@@ -82,7 +82,7 @@ plan 72;
     dies-ok { ConstantTest3::yak }, 'constant can be explicitly "my"-scoped';
 }
 
-#?rakudo todo 'COMPILING RT #125054'
+#?rakudo todo 'COMPILING'
 {
     my $ok;
 
@@ -103,7 +103,7 @@ plan 72;
     ok $ok, "declaring a constant in terms of hash constant works";
 }
 
-#?rakudo todo 'COMPILING RT #125054'
+#?rakudo todo 'COMPILING'
 {
     my $ok;
 
@@ -124,7 +124,7 @@ plan 72;
     ok $ok, "declaring a constant in terms of array constant works";
 }
 
-#?rakudo todo 'COMPILING RT #125054'
+#?rakudo todo 'COMPILING'
 {
     my $ok;
 

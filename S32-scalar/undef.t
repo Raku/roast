@@ -85,11 +85,11 @@ ok(!defined(Mu), "Mu is not defined");
     ok(defined(%hash), "aggregate hash defined");
 
     undefine(@ary);
-#?rakudo todo 'definedness of array RT #124563'
+#?rakudo todo 'definedness of array'
     ok(!defined(@ary), "undefine array");
 
     undefine(%hash);
-#?rakudo todo 'definedness of hash RT #124564'
+#?rakudo todo 'definedness of hash'
     ok(!defined(%hash), "undefine hash");
 
     @ary = (1);
@@ -98,7 +98,7 @@ ok(!defined(Mu), "Mu is not defined");
     ok(defined(%hash), "define hash again");
 }
 
-#?rakudo skip 'access to &your_sub RT #124565'
+#?rakudo skip 'access to &your_sub'
 {
     sub a_sub { "møøse" }
 
@@ -214,7 +214,7 @@ Perl6-specific tests
 #                                 "let keyword">
 
 # - unmatched alternative should bind to undef
-#?rakudo skip 'Cannot use bind operator with this left-hand side RT #124566'
+#?rakudo skip 'Cannot use bind operator with this left-hand side'
 #?DOES 10
 {
     my ($num, $alpha);

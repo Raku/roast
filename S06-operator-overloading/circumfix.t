@@ -3,7 +3,7 @@ use Test;
 
 plan 16;
 
-#?rakudo skip 'macros RT #124978'
+#?rakudo skip 'macros'
 {
     use experimental :macros;
     my $var = 0;

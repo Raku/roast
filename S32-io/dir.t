@@ -11,7 +11,7 @@ my @files;
 ok (@files = dir()), "dir() runs in cwd()";
 
 # see roast's README as for why there is always a t/ available
-#?rakudo todo 'directories are not marked with trailing / yet RT #124784'
+#?rakudo todo 'directories are not marked with trailing / yet'
 ok @files>>.relative.grep('t/'), 'current directory contains a t/ dir';
 ok @files.grep(*.basename eq 't'), 'current directory contains a t/ dir';
 isa-ok @files[0], IO::Path, 'dir() returns IO::Path objects';

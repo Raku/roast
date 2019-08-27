@@ -21,7 +21,7 @@ is .doit\ (),   'empty',        'method call with unspace';
 
 is (.doit: 1, 2, 3),    'a:1|b:2!3',    'list op with colon';
 is (.doit: 1, 2, 3, 4), 'a:1|b:2!3!4',  'list op with colon, slurpy';
-#?rakudo 3 skip 'switch-from-paren-to-listop form RT #124852'
+#?rakudo 3 skip 'switch-from-paren-to-listop form'
 is (.doit(1): 2, 3),    'a:1|b:2!3',    'list op with colon';
 is (.doit(1, 2): 3),    'a:1|b:2!3',    'list op with colon';
 is (.doit\  (1, 2): 3), 'a:1|b:2!3',    'list op with colon, unspace';

@@ -43,7 +43,7 @@ plan 40;
     }
 } #4*6
 
-#?rakudo skip 'Cannot use bind operator with this LHS RT #124751'
+#?rakudo skip 'Cannot use bind operator with this LHS'
 {
     my @list = (1, 2, 3, 4);
     my (@even,@odd);

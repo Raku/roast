@@ -19,7 +19,7 @@ macro four () { quasi { 2+2 } }
 
 is(four, 4, "macro returning quasi");
 
-#?rakudo skip ':COMPILING flag RT #124964'
+#?rakudo skip ':COMPILING flag'
 {
     macro hi () { quasi :COMPILING { "hello $s" } } 
 
@@ -51,7 +51,7 @@ is(four, 4, "macro returning quasi");
     is hygienic($x), 7, 'lexical vars in macros are not visible to the AST vars';
 }
 
-#?rakudo skip 'return from macro RT #124965'
+#?rakudo skip 'return from macro'
 {
     macro outside-declaration ( $ast ) {
         my $COMPILING::x = 4;

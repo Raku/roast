@@ -61,7 +61,7 @@ throws-like 'my class A { submethod BUILD(:$!notthere = 10) { } }; A.new',
     ok $error ~~ / :i call /, '... error message mentions "call"';
 }
 
-#?rakudo.jvm todo "unival NYI RT #124920"
+#?rakudo.jvm todo "unival NYI"
 {
     try { EVAL 'unival(42.2)' }
     my $error = ~$!;

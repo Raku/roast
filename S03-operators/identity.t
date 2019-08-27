@@ -127,7 +127,7 @@ class TestObj { has $!a }
   ok(($foo =:= $frop), "binding makes two objects the same object");
 }
 
-#?rakudo todo 'misuse of =:= RT #124537'
+#?rakudo todo 'misuse of =:='
 {
     ok (Mu =:= Mu) ~~ Failure, 'misuse of =:= is failure (Mu)';
     ok (1 =:= '1') ~~ Failure, 'misuse of =:= is failure (literals)';

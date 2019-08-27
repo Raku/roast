@@ -19,7 +19,7 @@ my @list = (1 .. 5);
     is @result.join(', '), '2, 4, 6, 8, 10', 'got the values we expected';
 }
 
-#?rakudo skip "adverbial block RT #124752"
+#?rakudo skip "adverbial block"
 {
     my @result = @list.map():{ $_ * 2 };
     is(+@result, 5, 'adverbial block: we got a list back');
@@ -32,7 +32,7 @@ my @list = (1 .. 5);
     is @result.join(', '), '2, 4, 6, 8, 10', 'got the values we expected';
 }
 
-#?rakudo skip "closure as non-final argument RT #124753"
+#?rakudo skip "closure as non-final argument"
 {
     my @result = map { $_ * 2 }: @list;
     is(+@result, 5, 'we got a list back');

@@ -52,7 +52,7 @@ Testing operator overloading subroutines
 
 # Overriding prefix:<if>
 # L<S04/"Statement parsing" /"since prefix:<if> would hide statement_modifier:<if>">
-#?rakudo skip 'missing block, apparently "if" not an op RT #124982'
+#?rakudo skip 'missing block, apparently "if" not an op'
 {
     my proto prefix:<if> ($a) { $a*2 }
     is (if+5), 10;

@@ -8,7 +8,7 @@ sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_rebindstdhandles' ~ nonce();
 
 # Test for re-binding $*OUT.
-#?rakudo skip 'contextual rebinding regression RT #125041'
+#?rakudo skip 'contextual rebinding regression'
 {
     my $old_out := $*OUT;
     $*OUT := open($filename, :w);
@@ -23,7 +23,7 @@ my $filename = 'tempfile_rebindstdhandles' ~ nonce();
 }
 
 # Test for re-binding $*ERR.
-#?rakudo skip 'contextual rebinding regression RT #125042'
+#?rakudo skip 'contextual rebinding regression'
 {
     my $old_err := $*ERR;
     $*ERR := open($filename, :w);

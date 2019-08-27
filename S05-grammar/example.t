@@ -53,13 +53,13 @@ $content = '<title>Exactly</title> aosihdas
 <small>C</small> aosidh
 <small>D</small>';
 
-#?rakudo skip 'Method "speaker" not found for invocant of class "Cursor" RT #124795'
+#?rakudo skip 'Method "speaker" not found for invocant of class "Cursor"'
 is($content ~~ m/<title>/, '<title>Exactly</title>', 'match token');
 
 # XXX this can't work this way
 # 'schedule' is a rule (non-backtracking) so the implicit <.ws> will always
 # match zero characters.
-#?rakudo skip 'Method "speaker" not found for invocant of class "Cursor" RT #124795'
+#?rakudo skip 'Method "speaker" not found for invocant of class "Cursor"'
 is($content ~~ m/<schedule>/, $content, 'match rule');
 
 # RT #81136

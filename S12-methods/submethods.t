@@ -67,7 +67,7 @@ Basic submethod tests. See L<S12/"Submethods">
 # Roles with BUILD
 # See thread "Roles and BUILD" on p6l
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/21277">
-#?rakudo skip 'outer lexicals in roles RT #124850'
+#?rakudo skip 'outer lexicals in roles'
 {
   my $was_in_a1_build = 0;
   my $was_in_a2_build = 0;
@@ -81,7 +81,7 @@ Basic submethod tests. See L<S12/"Submethods">
   is $was_in_a2_build, 1, "roles' BUILD submethods were called when mixed in a class (2)";
 }
 
-#?rakudo skip 'roles and submethods RT #124851'
+#?rakudo skip 'roles and submethods'
 #?DOES 4
 {
   my $was_in_b1_build = 0;

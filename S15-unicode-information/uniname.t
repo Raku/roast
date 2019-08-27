@@ -34,7 +34,7 @@ is uniname("¶"),        "PILCROW SIGN",           "uniname() on character with 
 is uniname("\x[2028]"), "LINE SEPARATOR",         "uniname() returns current Unicode name for formatting character.";
 is uniname("\x[80]"),   "<control-0080>",         "uniname() returns codepoint label for control character without any name."; # RT #122471
 
-#?rakudo 5 skip ":one NYI RT #125069"
+#?rakudo 5 skip ":one NYI"
 is uniname("A", :one),        "<graphic-0041>", "uniname(:one) returns non-standard codepoint label for graphic character without Unicode 1 name.";
 is uniname("\0", :one),       "NULL",           "uniname(:one) returns Unicode 1 name for control character";
 is uniname("¶", :one),        "PARAGRAPH SIGN", "uniname(:one) on character with current & Unicode 1 name returns Unicode 1 name.";

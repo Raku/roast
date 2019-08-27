@@ -46,7 +46,7 @@ character classes), and those are referenced at the correct spot.
 }
 
 # so if the first character is a left parenthesis, it really is a call
-#?rakudo skip '<test()> NYI RT #124519'
+#?rakudo skip '<test()> NYI'
 {
     my $pass = 0;
     my sub test (Int $a = 1) {$pass += $a}
@@ -54,7 +54,7 @@ character classes), and those are referenced at the correct spot.
     ok($pass, 'function call (no arguments)');
 }
 
-#?rakudo skip '<test()> NYI RT #124520'
+#?rakudo skip '<test()> NYI'
 {
     my $pass = 0;
     my sub test (Int $a) {$pass += $a}
@@ -103,7 +103,7 @@ character classes), and those are referenced at the correct spot.
 
 # If the first character after the identifier is whitespace, the subsequent
 # text (following any whitespace) is passed as a regex
-#?rakudo skip 'angle quotes in regexes RT #124521'
+#?rakudo skip 'angle quotes in regexes'
 {
     my $is_regex = 0;
     my sub test ($a) {$is_regex++ if $a ~~ Regex}
@@ -118,7 +118,7 @@ character classes), and those are referenced at the correct spot.
 
 # If the first character is a colon followed by whitespace the
 # rest of the text is taken as a list of arguments to the method
-#?rakudo skip 'colon arguments NYI RT #124522'
+#?rakudo skip 'colon arguments NYI'
 {
     my $called_ok = 0;
     my sub test ($a, $b) {$called_ok++ if $a && $b}
@@ -261,7 +261,7 @@ character classes), and those are referenced at the correct spot.
 
 # A leading * indicates that the following pattern allows a partial match.
 # It always succeeds after matching as many characters as possible.
-#?rakudo skip '<*literal> RT #124525'
+#?rakudo skip '<*literal>'
 {
     is(''    ~~ /^ <*xyz> $ /, '',    'partial match (0)');
     is('x'   ~~ /^ <*xyz> $ /, 'x',   'partial match (1a)');

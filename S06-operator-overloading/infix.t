@@ -65,7 +65,7 @@ plan 47;
 }
 
 # Overriding infix:<;>
-#?rakudo todo 'infix:<;> RT #124981'
+#?rakudo todo 'infix:<;>'
 {
     my proto infix:<;> ($a, $b) { $a + $b }
     is $(3 ; 2), 5  # XXX correct?

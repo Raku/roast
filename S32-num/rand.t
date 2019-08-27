@@ -66,7 +66,7 @@ lives-ok { srand(1) }, 'srand(1) lives and parses';
         'edge case: srand(0) not the same as srand(:seed(1))');
 }
 
-#?rakudo skip 'Test is too slow; srand call incorrect RT #124812'
+#?rakudo skip 'Test is too slow; srand call incorrect'
 # Similar code under Perl 5 runs in < 15s.
 {
     srand;

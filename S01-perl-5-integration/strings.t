@@ -9,7 +9,7 @@ unless (try { EVAL("1", :lang<Perl5>) }) {
 }
 
 is(EVAL("'Yet Another Perl Hacker'",:lang<Perl5>),"Yet Another Perl Hacker");
-#?rakudo todo "NativeCall strings not yet Null safe RT #124649"
+#?rakudo todo "NativeCall strings not yet Null safe"
 {
     is(EVAL('"Yet Ano\0ther P\0erl Hacker"',:lang<Perl5>),"Yet Ano\0ther P\0erl Hacker","Null Bytes in the middle of a converted string");
 }

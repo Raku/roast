@@ -17,9 +17,9 @@ is ([+&] ()), +^0, "[+&] () eq +^0";
 ok( !([+<] ()).defined, "[+<] () should fail");
 ok( !([+>] ()).defined, "[+>] () should fail");
 ok( !([~&] ()).defined, "[~&] () should fail");
-#?rakudo skip "~< NYI RT #124531"
+#?rakudo skip "~< NYI"
 ok( !([~<] ()).defined, "[~<] () should fail");
-#?rakudo skip "~> NYI RT #124531"
+#?rakudo skip "~> NYI"
 ok( !([~>] ()).defined, "[~>] () should fail");
 is ([+] ()), 0, "[+] () eq 0";
 is ([-] ()), 0, "[-] () eq 0";

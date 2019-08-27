@@ -516,7 +516,7 @@ my @p;
 }
 
 # XXX: The following tests assume autoconvertion between "a" and buf8 type
-#?rakudo 2 skip "~< and ~> NYI RT #124531"
+#?rakudo 2 skip "~< and ~> NYI"
 {
     my $x = "a";
     @p = $x ~<= 8, 9;
@@ -604,7 +604,7 @@ sub l () { 1, 2 };
     is(@z.elems, 6, 'lhs treats ($a, *) as list (2)');
 }
 
-#?rakudo skip 'cannot modify an immutable value RT #124533'
+#?rakudo skip 'cannot modify an immutable value'
 {
     my $a;
     my @z = (@$a = l, l, l);
@@ -612,7 +612,7 @@ sub l () { 1, 2 };
     is @z.elems, 6, 'lhs treats @$a as list (2)';
 }
 
-#?rakudo skip 'cannot modify an immutable value RT #124533'
+#?rakudo skip 'cannot modify an immutable value'
 {
     my $a;
     $a[] = l, l, l;

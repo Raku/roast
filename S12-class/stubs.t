@@ -14,7 +14,7 @@ eval-lives-ok q[ role StubB { ... }; role StubB { method foo { } }; ],
 eval-lives-ok q[ module StubC { ... }; module StubC { sub foo { } }; ],
               'Can stub a module, and later on declare it';
 
-#?rakudo todo 'nom regression RT #125044'
+#?rakudo todo 'nom regression'
 eval-lives-ok q[ package StubD { ... }; class StubD { method foo { } }; ],
               'Can stub a package, and later on implement it as a class';
 

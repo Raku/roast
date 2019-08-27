@@ -9,7 +9,7 @@ my Str $x;
 
 #L<S19/Options and Values/These options are made available>
 
-#?rakudo todo "delimited options NYI RT #125020"
+#?rakudo todo "delimited options NYI"
 is_run $x, :args['++FOO', '--bar', '++/FOO', '-e', 'say %*OPTS<FOO>'],
     {
         out     => '--bar\n',
