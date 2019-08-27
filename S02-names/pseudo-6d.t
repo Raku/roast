@@ -12,7 +12,7 @@ plan 159;
 # L<S02/Names>
 
 # (root)
-#?rakudo skip 'the binding in here is NYI RT #124914'
+#?rakudo skip 'the binding in here is NYI'
 {
     my $x = 1; #OK
     my $y = 2; #OK
