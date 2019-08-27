@@ -338,7 +338,7 @@ plan 199;
 # COMPILING - not testable without BEGIN
 
 # DYNAMIC
-#?rakudo skip 'various issues to resolve RT #124917'
+#?rakudo skip 'various issues to resolve'
 {
     my $dyn = "DYNAMIC";
 
