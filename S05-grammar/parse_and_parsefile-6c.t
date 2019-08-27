@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 use Test;
 
 plan 17;
@@ -9,7 +9,7 @@ grammar Foo { token TOP { \d+ } }
 grammar Bar { token untop { \d+ } }
 grammar Baz { token TOP { \d+ \n } }
 
-nok(Foo.parse("abc123xyz"), ".parse method invokes TOP rule, no match");
+is Foo.parse("abc123xyz"), Nil, ".parse method invokes TOP rule, no match";
 is(~Foo.parse("123"), "123",  ".parse method invokes TOP rule, match");
 nok(Foo.parse("123xyz"),  ".parse method requires match to end");
 is(~Foo.subparse("123xyz"), "123",  ".subparse method doesn't require match to end");
