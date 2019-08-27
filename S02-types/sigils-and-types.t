@@ -28,7 +28,7 @@ does-ok EVAL('List'), Positional, "List does Positional";
 does-ok EVAL('Array'), Positional, "Array does Positional";
 does-ok EVAL('Range'), Positional, "Range does Positional";
 does-ok EVAL('Buf'), Positional, "Buf does Positional";
-#?rakudo todo "Capture does Positional RT #124484"
+#?rakudo todo "Capture does Positional"
 does-ok EVAL('Capture'), Positional, "Capture does Positional";
 
 my %hash;
@@ -40,7 +40,7 @@ does-ok EVAL('Pair'), Associative, "Pair does Associative";
 does-ok EVAL('Set'), Associative, "Set does Associative";
 does-ok EVAL('Bag'), Associative, "Bag does Associative";
 does-ok EVAL('QuantHash'), Associative, "QuantHash does Associative";
-#?rakudo todo "Capture does Associative RT #124485"
+#?rakudo todo "Capture does Associative"
 does-ok EVAL('Capture'), Associative, "Capture does Associative";
 
 

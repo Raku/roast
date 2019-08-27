@@ -71,7 +71,7 @@ Quoting Larry:
 }
 
 # Binding on hash slices
-#?rakudo todo 'binding on hash elements unimplemented RT #124779'
+#?rakudo todo 'binding on hash elements unimplemented'
 {   my %hash = (:a<foo>, :b<bar>, :c<baz>);
 
     try { %hash<a b> := <FOO BAR> };
@@ -79,7 +79,7 @@ Quoting Larry:
     is %hash<b>, "BAR", "binding hash slices works (1-2)";
 }
 
-#?rakudo todo 'binding on hash elements unimplemented RT #124780'
+#?rakudo todo 'binding on hash elements unimplemented'
 {   my %hash = (:a<foo>, :b<bar>, :c<baz>);
 
     try { %hash<a b> := <FOO> };

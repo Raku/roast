@@ -52,7 +52,7 @@ plan 21;
     multi sub t1 (&code:(Any, Any)) { 'Two' };   #OK not used
 
     # Note that using &code:($,$) instead of &code:(Any, Any) makes this next test work
-    #?rakudo skip 'subsignatures dont factor into multi candidates yet RT #124935'
+    #?rakudo skip 'subsignatures dont factor into multi candidates yet'
     is t1(-> $a, $b { }), 'Two',   #OK not used
        'Multi dispatch based on closure parameter syntax (1)';
     is t1(-> Int $a { }), 'Int',   #OK not used

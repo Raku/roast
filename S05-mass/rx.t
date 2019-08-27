@@ -1447,7 +1447,7 @@ ok 'foo-bar' ~~ /:s foo '-'? bar/, 'basic ws match \s* \s*';
 ok 'foobar' !~~ /:s foo '-'? bar/, 'basic ws non-match';
 
 #### :s()foo '-'? bar		foo - bar	n	basic ws match
-#?rakudo skip ':s() RT #124899'
+#?rakudo skip ':s()'
 ok 'foo - bar' !~~ /:s()foo '-'? bar/, 'basic ws match';
 
 #### :s[]foo '-'? bar		foo - bar	y	basic ws match
@@ -2075,7 +2075,7 @@ is $/, 'foobar', '... will match correctly';
 ok ('2+3 ab2' ~~ /<ident>/) && matchcheck($/, q/mob<ident>: <ab2 @ 4>/), 'capturing builtin <ident>';
 
 #### <name>			ab::cd::x3::42	/mob<name>: <ab::cd::x3 @ 0>/	capturing builtin <name>
-#?rakudo skip 'regex <name> RT #124904'
+#?rakudo skip 'regex <name>'
 ok ('ab::cd::x3::42' ~~ /<name>/) && matchcheck($/, q/mob<name>: <ab::cd::x3 @ 0>/), 'capturing builtin <name>';
 
 
@@ -2083,7 +2083,7 @@ ok ('ab::cd::x3::42' ~~ /<name>/) && matchcheck($/, q/mob<name>: <ab::cd::x3 @ 0
 ok '2+3 ab2' ~~ /<.ident>/, 'non-capturing builtin <.ident>';
 
 #### <.name>			ab::cd::x3::42	y	non-capturing builtin <.name>
-#?rakudo skip 'regex <name> RT #124905'
+#?rakudo skip 'regex <name>'
 ok 'ab::cd::x3::42' ~~ /<.name>/, 'non-capturing builtin <.name>';
 
 

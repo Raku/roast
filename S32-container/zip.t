@@ -42,7 +42,7 @@ plan 14;
     is (@a Z @b), @e, "zip uses length of shortest";
 }
 
-#?rakudo skip 'lvalue zip RT #124907'
+#?rakudo skip 'lvalue zip'
 {
     my @a;
     my @b;

@@ -93,7 +93,7 @@ ok $d.HOW.does($d, InitialAttribBoth),
   ".HOW.does gives correct information (4-1)";
 ok $d.^does(InitialAttribBoth),
   ".^does gives correct information (4-1)";
-#?rakudo 2 todo '.does with parametric roles RT #124746'
+#?rakudo 2 todo '.does with parametric roles'
 ok !$d.HOW.does($d, InitialAttribBoth["type1", "name1"]),
   ".HOW.does gives correct information (4-3)";
 ok !$d.^does(InitialAttribBoth["type1", "name1"]),

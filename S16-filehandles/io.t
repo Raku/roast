@@ -267,7 +267,7 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
     $fh = open($filename, :bin);
     my $b = $fh.read(32);
     $fh.close;
-#?rakudo.jvm todo 'will fail due to above failures RT #125077'
+#?rakudo.jvm todo 'will fail due to above failures'
     is $b.values,
        (0x61,0xa2,0x80,0x82..0x8c,0x8e,0x81,0x8d,0x8f,0x61,0xa2,0xff,0x80),
        "file with encoding wrote correct content";
@@ -279,7 +279,7 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
     $s = '';
     lives-ok { $s ~= $fh.getc for 1..3; },
       "windows-1252 unmapped chars from fh";
-#?rakudo.jvm todo 'builtin JVM charset folds these RT #124686'
+#?rakudo.jvm todo 'builtin JVM charset folds these'
     is $s, '', "correct windows-1252 unmapped chars from fh";
 
     lives-ok { $fh.encoding('ISO-8859-1') }, "reset input fh encoding";

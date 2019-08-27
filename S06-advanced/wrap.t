@@ -114,7 +114,7 @@ sub levelwrap($n) {
 is( levelwrap( 1 ), 1, "Sanity test." );
 is( levelwrap( 2 ), 2, "Sanity test." );
 
-#?rakudo todo 'callwith RT #124653'
+#?rakudo todo 'callwith'
 lives-ok { &levelwrap.callwith( 1 )},
     "Check that functions have a 'callwith' that works. ";
 
@@ -161,7 +161,7 @@ sub functionB {
     #?rakudo todo 'temp and wrap'
     is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 }
-#?rakudo todo 'temp and wrap RT #124654'
+#?rakudo todo 'temp and wrap'
 is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 
 # RT #70267

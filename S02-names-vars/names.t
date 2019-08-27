@@ -16,10 +16,10 @@ plan 156;
     our $river = 'Terrain::Hill';
     is($mountain, 'Hill', 'basic variable name');
     is($Terrain::mountain, 108, 'variable name with package');
-    #?rakudo skip 'package variable autovivification RT #124637'
+    #?rakudo skip 'package variable autovivification'
     is(Terrain::<$mountain>, 108, 'variable name with sigil not in front of package');
     is($Terrain::Hill::mountain, 1024, 'variable name with 2 deep package');
-    #?rakudo skip 'package variable autovivification RT #124637'
+    #?rakudo skip 'package variable autovivification'
     is(Terrain::Hill::<$mountain>, 1024, 'varaible name with sigil not in front of 2 package levels deep');
     is($Terrain::($mountain)::mountain, 1024, 'variable name with a package name partially given by a variable ');
     is($::($river)::mountain, 1024, 'variable name with package name completely given by variable');
@@ -36,7 +36,7 @@ plan 156;
     is(::<$bear>,   2.16, 'variable lookup using ::<$foo>');
 }
 
-#?rakudo skip '::{ } package lookup NYI RT #124638'
+#?rakudo skip '::{ } package lookup NYI'
 {
     my $::<!@#$> =  2.22;
     is($::{'!@#$'}, 2.22, 'variable lookup using $::{\'symbols\'}');

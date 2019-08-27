@@ -26,7 +26,7 @@ my @list = (1 ... 10);
     is($result, 3, "method form of first, :end, :k returns the expected item");
 }
 
-#?rakudo skip "adverbial block RT #124754"
+#?rakudo skip "adverbial block"
 {
     my $result = @list.first():{ $^a == 4 }, :end, :k;
     ok($result ~~ Int, "first(, :end, :k):<block> returns an Int");

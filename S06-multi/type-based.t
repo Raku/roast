@@ -225,7 +225,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is foo(NotCool), 1, 'Set hits Int() candidate due to it accepting Any and coercing';
 }
 
-#?rakudo todo "coercions need to fail like constraints RT #124772"
+#?rakudo todo "coercions need to fail like constraints"
 {
     proto main ($) {*}
     multi main ($x) { say $x.WHAT }

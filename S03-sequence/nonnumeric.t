@@ -5,7 +5,7 @@ plan 44;
 
 # L<S03/List infix precedence/'C<.succ> is assumed'>
 
-#?rakudo skip 'hangs RT #125049'
+#?rakudo skip 'hangs'
 {
     class Alternating {
         has Int $.val;
@@ -67,7 +67,7 @@ is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎�
 is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
 
 # be sure the test works as specced even for user classes
-#?rakudo skip 'lifting comparison ops RT #125050'
+#?rakudo skip 'lifting comparison ops'
 {
     class Periodic {
         has Int $.val;

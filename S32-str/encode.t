@@ -25,13 +25,13 @@ if $*DISTRO.is-win {
 is 'ö'.encode('UTF-8')[0], 195, 'indexing a utf8 gives correct value (1)';
 is 'ö'.encode('UTF-8')[1], 182, 'indexing a utf8 gives correct value (1)';
 is '€‚ƒ„…†‡ˆ‰Š‹ŒŽ'.encode('windows-1252').values, (0x80,0x82..0x8c,0x8e), 'cp1252 encodes most C1 substitutes';
-#?rakudo.jvm todo 'builtin JVM cp1252 code folds these RT #124686'
+#?rakudo.jvm todo 'builtin JVM cp1252 code folds these'
 is ''.encode('windows-1252').values, (0x81,0x8d,0x8f), 'cp1252 encode tolerates unassigned C1 characters';
 
 # RT#107204
-#?rakudo.jvm todo 'JVM builtin code folds these RT #124686'
+#?rakudo.jvm todo 'JVM builtin code folds these'
 throws-like '"aouÄÖÜ".encode("latin1").decode("utf8")', Exception, message => rx:s:i/line 1 col\w* 4/;
-#?rakudo.jvm todo 'JVM builtin code folds these RT #124686'
+#?rakudo.jvm todo 'JVM builtin code folds these'
 throws-like '"ssß".encode("latin1").decode("utf8")', Exception, message => rx:s:i/term/;
 #?rakudo todo 'RT#107204 should say line and column or mention term(ination)'
 throws-like '"aoaou".encode("latin1").decode("utf16")', Exception, message => rx:s:i/line 1 col\w* 2|term/;
@@ -54,7 +54,7 @@ ok Buf.new(195, 182).decode ~~ Str, '.decode returns a Str';
 is Buf.new(195, 182).decode, 'ö', 'decoding a Buf with UTF-8';
 is Buf.new(246).decode('ISO-8859-1'), 'ö', 'decoding a Buf with Latin-1';
 is Buf.new(0x80,0x82..0x8c,0x8e).decode('windows-1252'),'€‚ƒ„…†‡ˆ‰Š‹ŒŽ', 'cp1252 decodes most C1 substitutes';
-#?rakudo.jvm todo 'builtin JVM cp1252 code folds these RT #124686'
+#?rakudo.jvm todo 'builtin JVM cp1252 code folds these'
 is Buf.new(0x81,0x8d,0x8f).decode('windows-1252'), '', 'cp1252 decode tolerates unassigned C1 characters';
 
 ok Buf ~~ Stringy, 'Buf does Stringy';

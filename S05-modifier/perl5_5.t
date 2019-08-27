@@ -30,7 +30,7 @@ is(("<&OUT" ~~ rx:P5/^[<>]&/ && $/), "<&", 're_tests 631/0 (815)');
 is(("aaaaaaaaaa" ~~ rx:P5/^(a\1?){4}$/ && $0), "aaaa", 're_tests 633/1 (817)');
 ok((not ("aaaaaaaaa" ~~ rx:P5/^(a\1?){4}$/)), 're_tests 635  (819)');
 ok((not ("aaaaaaaaaaa" ~~ rx:P5/^(a\1?){4}$/)), 're_tests 637  (821)');
-#?rakudo todo "unknown issue RT #125022"
+#?rakudo todo "unknown issue"
 is(("aaaaaaaaaa" ~~ rx:P5/^(a(?(1)\1)){4}$/ && $0), "aaaa", 're_tests 639/1 (823)');
 ok((not ("aaaaaaaaa" ~~ rx:P5/^(a(?(1)\1)){4}$/)), 're_tests 641  (825)');
 ok((not ("aaaaaaaaaaa" ~~ rx:P5/^(a(?(1)\1)){4}$/)), 're_tests 643  (827)');
@@ -96,7 +96,7 @@ is(("a\nB" ~~ rx:P5/(?i)((?s-i:a.))b/ && $0), "a\n", 're_tests 722/1 (918)');
 ok((not ("B\nB" ~~ rx:P5/(?i)((?s-i:a.))b/)), 're_tests 723  (919)');
 is(("cabbbb" ~~ rx:P5/(?:c|d)(?:)(?:a(?:)(?:b)(?:b(?:))(?:b(?:)(?:b)))/ && $/), "cabbbb", 're_tests 724/0 (920)');
 is(("caaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" ~~ rx:P5/(?:c|d)(?:)(?:aaaaaaaa(?:)(?:bbbbbbbb)(?:bbbbbbbb(?:))(?:bbbbbbbb(?:)(?:bbbbbbbb)))/ && $/), "caaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 're_tests 726/0 (922)');
-#?rakudo 2 todo "(?i) and backreferences RT #125024"
+#?rakudo 2 todo "(?i) and backreferences"
 is(("Ab4ab" ~~ rx:P5/(?i)(ab)\d\1/ && $0), "Ab", 're_tests 728/1 (924)');
 is(("ab4Ab" ~~ rx:P5/(?i)(ab)\d\1/ && $0), "ab", 're_tests 730/1 (926)');
 is(("foobar1234baz" ~~ rx:P5/foo\w*\d{4}baz/ && $/), "foobar1234baz", 're_tests 732/0 (928)');
@@ -110,7 +110,7 @@ is(("dbaacb" ~~ rx:P5/(?<![cd])[ab]/ && $/), "a", 're_tests 742/0 (938)');
 ok((not ("dbcb" ~~ rx:P5/(?<!(c|d))b/)), 're_tests 744  (940)');
 is(("dbaacb" ~~ rx:P5/(?<!(c|d))[ab]/ && $/), "a", 're_tests 746/0 (942)');
 is(("cdaccb" ~~ rx:P5/(?<!cd)[ab]/ && $/), "b", 're_tests 748/0 (944)');
-#?rakudo skip "hangs RT #125025"
+#?rakudo skip "hangs"
 ok((not ("a--" ~~ rx:P5/^(?:a?b?)*$/)), 're_tests 750  (946)');
 is(("a\nb\nc\n" ~~ rx:P5/((?m)^b$)/ && $0), "b", 're_tests 752/1 (948)');
 is(("a\nb\n" ~~ rx:P5/(?m)^b/ && $/), "b", 're_tests 753/0 (949)');

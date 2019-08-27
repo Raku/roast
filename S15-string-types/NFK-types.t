@@ -26,7 +26,7 @@ plan 10;
 
 ## NFKD
 
-#?rakudo 1 skip 'NFKD type NYI RT #124990'
+#?rakudo 1 skip 'NFKD type NYI'
 {
     is q:nfkd"ẛ̣".WHAT, NFKD, ":nfkd adverb on quoteforms produces NFKD string type.";
     is "ẛ̣".NFKD.WHAT, NFKD, "Str literal can be converted to NFKD.";

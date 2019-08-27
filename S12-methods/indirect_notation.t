@@ -72,7 +72,7 @@ is EVAL('abs -42:'), 42, 'indirect object notation with colon at EOF works';
 }
 
 # L<S12/Fancy method calls/"$obj.@candidates(1,2,3)">
-#?rakudo skip '.@foo not yet working RT #124844'
+#?rakudo skip '.@foo not yet working'
 {
     class T3 {
         has $.x;
@@ -103,7 +103,7 @@ is EVAL('abs -42:'), 42, 'indirect object notation with colon at EOF works';
 
 dies-ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";   #OK use of quotes
 
-#?rakudo skip '.*, .+ and .? with @foo RT #124845'
+#?rakudo skip '.*, .+ and .? with @foo'
 {
     class T4 {
         has $.called = 0;

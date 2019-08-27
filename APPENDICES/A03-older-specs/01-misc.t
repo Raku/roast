@@ -406,10 +406,10 @@ group-of 12 => '$CALLER::_' => {
     is(callerunderscore("foo"), "-foo-", 'CALLER:: string arg');
     is(callerunderscore(1), "-1-", 'CALLER:: number arg');
     $_ = "foo";
-    #?rakudo todo "NYI RT #124924"
+    #?rakudo todo "NYI"
     is(callerunderscore(), "-foo-", 'CALLER:: $_ set once');
     $_ = "bar";
-    #?rakudo todo "NYI RT #124924"
+    #?rakudo todo "NYI"
     is(callerunderscore(), "-bar-", 'CALLER:: $_ set twice');
     for ("quux") {
         #?rakudo todo "NYI RT #123660"
@@ -419,7 +419,7 @@ group-of 12 => '$CALLER::_' => {
         #?rakudo todo "NYI RT #123660"
         is callerunderscore, '-hirgel-', '$CALLER::_ set by given';
     }
-    #?rakudo todo "NYI RT #124924"
+    #?rakudo todo "NYI"
     is(callerunderscore(), '-bar-', 'CALLER:: $_ reset after for');
 
 

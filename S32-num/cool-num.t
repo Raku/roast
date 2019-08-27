@@ -65,7 +65,7 @@ is-approx "17"i, 17i, '"17"i == 17i';
 is-approx (NotComplex.new)i, $magic\i, '(NotComplex.new)i == $magic\i';
 }
 
-#?rakudo skip 'angle conversion RT #124816'
+#?rakudo skip 'angle conversion'
 #?DOES 4
 {
 is-approx "17".to-radians(Degrees), 17.to-radians(Degrees),

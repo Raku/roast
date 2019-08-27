@@ -11,7 +11,7 @@ plan 6;
 throws-like 'my enum B (a => 1, b => "bar")', Exception,
              'mixed type enums are forbidden';
 
-#?rakudo todo 'NYI RT #124833'
+#?rakudo todo 'NYI'
 eval-lives-ok 'my Cool enum C (a => 1, b => "bar")',
              '... unless that type covers both enum value types';
 

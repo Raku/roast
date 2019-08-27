@@ -86,7 +86,7 @@ plan 23;
 }
 
 # <<== and ==>> pretending to be unshift and push, respectively
-#?rakudo skip 'double-ended feeds RT #124634'
+#?rakudo skip 'double-ended feeds'
 {
     my @odds = <1 3 5 7 9>;
     my @even = <0 2 4 6 8>;
@@ -100,7 +100,7 @@ plan 23;
 
 # feeding to whatever using ==> and ==>>
 
-#?rakudo skip 'double-ended feeds RT #124635'
+#?rakudo skip 'double-ended feeds'
 {
     my @data = 'a' .. 'e';
 
@@ -126,7 +126,7 @@ plan 23;
 }
 
 # no need for temp variables in feeds: $(*), @(*), %(*)
-#?rakudo skip '* feeds RT #124636'
+#?rakudo skip '* feeds'
 #?DOES 4
 {
     my @data = 'a' .. 'z';

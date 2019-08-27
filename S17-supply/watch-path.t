@@ -13,7 +13,7 @@ ok !$filename.IO.e, "make sure we don't have a file";
 
 given $*DISTRO.name {
     when "macosx" {
-#?rakudo.jvm 3 skip "file system events NYI? RT #124828"
+#?rakudo.jvm 3 skip "file system events NYI?"
         subtest &macosx, "does watch-path work on Mac OS X";
 
         unlink $filename; # in case we missed the cleanup
