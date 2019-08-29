@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 12;
 
-my $exception = ::('X::Promise::IllegalTransition');
+my $exception = ::('X::Promise::Resolved');
 
 {
     my $promise = Promise.new;
@@ -13,14 +13,14 @@ my $exception = ::('X::Promise::IllegalTransition');
     is $promise.result, 1, 'Keeping a vow assigns a result to the promise';
 
     throws-like { $vow.keep(2) }, $exception, promise => $promise,
-     message => 'Illegal attempt to keep/break this Promise (status: Kept)',
+     message => 'Cannot keep/break a Promise more than once (status: Kept)',
      'Keeping a vow throws if the promise was Kept already';
 
     is $promise.result, 1,
      'Keeping a vow does not change the result of an already Kept promise';
 
     throws-like { $vow.break(3) }, $exception, promise => $promise,
-     message => 'Illegal attempt to keep/break this Promise (status: Kept)',
+     message => 'Cannot keep/break a Promise more than once (status: Kept)',
      'Breaking a vow throws if the promise was Kept already';
 
     is $promise.status, Kept,
@@ -36,14 +36,14 @@ my $exception = ::('X::Promise::IllegalTransition');
     is $promise.cause, 1, 'Breaking a vow assigns a cause to the promise';
 
     throws-like { $vow.break(2) }, $exception, promise => $promise,
-     message => 'Illegal attempt to keep/break this Promise (status: Broken)',
+     message => 'Cannot keep/break a Promise more than once (status: Broken)',
      'Breaking a vow throws if the promise was Broken already';
 
     is $promise.cause, 1,
      'Breaking a vow does not change the cause of an already Broken promise';
 
     throws-like { $vow.keep(3) }, $exception, promise => $promise,
-     message => 'Illegal attempt to keep/break this Promise (status: Broken)',
+     message => 'Cannot keep/break a Promise more than once (status: Broken)',
      'Keeping a vow throws if the promise was Broken already';
 
     is $promise.status, Broken,
