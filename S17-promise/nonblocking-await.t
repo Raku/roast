@@ -221,8 +221,11 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
 {
     my $kill = Promise.new;
     my $started = Promise.new;
+    my $s-address = '0.0.0.0';
+    my $c-address = '127.0.0.1';
+    my $port = 4893;
     my $ok = start react {
-        whenever IO::Socket::Async.listen('localhost', 4893) -> $conn {
+        whenever IO::Socket::Async.listen($s-address, $port) -> $conn {
             whenever $conn.Supply(:bin) -> $buf {
                 await $conn.write: $buf;
                 $conn.close;
@@ -236,7 +239,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     my @responses;
     for ^20 {
         react {
-            whenever IO::Socket::Async.connect('localhost', 4893) -> $client {
+            whenever IO::Socket::Async.connect($c-address, $port) -> $client {
                 await $client.write('is this thing on?'.encode('ascii'));
                 whenever $client.Supply(:bin) {
                     push @responses, .decode('ascii');
@@ -256,8 +259,8 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
 #?rakudo.jvm skip 'NullPointerException'
 {
     my @foo = do {
-	    await start { do for ^2 { my uint64 @ = 9, 9; }.Slip },
-		      start { do for ^2 { my uint64 @ = 1, 2; }.Slip };
+        await start { do for ^2 { my uint64 @ = 9, 9; }.Slip },
+              start { do for ^2 { my uint64 @ = 1, 2; }.Slip };
     }
     is @foo.elems, 4, "slips awaited over get flattened out";
 }
@@ -265,8 +268,8 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
 {
   await start {
     my @foo = do {
-	    await start { do for ^2 { my uint64 @ = 9, 9; }.Slip },
-		      start { do for ^2 { my uint64 @ = 1, 2; }.Slip };
+        await start { do for ^2 { my uint64 @ = 9, 9; }.Slip },
+              start { do for ^2 { my uint64 @ = 1, 2; }.Slip };
     }
     is @foo.elems, 4, "slips awaited over get flattened out";
   }
@@ -284,3 +287,5 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     await (((p(), (p(), (p(),))), (p(), p(), p())), (p(), p(), p()));
     is-deeply $x, 9, '&await awaits in sink context, with nested iterables';
 }
+
+# vim: ft=perl6 sw=4 ts=4 sts=4 expandtab

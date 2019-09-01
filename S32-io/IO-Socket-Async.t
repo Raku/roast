@@ -3,7 +3,8 @@ use Test;
 
 plan 40;
 
-my $hostname = 'localhost';
+my $s-address = '0.0.0.0';
+my $c-address = '127.0.0.1';
 my $port = 5000;
 
 try {
@@ -15,11 +16,11 @@ try {
     await $sync;
 }
 
-await IO::Socket::Async.connect($hostname, $port).then(-> $sr {
+await IO::Socket::Async.connect($c-address, $port).then(-> $sr {
     is $sr.status, Broken, 'Async connect to unavailable server breaks promise';
 });
 
-my $server = IO::Socket::Async.listen($hostname, $port);
+my $server = IO::Socket::Async.listen($s-address, $port);
 
 my $echoTap = $server.tap(-> $c {
     $c.Supply.tap(-> $chars {
@@ -27,7 +28,7 @@ my $echoTap = $server.tap(-> $c {
     }, quit => { say $_; });
 });
 
-await IO::Socket::Async.connect($hostname, $port).then(-> $sr {
+await IO::Socket::Async.connect($c-address, $port).then(-> $sr {
     is $sr.status, Kept, 'Async connect to available server keeps promise';
     $sr.result.close() if $sr.status == Kept;
 });
@@ -36,7 +37,7 @@ multi sub client(&code) {
     my $p = Promise.new;
     my $v = $p.vow;
 
-    my $client = IO::Socket::Async.connect($hostname, $port).then(-> $sr {
+    my $client = IO::Socket::Async.connect($c-address, $port).then(-> $sr {
         if $sr.status == Kept {
             my $socket = $sr.result;
             code($socket, $v);
@@ -162,7 +163,7 @@ $echoTap.close;
 }
 
 {
-    my $latin1server = IO::Socket::Async.listen($hostname, $port, :enc('latin-1'));
+    my $latin1server = IO::Socket::Async.listen($s-address, $port, :enc('latin-1'));
     my $latin1Tap = $latin1server.tap(-> $c {
         $c.Supply.tap(-> Str $msg { $c.print($msg).then({ $c.close }) });
     });
@@ -173,7 +174,7 @@ $echoTap.close;
 }
 
 {
-    my $transcodeServer = IO::Socket::Async.listen($hostname, $port, :enc('utf-8'));
+    my $transcodeServer = IO::Socket::Async.listen($s-address, $port, :enc('utf-8'));
     my $transcodeTap = $transcodeServer.tap(-> $c {
         $c.Supply(:enc('latin-1')).tap(-> Str $msg { $c.print($msg).then({ $c.close }) });
     });
@@ -188,7 +189,7 @@ $echoTap.close;
     my $byteCountTap = $server.tap(-> $c {
         $c.Supply(:bin).tap(-> Blob $b { $c.write("Öl,$b.elems()\n".encode('latin-1')).then({ $c.close }) });
     });
-    my $latin1Client = await IO::Socket::Async.connect($hostname, $port, :enc('latin-1'));
+    my $latin1Client = await IO::Socket::Async.connect($c-address, $port, :enc('latin-1'));
     my $received = Promise.new;
     my $receivedStr = '';
     $latin1Client.Supply.tap({ $receivedStr ~= $_ }, done => { $received.keep($receivedStr) });
@@ -235,8 +236,7 @@ $echoTap.close;
 }
 
 {
-    my $anotherPort = 6000;
-    my $badServer = IO::Socket::Async.listen($hostname, $anotherPort);
+    my $badServer = IO::Socket::Async.listen($s-address, 6000);
     my $failed = Promise.new;
     my $t1 = $badServer.tap();
     my $t2 = $badServer.tap(quit => { $failed.keep });
@@ -245,8 +245,9 @@ $echoTap.close;
 }
 
 {
-    my $t = IO::Socket::Async.listen("localhost", 5007).tap: -> $conn { };
-    my $conn = await IO::Socket::Async.connect("localhost", 5007);
+    my $port = 5007;
+    my $t = IO::Socket::Async.listen($s-address, $port).tap: -> $conn { };
+    my $conn = await IO::Socket::Async.connect($c-address, $port);
     lives-ok { for ^5 { $conn.close; sleep 0.05; } },
         'Multiple close of an IO::Socket::Async silently coped with';
     dies-ok { await $conn.write("42".encode("ascii")) },
@@ -257,7 +258,7 @@ $echoTap.close;
 }
 
 {
-    my $lis = IO::Socket::Async.listen("localhost", 0);
+    my $lis = IO::Socket::Async.listen($s-address, 0);
 
     my @first-got;
     my @second-got;
@@ -288,8 +289,8 @@ $echoTap.close;
 
     my $fconn;
     my $sconn;
-    lives-ok { $fconn = await IO::Socket::Async.connect("localhost", $first.socket-port.result) }, "can connect to first port on localhost";
-    lives-ok { $sconn = await IO::Socket::Async.connect($second.socket-host.result, $second.socket-port.result) }, "can connect to second port on given host and port";
+    lives-ok { $fconn = await IO::Socket::Async.connect($c-address, $first.socket-port.result) }, "can connect to first port on localhost";
+    lives-ok { $sconn = await IO::Socket::Async.connect($c-address, $second.socket-port.result) }, "can connect to second port on given host and port";
 
     lives-ok { await $fconn.write("hello first".encode("ascii")) }, "send message to first connection";
     lives-ok { await $sconn.write("hello second".encode("ascii")) }, "send message to second connection";
@@ -310,7 +311,7 @@ $echoTap.close;
 
 # Rakudo Issue #2411
 {
-    my $listen-socket = IO::Socket::Async.listen("127.0.0.1", 0);
+    my $listen-socket = IO::Socket::Async.listen($s-address, 0);
     react {
         my $listen-tap = do whenever $listen-socket -> $socket { … }
         ok $listen-tap.defined, "listen tap is defined";
