@@ -161,6 +161,7 @@ eval-lives-ok q|BEGIN require Fancy::Utilities <&allgreet>;|,'require can import
 }
 
 # RT #131112
+#?rakudo.jvm skip 'R#3158'
 {
     require ::('SetConst');
     ok ::('SetConst::X') eqv set(<x y>),
