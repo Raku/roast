@@ -213,10 +213,6 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
 
         my $cmd = $*EXECUTABLE.absolute ~ ' ';
         $cmd ~= @compiler-args.join(' ') ~ ' ' if @compiler-args;
-        use nqp;
-        # Add -I from our runner command line.
-        my %cli-args = nqp::getcomp("perl6").cli-options;
-        $cmd ~= .map( '-I' ~ * ).join(' ') ~ ' ' with %cli-args<I>;
         $cmd ~= $fnbase ~ '.code'  if $code.defined;
         $cmd ~= " @actual_args.join(' ') < $fnbase.in > $fnbase.out 2> $fnbase.err";
         # diag("Command line: $cmd");
