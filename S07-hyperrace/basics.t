@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 85;
+plan 87;
 
 for <hyper race> -> $meth {
         sub hr (\seq) { $meth eq 'race' ?? seq.sort !! seq }
@@ -187,4 +187,22 @@ is-deeply ^1000 .hyper.map(*+1).Array, [^1000 + 1], '.hyper preserves order';
 {
     is-deeply (^100).race(batch=>1).map({ sprintf '%1$s %2$s', 5, 42 }).List, ‘5 42’ xx 100, 
         'sprintf is threadsafe when format tokens use explicit indices';
+}
+
+# https://github.com/rakudo/rakudo/issues/3165
+{
+    dies-ok
+        {
+            my @r = (^1).race(:batch(1), :degree(1)).map({
+                my @r2 = (^1).race(:batch(1), :degree(1)).map({ die 1; });
+            });
+        },
+        'die in a race nested in a race propagates exception';
+    dies-ok
+        {
+            my @r = (^1).hyper(:batch(1), :degree(1)).map({
+                my @r2 = (^1).hyper(:batch(1), :degree(1)).map({ die 1; });
+            });
+        },
+        'die in a hyper nested in a hyper propagates exception';
 }
