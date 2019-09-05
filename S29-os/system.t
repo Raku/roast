@@ -6,7 +6,7 @@ use Test::Util;
 # L<S29/"OS"/"=item run">
 # system is renamed to run, so link there.
 
-plan 39;
+plan 41;
 
 my $res;
 
@@ -202,6 +202,16 @@ subtest 'Proc.pid is set correctly' => {
     $pid = $p.pid;
     $p.shell: 'meooooooows', :err;
     isnt $pid, $p.pid, ".pid property updates with shell's PID on failed shell()";
+}
+
+# https://github.com/rakudo/rakudo/issues/3149
+{
+    my $proc = run $*EXECUTABLE, ‘-e’,
+        ‘use NativeCall; sub strdup(int64) is native(Str) {*}; strdup(0)’;
+    throws-like { sink $proc },
+        X::Proc::Unsuccessful,
+        'Exit with a segfault makes the Proc throw in sink context';
+    nok $proc, 'Exit with a segfault makes the Proc false';
 }
 
 # vim: ft=perl6
