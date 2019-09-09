@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 18;
+plan 21;
 
 {
     my %hash = :foo, :42bar;
@@ -87,6 +87,24 @@ subtest 'Map.gist shows only the first sorted 100 els' => {
     %m<a><b> = 666;
     is %m<a><b>, 666, 'did we change the hash inside the map';
     is %m.WHICH, $WHICH, 'did the .WHICH stay unchanged';
+}
+
+# perl6/problem-solving#99
+{
+    my %h = :1a, :2b;
+    isa-ok %h<a>.VAR, Scalar, "a hash value is containerized";
+    my %m := %h.Map;
+    isa-ok %m<a>.VAR, Int, "Map coercion deconts hash value";
+}
+
+# rakudo/rakudo#3168
+{
+    my class Foo {
+        has @.a;
+    }
+    my %args = a => [1, 2, 3];
+    my $foo = Foo.new(|%args.Map);
+    is-deeply $foo.a, [1, 2, 3], "array attribute initializer from Hash coerced to Map";
 }
 
 # vim: ft=perl6
