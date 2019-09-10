@@ -9,10 +9,12 @@ plan 1;
     # Test if file change events are not lost.
     my $watch-file = $*SPEC.catfile( $*TMPDIR, "watchme" );
     my $fh = $watch-file.IO.open: :w, :0out-buffer;
+    my $start-writing = Promise.new;
+    my $start-vow = $start-writing.vow;
     my $done-writing = Promise.new;
     my $done-vow = $done-writing.vow;
     start {
-        sleep .1; # Be overcautious.
+        await $start-writing;
         for ^10 {
             $fh.say: time;
             sleep .01;
@@ -32,6 +34,7 @@ plan 1;
         whenever $timeout {
             done;
         }
+        $start-vow.keep(True);
     }
 
     if $timeout.status ~~ Planned {
