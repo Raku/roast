@@ -13,7 +13,7 @@ Miscellaneous metaop tests that don't fit into other files in this directory.
 
 # Covers opts in https://github.com/rakudo/rakudo/commit/b9b0838dd8
 subtest 'cover metaop call simplification optimization' => {
-    plan 7;
+    plan 8;
     subtest '(//=) +=' => {
         plan 2;
         my $a;
@@ -65,5 +65,15 @@ subtest 'cover metaop call simplification optimization' => {
             '(4)';
         # https://github.com/rakudo/rakudo/issues/1987
         throws-like '42.abs += 42', X::Assignment::RO, '(5)';
+    }
+    # GH rakudo/rakudo#1205
+    # $l ,= 2; must not result in List_12345(List_12345, 2) but must be List(1, 2)
+    subtest 'assignment to a scalar' => {
+        plan 2;
+        my $foo = 42;
+        $foo ,= 2;
+        # is-deeply can't be used because it might end up in indefinite loop
+        isa-ok $foo[0], Int, "metassign doesn't re-assign lhs scalar with op result";
+        is $foo[0], 42, "inital value preserved as the first element";
     }
 }
