@@ -15,7 +15,7 @@ Miscellaneous metaop tests that don't fit into other files in this directory.
 
 # Covers opts in https://github.com/rakudo/rakudo/commit/b9b0838dd8
 subtest 'cover metaop call simplification optimization' => {
-    plan 8;
+    plan 7;
     subtest '(//=) +=' => {
         plan 2;
         my $a;
@@ -67,17 +67,5 @@ subtest 'cover metaop call simplification optimization' => {
             '(4)';
         # https://github.com/rakudo/rakudo/issues/1987
         throws-like '42.abs += 42', X::Assignment::RO, '(5)';
-    }
-    # GH rakudo/rakudo#1205
-    # $_ = 1; $_ &= 2; must result in all(1,2)
-    subtest 'assignment to a scalar' => {
-        plan 3;
-        my %junction_ops = :all<&>, :any<|>, :one<^>;
-        for %junction_ops.pairs -> (:key($type), :value($op)) {
-            doesn't-hang 'my $j = 1; $j ' ~ $op ~ '= 2; print $j.gist',
-                         "junction '$type' doesn't freeze after assign metaop",
-                         :out("{$type}(1, 2)"),
-                         :err("");
-        }
     }
 }
