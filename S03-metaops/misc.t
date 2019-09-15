@@ -1,5 +1,7 @@
 use v6;
+use lib <t/packages>;
 use Test;
+use Test::Helpers;
 
 plan 1;
 
@@ -67,13 +69,15 @@ subtest 'cover metaop call simplification optimization' => {
         throws-like '42.abs += 42', X::Assignment::RO, '(5)';
     }
     # GH rakudo/rakudo#1205
-    # $l ,= 2; must not result in List_12345(List_12345, 2) but must be List(1, 2)
+    # $_ = 1; $_ &= 2; must result in all(1,2)
     subtest 'assignment to a scalar' => {
-        plan 2;
-        my $foo = 42;
-        $foo ,= 2;
-        # is-deeply can't be used because it might end up in indefinite loop
-        isa-ok $foo[0], Int, "metassign doesn't re-assign lhs scalar with op result";
-        is $foo[0], 42, "inital value preserved as the first element";
+        plan 3;
+        my %junction_ops = :all<&>, :any<|>, :one<^>;
+        for %junction_ops.pairs -> (:key($type), :value($op)) {
+            doesn't-hang 'my $j = 1; $j ' ~ $op ~ '= 2; print $j.gist',
+                         "junction '$type' doesn't freeze after assign metaop",
+                         :out("{$type}(1, 2)"),
+                         :err("");
+        }
     }
 }
