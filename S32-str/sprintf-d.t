@@ -1,15 +1,20 @@
 use v6.e.PREVIEW;
 
-#BEGIN %*ENV<PERL6_TEST_DIE_ON_FAIL> = True;
+BEGIN %*ENV<PERL6_TEST_DIE_ON_FAIL> = True;
 use Test;
 
-# Test combinations of flags for "%d" and "%i".  The @info array is intialized
-# with the flags (as a string), the size/precision specification (either a
-# string or a # number), and the expected strings for the values 0, 1, 314 and
-# -314.  The flags values will be expanded to all possible permutations to
-# ensure that the order of the flags is irrelevant.  Each flag permutation is
-# combined with the size/permutation value to create a proper format string.
-# Each test will be done twice: once with a lowercase "d" and once with "i".
+# Test combinations of flags for "%d", "%D" and "%i".  The @info array is
+# intialized with the flags (as a string), the size/precision specification
+#(either a string or a # number), and the expected strings for the values
+# 0, 1, 314 and -314.  The flags values will be expanded to all possible
+# permutations to ensure that the order of the flags is irrelevant.  Each
+# flag permutation is combined with the size/permutation value to create a
+# proper format string.  Each test will be done three times: once with a
+# lowercase "d", once with an uppercase "D" and once with "i".
+#
+# Since the '#' in a format is *always* ignored for the decimal integer
+# format, it is *not* added specifically in the tables, but instead generated
+# from the values specified without the '#'.
 
 #                        0 ,         1 ,       314 ,      -314 ;
 my @info = ( # |-----------|-----------|-----------|-----------|
@@ -109,14 +114,14 @@ my @info = ( # |-----------|-----------|-----------|-----------|
         @flat.append(
           '%' ~ $permuted ~ $size ~ $_,
           ($r0 => 0, $r1 => 1, $r4 => 314, $rm => -314)
-        ) for <d i>;
+        ) for <d D i>;
     }
-    for "#$flags".comb.permutations>>.join -> $permuted {
-        @flat.append(
-          '%' ~ $permuted ~ $size ~ $_,
-          ($r0 => 0, $r1 => 1, $r4 => 314, $rm => -314)
-        ) for <d i>;
-    }
+#    for "#$flags".comb.permutations>>.join -> $permuted {
+#        @flat.append(
+#          '%' ~ $permuted ~ $size ~ $_,
+#          ($r0 => 0, $r1 => 1, $r4 => 314, $rm => -314)
+#        ) for <d D i>;
+#    }
     |@flat
 }
 
@@ -146,13 +151,13 @@ my @info = ( # |-----------|-----------|-----------|-----------|
         @flat.append(
           '%' ~ $permuted ~ $size ~ $_,
           ($r0 => (0,0), $r1 => (0,1), $r4 => (0,314), $rm => (0,-314))
-        ) for <d i>;
+        ) for <d D i>;
     }
     for "#$flags".comb.permutations>>.join -> $permuted {
         @flat.append(
           '%' ~ $permuted ~ $size ~ $_,
           ($r0 => (0,0), $r1 => (0,1), $r4 => (0,314), $rm => (0,-314))
-        ) for <d i>;
+        ) for <d D i>;
     }
     |@flat
 } );
@@ -183,13 +188,13 @@ my @info = ( # |-----------|-----------|-----------|-----------|
         @flat.append(
           '%' ~ $permuted ~ $size ~ $_,
           ($r0 => (2,0), $r1 => (2,1), $r4 => (2,314), $rm => (2,-314))
-        ) for <d i>;
+        ) for <d D i>;
     }
     for "#$flags".comb.permutations>>.join -> $permuted {
         @flat.append(
           '%' ~ $permuted ~ $size ~ $_,
           ($r0 => (2,0), $r1 => (2,1), $r4 => (2,314), $rm => (2,-314))
-        ) for <d i>;
+        ) for <d D i>;
     }
     |@flat
 } );
