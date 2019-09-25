@@ -16,7 +16,7 @@ use Test;
 #
 #   should do.
 
-plan 25;
+plan 26;
 
 my $foo        = 42;
 my $was_inside = 0;
@@ -106,6 +106,32 @@ subtest '.perl on Proxied object does not crash' => {
         'IterationEnd fetch value';
     eval-lives-ok ｢(Proxy.new: :STORE{$^a,$^b}, :FETCH{42}).VAR.perl｣,
         '42 (i.e. .DEFINITE) fetch value';
+}
+
+# subclassing a Proxy
+subtest 'creating and using a subclass of Proxy' => {
+    plan 7;
+    sub historize($value is copy) is raw {
+        class History is Proxy { has @.history }
+        my $proxy := History.new(
+          FETCH => -> $ { $value },
+          STORE => -> $, \new-value {
+              $proxy.VAR.history.push($value);
+              $value = new-value
+          }
+        )
+    }
+    my $a := historize(42);
+    is $a, 42, 'did the value arrive';
+    is-deeply $a.VAR.history, [], 'still no history';
+    $a = 666;
+    is $a, 666, 'did the change arrive';
+    is-deeply $a.VAR.history, [42], 'check we see the previous value';
+    $a++;
+    is $a, 667, 'did the increment arrive';
+    is-deeply $a.VAR.history, [42,666], 'check we see the previous values';
+    $a.VAR.history = ();
+    is-deeply $a.VAR.history, [], 'did the reset work';
 }
 
 # vim: ft=perl6
