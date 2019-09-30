@@ -4,3 +4,5 @@ use Ver6c;
 role VerRole[::T] is export { }
 
 class Cv6e is export { }
+
+enum Enum-v6e is export <ea eb ec>;
