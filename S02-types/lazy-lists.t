@@ -15,7 +15,7 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 26;
 
 {
     my @a = (1..Inf);
@@ -150,6 +150,27 @@ sub make-lazy-list($num) { gather { take $_ for 0..^$num; $was-lazy = 0 }.lazy }
         last
     }
     is $i, 1, 'for gather { ... } { last } properly lazy';
+}
+
+{
+    $was-lazy = 1;
+    my \one = make-lazy-list(10);
+    my @res = one.kv;
+    ok $was-lazy, 'kv is lazy';
+}
+
+{
+    $was-lazy = 1;
+    my \one = make-lazy-list(10);
+    my @res = one.pairs;
+    ok $was-lazy, 'pairs is lazy';;
+}
+
+{
+    $was-lazy = 1;
+    my \one = make-lazy-list(10);
+    my @res = one.antipairs;
+    ok $was-lazy, 'antipairs is lazy';;
 }
 
 # vim: ft=perl6
