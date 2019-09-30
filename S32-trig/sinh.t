@@ -190,6 +190,10 @@ for @sinhes -> $angle
     is-approx(asinh((0.86867096149566).FatRat), 0.7853982, "asinh(FatRat) - 0.7853982");
 }
 
+{
+    ok (1, * * 10 ... * > 1e40).map({-.asinh == asinh(-$_)}).all, "asinh(x) equals -asinh(-x) for huge values";
+}
+
 done-testing;
 
 # vim: ft=perl6 nomodifiable
