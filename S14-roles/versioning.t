@@ -4,7 +4,7 @@ use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use lib $?FILE.IO.parent(2).add: 'packages/S14-roles/lib';
 use Test::Util;
 
-plan 2;
+plan 3;
 
 subtest "Basic role language revision", {
     my @rev-map = :c<c>, :d<d>, :e<e.PREVIEW>;
@@ -62,6 +62,18 @@ subtest "Multi-module and multi-version", {
                     'mixin of v6.e role into incompatible v6.d class throws';
         lives-ok { my class C { }; my $v = C.new but VerRole }, "mixin of v6.c role into a v6.d class";
     }
+}
+
+subtest "Enum", {
+    plan 3;
+    use Ver6c;
+    use Ver6e;
+
+    enum Enum-v6d <da db dc>;
+
+    is Enum-v6c.^language-revision, 'c', "enum for v6.c";
+    is Enum-v6d.^language-revision, 'd', "enum for v6.e";
+    is Enum-v6e.^language-revision, 'e', "enum for v6.d";
 }
 
 done-testing;
