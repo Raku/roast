@@ -56,16 +56,16 @@ for @methods -> $bytes, $mask, $write, $read {
         plan 3 + @endians * 3 + 3 + @endians * 3;
 
         # tests on existing buf
-        is-deeply existing."$write"($offset,$value), Nil,
-          "does existing $write $offset $value return Nil";
+        is-deeply existing."$write"($offset,$value), existing,
+          "does existing $write $offset $value return existing";
         is existing.elems, $elems,
           "did existing $write $offset $value not change size";
         is existing."$read"($offset), $value,
           "did existing $read $offset give $value";
 
         for @endians -> $endian {
-          is-deeply existing."$write"($offset,$value,$endian), Nil,
-            "does existing $write $offset $value $endian return Nil";
+          is-deeply existing."$write"($offset,$value,$endian), existing,
+            "does existing $write $offset $value $endian return existing";
           is existing.elems, $elems,
             "did existing $write $offset $value $endian not change size";
           is existing."$read"($offset,$endian), $value,
@@ -73,16 +73,16 @@ for @methods -> $bytes, $mask, $write, $read {
         }
 
         # tests on new buf
-        is-deeply (my $buf := buf8.new)."$write"($offset,$value), Nil,
-          "does new $write $offset $value return Nil";
+        is-deeply (my $buf := buf8.new)."$write"($offset,$value), $buf,
+          "does new $write $offset $value return \$buf";
         is $buf.elems, $offset + $bytes,
           "did new $write $offset $value set size {$offset + $bytes}";
         is $buf."$read"($offset), $value,
           "did new $read $offset give $value";
 
         for @endians -> $endian {
-          is-deeply (my $buf := buf8.new)."$write"($offset,$value,$endian), Nil,
-            "does new $write $offset $value $endian return Nil";
+          is-deeply (my $buf := buf8.new)."$write"($offset,$value,$endian),$buf,
+            "does new $write $offset $value $endian return \$buf";
           is $buf.elems, $offset + $bytes,
             "did new $write $offset $value $endian set size {$offset + $bytes}";
           is $buf."$read"($offset,$endian), $value,
