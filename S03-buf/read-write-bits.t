@@ -58,14 +58,14 @@ for @testdata -> \blob, \buf, $name {
                 # basic roundtrip tests on existing buffer
                 my $mutable  := buf8.new(buf);
                 my $unsigned := $mutable.read-ubits($from, $bits);
-                is $mutable.write-ubits($from, $bits, $unsigned), Nil,
-                  "write-ubits $unsigned mutable $from $bits returns Nil";
+                is-deeply $mutable.write-ubits($from, $bits, $unsigned),$mutable,
+                  "write-ubits $unsigned mutable $from $bits returns \$mutable";
                 is $mutable.read-ubits($from, $bits).fmt($format), $ebits,
                   "did ubits $name $from $bits roundtrip";
 
                 my $signed := $mutable.read-bits($from, $bits);
-                is $mutable.write-bits($from, $bits, $signed), Nil,
-                  "write-bits $signed mutable $from $bits returns Nil";
+                is-deeply $mutable.write-bits($from, $bits, $signed), $mutable,
+                  "write-bits $signed mutable $from $bits returns \$mutable";
                 is $signed < 0, substr($ebits,0,1) eq "1",
                   "was sign bit correct on buf bits $name $from $bits";
                 is $unsigned, $signed +& $rmask,
@@ -75,14 +75,14 @@ for @testdata -> \blob, \buf, $name {
 
                 # basic roundtrip tests on empty buffer
                 $mutable := buf8.new;
-                is $mutable.write-ubits($from, $bits, $unsigned), Nil,
-                  "write-ubits $unsigned new $from $bits returns Nil";
+                is $mutable.write-ubits($from, $bits, $unsigned), $mutable,
+                  "write-ubits $unsigned new $from $bits returns \$mutable";
                 is $mutable.read-ubits($from, $bits).fmt($format), $ebits,
                   "did ubits $name $from $bits roundtrip";
 
                 $mutable := buf8.new;
-                is $mutable.write-bits($from, $bits, $signed), Nil,
-                  "write-bits $signed new $from $bits returns Nil";
+                is $mutable.write-bits($from, $bits, $signed), $mutable,
+                  "write-bits $signed new $from $bits returns \$mutable";
                 is $signed < 0, substr($ebits,0,1) eq "1",
                   "was sign bit correct on buf bits $name $from $bits";
                 is $unsigned, $signed +& $rmask,
