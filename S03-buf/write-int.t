@@ -48,30 +48,33 @@ my @may-be-negative = (
   |(@filled-with-sign.map( (^*).roll )),
 );
 
-plan (@umethods / 4) * 2
+plan (@umethods / 4)
    + @byte-widths * (@positive + @patterns) * 8
-   + (@imethods / 4) * 2
+   + (@imethods / 4)
    + @byte-widths * (@may-be-negative + @positive + @patterns) * 8
 ;
 
 # run for all possible methods setting / returning unsigned values
 for @umethods -> $bytes, $mask, $write, $read {
-  dies-ok { buf8."$write"(0,42) }, "does buf8 $write 0 42 die";
 
   subtest {
-    plan 2; # + @endians * 2;
+    plan 3 + @endians * 3;
 
+    dies-ok { buf8."$write"(-1,42) },
+      "does $write -1 42 die on type object";
     dies-ok { buf8.new."$write"(-1,42) },
       "does $write -1 42 die on uninited";
     dies-ok { buf8.new(255)."$write"(-1,42) },
       "does $write -1 42 die on inited";
 
-#    for @endians -> $endian {
-#      dies-ok { buf8.new."$write"(-1,42,$endian) },
-#        "does $write -1 42 $endian die on uninited";
-#      dies-ok { buf8.new(255)."$write"(-1,42,$endian) },
-#        "does $write -1 42 $endian die";
-#    }
+    for @endians -> $endian {
+      dies-ok { buf8."$write"(-1,42,$endian) },
+        "does $write -1 42 $endian die on type object";
+      dies-ok { buf8.new."$write"(-1,42,$endian) },
+        "does $write -1 42 $endian die on uninited";
+      dies-ok { buf8.new(255)."$write"(-1,42,$endian) },
+        "does $write -1 42 $endian die";
+    }
   }, "did all possible negative offsets die";
 
   # run for a set or predetermined and random values
@@ -89,36 +92,53 @@ for @umethods -> $bytes, $mask, $write, $read {
     for ^8 -> $offset {
 
       subtest {
-        plan 3 + @endians * 3 + 3 + @endians * 3;
+        plan 3 * (3 + @endians * 3);
 
         # tests on existing buf
-        is-deeply existing."$write"($offset,$value), Nil,
-          "does existing $write $offset $value return Nil";
+        is-deeply existing."$write"($offset,$value), existing,
+          "does existing $write $offset $value return existing";
         is existing.elems, $elems,
           "did existing $write $offset $value not change size";
         is existing."$read"($offset), $returned,
           "did existing $read $offset give $returned";
 
         for @endians -> $endian {
-          is-deeply existing."$write"($offset,$value,$endian), Nil,
-            "does existing $write $offset $value $endian return Nil";
+          is-deeply existing."$write"($offset,$value,$endian), existing,
+            "does existing $write $offset $value $endian return existing";
           is existing.elems, $elems,
             "did existing $write $offset $value $endian not change size";
           is existing."$read"($offset,$endian), $returned,
             "did existing $read $offset $endian give $returned";
         }
 
+        # tests on type object
+        my $fromtype := buf8."$write"($offset,$value);
+        ok $fromtype ~~ buf8, 'did we get a buf8?';
+        is $fromtype.elems, $offset + $bytes,
+          "did type $write $offset $value set size {$offset + $bytes}";
+        is $fromtype."$read"($offset), $returned,
+          "did type $read $offset give $returned";
+
+        for @endians -> $endian {
+          my $fromtype := buf8."$write"($offset,$value,$endian);
+          ok $fromtype ~~ buf8, 'did we get a buf8?';
+          is $fromtype.elems, $offset + $bytes,
+            "did type $write $offset $value $endian set size {$offset + $bytes}";
+          is $fromtype."$read"($offset,$endian), $returned,
+            "did type $read $offset $endian give $returned";
+        }
+
         # tests on new buf
-        is-deeply (my $buf := buf8.new)."$write"($offset,$value), Nil,
-          "does new $write $offset $value return Nil";
+        is-deeply (my $buf := buf8.new)."$write"($offset,$value), $buf,
+          "does new $write $offset $value return \$buf";
         is $buf.elems, $offset + $bytes,
           "did new $write $offset $value set size {$offset + $bytes}";
         is $buf."$read"($offset), $returned,
           "did new $read $offset give $returned";
 
         for @endians -> $endian {
-          is-deeply (my $buf := buf8.new)."$write"($offset,$value,$endian), Nil,
-            "does new $write $offset $value $endian return Nil";
+          is-deeply (my $buf := buf8.new)."$write"($offset,$value,$endian),$buf,
+            "does new $write $offset $value $endian return \$buf";
           is $buf.elems, $offset + $bytes,
             "did new $write $offset $value $endian set size {$offset + $bytes}";
           is $buf."$read"($offset,$endian), $returned,
@@ -131,22 +151,25 @@ for @umethods -> $bytes, $mask, $write, $read {
 
 # run for all possible methods setting / returning possibly signed values
 for @imethods -> $bytes, $mask, $write, $read {
-  dies-ok { buf8."$write"(0,-42) }, "does buf8 $write 0 -42 die";
 
   subtest {
-    plan 2; # + @endians * 2;
+    plan 3 + @endians * 3;
 
+    dies-ok { buf8."$write"(-1,-42) },
+      "does $write -1 -42 die on type object";
     dies-ok { buf8.new."$write"(-1,-42) },
       "does $write -1 -42 die on uninited";
     dies-ok { buf8.new(255)."$write"(-1,-42) },
       "does $write -1 -42 die on inited";
 
-#    for @endians -> $endian {
-#      dies-ok { buf8.new."$write"(-1,-42,$endian) },
-#        "does $write -1 -42 $endian die on uninited";
-#      dies-ok { buf8.new(255)."$write"(-1,-42,$endian) },
-#        "does $write -1 -42 $endian die";
-#    }
+    for @endians -> $endian {
+      dies-ok { buf8."$write"(-1,-42,$endian) },
+        "does $write -1 -42 $endian die on type object";
+      dies-ok { buf8.new."$write"(-1,-42,$endian) },
+        "does $write -1 -42 $endian die on uninited";
+      dies-ok { buf8.new(255)."$write"(-1,-42,$endian) },
+        "does $write -1 -42 $endian die";
+    }
   }, "did all possible negative offsets die";
 
   # run for a set or predetermined and random values
@@ -167,36 +190,53 @@ for @imethods -> $bytes, $mask, $write, $read {
     for ^8 -> $offset {
 
       subtest {
-        plan 3 + @endians * 3 + 3 + @endians * 3;
+        plan 3 * (3 + @endians * 3);
 
         # tests on existing buf
-        is-deeply existing."$write"($offset,$value), Nil,
-          "does existing $write $offset $value return Nil";
+        is-deeply existing."$write"($offset,$value), existing,
+          "does existing $write $offset $value return existing";
         is existing.elems, $elems,
           "did existing $write $offset $value not change size";
         is existing."$read"($offset), $returned,
           "did existing $read $offset give $returned";
 
         for @endians -> $endian {
-          is-deeply existing."$write"($offset,$value,$endian), Nil,
-            "does existing $write $offset $value $endian return Nil";
+          is-deeply existing."$write"($offset,$value,$endian), existing,
+            "does existing $write $offset $value $endian return existing";
           is existing.elems, $elems,
             "did existing $write $offset $value $endian not change size";
           is existing."$read"($offset,$endian), $returned,
             "did existing $read $offset $endian give $returned";
         }
 
+        # tests on type object
+        my $fromtype := buf8."$write"($offset,$value);
+        ok $fromtype ~~ buf8, 'did we get a buf8?';
+        is $fromtype.elems, $offset + $bytes,
+          "did type $write $offset $value set size {$offset + $bytes}";
+        is $fromtype."$read"($offset), $returned,
+          "did type $read $offset give $returned";
+
+        for @endians -> $endian {
+          my $fromtype := buf8."$write"($offset,$value,$endian);
+          ok $fromtype ~~ buf8, "did we get a buf8 with $endian?";
+          is $fromtype.elems, $offset + $bytes,
+            "did type $write $offset $value $endian set size {$offset + $bytes}";
+          is $fromtype."$read"($offset,$endian), $returned,
+            "did type $read $offset $endian give $returned";
+        }
+
         # tests on new buf
-        is-deeply (my $buf := buf8.new)."$write"($offset,$value), Nil,
-          "does new $write $offset $value return Nil";
+        is-deeply (my $buf := buf8.new)."$write"($offset,$value), $buf,
+          "does new $write $offset $value return \$buf";
         is $buf.elems, $offset + $bytes,
           "did new $write $offset $value set size {$offset + $bytes}";
         is $buf."$read"($offset), $returned,
           "did new $read $offset give $returned";
 
         for @endians -> $endian {
-          is-deeply (my $buf := buf8.new)."$write"($offset,$value,$endian), Nil,
-            "does new $write $offset $value $endian return Nil";
+          is-deeply (my $buf := buf8.new)."$write"($offset,$value,$endian),$buf,
+            "does new $write $offset $value $endian return \$buf";
           is $buf.elems, $offset + $bytes,
             "did new $write $offset $value $endian set size {$offset + $bytes}";
           is $buf."$read"($offset,$endian), $returned,
