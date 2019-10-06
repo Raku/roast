@@ -648,7 +648,8 @@ S12-class/interface-consistency.t
 S12-class/lexical.t
 S12-class/literal.t
 S12-class/magical-vars.t
-S12-class/mro.t
+S12-class/mro-6c.t
+S12-class/mro-6e.t
 S12-class/namespaced.t
 S12-class/open.t
 S12-class/parent_attributes.t
@@ -663,6 +664,7 @@ S12-construction/construction.t
 S12-construction/destruction.t
 S12-construction/named-params-in-BUILD.t
 S12-construction/new.t
+S12-construction/roles-6e.t
 S12-construction/TWEAK.t
 S12-enums/anonymous.t
 S12-enums/as-role.t
