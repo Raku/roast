@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4;
+plan 5;
 
 subtest "simple" => {
     plan 5;
@@ -120,6 +120,7 @@ subtest "puned role" => {
 }
 
 subtest "run-time does" => {
+    plan 1;
     # rakudo github issue #2282
     my role Foo1 { method foo { "Foo1::foo"; } }
     my role Foo2 { method foo { "Foo2::foo"; } }
@@ -150,6 +151,22 @@ subtest "run-time does" => {
 
     my $inst = Bar.new;
     is-deeply( $inst.foo, [<Bar::foo Foo::foo Foo1::foo Foo::foo Foo1::foo Foo2::foo Foo::foo Foo1::foo Foo2::foo Foo3::foo>], "Dynamic application of roles" );
+}
+
+subtest "parameterized role" => {
+    my role Bar::R[::T] {
+        method of-type {
+            T.^name
+        }
+    }
+
+    my class Foo does Bar::R[Str] {
+        method foo {
+            self.Bar::R::of-type
+        }
+    }
+
+    is Foo.new.foo, 'Str', "parameterized type is resolved by its base name";
 }
 
 # vim: ft=perl6
