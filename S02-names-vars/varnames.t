@@ -12,7 +12,7 @@ lives-ok { EVAL 'my $/' },
   'as can $/';
 
 dies-ok { EVAL '$/ = "foo"' },
-  'S05: Perl 6\'s $/ variable may not be assigned to directly.';
+  'S05: Raku\'s $/ variable may not be assigned to directly.';
 
 lives-ok { EVAL 'my proto $!' },
   '$! can be declared again if proto is used though';

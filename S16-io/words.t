@@ -191,8 +191,8 @@ group-of 5 => "\$limit arg (IO::Path method)" => {
 {
     $*ARGFILES = IO::ArgFiles.new:
         make-temp-file(:content<foo bar>), make-temp-file(:content<meow moo>),
-        make-temp-file(:content<I ♥ Perl 6>);
-    is-eqv words(), <foo bar meow moo I ♥ Perl 6>».Str.Seq,
+        make-temp-file(:content<I ♥ Raku>);
+    is-eqv words(), <foo bar meow moo I ♥ Raku>».Str.Seq,
         'words() without args uses $*ARGFILES';
 }
 

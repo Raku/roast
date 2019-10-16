@@ -98,6 +98,7 @@ S02-magicals/KERNEL.t
 S02-magicals/PERL.t
 S02-magicals/pid.t
 S02-magicals/progname.t
+S02-magicals/RAKU.t
 S02-magicals/sub.t
 S02-magicals/subname.t
 S02-magicals/USER.t
@@ -424,7 +425,7 @@ S05-match/blocks.t
 S05-match/capturing-contexts.t
 S05-match/make.t
 S05-match/non-capturing.t
-S05-match/perl.t
+S05-match/raku.t
 S05-match/positions.t
 S05-metachars/closure.t
 S05-metachars/line-anchors.t

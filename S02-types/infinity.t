@@ -5,7 +5,7 @@ use Test::Util;
 
 plan 21;
 
-# L<S02/"Infinity and C<NaN>" /Perl 6 by default makes standard IEEE floating point concepts visible>
+# L<S02/"Infinity and C<NaN>" /Raku by default makes standard IEEE floating point concepts visible>
 
 {
     my $x = Inf;

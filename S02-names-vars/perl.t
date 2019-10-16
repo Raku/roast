@@ -1,7 +1,7 @@
 use v6;
 use Test;
 plan 116;
-# L<S02/Names and Variables/To get a Perlish representation of any object>
+# L<S02/Names and Variables/To get a Raku representation of any object>
 
 my @tests = (
     # Basic scalar values
@@ -45,7 +45,7 @@ my @tests = (
     <a b c>
 );
 
-# L<S02/Names and Variables/To get a Perlish representation of any object>
+# L<S02/Names and Variables/To get a Raku representation of any object>
 # Quoting S02 (emphasis added):
 #   To get a Perlish representation of any data value, use the .perl method.
 #   This will put quotes around strings, square brackets around list values,

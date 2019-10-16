@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 25;
 
-# L<S02/Names and Variables/so that Perl can evaluate the result
+# L<S02/Names and Variables/so that Raku can evaluate the result
 # back to the same object>
 
 my @tests = (
@@ -109,4 +109,3 @@ my @tests = (
 }
 
 # vim: ft=perl6
-

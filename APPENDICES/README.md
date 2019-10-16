@@ -1,9 +1,9 @@
-# Perl 6 Specification Appendices
+# Raku Specification Appendices
 
-The `APPENDICES` directory of the Perl 6 specification contains *advisory*
+The `APPENDICES` directory of the Raku specification contains *advisory*
 specifications. These tests describe behaviour some implementations chose
 to follow and other implementations may follow the same behaviour, to offer
-similar execution results from the same Perl 6 programs.
+similar execution results from the same Raku programs.
 
 However, it's possible some implementations or some environments may not
 be able to adhere to these specifications. For example, an implementation
@@ -16,7 +16,7 @@ implementations and regular specification tests that all implementations
 must adhere to.
 
 An implementation may fail all of the tests in APPENDICES, yet still claim
-the status of being a fully-compliant Perl 6 implementation.
+the status of being a fully-compliant Raku implementation.
 
 ## Available Appendices
 

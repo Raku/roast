@@ -6,7 +6,7 @@ plan 9;
 
 =begin pod
 
-Perl 6 has an explicitly declared C<=~> which should die at compile time
+Raku has an explicitly declared C<=~> which should die at compile time
 and is intended to catch user "brainos"; it recommends C<~~> to the user
 instead. Similar for C<!~>.
 

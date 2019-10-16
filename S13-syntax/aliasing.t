@@ -4,7 +4,7 @@ use Test;
 
 plan 3;
 
-# L<S13/Syntax/This can easily be handled with Perl 6's aliasing>
+# L<S13/Syntax/This can easily be handled with Raku's aliasing>
 
 class Foo {
   method bar()     { 42 }

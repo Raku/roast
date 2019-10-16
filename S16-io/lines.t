@@ -150,7 +150,7 @@ group-of 5 => '$limit works right with any combination of args' => {
 }
 
 {
-    my $file = make-temp-file :content("foo\nbar\nber\nmeow\nPerl 6");
+    my $file = make-temp-file :content("foo\nbar\nber\nmeow\nRaku");
     # we spin up another perl6 and do 1500 x 2 .lines calls; if the handle
     # isn't closed; we can expect some errors to show up in the output
     is_run ｢my $i = 0; my @lines; with ｣ ~ $file.perl ~ ｢ {

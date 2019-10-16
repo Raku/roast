@@ -4,7 +4,7 @@ use Test;
 
 plan 21;
 
-# L<S09/Autovivification/In Perl 6 these read-only operations are indeed non-destructive:>
+# L<S09/Autovivification/In Raku these read-only operations are indeed non-destructive:>
 {
     # Compare with Perl 5:
     #   $ perl -we '
@@ -66,7 +66,7 @@ plan 21;
     is +@array, 4,
         '@array[$index_out_of_bounds]:exists should not have altered @array';
 }
-    
+
 {
     my @array  = <a b c d>;
     my $exists = @array[*-5]:exists;

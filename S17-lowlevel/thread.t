@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 #-------------------------------------------------------------------------------
-# Tests for low level async functionality in Perl 6.  Please do *not* use this
+# Tests for low level async functionality in Raku.  Please do *not* use this
 # as inspiration for a way to do things.  Please look at using Promises (aka
 # start {...}), Channels and Supplies.  Thank you!
 #-------------------------------------------------------------------------------

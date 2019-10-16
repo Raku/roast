@@ -7,7 +7,7 @@ use Test;
 .isa() tests
 
 These tests are specific to the .isa() which is attached to the
-Perl6 Array "class". Which is actually @array.HOW.isa(), which
+Raku Array "class". Which is actually @array.HOW.isa(), which
 is actually just the normal OO .isa(). This test does not attempt
 to test anything other than the "normal" behavior of @array.isa()
 

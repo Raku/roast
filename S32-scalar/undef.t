@@ -16,11 +16,11 @@ perl6-specific tests.
 # L<http://groups.google.com/groups?threadm=20050601002444.GB32060@wall.org>
 #   On Tue, May 24, 2005 at 10:53:59PM +1000, Stuart Cook wrote:
 #   : I'm not sure whether this behaviour is supposed to be changing.
-#   
+#
 #   It is.  I think we decided to make the value undef, and the function
 #   undefine().  (But these days most values of undef really ought to
 #   be constructed and returned (or thrown) using fail().)
-#   
+#
 #   Larry
 
 plan 91;
@@ -107,7 +107,7 @@ ok(!defined(Mu), "Mu is not defined");
 
     ok(EVAL('!defined(&a_subwoofer)'), "undefined sub");
     ok(EVAL('!defined(%«$?PACKAGE\::»<&a_subwoofer>)'), "undefined sub (symbol table)");
-    
+
     dies-ok { undefine &a_sub }, 'die trying to undefine a sub';
     ok defined &a_sub, 'sub is still defined after attempt to undefine';
 }
@@ -151,7 +151,7 @@ ok(!defined(Mu), "Mu is not defined");
 
 =begin pod
 
-Perl6-specific tests
+Raku-specific tests
 
 =end pod
 

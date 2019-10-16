@@ -15,8 +15,8 @@ constant $all-chars-result = 252707981515975716809338207842179630428974709482351
 for &parse-base, Str.^lookup('parse-base') -> &pb {
     my $t = " ({&pb.^name.lc} form)";
 
-    is-deeply pb('Perl6',  30), 20652936,    '"Perl6"  in base-30' ~ $t;
-    is-approx pb('Perl.6', 32), 834421.1875, '"Perl.6" in base-32' ~ $t;
+    is-deeply pb('Raku',      31), 814617,        '"Raku"      in base-30' ~ $t;
+    is-approx pb('Raku.lang', 32), 895646.666733, '"Raku.lang" in base-32' ~ $t;
 
     is-deeply pb('1111', $_), +":{$_}<1111>", "1111 in base-$_" ~ $t
         for 2..36;
@@ -43,11 +43,11 @@ for &parse-base, Str.^lookup('parse-base') -> &pb {
         "$fancy-nums-value.$fancy-nums-value".Numeric,
         'can parse fancy Unicode numerals as float' ~ $t;
 
-    throws-like { pb "Perl6", 42 },
+    throws-like { pb "Raku", 42 },
         X::Syntax::Number::RadixOutOfRange, radix => 42,
     'too large radix throws' ~ $t;
 
-    throws-like { pb "Perl6", 1 },
+    throws-like { pb "Raku", 1 },
         X::Syntax::Number::RadixOutOfRange, radix => 1,
     'too small radix throws' ~ $t;
 

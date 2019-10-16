@@ -200,7 +200,7 @@ is sprintf('%f', 2.718281828459), sprintf('%.6f', 2.718281828459), '%f defaults 
 is sprintf('%g', 2.718281828459), sprintf('%.6g', 2.718281828459), '%g defaults to .6';
 is sprintf('%G', 2.718281828459), sprintf('%.6G', 2.718281828459), '%G defaults to .6';
 
-# L<S32::Str/"Str"/"The special directive, %n does not work in Perl 6">
+# L<S32::Str/"Str"/"The special directive, %n does not work in Raku">
 dies-ok(sub {my $x = sprintf('%n', 1234)}, '%n dies (Perl 5 compatibility)');   #OK not used
 dies-ok(sub {my $x = sprintf('%p', 1234)}, '%p dies (Perl 5 compatibility)');   #OK not used
 

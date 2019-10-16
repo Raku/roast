@@ -30,7 +30,7 @@ sub test-gmtime( Int $t is copy ) {
     # only valid from 1970-01-01 until 2100-02-28
     $wday = ($t+3) % 7;  # 1970-01-01 was a Thursday
                          # Monday is $wday 0, unlike Perl 5.
-    $year = 70; # (Unix epoch 0) == (Gregorian 1970) == (Perl year 70)
+    $year = 70; # (Unix epoch 0) == (Gregorian 1970) == (Raku year 70)
     loop ( $yday = 365; $t >= $yday; $year++ ) {
         $t -= $yday; # count off full years of 365 or 366 days
         $yday = (($year+1) % 4 == 0) ?? 366 !! 365;

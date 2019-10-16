@@ -172,7 +172,7 @@ if $path.IO.e {
         }
     }
 
-    constant $str = "I ♥ Perl 6";
+    constant $str = "I ♥ Raku";
     constant $bin = $str.encode;
 
     test-spurt make-temp-file(), $str;
@@ -243,22 +243,22 @@ subtest 'IO::Handle spurt' => { # 2017 IO Grant; IO::Handle.spurt
     }
     {
     my $fh = $file.open: :w;
-    ok $fh.spurt("I ♥ Perl 6"),
+    ok $fh.spurt("I ♥ Raku"),
         'can spurt a Str in default encoding [method]';
-    ok spurt($fh, "I ♥ Perl 6"),
+    ok spurt($fh, "I ♥ Raku"),
         'can spurt a Str in default encoding [sub]';
     $fh.close;
-    is-deeply $file.slurp, "I ♥ Perl 6" x 2,
+    is-deeply $file.slurp, "I ♥ Raku" x 2,
         'default encoded Str spurted contents look right';
     }
     {
     my $fh = $file.open: :a;
-    ok $fh.spurt("I ♥ Perl 6"),
+    ok $fh.spurt("I ♥ Raku"),
         'spurt appends when handle is in append mode [method]';
-    ok spurt($fh, "I ♥ Perl 6"),
+    ok spurt($fh, "I ♥ Raku"),
         'spurt appends when handle is in append mode [sub]';
     $fh.close;
-    is-deeply $file.slurp, "I ♥ Perl 6" x 4,
+    is-deeply $file.slurp, "I ♥ Raku" x 4,
         'appended spurt contents look right';
     }
 }

@@ -64,7 +64,7 @@ Usage: $0 [options] [implname] testfilename [fudgedtestfilename]
         supplying this option will suppress that behavior.
 
     --version="v6.0.0"
-        pass the targeted Perl 6 language version you attempt to comply with,
+        pass the targeted Raku language version you attempt to comply with,
         defaults to 'v6.0.0'.
 
     Verbs:
@@ -87,12 +87,12 @@ Usage: $0 [options] [implname] testfilename [fudgedtestfilename]
     #?v6.0+          [num|*] ['reason']
     #?v6.0.0..*      [num|*] ['reason']
     #?v6.0.0..v6.0.5 [num|*] ['reason']
-        run num/all tests for the given Perl 6 language version. Skipped
-        on non-matching Perl 6 language versions.
+        run num/all tests for the given Raku language version. Skipped
+        on non-matching Raku language versions.
 
     #?v6+            [num|*] skip|emit|todo|eval|try ['reason']
-        skip or todo (etc) tests for the matching Perl 6 language version.
-        Non-matching Perl 6 language versions are left untouched.
+        skip or todo (etc) tests for the matching Raku language version.
+        Non-matching Raku language versions are left untouched.
 
     #?DOES count
         for all implementations, the following thing does count tests
@@ -219,7 +219,7 @@ sub fudgeblock {
             # Guard against false match with shebang line.  See roast RT #268
             next if $sense eq '!' && ! scalar m/\b(DOES|skip|emit|todo|eval|try)\b/ ;
 
-            if ($name =~ /^v\d/) {  # Perl 6 language version
+            if ($name =~ /^v\d/) {  # Raku language version
                 my $num = $args =~ s/(\d+)\s*// ? $1 : 1;
                 $cmd    = 'skip';
                 $applies = !version_matches($VERSION, $name);

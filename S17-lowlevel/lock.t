@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 #-------------------------------------------------------------------------------
-# Tests for low level async functionality in Perl 6.  Please do *not* use this
+# Tests for low level async functionality in Raku.  Please do *not* use this
 # as inspiration for a way to do things.  Please look at using Promises (aka
 # start {...}), Channels and Supplies.  Thank you!
 #-------------------------------------------------------------------------------
@@ -37,14 +37,14 @@ plan 23;
     my $output = '';
     my $l = Lock.new;
     my $t1 = Thread.start({
-        $l.protect({ 
+        $l.protect({
             for 1..10000 {
                 $output ~= 'a'
             }
         });
     });
     my $t2 = Thread.start({
-        $l.protect({ 
+        $l.protect({
             for 1..10000 {
                 $output ~= 'b'
             }
@@ -52,7 +52,7 @@ plan 23;
     });
     $t1.finish;
     $t2.finish;
-    ok $output ~~ /^ [ a+: b+: | b+: a+: ] $/, 'Lock is at least somewhat effective'; 
+    ok $output ~~ /^ [ a+: b+: | b+: a+: ] $/, 'Lock is at least somewhat effective';
 }
 
 {

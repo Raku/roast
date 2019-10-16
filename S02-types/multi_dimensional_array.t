@@ -10,7 +10,7 @@ Multi-Dimensional Arrays
 plan 59;
 
 # multi-dimensional array
-# L<S09/Multidimensional arrays/Perl 6 arrays are not restricted to being one-dimensional>
+# L<S09/Multidimensional arrays/Raku arrays are not restricted to being one-dimensional>
 
 # real multi-dimensional arrays
 {
@@ -165,11 +165,11 @@ subtest 'Insertion and reading of shaped array elements' => {
         for @md.keys -> $k {
             @md.AT-POS(|$k) = $k.sum;
         }
-        
+
         for @md.keys -> $k {
             is @md.AT-POS(|$k), $k.sum, "got the right value from array with dim $_ at $k";
         }
-        
+
         is @md.elems, $_, ".elems for a shaped array (dim $_) returns the first dimension";
     }
 }

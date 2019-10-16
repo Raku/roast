@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-# L<S02/"Built-In Data Types"/Perl 6> 
+# L<S02/"Built-In Data Types"/Raku> 
 
 plan 34;
 
@@ -19,7 +19,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 #                        ____________|________________
 #                       |                             |
 #                    Routine                        Block
-#       ________________|_______________ 
+#       ________________|_______________
 #      |     |       |       |    |     |
 #     Sub Method Submethod Multi Rule Macro
 
@@ -76,7 +76,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     isa-ok($foo, Routine);
     isa-ok($foo, Sub);
     is $foo.(42),      142,    "calling an anonymous sub with a positional param";
-    dies-ok { $foo.() }, 
+    dies-ok { $foo.() },
         "calling an anonymous sub expecting a param without a param dies";
     dies-ok { $foo.(42, 5) },
         "calling an anonymous sub expecting one param with two params dies";

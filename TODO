@@ -1,4 +1,4 @@
-TODO items for the Perl 6 Test Suite
+TODO items for the Raku Test Suite
 
 Add any requested tests or other updates to this file. Please organize them
 by synopsis (when applicable) or put them in the OVERALL section at the top
@@ -22,9 +22,14 @@ OVERALL
 * Add smartlinks to tests without them
 * Review XXX entries for test corrections
 * Find rakudo fudges that do not reference an RT, "NYI", or "unspecced"
-  Open a ticket describing the problem, add that RT number to 
+  Open a ticket describing the problem, add that RT number to
   the fudge comment. (other implementations have their own ticketing
   systems)
 
+DOCS
+* Add a note for test developers not to use test messages referring to
+  ticket numbers; like "RT12345 is fixed" or "GH#123" or anything like
+  this. Those are ok in related comments.
+
 SPECIFIC
-* 
+*

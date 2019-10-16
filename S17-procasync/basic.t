@@ -72,8 +72,8 @@ throws-like { $pc.stdout(:bin) }, X::Proc::Async::CharsOrBytes, :handle<stdout>;
 
 my $start-promise := $pc.start;
 
-# "Perl" as hex:
-my $write-promise = $pc.write(Buf.new(0x50, 0x65, 0x72, 0x6c));
+# "Raku" as hex:
+my $write-promise = $pc.write(Buf.new(0x52, 0x61, 0x6B, 0x75));
 isa-ok $write-promise, Promise, '.write returned a promise';
 await $write-promise;
 my $print-promise = $pc.print(' 6');
@@ -86,7 +86,7 @@ $pc.close-stdin;
 #?rakudo 3 skip 'returns Nil (flapping tests) RT #125047'
 isa-ok $start-promise.result, Proc, 'Can finish, return Proc';
 
-is $stdout, 'Perl 6', 'got correct STDOUT';
+is $stdout, 'Raku 6', 'got correct STDOUT';
 is $stderr, '',       'got correct STDERR';
 
 { # RT #129362

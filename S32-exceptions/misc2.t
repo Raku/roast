@@ -441,7 +441,7 @@ if $emits_suggestions {
     is +($!.routine_suggestion<toolongtomatchanything>), 0, "no suggestions for a strange name";
     ok $!.message !~~ /:s Did you mean/, "doesn't show suggestions if there are none.";
 
-    try EVAL('my class TestClassFactoryInterfaceBridgeMock is TooLongOfANameToBeConsideredGoodPerl { }');
+    try EVAL('my class TestClassFactoryInterfaceBridgeMock is TooLongOfANameToBeConsideredGoodRaku { }');
     is +($!.suggestions), 0, "no suggestions for a strange class";
     ok $!.message !~~ /:s Did you mean/, "doesn't show suggestions if there are none.";
 

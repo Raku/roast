@@ -74,7 +74,7 @@ Test::Idempotence - Extra tests for idempotence related matters
 
 =head1 DESCRIPTION
 
-Tests that assure that certain Perl 6 constructs produce identical
+Tests that assure that certain Raku constructs produce identical
 results when their output is fed back to them.
 
 =head1 FUNCTIONS

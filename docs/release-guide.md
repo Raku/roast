@@ -15,7 +15,7 @@ The following terms are used in this document and in other related papers:
 
 - _language revision_ or _revision_
 
-  A set of specifications defining a Perl 6 language variant. Revisions are represented by symbolic names consisting of
+  A set of specifications defining a Raku language variant. Revisions are represented by symbolic names consisting of
   a single letter of Latin alphabet.
 
   _Note_ in this document we use `<rev>` to represent a generic revision letter.
