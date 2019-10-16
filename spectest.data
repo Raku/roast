@@ -98,6 +98,7 @@ S02-magicals/KERNEL.t
 S02-magicals/PERL.t
 S02-magicals/pid.t
 S02-magicals/progname.t
+S02-magicals/RAKU.t
 S02-magicals/sub.t
 S02-magicals/subname.t
 S02-magicals/USER.t
