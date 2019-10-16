@@ -28,9 +28,9 @@ plan 33;
 
   ok(!($z =:= $x), 'z is not bound to x (we checked with the =:= identity op)');
 
-  $y = 'Perl Hacker';
-  is($y, 'Perl Hacker', 'y has been changed to "Perl Hacker"');
-  is($x, 'Perl Hacker', 'x has also been changed to "Perl Hacker"');
+  $y = 'Raku Hacker';
+  is($y, 'Raku Hacker', 'y has been changed to "Raku Hacker"');
+  is($x, 'Raku Hacker', 'x has also been changed to "Raku Hacker"');
 
   is($z, 'Just Another', 'z is still "Just Another" because it was not bound to x');
 }

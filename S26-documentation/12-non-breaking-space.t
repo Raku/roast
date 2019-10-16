@@ -64,9 +64,9 @@ sub gen-test($f) {
     # make one testing row per non-breaking space char
     for @nbchars -> $nbc {
         # first column
-        my $row = "Perl";
+        my $row = "Raku";
         $row ~= $nbc.chr;
-        $row ~= "6";
+        $row ~= "Language";
         for @bchars -> $c {
             $row ~= $c.chr;
         }
@@ -74,9 +74,9 @@ sub gen-test($f) {
 
         # second column
         $row ~= ' | ';
-        $row ~= "Perl ";
+        $row ~= "Raku ";
         $row ~= $nbc.chr;
-        $row ~= " 6";
+        $row ~= " Language";
         for @bchars -> $c {
             $row ~= $c.chr;
         }
@@ -108,8 +108,8 @@ sub gen-test($f) {
         $fh.say: "my \$nbspc = \"{@nbchars[$i].chr}\";";
 
         $fh.print: q:to/HERE/;
-        my $res0 = "Perl{$nbspc}6 is the best!";
-        my $res1 = "Perl {$nbspc} 6 is the best!";
+        my $res0 = "Raku{$nbspc}Language is the best!";
+        my $res1 = "Raku {$nbspc} Language is the best!";
         # show cell chars separated by pipes
         =begin comment
         my $c0 = $r.contents[$i][0].comb.join('|');

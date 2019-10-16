@@ -5,6 +5,7 @@ use Test::Util;
 
 plan 1;
 
+# TODO Replace PERL6LIB with RAKULIB when supported
 is_run 'BEGIN { BEGIN { q{S11modulesRakuLibTest.pm6}.IO.spurt(q{package { say q{all your base} }}); %*ENV<PERL6LIB>=qq{}; }; use S11modulesRakuLibTest }',
 {
     out    => "",

@@ -4,7 +4,7 @@ use Test;
 
 plan 44;
 
-# L<S02/"Lexical Conventions"/"Perl is written in Unicode">
+# L<S02/"Lexical Conventions"/"Raku is written in Unicode">
 
 # Unicode variables
 # english ;-)
@@ -105,7 +105,7 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
     is f(ä => 3), 3, 'non-ASCII named arguments';
 }
 
-# L<S02/Unicode Semantics/Perl can count Unicode line and paragraph separators>
+# L<S02/Unicode Semantics/Raku can count Unicode line and paragraph separators>
 # see also RT #122341
 
 lives-ok { EVAL "\{ 1 \} \x0a \{ 1 \}" },

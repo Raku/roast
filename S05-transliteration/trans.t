@@ -65,21 +65,21 @@ is("&nbsp;&lt;&gt;&amp;".trans( (['&nbsp;', '&nbsp;&lt;', '&lt;', '&gt;', '&amp;
                                 "AB>&",
     "The array version can map one characters to one-or-more characters, using leftmost longest match");
 
-is("Whfg nabgure Crey unpxre".trans('a'..'z' => ['n'..'z','a'..'m'], 'A'..'Z' => ['N'..'Z','A'..'M']),
-    "Just another Perl hacker",
+is("Whfg nabgure Enxh unpxre".trans('a'..'z' => ['n'..'z','a'..'m'], 'A'..'Z' => ['N'..'Z','A'..'M']),
+    "Just another Raku hacker",
     "Ranges can be grouped");
 
-is("Whfg nabgure Crey unpxre".trans('a..z' => 'n..za..m', 'A..Z' => 'N..ZA..M'),
-    "Just another Perl hacker",
+is("Whfg nabgure Enxh unpxre".trans('a..z' => 'n..za..m', 'A..Z' => 'N..ZA..M'),
+    "Just another Raku hacker",
     "Multiple ranges interpreted in string");
 
 # Per S05 changes
 {
-is("Whfg nabgure Crey unpxre".trans(' a..z' => '_n..za..m', 'A..Z' => 'N..ZA..M'),
-    "Just_another_Perl_hacker",
+is("Whfg nabgure Enxh unpxre".trans(' a..z' => '_n..za..m', 'A..Z' => 'N..ZA..M'),
+    "Just_another_Raku_hacker",
     "Spaces in interpreted ranges are not skipped (all spaces are important)");
-is("Whfg nabgure Crey unpxre".trans('a .. z' => 'n .. za .. m', 'A .. Z' => 'N .. ZA .. M'),
-    "Whfg nnbgure Crey unpxre",
+is("Whfg nabgure Enxh unpxre".trans('a .. z' => 'n .. za .. m', 'A .. Z' => 'N .. ZA .. M'),
+    "Whfg nnbgure Enxh unpxre",
     "Spaces in interpreted ranges are not skipped (all spaces are important)");
 };
 

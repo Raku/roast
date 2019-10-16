@@ -6,7 +6,7 @@ use Test;
 
 plan 11;
 
-# L<S13/Syntax/"Perl allows you to declare multiple signatures for a
+# L<S13/Syntax/"Raku allows you to declare multiple signatures for a
 # given body">
 
 # normal subs
