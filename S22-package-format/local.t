@@ -51,6 +51,7 @@ is $curlf.prefix, IO::Path.new($srcdir), "is '$srcdir' looking at the right dir"
 
 # all candidates
 my $compunit-src = $curlf.need(CompUnit::DependencySpecification.new(:short-name<NanooNanoo>));
+# TODO Perl6 to be changed to Raku when implementation changes
 subtest {
     if isa-ok $compunit-src, CompUnit {
         is $compunit-src.from,        'Perl6', "is the language 'Perl6'";

@@ -7,7 +7,7 @@ use Test;
 
 =head1 NAME
 
-Test::Compile - Perl6 test suite utilities for testing precompiled/loaded code
+Test::Compile - Raku test suite utilities for testing precompiled/loaded code
 
 =head1 SYNOPSIS
 
@@ -107,7 +107,7 @@ my sub precomp_loads_is($code, $expect, $reason) is export {
 # "private" parts
 #
 # Guts for precomp tests
-# 
+#
 # Although Test:: is currently shipped with the compiler, it may
 # eventually end up in its own distro.
 #

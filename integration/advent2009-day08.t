@@ -1,5 +1,5 @@
 # http://perl6advent.wordpress.com/2009/12/08/day-8-comb-your-constraints/
-
+# This test is a part of Raku history and thus preserves the historical name.
 use v6;
 use Test;
 

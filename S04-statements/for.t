@@ -505,6 +505,7 @@ throws-like 'for(0..5) { }', X::Comp::Group, 'keyword needs at least one whitesp
 
 # RT #62478
 {
+    # TODO Replace Perl 6 with Raku when the message changes in the core
     throws-like 'for (my $i; $i <=3; $i++) { $i; }', X::Obsolete, 'Unsupported use of C-style "for (;;)" loop; in Perl 6 please use "loop (;;)"';
 }
 

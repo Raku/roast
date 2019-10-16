@@ -4,7 +4,7 @@ use Test;
 
 plan 22;
 
-# L<S09/Autovivification/In Perl 6 these read-only operations are indeed non-destructive:>
+# L<S09/Autovivification/In Raku these read-only operations are indeed non-destructive:>
 {
     my %h;
     my $b = %h<a><b>;

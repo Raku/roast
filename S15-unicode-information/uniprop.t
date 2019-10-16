@@ -10,7 +10,7 @@ plan 203;
 # L<S15/uniprop>
 
 ### The types in the comment below are taken from the Unicode property name types, which may or may
-### not correspond with types in Perl 6. The numbers in brackets show the number of each category
+### not correspond with types in Raku. The numbers in brackets show the number of each category
 ### we have tests for so far (Unicode 9.0). Hopefully eventually we include all of them.
 ## Only list properties whose return value is tested specifically to be the correct value.
 ## Boolean values must be tested on at least two codepoints, for both True and False values.

@@ -251,6 +251,7 @@ my @array2 = ("test", 1, Mu);
   my @arr = <a normal array with nothing funny>;
   my $minus_one = -1;
 
+  # TODO Change Perl 6 to Raku when actual error message changes.
   throws-like '@arr[-2]',
     X::Obsolete,
     message => 'Unsupported use of a negative -2 subscript to index from the end; in Perl 6 please use a function such as *-2',

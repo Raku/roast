@@ -212,7 +212,7 @@ subtest '.basename' => {
 subtest '.extension' => {
     my @tests = '' => '', '.' => '', '/.' => '', 'foo.bar/ber' => 'bar/ber',
         '.tar' => 'tar', 'foo.tar' => 'tar', 'foo.tar.gz' => 'gz',
-        '.tar.gz' => 'gz', 'I ♥ Perl 6' => '', 'I ♥ Perl 6.♥' => '♥';
+        '.tar.gz' => 'gz', 'I ♥ Raku' => '', 'I ♥ Raku.♥' => '♥';
 
     plan +@tests;
     for @tests -> (:key($in), :value($out)) {

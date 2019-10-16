@@ -7,7 +7,7 @@ plan 3;
 
 # RT #129227
 # We don't yet choose to set a maximum number of combiners, or a minimum that
-# Perl 6 implementations must support. However, we should be sure that even if
+# Raku implementations must support. However, we should be sure that even if
 # a ridiculously huge number is given, it either works or throws a catchable
 # exception. This makes sure at the very least we do not SEGV in such cases,
 # which is not acceptable behavior.

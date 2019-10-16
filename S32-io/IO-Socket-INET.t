@@ -337,7 +337,7 @@ sub do-test(Block $b-server, Block $b-client) {
 
 =begin pod
 
-=head1 Perl 6 Internet Sockets Testing
+=head1 Raku Internet Sockets Testing
 The initial use of the BSD Sockets library by Parrot and Rakudo happened
 without a formal test suite, slowing development and causing occasional
 random errors. This set of tests aims to ensure the future stability of

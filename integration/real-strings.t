@@ -10,13 +10,13 @@ plan 20;
 
 {
     my $x = 'a';
-    is $x.trans(['a'] => ['b']), 'b', 
-       'basic sanity: .trans works with native Perl 6 strings';
+    is $x.trans(['a'] => ['b']), 'b',
+       'basic sanity: .trans works with native Raku strings';
 }
 
 {
     my $x = 'abc'.split(/b/).[0];
-    lives-ok {$x.trans(['a'] => ['b']) }, 
+    lives-ok {$x.trans(['a'] => ['b']) },
        'Still works with strings returned from split() (lives)';
     is $x.trans(['a'] => ['b']), 'b',
        'Still works with strings returned from split() (result)';
@@ -69,7 +69,7 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT #76564, RT #7
 
 {
     my $x = 'this is a test'.chomp;
-    lives-ok {$x.trans(['t'] => ['T']) }, 
+    lives-ok {$x.trans(['t'] => ['T']) },
        'Still works with strings returned from chomp() (lives)';
     is $x.trans(['t'] => ['T']), 'This is a TesT',
        'Still works with strings returned from chomp() (result)';
@@ -77,7 +77,7 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT #76564, RT #7
 
 {
     my $contents = slurp $?FILE.IO.parent.add('real-strings.t');
-    lives-ok {$contents.trans(['t'] => ['T']) }, 
+    lives-ok {$contents.trans(['t'] => ['T']) },
        'Still works with strings returned from slurp() (lives)';
 }
 

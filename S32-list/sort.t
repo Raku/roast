@@ -146,19 +146,19 @@ plan 38;
 }
 
 {
-    my %map = (p => 1, e => 2, r => 3, l => 4);
+    my %map = (r => 1, a => 2, k => 3, u => 4);
 
-    is <r e p l>.sort({ %map{$_} }).join, 'perl',
+    is <r k u a>.sort({ %map{$_} }).join, 'raku',
             'can sort with automated Schwartzian Transform';
 
     my @s = %map.sort: { .value };
     isa-ok(@s[0], Pair, '%hash.sort returns a List of Pairs');
-    is (@s.map: { .key }).join, 'perl', 'sort with unary sub'
+    is (@s.map: { .key }).join, 'raku', 'sort with unary sub'
 }
 
 
 {
-    is (<P e r l 6>.sort: { 0; }).join, 'Perl6',
+    is (<R a k u>.sort: { 0; }).join, 'Raku',
     'sort with arity 0 closure is stable';
 
     my @a = ([5, 4], [5, 5], [5, 6], [0, 0], [1, 2], [1, 3], [0, 1], [5, 7]);

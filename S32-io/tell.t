@@ -11,8 +11,8 @@ subtest 'open(:w) handle' => {
     my $fh = make-temp-file.open: :w;
     is-deeply $fh.tell, 0, '.tell at start';
 
-    $fh.print: 'I ♥ Perl 6';
-    is-deeply $fh.tell, 'I ♥ Perl 6'.encode.bytes, '.tell after writing';
+    $fh.print: 'I ♥ Raku';
+    is-deeply $fh.tell, 'I ♥ Raku'.encode.bytes, '.tell after writing';
 
     $fh.seek: 2, SeekFromBeginning;
     is-deeply $fh.tell, 2, '.tell after seeking';
@@ -24,8 +24,8 @@ subtest 'open(:w, :bin) handle' => {
     my $fh = make-temp-file.open: :w, :bin;
     is-deeply $fh.tell, 0, '.tell at start';
 
-    $fh.write: 'I ♥ Perl 6'.encode;
-    is-deeply $fh.tell, 'I ♥ Perl 6'.encode.bytes, '.tell after writing';
+    $fh.write: 'I ♥ Raku'.encode;
+    is-deeply $fh.tell, 'I ♥ Raku'.encode.bytes, '.tell after writing';
 
     $fh.seek: 2, SeekFromBeginning;
     is-deeply $fh.tell, 2, '.tell after seeking';
@@ -37,11 +37,11 @@ subtest 'open(:a) handle' => {
     my $fh = make-temp-file.open: :a;
     is-deeply $fh.tell, 0, '.tell at start';
 
-    $fh.print: 'I ♥ Perl 6';
-    is-deeply $fh.tell, 'I ♥ Perl 6'.encode.bytes, '.tell after writing (1)';
+    $fh.print: 'I ♥ Raku';
+    is-deeply $fh.tell, 'I ♥ Raku'.encode.bytes, '.tell after writing (1)';
 
-    $fh.print: 'I ♥ Perl 6';
-    is-deeply $fh.tell, ('I ♥ Perl 6' x 2).encode.bytes,
+    $fh.print: 'I ♥ Raku';
+    is-deeply $fh.tell, ('I ♥ Raku' x 2).encode.bytes,
       '.tell after writing (2)';
 
     $fh.seek: 2, SeekFromBeginning;
@@ -52,11 +52,11 @@ subtest 'open(:a) handle' => {
 
 subtest 'open(:bin) handle' => {
     plan 4;
-    my $fh = make-temp-file(content => 'I ♥ Perl 6').open: :bin;
+    my $fh = make-temp-file(content => 'I ♥ Raku').open: :bin;
     is-deeply $fh.tell, 0, '.tell at start';
 
     $fh.slurp;
-    is-deeply $fh.tell, 'I ♥ Perl 6'.encode.bytes, '.tell after slurping';
+    is-deeply $fh.tell, 'I ♥ Raku'.encode.bytes, '.tell after slurping';
 
     $fh.seek: 2, SeekFromBeginning;
     is-deeply $fh.tell, 2, '.tell after seeking';

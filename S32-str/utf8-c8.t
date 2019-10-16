@@ -91,14 +91,14 @@ else {
     {
         my $cmd = Q{env ACME=$'L\xe9on' } ~ $*EXECUTABLE ~ Q{ -e 'say("lived")'};
         my $proc = shell $cmd, :out;
-        is $proc.out.get, 'lived', 'Can run Perl 6 with non-UTF-8 environment';
+        is $proc.out.get, 'lived', 'Can run Raku with non-UTF-8 environment';
     }
     {
         my $filename = "L\xe9on";
         spurt $filename, 'say(42)';
         LEAVE { try unlink $filename }
         my $proc = run $*EXECUTABLE, $filename, :out;
-        is $proc.out.get, '42', 'Can run Perl 6 sourcefile with non-UTF-8 name';
+        is $proc.out.get, '42', 'Can run Raku sourcefile with non-UTF-8 name';
     }
 }
 

@@ -35,7 +35,7 @@ dies-ok {EVAL '1 1)'}, "EVAL throws on syntax error";
 
 dies-ok {EVAL 'use Poison; 1'}, "EVAL dies on fatal use";
 
-# L<S04/Exception handlers/Perl 6's EVAL function only evaluates strings, not blocks.>
+# L<S04/Exception handlers/Raku's EVAL function only evaluates strings, not blocks.>
 dies-ok({EVAL {; 42} }, 'block EVAL is gone');
 
 # RT #63978, EVAL didn't work in methods

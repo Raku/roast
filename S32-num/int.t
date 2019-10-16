@@ -149,6 +149,7 @@ subtest 'smartmatching :U numeric against :D numeric does not throw' => {
     my UInt $u;
     is-deeply $u.defined, Bool::False, 'undefined UInt is undefined';
     cmp-ok $u, '~~', UInt, 'UInt var smartmatches True against UInt';
+    # TODO Module name to be changed when changed in the core.
     is $u.HOW.^name, 'Perl6::Metamodel::SubsetHOW', 'UInt is a subset';
     throws-like { UInt.new }, Exception,
         'attempting to instantiate UInt throws';

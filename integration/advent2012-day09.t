@@ -33,7 +33,7 @@ grammar FormalLetter is Letter {
     rule close { Yours sincerely ',' $<from>=.+ }
 }
 
-my $formal-letter = "Dear Perl6,
+my $formal-letter = "Dear Raku,
    Formal body text.
    Yours sincerely, Tester";
 

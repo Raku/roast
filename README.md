@@ -1,7 +1,7 @@
-# The Official Perl 6 Test Suite
+# The Official Raku Test Suite
 
 The purpose of the test suite is to validate implementations that wish to be known
-as a conforming Perl 6 implementation.
+as a conforming Raku.
 
 #### Contents
 
@@ -15,7 +15,7 @@ as a conforming Perl 6 implementation.
 
 ## Introduction
 
-Please consider this test suite to be the bleeding edge of Perl 6
+Please consider this test suite to be the bleeding edge of Raku
 development. New tests, tests for proposed new features, etc.,
 will live on this 'master' branch. Once a specification is cut, a branch
 will be created for that version of the spec, e.g., `6.c` for *Christmas*

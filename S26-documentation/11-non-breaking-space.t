@@ -24,11 +24,11 @@ plan 3;
 #   U+2001 EM QUAD
 #
 # To enter a unicode hex number using emacs: C-x 8 RET hex RET
-=head1 Perl 6
+=head1 Raku Language
 
 $r = $=pod[++$p];
 
-my @raw-chars = "Perl 6".comb;
+my @raw-chars = "Raku Language".comb;
 my @pod-chars = $r.contents[0].contents[0].comb;
 my $raw-char = @raw-chars[4];
 my $pod-char = @pod-chars[4];

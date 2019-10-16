@@ -471,7 +471,7 @@ Test::Util - Extra utility code for testing
 =head1 DESCRIPTION
 
 This module is for test code that would be useful
-across Perl 6 implementations.
+across Raku implementations.
 
 =head1 FUNCTIONS
 

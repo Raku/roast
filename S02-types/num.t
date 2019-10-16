@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-#L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
+#L<S02/The C<Num> and C<Rat> Types/Raku intrinsically supports big integers>
 
 plan 108;
 
@@ -98,7 +98,7 @@ is-approx( EVAL(1e100.Num.perl), 1e100, 'EVAL 1e100.Num.perl is 1' );
     is($a, "10010", '10.01e3 stringification works');
 }
 
-#L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
+#L<S02/The C<Num> and C<Rat> Types/Raku intrinsically supports big integers>
 
 {
     my $a = 0b100; "$a";
@@ -143,7 +143,7 @@ isa-ok(1 / 1, Rat);
     ok($a == 10.0, 'trailing zeros compare correctly');
 }
 
-#L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
+#L<S02/The C<Num> and C<Rat> Types/Raku intrinsically supports big integers>
 {
     my $a = "1.01";
     isa-ok($a.Int, Int);

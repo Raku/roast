@@ -616,11 +616,11 @@ subtest 'readchars method' => {
         X::IO::BinaryMode, 'binary cat';
 
     my $cat = IO::CatHandle.new:
-        make-files "a♥b\ncd♥\n", "I ♥ Perl 6", "", "foos";
+        make-files "a♥b\ncd♥\n", "I ♥ Raku", "", "foos";
 
     is-deeply $cat.readchars(4),   "a♥b\n",       '1';
-    is-deeply $cat.readchars(10),  "cd♥\nI ♥ Pe", '2';
-    is-deeply $cat.readchars(6),   'rl 6fo',      '3';
+    is-deeply $cat.readchars(9),   "cd♥\nI ♥ R",  '2';
+    is-deeply $cat.readchars(5),   'akufo',       '3';
     is-deeply $cat.readchars,      'os',          '4';
     is-deeply $cat.readchars(100), '',            '5';
     is-deeply $cat.readchars(200), '',            '6';
@@ -681,7 +681,7 @@ subtest 'seek method and tell method' => {
 
 subtest 'slurp method' => {
     plan 4;
-    my @data = "ab\ncd♥\n", "I ♥ Perl 6", "", "foos";
+    my @data = "ab\ncd♥\n", "I ♥ Raku", "", "foos";
     sub files { make-files @data }
 
     is-deeply IO::CatHandle.new(files).slurp, @data.join, 'non-binary';

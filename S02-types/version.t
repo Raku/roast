@@ -79,4 +79,4 @@ subtest '`eqv` on containerized Version objects' => {
 
 # https://irclog.perlgeek.de/perl6/2017-06-24#i_14781849
 is_run ｢use v6c; print "OK";｣, {:out('OK'), :err(''), :0status},
-    'can use `v6c` version literal (no dot) when specifying Perl 6 version';
+    'can use `v6c` version literal (no dot) when specifying Raku version';

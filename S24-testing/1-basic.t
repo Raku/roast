@@ -9,7 +9,7 @@ plan 60;
 This file /exhaustively/ tests the Test module.
 
 I try every variant of each Test function here because we are using this
-module to test Perl 6 itself, so I want to be sure that the error is not
+module to test Raku itself, so I want to be sure that the error is not
 coming from within this module.
 
 We need to test that these functions produce 'not ok' at the right times,

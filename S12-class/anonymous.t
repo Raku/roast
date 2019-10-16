@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-# L<S12/Classes/"Perl 6 supports multiple inheritance, anonymous classes">
+# L<S12/Classes/"Raku supports multiple inheritance, anonymous classes">
 plan 18;
 
 # Create and instantiate empty class; check .WHAT works and stringifies to

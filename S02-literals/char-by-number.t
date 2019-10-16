@@ -63,6 +63,7 @@ is("\c65,66,67", 'A,66,67', '\clist not valid');
 # L<S02/Radix interpolation/"\123 form">
 
 {
+    # TODO Replace Perl 6 with Raku when the message changes
     throws-like { EVAL q{"\123"} },
       X::Comp,
       '"\123" form is no longer valid Perl 6';
