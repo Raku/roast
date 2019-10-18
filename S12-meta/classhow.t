@@ -2,7 +2,7 @@ use Test;
 
 use lib $?FILE.IO.parent(2).add("packages/S12-meta/lib");
 
-plan 5;
+plan 6;
 
 # RT #128516
 {
@@ -38,4 +38,17 @@ plan 5;
     $GH2602.^compose;
     ok $GH2602.new.WHAT ~~ $GH2602,
         'Smartmatch returns True for a scalar with a run-time created class and an instance of the class';
+}
+
+# https://github.com/rakudo/rakudo/issues/2607
+{
+    my $inner = Metamodel::ClassHOW.new_type(name => 'Inner');
+    $inner.^compose;
+
+    my $outer = Metamodel::ClassHOW.new_type(name => 'Outer');
+    my $attr = Attribute.new(name => '$!inner', type => $inner, package => $outer, :has_accessor);
+    $outer.^add_attribute($attr);
+    $outer.^compose;
+
+    lives-ok { $outer.new(inner => $inner.new) }, 'Runtime created classes can be used as attributes';
 }
