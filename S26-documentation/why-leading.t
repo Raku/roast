@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 355;
+plan 356;
 
 my $pod_index = 0;
 
@@ -322,5 +322,7 @@ my $block = {;
 };
 
 test-leading($block, 'this is a block');
-
 is $=pod.elems, $pod_index;
+
+# R#3242
+lives-ok { "#| foo\n#|\n#| bar".EVAL }, 'can we have an empty #|';
