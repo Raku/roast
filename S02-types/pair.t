@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4 * 19 + 104;
+plan 4 * 19 + 105;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -459,6 +459,13 @@ subtest 'Clone of Pair does not share .WHICH' => {
     cmp-ok $clone.WHICH, &[!===], $p.WHICH, 'clone, same value';
     $v = 200;
     cmp-ok $clone.WHICH, &[!===], $p.WHICH, 'clone, different value';
+}
+
+# https://github.com/rakudo/rakudo/issues/1500
+{
+    my Pair $p;
+    is-deeply ($p .= new :key<foo> :value<bar>), :foo<bar>.Pair,
+        'fake-infix adverbs (named args) on a construct inside args to another routine';
 }
 
 # vim: ft=perl6
