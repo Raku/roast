@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 411;
+plan 412;
 
 =begin pod
 
@@ -1131,6 +1131,9 @@ lives-ok {
 }, 'An array built with a hyperoperator is mutable';
 
 # https://github.com/rakudo/rakudo/issues/2482
-lives-ok { |<1 2> >>xx>> 2 }, 'Values created with a hyperoperator can be wrapped in a slip';
+lives-ok {
+    my @t2482 = |<1 2> >>xx>> 2;
+    is @t2482, slip((<1 1>), (<2 2>)), 'Hyper on a slip values are correct';
+}, 'Values created with a hyperoperator can be wrapped in a slip';
 
 # vim: ft=perl6
