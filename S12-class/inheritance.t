@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 40;
+plan 41;
 
 # L<S12/Single inheritance/An "isa" is just a trait that happens to be another class>
 
@@ -176,5 +176,13 @@ throws-like 'class RT64642 is ::Nowhere {}', X::Inheritance::UnknownParent,
 # RT #125689
 throws-like 'class X is nosuchtrait { }', X::Inheritance::UnknownParent,
     'Get unkown parent error even when class is called X';
+
+# https://github.com/rakudo/rakudo/issues/2829
+{
+    class SubParameter is Parameter {
+        has $.p2829;
+    }
+    is SubParameter.new(p2829 => 'p2829').p2829, 'p2829', 'Parameter subclass initializes attributes';
+}
 
 # vim: ft=perl6
