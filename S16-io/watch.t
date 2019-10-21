@@ -5,6 +5,8 @@ use Test;
 plan 1;
 
 # GH rakudo/rakudo#3100
+#?rakudo.jvm skip 'nqp::watchfile only implemented as stub for JVM backend'
+#?DOES 1
 {
     # Test if file change events are not lost.
     my $watch-file = $*SPEC.catfile( $*TMPDIR, "watchme" );
