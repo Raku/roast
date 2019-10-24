@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 48;
+plan 52;
 
 my @result = 1,2,3;
 
@@ -257,3 +257,15 @@ group-of 2 => 'ZEN slices do not cache Seqs' => {
         'parenthesis do not imply laziness (1)';
     ok $sum2 == 6, 'parenthesis do not imply laziness (2)';
 }
+
+# https://github.com/rakudo/rakudo/issues/2976
+{
+    lives-ok {
+        given Seq.new((1,2,3).iterator) {
+            is-deeply .elems, 3, 'Elems on Seq calculates size';
+            ok 1|2|3 ~~ .all, 'First pass on cached Seq';
+            ok 1|2|3 ~~ .all, 'Second pass on cached Seq';
+        }
+    }, 'elems call caches Seq';
+}
+
