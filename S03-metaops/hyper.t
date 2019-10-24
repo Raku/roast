@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 410;
+plan 412;
 
 =begin pod
 
@@ -1129,5 +1129,11 @@ lives-ok {
     my @GH2480-m = @GH2480 »*» 0;
     @GH2480-m[0][0] = 42;
 }, 'An array built with a hyperoperator is mutable';
+
+# https://github.com/rakudo/rakudo/issues/2482
+lives-ok {
+    my @t2482 = |<1 2> >>xx>> 2;
+    is-deeply @t2482, [<1 1>.Seq, <2 2>.Seq], 'Hyper on slip values is correct';
+}, 'Values created with a hyperoperator can be wrapped in a slip';
 
 # vim: ft=perl6
