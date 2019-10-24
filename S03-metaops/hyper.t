@@ -1133,7 +1133,7 @@ lives-ok {
 # https://github.com/rakudo/rakudo/issues/2482
 lives-ok {
     my @t2482 = |<1 2> >>xx>> 2;
-    is @t2482, slip((<1 1>), (<2 2>)), 'Hyper on a slip values are correct';
+    is-deeply @t2482, [<1 1>.Seq, <2 2>.Seq], 'Hyper on slip values is correct';
 }, 'Values created with a hyperoperator can be wrapped in a slip';
 
 # vim: ft=perl6
