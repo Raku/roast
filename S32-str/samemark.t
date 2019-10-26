@@ -23,5 +23,14 @@ is('zoö'.samemark('ŏô'), 'z̆ôô', 'samemark with longer source string');
     #?rakudo.jvm skip 'samemark NYI'
     is "foo".samemark(""), "foo", 'samemark "": nothing to be done';
 }
+# perl6/problem-solving#61
+#?rakudo.jvm 3 skip 'samemark NYI'
+{
+    is ‘🇦🇬’.samemark('é').ords, '127462 127468 769';
+
+    is "\c[arabic number sign]a".samemark('é').NFD.list, '97 769', 'prepend test';
+    is "a".samemark("\c[arabic number sign]é").NFD.list,
+      "\c[arabic number sign]".ord ~ ' 97 769', 'prepend test';
+}
 
 # vim: ft=perl6
