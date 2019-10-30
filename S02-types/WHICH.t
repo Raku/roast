@@ -171,6 +171,7 @@ my @exception = <
   X::Buf::Pack
   X::Buf::Pack::NonASCII
   X::Caller::NotDynamic
+  X::SymbolNotDynamic
   X::Cannot::Empty
   X::Cannot::Lazy
   X::Cannot::New
