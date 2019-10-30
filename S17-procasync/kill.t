@@ -79,7 +79,6 @@ subtest 'can rapid-kill our Proc::Async without hanging' => {
     my $proc = Proc::Async.new: $*EXECUTABLE, "-e", "sleep 1";
     my $prom = $proc.start;
     $proc.kill;
-    await $prom;       
+    $ = await $prom;
     pass 'did not hang';
 }
-
