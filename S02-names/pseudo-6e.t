@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use lib $?FILE.IO.parent(2).add("packages/S02-names/lib");
 use Test::Util;
 
-plan 199;
+plan 203;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -630,4 +630,236 @@ is_run q|BEGIN { UNIT; Nil }|, { :0status, :out(''), :err('') },
     }
 }
 
+# GH rakudo/rakudo#3270
+our $to-be-found-on-GLOBAL = "something unique";
+# Dynamic variables created via PROCESS or GLOBAL key assignment must have .VAR.dynamic set.
+subtest "Dynamic flag", {
+    plan 4;
+    nok PROCESS::<$gh3270>:exists, "variable doesn't pre-exists";
+    PROCESS::<$gh3270-proc> = 42;
+    ok $*gh3270-proc.VAR.dynamic, "container created via PROCESS is marked as dynamic";
+    GLOBAL::<$gh3270-glob> = 0;
+    ok $*gh3270-glob.VAR.dynamic, "container created via GLOBAL is marked as dynamic";
+    nok $to-be-found-on-GLOBAL.VAR.dynamic, "our-declared variable doesn't have dynamic flag";
+}
+
+# GH rakudo/rakudo#3257
+my module SymDumper {
+    sub dynamic-symbols(-->List()) is export {
+        DYNAMIC::.keys
+    }
+
+    sub callers-symbols(-->List()) is export {
+        CALLERS::.keys
+    }
+
+    sub lexical-symbols(-->List()) is export {
+        CALLER::LEXICAL::.keys
+    }
+}
+
+sub is-containing($got, $expected, Str:D $msg) {
+    my $exp-set = $expected.list.Set;
+    my $got-set = $got.list.Set;
+    if $exp-set ⊆ $got-set {
+        pass $msg
+    }
+    else {
+        flunk $msg;
+        diag "expected: " ~ $exp-set.keys.list.gist;
+        diag "got     : " ~ $got-set.keys.list.gist;
+    }
+}
+
+subtest "Dynamic chain pseudo-packages use PROCESS" => {
+    plan 30;
+
+    # Take measures as to not leave behind test symbols.
+    my $orig-syms = PROCESS::.keys.Set;
+    my sub cleanup-namespace {
+        for PROCESS::.keys {
+            PROCESS::{$_}:delete unless $_ ∈ $orig-syms;
+        }
+    }
+
+    # Make sure a previously ran test didn't leave anything behind.
+    nok DYNAMIC::<$*foo>:exists, "a dynamic variable doesn't exists in DYNAMIC yet";
+    nok LEXICAL::<$*foo>:exists, "a dynamic variable doesn't exists in LEXICAL yet";
+
+    my sub check-not-exists($name) {
+        nok CALLERS::{$name}:exists, "a dynamic variable doesn't exists in CALLERS yet";
+        nok LEXICAL::{$name}:exists,  "a dynamic variable doesn't exists in callee's LEXICAL yet";
+    }
+
+    check-not-exists '$*foo';
+    check-not-exists '$*foo-constant';
+
+    # Instantiate a dynamic variable and a constant
+    PROCESS::<$foo> = 42;
+    PROCESS::<$foo-constant> := pi;
+
+    ok DYNAMIC::<$*foo>:exists, "a dynamic variable now exists is DYNAMIC";
+    ok DYNAMIC::<$*foo-constant>:exists, "a dynamic constant now exists is DYNAMIC";
+
+    my sub check-exists($name) {
+        ok CALLERS::{$name}:exists, "dynamic variable exists in CALLERS";
+        ok LEXICAL::{$name}:exists, "dynamic variable exists in callee's LEXICAL";
+    }
+
+    check-exists('$*foo');
+    check-exists('$*foo-constant');
+
+    is DYNAMIC::<$*foo>, 42, "DYNAMIC finds a variable in PROCESS";
+    is DYNAMIC::<$*foo-constant>, pi, "DYNAMIC finds a constant in PROCESS";
+    is LEXICAL::<$*foo>, 42, "LEXICAL finds a variable in PROCESS";
+    is LEXICAL::<$*foo-constant>, pi, "LEXICAL finds a constant in PROCESS";
+
+    # Assignment to an existing symbol must change it where it is located.
+    DYNAMIC::<$*foo> = pi;
+    is $*foo, pi, "asignment via DYNAMIC changes the dynamic variable";
+    is PROCESS::<$foo>, pi, "asignment via DYNAMIC changes the symbol on PROCESS";
+
+    # Assignment to a non-existing symbol must create it on PROCESS.
+    DYNAMIC::<$*new-foo> = "foo";
+    DYNAMIC::<$*new-foo-constant> := "foo-constant";
+
+    ok PROCESS::<$new-foo>:exists, "creating a new dynamic variable on DYNAMIC creates it in PROCESS";
+    ok PROCESS::<$new-foo-constant>:exists, "creating a new dynamic constant on DYNAMIC creates it in PROCESS";
+    is PROCESS::<$new-foo>, "foo", "new dynamic variable value is correct";
+    is PROCESS::<$new-foo-constant>, "foo-constant", "new dynamic constant value is correct";
+
+    is $*new-foo, "foo", "new dynamic variable is directly accessible";
+    is $*new-foo-constant, "foo-constant", "new dynamic constant is directly accessible";
+
+    cleanup-namespace;
+
+    import SymDumper;
+    my $level0;
+    sub lev3(&dumper) {
+        my $level3; # Won't be exposed
+        &dumper()
+    }
+    sub lev2(&dumper) {
+        my $*level2;
+        lev3(&dumper)
+    }
+    sub lev1(&dumper) {
+        my $*level1;
+        lev2(&dumper)
+    }
+    sub check-expected-syms($expected, $msg) {
+        is-containing lev1(&dynamic-symbols), $expected, "all expected symbols are met in DYNAMIC::.keys$msg";
+        is-containing lev1(&callers-symbols), $expected, "all expected symbols are met in CALLERS::.keys$msg";
+        is-containing lev1(&lexical-symbols), ($expected ∪ <$level3 $level0>), "all expected symbols are met in CALLER::LEXICAL::.keys$msg";
+    }
+    check-expected-syms(<$*level1 $*level2>, ", nothing set on PROCESS");
+    PROCESS::<$process-level> = 42;
+    check-expected-syms(<$*level1 $*level2 $*process-level>, ", including a symbol from PROCESS");
+
+    cleanup-namespace;
+}
+
+subtest "Dynamic chain pseudo-packages use GLOBAL" => {
+    plan 20;
+
+    # Take measures as to not leave behind test symbols.
+    my $orig-syms = GLOBAL::.keys.Set;
+    my sub cleanup-namespace {
+        for GLOBAL::.keys {
+            GLOBAL::{$_}:delete unless $_ ∈ $orig-syms;
+        }
+    }
+
+    nok DYNAMIC::<$*foo>:exists, "a dynamic variable doesn't exists in DYNAMIC yet";
+    nok LEXICAL::<$*foo>:exists, "a dynamic variable doesn't exists in LEXICAL yet";
+
+    my sub check-not-exists($name) {
+        nok CALLERS::{$name}:exists, "a dynamic variable doesn't exists in CALLERS yet";
+        nok LEXICAL::{$name}:exists,  "a dynamic variable doesn't exists in callee's LEXICAL yet";
+    }
+
+    check-not-exists '$*foo';
+
+    GLOBAL::<$foo> = 42;
+    GLOBAL::<$foo-constant> := pi;
+
+    ok DYNAMIC::<$*foo>:exists, "a dynamic variable now exists is DYNAMIC";
+    ok DYNAMIC::<$*foo-constant>:exists, "a dynamic constant now exists is DYNAMIC";
+
+    my sub check-exists($name) {
+        ok CALLERS::{$name}:exists, "dynamic variable exists in CALLERS";
+        ok LEXICAL::{$name}:exists, "dynamic variable exists in callee's LEXICAL";
+    }
+
+    check-exists('$*foo');
+
+    is DYNAMIC::<$*foo>, 42, "DYNAMIC finds a variable in GLOBAL";
+    is DYNAMIC::<$*foo-constant>, pi, "DYNAMIC finds a constant in GLOBAL";
+    is LEXICAL::<$*foo>, 42, "LEXICAL finds a variable in GLOBAL";
+    is LEXICAL::<$*foo-constant>, pi, "LEXICAL finds a constant in GLOBAL";
+
+    DYNAMIC::<$*foo> = pi;
+    is $*foo, pi, "asignment via DYNAMIC changes the dynamic variable";
+    is GLOBAL::<$foo>, pi, "assigning via DYNAMIC changes the symbol on GLOBAL";
+
+    cleanup-namespace;
+
+    import SymDumper;
+    my $level0;
+    sub lev3(&dumper) {
+        my $level3; # Won't be exposed
+        &dumper()
+    }
+    sub lev2(&dumper) {
+        my $*level2;
+        lev3(&dumper)
+    }
+    sub lev1(&dumper) {
+        my $*level1;
+        lev2(&dumper)
+    }
+    GLOBAL::<$global-level> = 42;
+    sub check-expected-syms($expected, $msg) {
+        is-containing lev1(&dynamic-symbols), $expected, "all expected symbols are met in DYNAMIC::.keys$msg";
+        is-containing lev1(&callers-symbols), $expected, "all expected symbols are met in CALLERS::.keys$msg";
+        is-containing lev1(&lexical-symbols), ($expected ∪ <$level3 $level0>), "all expected symbols are met in CALLER::LEXICAL::.keys$msg";
+    }
+    check-expected-syms(<$*level1 $*level2 $*global-level>, ", including symbols from GLOBAL");
+
+    ok DYNAMIC::<$*to-be-found-on-GLOBAL>:exists, "our-declared variable can be found on DYNAMIC";
+    is DYNAMIC::<$*to-be-found-on-GLOBAL>, "something unique", "value of our-declared variable taken via DYNAMIC";
+    ok '$*to-be-found-on-GLOBAL' ∉ DYNAMIC::.keys, "our-declared value is not iterated over because it's not a real dynamic";
+
+    cleanup-namespace;
+}
+
+subtest "Dynamic chain in a Promise" => {
+    plan 9;
+
+    my $*out-of-promise = 1;
+    PROCESS::<$in-PROCESS> = "proc";
+    GLOBAL::<$in-GLOBAL> = "glob";
+
+    await start {
+        my $*in-promise = 42;
+        await start {
+            # Testing for incomplete list of symbols just to see all layers are covered, including
+            is-containing DYNAMIC::.keys,
+                <$*in-promise $*out-of-promise $*in-PROCESS $*in-GLOBAL $*IN $*OUT $*PROMISE>,
+                "symbols outside of Promise wrapper are visible";
+            ok DYNAMIC::<$*in-promise>:exists, "DYNAMIC can see symbols outside of current Promise wrapper";
+            ok DYNAMIC::<$*out-of-promise>:exists, "DYNAMIC can see symbols outside of nested Promise wrappers";
+            is DYNAMIC::<$*out-of-promise>, 1, "out of Promise dynamic symbol value";
+            is DYNAMIC::<$*in-promise>, 42, "in-Promise dynamic symbol value";
+            is DYNAMIC::<$*in-PROCESS>, "proc", "declared on PROCESS symbol value";
+            is DYNAMIC::<$*in-GLOBAL>, "glob", "declared on GLOBAL symbol value";
+            DYNAMIC::<$*out-of-promise> = pi;
+            DYNAMIC::<$*in-promise> = pi/2;
+        }
+        is $*in-promise, pi/2, "asignment via DYNAMIC inside a Promise-wrapped code, level 1";
+    }
+    is $*out-of-promise, pi, "asignment via DYNAMIC inside a Promise-wrapped code, level 2";
+}
+
+done-testing;
 # vim: ft=perl6
