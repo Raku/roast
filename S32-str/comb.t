@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 83;
+plan 84;
 
 # L<S32::Str/Str/=item comb>
 
@@ -123,6 +123,18 @@ is (<a ab>, <bc ad ba>).comb(rx:Perl5/\S*a\S*/), <a ab ad ba>,
     test( "foobarbaz",  1, <f o o b a r b a z> );
     test( "foobarbaz",  0, <f o o b a r b a z> );
     test( "foobarbaz", -1, <f o o b a r b a z> );
+}
+
+{
+    sub test($str,$result) {
+        subtest {
+            plan 2;
+            is comb(/./,$str,:match).gist, $result, "comb(/./,$str,:match)";
+            is $str.comb(/./,:match).gist,  $result, "$str\.comb(/./,:match)";
+        }, "comb with \"$str\", regex /./";
+    }
+
+    test( "abcde", /./, "(｢a｣ ｢b｣ ｢c｣ ｢d｣ ｢e｣)" );
 }
 
 {
