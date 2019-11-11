@@ -134,7 +134,7 @@ is (<a ab>, <bc ad ba>).comb(rx:Perl5/\S*a\S*/), <a ab ad ba>,
         }, "comb with \"$str\", regex /./";
     }
 
-    test( "abcde", /./, "(｢a｣ ｢b｣ ｢c｣ ｢d｣ ｢e｣)" );
+    test( "abcde", "(｢a｣ ｢b｣ ｢c｣ ｢d｣ ｢e｣)" );
 }
 
 {
