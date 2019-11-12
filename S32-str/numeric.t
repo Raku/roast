@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 189;
+plan 190;
 
 #?DOES 2
 sub check($str, $expected_type, $expected_number, $desc?) {
@@ -170,6 +170,10 @@ throws-like Q|"34\x[308]5".Int|, X::Str::Numeric,
     isa-ok $n, Failure, '"a".Int produces a failure';
     dies-ok { $n * 2 }, 'cannot do math with a Failure';
 }
+
+# https://github.com/rakudo/rakudo/pull/3289
+fails-like { 'a'.UInt }, X::Str::Numeric,
+    '"a".UInt produces a Failure';
 
 subtest 'can handle − (U+2212) minus as regular minus' => {
     plan 4;
