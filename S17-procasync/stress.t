@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 23;
+plan 24;
 
 # RT #125515
 {
@@ -92,4 +92,22 @@ if run :!out, :!err, «perl -e 'print 42'» {
 }
 else {
     skip 'need `perl` to run this test';
+}
+
+{
+  my $prog   = $*DISTRO.is-win ?? 'cmd'   !! 'cat';
+  my @target = $*DISTRO.is-win ?? «/c ""» !! '/dev/null';
+
+  for ^1200 {
+    print "\r$_ ";
+      my $proc = Proc::Async.new($prog, |@target);
+      react {
+          whenever $proc.start { done }
+          whenever signal(SIGTERM) {}
+          whenever Promise.in(5) {}
+      }
+  }
+
+  say '';
+  pass 'made it to the end without memory corruption';
 }
