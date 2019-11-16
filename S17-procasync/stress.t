@@ -7,7 +7,7 @@ plan 24;
 
 # RT #125515
 {
-    constant $read-file = $?FILE.IO.parent(2).add("packages/README");
+    constant $read-file = $?FILE.IO.parent(2).add("packages").add("README");
     $read-file.IO.r or bail-out "Missing $read-file that is needed to run a test";
 
     my @got;
