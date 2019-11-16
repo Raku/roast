@@ -171,7 +171,7 @@ subtest "simple parameterized role" => {
 }
 
 subtest "parameterizations and inheritance" => {
-    plan 2;
+    plan 3;
     my sub type-sig(Mu \tobj, Mu $type = Nil) {
         tobj.^name ~ ($type ~~ Nil ?? "" !! "[" ~ $type.^name ~ "]")
     }
@@ -191,8 +191,16 @@ subtest "parameterizations and inheritance" => {
     }
 
     my role R2 does R1[Bool] {
+        my class CR2 does R1[Set] {
+            method of-type {
+                type-sig($?CLASS), |self.R1::of-type
+            }
+        }
         method of-type {
             type-sig($?ROLE), |self.R1::of-type
+        }
+        method CR2-of-type {
+            CR2.new.of-type
         }
     }
 
@@ -220,6 +228,7 @@ subtest "parameterizations and inheritance" => {
 
     is-deeply C2.new.of-type, ("C2", "C1", "R1[Int]", "R2[Num]", "R1[Num]", "R2", "R1[Bool]"), "relaxed qualified calls to parameterized roles";
     is C2.new.to-str, "R2:class C1", "dispatch from role code on a class parent";
+    is C2.new.CR2-of-type, ("R2::CR2", "R1[Set]"), "dispatching in a class private to a role";
 }
 
 subtest "relaxed dispatch ambiguities" => {
