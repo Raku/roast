@@ -94,20 +94,19 @@ else {
     skip 'need `perl` to run this test';
 }
 
-{
-  my $prog   = $*DISTRO.is-win ?? 'cmd'   !! 'cat';
-  my @target = $*DISTRO.is-win ?? «/c ""» !! '/dev/null';
+# https://github.com/rakudo/rakudo/issues/3299
+is_run ｢
+    my $prog   = $*DISTRO.is-win ?? 'cmd'   !! 'cat';
+    my @target = $*DISTRO.is-win ?? «/c ""» !! '/dev/null';
 
-  for ^1200 {
-    print "\r$_ ";
+    for ^1200 {
       my $proc = Proc::Async.new($prog, |@target);
       react {
           whenever $proc.start { done }
           whenever signal(SIGTERM) {}
           whenever Promise.in(5) {}
       }
-  }
+    }
 
-  say '';
-  pass 'made it to the end without memory corruption';
-}
+    print 'pass'
+｣, {:out<pass>, :err(''), :0status}, 'No memory corruption when starting many Proc::Async instances';
