@@ -50,7 +50,7 @@ plan 15;
         loop {
             my $conn = $listen.accept;
             start {
-                CATCH { default { dd [$_] } }
+                CATCH { default { diag $_ } }
                 while my $buf = $conn.recv(:bin) {
                     $conn.write: $buf;
                 }

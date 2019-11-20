@@ -32,7 +32,6 @@ for <hyper race> -> $meth {
             # We .keep last promise and then inside the hyper .keep previous
             # ones, so we end up keeping them in reverse
             (my @promises = ^5 .map: { Promise.new }).tail.keep;
-            dd @promises[0].^name;
             my @result = (^5)."$meth"( degree => 5, batch => 1 ).map({
                 await @promises[$_];        # wait our turn
                 $_ && @promises[$_-1].keep; # let the next lower one proceed

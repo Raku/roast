@@ -3,7 +3,9 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 51;
+my $pkg-path = $?FILE.IO.parent(2).add("packages/S10-packages/lib");
+
+plan 52;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
 
@@ -308,4 +310,11 @@ with make-temp-dir() -> $dir {
                },
 	     'is DEPRECATED does work on Routines in precomped modules';
     }
+}
+
+# GH rakudo/rakudo#2897
+{
+    is_run q<use lib '> ~ $pkg-path ~ q<'; use GH2897-B; (^3).map( { my-counter } ).join(",").print>,
+            { :err(''), :out('0,1,2'), :status => 0 },
+            'closure is preserved after deserialzation';
 }

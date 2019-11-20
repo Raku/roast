@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 63;
+plan 64;
 
 my     @a  = 42, 666;
 my Int @ai = 42, 666;
@@ -89,4 +89,17 @@ for $@a, Any, $@ai, Int -> \a, \T {
       '3 dimensional EXISTS-POS with Failure';
     is-deeply @a.EXISTS-POS($neg,$neg,$neg,0), False,
       '4 dimensional EXISTS-POS with Failure';
+}
+
+# spotted on #raku on 17 Nov 2019
+# fixed with https://github.com/rakudo/rakudo/commit/ed8f5141fe
+{
+    role StrIdx does Positional {
+        method AT-POS(\SELF: $i) is raw {
+            SELF.substr-rw($i, 1)
+        }
+    }
+    my $s = "asd" but StrIdx;
+    $s[1] = "c";
+    is $s, "acd", 'Could we change the "element" without creating ASSIGN-POS?';
 }

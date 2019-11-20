@@ -3,7 +3,7 @@ use nqp;
 use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
-plan 28;
+plan 30;
 
 # L<S29/Context/"=item EVAL">
 
@@ -125,6 +125,15 @@ is_run 'use MONKEY-SEE-NO-EVAL; EVAL q|print "I ® U"|.encode',
     ok $begin, 'Did the EVAL run BEGIN';
     ok $check, 'Did the EVAL run CHECK';
     nok $run, 'Did the EVAL NOT run the code';
+}
+
+# GH rakudo/rakudo#3263
+{
+    for <c d> -> $rev {
+        is_run q<use v6.> ~ $rev ~ q<; use MONKEY-SEE-NO-EVAL; EVAL 'print $*PERL.version'>,
+            {:out("6.$rev"), :err(''), :0status},
+            "EVAL preserves version 6.$rev";
+    }
 }
 
 # vim: ft=perl6

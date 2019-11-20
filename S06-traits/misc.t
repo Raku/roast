@@ -58,7 +58,6 @@ multi sub param_rw_ro ($x is rw) { "fee $x" }
 multi sub param_rw_ro ($x) { "foo $x" }
 $foo = "fie";
 is param_rw_ro($foo), "fee fie", 'trait "is rw" used to narrow multi-dispatch';
-#?rakudo.jvm skip 'RT #129812'
 is param_rw_ro("fum"), "foo fum", 'trait "is rw" used to narrow multi-dispatch (converse)';
 
 # is copy
