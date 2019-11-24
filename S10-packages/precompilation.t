@@ -56,7 +56,6 @@ my @keys2 = Test::Util::run( "use lib $example2-lib-prefix.perl();\n" ~ q:to"--E
 #?rakudo.jvm todo 'got: $["C", "K"]'
 is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 
-#?rakudo.moar todo 'RT #122896'
 #?rakudo.js todo 'RT #122896'
 {
     is_run
