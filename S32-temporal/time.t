@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<time>>
 
-# Based Heavily on the t/op/time.t test from Perl5.8.6
+# Based Heavily on the t/op/time.t test from Perl 5.8.6
 # Perhaps the testing of these builtins needs to be more rigorous
 # mattc 20050316
 

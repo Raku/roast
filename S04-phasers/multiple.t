@@ -10,8 +10,8 @@ plan 2;
 
 # L<S04/Phasers/"occur multiple times">
 # IRC log:
-# [05:41] <agentzh> TimToady: S04 doesn't discuss the running order 
-#                   of multiple phasers (say, two END {} in 
+# [05:41] <agentzh> TimToady: S04 doesn't discuss the running order
+#                   of multiple phasers (say, two END {} in
 #                   the same scope), so should we assume it's the
 #                   same as in Perl 5?
 # [05:41] <TimToady> yes

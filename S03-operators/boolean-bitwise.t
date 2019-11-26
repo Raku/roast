@@ -9,7 +9,7 @@ Tests for Synopsis 3
 
 plan 45;
 
-{ # L<S03/Changes to Perl 5 operators/ "?| is a logical OR">
+{ # L<S03/Changes to Perl operators/ "?| is a logical OR">
   # work with pure Bool's
   ok( ?(False?|False == False), '?| works with Bools');
   ok( ?(False?|True  == True),  '?| works with Bools');
@@ -31,7 +31,7 @@ plan 45;
 
 }
 
-{ # L<S03/Changes to Perl 5 operators/ "?& is a logical AND">
+{ # L<S03/Changes to Perl operators/ "?& is a logical AND">
   # work with pure Bool's
   ok( ?(False?&False == False), '?& works with Bools');
   ok( ?(False?&True  == False), '?& works with Bools');
@@ -53,7 +53,7 @@ plan 45;
   isa-ok infix:<?&>(), Bool, '?& with no arguments yields a Bool';
 }
 
-{ ## L<S03/Changes to Perl 5 operators/ "?^ is a logical XOR">
+{ ## L<S03/Changes to Perl operators/ "?^ is a logical XOR">
   # work with pure Bool's
   ok( ?(False?^False == False), '?^ works with Bools');
   ok( ?(False?^True  == True),  '?^ works with Bools');
@@ -65,7 +65,7 @@ plan 45;
   ok( ?(-1   ?^ Any  == True),  '?^ works');
   ok( ?(42   ?^ 42   == False), '?^ works');
   ok( ?(42   ?^ 41   == False),  '?^ works');
- 
+
   ok( ?(infix:<?^>(True) == True), '?^ works with one argument');
   ok( ?(infix:<?^>() == False), '?^ works with no arguments');
 

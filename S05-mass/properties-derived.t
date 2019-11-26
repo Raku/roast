@@ -3,10 +3,10 @@ use Test;
 
 =begin pod
 
-This file was originally derived from the perl5 CPAN module Perl6::Rules,
+This file was originally derived from the Perl CPAN module Perl6::Rules,
 version 0.3 (12 Apr 2004), file t/properties_slow_to_compile.t.
 
-XXX needs more clarification on the case of the rules, 
+XXX needs more clarification on the case of the rules,
 ie letter vs. Letter vs isLetter
 
 Some notes regarding specific unicode codepoints chosen below

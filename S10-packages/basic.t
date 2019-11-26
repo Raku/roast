@@ -208,11 +208,11 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
     is EVAL('use PM6; pm6_works()'), 42, 'can call subs exported from .pm6 module';
 }
 
-# package Foo; is perl 5 code;
+# package Foo; is Perl code;
 # RT #75458
 {
-    throws-like "package Perl5Code;\n'this is Perl 5 code'", Exception,
-        'package Foo; is indicator for Perl 5 code';
+    throws-like "package PerlCode;\n'this is Perl code'", Exception,
+        'package Foo; is indicator for Perl code';
 }
 
 #RT #80856
@@ -328,7 +328,7 @@ throws-like q[
 # RT #131076
 {
     eval-lives-ok '{ my @z; my $x = *²; for $x(42), $x(50) { push @z, $_ } }',
-        "loop that isn't Perl 5 is not identified as such";
+        "loop that isn't Perl is not identified as such";
 }
 
 # RT #131540

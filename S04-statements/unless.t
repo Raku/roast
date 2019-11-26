@@ -10,8 +10,7 @@ Basic "unless" tests
 
 plan 10;
 
-# L<S04/Conditional statements/unless statements 
-#   work as in Perl 5>
+# L<S04/Conditional statements/unless statements  work as in Perl>
 
 my $x = 'test';
 {

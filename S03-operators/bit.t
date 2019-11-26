@@ -10,7 +10,7 @@ plan 49;
 
 # numerics
 
-# L<S03/Changes to Perl 5 operators/Bitwise operators get a data type prefix>
+# L<S03/Changes to Perl operators/Bitwise operators get a data type prefix>
 {
 
   # numeric

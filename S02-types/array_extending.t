@@ -6,7 +6,7 @@ plan 21;
 
 # L<S09/Autovivification/In Raku these read-only operations are indeed non-destructive:>
 {
-    # Compare with Perl 5:
+    # Compare with Perl:
     #   $ perl -we '
     #     my @array = qw<a b c>;
     #     my $foo = $array[100];

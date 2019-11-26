@@ -538,7 +538,7 @@ tools/test_summary.pl -- run spectests and make statistical reports
 
 =head1 DESCRIPTION
 
-This test harness written in Perl 5, runs the Raku specification test
+This test harness written in Perl, runs the Raku specification test
 suite.  It uses the same Test Anything Protocol (TAP) as for example
 L<TAP::Harness>, but does not depend those modules.
 

@@ -3,15 +3,15 @@ use Test;
 
 =begin pod
 
-This file was originally derived from the perl5 CPAN module Perl6::Rules,
+This file was originally derived from the Perl CPAN module Perl6::Rules,
 version 0.3 (12 Apr 2004), file t/named_chars.t.
 
-# L<S02/Unicode codepoints/"(Within a regex you may also use \C to match a character 
+# L<S02/Unicode codepoints/"(Within a regex you may also use \C to match a character
 # that is not the specified character.)">
 
 =end pod
 
-plan 431; 
+plan 431;
 
 
 ok("abc\x[a]def" ~~ m/\c[LINE FEED]/, 'Unanchored named LINE FEED');
@@ -438,7 +438,7 @@ ok(!( "\x[ff6e]" ~~ m/^ \X[FF6E]/ ), 'Negative hex \X[FF6E] nomatch');
 ok(!( "\x[ff6e]" ~~ m/^ <[\X[FF6E]]>/ ), 'Negative charclass hex \X[FF6E] nomatch');
 ok("\x[ff6e]" ~~ m/^ \X[A42D]/, 'Negative hex \X[A42D] match');
 ok("\x[ff6e]" ~~ m/^ <[\X[A42D]]>/, 'Negative charclass hex \X[A42D] match');
- 
+
 
 # names special cases (see http://www.unicode.org/reports/tr18/#Name_Properties) "... that require special-casing ..."
 
@@ -471,7 +471,7 @@ ok(!("\c[HANGUL JUNGSEONG O-E]" ~~ m/\c[HANGUL JUNGSEONG OE]/), 'nomatch named H
 
 # TODO: border values
 # \x[0000], \x[007F], \x[0080], \x[00FF],
-# \x[FFFF], \x[00010000], \x[0010FFFF], 
+# \x[FFFF], \x[00010000], \x[0010FFFF],
 # \x[00110000], ... \x[FFFFFFFF] XXX should do what?
 
 # TODO: Grapheme

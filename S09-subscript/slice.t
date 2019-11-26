@@ -36,7 +36,7 @@ plan 34;
     is-deeply(@array[1,3...*], (7,11),    "infinite even sequence slice");
 }
 
-# Behaviour assumed to be the same as Perl 5
+# Behaviour assumed to be the same as Perl
 {   my @array  = <a b c d>;
     my @slice := @array[1,2];
     is ~(@slice = <A B C D>), "A B",

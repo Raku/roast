@@ -184,20 +184,20 @@ ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/) && matchcheck($/, q/mob 8: <d @ 3>
 #### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 4: <e @ 4>/	numbered aliases $4
 ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/) && matchcheck($/, q/mob 4: <e @ 4>/), 'numbered aliases $4';
 
-#### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 1: <abc @ 0>/	perl5 numbered captures $1
-ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/) && matchcheck($/, q/mob 1: <abc @ 0>/), 'perl5 numbered captures $1';
+#### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 1: <abc @ 0>/	Perl numbered captures $1
+ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/) && matchcheck($/, q/mob 1: <abc @ 0>/), 'Perl numbered captures $1';
 
-#### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 2: <a @ 0>/	perl5 numbered captures $1
-ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/) && matchcheck($/, q/mob 2: <a @ 0>/), 'perl5 numbered captures $1';
+#### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 2: <a @ 0>/	Perl numbered captures $1
+ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/) && matchcheck($/, q/mob 2: <a @ 0>/), 'Perl numbered captures $1';
 
-#### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 3: <b @ 1>/	perl5 numbered captures $1
-ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/) && matchcheck($/, q/mob 3: <b @ 1>/), 'perl5 numbered captures $1';
+#### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 3: <b @ 1>/	Perl numbered captures $1
+ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/) && matchcheck($/, q/mob 3: <b @ 1>/), 'Perl numbered captures $1';
 
-#### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 4: <c @ 2>/	perl5 numbered captures $1
-ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/) && matchcheck($/, q/mob 4: <c @ 2>/), 'perl5 numbered captures $1';
+#### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 4: <c @ 2>/	Perl numbered captures $1
+ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/) && matchcheck($/, q/mob 4: <c @ 2>/), 'Perl numbered captures $1';
 
-#### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 5: <d @ 3>/	perl5 numbered captures $1
-ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/) && matchcheck($/, q/mob 5: <d @ 3>/), 'perl5 numbered captures $1';
+#### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 5: <d @ 3>/	Perl numbered captures $1
+ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/) && matchcheck($/, q/mob 5: <d @ 3>/), 'Perl numbered captures $1';
 
 #### :s $<key>=[\w+] \= $<val>=[\S+]	 abc = 123	/mob<key>: <abc @ 1>/	named capture
 ok (' abc = 123' ~~ /:s $<key>=[\w+] \= $<val>=[\S+]/) && matchcheck($/, q/mob<key>: <abc @ 1>/), 'named capture';
@@ -1468,9 +1468,9 @@ ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 0: <dog @ 0
 #?rakudo skip ':: NYI RT #124902'
 ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 1: <spot @ 7>/), 'sigspace and capture together';
 
-#### :perl5 \A.*? bcd\Q$\E..\z	a bcd$ef	y	perl5 syntax (:perl5)
+#### :Perl \A.*? bcd\Q$\E..\z	a bcd$ef	y	Perl syntax (:Perl5)
 #?rakudo todo 'parse error RT #124903'
-ok 'a bcd$ef' ~~ m:Perl5/\A.*? bcd\Q$\E..\z/, 'perl5 syntax (:Perl5)';
+ok 'a bcd$ef' ~~ m:Perl5/\A.*? bcd\Q$\E..\z/, 'Perl syntax (:Perl5)';
 
 #### :s^[\d+ ]* abc			11 12 13 abc	y	<?ws> before closing bracket
 ok '11 12 13 abc' ~~ /:s^[\d+ ]* abc/, '<?ws> before closing bracket';

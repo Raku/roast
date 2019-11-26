@@ -14,7 +14,7 @@ This test tests the various filetest operators.
 plan 128;
 
 # L<S32::IO/IO::FSNode/=item IO ~~ :X>
-# L<S03/Changes to Perl 5 operators/The filetest operators are gone.>
+# L<S03/Changes to Perl operators/The filetest operators are gone.>
 # old: L<S16/Filehandles, files, and directories/A file test, where X is one of the letters listed below.>
 
 dies-ok { 't' ~~ :d }, 'file test from before spec revision 27503 is error';

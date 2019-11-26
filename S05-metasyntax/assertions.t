@@ -8,7 +8,7 @@ plan 4;
 
 =begin pod
 
-This file was derived from the perl5 CPAN module Perl6::Rules,
+This file was derived from the Perl CPAN module Perl6::Rules,
 version 0.3 (12 Apr 2004), file t/assert.t.
 
 It has (hopefully) been, and should continue to be, updated to

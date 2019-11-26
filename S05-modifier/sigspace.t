@@ -4,7 +4,7 @@ use Test;
 
 =begin pod
 
-Parts of this file were originally derived from the perl5 CPAN module
+Parts of this file were originally derived from the Perl CPAN module
 Perl6::Rules, version 0.3 (12 Apr 2004), file t/word.t.
 
 =end pod

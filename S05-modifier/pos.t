@@ -3,7 +3,7 @@ use Test;
 
 =begin origin
 
-This file was originally derived from the perl5 CPAN module Perl6::Rules,
+This file was originally derived from the Perl CPAN module Perl6::Rules,
 version 0.3 (12 Apr 2004), file t/continue.t.
 
 =end origin
@@ -74,7 +74,7 @@ for ("abcdef") {
    ok $match.Bool, "Match anchored to 3";
    is $match.from, 3, "and the match is in the correct position";
    nok $str.match(/abc/, :p(4)).Bool, "No match anchored to 4";
-   
+
    $match = $str.match(/abc/, :p(6));
    ok $match.Bool, "Match anchored to 6";
    is $match.from, 6, "and the match is in the correct position";
@@ -96,7 +96,7 @@ for ("abcdef") {
    ok $match.Bool, "Match anchored to 3";
    is $match.from, 3, "and the match is in the correct position";
    nok $str.match(/abc/, :pos(4)).Bool, "No match anchored to 4";
-   
+
    $match = $str.match(/abc/, :pos(6));
    ok $match.Bool, "Match anchored to 6";
    is $match.from, 6, "and the match is in the correct position";

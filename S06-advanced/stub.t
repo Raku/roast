@@ -8,7 +8,7 @@ BEGIN plan 13;
 BEGIN lives-ok({sub thunder {...}}, 'sub foo {...} works');
 
 BEGIN throws-like 'sub foo;', X::UnitScope::Invalid,
-    'old Perl 5 "sub foo;" syntax is dead';
+    'old Perl "sub foo;" syntax is dead';
 
 {
     sub lightning {...}

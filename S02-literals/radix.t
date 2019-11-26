@@ -108,7 +108,7 @@ is(:16<100>, 256, 'got the correct int value from hex 100');
 is(:16<FF>, 255, 'got the correct int value from hex FF');
 is(:16<fF>, 255, 'got the correct int value from (mixed case) hex fF');
 
-# some random mad up hex strings (these values are checked against perl5)
+# some random mad up hex strings (these values are checked against Perl)
 is :16<2_F_A_C_E_D>,  0x2FACED, 'got the correct int value from hex 2_F_A_C_E_D';
 
 # L<S02/Conversion functions/"interpret leading 0b or 0d as hex digits">

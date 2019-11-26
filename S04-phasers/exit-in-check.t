@@ -22,9 +22,9 @@ CHECK {
 }
 
 # This file was testing that exit does not trigger END at CHECK time.
-# However, the spec did not say anything on this subject, and Perl 5
+# However, the spec did not say anything on this subject, and Perl
 # does call END blocks upon exit in CHECK.  Hence I've preserved the
-# original test below but now it tests for the perl5-compatible behaviour.
+# original test below but now it tests for the Perl-compatible behaviour.
 #   -- audreyt 20061006
 
 =begin finish

@@ -1,10 +1,7 @@
 use v6;
 use Test;
 
-#                      +---- UTF8 non-breaking space here!
-#                      |     (in case of 22-char wide screen)
-#                      V
-# L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
+# L<S03/Changes to Perl operators/list assignment operator now parses on the right>
 
 plan 301;
 

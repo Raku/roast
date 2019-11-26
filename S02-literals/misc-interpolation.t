@@ -96,7 +96,7 @@ is("x  \c[65,66,67]]  x",    "x  ABC]  x", "\\c[] should not eat following ]s");
     }
     my $x = InterpolationTest.new;
 
-    # ORLY, STD.pm (from Perl 5) parses that as an indirect method call. It will warn,
+    # ORLY, STD.pm (from Perl) parses that as an indirect method call. It will warn,
     # but strictly speaking it's legal.
     is "|$x.'f'()|", '|int|',    #OK use of quotes
        'interpolation of indirect method calls (different quotes)';

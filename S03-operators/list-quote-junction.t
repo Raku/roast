@@ -34,7 +34,7 @@ is different from
 
 =end kwid
 
-# L<S03/Changes to Perl 5 operators/"Note that Raku making a consistent">
+# L<S03/Changes to Perl operators/"Note that Raku making a consistent">
 
 my @matching_strings = <foo bar>;
 my @nonmatching_strings = ('fo','foo ', 'foo bar baz', 'oo', 'bar b', 'bar baz');

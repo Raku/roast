@@ -4,16 +4,16 @@ use Test;
 
 plan 17;
 
-# L<S03/"Changes to Perl 5 operators"/"-> becomes .">
+# L<S03/"Changes to Perl operators"/"-> becomes .">
 
 class Foo {
     has $.num;
-    
+
     method bar ($self: $num) returns Foo {
-        $!num = $num; 
+        $!num = $num;
         return $self;
     }
-    
+
     method baz ($self: $num) returns Foo {
         $!num += $num;
         return $self;
@@ -23,7 +23,7 @@ class Foo {
 my $foo = Foo.new(:num<10>);
 isa-ok($foo, Foo);
 
-# do some sanity checking to make sure it does 
+# do some sanity checking to make sure it does
 # all that we expect it too first.
 
 is($foo.num(), 10, '... got the right num value');
@@ -56,17 +56,17 @@ is($foo.num(), 15, '... got the right num value');
 # test attribute accessors, too
 is($foo.baz(7).baz(6).num, 28, 'chained an auto-generated accessor');
 
-throws-like 'Foo->new', X::Obsolete, 'Perl 5 -> is dead (class constructor)';
-throws-like '$foo->num', X::Obsolete, 'Perl 5 -> is dead (method call)';
+throws-like 'Foo->new', X::Obsolete, 'Perl -> is dead (class constructor)';
+throws-like '$foo->num', X::Obsolete, 'Perl -> is dead (method call)';
 
-# L<S03/"Changes to Perl 5 operators"/"-> becomes .">
+# L<S03/"Changes to Perl operators"/"-> becomes .">
 # L<S12/"Open vs Closed Classes"/"though you have to be explicit">
 {
     # (A => (B => Mu)) => (C => Mu))
     # ((A B) C)
-    
+
     my $cons = [=>] ( [=>] |<A B>, Mu ), <C>, Mu;
-    
+
     my $p = $cons.key;
     ok( $cons.key.key =:= $p.key, 'chaining through temp variable' );
     ok( $cons.key.key =:= $cons.key.key, 'chaining through Any return');
