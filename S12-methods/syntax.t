@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 15;
 
 # L<S12/Fancy method calls/"no space between the method name and the left parenthesis">
 
@@ -43,9 +43,12 @@ is (1..8).grep({ $_ % 2 }).map({ $_ - 1 }).join('|'), '0|2|4|6',
     class B {
         method a ($a, $b) { $a + $b }
         method b { $.a(2, 3) }
+        # GH rakudo/rakudo#3306
+        method c { $.a: 40,2 }
     }
 
-    is B.new.b, 5, '$.a can accept arguments';
+    is B.new.b, 5, '`$.a(<arguments>)` works';
+    is B.new.c, 42, '`$.a: <arguments>` works';
 }
 
 # RT #69350
