@@ -4,7 +4,7 @@ use Test;
 
 =begin pod
 
-This file was derived from the perl5 CPAN module Perl6::Rules,
+This file was derived from the Perl CPAN module Perl6::Rules,
 version 0.3 (12 Apr 2004), file t/stdrules.t.
 
 It has (hopefully) been, and should continue to be, updated to
@@ -43,7 +43,7 @@ ok(!( "A" ~~ m/^<-alpha>$/ ), q{Don't match inverted alpha as subrule} );
 ok(!( "\x07"  ~~ m/^<.alpha>$/ ), q{Don't match unrelated alpha as subrule} );
 ok("\x07"  ~~ m/^<!alpha>.$/, q{Match unrelated negated alpha as subrule});
 ok("\x07"  ~~ m/^<-alpha>$/, q{Match unrelated inverted alpha as subrule});
- 
+
 ok("A" ~~ m/^<+alpha>$/, q{Match alpha as charset});
 ok("A" ~~ m/^<+[A]+alpha>$/, q{Match compound alpha as charset});
 ok(!( "A" ~~ m/^<-alpha>$/ ), q{Don't match inverted alpha as charset} );
@@ -61,7 +61,7 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
     ok(!( "("  ~~ m/^<.space>$/ ), q{Don't match unrelated space as subrule} );
     ok("("  ~~ m/^<!space>.$/, q{Match unrelated negated space as subrule});
     ok("("  ~~ m/^<-space>$/, q{Match unrelated inverted space as subrule});
-    
+
     ok("\x[9]" ~~ m/^<+space>$/, q{Match space as charset});
     ok("\x[9]" ~~ m/^<+[A]+space>$/, q{Match compound space as charset});
     ok(!( "\x[9]" ~~ m/^<-space>$/ ), q{Don't match externally inverted space as charset} );
@@ -81,7 +81,7 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
     ok(!( "\x[C]"  ~~ m/^<.digit>$/ ), q{Don't match unrelated digit as subrule} );
     ok("\x[C]"  ~~ m/^<!digit>.$/, q{Match unrelated negated digit as subrule});
     ok("\x[C]"  ~~ m/^<-digit>$/, q{Match unrelated inverted digit as subrule});
-    
+
     ok("0" ~~ m/^<+digit>$/, q{Match digit as charset});
     ok("0" ~~ m/^<+[A]+digit>$/, q{Match compound digit as charset});
     ok(!( "0" ~~ m/^<-digit>$/ ), q{Don't match externally inverted digit as charset} );
@@ -135,7 +135,7 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
     ok(!( "&"  ~~ m/^<.blank>$/ ), q{Don't match unrelated blank as subrule} );
     ok("&"  ~~ m/^<!blank>.$/, q{Match unrelated negated blank as subrule});
     ok("&"  ~~ m/^<-blank>$/, q{Match unrelated inverted blank as subrule});
-    
+
     ok("\x[9]" ~~ m/^<+blank>$/, q{Match blank as charset});
     ok("\x[9]" ~~ m/^<+[A]+blank>$/, q{Match compound blank as charset});
     ok(!( "\x[9]" ~~ m/^<-blank>$/ ), q{Don't match externally inverted blank as charset} );
@@ -155,7 +155,7 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
     ok(!( "="  ~~ m/^<.cntrl>$/ ), q{Don't match unrelated cntrl as subrule} );
     ok("="  ~~ m/^<!cntrl>.$/, q{Match unrelated negated cntrl as subrule});
     ok("="  ~~ m/^<-cntrl>$/, q{Match unrelated inverted cntrl as subrule});
-    
+
     ok("\x[7F]" ~~ m/^<+cntrl>$/, q{Match cntrl as charset} );
     ok("\x[7F]" ~~ m/^<+[A]+cntrl>$/, q{Match compound cntrl as charset});
     ok(!( "\x[7F]" ~~ m/^<-cntrl>$/ ), q{Don't match externally inverted cntrl as charset} );
@@ -175,7 +175,7 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
     ok(!( "\x[7F]"  ~~ m/^<.graph>$/ ), q{Don't match unrelated graph as subrule} );
     ok("\x[7F]"  ~~ m/^<!graph>.$/, q{Match unrelated negated graph as subrule});
     ok("\x[7F]"  ~~ m/^<-graph>$/, q{Match unrelated inverted graph as subrule});
- 
+
     ok("V" ~~ m/^<+graph>$/, q{Match graph as charset} );
     ok("V" ~~ m/^<+[A]+graph>$/, q{Match compound graph as charset});
     ok(!( "V" ~~ m/^<-graph>$/ ), q{Don't match externally inverted graph as charset} );
@@ -258,7 +258,7 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 
     ok("A" ~~ m/^<+upper>$/, q{Match upper as charset} );
     ok("A" ~~ m/^<+[A]+upper>$/, q{Match compound upper as charset});
-    
+
     ok(!( "A" ~~ m/^<-upper>$/ ), q{Don't match externally inverted upper as charset} );
     ok(!( "A" ~~ m/^<+[A]-upper>$/ ), q{Don't match compound inverted upper as charset} );
     ok(!( "A" ~~ m/^<-upper>$/ ), q{Don't match internally inverted upper as charset} );
@@ -275,7 +275,7 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 # ok(!( '{'  ~~ m/^<.word>$/ ), q{Don't match unrelated word as subrule} );
 # ok('{'  ~~ m/^<!word>.$/, q{Match unrelated negated word as subrule} );
 # ok('{'  ~~ m/^<-word>$/, q{Match unrelated inverted word as subrule});
-# 
+#
 # ok("b" ~~ m/^<+word>$/, q{Match word as charset} );
 # ok("b" ~~ m/^<+[A]+word>$/, q{Match compound word as charset});
 # ok(!( "b" ~~ m/^<-word>$/ ), q{Don't match externally inverted word as charset} );

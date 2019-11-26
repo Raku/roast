@@ -6,7 +6,7 @@ plan 10;
 
 # test the unless statement modifier
 
-# L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
+# L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl>
 {
     my $a = 1;
     $a = 4 unless 'a' eq 'a';

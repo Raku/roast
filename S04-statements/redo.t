@@ -11,7 +11,7 @@ plan 12;
 }
 
 {
-    my @log;    
+    my @log;
     my $i;
     while ++$i < 5 {
         push @log, "before";
@@ -22,7 +22,7 @@ plan 12;
         }
         push @log, "after";
     }
-    
+
     is(~@log, "before before no_redo after before no_redo after", "statements after redo are not executed");
 }
 
@@ -90,7 +90,7 @@ plan 12;
             redo
         }
     }
-    # pugs, rakudo and perl5 independently agree that this should be
+    # pugs, rakudo and Perl independently agree that this should be
     # 201, not 220 as the ruby example says.
     # that's because the ruby example doesn't have the 'is copy' trait.
     is($sum, 201, "testRedoWithFor");

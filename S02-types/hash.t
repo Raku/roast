@@ -170,7 +170,7 @@ test2 %h;
 # Blechschmidt: L<"http://www.nntp.perl.org/group/perl.perl6.language/22401">
 #
 # 20060604: Now that defaulting works the other way around, hashes resume
-# the bias-to-the-right behaviour, consistent with Perl 5.
+# the bias-to-the-right behaviour, consistent with Perl.
 #
 
 my %dupl = (a => 1, b => 2, a => 3);

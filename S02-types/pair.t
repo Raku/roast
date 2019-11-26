@@ -186,7 +186,7 @@ L<"http://www.nntp.perl.org/group/perl.perl6.language/20122">
 
    key => $x ?? $y !! $z;
 
- plus it moves it closer to the comma that it used to be in Perl 5."
+ plus it moves it closer to the comma that it used to be in Perl."
 
 (iblech) XXX: this contradicts current S03 so I could be wrong.
 

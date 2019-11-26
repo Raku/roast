@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 # Tests for auto-increment and auto-decrement operators
-# originally from Perl 5, by way of t/operators/auto.t
+# originally from Perl, by way of t/operators/auto.t
 
 plan 79;
 

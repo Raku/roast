@@ -10,7 +10,7 @@ Tests for can.
 
 plan 29;
 
-# L<S12/"Introspection"/Unlike in Perl 5 where .can returns a single Code object>
+# L<S12/"Introspection"/Unlike in Perl where .can returns a single Code object>
 
 lives-ok { Str.can("split") },   "method can on built-in Str works";
 ok "foo".can("split"),           "methd can on built-in Str gives correct result if method found";

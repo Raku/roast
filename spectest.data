@@ -33,20 +33,20 @@ MISC/bug-coverage-6.d.t
 MISC/bug-coverage-stress.t                  # stress
 MISC/bug-coverage-stress-6.d.t              # stress
 MISC/misc-6.d.t
-S01-perl-5-integration/array.t              # perl5
-S01-perl-5-integration/basic.t              # perl5
-S01-perl-5-integration/class.t              # perl5
-S01-perl-5-integration/context.t            # perl5
-S01-perl-5-integration/eval_lex.t           # perl5
-S01-perl-5-integration/exception_handling.t # perl5
-S01-perl-5-integration/hash.t               # perl5
+S01-perl-5-integration/array.t              # Perl
+S01-perl-5-integration/basic.t              # Perl
+S01-perl-5-integration/class.t              # Perl
+S01-perl-5-integration/context.t            # Perl
+S01-perl-5-integration/eval_lex.t           # Perl
+S01-perl-5-integration/exception_handling.t # Perl
+S01-perl-5-integration/hash.t               # Perl
 S01-perl-5-integration/isms.t
-S01-perl-5-integration/import.t             # perl5
-S01-perl-5-integration/method.t             # perl5
-S01-perl-5-integration/return.t             # perl5
-S01-perl-5-integration/roundtrip.t          # perl5
-S01-perl-5-integration/strings.t            # perl5
-S01-perl-5-integration/subs.t               # perl5
+S01-perl-5-integration/import.t             # Perl
+S01-perl-5-integration/method.t             # Perl
+S01-perl-5-integration/return.t             # Perl
+S01-perl-5-integration/roundtrip.t          # Perl
+S01-perl-5-integration/strings.t            # Perl
+S01-perl-5-integration/subs.t               # Perl
 S02-lexical-conventions/finish-pod.t
 S02-lexical-conventions/bom.t
 S02-lexical-conventions/comments.t
@@ -458,17 +458,17 @@ S05-modifier/ignoremark.t                   # moar
 S05-modifier/ii.t
 S05-modifier/my.t
 S05-modifier/overlapping.t
-S05-modifier/perl5_0.t
-S05-modifier/perl5_1.t
-S05-modifier/perl5_2.t
-S05-modifier/perl5_3.t
-S05-modifier/perl5_4.t
-S05-modifier/perl5_5.t
-S05-modifier/perl5_6.t
-S05-modifier/perl5_7.t
-S05-modifier/perl5_8.t
-S05-modifier/perl5_9.t
-S05-modifier/perl5_10.t
+S05-modifier/Perl_0.t
+S05-modifier/Perl_1.t
+S05-modifier/Perl_2.t
+S05-modifier/Perl_3.t
+S05-modifier/Perl_4.t
+S05-modifier/Perl_5.t
+S05-modifier/Perl_6.t
+S05-modifier/Perl_7.t
+S05-modifier/Perl_8.t
+S05-modifier/Perl_9.t
+S05-modifier/Perl_10.t
 S05-modifier/pos.t
 S05-modifier/repetition-exhaustive.t
 S05-modifier/repetition.t

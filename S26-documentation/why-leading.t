@@ -8,7 +8,7 @@ my $pod_index = 0;
 # WHY.trailing, and that WHY.WHEREFORE is the appropriate thing
 # Also checks the $=pod object is set appropriately.
 # XXX we need to be able to affect the test level (like Test::Builder::Level
-#     in Perl 5) so that failures point at the caller
+#     in Perl) so that failures point at the caller
 sub test-leading($thing, $value) {
     is $thing.WHY.?contents, $value, $value  ~ ' - contents';
     is $thing.WHY.?WHEREFORE.^name, $thing.^name, $value ~ ' - WHEREFORE';
@@ -112,7 +112,7 @@ sub second {}
 test-leading(&first, "that will break");
 test-leading(&second, "that will break");
 
-#| trailing space here 
+#| trailing space here
 sub third {}
 
 test-leading(&third, "trailing space here");
@@ -136,7 +136,7 @@ sub has-two-params(
 {
     my @params = &has-two-params.signature.params;
     test-leading(@params[0], 'documented');
-    ok !@params[1].WHY.defined, 'Second param should not be documented' or 
+    ok !@params[1].WHY.defined, 'Second param should not be documented' or
         diag(@params[1].WHY.contents);
 }
 

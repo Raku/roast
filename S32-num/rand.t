@@ -67,7 +67,7 @@ lives-ok { srand(1) }, 'srand(1) lives and parses';
 }
 
 #?rakudo skip 'Test is too slow; srand call incorrect'
-# Similar code under Perl 5 runs in < 15s.
+# Similar code under Perl runs in < 15s.
 {
     srand;
 
@@ -88,7 +88,7 @@ lives-ok { srand(1) }, 'srand(1) lives and parses';
     my $badness = abs( 1 - $cs / ( $cells - 1 ) );
 
     # XXX: My confidence in this test is rather low.
-    # I got the number below by running the same test repeatedly with Perl 5
+    # I got the number below by running the same test repeatedly with Perl
     # and observing its results then again with deliberately corrupted
     # "results".  The value I picked is between the worst of the natural
     # results and the best of the b0rked results.

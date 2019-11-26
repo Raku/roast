@@ -4,8 +4,7 @@ use Test;
 
 plan 24;
 
-# L<S04/Conditional statements/Conditional statement
-#   modifiers work as in Perl 5>
+# L<S04/Conditional statements/Conditional statement modifiers work as in Perl>
 
 ##  scalar checking  ##
 

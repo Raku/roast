@@ -4,7 +4,7 @@ use Test;
 
 plan 29;
 
-# L<S02/Names and Variables/special variables of Perl 5 are going away>
+# L<S02/Names and Variables/special variables of Perl are going away>
 
 lives-ok { EVAL 'my $!' },
   '$! can be declared again';

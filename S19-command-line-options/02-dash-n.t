@@ -9,7 +9,7 @@ plan 6;
 
 Test C<-n> implementation
 
-The C<-n> command line switch mimics the Perl5 C<-n> command line
+The C<-n> command line switch mimics the Perl C<-n> command line
 switch, and wraps the whole script in
 
   for (lines) {

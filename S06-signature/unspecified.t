@@ -3,7 +3,7 @@ use Test;
 
 plan 18;
 
-# L<S06/Perl5ish subroutine declarations/You can declare a sub without
+# L<S06/Perlish subroutine declarations/You can declare a sub without
 # parameter list>
 #
 # TODO: if there is a better way to compare signatures: don't rely on .perl

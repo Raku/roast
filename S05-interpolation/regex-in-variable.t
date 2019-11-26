@@ -5,7 +5,7 @@ use Test::Util;
 
 =begin pod
 
-This file was originally derived from the perl5 CPAN module Perl6::Rules,
+This file was originally derived from the Perl CPAN module Perl6::Rules,
 version 0.3 (12 Apr 2004), file t/patvar.t.
 
 =end pod

@@ -1,6 +1,6 @@
 use v6;
 
-# L<S28/Perl 5 to Raku special variable translation>
+# L<S28/Perl to Raku special variable translation>
 
 use Test;
 

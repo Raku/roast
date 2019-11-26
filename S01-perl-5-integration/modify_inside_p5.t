@@ -9,6 +9,6 @@ my $y = 'case';
   $x .= 'ing';
 };
 
-is $x, 'testing', "scalar modified inside perl5 block";
+is $x, 'testing', "scalar modified inside Perl block";
 
 # vim: ft=perl6

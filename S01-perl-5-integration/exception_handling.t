@@ -6,14 +6,14 @@ use Test;
 BEGIN {
 plan 3;
 unless (try { EVAL("1", :lang<Perl5>) }) {
-    skip-rest('no perl 5 support'); exit;
+    skip-rest('no Perl support'); exit;
 }
 }
 
 use Carp:from<Perl5>;
 
 my $err;
-lives-ok({ try { Carp.croak() }; $err = $! }, "Perl 5 exception (die) caught");
+lives-ok({ try { Carp.croak() }; $err = $! }, "Perl exception (die) caught");
 like($err.Str, rx:P5/Carp/, "Exception is propagated to Raku land");
 
 EVAL(q[
@@ -36,6 +36,6 @@ try { $foo.error };
 lives-ok( {
     my $err = $!;
     $err.payload.test;
-}, "Accessing Perl5 method doesn't die");
+}, "Accessing Perl method doesn't die");
 
 # vim: ft=perl6
