@@ -3,11 +3,11 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 23;
+plan 24;
 
 # RT #125515
 {
-    constant $read-file = $?FILE.IO.parent(2).add("packages/README");
+    constant $read-file = $?FILE.IO.parent(2).add("packages").add("README");
     $read-file.IO.r or bail-out "Missing $read-file that is needed to run a test";
 
     my @got;
@@ -93,3 +93,20 @@ if run :!out, :!err, «perl -e 'print 42'» {
 else {
     skip 'need `perl` to run this test';
 }
+
+# https://github.com/rakudo/rakudo/issues/3299
+is_run ｢
+    my $prog   = $*DISTRO.is-win ?? 'cmd'   !! 'cat';
+    my @target = $*DISTRO.is-win ?? «/c ""» !! '/dev/null';
+
+    for ^1200 {
+      my $proc = Proc::Async.new($prog, |@target);
+      react {
+          whenever $proc.start { done }
+          whenever signal(SIGTERM) {}
+          whenever Promise.in(5) {}
+      }
+    }
+
+    print 'pass'
+｣, {:out<pass>, :err(''), :0status}, 'No memory corruption when starting many Proc::Async instances';
