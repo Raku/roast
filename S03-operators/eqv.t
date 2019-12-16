@@ -246,16 +246,40 @@ subtest 'Throws/lives in lazy cases' => {
 }
 
 # rakudo/issues/3346
-{
-    my class Null does Iterable does Iterator {
-        method iterator  { self }
-        method pull-one  { IterationEnd }
+subtest 'Non-Positional Iterables' => {
+    plan 6;
+
+    my class Non-Positional does Iterable {
+        has @.elems;
+        method iterator  {
+            class :: does Iterator {
+                has @.elems;
+                method pull-one {
+                    @!elems ?? @!elems.shift !! IterationEnd;
+                }
+            }.new(:@!elems);
+        }
     }
 
-    my $p = start { Null.new eqv Null.new };
+    my $p = start {
+        ok Non-Positional.new eqv Non-Positional.new,
+            'both empty';
+
+        nok Non-Positional.new eqv Non-Positional.new(:elems<b>),
+            'a.iterator reaches IterationEnd before b.iterator';
+
+        nok Non-Positional.new(:elems<a>) eqv Non-Positional.new,
+            'b.iterator reaches IterationEnd before a.iterator';
+
+        nok Non-Positional.new(:elems<a>) eqv Non-Positional.new(:elems<b>),
+            'iterators return unequal values';
+
+        ok Non-Positional.new(:elems<b>) eqv Non-Positional.new(:elems<b>),
+            'iterators return equal values';
+    };
+
     await Promise.anyof($p, Promise.in(5));
-    ok $p.status == Kept,
-     'eqv comparison between non-Positional Iterables does not hang';
+    ok $p, 'eqv comparison between non-Positional Iterables does not hang';
 }
 
 # vim: ft=perl6
