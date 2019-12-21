@@ -262,7 +262,7 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
 
 }
 
-#L<S05/Substitution/As with Perl 5, a bracketing form is also supported>
+#L<S05/Substitution/As with Perl, a bracketing form is also supported>
 {
     my $a = 'abc';
     ok $a ~~ s[b] = 'de', 's[...] = ... returns true on success';

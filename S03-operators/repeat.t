@@ -11,7 +11,7 @@ Repeat operators for strings and lists
 
 plan 62;
 
-#L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
+#L<S03/Changes to Perl operators/"x (which concatenates repetitions of a string to produce a single string">
 
 is('a' x 3, 'aaa', 'string repeat operator works on single character');
 is('ab' x 4, 'abababab', 'string repeat operator works on multiple character');
@@ -41,7 +41,7 @@ is('str' x Int, '', 'x with Int type object');
         'list repeating with -Inf fails';
 }
 
-#L<S03/Changes to Perl 5 operators/"and xx (which creates a list of repetitions of a list or item)">
+#L<S03/Changes to Perl operators/"and xx (which creates a list of repetitions of a list or item)">
 my @foo = 'x' xx 10;
 is(@foo[0], 'x', 'list repeat operator created correct array');
 is(@foo[9], 'x', 'list repeat operator created correct array');

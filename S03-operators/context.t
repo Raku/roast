@@ -70,20 +70,20 @@ plan 38;
         'building a hash of one item fails';
 }
 
-# L<S03/"Changes to Perl 5 operators"/Perl 5's ${...}, @{...}, %{...}, etc>
+# L<S03/"Changes to Perl operators"/Perl's ${...}, @{...}, %{...}, etc>
 #                       ^ non-breaking space
 # Deprecated P5 dereferencing operators:
 {
     my $scalar = 'abcd';
-    throws-like '${$scalar}', X::Obsolete, 'Perl 5 form of ${$scalar} dies';
-    throws-like '"${$scalar}"', X::Obsolete, 'Perl 5 form of "${$scalar}" dies';
+    throws-like '${$scalar}', X::Obsolete, 'Perl form of ${$scalar} dies';
+    throws-like '"${$scalar}"', X::Obsolete, 'Perl form of "${$scalar}" dies';
 
     my $array  = [1, 2, 3];
-    throws-like '@{$array}', X::Obsolete, 'Perl 5 form of @{$array} dies';
-    throws-like '"@{$array}"', X::Obsolete, 'Perl 5 form of "@{$array}" dies';
+    throws-like '@{$array}', X::Obsolete, 'Perl form of @{$array} dies';
+    throws-like '"@{$array}"', X::Obsolete, 'Perl form of "@{$array}" dies';
 
     my $hash  = {a => 1, b => 2, c => 3};
-    throws-like '%{$hash}', X::Hash::Store::OddNumber, 'Let rare Perl 5 form of %{$hash} fail for other reasons';
+    throws-like '%{$hash}', X::Hash::Store::OddNumber, 'Let rare Perl form of %{$hash} fail for other reasons';
 }
 
 is(($).WHAT.gist, '(Any)', 'Anonymous $ variable can be declared');

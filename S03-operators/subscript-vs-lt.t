@@ -4,7 +4,7 @@ use Test;
 
 =begin pod
 
-  Infix comparison operators L<S03/"Changes to Perl 5 operators"/"stealth postfix">
+  Infix comparison operators L<S03/"Changes to Perl operators"/"stealth postfix">
 
 =end pod
 

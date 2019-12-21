@@ -7,7 +7,7 @@ use Test::Util;
 
 'Mu' and 'undefine' tests
 
-This test file contains two sections: a port of the perl5 'undef.t' tests, and
+This test file contains two sections: a port of the Perl 'undef.t' tests, and
 perl6-specific tests.
 
 =end pod

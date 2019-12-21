@@ -29,11 +29,11 @@ both(5, :b(6), 3, :a(4));
 
 {
     my @result;
-    sub perl5sub {
+    sub Perl-sub {
         push @result, @_[0];
         push @result, @_[1];
     }
-    perl5sub(<foo bar>);
+    Perl-sub(<foo bar>);
     is(@result, [<foo bar>], 'use @_ in sub');
 }
 

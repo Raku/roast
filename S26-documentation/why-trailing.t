@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 55;
+plan 56;
 
 my $pod_index = 0;
 
@@ -138,14 +138,16 @@ sub has-parameter-as-well(
 
 sub so-many-params(
     Str $param, #= first param
+    Str $foo, #= second param
     Int $other-param
 ) {}
 
 {
     my @params = &so-many-params.signature.params;
     test-trailing(@params[0], 'first param');
-    ok !@params[1].WHY.defined, 'the second parameter has no comments'
-        or diag(@params[1].WHY.contents);
+    test-trailing(@params[1], 'second param');
+    ok !@params[2].WHY.defined, 'the third parameter has no comments'
+        or diag(@params[2].WHY.contents);
 }
 
 

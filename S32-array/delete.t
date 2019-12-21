@@ -57,7 +57,7 @@ sub make-string(@a) {
     "deletion of array elements accessed by positive and negative indices (2)";
 }
 
-# Results taken from Perl 5
+# Results taken from Perl
 {
   my @array = <a b c>;
   is ~(@array[2, *-1]:delete), "c ",

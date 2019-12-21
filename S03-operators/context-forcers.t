@@ -14,7 +14,7 @@ sub iis(Mu $a, Mu $b, $descr) {
 
 }
 
-{ # L<S03/"Changes to Perl 5 operators"/imposes boolean context/>
+{ # L<S03/"Changes to Perl operators"/imposes boolean context/>
   iis ?True,    True,  "? context forcer works (1)";
   iis ?False,   False, "? context forcer works (2)";
 
@@ -44,7 +44,7 @@ sub iis(Mu $a, Mu $b, $descr) {
   iis ?{:a},    True,   "? context forcer: non-empty hash is true";
 }
 
-{ # L<S03/"Changes to Perl 5 operators" /imposes a numeric context/>
+{ # L<S03/"Changes to Perl operators" /imposes a numeric context/>
   is +1,           1, "+ context forcer works (1)";
   is +0,           0, "+ context forcer works (2)";
   is +(3/4),     3/4, "+ context forcer works (3)";
@@ -54,7 +54,7 @@ sub iis(Mu $a, Mu $b, $descr) {
   is +(?3),        1, "+ context forcer works (14)";
 }
 
-{ # L<S03/"Changes to Perl 5 operators" /imposes a numeric context/>
+{ # L<S03/"Changes to Perl operators" /imposes a numeric context/>
   is -1,          -1, "- context forcer works (1)";
   is -0,          -0, "- context forcer works (2)";
   is -(3/4),    -3/4, "- context forcer works (3)";
@@ -64,7 +64,7 @@ sub iis(Mu $a, Mu $b, $descr) {
   is -(?3),       -1, "- context forcer works (14)";
 }
 
-{ # L<S03/"Changes to Perl 5 operators" /imposes a string context/>
+{ # L<S03/"Changes to Perl operators" /imposes a string context/>
   is ~1,         "1", "~ context forcer works (1)";
   is ~0,         "0", "~ context forcer works (2)";
   is ~"1",       "1", "~ context forcer works (3)";
@@ -105,7 +105,7 @@ subtest 'numeric context' => {
 }
 
 # L<S02/Context/string "~">
-# L<S03/Changes to Perl 5 operators/Unary ~ string context>
+# L<S03/Changes to Perl operators/Unary ~ string context>
 # string context
 {
     my $a = 10.500000;
@@ -122,7 +122,7 @@ subtest 'numeric context' => {
 }
 
 # L<S02/Context/boolean "?">
-# L<S03/Changes to Perl 5 operators/"?" imposes boolean context>
+# L<S03/Changes to Perl operators/"?" imposes boolean context>
 # boolean context
 {
     my $a = '';

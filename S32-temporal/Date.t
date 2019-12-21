@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 127;
+plan 128;
 
 # construction
 {
@@ -275,4 +275,15 @@ is Date.today.clone(:1day, :2month, :2017year).Str, '2017-02-01',
       'does adding negative values from Date work ok';
     is Date.new("2019-01-01") - -100, Date.new("2019-04-11"),
       'does subtracting negative values from Date work ok';
+}
+
+# R#3069
+{
+    my $fmt =  { sprintf "%04d%02d%02d", .year, .month, .day };
+    is
+      (Date.new('2019-05-01', formatter => $fmt)
+        .. Date.new('2019-05-31', formatter => $fmt)
+      ).join(' '),
+      "20190501 20190502 20190503 20190504 20190505 20190506 20190507 20190508 20190509 20190510 20190511 20190512 20190513 20190514 20190515 20190516 20190517 20190518 20190519 20190520 20190521 20190522 20190523 20190524 20190525 20190526 20190527 20190528 20190529 20190530 20190531",
+      "make sure we didn't lose the formatter";
 }

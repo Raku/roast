@@ -4,7 +4,7 @@ plan 11;
 
 =begin pod
 
-This file was originally derived from the perl5 CPAN module Perl6::Rules,
+This file was originally derived from the Perl CPAN module Perl6::Rules,
 version 0.3 (12 Apr 2004), file t/exhaustive.t.
 
 # L<S05/Modifiers/:exhaustive>
@@ -115,7 +115,7 @@ skip-rest("XXX - infinite loop"); exit;
 
 ok("time   flies   like    an     arrow" ~~
     m:s:ex/^ [ <adj>  <subj> <verb> <art> <obj>
-                 | <subj> <verb> <prep> <art> <noun> 
+                 | <subj> <verb> <prep> <art> <noun>
                  | <verb> <obj>  <prep> <art> <noun>
                  ]
          /,

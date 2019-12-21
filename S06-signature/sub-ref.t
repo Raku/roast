@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-# L<S02/"Built-In Data Types"/Raku> 
+# L<S02/"Built-In Data Types"/Raku>
 
 plan 34;
 
@@ -66,8 +66,8 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     isa-ok($foo, Code);
     isa-ok($foo, Routine);
     isa-ok($foo, Sub);
-    is $foo.(42), 142,              "basic invocation of a perl5-like anonymous sub (1)";
-    is $foo.(),    99,              "basic invocation of a perl5-like anonymous sub (2)";
+    is $foo.(42), 142,              "basic invocation of a Perl-like anonymous sub (1)";
+    is $foo.(),    99,              "basic invocation of a Perl-like anonymous sub (2)";
 }
 
 {

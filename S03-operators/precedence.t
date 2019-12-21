@@ -233,7 +233,7 @@ is(@c, [1,2,3], "@ = binds looser than ,");
     is -2² . abs.Str.ord, "4".ord, "on right side . is tighter than methodcall";
 }
 
-# Contrary to Perl 5 there are no prototypes, and since normal built-ins
+# Contrary to Perl there are no prototypes, and since normal built-ins
 # are not defined as prefix ops, 'uc $a eq $A' actually parses as
 # uc($a eq $A), not uc($a) eq $A.
 # http://irclog.perlgeek.de/perl6/2009-07-14#i_1316200

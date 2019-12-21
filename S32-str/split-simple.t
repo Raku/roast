@@ -75,7 +75,7 @@ split_test
 # a b 3 4 d 5 z    split on <before \d>
 #    ^ ^   ^
 #  => result: 'ab', '3', '4d', '5z'
-#  (confirmed by perl 5)
+#  (confirmed by Perl)
 
 split_test 'ab34d5z'.split(/<.before \d>/), <ab 3 4d 5z>, 'split with zero-width assertions';
 

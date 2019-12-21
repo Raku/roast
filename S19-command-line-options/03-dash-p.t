@@ -9,7 +9,7 @@ plan 3;
 
 Test C<-p> implementation
 
-The C<-p> command line switch mimics the Perl5 C<-p> command line
+The C<-p> command line switch mimics the Perl C<-p> command line
 switch, and wraps the whole script in
 
   for (lines) {
@@ -51,4 +51,3 @@ is_run(
     '-p -e using $0 in {} in "" in rhs in assign to s[] form subst',
     :compiler-args['-p'],
 );
-

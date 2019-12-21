@@ -4,8 +4,8 @@ use Test;
 # L<S03/"Declarators">
 # This section describes declarators like my, our, etc
 # Note that the usage of declarators on the RHS is not spec'ed yet,
-# but works like Perl 5. Also note that the list if declarators here
-# does not match the list described in the referenced specs. 
+# but works like Perl. Also note that the list if declarators here
+# does not match the list described in the referenced specs.
 
 plan 5;
 

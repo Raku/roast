@@ -41,7 +41,7 @@ throws-like '"aouÄÖÜ".encode("latin1").decode("utf16")', Exception, message =
 is 'abc'.encode()[0], 97, 'can index one element in a Buf';
 is-deeply 'abc'.encode()[1, 2], (98, 99), 'can slice-index a Buf';
 
-# verified with Perl 5:
+# verified with Perl:
 # perl -CS -Mutf8 -MUnicode::Normalize -e 'print NFD("ä")' | hexdump -C
 #?rakudo skip 'We do not handle NDF yet RT #124687'
 ok ('ä'.encode('UTF-8', 'D') eqv Buf.new(:16<61>, :16<cc>, :16<88>)),

@@ -4,7 +4,7 @@ use Test;
 
 =begin pod
 
-This file was derived from the perl5 CPAN module Perl6::Rules,
+This file was derived from the Perl CPAN module Perl6::Rules,
 version 0.3 (12 Apr 2004), file t/capture.t.
 
 It has (hopefully) been, and should continue to be, updated to
@@ -89,7 +89,7 @@ is(q/$0/, '$'~'0', 'Non-translation of non-interpolated q/$0/');
 is(q!$0!, '$'~'0', 'Non-translation of non-interpolated q!$0!');
 is(q|$0|, '$'~'0', 'Non-translation of non-interpolated q|$0|');
 
-# L<S05/Grammars/Just like the methods of a class, the rule definitions of a grammar are inherited> 
+# L<S05/Grammars/Just like the methods of a class, the rule definitions of a grammar are inherited>
 
 grammar English { regex name { john } }
 grammar French  { regex name { jean } }
@@ -106,7 +106,7 @@ ok("ivan" ~~ m/<.English::name> | <.French::name> | <.Russian::name>/, 'Russian 
 is(~$/, "ivan", 'Match is ivan');
 
 my regex name { <.English::name> | <.French::name> | <.Russian::name> }
- 
+
 ok("john" ~~ m/<name>/, 'English metaname');
 is(~$/, "john", 'Metaname match is john');
 ok(~$/ ne "jean", "Metaname match isn't jean");

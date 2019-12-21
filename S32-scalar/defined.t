@@ -126,7 +126,7 @@ ok(defined(@bax), 'variable @bax is defined after assigning Nil');
     isa-ok $bar.defined, Bool, '$bar.defined with $bar set to Mu returns a Bool';
 }
 
-# While porting a Perl 5 solution to QoTW regular #24, I noticed the following bug:
+# While porting a Perl solution to QoTW regular #24, I noticed the following bug:
 #   my %a = (a => 1);
 #   defined %a{"b"}; # true!
 my %a = (a => 1);

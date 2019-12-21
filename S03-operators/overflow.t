@@ -162,7 +162,7 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
 {
     # The peephole optimiser is wrong to think that it can substitute intops
     # in place of regular ops, because i_multiply can overflow.
-    # (Perl 5) Bug reported by "Sisyphus" (kalinabears@hdc.com.au)
+    # (Perl) Bug reported by "Sisyphus" (kalinabears@hdc.com.au)
     my $n = 1127;
     my $float = ($n % 1000) * 167772160.0;
     tryeq_sloppy $float, 21307064320;
@@ -242,7 +242,7 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
 
 #overflow tests from radix.t
 {
-    # some random made up hex strings (these values are checked against perl5)
+    # some random made up hex strings (these values are checked against Perl)
     is :16("FFACD5FE"), 4289517054, 'got the correct int value from hex FFACD5FE';
     is :16("AAA4872D"), 2862909229, 'got the correct int value from hex AAA4872D';
     is :16<DEAD_BEEF>,  0xDEADBEEF, 'got the correct int value from hex DEAD_BEEF';

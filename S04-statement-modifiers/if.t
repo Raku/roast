@@ -4,7 +4,7 @@ use Test;
 
 plan 15;
 
-# L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
+# L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl>
 
 # test the if statement modifier
 {
@@ -25,7 +25,7 @@ plan 15;
 	my @y = 41, ($answer ?? 42 !! slip()), 43;
 	my @z = 41, 42, 43;
 	is @y, @z, "sanity check";
-	is @x, @y, "if expr on true cond"; 
+	is @x, @y, "if expr on true cond";
 }
 
 {
@@ -34,11 +34,11 @@ plan 15;
 	my @y = 41, ($answer ?? 42 !! slip()), 43;
 	my @z = 41, 43;
 	is @y, @z, "sanity check";
-	is @x, @y, "if expr on false cond"; 
+	is @x, @y, "if expr on false cond";
 }
 
 
-#testing else part of the operator 
+#testing else part of the operator
 {
 	my $answer = 0;
 	my $x = $answer ?? 42 !! 43;
@@ -50,12 +50,12 @@ plan 15;
 	 return () if 1;
 	 123;
 	}
-	
+
 	my $ok = 1;
 	for foo() -> @foo {
 	    $ok = 0;
 	}
-	ok $ok, "condition in statement level respects context" 
+	ok $ok, "condition in statement level respects context"
 }
 
 {
