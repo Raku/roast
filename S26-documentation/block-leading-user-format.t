@@ -35,7 +35,7 @@ my $str = foo {}
 
 #= line 4
 
-HERE1
+HERE2
 
 # hash for actual runs of test pairs (without and with the env var)
 # key: the test string
