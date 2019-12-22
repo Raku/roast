@@ -30,18 +30,24 @@ isa-ok($foo, Foo, 'basic instantiation of declared class' );
 ok( ! $in_destructor,    'destructor should not fire while object is active' );
 
 my $child = Child.new();
-undefine $child;
+$child = Nil;
 
 # no guaranteed timely destruction, so replace $a and try to force some GC here
-for 1 .. 100
-{
-    $foo = Foo.new();
-}
+await Promise.anyof(
+    Promise.in(5),
+    start {
+        loop
+        {
+            my $foo = Foo.new;
+            my $chld = Child.new unless +@destructor_order;
+            last if $in_destructor && @destructor_order;
+        }
+    }
+);
 
-#?rakudo 4 todo ''
-ok( $in_destructor, '... only when object goes away everywhere'               );
-is( +@destructor_order, 2, '... only as many as available DESTROY submethods' );
-is(  @destructor_order[0], 'Child',  'Child DESTROY should fire first'        );
-is(  @destructor_order[1], 'Parent', '... then parent'                        );
+ok( $in_destructor, '... only when object goes away everywhere'                          );
+is( +@destructor_order % 2, 0, '... only a multiple of the available DESTROY submethods' );
+is(  @destructor_order[0], 'Child',  'Child DESTROY should fire first'                   );
+is(  @destructor_order[1], 'Parent', '... then parent'                                   );
 
 # vim: ft=perl6
