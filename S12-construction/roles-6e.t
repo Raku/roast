@@ -83,20 +83,21 @@ subtest "TWEAK" => {
 }
 subtest "DESTROY" => {
     plan 2;
-    my @order;
+    my $order = ();
     my $on_destroy = Promise.new;
     my $on_destroy_vow = $on_destroy.vow;
     my $build_ran = False;
     my $dlock = Lock.new;
     my role R0 {
         submethod DESTROY {
-            @order.push: $?ROLE.^name if $on_destroy.status ~~ Planned;
+            self.reg-DESTROY: $?ROLE;
+            cas $order, { $order = self.order };
         }
     }
     my role R0a {
         # This won't appear on the list because only submethods are executed on roles.
         method DESTROY {
-            @order.push: $?ROLE.^name;
+            self.reg-DESTROY: $?ROLE;
         }
         submethod BUILD {
             $build_ran = True;
@@ -104,34 +105,37 @@ subtest "DESTROY" => {
     }
     my class C0 does R0 does R0a {
         submethod DESTROY {
-            @order.push: $?CLASS.^name if $on_destroy.status ~~ Planned;
+            self.reg-DESTROY: $?CLASS;
         }
     }
     my role R1 does R0 {
         submethod DESTROY {
-            @order.push: $?ROLE.^name if $on_destroy.status ~~ Planned;
+            self.reg-DESTROY: $?ROLE;
         }
     }
     my role R2 {
         submethod DESTROY {
-            @order.push: $?ROLE.^name if $on_destroy.status ~~ Planned;
+            self.reg-DESTROY: $?ROLE;
         }
     }
     my class C1 does R1 does R2 is C0 {
+        has @.order;
         submethod DESTROY {
-                if $on_destroy.status ~~ Planned {
-                    $on_destroy_vow.keep(True);
-                    @order.push: $?CLASS.^name;
-                }
+            self.reg-DESTROY: $?CLASS;
+        }
+        method reg-DESTROY(Mu \type) {
+            @!order.push: type.^name;
         }
     }
-    start {
-        while $on_destroy.status ~~ Planned {
-            C1.new
-        }
-    }
-    await $on_destroy;
-    is-deeply @order.List, <R0 C0 R0 R1 R2 C1>, "DESTROYs are invoked in the right order";
+    await Promise.anyof(
+        start {
+            while !$order.elems {
+                C1.new
+            }
+        },
+        Promise.in(5)
+    );
+    is-deeply ($order // ()).List, <C1 R2 R1 R0 C0 R0>, "DESTROYs are invoked in the right order";
     # Cross-check for all above cases where methods in roles aren't called.
     ok $build_ran, "submethod BUILD is still called where role is with method DESTROY";
 }
