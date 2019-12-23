@@ -197,7 +197,7 @@ try {
     is greet('japhb'), 'greet japhb', 'wrapped greet() works';
     is $wrapped, 'greet', 'wrapper sees lexical from time of wrap (greet)';
 
-    undefine $wrapped;
+    $wrapped = Nil;
 
     ok ! $wrapped.defined, 'wrapper test variable is undefined';
     is meet('masak'), 'meet masak', 'wrapped meet() works';

@@ -44,7 +44,7 @@ try {
 
 # RT #70011
 {
-    undefine $!;
+    $! = Nil;
     try { die('goodbye'); }
     ok defined( $!.perl ), '$! has working Raku object methods after try';
     ok ($!.WHAT ~~ Exception), '$! is Exception object after try';

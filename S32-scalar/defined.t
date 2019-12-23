@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 56;
+plan 55;
 
 # L<S32::Basics/Mu/=item defined>
 
@@ -46,11 +46,6 @@ ok(defined($foo), 'variable $foo is now defined (as string "b")');
 
 $foo = 0;
 ok(defined($foo), 'variable $foo is now defined (as numeric literal 0)');
-
-{
-    undefine($foo);
-    ok(!defined($foo), 'undefine $foo works');
-}
 
 # containers
 
