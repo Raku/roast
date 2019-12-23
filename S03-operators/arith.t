@@ -13,6 +13,9 @@ unless ($five == 5) {
     exit();
 }
 
+# was in core pre v6.e, not anymore
+sub undefine(\a) { a = Nil }
+
 # 2008-May-01 .nextwith tailcalls removed to help rakudo.
 # Probably degrades error messages, so restore once rakudo does .nextwith.
 
