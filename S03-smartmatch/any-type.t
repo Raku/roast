@@ -1,9 +1,10 @@
 use v6;
 use Test;
-plan 15;
+plan 4;
 
 #L<S03/Smart matching/type membership>
-{ 
+subtest "Basics" => {
+    plan 3;
     class Dog {}
     class Cat {}
     class Chihuahua is Dog {} # i'm afraid class Pugs will get in the way ;-)
@@ -16,7 +17,8 @@ plan 15;
 }
 
 # RT #71462
-{
+subtest "RT 71462" => {
+    plan 10;
     is 'RT71462' ~~ Str,      True,  '~~ Str returns a Bool (1)';
     is 5         ~~ Str,      False, '~~ Str returns a Bool (2)';
     is 'RT71462' ~~ Int,      False, '~~ Int returns a Bool (1)';
@@ -30,10 +32,22 @@ plan 15;
 }
 
 # RT #76610
-{
+subtest "RT 76610" => {
+    plan 2;
     module M { };
     lives-ok { 42 ~~ M }, '~~ module lives';
     ok not $/, '42 is not a module';
+}
+
+# https://github.com/rakudo/rakudo/issues/3383
+subtest "GH 3383" => {
+    plan 6;
+    ok Array        ~~ Positional,        "Array ~~ Positional";
+    ok Array[Str]   ~~ Positional,        "Array[Str] ~~ Positional";
+    ok Array[Str]   ~~ Positional[Str],   "Array[Str] ~~ Positional[Str]";
+    ok Array[Str:D] ~~ Positional,        "Array[Str:D] ~~ Positional";
+    ok Array[Str:D] ~~ Positional[Str],   "Array[Str:D] ~~ Positional[Str]";
+    ok Array[Str:D] ~~ Positional[Str:D], "Array[Str:D] ~~ Positional[Str:D]";
 }
 
 # vim: ft=perl6
