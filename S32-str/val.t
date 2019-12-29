@@ -173,6 +173,7 @@ sub ok-val(\value, @strings) {
            "$string",  value,
           "+$string",  value,
           " $string",  value,
+          "$string ",  value,
          " $string ",  value,
           "-$string", -value,
           "−$string", -value,
