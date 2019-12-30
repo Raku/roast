@@ -95,7 +95,10 @@ else {
 }
 
 # https://github.com/rakudo/rakudo/issues/3299
-is_run ｢
+#?rakudo.jvm skip 'hangs / SIGTERM not supported'
+#?DOES 1
+{
+  is_run ｢
     my $prog   = $*DISTRO.is-win ?? 'cmd'   !! 'cat';
     my @target = $*DISTRO.is-win ?? «/c ""» !! '/dev/null';
 
@@ -109,4 +112,5 @@ is_run ｢
     }
 
     print 'pass'
-｣, {:out<pass>, :err(''), :0status}, 'No memory corruption when starting many Proc::Async instances';
+  ｣, {:out<pass>, :err(''), :0status}, 'No memory corruption when starting many Proc::Async instances';
+}
