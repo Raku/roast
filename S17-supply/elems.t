@@ -4,9 +4,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Tap;
 
-plan 5;
-
-dies-ok { Supply.elems }, 'can not be called as a class method';
+plan 4;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
