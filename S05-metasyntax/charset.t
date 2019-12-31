@@ -88,7 +88,8 @@ ok 'b' ~~ /<[. .. b]>/, 'weird char class matches at least its end point';
 # RT #69682
 {
 try { EVAL "/<[a-z]>/"; }
-ok ~$! ~~ / 'Unsupported use of - as character range; in Perl 6 please use ..'/,
+# TODO Replace when the actual error message is changed.
+ok ~$! ~~ / 'Unsupported use of - as character range; in '/,
     "STD error message for - as character range";
 }
 
