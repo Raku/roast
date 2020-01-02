@@ -156,7 +156,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     is_run '',
        {
          out    => '',
-         err    => { not $_ ~~ / ( "SORRY!" .*) ** 2 / },
+         err    => { not $_ ~~ / ( "SORRY!" .* $$) .* $0 / },
          status => { $_ != 0 },
        },
        :compiler-args['-I', $package-lib-prefix, '-M', 'RT127176'],
