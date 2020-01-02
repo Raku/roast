@@ -610,6 +610,7 @@ S11-compunit/compunit-repository.t
 S11-compunit/rt126904.t
 S11-modules/export.t
 S11-modules/importing.t
+S11-modules/import-long.t
 S11-modules/import-multi.t
 S11-modules/import-tag.t
 S11-modules/import.t
