@@ -1,19 +1,19 @@
 use v6.c;
 use Test;
 
-plan 2;
+plan 3;
 
 subtest "Basics" => {
     plan 7;
     # L<S14/Roles/"Roles may have attributes">
 
     {
-        role R1 {
+        my role R1 {
             has $!a1;
             has $.a2 is rw;
         };
 
-        class C1 does R1 {
+        my class C1 does R1 {
             method set_a1($val) {
                 $!a1 = $val;
             }
@@ -32,32 +32,32 @@ subtest "Basics" => {
     }
 
 
-    role R2 {
+    my role R2 {
         has Int $!a;
     }
 
     throws-like 'class C3 does R2 { has $!a }', Exception, 'Roles with conflicing attributes';
     throws-like 'class C2 does R2 { has Int $!a }', Exception, 'Same name, same type will also conflicts';
 
-    role R3 {
+    my role R3 {
         has $.x = 42;
     }
-    class C4 does R3 { }
+    my class C4 does R3 { }
     is C4.new.x, 42, 'initializing attributes in a role works';
 
-    role R4 { has @!foo; method bar() { @!foo } }
-    class C5 does R4 {
+    my role R4 { has @!foo; method bar() { @!foo } }
+    my class C5 does R4 {
         has $.baz;
     }
     is C5.new().bar(), [], 'Composing an attribute into a class that already has one works';
 
     {
-        role R6 {
+        my role R6 {
             has %!e;
             method el() { %!e<a> };
             submethod BUILD(:%!e) { };
         }
-        class C6 does R6 { };
+        my class C6 does R6 { };
         is C6.new(e => { a => 42 }).el, 42, 'can use :%!role_attr in BUILD signature';
     }
 }
@@ -89,6 +89,26 @@ subtest "Multi-path consumption" => {
         my role R2[::T] does R0[T] { };
         my class C does R1[Str] does R2[Str] { }
     >, "indirect double-consumption via parameterized roles doesn't result in conflicting attribute";
+}
+
+# GH rakudo/rakudo#3382
+# Entities defined in classes are prioritized over role stuff. For example, a method from role can't override class'
+# attribute accessor; etc.
+subtest "Class prioritization" => {
+    plan 2;
+
+    my role R {
+        has $.r1 = pi;
+        method c1 { 666 }
+    }
+    my class C does R {
+        has $.c1 = 42;
+        method r1 { e }
+    }
+
+    my $inst = C.new;
+    is $inst.c1, 42, "a method from role doesn't override class attribute accessor";
+    is $inst.r1, e, "a method from class overrides role's attribute accessor";
 }
 
 # vim: syn=perl6
