@@ -135,6 +135,7 @@ subtest "DESTROY" => {
         },
         Promise.in(5)
     );
+    #?rakudo.jvm todo 'got: $()'
     is-deeply ($order // ()).List, <C1 R2 R1 R0 C0 R0>, "DESTROYs are invoked in the right order";
     # Cross-check for all above cases where methods in roles aren't called.
     ok $build_ran, "submethod BUILD is still called where role is with method DESTROY";

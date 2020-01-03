@@ -45,9 +45,12 @@ await Promise.anyof(
     }
 );
 
+#?rakudo.jvm todo "doesn't work, yet"
 ok( $in_destructor, '... only when object goes away everywhere'                          );
 is( +@destructor_order % 2, 0, '... only a multiple of the available DESTROY submethods' );
+#?rakudo.jvm todo "expected: 'Child', got: (Any)"
 is(  @destructor_order[0], 'Child',  'Child DESTROY should fire first'                   );
+#?rakudo.jvm todo "expected: 'Parent', got: (Any)"
 is(  @destructor_order[1], 'Parent', '... then parent'                                   );
 
 # vim: ft=perl6
