@@ -239,21 +239,21 @@ is ([max] 5.4,10.7,-15.2,20.8), 20.8, 'reduce max numeric';
 
     # combination of minmax results for strings:
 
-    is (@words[0..1].minmax minmax @words[2..*].minmax).perl, ('five'..'two').perl,
+    is (@words[0..1].minmax minmax @words[2..*].minmax).raku, ('five'..'two').raku,
         'infix:<minmax> combine .minmax of non-empty sublists of Strs';
-    is (@words[ () ].minmax minmax @words[0..*].minmax).perl, ('five'..'two').perl,
+    is (@words[ () ].minmax minmax @words[0..*].minmax).raku, ('five'..'two').raku,
         'infix:<minmax> combine .minmax of empty and non-empty sublist of Strs';
-    is (@words[0..5].minmax minmax @words[6..*].minmax).perl, ('five'..'two').perl,
+    is (@words[0..5].minmax minmax @words[6..*].minmax).raku, ('five'..'two').raku,
         'infix:<minmax> combine .minmax of non-empty and empty sublist of Strs';
 
-    is ([minmax] @words[0..1].minmax, @words[2..3].minmax, @words[4..*].minmax).perl, ('five'..'two').perl,
+    is ([minmax] @words[0..1].minmax, @words[2..3].minmax, @words[4..*].minmax).raku, ('five'..'two').raku,
         '[minmax] combine .minmax of non-empty sublist of Strs';
-    is ([minmax] @words[ () ].minmax, @words[0..5].minmax, @words[6..*].minmax).perl, ('five'..'two').perl,
+    is ([minmax] @words[ () ].minmax, @words[0..5].minmax, @words[6..*].minmax).raku, ('five'..'two').raku,
         '[minmax] combine .minmax of empty, non-empty, empty sublist of Strs';
 
-    is (@words[0..1].minmax.item, @words[2..3].minmax.item, @words[4..*].minmax.item).minmax.perl, ('five'..'two').perl,
+    is (@words[0..1].minmax.item, @words[2..3].minmax.item, @words[4..*].minmax.item).minmax.raku, ('five'..'two').raku,
         '.minmax combine .minmax of non-empty sublist of Strs';
-    is (@words[ () ].minmax.item, @words[0..5].minmax.item, @words[6..*].minmax.item).minmax.perl, ('five'..'two').perl,
+    is (@words[ () ].minmax.item, @words[0..5].minmax.item, @words[6..*].minmax.item).minmax.raku, ('five'..'two').raku,
         '.minmax combine .minmax of empty, non-empty, empty sublist of Strs';
 }
 

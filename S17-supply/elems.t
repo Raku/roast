@@ -6,7 +6,7 @@ use Test::Tap;
 plan 4;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     tap-ok Supply.from-list(42..51).elems, [1..10], "just tracing elems works";
 

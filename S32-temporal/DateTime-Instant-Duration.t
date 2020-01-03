@@ -123,7 +123,7 @@ is DateTime.new(dtpi 2006,  1,  1,    0,  0,  0.2).second,  0.2, 'Round-tripping
 
 {
     my $i = dtpi 1988, 11, 22,   18, 42, 15.9;
-    isa-ok $i.perl.EVAL, Instant, 'Instant.perl evals to Instant';
+    isa-ok $i.raku.EVAL, Instant, 'Instant.raku evals to Instant';
 }
 
 for 1, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1449755609 {
@@ -135,7 +135,7 @@ for 1, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1449755609 {
 { # coverage; 2016-10-03
     is-deeply Duration.new(4e0).narrow, 4,   'Duration.narrow (Int)';
     is-deeply Duration.new(4.5).narrow, 4.5, 'Duration.narrow (Rat)';
-    is-deeply .perl.EVAL, $_, 'Duration.perl roundtrips' given Duration.new: 4;
+    is-deeply .raku.EVAL, $_, 'Duration.raku roundtrips' given Duration.new: 4;
 
     subtest 'infix:<->(Duration, Real)' => {
         plan 9;

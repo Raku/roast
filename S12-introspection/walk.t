@@ -24,7 +24,7 @@ subtest "Basics" => {
     my class B {
         method m { 'B' }
         submethod sm { 'b' }
-        method mmix(|c) { 'B::mmix(' ~ c.perl ~ ')' }
+        method mmix(|c) { 'B::mmix(' ~ c.raku ~ ')' }
         method few { |(1, 2, 3) }
     }
     my class C is A is B {
@@ -36,7 +36,7 @@ subtest "Basics" => {
     my class D is A {
         method m { 'D' }
         submethod sm { 'd' }
-        submethod mmix(|c) { 'D::mmix(' ~ c.perl ~ ')' }
+        submethod mmix(|c) { 'D::mmix(' ~ c.raku ~ ')' }
         method few { ('a', 'b', 'c') }
     }
     my class E is C is D {
@@ -154,7 +154,7 @@ subtest "Basics" => {
     # Normally exceptions are rethrown except when quiet mode is set.
     {
         my $x = E.new;
-        throws-like { $x.WALK("constrained")(42).perl.say }, X::TypeCheck::Binding, "throws errors by default";
+        throws-like { $x.WALK("constrained")(42).raku.say }, X::TypeCheck::Binding, "throws errors by default";
         my @rv;
         lives-ok { @rv = $x.WALK("constrained").quiet.invoke(42) }, "lives in quiet mode";
         isa-ok @rv[1], Failure, "Failure is the return value of thrown method";

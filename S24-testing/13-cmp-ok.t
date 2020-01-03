@@ -6,7 +6,7 @@ use Test::Util;
 plan 2;
 
 # Some things don't stringify well, so cmp-ok should show something better
-# for them, like .gist or .perl:
+# for them, like .gist or .raku:
 is_run ｢use Test; cmp-ok 'foo', '~~', class {
     method raku { 'meowbar' }
     method gist { 'meowbar' }

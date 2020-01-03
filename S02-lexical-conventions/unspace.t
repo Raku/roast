@@ -310,8 +310,8 @@ is &infix:<+>( 5\ , 5), 10, 'unspace between first and second argument';
 is &infix:<+>( 5 \ , 5), 10, 'unspace between first and second argument with leading space';
 
 # RT #117465
-is "foo".\ \ perl, "foo".perl, 'two unspace in a row after . for method call';
-is "foo"\ \ .perl, "foo".perl, 'two unspace in a row before . for method call';
+is "foo".\ \ perl, "foo".raku, 'two unspace in a row after . for method call';
+is "foo"\ \ .raku, "foo".raku, 'two unspace in a row before . for method call';
 
 # \# okay within a regex
 ok '#' ~~ /\#/, 'Unspace restriction in regex does not apply to \#';

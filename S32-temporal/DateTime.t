@@ -159,7 +159,7 @@ is show-dt(DateTime.new(946684800)), '0 0 0 1 1 2000 6', 'from POSIX at 2000-01-
 
 # compare dates for a series of times earlier and later than "now", so
 # that every test run will use different values
-# and test round-tripping with .perl while we're at it
+# and test round-tripping with .raku while we're at it
 {
     my $t = time;
     my $t1 = $t;
@@ -170,11 +170,11 @@ is show-dt(DateTime.new(946684800)), '0 0 0 1 1 2000 6', 'from POSIX at 2000-01-
         $t1 -= $offset;
         my $dt = DateTime.new($t1);
         is show-dt($dt), join(' ', test-gmtime $t1), "crosscheck $dt";
-        is show-dt($dt), show-dt(EVAL $dt.perl), ".perl round-tripping with $dt";
+        is show-dt($dt), show-dt(EVAL $dt.raku), ".raku round-tripping with $dt";
         $t2 += $offset;
         $dt = DateTime.new($t2);
         is show-dt($dt), join(' ', test-gmtime $t2), "crosscheck $dt";
-        is show-dt($dt), show-dt(EVAL $dt.perl), ".perl round-tripping with $dt";
+        is show-dt($dt), show-dt(EVAL $dt.raku), ".raku round-tripping with $dt";
     }
 }
 

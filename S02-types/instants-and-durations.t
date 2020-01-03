@@ -40,9 +40,9 @@ throws-like { Instant.new(123) }, X::Cannot::New, 'Instant.new is illegal';
 }
 
 for -2**63, -400.2, -33/7, -1, 0, 1, 33/7, 400.2, 2**32 -> $e {
-    is-deeply .perl.EVAL, $_, "Instant round trips properly .($e, False)"
+    is-deeply .raku.EVAL, $_, "Instant round trips properly .($e, False)"
         with Instant.from-posix: $e, False;
-    is-deeply .perl.EVAL, $_, "Instant round trips properly .($e, True)"
+    is-deeply .raku.EVAL, $_, "Instant round trips properly .($e, True)"
         with Instant.from-posix: $e, True;
 }
 

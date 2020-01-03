@@ -29,7 +29,7 @@ for [$*OUT.path, 'STDOUT'], [$*ERR.path, 'STDERR'], [$*IN.path, 'STDIN']
 }
 
 for <IN OUT ERR> -> $stream {
-    is-deeply .perl.EVAL, $_, ".perl for $stream"
+    is-deeply .raku.EVAL, $_, ".raku for $stream"
         with IO::Special.new: "<STD$stream>";
 }
 

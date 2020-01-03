@@ -66,12 +66,12 @@ for @testing -> @a, $T {
 
                 # sub
                 splice-ok splice(@a,|@params), $Treturn, @a, $Tremain,
-                  "$T.perl() sub: $comment";
+                  "$T.raku() sub: $comment";
 
                 # method
                 @a = values.map(*.Num);
                 splice-ok @a.splice(|@params), $Treturn, @a, $Tremain,
-                  "$T.perl() method: $comment";
+                  "$T.raku() method: $comment";
             }
 
             else {
@@ -83,14 +83,14 @@ for @testing -> @a, $T {
 
                 # sub
                 splice-ok splice(@a,|params), $Treturn, @a, $Tremain,
-                  "$T.perl() sub: $comment";
+                  "$T.raku() sub: $comment";
 
                 # method
                 @a = values;
                 splice-ok @a.splice(|params), $Treturn, @a, $Tremain,
-                  "$T.perl() method: $comment";
+                  "$T.raku() method: $comment";
             }
-        }, "$T.perl() $comment";
+        }, "$T.raku() $comment";
     }
 
 #---------------------+--------+---------+----------+---------------------------

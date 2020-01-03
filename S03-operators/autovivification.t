@@ -128,9 +128,9 @@ plan 23;
     my @empty;
     is +@empty, 0, 'Sanity: empty array, @empty, has 0 elements'; 
 
-    my $before =  @empty.perl;
+    my $before =  @empty.raku;
     @empty[5] ~~ /nothing/;
-    my $after = @empty.perl;
+    my $after = @empty.raku;
 
     is +@empty,0,'empty array, @empty, has 0 elements';
 

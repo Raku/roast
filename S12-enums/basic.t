@@ -46,10 +46,10 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
 }
 
 {
-    # usually we don't test explicit value for .perl, but here
+    # usually we don't test explicit value for .raku, but here
     # it's specced, so we make an exception
-    is Day::Mon.perl, 'Day::Mon', '.perl on long form of Pair key';
-    is Mon.perl,      'Day::Mon', '.perl on short form of Pair value';
+    is Day::Mon.raku, 'Day::Mon', '.raku on long form of Pair key';
+    is Mon.raku,      'Day::Mon', '.raku on short form of Pair value';
 
     is Day::Mon.key,  'Mon',      '.key on long form of Pair value';
     is Mon.key,       'Mon',      '.key on short form of Pair value';
@@ -63,7 +63,7 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
                 c => 100, d => 500,
                 m => 1000);
     ok v == 5, 'enum with parens works and non-0 starting point works';
-    is v.perl, 'roman::v', '.perl works on enum with parens';
+    is v.raku, 'roman::v', '.raku works on enum with parens';
     is v.key,  'v',        '.key works on enum with parens';
 }
 
@@ -259,7 +259,7 @@ is-deeply do { my enum Foos (a => <42>); a.Str }, 'a',
 }
 
 { # RT #129142
-    eval-lives-ok 'my enum FF <zero one two three>; my enum GG <fee fie foo fum>; { FF(GG(2)).perl }',
+    eval-lives-ok 'my enum FF <zero one two three>; my enum GG <fee fie foo fum>; { FF(GG(2)).raku }',
                   'Coercing an enum from a coercion of an enum from an int works';
 }
 

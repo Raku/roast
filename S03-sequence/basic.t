@@ -23,7 +23,7 @@ is (1, { $_ + 2 } ... 9).join(', '), '1, 3, 5, 7, 9', 'simple sequence with one 
 is (1, *+2 ... 9).join(', '), '1, 3, 5, 7, 9', 'simple sequence with one item and * closure on the LHS';
 is (1, { $_ - 2 } ... -7).join(', '), '1, -1, -3, -5, -7', 'simple sequence with one item and closure on the LHS';
 is (1, 3, 5, { $_ + 2 } ... 13).join(', '), '1, 3, 5, 7, 9, 11, 13', 'simple sequence with three items and block closure on the LHS';
-is (1, { 1 / ((1 / $_) + 1) } ... 1/5).map({.perl}).join(', '), '1, 0.5, <1/3>, 0.25, 0.2', 'tricky sequence with one item and closure on the LHS';
+is (1, { 1 / ((1 / $_) + 1) } ... 1/5).map({.raku}).join(', '), '1, 0.5, <1/3>, 0.25, 0.2', 'tricky sequence with one item and closure on the LHS';
 is (1, { -$_ } ... 1).join(', '), '1', 'simple alternating sequence with one item and closure on the LHS';
 is (1, { -$_ } ... 3).[^5].join(', '), '1, -1, 1, -1, 1', 'simple alternating sequence with one item and closure on the LHS';
 
@@ -46,7 +46,7 @@ is (1, { $_ + 2 } ... 10).[^6].join(', '), '1, 3, 5, 7, 9, 11', 'simple sequence
 is (1, *+2 ... 10).[^6].join(', '), '1, 3, 5, 7, 9, 11', 'simple sequence with one item and * closure on the LHS';
 is (1, { $_ - 2 } ... -8).[^6].join(', '), '1, -1, -3, -5, -7, -9', 'simple sequence with one item and closure on the LHS';
 is (1, 3, 5, { $_ + 2 } ... 14).[^8].join(', '), '1, 3, 5, 7, 9, 11, 13, 15', 'simple sequence with three items and block closure on the LHS';
-is (1, { 1 / ((1 / $_) + 1) } ... 11/60).[^6].map({.perl}).join(', '), '1, 0.5, <1/3>, 0.25, 0.2, <1/6>', 'tricky sequence with one item and closure on the LHS';
+is (1, { 1 / ((1 / $_) + 1) } ... 11/60).[^6].map({.raku}).join(', '), '1, 0.5, <1/3>, 0.25, 0.2, <1/6>', 'tricky sequence with one item and closure on the LHS';
 is (1, { -$_ } ... 0).[^4].join(', '), '1, -1, 1, -1', 'simple alternating sequence with one item and closure on the LHS';
 
 is (1 ... 5.5, 6, 7).[lazy ^8].join(', '), '1, 2, 3, 4, 5, 6, 7', 'simple sequence with two further terms on the RHS';
@@ -66,7 +66,7 @@ is (1, { $_ + 2 } ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'simple sequence with
 is (1, *+2 ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'simple sequence with one item and * closure on the LHS';
 is (1, { $_ - 2 } ... *).[^5].join(', '), '1, -1, -3, -5, -7', 'simple sequence with one item and closure on the LHS';
 is (1, 3, 5, { $_ + 2 } ... *).[^7].join(', '), '1, 3, 5, 7, 9, 11, 13', 'simple sequence with three items and block closure on the LHS';
-is (1, { 1 / ((1 / $_) + 1) } ... *).[^5].map({.perl}).join(', '), '1, 0.5, <1/3>, 0.25, 0.2', 'tricky sequence with one item and closure on the LHS';
+is (1, { 1 / ((1 / $_) + 1) } ... *).[^5].map({.raku}).join(', '), '1, 0.5, <1/3>, 0.25, 0.2', 'tricky sequence with one item and closure on the LHS';
 is (1, { -$_ } ... *).[^5].join(', '), '1, -1, 1, -1, 1', 'simple alternating sequence with one item and closure on the LHS';
 
 is (1 ... *, 6, 7).[^7].join(', '), '1, 2, 3, 4, 5, 6, 7', 'simple sequence with two further terms on the RHS';
@@ -98,9 +98,9 @@ is (False, { !$_ } ... *).[^10].grep(Bool).elems, 10, "alternating False and Tru
 # L<S03/List infix precedence/'"asymptotically approaching" is not the same as "equals"'>
 # infinite sequence with limits
 
-is ~(1, 1/2, 1/4 ... 0).[^5].map({.perl}), '1 0.5 0.25 0.125 0.0625', 'geometric sequence that never reaches its limit';
-is ~(1, -1/2, 1/4 ... 0).[^5].map({.perl}), '1 -0.5 0.25 -0.125 0.0625', 'alternating geometric sequence that never reaches its limit';
-is (1, { 1 / ((1 / $_) + 1) } ... 0).[^5].map({.perl}).join(', '), '1, 0.5, <1/3>, 0.25, 0.2', '"harmonic" sequence that never reaches its limit';
+is ~(1, 1/2, 1/4 ... 0).[^5].map({.raku}), '1 0.5 0.25 0.125 0.0625', 'geometric sequence that never reaches its limit';
+is ~(1, -1/2, 1/4 ... 0).[^5].map({.raku}), '1 -0.5 0.25 -0.125 0.0625', 'alternating geometric sequence that never reaches its limit';
+is (1, { 1 / ((1 / $_) + 1) } ... 0).[^5].map({.raku}).join(', '), '1, 0.5, <1/3>, 0.25, 0.2', '"harmonic" sequence that never reaches its limit';
 
 # empty sequence
 
@@ -147,9 +147,9 @@ is (1,2,4...*)[10], 1024,
 is (4 ... ^5).join(', '), '4, 3, 2, 1, 0, 1, 2, 3, 4',
     'geometric sequence started in one direction and continues in the other with exclusion';
 
-lives-ok { (1 ... 5).perl }, 'Can take .perl of sequence';
-is EVAL((1 ... 5).perl).join(','), '1,2,3,4,5',
-    'EVAL($sequence.perl) reproduces result list';
+lives-ok { (1 ... 5).raku }, 'Can take .raku of sequence';
+is EVAL((1 ... 5).raku).join(','), '1,2,3,4,5',
+    'EVAL($sequence.raku) reproduces result list';
 
 # RT #98790
 is ~((1 ... *) Z~ ('a' ... 'z')).[^5], "1a 2b 3c 4d 5e", "Zipping two sequence in parallel";

@@ -44,8 +44,8 @@ is (1, slip flat (2,3)).gist, '(1 2 3)', "slip flat listops right";
 
 {
     my $slip = slip <a b c>;
-    is-deeply [$slip.perl.EVAL], [$slip],
-        'can .perl.EVAL roundtrip an itemized slip';
+    is-deeply [$slip.raku.EVAL], [$slip],
+        'can .raku.EVAL roundtrip an itemized slip';
 }
 
 # R#2930

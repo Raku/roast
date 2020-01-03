@@ -422,14 +422,14 @@ my %seen-which;
 
 nok %seen-which{Nil.WHICH}++, "checking Nil.WHICH";
 isa-ok Nil.WHICH, ObjAt,      "Nil returns an ObjAt";
-is Nil.perl,                  'Nil', "Nil.perl returns 'Nil'";
+is Nil.raku,                  'Nil', "Nil.raku returns 'Nil'";
 is Nil.gist,                  'Nil', "Nil.gist returns 'Nil'";
 
 for @normal -> $class {
     my $short = $class.split('::')[* - 1];
     nok %seen-which{::($class).WHICH}++, "checking $class.WHICH";
     isa-ok ::($class).WHICH,      ObjAt, "$class returns an ObjAt";
-    is ::($class).perl,          $class, "$class.perl returns self";
+    is ::($class).raku,          $class, "$class.raku returns self";
     is ::($class).gist,      "($short)", "$class.gist returns self";
 }
 
@@ -437,7 +437,7 @@ for @exception -> $class {
     my $short = $class.split('::')[* - 1];
     nok %seen-which{::($class).WHICH}++, "checking $class.WHICH";
     isa-ok ::($class).WHICH,      ObjAt, "$class returns an ObjAt";
-    is ::($class).perl,          $class, "$class.perl returns self";
+    is ::($class).raku,          $class, "$class.raku returns self";
     is ::($class).gist,      "($short)", "$class.gist returns self";
 }
 
@@ -445,7 +445,7 @@ for @concurrent -> $class {
     my $short = $class.split('::')[* - 1];
     nok %seen-which{::($class).WHICH}++, "checking $class.WHICH";
     isa-ok ::($class).WHICH,      ObjAt, "$class returns an ObjAt";
-    is ::($class).perl,          $class, "$class.perl returns self";
+    is ::($class).raku,          $class, "$class.raku returns self";
     is ::($class).gist,      "($short)", "$class.gist returns self";
 }
 
@@ -462,23 +462,23 @@ for @moar -> $class {
     nok %seen-which{::($class).WHICH}++, "checking $class.WHICH";
     isa-ok ::($class).WHICH,      ObjAt, "$class returns an ObjAt";
     #?rakudo.jvm 2    skip 'NFC NYI on jvm - RT #124500'
-    is ::($class).perl,          $class, "$class.perl returns self";
+    is ::($class).raku,          $class, "$class.raku returns self";
     is ::($class).gist,      "($short)", "$class.gist returns self";
 }
 
 # RT #128944
-subtest 'ObjAt.perl gives distinct results for different objects' => {
+subtest 'ObjAt.raku gives distinct results for different objects' => {
     my @obj = "rt", 128944, <128944>, rx/^/, NaN, ∞, τ+i, .5, class {}, 'a'|42,
                 sub {}, -> {}, method {}, *, *+5, start {}, supply {};
     plan 1+@obj;
     my %seen is SetHash;
     for @obj {
-        %seen{.WHICH.perl}++;
-        is-deeply .WHICH.perl.EVAL, .WHICH,
-            "can .perl.EVAL roundtrip .WHICH for {.perl}";
+        %seen{.WHICH.raku}++;
+        is-deeply .WHICH.raku.EVAL, .WHICH,
+            "can .raku.EVAL roundtrip .WHICH for {.raku}";
     }
     cmp-ok %seen, '==', @obj,
-        'number of unique .WHICH.perls matches number of objects we tested';
+        'number of unique .WHICH.rakus matches number of objects we tested';
 }
 
 # RT #130271

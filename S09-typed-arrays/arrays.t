@@ -180,7 +180,7 @@ plan 84;
 
 {
     my Int @a; @a[2] = 42;
-    my @b := @a.perl.EVAL;
+    my @b := @a.raku.EVAL;
     is @b.of, Int, 'does the roundtrip preserve typedness';
     is @a, @b, 'do typed arrays with empty elements roundtrip';
 }

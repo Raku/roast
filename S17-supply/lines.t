@@ -12,7 +12,7 @@ plan 23;
 dies-ok { Supply.lines }, 'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     tap-ok Supply.from-list( @simple.map: * ~ "\n" ).lines,
       @simple,

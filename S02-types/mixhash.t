@@ -204,10 +204,10 @@ sub showkv($x) {
     my $m = { foo => 10000000000, bar => 17, baz => 42 }.MixHash;
     my $s;
     my $c;
-    lives-ok { $s = $m.perl }, ".perl lives";
+    lives-ok { $s = $m.raku }, ".raku lives";
     isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
-    lives-ok { $c = EVAL $s }, ".perl.EVAL lives";
+    lives-ok { $c = EVAL $s }, ".raku.EVAL lives";
     isa-ok $c, MixHash, "... and produces a MixHash";
     is showkv($c), showkv($m), "... and it has the correct values";
 }
@@ -366,7 +366,7 @@ sub showkv($x) {
 
 {
     my %h of MixHash;
-    ok %h.of.perl eq 'MixHash', 'is the hash really a MixHash';
+    ok %h.of.raku eq 'MixHash', 'is the hash really a MixHash';
     #?rakudo 2 todo 'in flux'
     lives-ok { %h = mix <a b c d c b> }, 'Assigning a Mix to a MixHash';
     is %h.keys.sort.map({ $^k ~ ':' ~ %h{$k} }).join(' '),
@@ -573,9 +573,9 @@ group-of 10 => 'MixHash autovivification of non-existent keys' => {
           ?? X::Numeric::Real !! $pair.value eq 'a'
           ?? X::Str::Numeric  !! X::OutOfRange;
       throws-like { $pair.MixHash }, ex,
-        "($pair.perl()).MixHash throws";
+        "($pair.raku()).MixHash throws";
       throws-like { MixHash.new-from-pairs($pair) }, ex,
-        "MixHash.new-from-pairs( ($pair.perl()) ) throws";
+        "MixHash.new-from-pairs( ($pair.raku()) ) throws";
     }
 }
 

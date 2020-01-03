@@ -16,9 +16,9 @@ class Foo {
 }
 
 lives-ok { Foo.new.m1(1, :x<1>, :y<2>) }, 'implicit *%_ means we can pass extra nameds';
-ok &Foo::m1.signature.perl ~~ /'*%_'/,    '*%_ shows up in .perl of the Signature';
+ok &Foo::m1.signature.raku ~~ /'*%_'/,    '*%_ shows up in .raku of the Signature';
 lives-ok { Foo.new.m2(1, :x<1>, :y<2>) }, 'explicit *%_ means we can pass extra nameds';
-ok &Foo::m2.signature.perl !~~ /'*%_'/,   'With explicit one, *%_ not in .perl of the Signature';
+ok &Foo::m2.signature.raku !~~ /'*%_'/,   'With explicit one, *%_ not in .raku of the Signature';
 
 class Bar is Foo is hidden {
     our &m1 = method m1($a) {   #OK not used
@@ -27,7 +27,7 @@ class Bar is Foo is hidden {
 }
 
 dies-ok { Bar.new.m1(1, :x<1>, :y<2>) },  'is hidden means no implicit *%_';
-ok &Bar::m1.signature.perl !~~ /'*%_'/,   '*%_ does not show up in .perl of the Signature';
+ok &Bar::m1.signature.raku !~~ /'*%_'/,   '*%_ does not show up in .raku of the Signature';
 
 
 class Baz is Bar {

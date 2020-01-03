@@ -9,7 +9,7 @@ dies-ok { Supply.minmax }, 'can not be called as a class method';
 dies-ok { Supply.new.minmax(23) }, 'must be code if specified';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     tap-ok Supply.from-list(1..5).minmax, [(1..1),(1..2),(1..3),(1..4),(1..5)],
       "ascending minmax works";

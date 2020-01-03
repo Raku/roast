@@ -59,12 +59,12 @@ subtest 'coersion from different types' => {
     plan 2*(@prime + @un-prime);
 
     for @prime {
-        my $desc := "{.perl} {.^name} is prime";
+        my $desc := "{.raku} {.^name} is prime";
         is-deeply  is-prime($_), True, "$desc (sub form)";
         is-deeply .is-prime,     True, "$desc (method form)";
     }
     for @un-prime {
-        my $desc := "{.perl} {.^name} is NOT prime";
+        my $desc := "{.raku} {.^name} is NOT prime";
         is-deeply  is-prime($_), False, "$desc (sub form)";
         is-deeply .is-prime,     False, "$desc (method form)";
     }
@@ -73,7 +73,7 @@ subtest 'coersion from different types' => {
 subtest 'Complex.is-prime with Complex that cannot be Real throw' => {
     plan 2*my @tests := <3-3i >, <2+5i>, <-3-3i >, <-2+5i>, <0+31337i>;
     for @tests {
-        throws-like { .is-prime    }, X::Numeric::Real, "{.perl} (method form)";
-        throws-like {  is-prime $_ }, X::Numeric::Real, "{.perl} (sub form)";
+        throws-like { .is-prime    }, X::Numeric::Real, "{.raku} (method form)";
+        throws-like {  is-prime $_ }, X::Numeric::Real, "{.raku} (sub form)";
     }
 }

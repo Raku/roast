@@ -25,7 +25,7 @@ get a list of osnames that have actually passed tests.
     ok $?DISTRO.release,   "Release info is '{$?DISTRO.release}'";
     ok $?DISTRO.path-sep,  "Path separator is '{$?DISTRO.path-sep}'";
 
-    ok $?DISTRO.perl ~~ m/\w/, 'We can do a $?DISTRO.perl';
+    ok $?DISTRO.raku ~~ m/\w/, 'We can do a $?DISTRO.raku';
     ok $?DISTRO.gist ~~ m/\w/, 'We can do a $?DISTRO.gist';
     ok $?DISTRO.Str  ~~ m/\w/, 'We can do a $?DISTRO.Str';
 
@@ -47,7 +47,7 @@ ok $*DISTRO.desc,      "Description is '{$*DISTRO.desc}'";
 ok $*DISTRO.release,   "Release info is '{$*DISTRO.release}'";
 ok $*DISTRO.path-sep,  "Path separator is '{$*DISTRO.path-sep}'";
 
-ok $*DISTRO.perl ~~ m/\w/, 'We can do a $*DISTRO.perl';
+ok $*DISTRO.raku ~~ m/\w/, 'We can do a $*DISTRO.raku';
 ok $*DISTRO.gist ~~ m/\w/, 'We can do a $*DISTRO.gist';
 ok $*DISTRO.Str  ~~ m/\w/, 'We can do a $*DISTRO.Str';
 

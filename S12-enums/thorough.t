@@ -17,7 +17,7 @@ enum day <Sun Mon Tue Wed Thu Fri Sat>;
 
 is day.gist, '(day)', 'enum itself stringififes';
 ok day.WHAT === day,  'enum.WHAT returned a value';
-ok day.perl, 'enum.perl returned a value';
+ok day.raku, 'enum.raku returned a value';
 
 #?DOES 12
 sub test_stuff($x) {
@@ -32,7 +32,7 @@ sub test_stuff($x) {
   does-ok $x, day,         ".does worked correctly ($x-2)";
   ok $x.Tue,               ".Tue() worked correctly ($x)";
   ok $x.Tue.WHAT === day,  '$obj.Tue.WHAT returns the proper type object';
-  ok $x.Tue.perl,          '$obj.Tue.perl returns a true valuee';
+  ok $x.Tue.raku,          '$obj.Tue.raku returns a true valuee';
 }
 
 #?rakudo skip 'NYI'
@@ -77,8 +77,8 @@ sub test_stuff($x) {
     is Bool::True.f, 'inBool', 'method on long name pick up the one from the enum';
 }
 
-ok True.perl ~~/^ 'Bool::True'/, 'True.perl';
-ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
+ok True.raku ~~/^ 'Bool::True'/, 'True.raku';
+ok Bool::True.raku ~~/^ 'Bool::True'/, 'Bool::True.raku';
 
 {
     enum Negation << :isnt<isnt> :arent<arent> :amnot<amnot> :aint<aint> >>;

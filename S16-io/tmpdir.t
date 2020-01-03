@@ -9,7 +9,7 @@ use Test::Util;
 plan 9;
 
 isa-ok $*TMPDIR, IO::Path;
-lives-ok { $*TMPDIR.perl }, '$*TMPDIR.perl works';
+lives-ok { $*TMPDIR.raku }, '$*TMPDIR.raku works';
 lives-ok { $*TMPDIR.gist }, '$*TMPDIR.gist works';
 
 isa-ok .tmpdir, IO::Path, "{.^name}.tmpdir returns IO::Path"

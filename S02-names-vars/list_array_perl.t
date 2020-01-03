@@ -26,10 +26,10 @@ my @tests = (
 {
     for @tests -> $obj {
         my $s = (~$obj).subst(/\n/, '␤');
-        ok EVAL($obj.perl) eq $obj,
-            "($s.perl()).perl returned something whose EVAL()ed stringification is unchanged";
-        is (EVAL($obj.perl).WHAT).gist, $obj.WHAT.gist,
-            "($s.perl()).perl returned something whose EVAL()ed .WHAT is unchanged";
+        ok EVAL($obj.raku) eq $obj,
+            "($s.raku()).raku returned something whose EVAL()ed stringification is unchanged";
+        is (EVAL($obj.raku).WHAT).gist, $obj.WHAT.gist,
+            "($s.raku()).raku returned something whose EVAL()ed .WHAT is unchanged";
     }
 }
 
@@ -38,63 +38,63 @@ my @tests = (
     my $foo = [ 42 ]; $foo[1] = $foo;
     is $foo[1][1][1][0], 42, "basic recursive arrayref";
 
-    ok $foo.perl,
-        ".perl doesn't hang on a recursive arrayref";
-    ok $foo.perl.EVAL.perl,
-        ".perl output parses on a recursive arrayref";
+    ok $foo.raku,
+        ".raku doesn't hang on a recursive arrayref";
+    ok $foo.raku.EVAL.raku,
+        ".raku output parses on a recursive arrayref";
 }
 
 {
-    # test bug in .perl on result of hyperoperator
+    # test bug in .raku on result of hyperoperator
     # first the trivial case without hyperop
     my @foo = ([-1, -2], -3);
-    is @foo.item.perl, '$[[-1, -2], -3]', ".perl on a nested list";
+    is @foo.item.raku, '$[[-1, -2], -3]', ".raku on a nested list";
 
     my @hyp = -« ([1, 2], 3);
     # what it currently (r16460) gives
-    isnt @hyp.item.perl, '[(-1, -2), -3]', "strange inner parens from .perl on result of hyperop";
+    isnt @hyp.item.raku, '[(-1, -2), -3]', "strange inner parens from .raku on result of hyperop";
 
     # what it should give
-    is @hyp.item.perl, '$[[-1, -2], -3]', ".perl on a nested list result of hyper operator";
+    is @hyp.item.raku, '$[[-1, -2], -3]', ".raku on a nested list result of hyper operator";
 }
 
 {
     my @list = (1, 2);
-    append @list, EVAL (3, 4).perl;
-    is +@list, 4, 'EVAL(@list.perl) gives a list, not a scalar';
+    append @list, EVAL (3, 4).raku;
+    is +@list, 4, 'EVAL(@list.raku) gives a list, not a scalar';
 
     @list = (1,2);
-    append @list, EVAL $(3, 4).perl;
-    is +@list, 3, 'EVAL($@list.perl) gives a scalar list, not a list';
+    append @list, EVAL $(3, 4).raku;
+    is +@list, 3, 'EVAL($@list.raku) gives a scalar list, not a list';
 }
 
 # RT #63724
 {
     my @original      = (1,2,3);
-    my $dehydrated    = @original.perl;
+    my $dehydrated    = @original.raku;
     my @reconstituted = @( EVAL $dehydrated );
 
     is @reconstituted, @original,
-       "EVAL of .perl returns original for '$dehydrated'";
+       "EVAL of .raku returns original for '$dehydrated'";
 
     @original      = (1,);
-    $dehydrated    = @original.perl;
+    $dehydrated    = @original.raku;
     @reconstituted = @( EVAL $dehydrated );
 
     is-deeply @reconstituted, @original,
-       "EVAL of .perl returns original for '$dehydrated'";
+       "EVAL of .raku returns original for '$dehydrated'";
 }
 
 # RT #124342
 {
     my $l := (1,);
-    is-deeply (EVAL $l.perl), $l;
+    is-deeply (EVAL $l.raku), $l;
 }
 
 # RT #65988
 {
     my $rt65988 = (\(1,2), \(3,4));
-    is-deeply EVAL( $rt65988.perl ), $rt65988, $rt65988.perl ~ '.perl';
+    is-deeply EVAL( $rt65988.raku ), $rt65988, $rt65988.raku ~ '.raku';
 }
 
 # probably there is a better place for this test

@@ -47,17 +47,17 @@ my @tests = (
 
 # L<S02/Names and Variables/To get a Raku representation of any object>
 # Quoting S02 (emphasis added):
-#   To get a Perlish representation of any data value, use the .perl method.
+#   To get a Perlish representation of any data value, use the .raku method.
 #   This will put quotes around strings, square brackets around list values,
 #   curlies around hash values, etc., **such that standard Perl could reparse
 #   the result**.
 {
     for @tests -> $obj {
         my $s = (~$obj).subst(/\n/, '␤');
-        ok EVAL($obj.perl).perl eq $obj.perl,
-            "($s.perl()).perl returned something whose EVAL()ed stringification is unchanged";
-        is WHAT(EVAL($obj.perl)).gist, $obj.WHAT.gist,
-            "($s.perl()).perl returned something whose EVAL()ed .WHAT is unchanged";
+        ok EVAL($obj.raku).raku eq $obj.raku,
+            "($s.raku()).raku returned something whose EVAL()ed stringification is unchanged";
+        is WHAT(EVAL($obj.raku)).gist, $obj.WHAT.gist,
+            "($s.raku()).raku returned something whose EVAL()ed .WHAT is unchanged";
     }
 }
 
@@ -66,8 +66,8 @@ my @tests = (
     my $foo = { a => 42 }; $foo<b> = $foo;
     is $foo<b><b><b><a>, 42, "basic recursive hashref";
 
-    ok $foo.perl,
-        ".perl worked correctly on a recursive hashref";
+    ok $foo.raku,
+        ".raku worked correctly on a recursive hashref";
 }
 
 {
@@ -78,8 +78,8 @@ my @tests = (
 
     is $foo[1]<b>[1]<b>[0], 42, "mixed arrayref/hashref recursive structure";
 
-    ok $foo.perl,
-        ".perl worked correctly on a mixed arrayref/hashref recursive structure";
+    ok $foo.raku,
+        ".raku worked correctly on a mixed arrayref/hashref recursive structure";
 }
 
 # RT #124242
@@ -124,7 +124,7 @@ my @tests = (
 
 {
     # test a bug reported by Chewie[] - apparently this is from S03
-    is(EVAL((("f","oo","bar").keys.List).perl), <0 1 2>, ".perl on a .keys list");
+    is(EVAL((("f","oo","bar").keys.List).raku), <0 1 2>, ".raku on a .keys list");
 }
 
 
@@ -137,30 +137,30 @@ my @tests = (
 
         method init {
             $.inst = [ 0.451619069541592e0, 0.248524740881188e0 ];
-            $!priv = [ 0.016026552444413e0, 0.929197054085006e0 ].perl;
+            $!priv = [ 0.016026552444413e0, 0.929197054085006e0 ].raku;
         }
     }
 
     my $t1 = RT61918.new();
-    my $t1_new = $t1.perl;
+    my $t1_new = $t1.raku;
     $t1.init;
-    my $t1_init = $t1.perl;
+    my $t1_init = $t1.raku;
 
-    ok $t1_new ne $t1_init, 'changing object changes .perl output';
+    ok $t1_new ne $t1_init, 'changing object changes .raku output';
 
     # TODO: more tests that show EVAL($t1_init) has the same guts as $t1.
-    ok $t1_new ~~ /<< krach >>/, 'attribute value appears in .perl output';
+    ok $t1_new ~~ /<< krach >>/, 'attribute value appears in .raku output';
 
-    # RT #62002 -- validity of default .perl
-    my $t2_init = EVAL($t1_init).perl;
-    is $t1_init, $t2_init, '.perl on user-defined type roundtrips okay';
+    # RT #62002 -- validity of default .raku
+    my $t2_init = EVAL($t1_init).raku;
+    is $t1_init, $t2_init, '.raku on user-defined type roundtrips okay';
 }
 
 # RT #123048
 {
     my $a = 0.219947518065601987e0;
-    is $a.perl, EVAL($a.perl).perl,
-        '.perl on float with many digits roundtrips okay';
+    is $a.raku, EVAL($a.raku).raku,
+        '.raku on float with many digits roundtrips okay';
 }
 
 # RT #64080
@@ -168,60 +168,60 @@ my @tests = (
     my %h;
     lives-ok { %h<a> = [%h<a>] },
              'can assign list with new hash element to itself';
-    lives-ok { %h<a>.perl }, 'can take .perl from hash element';
+    lives-ok { %h<a>.raku }, 'can take .raku from hash element';
     ok %h<a> !=== %h<a>[0], 'hoa does not refer to hash element';
 }
 
 # RT #67790
 {
     class RT67790 {}
-    lives-ok { RT67790.HOW.perl }, 'can .perl on .HOW';
+    lives-ok { RT67790.HOW.raku }, 'can .raku on .HOW';
     #?rakudo skip 'RT #67790'
-    ok EVAL(RT67790.HOW.perl) === RT67790.HOW, '... and it returns the right thing';
+    ok EVAL(RT67790.HOW.raku) === RT67790.HOW, '... and it returns the right thing';
 }
 
 # RT #69869
 {
     is 1.0.WHAT.gist, Rat.gist, '1.0 is Rat';
-    is EVAL( 1.0.perl ).WHAT.gist, Rat.gist, "1.0 perl'd and EVAL'd is Rat";
+    is EVAL( 1.0.raku ).WHAT.gist, Rat.gist, "1.0 perl'd and EVAL'd is Rat";
 }
 
 
 # RT #67948
 {
     my @a;
-    ([0, 0], [1, 1]).grep({@a.push: .perl; 1}).eager;
+    ([0, 0], [1, 1]).grep({@a.push: .raku; 1}).eager;
     for @a {
         my $n = EVAL($_);
-        isa-ok $n, Array, '.perl in .grep works - type';
-        is $n.elems, 2, '.perl in .grep works - number of elems';
-        is $n[0], $n[1], '.perl in .grep works - element equality';
+        isa-ok $n, Array, '.raku in .grep works - type';
+        is $n.elems, 2, '.raku in .grep works - number of elems';
+        is $n[0], $n[1], '.raku in .grep works - element equality';
     }
 }
 
 # Buf
 {
     my Blob $a = "asdf".encode();
-    is EVAL($a.perl).decode("utf8"), "asdf";
+    is EVAL($a.raku).decode("utf8"), "asdf";
 }
 
 {
     my $ch;
-    lives-ok { $ch = EVAL 100.chr.perl }, '100.chr.perl - lives';
-    is $ch, 100.chr, ".perl on latin character";
+    lives-ok { $ch = EVAL 100.chr.raku }, '100.chr.raku - lives';
+    is $ch, 100.chr, ".raku on latin character";
     $ch = '';
 
-    lives-ok { $ch = EVAL 780.chr.perl }, '780.chr.perl - lives';
-    is $ch, 780.chr, ".perl on composing character";
+    lives-ok { $ch = EVAL 780.chr.raku }, '780.chr.raku - lives';
+    is $ch, 780.chr, ".raku on composing character";
 
     # RT #125110
     my $non-print-then-combchar = 1.chr ~ 780.chr;
-    lives-ok { $ch = EVAL $non-print-then-combchar.perl },
-        '.perl on string with combining char on a non-printable - lives';
+    lives-ok { $ch = EVAL $non-print-then-combchar.raku },
+        '.raku on string with combining char on a non-printable - lives';
     is $ch, $non-print-then-combchar,
-        ".perl on string with combining char on a non-printable - roundtrips";
+        ".raku on string with combining char on a non-printable - roundtrips";
 
-    is "Ħ".perl.chars, 3, 'non-combining start does not need escaping';
+    is "Ħ".raku.chars, 3, 'non-combining start does not need escaping';
 }
 
 # vim: ft=perl6

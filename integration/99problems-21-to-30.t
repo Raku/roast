@@ -123,7 +123,7 @@ sub combination($n, @xs) {
 
 {
     
-    is combination(3, (1..5)).perl,
+    is combination(3, (1..5)).raku,
     ([1, 2, 3],
      [1, 2, 4],
      [1, 2, 5],
@@ -133,7 +133,7 @@ sub combination($n, @xs) {
      [2, 3, 4],
      [2, 3, 5],
      [2, 4, 5],
-     [3, 4, 5]).perl, "combinations work.";
+     [3, 4, 5]).raku, "combinations work.";
 }
 
 {

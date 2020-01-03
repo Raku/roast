@@ -154,7 +154,7 @@ ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
         my @res = ($from .. $to).rand xx $n;
         is (my $n-good := @res.grep($from <= * <= $to).elems), $n,
             'all generated numbers are in range'
-        or diag "Got {$n - $n-good} out of range numbers in @res.perl()";
+        or diag "Got {$n - $n-good} out of range numbers in @res.raku()";
 
         # Look for a bit less than exact number, since there's a small chance
         # for some of them to be the same and we don't want the test to flap

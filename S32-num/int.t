@@ -15,14 +15,14 @@ Basic tests for the int() builtin
 # basic sanity:
 is(-0, 0, '-0 is the same as 0 - hey, they are integers ;-)');
 
-isa-ok( EVAL(1.perl), Int, 'EVAL 1.perl is Int' );
-is( EVAL(1.perl), 1, 'EVAL 1.perl is 1' );
-isa-ok( EVAL((-12).perl), Int, 'EVAL -12.perl is Int' );
-is( EVAL((-12).perl), -12, 'EVAL -12.perl is -12' );
-isa-ok( EVAL(0.perl), Int, 'EVAL 0.perl is Int' );
-is( EVAL(0.perl), 0, 'EVAL 0.perl is 0' );
-isa-ok( EVAL((-0).perl), Int, 'EVAL -0.perl is Int' );
-is( EVAL((-0).perl), -0, 'EVAL -0.perl is 0' );
+isa-ok( EVAL(1.raku), Int, 'EVAL 1.raku is Int' );
+is( EVAL(1.raku), 1, 'EVAL 1.raku is 1' );
+isa-ok( EVAL((-12).raku), Int, 'EVAL -12.raku is Int' );
+is( EVAL((-12).raku), -12, 'EVAL -12.raku is -12' );
+isa-ok( EVAL(0.raku), Int, 'EVAL 0.raku is Int' );
+is( EVAL(0.raku), 0, 'EVAL 0.raku is 0' );
+isa-ok( EVAL((-0).raku), Int, 'EVAL -0.raku is Int' );
+is( EVAL((-0).raku), -0, 'EVAL -0.raku is 0' );
 
 is((-1).Int, -1, "(-1).Int is -1");
 is(0.Int, 0, "0.Int is 0");

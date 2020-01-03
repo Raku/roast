@@ -42,13 +42,13 @@ plan 106;
     $x = Foo.new;
     $r = $x.test(1|2);
     is($x.count, 2, 'method called right number of times');
-    $ok = $r.perl.subst(/\D/, '', :g) eq '12' | '21';
+    $ok = $r.raku.subst(/\D/, '', :g) eq '12' | '21';
     ok(?$ok,        'right values passed to method');
 
     $x = Foo.new;
     $r = $x.test(1 & 2 | 3);
     is($x.count, 3, 'method called right number of times');
-    $ok = $r.perl.subst(/\D/, '', :g) eq '123' | '213' | '312' | '321'; # e.g. & values together
+    $ok = $r.raku.subst(/\D/, '', :g) eq '123' | '213' | '312' | '321'; # e.g. & values together
     ok(?$ok,        'junction structure maintained');
 }
 
@@ -65,7 +65,7 @@ plan 106;
     is($calls_a, 3, 'correct multi-sub called right number of times');
     is($calls_b, 0, 'incorrect multi-sub not called');
     is($calls_c, 0, 'incorrect multi-sub not called');
-    $ok = $r.perl.subst(/\D/, '', :g) eq '123' | '213' | '312' | '321'; # e.g. & values together
+    $ok = $r.raku.subst(/\D/, '', :g) eq '123' | '213' | '312' | '321'; # e.g. & values together
     ok(?$ok,        'junction structure maintained');
 
     $calls_a = 0;
@@ -119,7 +119,7 @@ plan 106;
     is($obj.calls_a, 3, 'correct multi-method called right number of times');
     is($obj.calls_b, 0, 'incorrect multi-method not called');
     is($obj.calls_c, 0, 'incorrect multi-method not called');
-    $ok = $r.perl.subst(/\D/, '', :g) eq '123' | '213' | '312' | '321'; # e.g. & values together
+    $ok = $r.raku.subst(/\D/, '', :g) eq '123' | '213' | '312' | '321'; # e.g. & values together
     ok(?$ok,            'junction structure maintained');
 
     $obj = MMTest.new();
@@ -195,7 +195,7 @@ plan 106;
 
     $x = JuncInvTest1.new(n => 1) | JuncInvTest1.new(n => 2) & JuncInvTest1.new(n => 4);
     my Mu $r = $x.d;
-    my $ok = ?($r.perl.subst(/\D/, '', :g) eq '248' | '284' | '482' | '842');
+    my $ok = ?($r.raku.subst(/\D/, '', :g) eq '248' | '284' | '482' | '842');
     ok($ok, 'auto-threading over invocant produced correct junctional result');
 
     $cnt2 = 0;

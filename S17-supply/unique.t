@@ -6,7 +6,7 @@ use Test::Tap;
 plan 16;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     tap-ok Supply.from-list(flat(1..10,1..10)).unique,
       [1,2,3,4,5,6,7,8,9,10],

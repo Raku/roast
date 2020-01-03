@@ -39,7 +39,7 @@ is +@methods, 0, 'class C has no local methods (instance)';
 @methods = B.^methods(:local).grep(*.name ne 'BUILDALL');
 is +@methods, 1, 'class B has one local methods (proto)';
 is @methods[0].name(), 'foo', 'method name can be found';
-ok @methods[0].signature.perl ~~ /'$param'/, 'method signature contains $param';
+ok @methods[0].signature.raku ~~ /'$param'/, 'method signature contains $param';
 is @methods[0].returns.gist, Num.gist, 'method returns a Num (from .returns)';
 is @methods[0].of.gist, Num.gist, 'method returns a Num (from .of)';
 ok !@methods[0].is_dispatcher, 'method is not a dispatcher';
@@ -47,7 +47,7 @@ ok !@methods[0].is_dispatcher, 'method is not a dispatcher';
 @methods = B.new().^methods(:local).grep(*.name ne 'BUILDALL');
 is +@methods, 1, 'class B has one local methods (instance)';
 is @methods[0].name(), 'foo', 'method name can be found';
-ok @methods[0].signature.perl ~~ /'$param'/, 'method signature contains $param';
+ok @methods[0].signature.raku ~~ /'$param'/, 'method signature contains $param';
 is @methods[0].returns.gist, Num.gist, 'method returns a Num (from .returns)';
 is @methods[0].of.gist, Num.gist, 'method returns a Num (from .of)';
 ok !@methods[0].is_dispatcher, 'method is not a dispatcher';
@@ -110,7 +110,7 @@ ok +List.^methods(:all) > +Any.^methods(:all), 'List has more methods than Any';
 ok +Any.^methods(:all) > +Mu.^methods(), 'Any has more methods than Mu';
 
 ok +(D.^methods>>.name) > 0, 'can get names of methods in and out of our own classes';
-ok D.^methods.perl, 'can get .perl of output of .^methods';
+ok D.^methods.raku, 'can get .raku of output of .^methods';
 
 class PT1 {
     method !pm1() { }
@@ -150,11 +150,11 @@ is @methods[0].name, 'bar', 'methods call found public method in subclass (with 
 
 {
     lives-ok { Sub.^methods.gist }, 'Can .gist methods of a subroutine';
-    lives-ok { Sub.^methods.perl }, 'Can .perl methods of a subroutine';
+    lives-ok { Sub.^methods.raku }, 'Can .raku methods of a subroutine';
     lives-ok { Method.^methods.gist }, 'Can .gist methods of a method';
-    lives-ok { Method.^methods.perl }, 'Can .perl methods of a method';
+    lives-ok { Method.^methods.raku }, 'Can .raku methods of a method';
     lives-ok { { $^a }.^methods.gist }, 'Can .gist methods of a block';
-    lives-ok { { $^a }.^methods.perl }, 'Can .perl methods of a block';
+    lives-ok { { $^a }.^methods.raku }, 'Can .raku methods of a block';
     # RT #108968
     lives-ok { :(Int).^methods>>.gist }, 'Can >>.gist methods of a Signature';
 }

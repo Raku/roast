@@ -9,7 +9,7 @@ plan 20;
 # Simple test, making sure callwith passes on parameters properly.
 class A {
     method a(*@A) {
-        flat (self.perl, @A)
+        flat (self.raku, @A)
     }
 }
 class B is A {
@@ -21,7 +21,7 @@ class B is A {
     my $instance = B.new;
     my @result = $instance.a();
     is @result.elems, 3, 'nextwith passed on right number of parameters';
-    is @result[0], $instance.perl, 'invocant passed on correctly';
+    is @result[0], $instance.raku, 'invocant passed on correctly';
     is @result[1], "FIRST ARG", 'first argument correct';
     is @result[2], "SECOND ARG", 'second argument correct';
 }

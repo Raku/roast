@@ -36,7 +36,7 @@ else {
 
 sub test-chdir ($desc, $after, |args) {
     my $before = make-temp-dir;
-    subtest "chdir with {args.perl}" => {
+    subtest "chdir with {args.raku}" => {
         temp $*CWD = $before;
         ok chdir($after, |args), "call to chdir succeeds";
         is-path $*CWD, $after, 'new $*CWD is correct';
@@ -45,7 +45,7 @@ sub test-chdir ($desc, $after, |args) {
 
 sub test-chdir-fails ($desc, $why, $after, |args) {
     my $before = make-temp-dir;
-    subtest "chdir with {args.perl} fails because of $why" => {
+    subtest "chdir with {args.raku} fails because of $why" => {
         temp $*CWD = $before;
         fails-like { chdir $after, |args }, X::IO::Chdir,
             'call to chdir returned a Failure';

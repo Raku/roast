@@ -302,7 +302,7 @@ throws-like 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};', X::Redeclarat
     class C {
         multi method b(|c(Int $b)) { samewith "$b" }
         multi method b(|c(Str $b)) {
-            is $b, "42", 'samewith $b stringified for ' ~ self.perl;
+            is $b, "42", 'samewith $b stringified for ' ~ self.raku;
         }
     }
 

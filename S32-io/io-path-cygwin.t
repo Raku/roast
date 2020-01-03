@@ -23,7 +23,7 @@ is $path.dirname,   "foo", 'dirname "C:foo\\\\bar\\" -> "foo"';
 is $path.basename,  "bar", 'basename "C:foo\\\\bar\\" -> "bar"';
 isa-ok $path.path, Str, ".path returns Str of path";
 
-is $path.perl.EVAL, $path, ".perl loopback";
+is $path.raku.EVAL, $path, ".raku loopback";
 
 my $uncpath = IO::Path::Cygwin.new("\\\\server\\share\\");
 is $uncpath.volume, "//server/share", 'volume "//server/share/" -> ""/server/share"';

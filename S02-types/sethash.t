@@ -199,9 +199,9 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = SetHash.new(<foo bar baz>);
     my $str;
     my $c;
-    lives-ok { $str = $s.perl }, ".perl lives";
+    lives-ok { $str = $s.raku }, ".raku lives";
     isa-ok $str, Str, "... and produces a string";
-    lives-ok { $c = EVAL $str }, ".perl.eval lives";
+    lives-ok { $c = EVAL $str }, ".raku.eval lives";
     isa-ok $c, SetHash, "... and produces a SetHash";
     is showset($c), showset($s), "... and it has the correct values";
 }

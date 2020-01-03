@@ -10,7 +10,7 @@ dies-ok { Supply.rotor }, 'can not be called as a class method';
 dies-ok { Supply.from-list(1..5).rotor }, 'no param version illegal';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     tap-ok Supply.from-list(1..5).rotor(3 => -2),
       [[1,2,3],[2,3,4],[3,4,5]],
@@ -27,15 +27,15 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     for 3, 3 => 0 -> $what {
         tap-ok Supply.from-list(1..10).rotor(3 => 0),
           [[1,2,3],[4,5,6],[7,8,9]],
-          "we can rotor without gap with $what.perl()";
+          "we can rotor without gap with $what.raku()";
 
         tap-ok Supply.from-list(1..10).rotor(3 => 0,:!partial),
           [[1,2,3],[4,5,6],[7,8,9]],
-          "we can rotor without gap without partial with $what.perl()";
+          "we can rotor without gap without partial with $what.raku()";
 
         tap-ok Supply.from-list(1..10).rotor(3 => 0,:partial),
           [[1,2,3],[4,5,6],[7,8,9],[10]],
-          "we can rotor without gap with partial with $what.perl()";
+          "we can rotor without gap with partial with $what.raku()";
     }
 
     tap-ok Supply.from-list(1..10).rotor(3 => 1),

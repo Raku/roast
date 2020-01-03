@@ -20,7 +20,7 @@ is-primed-sig(sub (::T $a, Array[Array[T]] $b, Array[Array[Int]] :$c) { }, :($b,
 is-primed-sig(sub (::T $a, Array[Positional[T]] $b, Array[Positional[Int]] :$c) { }, :($b, Array[Positional[Int]] :$c), 1);
 
 #?rakudo skip 'We could do better here'
-is-primed-call(sub (::T $a, T $b is copy, T :$c) { "a" ~ $a.perl ~ "b" ~ $b.perl ~ "c" ~ $c.perl }, \("A", :c<C>), ["aAb(Any)cC"], *, Nil);
+is-primed-call(sub (::T $a, T $b is copy, T :$c) { "a" ~ $a.raku ~ "b" ~ $b.raku ~ "c" ~ $c.raku }, \("A", :c<C>), ["aAb(Any)cC"], *, Nil);
 
 # How or whether this should fail is less clear to me.  Currently LTA error.
 is-primed-sig(sub () { }, :(), *);

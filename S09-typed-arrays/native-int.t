@@ -223,8 +223,8 @@ for flat @int,@uint -> $T {
     @arr = 1..5;
     is @arr.Str,  '1 2 3 4 5', ".Str space-separates on $t array";
     is @arr.gist, '[1 2 3 4 5]', ".gist space-separates on $t array";
-    is @arr.perl, "array[$t].new(1, 2, 3, 4, 5)",
-      ".perl includes type and int values on $t array";
+    is @arr.raku, "array[$t].new(1, 2, 3, 4, 5)",
+      ".raku includes type and int values on $t array";
 
     is-deeply @arr[^2], array[$T].new(1,2), 'does slice return same type';
     is-deeply @arr[my $ = ^2], 3, 'does slice handle containerized range';

@@ -27,7 +27,7 @@ plan 32;
     ok $?VM.precomp-target, "Extension is '{$?VM.precomp-target}'";
     ok $?VM.prefix,         "Prefix is '{$?VM.prefix}'";
 
-    ok $?VM.perl ~~ m/\w/, 'We can do a $?VM.perl';
+    ok $?VM.raku ~~ m/\w/, 'We can do a $?VM.raku';
     ok $?VM.gist ~~ m/\w/, 'We can do a $?VM.gist';
     ok $?VM.Str  ~~ m/\w/, 'We can do a $?VM.Str ';
 
@@ -50,7 +50,7 @@ ok $*VM.precomp-ext,    "Extension is '{$*VM.precomp-ext}'";
 ok $*VM.precomp-target, "Extension is '{$*VM.precomp-target}'";
 ok $*VM.prefix,         "Prefix is '{$*VM.prefix}'";
 
-ok $*VM.perl ~~ m/\w/, 'We can do a $*VM.perl';
+ok $*VM.raku ~~ m/\w/, 'We can do a $*VM.raku';
 ok $*VM.gist ~~ m/\w/, 'We can do a $*VM.gist';
 ok $*VM.Str  ~~ m/\w/, 'We can do a $*VM.Str';
 

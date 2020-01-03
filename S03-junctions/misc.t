@@ -146,14 +146,14 @@ sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
 Tests junction examples from Synopsis 03
 
 j() is used to convert a junction to canonical string form, currently
-just using .perl until a better approach presents itself.
+just using .raku until a better approach presents itself.
 
 =end description
 
 # L<S03/Junctive operators>
 
 # Canonical stringification of a junction
-sub j (Mu $j) { return $j.perl }
+sub j (Mu $j) { return $j.raku }
 
 {
     # L<S03/Junctive operators/They thread through operations>
@@ -520,19 +520,19 @@ subtest 'Junction.new does not crash with empty, but touched array' => {
     plan 4;
 
     my @a; $ = +@a;
-    lives-ok { Junction.new($_, @a).perl }, $_ for <all none any one>;
+    lives-ok { Junction.new($_, @a).raku }, $_ for <all none any one>;
 }
 
-subtest 'Junction .Str, .gist, and .perl' => {
+subtest 'Junction .Str, .gist, and .raku' => {
     plan 3+4*2;
     isa-ok <a b c>.any.Str.WHAT,  Junction, 'Junction.Str juncts';
     isa-ok <a b c>.any.gist.WHAT, Str,      'Junction.gist does not junct';
-    isa-ok <a b c>.any.perl.WHAT, Str,      'Junction.perl does not junct';
+    isa-ok <a b c>.any.raku.WHAT, Str,      'Junction.raku does not junct';
 
     for <none one any all> -> $t {
         is-deeply <foo bar ber>."$t"().gist.comb(/\w+/).sort, ($t, |<foo bar ber>).sort, "Junction.gist on $t junction looks about right";
         my $j := <foo bar ber>."$t"();
-        is-deeply-junction $j.perl.EVAL, $j, "Junction.perl on $t junction roundtrips";
+        is-deeply-junction $j.raku.EVAL, $j, "Junction.raku on $t junction roundtrips";
     }
 }
 # GH rakudo/rakudo#1205

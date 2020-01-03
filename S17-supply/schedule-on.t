@@ -9,7 +9,7 @@ dies-ok { Supply.schedule-on($*SCHEDULER) },
   'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     {
         my $other_scheduler = CurrentThreadScheduler.new;

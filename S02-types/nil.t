@@ -40,7 +40,7 @@ ok Nil.JustAnyMethod('meows', 42, 'bars', :foos) === Nil,
 
     $calls = 0;
     ok return_nil() === Nil, 'return_nil() === Nil';
-    is return_nil().perl, 'Nil', 'return_nil().perl says Nil';
+    is return_nil().raku, 'Nil', 'return_nil().raku says Nil';
     is $calls, 2, 'return_nil() called twice';
 
     my $n = return_nil();

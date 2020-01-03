@@ -53,7 +53,7 @@ isa-ok $path.IO,   IO::Path, 'IO::Path.IO returns IO::Path';
 
 # RT #126935
 # RT #131185
-subtest '.perl.EVAL rountrips' => {
+subtest '.raku.EVAL rountrips' => {
     my @tests = gather {
         .IO.take for q/\x[308]foo|ba"'\''r/, "/foo|\\bar", "/foo\tbar";
         # use spec that is NOT the default for the OS
@@ -72,16 +72,16 @@ subtest '.perl.EVAL rountrips' => {
     plan +@tests;
     for @tests {
         if .DEFINITE {
-            subtest "using {.perl}" => {
+            subtest "using {.raku}" => {
                 plan 4;
-                is-path   .IO.perl.EVAL,      .IO,      'equivalent object';
-                is-deeply .IO.perl.EVAL.path, .IO.path, 'same .path';
-                is-deeply .IO.perl.EVAL.CWD,  .IO.CWD,  'same .CWD';
-                is-deeply .IO.perl.EVAL.SPEC, .IO.SPEC, 'same .SPEC';
+                is-path   .IO.raku.EVAL,      .IO,      'equivalent object';
+                is-deeply .IO.raku.EVAL.path, .IO.path, 'same .path';
+                is-deeply .IO.raku.EVAL.CWD,  .IO.CWD,  'same .CWD';
+                is-deeply .IO.raku.EVAL.SPEC, .IO.SPEC, 'same .SPEC';
             }
         }
         else {
-            is-deeply .IO.perl.EVAL, .IO, "new eqv old using {.perl}";
+            is-deeply .IO.raku.EVAL, .IO, "new eqv old using {.raku}";
         }
     }
 }
@@ -194,7 +194,7 @@ subtest '.resolve' => {
             ?? .CWD.IO.volume ~ .SPEC.dir-sep
             !! .SPEC.dir-sep;
         is .resolve.CWD, $expected-cwd,
-            ".resolve sets CWD to SPEC's dir-sep for {.perl}"
+            ".resolve sets CWD to SPEC's dir-sep for {.raku}"
     }
 }
 
@@ -226,7 +226,7 @@ subtest '.sibling' => {
     for @tests -> (:key($start-path), :value($res-path)) {
         for @Path-Types -> $Path {
             is-path $Path.new($start-path).sibling('bar'), $Path.new($res-path),
-                "$Path.perl() with $start-path.perl()";
+                "$Path.raku() with $start-path.raku()";
         }
     }
 
@@ -236,7 +236,7 @@ subtest '.sibling' => {
 
 subtest '.IO on :U gives right class' => {
     plan +@Path-Types;
-    cmp-ok $_, '===', .IO, .perl for @Path-Types;
+    cmp-ok $_, '===', .IO, .raku for @Path-Types;
 }
 
 subtest '.gist' => {
@@ -256,7 +256,7 @@ subtest '.gist' => {
 
 subtest 'combiners on "/" do not interfere with absolute path detection' => {
     plan +@Path-Types;
-    is-deeply .is-absolute, True, .perl for @Path-Types.map: *.new: "/\x[308]";
+    is-deeply .is-absolute, True, .raku for @Path-Types.map: *.new: "/\x[308]";
 }
 
 subtest '.parts attribute' => {
@@ -271,21 +271,21 @@ subtest '.parts attribute' => {
     }
 
     for @Path-Types {
-        check-parts .new('foo').parts, "foo {.perl}",
+        check-parts .new('foo').parts, "foo {.raku}",
             :basename<foo>, :dirname<.>, :volume('');
 
-        check-parts .new('./foo').parts, "./foo {.perl}",
+        check-parts .new('./foo').parts, "./foo {.raku}",
             :basename<foo>, :dirname<.>, :volume('');
 
-        check-parts .new('bar/foo').parts, "bar/foo {.perl}",
+        check-parts .new('bar/foo').parts, "bar/foo {.raku}",
             :basename<foo>, :dirname<bar>, :volume('');
 
-        check-parts .new('/bar/foo').parts, "/bar/foo {.perl}",
+        check-parts .new('/bar/foo').parts, "/bar/foo {.raku}",
             :basename<foo>, :dirname</bar>, :volume('');
 
         my $p = .new('/').parts;
-        check-parts $p, "/ {.perl}", :dirname</>, :volume('');
-        cmp-ok $p<basename>, 'eq', <\ />.any, "/ {.perl} (basename)";
+        check-parts $p, "/ {.raku}", :dirname</>, :volume('');
+        cmp-ok $p<basename>, 'eq', <\ />.any, "/ {.raku} (basename)";
     }
 
     check-parts IO::Path::Win32.new('C:foo').parts, "C:foo",
@@ -402,8 +402,8 @@ subtest 'Ensure <0> can be used to make an IO::Path' => {
     plan @nums * (1 + @Path-Types);
 
     for @nums -> $num {
-        lives-ok { .new: $num }, "$num.perl() with {.perl}" for @Path-Types;
-        lives-ok {    $num.IO }, "$num.perl() with .IO coercer";
+        lives-ok { .new: $num }, "$num.raku() with {.raku}" for @Path-Types;
+        lives-ok {    $num.IO }, "$num.raku() with .IO coercer";
     }
 }
 
@@ -417,7 +417,7 @@ subtest '.parent(Int)' => {
         }).flat.List;
 
     for @paths -> $p is raw {
-        my $d := $p.perl;
+        my $d := $p.raku;
         throws-like { $p.parent(-1) }, X::Multi::NoMatch, 'no candidate to handle negative parents';
         is-deeply $p.parent(0), $p, "0 $d";
         is-deeply $p.parent(1), $p.parent, "1 $d";

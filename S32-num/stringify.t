@@ -9,7 +9,7 @@ sub Complex_str_test($value, $str_nucleus) {
     is ~$value, $str_nucleus, "~<$str_nucleus>";
     is $value.Str, $str_nucleus, "<$str_nucleus>.Str";
     is $value.gist, $str_nucleus, "<$str_nucleus>.gist";
-    is $value.perl, "<$str_nucleus>", "<$str_nucleus>.perl";
+    is $value.raku, "<$str_nucleus>", "<$str_nucleus>.raku";
 }
 
 # basic syntactic correctness - sign flags, lack of space
@@ -31,7 +31,7 @@ Complex_str_test (0 + NaN\i), '0+NaN\i';
 # for Niecza in the past
 
 is Complex.gist, '(Complex)', 'Complex.gist';
-is Complex.perl, 'Complex', 'Complex.perl';
+is Complex.raku, 'Complex', 'Complex.raku';
 # XXX Should ~Complex and Complex.Str return something specific?  For now
 # just make sure they don't die
 lives-ok { ~Complex }, '~Complex does not die';
@@ -45,7 +45,7 @@ sub Rat_str_test($value, $str_nucleus, $str, $perl = $str) {
         is ~$value, $str, "~<$str_nucleus>";
         is $value.Str, $str, "<$str_nucleus>.Str";
         is $value.gist, $str, "<$str_nucleus>.gist";
-        is $value.perl, $perl, "<$str_nucleus>.perl";
+        is $value.raku, $perl, "<$str_nucleus>.raku";
 
         # FatRat tests
         is ~$value.FatRat, $str, "~<$str_nucleus>.FatRat";
@@ -74,7 +74,7 @@ Rat_str_test (4.5 ** 60),
              '1558657976916843360832062017400788597510.058834953945635510598466400011830046423710882663726806640625';
 
 is Rat.gist, '(Rat)', 'Rat.gist';
-is Rat.perl, 'Rat', 'Rat.perl';
+is Rat.raku, 'Rat', 'Rat.raku';
 lives-ok { ~Rat }, '~Rat does not die';
 lives-ok { Rat.Str }, 'Rat.Str does not die';
 
@@ -83,7 +83,7 @@ lives-ok { Rat.Str }, 'Rat.Str does not die';
 subtest 'no precision loss in stringification of Nums' => {
     plan 6;
     is pi,           '3.141592653589793', 'pi';
-    is pi.perl.EVAL, '3.141592653589793', 'pi (.perl.EVAL roundtripped)';
+    is pi.raku.EVAL, '3.141592653589793', 'pi (.raku.EVAL roundtripped)';
     is .1e0,         '0.1', '0.1e0 does not get long string of zeros';
     is .3e0,         '0.3', '0.3e0 does not get long string of zeros';
     is .1e0 + .2e0,  '0.30000000000000004', '0.1e0+0.2e0 gets 0.3000…';

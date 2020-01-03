@@ -35,7 +35,7 @@ ok NaN + 1i ~~ (NaN)i, "NaN + 1i ~~ (NaN)i";
 ok truncate(NaN) ~~ NaN, 'truncate(NaN) ~~ NaN';
 
 #RT #103500
-is NaN.perl, 'NaN', 'NaN perlification ok';
+is NaN.raku, 'NaN', 'NaN perlification ok';
 
 #RT #83622
 ok NaN===NaN, "NaN value identity";

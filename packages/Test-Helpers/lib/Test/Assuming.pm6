@@ -8,15 +8,15 @@ use Test;
 sub is-primed-sig (Block $b, Signature $s, Capture |cap) is export {
 
     my $r = $b.assuming(|cap);
-    my $res = $r.signature.perl;
-    my $tname = 'Priming ' ~ $b.signature.perl ~ ' with ' ~ cap.perl ~ ' gave ' ~ $s.perl;
-    if $res eq $s.perl and not $r.can('Failure') {
+    my $res = $r.signature.raku;
+    my $tname = 'Priming ' ~ $b.signature.raku ~ ' with ' ~ cap.raku ~ ' gave ' ~ $s.raku;
+    if $res eq $s.raku and not $r.can('Failure') {
         pass($tname);
         return;
     }
     my $diag1;
     my $diag2;
-    unless $res eq $s.perl {
+    unless $res eq $s.raku {
         $diag1 = "Got $res instead";
     }
     if $r.can('Failure') {
@@ -45,10 +45,10 @@ sub priming-fails-bind-ok (Block $b, $symbol, $expected, Capture |cap) is export
         $why = "No Failure mixed in\n";
     }
     elsif $r.Failure.exception !~~ X::TypeCheck::Binding|X::AdHoc {
-        $why = 'Wrong X:: subtype ' ~ $r.Failure.exception.WHAT.perl;
+        $why = 'Wrong X:: subtype ' ~ $r.Failure.exception.WHAT.raku;
     }
     elsif $r.Failure.exception ~~ X::TypeCheck::Binding and $r.Failure.exception.expected !=== $expected {
-        $why = "Wrong expected type { $r.Failure.exception.expected.perl } reported";
+        $why = "Wrong expected type { $r.Failure.exception.expected.raku } reported";
     }
     elsif $r.Failure.exception ~~ X::TypeCheck::Binding and $r.Failure.exception.symbol ne $symbol {
         $why = "Wrong symbol { $r.Failure.exception.symbol } reported";
@@ -57,7 +57,7 @@ sub priming-fails-bind-ok (Block $b, $symbol, $expected, Capture |cap) is export
         $why = 'Wrong AdHoc Message: ' ~ $r.Failure.exception.payload;
     }
 
-    my $tname = "Priming { $b.signature.perl } with { cap.perl } mixed in a Failure ";
+    my $tname = "Priming { $b.signature.raku } with { cap.raku } mixed in a Failure ";
     if ($why) {
         ok(0,$tname);
     } else {
@@ -77,12 +77,12 @@ sub priming-fails-bind-ok (Block $b, $symbol, $expected, Capture |cap) is export
 sub is-primed-call (Block $b, \call, @expect, Capture |cap) is export {
 
     my $r = $b.assuming(|cap);
-    my $res = $r.signature.perl;
+    my $res = $r.signature.raku;
     my @res;
     my @got;
     my $why;
 
-    my $tname =  "&" ~ $b.name ~ ".assuming(" ~ cap.values.perl ~ ")(" ~ call.values.perl ~ ") returned expected value { @expect.perl }";
+    my $tname =  "&" ~ $b.name ~ ".assuming(" ~ cap.values.raku ~ ")(" ~ call.values.raku ~ ") returned expected value { @expect.raku }";
 
     if $r.can('Failure') or (@got = $r(|call)) !eqv @expect {
         ok(0,$tname);
@@ -94,7 +94,7 @@ sub is-primed-call (Block $b, \call, @expect, Capture |cap) is export {
             diag "Result looked otherwise correct\n";
         }
         else {
-            diag "Got { @got.perl } instead";
+            diag "Got { @got.raku } instead";
         }
     }
     else {

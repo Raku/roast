@@ -66,7 +66,7 @@ subtest 'comb method' => {
         \(2, 3), \(/../), \(/../, 2), \(/<:alpha>/, 3);
     plan +@tests;
 
-    cmp-ok cat.comb(|$_), 'eqv', $str.comb(|$_), .perl for @tests;
+    cmp-ok cat.comb(|$_), 'eqv', $str.comb(|$_), .raku for @tests;
 }
 
 subtest 'DESTROY method' => {
@@ -554,34 +554,34 @@ subtest 'path method' => {
 subtest 'perl method' => {
     plan 8;
 
-    is-deeply IO::CatHandle    .perl.EVAL, IO::CatHandle,     'type object';
-    is-deeply IO::CatHandle.new.perl.EVAL, IO::CatHandle.new, 'no args';
+    is-deeply IO::CatHandle    .raku.EVAL, IO::CatHandle,     'type object';
+    is-deeply IO::CatHandle.new.raku.EVAL, IO::CatHandle.new, 'no args';
 
     my $cat = IO::CatHandle.new: make-files <a b c>;
-    is-deeply $cat.perl.EVAL, $cat, 'just handles';
+    is-deeply $cat.raku.EVAL, $cat, 'just handles';
 
     $cat = IO::CatHandle.new: :bin, make-files <a b c>;
-    is-deeply $cat.perl.EVAL, $cat, ':bin';
+    is-deeply $cat.raku.EVAL, $cat, ':bin';
 
     #?rakudo.jvm emit # Unsupported VM encoding 'utf8-c8'
     $cat = IO::CatHandle.new: :encoding<utf8-c8>, make-files <a b c>;
     #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
-    is-deeply $cat.perl.EVAL, $cat, ':encoding';
+    is-deeply $cat.raku.EVAL, $cat, ':encoding';
 
     #?rakudo.jvm emit # Unsupported VM encoding 'utf8-c8'
     $cat = IO::CatHandle.new: :encoding<utf8-c8>, :nl-in<foo bar>, make-files <a b c>;
     #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
-    is-deeply $cat.perl.EVAL, $cat, ':encoding + :nl-in';
+    is-deeply $cat.raku.EVAL, $cat, ':encoding + :nl-in';
 
     #?rakudo.jvm emit # Unsupported VM encoding 'utf8-c8'
     $cat = IO::CatHandle.new: :encoding<utf8-c8>, :nl-in<foo bar>, :!chomp, make-files <a b c>;
     #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
-    is-deeply $cat.perl.EVAL, $cat, ':encoding + :nl-in + :!chomp';
+    is-deeply $cat.raku.EVAL, $cat, ':encoding + :nl-in + :!chomp';
 
     #?rakudo.jvm emit # Unsupported VM encoding 'utf8-c8'
     $cat = IO::CatHandle.new: :encoding<utf8-c8>, :nl-in<foo bar>, :!chomp;
     #?rakudo.jvm skip "Unsupported VM encoding 'utf8-c8'"
-    is-deeply $cat.perl.EVAL, $cat, ':encoding, :nl-in, :!chomp and no handles';
+    is-deeply $cat.raku.EVAL, $cat, ':encoding, :nl-in, :!chomp and no handles';
 }
 
 subtest 'read method' => {
@@ -715,7 +715,7 @@ subtest 'split method' => {
         \(/../, 2, :skip-empty, :p), \(/<:alpha>/, 3, :skip-empty, :kv);
     plan +@tests;
 
-    is-deeply cat.split(|$_), $str.split(|$_), .perl for @tests;
+    is-deeply cat.split(|$_), $str.split(|$_), .raku for @tests;
 }
 
 subtest 'Str method' => {

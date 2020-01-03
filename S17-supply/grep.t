@@ -8,7 +8,7 @@ plan 9;
 dies-ok { Supply.grep({...}) }, 'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     tap-ok Supply.from-list(1..10).grep( * > 5 ),
       [6,7,8,9,10],

@@ -24,7 +24,7 @@ sub test-out-buffer (
 }
 
 for \(:w), \(:rw), \(:a) -> $open-args {
-    subtest ".open: $open-args.perl()" => {
+    subtest ".open: $open-args.raku()" => {
         plan 10;
         test-out-buffer :10buffer, :15exp-bytes, :$open-args, '1 x over', { .print: 'x' x 15 };
         test-out-buffer :10buffer, :15exp-bytes, :$open-args, '1 x over + 1 x under', {
@@ -92,7 +92,7 @@ for \(:w), \(:rw), \(:a) -> $open-args {
     # Extra "\n" after `meow` is 'cause run-as-tty sends extra new line,
     # 'cause MacOS's `script` really wants it or something
     :out{ .contains: "FOO" & "bar" or do {
-        diag "Got STDOUT: {.perl}";
+        diag "Got STDOUT: {.raku}";
         False;
     }}, 'prompt does not hang';
 }

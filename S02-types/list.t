@@ -10,13 +10,13 @@ is +(5, 7, 8), 3, 'prefix:<+> on a List';
 is ~(5, 7, 8), '5 7 8', 'prefix:<~> on a List';
 is (5, 7, 8).Str, '5 7 8', '.Str on a List';
 
-# .perl
-is ().perl, '()', '.perl on empty List';
-is ().item.perl, '$( )', '.item.perl on empty List';
-is-deeply ().item, ().item.perl.EVAL, 'can roundtrip ().item';
+# .raku
+is ().raku, '()', '.raku on empty List';
+is ().item.raku, '$( )', '.item.raku on empty List';
+is-deeply ().item, ().item.raku.EVAL, 'can roundtrip ().item';
 #?rakudo.jvm skip 'dies with t/harness5'
-cmp-ok ().item.VAR, '===', ().item.perl.EVAL.VAR,
-    '().item .perl.EVAL roundtrip preserves itemization';
+cmp-ok ().item.VAR, '===', ().item.raku.EVAL.VAR,
+    '().item .raku.EVAL roundtrip preserves itemization';
 
 # L<S02/Quoting forms/Elsewhere it is equivalent to a parenthesized list of strings>
 

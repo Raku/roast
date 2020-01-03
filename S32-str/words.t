@@ -34,7 +34,7 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc d".words,
 # RT #120517
 {
     my $RT120517 = "FOO";
-    is qq:ww/$RT120517 "BAR BAZ"/.perl, qq:ww/FOO "BAR BAZ"/.perl, "interpolated variable .perl's like a literal"
+    is qq:ww/$RT120517 "BAR BAZ"/.raku, qq:ww/FOO "BAR BAZ"/.raku, "interpolated variable .raku's like a literal"
 }
 
 {

@@ -5,8 +5,8 @@ plan 11;
 {
     my @fifties-novels;
     @fifties-novels[2 ; 2,3] = "Charlotte's Web", "The Voyage of the Dawn Treader";
-    lives-ok { @fifties-novels.perl },
-        'can call .perl on multidimensional array with only some elements autovivified';
+    lives-ok { @fifties-novels.raku },
+        'can call .raku on multidimensional array with only some elements autovivified';
     is-deeply @fifties-novels,
         Array.new(Any, Any, [Any, Any, "Charlotte's Web", "The Voyage of the Dawn Treader"]),
         "Autovivifying LoL assignment on Array with multiple final indices";

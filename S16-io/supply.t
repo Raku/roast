@@ -10,7 +10,7 @@ plan 7;
 dies-ok { IO::Handle.Supply(1000) }, 'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     unlink $filename;
     ok spurt($filename,"abcde"),'did we write the filename';

@@ -33,7 +33,7 @@ plan 105;
 # uninitialized array variables should work too...
 {
     my @a;
-    is EVAL(@a.perl).elems, 0, '@a.perl on uninitialized variable';
+    is EVAL(@a.raku).elems, 0, '@a.raku on uninitialized variable';
 }
 
 # array of strings

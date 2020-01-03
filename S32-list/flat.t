@@ -19,11 +19,11 @@ sub make-test-data {
 plan 4 + 2*make-test-data;
 
 for make-test-data() -> (:key($got), :value($expected)) {
-    is-deeply $got.flat,  $expected, "$got.perl() (method form)";
+    is-deeply $got.flat,  $expected, "$got.raku() (method form)";
 }
 
 for make-test-data() -> (:key($got), :value($expected)) {
-    is-deeply flat($got), $expected, "$got.perl() (sub form)";
+    is-deeply flat($got), $expected, "$got.raku() (sub form)";
 }
 
 is-deeply ((1, 2, 3), 4..*).flat[^20], (1..*)[^20],

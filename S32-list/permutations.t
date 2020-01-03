@@ -26,5 +26,5 @@ subtest '&permutations with Iterable first argument match calls with method form
         2..4, 2^..4, 2^..^4, 2..^4,
         %(:42foo, :70bar, :12ber), Map.new: (:42foo, :70bar, :12ber);
 
-    is-deeply permutations($_).sort, .permutations.sort, .perl for @i;
+    is-deeply permutations($_).sort, .permutations.sort, .raku for @i;
 }

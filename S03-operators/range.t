@@ -77,7 +77,7 @@ is ~(^"5"), "0 1 2 3 4", 'unary ^"num" produces the range 0..^num';
 
 {
     my @a = 3, 5, 3;
-    is (^@a).perl, (0..^3).perl,    'unary ^@a produces 0..^+@a';
+    is (^@a).raku, (0..^3).raku,    'unary ^@a produces 0..^+@a';
 }
 
 # test iterating on infinite ranges
@@ -236,7 +236,7 @@ is ~(2 .. [<a b c d e>]), "2 3 4 5", '2 .. @list is legal';
 
 # RT #82620
 {
-    lives-ok {("a".."b").map({.trans(""=>"")}).perl},
+    lives-ok {("a".."b").map({.trans(""=>"")}).raku},
         "range doesn't leak Parrot types";
 }
 
@@ -261,7 +261,7 @@ throws-like '1..2..3', X::Syntax::NonAssociative, '.. is not associative';
     ## once this block died at compile time
     ## with q[P6opaque: no such attribute '$!phasers']
     ## cmp. https://github.com/rakudo/rakudo/commit/c5e7a7783d
-    isa-ok { *.perl for ^2 }, Block,
+    isa-ok { *.raku for ^2 }, Block,
         'range optimizer is protected from cases with no block';
 }
 

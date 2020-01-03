@@ -19,7 +19,7 @@ sub output-has(Str:D $output, Int:D :$todos, Int:D :$fails, Int:D :$noks) {
         TODOS: $todos|$todos-actual (expected|actual)
         FAILS: $fails|$fails-actual
         NOKS:  $noks|$noks-actual
-        while testing `$output.perl()`
+        while testing `$output.raku()`
         END
     }
     $result

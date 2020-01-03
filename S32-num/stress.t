@@ -22,8 +22,8 @@ subtest 'No drift when roundtripping Num -> perl -> Num -> perl' => {
     for @ranges -> \r {
         for ^iters {
             my \n  := r.rand;
-            my \n1 := n.perl.Num; # get first correct num
-            my \n2 := n.perl.Num.perl.Num.perl.Num.perl.Num; # second
+            my \n1 := n.raku.Num; # get first correct num
+            my \n2 := n.raku.Num.raku.Num.raku.Num.raku.Num; # second
             cmp-ok n1, '===', n2, "{n} roundtrippage is stable";
         }
     }

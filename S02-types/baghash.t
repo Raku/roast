@@ -201,10 +201,10 @@ sub showkv($x) {
     my $b = { foo => 10000000000, bar => 17, baz => 42 }.BagHash;
     my $s;
     my $c;
-    lives-ok { $s = $b.perl }, ".perl lives";
+    lives-ok { $s = $b.raku }, ".raku lives";
     isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
-    lives-ok { $c = EVAL $s }, ".perl.EVAL lives";
+    lives-ok { $c = EVAL $s }, ".raku.EVAL lives";
     isa-ok $c, BagHash, "... and produces a BagHash";
     is showkv($c), showkv($b), "... and it has the correct values";
 }
@@ -327,7 +327,7 @@ sub showkv($x) {
     my $b = BagHash.new("a", "b", "b");
 
     my $a = $b.pickpairs;
-    say :$a.perl;
+    say :$a.raku;
     isa-ok $a, Pair, 'Did we get a Pair';
     ok ($a eq "a\t1" or $a eq "b\t2"), "We got one of the two choices";
 
@@ -468,7 +468,7 @@ sub showkv($x) {
 
 {
     my %h of BagHash;
-    ok %h.of.perl eq 'BagHash', 'is the hash really a BagHash';
+    ok %h.of.raku eq 'BagHash', 'is the hash really a BagHash';
     #?rakudo 2 todo 'in flux'
     lives-ok { %h = bag <a b c d c b> }, 'Assigning a Bag to a BagHash';
     is %h.keys.sort.map({ $^k ~ ':' ~ %h{$k} }).join(' '),
@@ -675,9 +675,9 @@ group-of 10 => 'BagHash autovivification of non-existent keys' => {
       my \ex := $pair.value eq 'a'
           ?? X::Str::Numeric !! X::Numeric::CannotConvert;
       throws-like { $pair.BagHash }, ex,
-        "($pair.perl()).BagHash throws";
+        "($pair.raku()).BagHash throws";
       throws-like { BagHash.new-from-pairs($pair) }, ex,
-        "BagHash.new-from-pairs( ($pair.perl()) ) throws";
+        "BagHash.new-from-pairs( ($pair.raku()) ) throws";
     }
 }
 

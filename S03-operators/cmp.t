@@ -104,49 +104,49 @@ for Rat, FatRat -> \RatT {
     my $inf  = RatT.new:  1, 0;
     my $ninf = RatT.new: -1, 0;
 
-    subtest "$nan.perl() (behaves like NaN)" => {
+    subtest "$nan.raku() (behaves like NaN)" => {
         plan 10;
-        is-deeply $nan cmp  NaN, Same, "$nan.perl() cmp NaN";
-        is-deeply $nan cmp   42, More, "$nan.perl() cmp 42";
-        is-deeply $nan cmp  -42, More, "$nan.perl() cmp -42";
-        is-deeply $nan cmp  Inf, More, "$nan.perl() cmp Inf";
-        is-deeply $nan cmp -Inf, More, "$nan.perl() cmp -Inf";
+        is-deeply $nan cmp  NaN, Same, "$nan.raku() cmp NaN";
+        is-deeply $nan cmp   42, More, "$nan.raku() cmp 42";
+        is-deeply $nan cmp  -42, More, "$nan.raku() cmp -42";
+        is-deeply $nan cmp  Inf, More, "$nan.raku() cmp Inf";
+        is-deeply $nan cmp -Inf, More, "$nan.raku() cmp -Inf";
 
-        is-deeply  NaN cmp $nan, Same, " NaN cmp $nan.perl()";
-        is-deeply   42 cmp $nan, Less, "  42 cmp $nan.perl()";
-        is-deeply  -42 cmp $nan, Less, " -42 cmp $nan.perl()";
-        is-deeply  Inf cmp $nan, Less, " Inf cmp $nan.perl()";
-        is-deeply -Inf cmp $nan, Less, "-Inf cmp $nan.perl()";
+        is-deeply  NaN cmp $nan, Same, " NaN cmp $nan.raku()";
+        is-deeply   42 cmp $nan, Less, "  42 cmp $nan.raku()";
+        is-deeply  -42 cmp $nan, Less, " -42 cmp $nan.raku()";
+        is-deeply  Inf cmp $nan, Less, " Inf cmp $nan.raku()";
+        is-deeply -Inf cmp $nan, Less, "-Inf cmp $nan.raku()";
     }
 
-    subtest "$ninf.perl() (behaves like -Inf)" => {
+    subtest "$ninf.raku() (behaves like -Inf)" => {
         plan 10;
-        is-deeply $ninf cmp  NaN, Less, "$ninf.perl() cmp NaN";
-        is-deeply $ninf cmp   42, Less, "$ninf.perl() cmp 42";
-        is-deeply $ninf cmp  -42, Less, "$ninf.perl() cmp -42";
-        is-deeply $ninf cmp  Inf, Less, "$ninf.perl() cmp Inf";
-        is-deeply $ninf cmp -Inf, Same, "$ninf.perl() cmp -Inf";
+        is-deeply $ninf cmp  NaN, Less, "$ninf.raku() cmp NaN";
+        is-deeply $ninf cmp   42, Less, "$ninf.raku() cmp 42";
+        is-deeply $ninf cmp  -42, Less, "$ninf.raku() cmp -42";
+        is-deeply $ninf cmp  Inf, Less, "$ninf.raku() cmp Inf";
+        is-deeply $ninf cmp -Inf, Same, "$ninf.raku() cmp -Inf";
 
-        is-deeply  NaN cmp $ninf, More, " NaN cmp $ninf.perl()";
-        is-deeply   42 cmp $ninf, More, "  42 cmp $ninf.perl()";
-        is-deeply  -42 cmp $ninf, More, " -42 cmp $ninf.perl()";
-        is-deeply  Inf cmp $ninf, More, " Inf cmp $ninf.perl()";
-        is-deeply -Inf cmp $ninf, Same, "-Inf cmp $ninf.perl()";
+        is-deeply  NaN cmp $ninf, More, " NaN cmp $ninf.raku()";
+        is-deeply   42 cmp $ninf, More, "  42 cmp $ninf.raku()";
+        is-deeply  -42 cmp $ninf, More, " -42 cmp $ninf.raku()";
+        is-deeply  Inf cmp $ninf, More, " Inf cmp $ninf.raku()";
+        is-deeply -Inf cmp $ninf, Same, "-Inf cmp $ninf.raku()";
     }
 
-    subtest "$inf.perl() Rat (behaves like Inf)" => {
+    subtest "$inf.raku() Rat (behaves like Inf)" => {
         plan 10;
-        is-deeply $inf cmp  NaN, Less, "$inf.perl() cmp NaN";
-        is-deeply $inf cmp   42, More, "$inf.perl() cmp 42";
-        is-deeply $inf cmp  -42, More, "$inf.perl() cmp -42";
-        is-deeply $inf cmp  Inf, Same, "$inf.perl() cmp Inf";
-        is-deeply $inf cmp -Inf, More, "$inf.perl() cmp -Inf";
+        is-deeply $inf cmp  NaN, Less, "$inf.raku() cmp NaN";
+        is-deeply $inf cmp   42, More, "$inf.raku() cmp 42";
+        is-deeply $inf cmp  -42, More, "$inf.raku() cmp -42";
+        is-deeply $inf cmp  Inf, Same, "$inf.raku() cmp Inf";
+        is-deeply $inf cmp -Inf, More, "$inf.raku() cmp -Inf";
 
-        is-deeply  NaN cmp $inf, More, " NaN cmp $inf.perl()";
-        is-deeply   42 cmp $inf, Less, "  42 cmp $inf.perl()";
-        is-deeply  -42 cmp $inf, Less, " -42 cmp $inf.perl()";
-        is-deeply  Inf cmp $inf, Same, " Inf cmp $inf.perl()";
-        is-deeply -Inf cmp $inf, Less, "-Inf cmp $inf.perl()";
+        is-deeply  NaN cmp $inf, More, " NaN cmp $inf.raku()";
+        is-deeply   42 cmp $inf, Less, "  42 cmp $inf.raku()";
+        is-deeply  -42 cmp $inf, Less, " -42 cmp $inf.raku()";
+        is-deeply  Inf cmp $inf, Same, " Inf cmp $inf.raku()";
+        is-deeply -Inf cmp $inf, Less, "-Inf cmp $inf.raku()";
     }
 }
 

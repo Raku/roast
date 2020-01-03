@@ -8,7 +8,7 @@ plan 77;
 sub test-indir ($desc, $in-path, |args) {
     temp $*CWD = my $out-path = make-temp-dir;
 
-    subtest "\&indir(\$path) {"with " ~ args.perl if args}, $desc" => {
+    subtest "\&indir(\$path) {"with " ~ args.raku if args}, $desc" => {
         my @in-paths = $in-path ~~ Str ?? ($in-path, $in-path.IO)
             !! ( $in-path,
                 |($in-path.is-relative
@@ -39,7 +39,7 @@ sub test-indir ($desc, $in-path, |args) {
 }
 
 sub test-indir-fails ($desc, $why, $in-path, |args) {
-    subtest "\&indir(\$path, {args ?? args.perl !! '…'}), $desc" => {
+    subtest "\&indir(\$path, {args ?? args.raku !! '…'}), $desc" => {
         my @in-paths = $in-path ~~ Str ?? ($in-path, $in-path.IO)
             !! ($in-path.absolute, $in-path.relative, $in-path.Str);
         plan +@in-paths;

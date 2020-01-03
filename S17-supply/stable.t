@@ -8,7 +8,7 @@ plan 7;
 dies-ok { Supply.stable(1) }, 'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
 #?rakudo skip "doesn't work or can't test"
 {

@@ -18,7 +18,7 @@ plan 42;
     ok $?KERNEL.arch,      "Architecture info is '{$?KERNEL.arch}'";
     ok $?KERNEL.bits,      "Number of bits is '{$?KERNEL.bits}'";
 
-    ok $?KERNEL.perl ~~ m/\w/, 'We can do a $?KERNEL.perl';
+    ok $?KERNEL.raku ~~ m/\w/, 'We can do a $?KERNEL.raku';
     ok $?KERNEL.gist ~~ m/\w/, 'We can do a $?KERNEL.gist';
     ok $?KERNEL.Str  ~~ m/\w/, 'We can do a $?KERNEL.Str';
 
@@ -44,7 +44,7 @@ ok $*KERNEL.arch,      "Architecture info is '{$*KERNEL.arch}'";
 ok $*KERNEL.bits,      "Number of bits is '{$*KERNEL.bits}'";
 ok $*KERNEL.hostname,  "Hostname is '{$*KERNEL.hostname}'";
 
-ok $*KERNEL.perl ~~ m/\w/, 'We can do a $*KERNEL.perl';
+ok $*KERNEL.raku ~~ m/\w/, 'We can do a $*KERNEL.raku';
 ok $*KERNEL.gist ~~ m/\w/, 'We can do a $*KERNEL.gist';
 ok $*KERNEL.Str  ~~ m/\w/, 'We can do a $*KERNEL.Str';
 

@@ -145,7 +145,7 @@ if $path.IO.e {
 { # 2017 IO Grant
     sub test-spurt ($file, $data, $expected = $data, :$senc, :$meth, |args) {
         my &SPURT = $meth ?? IO::Path.^lookup('spurt') !! &spurt;
-        subtest "spurt {$data.^name} {args.perl} {$senc if $senc}" => {
+        subtest "spurt {$data.^name} {args.raku} {$senc if $senc}" => {
             plan 2;
             my $form = "[{&SPURT.^name.lc} form]";
 
@@ -163,7 +163,7 @@ if $path.IO.e {
     sub test-spurt-fails ($file, $data, $expected = $data, :$meth, |args) {
         my &SPURT = $meth ?? IO::Path.^lookup('spurt') !! &spurt;
 
-        subtest "spurt {$data.^name} {args.perl} fails" => {
+        subtest "spurt {$data.^name} {args.raku} fails" => {
             plan 1;
             my $form = "[{&SPURT.^name.lc} form]";
 

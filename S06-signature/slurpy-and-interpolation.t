@@ -31,7 +31,7 @@ dies-ok {
 # used to be a Rakudo regression, RT #62730
 
 {
-    sub f1(*%h) { %h.perl };
+    sub f1(*%h) { %h.raku };
     sub f2(*%h) { f1(|%h) };
     lives-ok { f2( :a(1) ) },
             'Can interpolate hashes into slurpy named parameters';

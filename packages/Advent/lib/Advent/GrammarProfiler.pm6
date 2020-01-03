@@ -9,7 +9,7 @@ my class ProfiledGrammarHOW is Metamodel::GrammarHOW {
         substr($name, 0, 1) eq '!' || $name eq any(<parse CREATE Bool defined MATCH raku perl name BUILD TWEAK DESTROY new bless BUILDALL sink>) ??
             $meth !!
             -> $c, |args {
-                my $grammar = $obj.WHAT.perl;
+                my $grammar = $obj.WHAT.raku;
                 %timing{$grammar} //= {};                   # Vivify grammar hash
                 %timing{$grammar}{$meth.name} //= {};       # Vivify method hash
                 my %t := %timing{$grammar}{$meth.name};

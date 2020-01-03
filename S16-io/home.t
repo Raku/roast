@@ -10,7 +10,7 @@ plan 8;
 BEGIN %*ENV<HOME> = make-temp-dir.absolute;
 
 isa-ok $*HOME, IO::Path,  '$*HOME contains IO::Path object';
-lives-ok { $*HOME.perl }, '$*HOME.perl works';
+lives-ok { $*HOME.raku }, '$*HOME.raku works';
 lives-ok { $*HOME.gist }, '$*HOME.gist works';
 
 if $*DISTRO.is-win {

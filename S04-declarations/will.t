@@ -117,7 +117,7 @@ is $same3, "aebebebc", 'all for blocks get $_';
 # RT #119109 
 {
     my $what;
-    my @a will begin { $what = $_.WHAT.perl; };
+    my @a will begin { $what = $_.WHAT.raku; };
     is $what, 'Array', 'will begin block gets var as topic';
 }
 

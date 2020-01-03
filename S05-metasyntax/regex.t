@@ -143,7 +143,7 @@ eval-lives-ok '/<[..b]>/', '/<[..b]>/ lives';
 }
 
 # RT #125302
-throws-like 'Regex.new.perl', Exception, '"Regex.new.perl dies but does not segfault';
+throws-like 'Regex.new.raku', Exception, '"Regex.new.raku dies but does not segfault';
 
 # RT #77524
 ok 'a' ~~ /a:/, '/a:/ is a valid pattern and matches a';
@@ -167,27 +167,27 @@ subtest '`**` quantifier' => {
     #?DOES 1
     sub is-len (UInt $len, $quant) {
         $*frugal ?? cmp-ok "xxxxx".match(/x **? {$quant}/).chars,
-                    '==', $len, "$quant.perl() matches $len chars (frugal)"
+                    '==', $len, "$quant.raku() matches $len chars (frugal)"
                  !! cmp-ok "xxxxx".match(/x **  {$quant}/).chars,
-                    '==', $len, "$quant.perl() matches $len chars (greedy)";
+                    '==', $len, "$quant.raku() matches $len chars (greedy)";
     }
 
     #?DOES 1
     sub is-no-match ($quant) {
         $*frugal ?? cmp-ok "xxxxx".match(/x **? {$quant}/),
-                    '===', Nil, "$quant.perl() does not match (frugal)"
+                    '===', Nil, "$quant.raku() does not match (frugal)"
                  !! cmp-ok "xxxxx".match(/x **  {$quant}/),
-                    '===', Nil, "$quant.perl() does not match (greedy)";
+                    '===', Nil, "$quant.raku() does not match (greedy)";
     }
 
     #?DOES 1
     sub does-match-throw ($quant, |c) {
         $*frugal ?? throws-like { "xxxxx".match(/x **? {$quant}/) },
                     X::Syntax::Regex::QuantifierValue, |c,
-                    "$quant.perl() throws (frugal)"
+                    "$quant.raku() throws (frugal)"
                  !! throws-like { "xxxxx".match(/x **  {$quant}/) },
                     X::Syntax::Regex::QuantifierValue, |c,
-                    "$quant.perl() throws (greedy)";
+                    "$quant.raku() throws (greedy)";
     }
 
     subtest 'greedy' => {

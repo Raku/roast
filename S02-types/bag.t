@@ -215,12 +215,12 @@ sub showkv($x) {
     my $b = { foo => 10000000000, bar => 17, baz => 42 }.Bag;
     my $s;
     my $c;
-    lives-ok { $s = $b.perl },
-      ".perl lives";
+    lives-ok { $s = $b.raku },
+      ".raku lives";
     isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
     lives-ok { $c = EVAL $s },
-      ".perl.EVAL lives";
+      ".raku.EVAL lives";
     isa-ok $c, Bag, "... and produces a Bag";
     is showkv($c), showkv($b), "... and it has the correct values";
 }
@@ -561,9 +561,9 @@ subtest '.hash does not cause keys to be stringified' => {
       my \ex := $pair.value eq 'a'
           ?? X::Str::Numeric !! X::Numeric::CannotConvert;
       throws-like { $pair.Bag }, ex,
-        "($pair.perl()).Bag throws";
+        "($pair.raku()).Bag throws";
       throws-like { Bag.new-from-pairs($pair) }, ex,
-        "Bag.new-from-pairs( ($pair.perl()) ) throws";
+        "Bag.new-from-pairs( ($pair.raku()) ) throws";
     }
 }
 

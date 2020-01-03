@@ -11,7 +11,7 @@ plan 12;
 
 # RT #132042
 doesn't-hang ｢
-    my $fh = ｣ ~ make-temp-file.perl ~ ｢.open: :w;
+    my $fh = ｣ ~ make-temp-file.raku ~ ｢.open: :w;
     await ^20 .map: -> $t {
         start {
             for ^500 -> $i {
@@ -64,7 +64,7 @@ with make-temp-dir() -> $dir {
     is_run q:to/♥/,
         await do for ^200 {
             start {
-                for \qq[$dir.perl()].dir -> $path {
+                for \qq[$dir.raku()].dir -> $path {
                     die "FAILED!" if $path.absolute ne $path.Str
                 }
             }

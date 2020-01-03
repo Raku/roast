@@ -180,9 +180,9 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = set <foo bar baz>;
     my $str;
     my $c;
-    lives-ok { $str = $s.perl }, ".perl lives";
+    lives-ok { $str = $s.raku }, ".raku lives";
     isa-ok $str, Str, "... and produces a string";
-    lives-ok { $c = EVAL $str }, ".perl.EVAL lives";
+    lives-ok { $c = EVAL $str }, ".raku.EVAL lives";
     isa-ok $c, Set, "... and produces a Set";
     is showset($c), showset($s), "... and it has the correct values";
 }
@@ -551,7 +551,7 @@ subtest 'set ops do not hang with Setty/Baggy/Mixy type objects' => {
 
     for @types -> $type {
         for @ops -> &op, $name {
-            lives-ok { op($ = 1, $type) }, "$type.perl() $name";
+            lives-ok { op($ = 1, $type) }, "$type.raku() $name";
         }
     }
 }

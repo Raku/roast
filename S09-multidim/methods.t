@@ -60,8 +60,8 @@ plan 80;
     is @arr.Slip, <a b c d>.Slip, '.Slip is over leaves';
 
     is @arr.gist, '[[a b] [c d]]', '.gist represents structure';
-    is @arr.perl, 'Array.new(:shape(2, 2), ["a", "b"], ["c", "d"])',
-        '.perl retains structure';
+    is @arr.raku, 'Array.new(:shape(2, 2), ["a", "b"], ["c", "d"])',
+        '.raku retains structure';
 
     my @one-dim := Array.new(:shape(4));
     @one-dim = 1..4;
@@ -127,8 +127,8 @@ plan 80;
     is @arr.Slip, (42, 43, 44, 45).Slip, '.Slip is over leaves (native)';
 
     is @arr.gist, '[[42 43] [44 45]]', '.gist represents structure (native)';
-    is @arr.perl, 'array[int].new(:shape(2, 2), [42, 43], [44, 45])',
-        '.perl retains structure (native)';
+    is @arr.raku, 'array[int].new(:shape(2, 2), [42, 43], [44, 45])',
+        '.raku retains structure (native)';
 }
 
 {

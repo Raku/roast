@@ -34,7 +34,7 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 
 # RT #65404
 {
-    lives-ok {ThisEmpty.perl ne "tbd"}, 'test for working .perl method'
+    lives-ok {ThisEmpty.raku ne "tbd"}, 'test for working .raku method'
 }
 
 # change to match likely error (top of file) when passes

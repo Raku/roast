@@ -129,7 +129,7 @@ subtest '.Array on uninited shaped array' => {
 
 { # RT #130510
     my @c[2;2] .= new(:shape(2, 2), <a b>, <c d>);
-    is @c.perl, Array.new(:shape(2, 2), <a b>, <c d>).perl,
+    is @c.raku, Array.new(:shape(2, 2), <a b>, <c d>).raku,
       '@c[some shape] accepts a .new: :shape(same shape)...';
 }
 

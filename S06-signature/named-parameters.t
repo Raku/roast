@@ -236,15 +236,15 @@ throws-like 'sub svn28865( :$a, :@a ) {}', X::Signature::NameClash,
 # RT #68524
 {
     sub rt68524( :$a! ) {}
-    ok( &rt68524.signature.perl ~~ m/\!/,
-        '.signature.perl with required parameter includes requirement' );
+    ok( &rt68524.signature.raku ~~ m/\!/,
+        '.signature.raku with required parameter includes requirement' );
 }
 
 # RT #69516
 {
     sub rt69516( :f($foo) ) { "You passed '$foo' as 'f'" }
-    ok( &rt69516.signature.perl ~~ m/ ':f(' \s* '$foo' \s* ')' /,
-        'parameter rename appears in .signature.perl' );
+    ok( &rt69516.signature.raku ~~ m/ ':f(' \s* '$foo' \s* ')' /,
+        'parameter rename appears in .signature.raku' );
 }
 
 # L<S06/Named parameters/Bindings happen in declaration order>

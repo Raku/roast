@@ -122,7 +122,7 @@ lives-ok {val("foo")}, "val() exists";
 
     for @wordlist -> ($val, $wrong-type) {
         isa-ok $val, Str, "'$val' from qw[] is a Str";
-        nok $val.isa($wrong-type), "'$val' from qw[] is not a $wrong-type.perl()";
+        nok $val.isa($wrong-type), "'$val' from qw[] is not a $wrong-type.raku()";
     }
 }
 
@@ -131,7 +131,7 @@ lives-ok {val("foo")}, "val() exists";
 
     for @wordlist -> ($val, $wrong-type) {
         isa-ok $val, Str, "'$val' from qqww[] is a Str";
-        nok $val.isa($wrong-type), "'$val' from qqww[] is not a $wrong-type.perl()";
+        nok $val.isa($wrong-type), "'$val' from qqww[] is not a $wrong-type.raku()";
     }
 }
 
@@ -142,8 +142,8 @@ lives-ok {val("foo")}, "val() exists";
 
     for (@wordlist Z @purenum Z @allotypes) -> ($val, $ntype, $atype) {
         isa-ok $val, Str,    "'$val' from qw:v[] is a Str";
-        isa-ok $val, $ntype, "'$val' from qw:v[] is a $ntype.perl()";
-        isa-ok $val, $atype, "'$val' from qw:v[] is a $atype.perl()";
+        isa-ok $val, $ntype, "'$val' from qw:v[] is a $ntype.raku()";
+        isa-ok $val, $atype, "'$val' from qw:v[] is a $atype.raku()";
     }
 }
 
@@ -154,8 +154,8 @@ lives-ok {val("foo")}, "val() exists";
 
     for (@wordlist Z @purenum Z @allotypes) -> ($val, $ntype, $atype) {
         isa-ok $val, Str,    "'$val' from qw:v[] is a Str";
-        isa-ok $val, $ntype, "'$val' from qw:v[] is a $ntype.perl()";
-        isa-ok $val, $atype, "'$val' from qw:v[] is a $atype.perl()";
+        isa-ok $val, $ntype, "'$val' from qw:v[] is a $ntype.raku()";
+        isa-ok $val, $atype, "'$val' from qw:v[] is a $atype.raku()";
     }
 }
 
@@ -216,8 +216,8 @@ subtest 'eqv with allomorphs' => {
     plan +@tests;
     for @tests -> ($a, $b) {
         $a.^name eq $b.^name
-            ?? is-deeply $a eqv $b, True,  "$a.perl() eqv $b.perl()"
-            !! is-deeply $a eqv $b, False, "$a.perl() eqv $b.perl()"
+            ?? is-deeply $a eqv $b, True,  "$a.raku() eqv $b.raku()"
+            !! is-deeply $a eqv $b, False, "$a.raku() eqv $b.raku()"
     }
 }
 
@@ -231,14 +231,14 @@ subtest 'cmp with allomorphs' => {
     my @more = @less.map: { .value => .key };
     plan @same + @less + @more;
 
-    is-deeply $_ cmp $_, Same,  "{.perl} cmp {.perl}" for @same;
+    is-deeply $_ cmp $_, Same,  "{.raku} cmp {.raku}" for @same;
 
     for @less -> (:key($a), :value($b)) {
-        is-deeply $a cmp $b, Less, "$a.perl() cmp $b.perl()"
+        is-deeply $a cmp $b, Less, "$a.raku() cmp $b.raku()"
     }
 
     for @more -> (:key($a), :value($b)) {
-        is-deeply $a cmp $b, More, "$a.perl() cmp $b.perl()"
+        is-deeply $a cmp $b, More, "$a.raku() cmp $b.raku()"
     }
 }
 
@@ -327,12 +327,12 @@ subtest '.ACCEPTS' => {
 
     for @true -> (:key($allo), :value($thing)) {
         is-deeply $allo.ACCEPTS($thing), True,
-            "{$allo.perl}.ACCEPTS({$thing.perl})"
+            "{$allo.raku}.ACCEPTS({$thing.raku})"
     }
 
     for @false -> (:key($allo), :value($thing)) {
         is-deeply $allo.ACCEPTS($thing), False,
-            "{$allo.perl}.ACCEPTS({$thing.perl})"
+            "{$allo.raku}.ACCEPTS({$thing.raku})"
     }
 }
 
@@ -386,14 +386,14 @@ subtest '.Numeric on :U allomorphs and Numeric type objects' => {
     plan 3*@types + @allos + 6;
 
     for flat CustomNumeric, @types, @allos -> \T {
-        warns-like { T.Numeric }, *.contains('uninitialized'&'numeric'), T.perl;
+        warns-like { T.Numeric }, *.contains('uninitialized'&'numeric'), T.raku;
     }
 
     quietly {
         is-deeply CustomNumeric.Numeric, 42, 'Numeric:U.Numeric calls self.new';
         for @types {
-            isa-ok .Numeric, $_,      "{.perl}.Numeric gives a {.perl} value";
-            cmp-ok .Numeric, '==', 0, "{.perl}.Numeric gives a zero";
+            isa-ok .Numeric, $_,      "{.raku}.Numeric gives a {.raku} value";
+            cmp-ok .Numeric, '==', 0, "{.raku}.Numeric gives a zero";
         }
 
         is-deeply IntStr    .Numeric, 0,      'IntStr    .Numeric gives a 0';
@@ -411,7 +411,7 @@ subtest '.Real on :U allomorphs and Numeric type objects' => {
     plan @types + @allos + 9;
 
     for flat @types, @allos -> \T {
-        warns-like { T.Real }, *.contains('uninitialized'&'numeric'), T.perl;
+        warns-like { T.Real }, *.contains('uninitialized'&'numeric'), T.raku;
     }
 
     quietly {
@@ -445,8 +445,8 @@ subtest '.Bool on allomorphs' => {
     my @false := <0>, <0e0>, <-0e0>, <0.0>, <0/0>,
         <0+0i>, <0e0+0e0i>, <-0e0+0e0i>, <-0e0-0e0i>, <0e0-0e0i>;
     plan @true + @false;
-    is-deeply .so, True,  .perl for @true;
-    is-deeply .so, False, .perl for @false;
+    is-deeply .so, True,  .raku for @true;
+    is-deeply .so, False, .raku for @false;
 }
 
 # GH#2010

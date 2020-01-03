@@ -6,18 +6,18 @@ use Test;
 
 plan 108;
 
-isa-ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
-is-approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
-isa-ok( EVAL(0.Num.perl), Num, 'EVAL 0.Num.perl is Num' );
-is-approx( EVAL(0.Num.perl), 0, 'EVAL 0.Num.perl is 0' );
-isa-ok( EVAL((-1).Num.perl), Num, 'EVAL -1.Num.perl is Num' );
-is-approx( EVAL((-1).Num.perl), -1, 'EVAL -1.Num.perl is -1' );
-isa-ok( EVAL(1.1.Num.perl), Num, 'EVAL 1.1.Num.perl is Num' );
-is-approx( EVAL(1.1.perl), 1.1, 'EVAL 1.1.Num.perl is 1.1' );
-isa-ok( EVAL((-1.1).Num.perl), Num, 'EVAL -1.1.Num.perl is Num' );
-is-approx( EVAL((-1.1).perl), -1.1, 'EVAL -1.1.Num.perl is -1.1' );
-isa-ok( EVAL(1e100.Num.perl), Num, 'EVAL 1e100.Num.perl is Num' );
-is-approx( EVAL(1e100.Num.perl), 1e100, 'EVAL 1e100.Num.perl is 1' );
+isa-ok( EVAL(1.Num.raku), Num, 'EVAL 1.Num.raku is Num' );
+is-approx( EVAL(1.Num.raku), 1, 'EVAL 1.Num.raku is 1' );
+isa-ok( EVAL(0.Num.raku), Num, 'EVAL 0.Num.raku is Num' );
+is-approx( EVAL(0.Num.raku), 0, 'EVAL 0.Num.raku is 0' );
+isa-ok( EVAL((-1).Num.raku), Num, 'EVAL -1.Num.raku is Num' );
+is-approx( EVAL((-1).Num.raku), -1, 'EVAL -1.Num.raku is -1' );
+isa-ok( EVAL(1.1.Num.raku), Num, 'EVAL 1.1.Num.raku is Num' );
+is-approx( EVAL(1.1.raku), 1.1, 'EVAL 1.1.Num.raku is 1.1' );
+isa-ok( EVAL((-1.1).Num.raku), Num, 'EVAL -1.1.Num.raku is Num' );
+is-approx( EVAL((-1.1).raku), -1.1, 'EVAL -1.1.Num.raku is -1.1' );
+isa-ok( EVAL(1e100.Num.raku), Num, 'EVAL 1e100.Num.raku is Num' );
+is-approx( EVAL(1e100.Num.raku), 1e100, 'EVAL 1e100.Num.raku is 1' );
 
 {
     my $a = 1; "$a";
@@ -843,8 +843,8 @@ subtest 'parsed nums choose closest available representation' => {
     # compare to what it stringifies too
     cmp-ok 2026887777243374/10**63,        '==', 2.026887777243374e-48; # 11
     #?rakudo.jvm 2 todo 'stringifies to 2.026887777243374E-48'
-    cmp-ok (2026887777243374/10**63).perl, 'eq', '2.026887777243374e-48';
-    cmp-ok 2.026887777243374e-48.perl,     'eq', '2.026887777243374e-48';
+    cmp-ok (2026887777243374/10**63).raku, 'eq', '2.026887777243374e-48';
+    cmp-ok 2.026887777243374e-48.raku,     'eq', '2.026887777243374e-48';
 
 
 }
@@ -882,8 +882,8 @@ subtest 'distinct num literals do not compare the same' => {
 
 { # RT#128817
     my $n := 1180591620717411303424.0e0;
-    cmp-ok $n.Int, '==', $n.perl.EVAL.Int,
-        '.perl roundtrips the Num correctly';
+    cmp-ok $n.Int, '==', $n.raku.EVAL.Int,
+        '.raku roundtrips the Num correctly';
 }
 
 subtest 'no hangs/crashes when parsing nums with huge exponents' => {

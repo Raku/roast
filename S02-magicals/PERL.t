@@ -14,7 +14,7 @@ plan 46;
     ok $?PERL.desc,      "Description is '{$?PERL.desc}'";
     ok $?PERL.compiler,  "Has compiler info";
 
-    ok $?PERL.perl ~~ m/\w/, 'We can do a $?PERL.perl';
+    ok $?PERL.raku ~~ m/\w/, 'We can do a $?PERL.raku';
     ok $?PERL.gist ~~ m/\w/, 'We can do a $?PERL.gist';
     ok $?PERL.Str  ~~ m/\w/, 'We can do a $?PERL.Str';
 
@@ -31,7 +31,7 @@ plan 46;
     ok $C.release,    "Release is '{$C.release}'";
     ok $C.codename,   "Codename is '{$C.codename}'";
 
-    ok $C.perl, 'We can do a $?PERL.compiler.perl';
+    ok $C.raku, 'We can do a $?PERL.compiler.raku';
     ok $C.gist, 'We can do a $?PERL.compiler.gist';
 
     isa-ok $C.version, Version;
@@ -47,7 +47,7 @@ ok $*PERL.signature, "Signature is '{$*PERL.signature}'";
 ok $*PERL.desc,      "Description is '{$*PERL.desc}'";
 ok $*PERL.compiler,  "Has compiler info";
 
-ok $*PERL.perl ~~ m/\w/, 'We can do a $*PERL.perl';
+ok $*PERL.raku ~~ m/\w/, 'We can do a $*PERL.raku';
 ok $*PERL.gist ~~ m/\w/, 'We can do a $*PERL.gist';
 ok $*PERL.Str  ~~ m/\w/, 'We can do a $*PERL.Str';
 
@@ -69,7 +69,7 @@ ok $C.release,    "Release is '{$C.release}'";
 #?rakudo todo 'no Perl.compiler.codename yet RT #124624'
 ok $C.codename,   "Codename is '{$C.codename}'";
 
-ok $C.perl, 'We can do a $?PERL.compiler.perl';
+ok $C.raku, 'We can do a $?PERL.compiler.raku';
 ok $C.gist, 'We can do a $?PERL.compiler.gist';
 
 isa-ok $C.version, Version;

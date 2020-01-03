@@ -220,10 +220,10 @@ sub showkv($x) {
     is $m.total, 10000000059.6, 'is the total calculated correctly';
     my $s;
     my $c;
-    lives-ok { $s = $m.perl }, ".perl lives";
+    lives-ok { $s = $m.raku }, ".raku lives";
     isa-ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
-    lives-ok { $c = EVAL $s }, ".perl.EVAL lives";
+    lives-ok { $c = EVAL $s }, ".raku.EVAL lives";
     isa-ok $c, Mix, "... and produces a Mix";
     is showkv($c), showkv($m), "... and it has the correct values";
 }
@@ -508,9 +508,9 @@ subtest '.hash does not cause keys to be stringified' => {
           ?? X::Numeric::Real !! $pair.value eq 'a'
           ?? X::Str::Numeric  !! X::OutOfRange;
       throws-like { $pair.Mix }, ex,
-        "($pair.perl()).Mix throws";
+        "($pair.raku()).Mix throws";
       throws-like { Mix.new-from-pairs($pair) }, ex,
-        "Mix.new-from-pairs( ($pair.perl()) ) throws";
+        "Mix.new-from-pairs( ($pair.raku()) ) throws";
     }
 }
 

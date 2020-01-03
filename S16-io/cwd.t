@@ -7,5 +7,5 @@ use Test;
 plan 3;
 
 isa-ok $*CWD, IO::Path;
-lives-ok { $*CWD.perl }, '$*CWD.perl works';
+lives-ok { $*CWD.raku }, '$*CWD.raku works';
 lives-ok { $*CWD.gist }, '$*CWD.gist works';

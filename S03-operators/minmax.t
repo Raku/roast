@@ -60,7 +60,7 @@ This test min/max functions in their operator form. To see them tested in their 
 {
     my @a = <Inspiring bold John Barleycorn!>;
     my @b = <What dangers thou canst make us scorn!>;
-    is (@a minmax @b).perl, ("Barleycorn!".."us").perl, 'minmax works for strings, too';
+    is (@a minmax @b).raku, ("Barleycorn!".."us").raku, 'minmax works for strings, too';
 }
 
 {

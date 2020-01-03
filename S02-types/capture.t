@@ -154,7 +154,7 @@ nok (defined  \()[0]), '\()[0] is not defined';
 
 # RT #114100
 {
-    sub f(|everything) { everything.perl };
+    sub f(|everything) { everything.raku };
     my %h = :a, :b, :!c;
     ok f(%h) ~~ /'\(' \s* '{'/, 'Hashes not flattened into capture list';
 }
@@ -173,7 +173,7 @@ nok (defined  \()[0]), '\()[0] is not defined';
     is $a, 42, 'Can modify Capture associative elements';
 }
 
-lives-ok { (1..*).Capture.perl }, '.perl of Capture formed from Range does not explode';
+lives-ok { (1..*).Capture.raku }, '.raku of Capture formed from Range does not explode';
 
 # RT #123581
 throws-like '(1..*).list.Capture', X::Cannot::Lazy, :action('create a Capture from');

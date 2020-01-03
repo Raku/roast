@@ -9,7 +9,7 @@ dies-ok { Supply.produce( {...} ) }, 'can not be called as a class method';
 dies-ok { Supplier.new.Supply.produce(23) }, 'must be code if specified';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     tap-ok Supply.from-list(1..5).produce( {$^a + $^b} ), [1,3,6,10,15],
       "simple produce works";

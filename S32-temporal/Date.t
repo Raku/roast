@@ -205,8 +205,8 @@ throws-like { Date.new: "2016-07\x[308]-05" }, X::Temporal::InvalidFormat,
             'Instant, with a custom formatter';
     }
 
-    is-deeply Date.new('2016-09-28').perl.EVAL,
-              Date.new('2016-09-28'), 'can roundtrip .perl output';
+    is-deeply Date.new('2016-09-28').raku.EVAL,
+              Date.new('2016-09-28'), 'can roundtrip .raku output';
 
     is-deeply (62 + Date.new: '2016-11-10'), Date.new('2017-01-11'),
         'can Int + Date to increment date by Int days';

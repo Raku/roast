@@ -8,7 +8,7 @@ plan 5;
 dies-ok { Supply.words }, 'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     tap-ok Supply.from-list(<a bb ccc dddd eeeee>).words,
       ['abbcccddddeeeee'],

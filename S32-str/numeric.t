@@ -13,7 +13,7 @@ sub check($str, $expected_type, $expected_number, $desc?) {
 #?DOES 1
 sub f($str) {
     my $num = +$str;
-    ok !$num.defined, "+{$str.perl} fails";
+    ok !$num.defined, "+{$str.raku} fails";
 }
 
 check '',           Int,      0;

@@ -235,7 +235,7 @@ subtest '.DESTROY does not close standard handles' => {
     plan 3;
     for $*IN, $*OUT, $*ERR {
         .DESTROY;
-        is-deeply .opened, True, .perl;
+        is-deeply .opened, True, .raku;
     }
 }
 

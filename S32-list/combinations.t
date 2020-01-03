@@ -103,7 +103,7 @@ subtest '&combinations with Iterable first argument match calls with method form
 
     for @n -> $n {
         for @k -> $k {
-            is-deeply combinations($n, $k).sort, $n.combinations($k).sort, "$n.perl(), $k.perl()";
+            is-deeply combinations($n, $k).sort, $n.combinations($k).sort, "$n.raku(), $k.raku()";
         }
     }
     is-deeply combinations(0),           ^0 .combinations, 'sub with (0)';

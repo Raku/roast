@@ -45,11 +45,11 @@ is $x,  23, '$x successfully modified';
 is $y, 353, '$y not modified';
 
 # RT #77752
-ok callframe.perl.starts-with("CallFrame."),   'CallFrame.perl works';
+ok callframe.raku.starts-with("CallFrame."),   'CallFrame.raku works';
 ok callframe.gist.starts-with($*PROGRAM-NAME), 'CallFrame.gist works';
 
 # RT #127479
-lives-ok { sub{callframe.perl}() }, '.perl on callframe in a sub does not crash';
+lives-ok { sub{callframe.raku}() }, '.raku on callframe in a sub does not crash';
 
 lives-ok {
     sub foo() { callframe(1).file.ends-with('x') }

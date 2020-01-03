@@ -25,7 +25,7 @@ entries C<lib/> in C<@*INC>.
 
 # L<S19/Reference/"Prepend directories to">
 
-my $fragment = '-e "@*INC.perl.say"';
+my $fragment = '-e "@*INC.raku.say"';
 
 my @tests = (
     'foo',

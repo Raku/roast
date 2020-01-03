@@ -48,5 +48,5 @@ sub I-am-fatal() {
 }
 try I-am-fatal();
 is $!, 'Neat error message', 'adhoc error';
-is $!.perl, 'X::AdHoc.new(payload => "Neat error message")', 'adhoc error';
+is $!.raku, 'X::AdHoc.new(payload => "Neat error message")', 'adhoc error';
 

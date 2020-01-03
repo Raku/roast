@@ -8,7 +8,7 @@ plan 7;
 dies-ok { Supply.map({...}) }, 'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     tap-ok Supply.from-list(1..10).map( * * 5 ),
       [5,10,15,20,25,30,35,40,45,50],

@@ -8,7 +8,7 @@ plan 1;
 
 # RT #118029
 {
-    sub S (Stash $s) { $s.WHAT.perl };
+    sub S (Stash $s) { $s.WHAT.raku };
     is S(Stash.new), 'Stash', 'Stash.new creates Stash, not a Hash';
 }
 

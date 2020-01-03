@@ -43,7 +43,7 @@ plan 5;
     # Extra "\n" after `meow` is 'cause run-as-tty sends extra new line,
     # 'cause MacOS's `script` really wants it or something
     :out{ .ends-with: "False\nmeow\n\nTrue\n" or do {
-        diag "Got STDOUT: {.perl}";
+        diag "Got STDOUT: {.raku}";
         False;
     }}, '.eof on TTY STDIN works right';
 }

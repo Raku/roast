@@ -146,7 +146,7 @@ throws-like 'sub f(:in(:$in)) { }', X::Signature::NameClash, name => 'in';
 throws-like '(my $foo) does Int', X::Does::TypeObject;
 throws-like '(my $foo) does Int, Bool', X::Does::TypeObject;
 # RT #76742
-throws-like 'Bool does role { method Str() { $.perl } };', X::Does::TypeObject;
+throws-like 'Bool does role { method Str() { $.raku } };', X::Does::TypeObject;
 throws-like 'my role R { }; 99 but R("wrong");', X::Role::Initialization;
 throws-like 'my role R { has $.x; has $.y }; 99 but R("wrong");', X::Role::Initialization;
 throws-like 'my role R { }; 99 does R("wrong");', X::Role::Initialization;

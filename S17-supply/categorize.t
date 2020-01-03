@@ -10,14 +10,14 @@ dies-ok { Supply.categorize( {a=>1} ) }, 'can not be called as a class method';
 dies-ok { Supply.categorize( [<a>]  ) }, 'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     {
         my &mapper = { $_ div 10 };
         my %mapper is default(0) = ( 11=>1, 12=>1, 13=>1 );
         my @mapper = 0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1;
         for &mapper, %mapper, @mapper -> \mapper {
-            my $what = mapper.WHAT.perl;
+            my $what = mapper.WHAT.raku;
             my $s = Supplier.new;
             my $c = $s.Supply.categorize( mapper );
             ok $c ~~ Supply, "we got a classification Supply ($what)";
@@ -43,7 +43,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         my @mapper = (),(),(),(),(),(),(),(),(),(),
           $(0,1),$(0,1),$(0,1),$(0,1),$(0,1),$(0,1),$(0,1),$(0,1),$(0,1),$(0,1);
         for &mapper, %mapper, @mapper -> \mapper {
-            my $what = mapper.WHAT.perl;
+            my $what = mapper.WHAT.raku;
             my $s = Supplier.new;
             my $c = $s.Supply.categorize( mapper );
             ok $c ~~ Supply, "we got a classification Supply ($what)";

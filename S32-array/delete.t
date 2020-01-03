@@ -102,10 +102,10 @@ sub make-string(@a) {
 # RT #67446
 {
     my @array = 0..1;
-    is ~(EVAL @array.perl ), '0 1', '@array.perl works after init';
+    is ~(EVAL @array.raku ), '0 1', '@array.raku works after init';
     is ~( map { 1 }, @array ), '1 1', 'map @array works after init';
     @array[0]:delete;
-    lives-ok { @array.perl }, '@array.perl lives after delete';
+    lives-ok { @array.raku }, '@array.raku lives after delete';
     lives-ok { map { 1 }, @array }, 'map @array lives after delete';
 }
 

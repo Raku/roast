@@ -11,7 +11,7 @@ plan 7*@nuls;
 {
     temp $*CWD = make-temp-dir;
     for @nuls -> $nul {
-        my $d = "with {$nul.perl}";
+        my $d = "with {$nul.raku}";
         throws-like { spurt $nul, "foo"   }, X::IO::Null, "&spurt $d";
         throws-like { slurp $nul          }, X::IO::Null, "&slurp $d";
         throws-like { chdir $nul          }, X::IO::Null, "&chdir $d";

@@ -118,7 +118,7 @@ lives-ok {my $x = -> {}; my $y = $x(); },
     ok $ok, 'Blocks receive junctions without autothreading';
     is $iterations, 1, 'no autothreading happened';
     my $b = -> $x { ... };
-    ok $b.signature.perl !~~ /Any/,
+    ok $b.signature.raku !~~ /Any/,
        'The .signature of a block does not contain Any';
 }
 

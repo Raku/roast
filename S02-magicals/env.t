@@ -96,7 +96,7 @@ throws-like { EVAL "%ENV" },
 {
     %*ENV<ABC> = 'def';
     ok %*ENV.gist ~~ /ABC/, '%*ENV.gist generates something with ABC in it';
-    ok %*ENV.perl ~~ /ABC/, '%*ENV.perl generates something with ABC in it';
+    ok %*ENV.raku ~~ /ABC/, '%*ENV.raku generates something with ABC in it';
 }
 
 # RT #117951

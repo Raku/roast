@@ -14,7 +14,7 @@ sub test($range,$min,$max,$exmin,$exmax,$inf,$elems,$perl) {
         is $range.excludes-min, $exmin, "$range.gist().excludes-min is $exmin";
         is $range.excludes-max, $exmax, "$range.gist().excludes-max is $exmax";
         is $range.infinite,       $inf, "$range.gist().infinite is $inf";
-        is $range.perl,          $perl, "$range.gist().perl is $perl";
+        is $range.raku,          $perl, "$range.gist().raku is $perl";
 
         if $elems == Inf {
             throws-like $range.elems, X::Cannot::Lazy, :action<.elems>;

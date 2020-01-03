@@ -247,73 +247,73 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
     my $msg1 = 'reduce [^^] false variable test';
     my $msg2 = 'infix ^^ false variable test';
     for (0, '', Bool::False, Any, Mu, Nil) -> $undef {
-        ok ( [^^]  $undef, $undef, $undef, 5 ), "|{$undef.perl}| $msg1 \#1";
-        nok ( [^^]  1, 2, $undef, 3, $undef ), "|{$undef.perl}| $msg1 \#2";
-        nok ( [^^]  $undef, $undef, 1, 5 ), "|{$undef.perl}| $msg1 \#3";
-        nok ( [^^]  1, $undef, $undef, 5 ), "|{$undef.perl}| $msg1 \#4";
-        ok ( [^^]  $undef, $undef, 2, $undef ), "|{$undef.perl}| $msg1 \#5";
-        nok ( [^^]  $undef, $undef, $undef ), "|{$undef.perl}| $msg1 \#6";
-        nok ( [^^]  $undef, $undef ), "|{$undef.perl}| $msg1 \#7";
-        ok ( [^^]  $undef, 1 ), "|{$undef.perl}| $msg1 \#8";
-        ok ( [^^]  1, $undef ), "|{$undef.perl}| $msg1 \#9";
-        nok ( [^^]  $undef ), "|{$undef.perl}| $msg1 \#10";
-        ok ( $undef ^^ $undef ^^ $undef ^^ 5 ), "|{$undef.perl}| $msg2 \#1";
-        nok ( 1 ^^ 2 ^^ $undef ^^ 3 ^^ $undef ), "|{$undef.perl}| $msg2 \#2";
-        nok ( $undef ^^ $undef ^^ 1 ^^ 5 ), "|{$undef.perl}| $msg2 \#3";
-        nok ( 1 ^^ $undef ^^ $undef ^^ 5 ), "|{$undef.perl}| $msg2 \#4";
-        ok ( $undef ^^ $undef ^^ 2 ^^ $undef ), "|{$undef.perl}| $msg2 \#5";
-        nok ( $undef ^^ $undef ^^ $undef ), "|{$undef.perl}| $msg2 \#6";
-        nok ( $undef ^^ $undef ), "|{$undef.perl}| $msg2 \#7";
-        ok ( $undef ^^ 1 ), "|{$undef.perl}| $msg2 \#8";
-        ok ( 1 ^^ $undef ), "|{$undef.perl}| $msg2 \#9";
+        ok ( [^^]  $undef, $undef, $undef, 5 ), "|{$undef.raku}| $msg1 \#1";
+        nok ( [^^]  1, 2, $undef, 3, $undef ), "|{$undef.raku}| $msg1 \#2";
+        nok ( [^^]  $undef, $undef, 1, 5 ), "|{$undef.raku}| $msg1 \#3";
+        nok ( [^^]  1, $undef, $undef, 5 ), "|{$undef.raku}| $msg1 \#4";
+        ok ( [^^]  $undef, $undef, 2, $undef ), "|{$undef.raku}| $msg1 \#5";
+        nok ( [^^]  $undef, $undef, $undef ), "|{$undef.raku}| $msg1 \#6";
+        nok ( [^^]  $undef, $undef ), "|{$undef.raku}| $msg1 \#7";
+        ok ( [^^]  $undef, 1 ), "|{$undef.raku}| $msg1 \#8";
+        ok ( [^^]  1, $undef ), "|{$undef.raku}| $msg1 \#9";
+        nok ( [^^]  $undef ), "|{$undef.raku}| $msg1 \#10";
+        ok ( $undef ^^ $undef ^^ $undef ^^ 5 ), "|{$undef.raku}| $msg2 \#1";
+        nok ( 1 ^^ 2 ^^ $undef ^^ 3 ^^ $undef ), "|{$undef.raku}| $msg2 \#2";
+        nok ( $undef ^^ $undef ^^ 1 ^^ 5 ), "|{$undef.raku}| $msg2 \#3";
+        nok ( 1 ^^ $undef ^^ $undef ^^ 5 ), "|{$undef.raku}| $msg2 \#4";
+        ok ( $undef ^^ $undef ^^ 2 ^^ $undef ), "|{$undef.raku}| $msg2 \#5";
+        nok ( $undef ^^ $undef ^^ $undef ), "|{$undef.raku}| $msg2 \#6";
+        nok ( $undef ^^ $undef ), "|{$undef.raku}| $msg2 \#7";
+        ok ( $undef ^^ 1 ), "|{$undef.raku}| $msg2 \#8";
+        ok ( 1 ^^ $undef ), "|{$undef.raku}| $msg2 \#9";
     }
 
     # test numericy true things
     $msg1 = 'reduce [^^] true numbery variable test';
     $msg2 = 'infix ^^ true numbery variable test';
     for (1, -147, pi, Bool::True) -> $def {
-        nok ( [^^] 0, 0, $def, 3, $def ), "|{$def.perl}| $msg1 \#1";
-        nok ( [^^] $def, $def, 0 ), "|{$def.perl}| $msg1 \#2";
-        nok ( [^^] 1, $def, Any, 5 ), "|{$def.perl}| $msg1 \#3";
-        ok ( [^^] $def, 0, 0, 0 ) == $def, "|{$def.perl}| $msg1 \#4";
-        ok ( [^^] Any, Any, Any, $def ) == $def, "|{$def.perl}| $msg1 \#5";
-        nok ( [^^] $def, $def ), "|{$def.perl}| $msg1 \#6";
-        ok ( [^^] $def, 0 ) == $def, "|{$def.perl}| $msg1 \#7";
-        ok ( [^^] 0, $def ) == $def, "|{$def.perl}| $msg1 \#8";
-        ok ( [^^] $def ), "|{$def.perl}| $msg1 \#9";
-        nok ( 0 ^^ 0 ^^ $def ^^ 3 ^^ $def ), "|{$def.perl}| $msg2 \#1";
-        nok ( $def ^^ $def ^^ 0 ), "|{$def.perl}| $msg2 \#2";
-        nok ( 1 ^^ $def ^^ Any ^^ 5 ), "|{$def.perl}| $msg2 \#3";
-        ok ( $def ^^ 0 ^^ 0 ^^ 0 ) == $def, "|{$def.perl}| $msg2 \#4";
-        ok ( Any ^^ Any ^^ Any ^^ $def ) == $def,"|{$def.perl}| $msg2 \#5";
-        nok ( $def ^^ $def ), "|{$def.perl}| $msg2 \#6";
-        ok ( $def ^^ 0 ) == $def, "|{$def.perl}| $msg2 \#7";
-        ok ( 0 ^^ $def ) == $def, "|{$def.perl}| $msg2 \#8";
+        nok ( [^^] 0, 0, $def, 3, $def ), "|{$def.raku}| $msg1 \#1";
+        nok ( [^^] $def, $def, 0 ), "|{$def.raku}| $msg1 \#2";
+        nok ( [^^] 1, $def, Any, 5 ), "|{$def.raku}| $msg1 \#3";
+        ok ( [^^] $def, 0, 0, 0 ) == $def, "|{$def.raku}| $msg1 \#4";
+        ok ( [^^] Any, Any, Any, $def ) == $def, "|{$def.raku}| $msg1 \#5";
+        nok ( [^^] $def, $def ), "|{$def.raku}| $msg1 \#6";
+        ok ( [^^] $def, 0 ) == $def, "|{$def.raku}| $msg1 \#7";
+        ok ( [^^] 0, $def ) == $def, "|{$def.raku}| $msg1 \#8";
+        ok ( [^^] $def ), "|{$def.raku}| $msg1 \#9";
+        nok ( 0 ^^ 0 ^^ $def ^^ 3 ^^ $def ), "|{$def.raku}| $msg2 \#1";
+        nok ( $def ^^ $def ^^ 0 ), "|{$def.raku}| $msg2 \#2";
+        nok ( 1 ^^ $def ^^ Any ^^ 5 ), "|{$def.raku}| $msg2 \#3";
+        ok ( $def ^^ 0 ^^ 0 ^^ 0 ) == $def, "|{$def.raku}| $msg2 \#4";
+        ok ( Any ^^ Any ^^ Any ^^ $def ) == $def,"|{$def.raku}| $msg2 \#5";
+        nok ( $def ^^ $def ), "|{$def.raku}| $msg2 \#6";
+        ok ( $def ^^ 0 ) == $def, "|{$def.raku}| $msg2 \#7";
+        ok ( 0 ^^ $def ) == $def, "|{$def.raku}| $msg2 \#8";
     }
 
     # test stringy true things
     $msg1 = 'reduce [^^] true string variable test';
     $msg2 = 'infix ^^ true string variable test';
     for ('no', 'Bob', '10', 'False') -> $def {
-        nok ( [^^] $def, $def, $def, 'string' ), "|{$def.perl}| $msg1 \#1";
-        nok ( [^^] '', '', $def, 'str', $def ), "|{$def.perl}| $msg1 \#2";
-        nok ( [^^] $def, $def,'' ), "|{$def.perl}| $msg1 \#3";
-        nok ( [^^] 1, $def, Any, 5 ), "|{$def.perl}| $msg1 \#4";
-        ok ( [^^] $def, '', '', '' ) eq $def, "|{$def.perl}| $msg1 \#5";
-        ok ( [^^] Any, Any, Any, $def ) eq $def, "|{$def.perl}| $msg1 \#6";
-        nok ( [^^] $def, $def ), "|{$def.perl}| $msg1 \#7";
-        ok ( [^^] $def, '' ) eq $def, "|{$def.perl}| $msg1 \#8";
-        ok ( [^^] '', $def ) eq $def, "|{$def.perl}| $msg1 \#9";
-        ok ( [^^] $def ) eq $def, "|{$def.perl}| $msg1 \#10";
-        nok ( $def ^^ $def ^^ $def ^^ 'string' ), "|{$def.perl}| $msg2 \#1";
-        nok ( '' ^^ '' ^^ $def ^^ 'str' ^^ $def ),"|{$def.perl}| $msg2 \#2";
-        nok ( $def ^^ $def ^^'' ), "|{$def.perl}| $msg2 \#3";
-        nok ( 1 ^^ $def ^^ Any ^^ 5 ), "|{$def.perl}| $msg2 \#4";
-        ok ( $def ^^ '' ^^ '' ^^ '' ) eq $def, "|{$def.perl}| $msg2 \#5";
-        ok ( Any ^^ Any ^^ Any ^^ $def ) eq $def,"|{$def.perl}| $msg2 \#6";
-        nok ( $def ^^ $def ), "|{$def.perl}| $msg2 \#7";
-        ok ( $def ^^ '' ) eq $def, "|{$def.perl}| $msg2 \#8";
-        ok ( '' ^^ $def ) eq $def, "|{$def.perl}| $msg2 \#9";
+        nok ( [^^] $def, $def, $def, 'string' ), "|{$def.raku}| $msg1 \#1";
+        nok ( [^^] '', '', $def, 'str', $def ), "|{$def.raku}| $msg1 \#2";
+        nok ( [^^] $def, $def,'' ), "|{$def.raku}| $msg1 \#3";
+        nok ( [^^] 1, $def, Any, 5 ), "|{$def.raku}| $msg1 \#4";
+        ok ( [^^] $def, '', '', '' ) eq $def, "|{$def.raku}| $msg1 \#5";
+        ok ( [^^] Any, Any, Any, $def ) eq $def, "|{$def.raku}| $msg1 \#6";
+        nok ( [^^] $def, $def ), "|{$def.raku}| $msg1 \#7";
+        ok ( [^^] $def, '' ) eq $def, "|{$def.raku}| $msg1 \#8";
+        ok ( [^^] '', $def ) eq $def, "|{$def.raku}| $msg1 \#9";
+        ok ( [^^] $def ) eq $def, "|{$def.raku}| $msg1 \#10";
+        nok ( $def ^^ $def ^^ $def ^^ 'string' ), "|{$def.raku}| $msg2 \#1";
+        nok ( '' ^^ '' ^^ $def ^^ 'str' ^^ $def ),"|{$def.raku}| $msg2 \#2";
+        nok ( $def ^^ $def ^^'' ), "|{$def.raku}| $msg2 \#3";
+        nok ( 1 ^^ $def ^^ Any ^^ 5 ), "|{$def.raku}| $msg2 \#4";
+        ok ( $def ^^ '' ^^ '' ^^ '' ) eq $def, "|{$def.raku}| $msg2 \#5";
+        ok ( Any ^^ Any ^^ Any ^^ $def ) eq $def,"|{$def.raku}| $msg2 \#6";
+        nok ( $def ^^ $def ), "|{$def.raku}| $msg2 \#7";
+        ok ( $def ^^ '' ) eq $def, "|{$def.raku}| $msg2 \#8";
+        ok ( '' ^^ $def ) eq $def, "|{$def.raku}| $msg2 \#9";
     }
 }
 
@@ -486,13 +486,13 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is $side-effect, 1, "and does have a side effect";
 
     $side-effect = 0;
-    is ([andthen] Int, ++$side-effect).perl, 'Empty', "[andthen] produces correct result without thunk";
+    is ([andthen] Int, ++$side-effect).raku, 'Empty', "[andthen] produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
     is ([andthen] 1, ++$side-effect), 1, "[andthen] produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
     $side-effect = 0;
-    is ([andthen] 1,1,1,Any,++$side-effect).perl, 'Empty', "[andthen] on long list produces correct result without thunk";
+    is ([andthen] 1,1,1,Any,++$side-effect).raku, 'Empty', "[andthen] on long list produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
     is ([andthen] 1,1,1,1,++$side-effect), 1, "[andthen] on long list produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";

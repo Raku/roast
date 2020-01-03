@@ -5,7 +5,7 @@ plan 18;
 
 dies-ok { Supply.throttle(1,1) }, 'can not be called as a class method';
 
-diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
 {
     my $min = 0;

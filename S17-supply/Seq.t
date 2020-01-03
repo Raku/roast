@@ -7,7 +7,7 @@ plan 9;
 is-deeply Supply.list, (Supply,).Seq, 'can list a Supply type object';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     my @a;
     for Supply.from-list(2..6).Seq { @a.push($_) };

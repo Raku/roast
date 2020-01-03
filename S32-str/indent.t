@@ -20,8 +20,8 @@ for 1..4 -> $i {
 }
 
 for 1..4 -> $i {
-    is  "\x[2001] !".indent($i).ords.perl,
-        ("\x[2001] " ~ (' ' x $i) ~ '!').ords.perl,
+    is  "\x[2001] !".indent($i).ords.raku,
+        ("\x[2001] " ~ (' ' x $i) ~ '!').ords.raku,
         "New indent goes after existing - .indent($i)";
 }
 
@@ -30,8 +30,8 @@ for 1..4 -> $i {
 
 for 1..4 -> $i {
     for (' ', "\x[2000]") -> $prefix {
-        is  ($prefix ~ 'quack').indent($i).perl,
-            ($prefix x ($i + 1) ~ 'quack').perl,
+        is  ($prefix ~ 'quack').indent($i).raku,
+            ($prefix x ($i + 1) ~ 'quack').raku,
             "Same space - .indent($i) prefix={$prefix.ord.fmt('"\\x[%x]"')}";
     }
 }
@@ -42,8 +42,8 @@ is  "\tquack".indent($tab),
 
 for 1..$tab -> $i {
     for (' ', "\t", "\x[2000]") -> $prefix {
-        is  ($prefix ~ ' ' ~ 'quack').indent($i).perl,
-            ($prefix ~ ' ' ~ (' ' x $i) ~ 'quack').perl,
+        is  ($prefix ~ ' ' ~ 'quack').indent($i).raku,
+            ($prefix ~ ' ' ~ (' ' x $i) ~ 'quack').raku,
             "Mixed space - .indent($i) prefix={$prefix.ord.fmt('"\\x[%x]"')}";
     }
 }
@@ -74,12 +74,12 @@ given 'Excess outdent test for warning' -> $test {
 # Whatever-star
 is ''.indent(*), '', 'indent(*) on empty string';
 
-is  "  quack\n meow\n   helicopter fish".indent(*).perl,
-    " quack\nmeow\n  helicopter fish".perl,
+is  "  quack\n meow\n   helicopter fish".indent(*).raku,
+    " quack\nmeow\n  helicopter fish".raku,
     'Whatever* outdent with at least 1 common indent';
 
-is  " quack\nmeow\n  helicopter fish".indent(*).perl,
-    " quack\nmeow\n  helicopter fish".perl,
+is  " quack\nmeow\n  helicopter fish".indent(*).raku,
+    " quack\nmeow\n  helicopter fish".raku,
     'Whatever* outdent with one line flush left already';
 
 is "  quack\n\n    meow\n".indent(*),
@@ -116,8 +116,8 @@ is  "\tquack\n\t meow".indent($tab),
     "\t\tquack\n\t {' ' x $tab}meow",
     'Multiline indent test with tab-space indent';
 
-is  "\ta\n b".indent(1).perl,
-    "\ta\n b".lines».indent(1).join("\n").perl,
+is  "\ta\n b".indent(1).raku,
+    "\ta\n b".lines».indent(1).join("\n").raku,
     'Multiline indent test with mixed line beginnings';
 
 is  "\tquack\nmeow".indent($tab),
@@ -130,16 +130,16 @@ is  "\ta\n b".indent(0),
     "\ta\n b",
     '.indent(0) should be a no-op';
 
-is "a\n\nb\n".indent(2).perl,
-   "  a\n\n  b\n".perl,
+is "a\n\nb\n".indent(2).raku,
+   "  a\n\n  b\n".raku,
    ".indent ignores empty lines";
 
-is  "\ta\n b".indent(1).indent(16).indent(0).indent(*).perl,
-    "\ta\n b".indent(True).indent('0x10').indent('0e0').indent(*).perl,
+is  "\ta\n b".indent(1).indent(16).indent(0).indent(*).raku,
+    "\ta\n b".indent(True).indent('0x10').indent('0e0').indent(*).raku,
     '.indent accepts weird scalar input and coerces it to Int when necessary';
 
-is  " \t a\n \t b\n".indent(1).perl,
-    " \t  a\n \t  b\n".perl,
+is  " \t a\n \t b\n".indent(1).raku,
+    " \t  a\n \t  b\n".raku,
     'Indentation should not be appended after a trailing \n';
 
 # https://github.com/rakudo/rakudo/issues/2409

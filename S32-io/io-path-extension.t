@@ -178,7 +178,7 @@ my @tests = gather {
 plan 2 + @tests;
 
 is-deeply .<path>.IO.extension(|.<args>), .<expected>,
-    "'{.<path>}'.IO.extension {.<args>.perl}"
+    "'{.<path>}'.IO.extension {.<args>.raku}"
 for @tests;
 
 throws-like { "foo.txt".IO.extension: :parts('a'..'z') }, Exception,

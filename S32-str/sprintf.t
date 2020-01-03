@@ -308,7 +308,7 @@ subtest 'sprintf with Numeric/Str type objects' => {
     sub qs (|c) { quietly sprintf |c }
 
     for @types -> \T {
-        my $p := "with {T.perl}";
+        my $p := "with {T.raku}";
         is-deeply qs('%c',   T), "\0",           "%c   $p";
         is-deeply qs('%02c', T), "0\0",          "%02c $p";
         is-deeply qs('%u',   T), '0',            "%u   $p";

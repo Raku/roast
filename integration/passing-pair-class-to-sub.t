@@ -9,7 +9,7 @@ use Test;
 plan 2;
 
 {
-    my sub foo ($x) { $x.perl }
+    my sub foo ($x) { $x.raku }
 
     my $pair = (a => 1);
     my $Pair = $pair.WHAT;
@@ -18,7 +18,7 @@ plan 2;
 }
 
 {
-    my sub foo ($x) { $x.perl }
+    my sub foo ($x) { $x.raku }
 
     my $int = 42;
     my $Int = $int.WHAT;

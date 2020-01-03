@@ -161,7 +161,7 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
             $ok++ if Buf.new(.encode('utf8-c8').list) eqv @bufs[0];
             unless Buf.new(.encode('utf8-c8').list) eqv @bufs[0] {
                 note $ok;
-                note Buf.new(.encode('utf8-c8').list).perl ~ "\n", @bufs[0].perl;
+                note Buf.new(.encode('utf8-c8').list).raku ~ "\n", @bufs[0].raku;
             }
         }
         $fh.close;

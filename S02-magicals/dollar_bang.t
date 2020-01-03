@@ -46,7 +46,7 @@ try {
 {
     $! = Nil;
     try { die('goodbye'); }
-    ok defined( $!.perl ), '$! has working Raku object methods after try';
+    ok defined( $!.raku ), '$! has working Raku object methods after try';
     ok ($!.WHAT ~~ Exception), '$! is Exception object after try';
     # - S04-statements/try.t tests $! being set after try.
     # - S29-context/die.t tests $! being set after die.
@@ -56,7 +56,7 @@ try {
     ok ($!), '$! as boolean works (true)';
 
     try { EVAL q[ die('farewell'); ] };
-    ok defined($!.perl), '$! has working Raku object methods after eval';
+    ok defined($!.raku), '$! has working Raku object methods after eval';
     ok ($!.WHAT ~~ Exception), '$! is Exception object after eval';
     # Although S29-context/die.t tests $! being set after die, it's not
     # from within an eval, so we test the eval/die combination here.

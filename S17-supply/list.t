@@ -8,7 +8,7 @@ plan 9;
 is-eqv Supply.list, (Supply,), 'can list a Supply type object';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     my @a;
     for Supply.from-list(2..6).list { @a.push($_) };

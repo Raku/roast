@@ -143,7 +143,7 @@ is (<a ab>, <bc ad ba>).comb(rx:Perl5/\S*a\S*/), <a ab ad ba>,
             plan 2;
             is comb($size,$str), $result, "comb($size,$str)";
             is $str.comb($size),  $result, "$str\.comb($size)";
-        }, "comb with \"$str\", size $size, limit $limit.perl()";
+        }, "comb with \"$str\", size $size, limit $limit.raku()";
     }
 
     for *, Inf, 20 -> $times {
@@ -190,7 +190,7 @@ subtest 'edge-case combers' => {
     }
     plan +@tests;
     for @tests -> ($str, $expected, |args) {
-        is-deeply $str.comb(|args), $expected, "$str.perl() with {args.perl}";
+        is-deeply $str.comb(|args), $expected, "$str.raku() with {args.raku}";
     }
 }
 

@@ -11,7 +11,7 @@ my $rat-methods = join ', ', Rat.^methods(:local).map({.name});
 ok ($rat-methods ~~ /<wb>'Str'<wb>/ && $rat-methods ~~ /<wb>'round'<wb>/), 'Rat Str and round methods'
    or diag "Rat methods: $rat-methods";
 
-ok Rat.^methods(:local).grep({.name eq 'log'}).[0].signature.perl, 'log signature';
+ok Rat.^methods(:local).grep({.name eq 'log'}).[0].signature.raku, 'log signature';
 
 # sub log-calls($obj, Role $r) { ... } 
 # wrapper example omitted - see RT #121967

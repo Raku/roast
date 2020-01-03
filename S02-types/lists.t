@@ -129,7 +129,7 @@ plan 29;
 {
     my $rt66304 = (1, 2, 4);
     isa-ok $rt66304, List, 'List assigned to scalar is-a List';
-    is( $rt66304.WHAT.perl, (1, 2, 4).WHAT.perl,
+    is( $rt66304.WHAT.raku, (1, 2, 4).WHAT.raku,
         'List.WHAT is the same as .WHAT of list assigned to scalar' );
     throws-like { $rt66304[1] = 'ro' },
       X::Assignment::RO,

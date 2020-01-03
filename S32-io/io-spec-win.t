@@ -91,7 +91,7 @@ my @catdir =
     ('','','..').item,              '\\',
     ('A:', 'foo').item,             'A:foo';
 for @catdir -> $in, $out {
-    is $win32.catdir(|$in), $out, "catdir: {$in.perl} -> '$out'";
+    is $win32.catdir(|$in), $out, "catdir: {$in.raku} -> '$out'";
 }
 
 my @splitpath =
@@ -120,7 +120,7 @@ my @splitpath =
     \('\\\\node\\share\\d1/d2\\d3/', :nofile),   '\\\\node\\share,\\d1/d2\\d3/,';
 
 for @splitpath -> $in, $out {
-    is $win32.splitpath(|$in).join(','), $out, "splitpath: {$in.perl} -> '$out'"
+    is $win32.splitpath(|$in).join(','), $out, "splitpath: {$in.raku} -> '$out'"
 }
 
 my @catpath =
@@ -146,7 +146,7 @@ my @catpath =
     ('\\\\node\\share','\\d1/d2\\','file').item,    '\\\\node\\share\\d1/d2\\file';
 
 for @catpath -> $in, $out {
-    is $win32.catpath(|$in), $out, "catpath: {$in.perl} -> '$out'"
+    is $win32.catpath(|$in), $out, "catpath: {$in.raku} -> '$out'"
 }
 
 diag "split tests";
@@ -176,7 +176,7 @@ my @split =
 ;
 for @split -> $in, $out {
     is $win32.split(|$in).hash.<volume dirname basename>.join(','),
-          $out, "split: {$in.perl} -> '$out'"
+          $out, "split: {$in.raku} -> '$out'"
 }
 
 diag "join tests";
@@ -209,7 +209,7 @@ my @join =
     ('\\\\node\\share','\\d1/d2\\','file').item,    '\\\\node\\share\\d1/d2\\file';
 
 for @join -> $in, $out {
-    is $win32.join(|$in), $out, "join: {$in.perl} -> '$out'"
+    is $win32.join(|$in), $out, "join: {$in.raku} -> '$out'"
 }
 
 ok $win32.is-absolute( "/" ), 'is-absolute: ok "/"';
@@ -233,7 +233,7 @@ my @catfile =
     ('A:', 'foo').item,         'A:foo';
 
 for @catfile -> $in, $out {
-    is $win32.catfile(|$in), $out, "catfile: {$in.perl} -> '$out'"
+    is $win32.catfile(|$in), $out, "catfile: {$in.raku} -> '$out'"
 }
 
 my @abs2rel =
@@ -263,7 +263,7 @@ my @abs2rel =
 
 {
     for @abs2rel -> $in, $out {
-        is $win32.abs2rel(|$in), $out, "abs2rel: {$in.perl} -> '$out'"
+        is $win32.abs2rel(|$in), $out, "abs2rel: {$in.raku} -> '$out'"
     }
 }
 
@@ -281,7 +281,7 @@ my @rel2abs =
     #$('D:foo.txt'),                        'D:\\alpha\\beta\\foo.txt';
 
 for @rel2abs -> $in, $out {
-    is $win32.rel2abs(|$in), $out, "rel2abs: {$in.perl} -> '$out'"
+    is $win32.rel2abs(|$in), $out, "rel2abs: {$in.raku} -> '$out'"
 }
 
 
@@ -320,7 +320,7 @@ subtest '.absolute with paths that have combiners on slashes' => {
     plan 2;
     for "/\x[308]", "\\\x[308]" -> $basename {
         my $abs := IO::Path::Win32.new(:volume<C:>, :$basename).absolute;
-        cmp-ok $abs.ords.grep(｢\/｣.ords.any), '==', 1, $basename.perl;
+        cmp-ok $abs.ords.grep(｢\/｣.ords.any), '==', 1, $basename.raku;
     }
 }
 

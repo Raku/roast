@@ -56,7 +56,7 @@ eval-lives-ok q':(::T $x)', "No error on type capture";
 {
     sub f (::T $g) {
         for ($g) -> T $h {
-            return $h ~ ":" ~ T.perl
+            return $h ~ ":" ~ T.raku
         }
     };
     is f("blah"), "blah:Str", 'Type variable matches in signature to "for" loop';

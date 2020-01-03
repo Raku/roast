@@ -9,7 +9,7 @@ dies-ok { Supply.min }, 'can not be called as a class method';
 dies-ok { Supply.new.min(23) }, 'must be code if specified';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     tap-ok Supply.from-list(1..10).min, [1],
       "ascending min works";

@@ -401,7 +401,7 @@ for $functions.lines {
     when /plus_inf\:\s+(.*)/ { $plus_inf = ~$0; }
     when /minus_inf\:\s+(.*)/ { $minus_inf = ~$0; }
     when /End/ {
-        say :$function_name.perl;
+        say :$function_name.raku;
         my $tf = TrigFunction.new($function_name, $inverted_function_name, $angle_and_results_name, 
                                   $rational_inverse_tests, $skip, $desired-result-code,
                                   $complex_check, $plus_inf, $minus_inf);

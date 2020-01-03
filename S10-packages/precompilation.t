@@ -13,7 +13,7 @@ BEGIN my $lib-path = $?FILE.IO.parent(2).IO;
 my $example-lib-prefix = $lib-path.add('packages/Example/lib').absolute;
 my $example2-lib-prefix = $lib-path.add('packages/Example2/lib').absolute;
 
-my @precompiled = Test::Util::run( "use lib $example-lib-prefix.perl();\n" ~ q:to"--END--").lines;
+my @precompiled = Test::Util::run( "use lib $example-lib-prefix.raku();\n" ~ q:to"--END--").lines;
     for <C A B> {
         my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name("Example::$_")));
         say $comp-unit.precompiled;
@@ -23,7 +23,7 @@ is @precompiled.elems, 3;
 is $_, 'True' for @precompiled;
 
 # RT #122773
-my @keys = Test::Util::run( "use lib $example-lib-prefix.perl();\n" ~ q:to"--END--").lines;
+my @keys = Test::Util::run( "use lib $example-lib-prefix.raku();\n" ~ q:to"--END--").lines;
     use Example::A;
     use Example::B;
 
@@ -32,7 +32,7 @@ my @keys = Test::Util::run( "use lib $example-lib-prefix.perl();\n" ~ q:to"--END
 
 #?rakudo.jvm todo 'got: $["B", "C"]'
 is-deeply @keys, [<A B C>], 'Diamond relationship';
-my @precompiled2 = Test::Util::run( "use lib $example2-lib-prefix.perl();\n" ~ q:to"--END--").lines;
+my @precompiled2 = Test::Util::run( "use lib $example2-lib-prefix.raku();\n" ~ q:to"--END--").lines;
     for <T P D N S B G K C E F H R A U> {
         my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name("Example2::$_")));
         say $comp-unit.precompiled;
@@ -42,7 +42,7 @@ is @precompiled2.elems, 15;
 is $_, 'True' for @precompiled2;
 
 # RT #123272
-my @keys2 = Test::Util::run( "use lib $example2-lib-prefix.perl();\n" ~ q:to"--END--").lines;
+my @keys2 = Test::Util::run( "use lib $example2-lib-prefix.raku();\n" ~ q:to"--END--").lines;
     use Example2::T;
 
     use Example2::G;
@@ -59,7 +59,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 #?rakudo.js todo 'RT #122896'
 {
     is_run
-      "use lib $example-lib-prefix.perl();\n" ~
+      "use lib $example-lib-prefix.raku();\n" ~
       'use Example::C;
        f();',
        { err => '',
@@ -101,7 +101,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 {
     my $rt123276-lib-prefix = $lib-path.add('packages/RT123276/lib').absolute;
 
-    my @precompiled = Test::Util::run( "use lib $rt123276-lib-prefix.perl();\n" ~ q:to"--END--").lines;
+    my @precompiled = Test::Util::run( "use lib $rt123276-lib-prefix.raku();\n" ~ q:to"--END--").lines;
         my $name = 'RT123276';
 
         for "{$name}", "{$name}::B::C1", "{$name}::B::C2" -> $module-name {
@@ -114,7 +114,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     is @precompiled.elems, 3, "tried to precompile all 3 modules";
     is $_, 'True' for @precompiled;
 
-    my @keys = Test::Util::run( "use lib $rt123276-lib-prefix.perl();\n" ~ q:to"--END--").lines;
+    my @keys = Test::Util::run( "use lib $rt123276-lib-prefix.raku();\n" ~ q:to"--END--").lines;
         use RT123276::B::C1;
         use RT123276::B::C2;
         say RT123276::B::C1.^methods.grep( *.name ne "BUILDALL" )
@@ -285,7 +285,7 @@ with make-temp-dir() -> $dir {
     ｣;
 
     for ^2 { # do two runs: 1 x without pre-existing precomp + 1 x with
-        is_run 'use lib \qq[$dir.absolute().perl()]; use Simple131924; print buggy-str() eq “: \n\r\n\r”',
+        is_run 'use lib \qq[$dir.absolute().raku()]; use Simple131924; print buggy-str() eq “: \n\r\n\r”',
              {:out<True>, :err(''), :0status},
 	     'no funny business with precompiled string strands (\qq[$_])';
     }
@@ -301,7 +301,7 @@ with make-temp-dir() -> $dir {
     ｣;
 
     for ^2 { # do two runs: 1 x without pre-existing precomp + 1 x with
-        is_run 'use lib \qq[$dir.absolute().perl()]; use Simple1219; print A.a()',
+        is_run 'use lib \qq[$dir.absolute().raku()]; use Simple1219; print A.a()',
                {
                    out    => '',
                    err    => { $_ ~~ / 'deprecated code'/ },

@@ -96,7 +96,7 @@ subtest '.lines accepts all Numerics as limit' => {
     for @stuff -> $limit {
         my @lines = lines Test::Util::run(
             ｢@*ARGS = '｣ ~ $tmp-file-name
-                ~ ｢' xx 2; .say for $*ARGFILES.lines: ｣ ~ $limit.perl
+                ~ ｢' xx 2; .say for $*ARGFILES.lines: ｣ ~ $limit.raku
         );
         is-deeply @lines, [<one two three one two>], "{$limit.^name} limit";
     }

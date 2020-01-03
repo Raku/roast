@@ -14,8 +14,8 @@ isa-ok( 1.Num.FatRat, FatRat, "cast of Num makes a FatRat");
 
 isa-ok(1 / 4, Rat, "/ makes a Rat");
 
-isa-ok( EVAL(FatRat.new(1, 3).perl), FatRat, 'EVAL FatRat.new(1, 3).perl is FatRat' );
-is-approx (EVAL FatRat.new(1, 3).perl), 1/3, 'EVAL FatRat.new(1, 3).perl is 1/3';
+isa-ok( EVAL(FatRat.new(1, 3).raku), FatRat, 'EVAL FatRat.new(1, 3).raku is FatRat' );
+is-approx (EVAL FatRat.new(1, 3).raku), 1/3, 'EVAL FatRat.new(1, 3).raku is 1/3';
 
 # Test ~
 is(~(FatRat.new(1,4)), ~(0.25e0), "FatRats stringify properly");

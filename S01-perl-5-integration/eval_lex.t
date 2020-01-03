@@ -20,7 +20,7 @@ subtest 'EVAL/EVALFILE evals Buf like perl would execute source file' => {
 
     # The $result Buf was obtained by running:
     # perl -e 'no warnings; print qq|♥\x{26666}|; { use utf8; print qq|♥\x{26666}| }' |
-    #    ./perl6 -e '$*IN.encoding(Nil); $*IN.slurp.perl.say'
+    #    ./perl6 -e '$*IN.encoding(Nil); $*IN.slurp.raku.say'
     my $result = Buf[uint8].new(195,162,194,153,194,165,240,166,153,166,226,153,165,240,166,153,166);
 
     my $code = ｢no warnings; print qq|♥\x{26666}|; { use utf8; print qq|♥\x{26666}| }｣;
@@ -28,7 +28,7 @@ subtest 'EVAL/EVALFILE evals Buf like perl would execute source file' => {
     subtest 'EVAL' => {
         plan 3;
         given run :out, :err, $*EXECUTABLE, '-e',
-            'use MONKEY-SEE-NO-EVAL; EVAL :lang<Perl5>, \qq[$code.perl()]'
+            'use MONKEY-SEE-NO-EVAL; EVAL :lang<Perl5>, \qq[$code.raku()]'
         {
             is-deeply .out.slurp-rest(:bin), $result, 'STDOUT has right data';
             is-deeply .err.slurp, '',      'STDERR is empty';
@@ -42,7 +42,7 @@ subtest 'EVAL/EVALFILE evals Buf like perl would execute source file' => {
         $path.spurt: $code;
         given run :out, :err, $*EXECUTABLE, '-e',
             'use MONKEY-SEE-NO-EVAL; EVALFILE :lang<Perl5>,'
-            ~ $path.absolute.perl
+            ~ $path.absolute.raku
         {
             is-deeply .out.slurp-rest(:bin), $result, 'STDOUT has right data';
             is-deeply .err.slurp, '',      'STDERR is empty';

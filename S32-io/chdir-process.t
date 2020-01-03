@@ -23,7 +23,7 @@ subtest '&*chdir into IO::Path respects its :CWD attribute' => {
     ($where.add('one').mkdir).add('pass1').spurt: 'pass1';
     my $to = IO::Path.new: ".", :CWD($where.add: 'one');
 
-    is_run '&*chdir(\qq[$to.perl()]); .say for dir',
+    is_run '&*chdir(\qq[$to.raku()]); .say for dir',
         {:out(/pass1/), :err(''), :0status},
     'found expected file';
 }

@@ -19,7 +19,7 @@ nok ($out == 3|5|7), '$var == 3|5|7';
 ok ($out == none(3,5,7)), '$var == none(3,5,7)';
 nok ($in == none(3,5,7)), '$var == none(3,5,7)';
 
-ok ( (any(1, 2, 3) + 2).perl , any(3, 4, 5) , 'Junction + Int gives Junction');
+ok ( (any(1, 2, 3) + 2).raku , any(3, 4, 5) , 'Junction + Int gives Junction');
 
 ok 'testing' ~~ /t/ & /s/ & /g/ , "'testing' ~~ /t/ & /s/ & /g/";
 nok 'testing' ~~ /x/ & /s/ & /g/ , "'testing' ~~ /x/ & /s/ & /g/";

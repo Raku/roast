@@ -9,7 +9,7 @@ plan 7;
 is-eqv Supply.sort, (Supply,).Seq, 'can sort a Supply type object';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     tap-ok Supply.from-list(10...1).sort, [1..10], "we can sort numbers";
     tap-ok Supply.from-list("z"..."a").sort, ["a" .. "z"], "we can sort strings";

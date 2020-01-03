@@ -52,9 +52,9 @@ my Glass of MulledWine $glass ;
 role Tray[::ItemType] { }
 my Tray of Glass of MulledWine $valuable;
 
-is $mug.WHAT.perl , 'Cup[EggNog]' , 'the $mug is a Cup of EggNog';
-is $glass.WHAT.perl , 'Glass[MulledWine]' , 'the $glass is a Glass of MulledWine';
-is $valuable.WHAT.perl , 'Tray[Glass[MulledWine]]' , 'the $valuable is a Tray of Glass of MulledWine';
+is $mug.WHAT.raku , 'Cup[EggNog]' , 'the $mug is a Cup of EggNog';
+is $glass.WHAT.raku , 'Glass[MulledWine]' , 'the $glass is a Glass of MulledWine';
+is $valuable.WHAT.raku , 'Tray[Glass[MulledWine]]' , 'the $valuable is a Tray of Glass of MulledWine';
 
 role DeliveryCalculation[::Calculator] {
     has $.mass;

@@ -48,8 +48,8 @@ subtest 'smartmatch against numeric range' => {
     is-deeply 0/0..0/0 ~~ -1/0..1/0, False, '0/0..0/0 ~~ -1/0..1/0';
 
     for @variants -> $r {
-        is-deeply $_ ~~ $r, True,  "{.perl} ~~ {$r.perl}" for @true;
-        is-deeply $_ ~~ $r, False, "{.perl} ~~ {$r.perl}" for @false;
+        is-deeply $_ ~~ $r, True,  "{.raku} ~~ {$r.raku}" for @true;
+        is-deeply $_ ~~ $r, False, "{.raku} ~~ {$r.raku}" for @false;
     }
 }
 
@@ -61,10 +61,10 @@ subtest 'smartmatch of string ranges' => {
     plan @true + @false;
 
     for @true -> ($a, $b) {
-        is-deeply $a ~~ $b, True,  "{$a.perl} ~~ {$b.perl}";
+        is-deeply $a ~~ $b, True,  "{$a.raku} ~~ {$b.raku}";
     }
     for @false -> ($a, $b) {
-        is-deeply $a ~~ $b, False, "{$a.perl} ~~ {$b.perl}";
+        is-deeply $a ~~ $b, False, "{$a.raku} ~~ {$b.raku}";
     }
 }
 
@@ -82,8 +82,8 @@ subtest 'smartmatch numeric range against string range [numeric strings]' => {
     plan @variants * (@true + @false);
 
     for @variants -> $r {
-        is-deeply $_ ~~ $r, True,  "{.perl} ~~ {$r.perl}" for @true;
-        is-deeply $_ ~~ $r, False, "{.perl} ~~ {$r.perl}" for @false;
+        is-deeply $_ ~~ $r, True,  "{.raku} ~~ {$r.raku}" for @true;
+        is-deeply $_ ~~ $r, False, "{.raku} ~~ {$r.raku}" for @false;
     }
 }
 

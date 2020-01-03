@@ -6,7 +6,7 @@ use Test::Tap;
 plan 10;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     {
         my $s1 = Supplier.new;

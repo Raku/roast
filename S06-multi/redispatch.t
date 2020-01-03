@@ -63,7 +63,7 @@ plan 14;
     class B {
         multi method b(Int $b) { samewith "$b" }
         multi method b(Str $b) {
-            is $b, "42", 'samewith $b stringified for ' ~ self.perl;
+            is $b, "42", 'samewith $b stringified for ' ~ self.raku;
         }
     }
 

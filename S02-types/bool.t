@@ -50,8 +50,8 @@ is Bool::True.Str, 'True', 'True.Str';
 is Bool::False.Str, 'False', 'False.Str';
 is Bool::True.gist, 'True', 'True.gist';
 is Bool::False.gist, 'False', 'False.gist';
-is Bool::True.perl, 'Bool::True', 'True.perl';
-is Bool::False.perl, 'Bool::False', 'False.perl';
+is Bool::True.raku, 'Bool::True', 'True.raku';
+is Bool::False.raku, 'Bool::False', 'False.raku';
 
 # numification - interaction with +
 is-deeply +Bool::True,      1, 'True numifies to an Int';

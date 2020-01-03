@@ -110,10 +110,10 @@ subtest 'infix:<===> on complex zeros' => {
 
 subtest 'Stringification of Complex handles signed zeros' => {
     plan 12;
-    cmp-ok <-0-0i>.perl.EVAL, '===', <-0-0i>, '<-0-0i>.perl';
-    cmp-ok <-0+0i>.perl.EVAL, '===', <-0+0i>, '<-0+0i>.perl';
-    cmp-ok <+0-0i>.perl.EVAL, '===',  <0-0i>, '<+0-0i>.perl';
-    cmp-ok <+0+0i>.perl.EVAL, '===',  <0+0i>, '<+0+0i>.perl';
+    cmp-ok <-0-0i>.raku.EVAL, '===', <-0-0i>, '<-0-0i>.raku';
+    cmp-ok <-0+0i>.raku.EVAL, '===', <-0+0i>, '<-0+0i>.raku';
+    cmp-ok <+0-0i>.raku.EVAL, '===',  <0-0i>, '<+0-0i>.raku';
+    cmp-ok <+0+0i>.raku.EVAL, '===',  <0+0i>, '<+0+0i>.raku';
 
     is-deeply <-0-0i>.gist, '-0-0i',   '<-0-0i>.gist';
     is-deeply <-0+0i>.gist, '-0+0i',   '<-0+0i>.gist';

@@ -130,9 +130,9 @@ sub fiddle(:$x,:$y){ violin($x) ~ violin($y) }
   my $v;
   my sub f($s,:$x) { violin($x) ~ violin($s) }
   my sub g($s1,$s2,:$x) {$s1~$x~$s2}
-  my sub h(*@a) {@a.perl}
-  my sub i(*%h) {%h.perl}
-  my sub j($s1,$s2,*%h) {$s1~%h.perl~$s2}
+  my sub h(*@a) {@a.raku}
+  my sub i(*%h) {%h.raku}
+  my sub j($s1,$s2,*%h) {$s1~%h.raku~$s2}
 
   # f(X s) f(Xs) f(s X) f(sX) f(xs) f(sx)
 
@@ -168,17 +168,17 @@ sub fiddle(:$x,:$y){ violin($x) ~ violin($y) }
 #?rakudo todo 'Multi colonpair syntax not yet understood'
 { # adverbs as pairs
 
-  my sub f1($s,:$x){$s.perl~$x}
+  my sub f1($s,:$x){$s.raku~$x}
   is f1(\:bar :x("b")), '("bar" => Bool::True)b', 'f1(\:bar :x("b"))';
 }
 
 {
   # adverbs as pairs, cont.
-  my sub f2(Pair $p){$p.perl}
-  is f2((:bar)), ("bar" => Bool::True).perl, 'f2((:bar))';
+  my sub f2(Pair $p){$p.raku}
+  is f2((:bar)), ("bar" => Bool::True).raku, 'f2((:bar))';
 
-  my sub f3(Pair $p1, Pair $p2){$p1.perl~" - "~$p2.perl}
-  is f3((:bar),(:hee(3))), "{(bar => Bool::True).perl} - {(hee => 3).perl}", 'f3((:bar),(:hee(3)))';
+  my sub f3(Pair $p1, Pair $p2){$p1.raku~" - "~$p2.raku}
+  is f3((:bar),(:hee(3))), "{(bar => Bool::True).raku} - {(hee => 3).raku}", 'f3((:bar),(:hee(3)))';
 }
 
 

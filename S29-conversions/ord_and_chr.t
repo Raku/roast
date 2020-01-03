@@ -177,7 +177,7 @@ subtest 'chr with large codepoints throws useful error' => {
     my @tests = 'chr 2⁶³-1',   '(2⁶³-1).chr', 'chr 2⁶³',
                 '2⁶³.chr',     'chr 2¹⁰⁰',    '(2¹⁰⁰).chr';
     plan +@tests;
-    throws-like $_, Exception, .perl for @tests;
+    throws-like $_, Exception, .raku for @tests;
 }
 
 #vim: ft=perl6

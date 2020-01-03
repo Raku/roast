@@ -14,18 +14,18 @@ isa-ok( 1.Int.Rat, Rat, "cast of Int makes a Rat");
 isa-ok( 1.Num.Rat, Rat, "cast of Num makes a Rat");
 
 isa-ok( Rat.new, Rat, 'Rat.new is Rat' );
-isa-ok( EVAL(Rat.new.perl), Rat, 'EVAL Rat.new.perl is Rat' );
-isa-ok( EVAL(Rat.new(1, 3).perl), Rat, 'EVAL Rat.new(1, 3).perl is Rat' );
-is( (EVAL Rat.new(1, 3).perl), 1/3, 'EVAL Rat.new(1, 3).perl is 1/3' );
-isa-ok( EVAL((1/3).perl), Rat, 'EVAL (1/3).perl is Rat' );
-is( (EVAL (1/3).perl), 1/3, 'EVAL (1/3).perl is 1/3' );
-is( (1/10).perl, "0.1", '(1/10).perl is 0.1' );
-is( (1/5).perl, "0.2", '(1/5).perl is .2' );
-is( (1/2).perl, "0.5", '(1/2).perl is .5' );
-is 1/128, (1/128).perl.EVAL, '(1/128).perl.EVAL round trips with sufficient accuracy';
-is 1/128, (1/128).perl.EVAL, '(1/128).perl.EVAL round trips with sufficient accuracy';
+isa-ok( EVAL(Rat.new.raku), Rat, 'EVAL Rat.new.raku is Rat' );
+isa-ok( EVAL(Rat.new(1, 3).raku), Rat, 'EVAL Rat.new(1, 3).raku is Rat' );
+is( (EVAL Rat.new(1, 3).raku), 1/3, 'EVAL Rat.new(1, 3).raku is 1/3' );
+isa-ok( EVAL((1/3).raku), Rat, 'EVAL (1/3).raku is Rat' );
+is( (EVAL (1/3).raku), 1/3, 'EVAL (1/3).raku is 1/3' );
+is( (1/10).raku, "0.1", '(1/10).raku is 0.1' );
+is( (1/5).raku, "0.2", '(1/5).raku is .2' );
+is( (1/2).raku, "0.5", '(1/2).raku is .5' );
+is 1/128, (1/128).raku.EVAL, '(1/128).raku.EVAL round trips with sufficient accuracy';
+is 1/128, (1/128).raku.EVAL, '(1/128).raku.EVAL round trips with sufficient accuracy';
 # RT #126873
-is(Rat.new(807412079564, 555).perl.EVAL, Rat.new(807412079564, 555), '807412079564/555 round trips without a compile_time_value error');
+is(Rat.new(807412079564, 555).raku.EVAL, Rat.new(807412079564, 555), '807412079564/555 round trips without a compile_time_value error');
 
 # Test ~
 is(~(Rat.new(1,4)), ~(0.25e0), "Rats stringify properly");
@@ -167,12 +167,12 @@ subtest '±Inf/NaN ⇿ Rat' => {
             "(-Inf).$m.Str throws division-by-zero";
 
         # RT #130171
-        is-deeply    NaN."$m"().perl.EVAL, ::($m).new(0, 0),
-               "NaN.$m.perl.EVAL roundtrips";
-        is-deeply    Inf."$m"().perl.EVAL, ::($m).new(1, 0),
-               "Inf.$m.perl.EVAL roundtrips";
-        is-deeply (-Inf)."$m"().perl.EVAL, ::($m).new(-1, 0),
-            "(-Inf).$m.perl.EVAL roundtrips";
+        is-deeply    NaN."$m"().raku.EVAL, ::($m).new(0, 0),
+               "NaN.$m.raku.EVAL roundtrips";
+        is-deeply    Inf."$m"().raku.EVAL, ::($m).new(1, 0),
+               "Inf.$m.raku.EVAL roundtrips";
+        is-deeply (-Inf)."$m"().raku.EVAL, ::($m).new(-1, 0),
+            "(-Inf).$m.raku.EVAL roundtrips";
 
         # RT #130171
         is-deeply    NaN."$m"() * 0, ::($m).new(0, 0),
@@ -343,9 +343,9 @@ subtest '0.9999999999999999999999 to string conversions' => {
     # would be output exactly or rounded off
     cmp-ok r.Str, '~~', '1'|'0.9999999999999999999999' ,
         'no weirdness in .Str';
-    is-deeply r.perl, '<9999999999999999999999/10000000000000000000000>',
-        '.perl gives accurate result';
-    is-deeply r.perl.EVAL, r, '.perl.EVAL roundtrips';
+    is-deeply r.raku, '<9999999999999999999999/10000000000000000000000>',
+        '.raku gives accurate result';
+    is-deeply r.raku.EVAL, r, '.raku.EVAL roundtrips';
     # RT #126101
     nok 0.99999999999999999999999 > 1, '0.99999... not rounded to larger than 1';
 }
@@ -571,8 +571,8 @@ subtest 'Rational.Bool' => {
 
     plan @true + @false;
 
-    is-deeply .so, True,  .perl for @true;
-    is-deeply .so, False, .perl for @false;
+    is-deeply .so, True,  .raku for @true;
+    is-deeply .so, False, .raku for @false;
 }
 
 subtest 'Rational.WHICH' => {

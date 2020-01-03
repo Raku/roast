@@ -201,9 +201,9 @@ for
           (qh ~~ Set ?? Bag !! qh ~~ SetHash ?? BagHash !! qh).new,
           "Sequence of empty {qh.^name} is the empty {qh.^name}";
         throws-like { op(qh.new,^Inf) }, X::Cannot::Lazy,
-          "Cannot {qh.perl}.new $name lazy list";
+          "Cannot {qh.raku}.new $name lazy list";
         throws-like { op(qh.new(<a b c>),^Inf) }, X::Cannot::Lazy,
-          "Cannot {qh.perl}.new(<a b c>) $name lazy list";
+          "Cannot {qh.raku}.new(<a b c>) $name lazy list";
     }
 
     for @pairs -> $parameter, $result {

@@ -181,7 +181,7 @@ throws-like ":7\x[308]a", X::Syntax::Malformed,
 
 # RT #129008
 is-perl-idempotent(((Int) => 42));
-is-perl-idempotent(((Pair) => 42), ".perl of (Pair) => 42 is idempotent"); # .gist WAT?
+is-perl-idempotent(((Pair) => 42), ".raku of (Pair) => 42 is idempotent"); # .gist WAT?
 is-perl-idempotent(((Num) => 42));
 is-perl-idempotent(((Str) => 42));
 is-perl-idempotent((:a(Bool)));

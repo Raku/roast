@@ -9,7 +9,7 @@ dies-ok { Supply.reduce( {...} ) }, 'can not be called as a class method';
 dies-ok { Supplier.new.Supply.reduce(23) }, 'must be code if specified';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     tap-ok Supply.from-list(1..5).reduce( {$^a + $^b} ), [15],
       "simple reduce works";

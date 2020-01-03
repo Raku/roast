@@ -22,7 +22,7 @@ sub test-comb($text,@result,|c) {
         is @got, @result, 'did we get expected result in for loop';
 
         is open($filename).comb(|c,:close).elems, +@result, 'elems ok';
-    }, "testing '$text.substr(^4)' with {c.perl}";
+    }, "testing '$text.substr(^4)' with {c.raku}";
 }
 
 # standard text file

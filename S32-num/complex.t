@@ -40,12 +40,12 @@ is-approx 2/(3+1i),      3/5 -(1/5)i,   'dividing a Real by a Complex';
 is-approx 2 * (3+7i),    6+14i,         'Real * Complex';
 is-approx (3+7i) * 2,    6+14i,         'Complex * Real';
 
-isa-ok( EVAL((1+3i).perl), Complex, 'EVAL (1+3i).perl is Complex' );
-is-approx( (EVAL (1+3i).perl), 1+3i, 'EVAL (1+3i).perl is 1+3i' );
-isa-ok( EVAL((1+0i).perl), Complex, 'EVAL (1+0i).perl is Complex' );
-is-approx( (EVAL (1+0i).perl), 1, 'EVAL (1+0i).perl is 1' );
-isa-ok( EVAL((3i).perl), Complex, 'EVAL (3i).perl is Complex' );
-is-approx( (EVAL (3i).perl), 3i, 'EVAL (3i).perl is 3i' );
+isa-ok( EVAL((1+3i).raku), Complex, 'EVAL (1+3i).raku is Complex' );
+is-approx( (EVAL (1+3i).raku), 1+3i, 'EVAL (1+3i).raku is 1+3i' );
+isa-ok( EVAL((1+0i).raku), Complex, 'EVAL (1+0i).raku is Complex' );
+is-approx( (EVAL (1+0i).raku), 1, 'EVAL (1+0i).raku is 1' );
+isa-ok( EVAL((3i).raku), Complex, 'EVAL (3i).raku is Complex' );
+is-approx( (EVAL (3i).raku), 3i, 'EVAL (3i).raku is 3i' );
 
 {
     ok (1+0i).Real ~~ Real, "(1+0i).Real is a Real";
@@ -283,8 +283,8 @@ subtest 'distinct Complex literals do not compare the same' => {
 
 { # RT#128817
     my $n := <1180591620717411303424.0e0+1180591620717409992704e0i>;
-    cmp-ok $n, '==', $n.perl.EVAL,
-        '.perl roundtrips the Complex correctly';
+    cmp-ok $n, '==', $n.raku.EVAL,
+        '.raku roundtrips the Complex correctly';
 }
 
 # vim: ft=perl6

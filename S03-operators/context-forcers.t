@@ -8,8 +8,8 @@ plan 103;
 #?DOES 1
 sub iis(Mu $a, Mu $b, $descr) {
     unless ok($a === $b, $descr) {
-        diag "Got:      " ~ $a.perl;
-        diag "Expected: " ~ $b.perl;
+        diag "Got:      " ~ $a.raku;
+        diag "Expected: " ~ $b.raku;
     }
 
 }
@@ -98,7 +98,7 @@ subtest 'numeric context' => {
     is-deeply +"\t \n42\t\n  ", 42, 'leading + trailing whitespace is ignored';
 
     for 1, 2.0, 3e0, 1+4i {
-        my $str = $_ ~~ Complex ?? .Str !! .perl;
+        my $str = $_ ~~ Complex ?? .Str !! .raku;
         is-deeply +$str,  $_, "+ coersion coerces {.^name}";
         is-deeply -$str, -$_, "- coersion coerces {.^name}";
     }

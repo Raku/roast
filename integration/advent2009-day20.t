@@ -11,7 +11,7 @@ is &foo.name, 'foo', 'Introspecting subroutine name';
 my $bar = &foo;
 is $bar.name, 'foo', 'Introspecting subroutine for a sub assigned to a scalar';
 
-is &foo.signature.perl, ':(Int $i, @stuff, $blah = 5)', 'Introspecting and stringification of subroutine signature';
+is &foo.signature.raku, ':(Int $i, @stuff, $blah = 5)', 'Introspecting and stringification of subroutine signature';
 
 # Not sure if this is an appropriate test - as this code doesn't exist in the Advent Calendar
 my @sig-info = \(name => '$i',     type => 'Int'),
@@ -20,7 +20,7 @@ my @sig-info = \(name => '$i',     type => 'Int'),
 
 for &foo.signature.params Z @sig-info -> ($param, $param-info) {
     is $param.name, $param-info<name>, 'Name matches ' ~ $param-info<name>;
-    is $param.type.perl, $param-info<type>, 'Type matches ' ~ $param-info<type>;
+    is $param.type.raku, $param-info<type>, 'Type matches ' ~ $param-info<type>;
 }
 
 is &foo.count, 3, 'Introspecting number of arguments';

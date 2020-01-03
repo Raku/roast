@@ -8,7 +8,7 @@ plan 17;
 dies-ok { Supply.flat }, 'can not be called as a class method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     tap-ok Supply.from-list( [1,2],[3,4,5] ).flat,
       [1..5], "On demand publish with flat";

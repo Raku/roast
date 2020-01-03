@@ -27,7 +27,7 @@ plan 23;
         );
 
     for @tests -> $s1, $s2, $res {
-        is(($s2 ~~ $s1), $res, "{$s2.perl} ~~ {$s1.perl}");
+        is(($s2 ~~ $s1), $res, "{$s2.raku} ~~ {$s1.raku}");
     }
 
     #?rakudo skip "Parametric types"

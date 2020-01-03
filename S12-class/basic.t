@@ -13,8 +13,8 @@ Very basic class tests from L<S12/Classes>
 # L<S12/Classes>
 class Foo {}
 
-is Foo.perl, 'Foo', 'Classname.perl produces the class name';
-is Foo.new.perl, 'Foo.new', 'Classname.new.perl just adds .new';
+is Foo.raku, 'Foo', 'Classname.raku produces the class name';
+is Foo.new.raku, 'Foo.new', 'Classname.new.raku just adds .new';
 
 my $foo = Foo.new();
 ok($foo ~~ Foo, '... smartmatch our $foo to the Foo class');

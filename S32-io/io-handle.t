@@ -145,11 +145,11 @@ subtest '.say method' => {
         with $nl-out {
             with $file.open(:w, :$nl-out) { .say: |in; .close }
             is-deeply $file.slurp, out ~ $nl-out,
-                in.perl ~ ' :nl-out(' ~ $nl-out.perl ~ ')';
+                in.raku ~ ' :nl-out(' ~ $nl-out.raku ~ ')';
         }
         else {
             with $file.open(:w) { .say: |in; .close }
-            is-deeply $file.slurp, out ~ "\n", in.perl;
+            is-deeply $file.slurp, out ~ "\n", in.raku;
         }
     }
 
@@ -213,7 +213,7 @@ given make-temp-file() {
 subtest 'opened filehandles get closed on exit automatically' => {
     plan 2;
     my $path = make-temp-file;
-    is_run ｢my $fh := ｣ ~ $path.perl  ~ ｢.open: :w, :5000out-buffer;
+    is_run ｢my $fh := ｣ ~ $path.raku  ~ ｢.open: :w, :5000out-buffer;
       $fh.print: 'pass'; $fh.print: '-pass2';
       print 'pass'
     ｣, {:out<pass>, :err(''), :0status}, 'written into a file without closing';

@@ -25,107 +25,107 @@ sub test($string,$splitter,$limit,$comment,
         my $original = $string;
 
         is split($splitter,$string), $r,
-          "split($splitter.perl(),$string.perl())";
+          "split($splitter.raku(),$string.raku())";
         is $string.split($splitter), $r,
-          "{$string.perl}.split($splitter.perl())";
+          "{$string.raku}.split($splitter.raku())";
 
         is split($splitter,$string,:v), $rv,
-          "split($splitter.perl(),$string.perl(),:v)";
+          "split($splitter.raku(),$string.raku(),:v)";
         is $string.split($splitter,:v), $rv,
-          "{$string.perl}.split($splitter.perl(),:v)";
+          "{$string.raku}.split($splitter.raku(),:v)";
 
         is split($splitter,$string,:k), $rk,
-          "split($splitter.perl(),$string.perl(),:k)";
+          "split($splitter.raku(),$string.raku(),:k)";
         is $string.split($splitter,:k), $rk,
-          "{$string.perl}.split($splitter.perl(),:k)";
+          "{$string.raku}.split($splitter.raku(),:k)";
 
         is split($splitter,$string,:kv), $rkv,
-          "split($splitter.perl(),$string.perl(),:kv)";
+          "split($splitter.raku(),$string.raku(),:kv)";
         is $string.split($splitter,:kv), $rkv,
-          "{$string.perl}.split($splitter.perl(),:kv)";
+          "{$string.raku}.split($splitter.raku(),:kv)";
 
         is split($splitter,$string,:p), $rp,
-          "split($splitter.perl(),$string.perl(),:p)";
+          "split($splitter.raku(),$string.raku(),:p)";
         is $string.split($splitter,:p), $rp,
-          "{$string.perl}.split($splitter.perl(),:p)";
+          "{$string.raku}.split($splitter.raku(),:p)";
 
         is split($splitter,$string,:skip-empty), $rse,
-          "split($splitter.perl(),$string.perl(),:skip-empty)";
+          "split($splitter.raku(),$string.raku(),:skip-empty)";
         is $string.split($splitter,:skip-empty), $rse,
-          "{$string.perl}.split($splitter.perl(),:skip-empty)";
+          "{$string.raku}.split($splitter.raku(),:skip-empty)";
 
         is split($splitter,$string,:v,:skip-empty), $rvse,
-          "split($splitter.perl(),$string.perl(),:v,:skip-empty)";
+          "split($splitter.raku(),$string.raku(),:v,:skip-empty)";
         is $string.split($splitter,:v,:skip-empty), $rvse,
-          "{$string.perl}.split($splitter.perl(),:v,:skip-empty)";
+          "{$string.raku}.split($splitter.raku(),:v,:skip-empty)";
 
         is split($splitter,$string,:k,:skip-empty), $rkse,
-          "split($splitter.perl(),$string.perl(),:k,:skip-empty)";
+          "split($splitter.raku(),$string.raku(),:k,:skip-empty)";
         is $string.split($splitter,:k,:skip-empty), $rkse,
-          "{$string.perl}.split($splitter.perl(),:k,:skip-empty)";
+          "{$string.raku}.split($splitter.raku(),:k,:skip-empty)";
 
         is split($splitter,$string,:kv,:skip-empty), $rkvse,
-          "split($splitter.perl(),$string.perl(),:kv,:skip-empty)";
+          "split($splitter.raku(),$string.raku(),:kv,:skip-empty)";
         is $string.split($splitter,:kv,:skip-empty), $rkvse,
-          "{$string.perl}.split($splitter.perl(),:kv,:skip-empty)";
+          "{$string.raku}.split($splitter.raku(),:kv,:skip-empty)";
 
         is split($splitter,$string,:p,:skip-empty), $rpse,
-          "split($splitter.perl(),$string.perl(),:p,:skip-empty)";
+          "split($splitter.raku(),$string.raku(),:p,:skip-empty)";
         is $string.split($splitter,:p,:skip-empty), $rpse,
-          "{$string.perl}.split($splitter.perl(),:p,:skip-empty)";
+          "{$string.raku}.split($splitter.raku(),:p,:skip-empty)";
 
         is split($splitter,$string,$limit), $rl,
-          "split($splitter.perl(),$string.perl(),$limit)";
+          "split($splitter.raku(),$string.raku(),$limit)";
         is $string.split($splitter,$limit), $rl,
-          "{$string.perl}.split($splitter.perl(),$limit)";
+          "{$string.raku}.split($splitter.raku(),$limit)";
 
         is split($splitter,$string,$limit,:v), $rlv,
-          "split($splitter.perl(),$string.perl(),$limit,:v)";
+          "split($splitter.raku(),$string.raku(),$limit,:v)";
         is $string.split($splitter,$limit,:v), $rlv,
-          "{$string.perl}.split($splitter.perl(),$limit,:v)";
+          "{$string.raku}.split($splitter.raku(),$limit,:v)";
 
         is split($splitter,$string,$limit,:k), $rlk,
-          "split($splitter.perl(),$string.perl(),$limit,:k)";
+          "split($splitter.raku(),$string.raku(),$limit,:k)";
         is $string.split($splitter,$limit,:k), $rlk,
-          "{$string.perl}.split($splitter.perl(),$limit,:k)";
+          "{$string.raku}.split($splitter.raku(),$limit,:k)";
 
         is split($splitter,$string,$limit,:kv), $rlkv,
-          "split($splitter.perl(),$string.perl(),$limit,:kv)";
+          "split($splitter.raku(),$string.raku(),$limit,:kv)";
         is $string.split($splitter,$limit,:kv), $rlkv,
-          "{$string.perl}.split($splitter.perl(),$limit,:kv)";
+          "{$string.raku}.split($splitter.raku(),$limit,:kv)";
 
         is split($splitter,$string,$limit,:p), $rlp,
-          "split($splitter.perl(),$string.perl(),$limit,:p)";
+          "split($splitter.raku(),$string.raku(),$limit,:p)";
         is $string.split($splitter,$limit,:p), $rlp,
-          "{$string.perl}.split($splitter.perl(),$limit,:p)";
+          "{$string.raku}.split($splitter.raku(),$limit,:p)";
 
         is split($splitter,$string,$limit,:skip-empty), $rlse,
-          "split($splitter.perl(),$string.perl(),$limit,:split-empty)";
+          "split($splitter.raku(),$string.raku(),$limit,:split-empty)";
         is $string.split($splitter,$limit,:skip-empty), $rlse,
-          "{$string.perl}.split($splitter.perl(),$limit,:split-empty)";
+          "{$string.raku}.split($splitter.raku(),$limit,:split-empty)";
 
         is split($splitter,$string,$limit,:v,:skip-empty), $rlvse,
-          "split($splitter.perl(),$string.perl(),$limit,:v,:skip-empty)";
+          "split($splitter.raku(),$string.raku(),$limit,:v,:skip-empty)";
         is $string.split($splitter,$limit,:v,:skip-empty), $rlvse,
-          "{$string.perl}.split($splitter.perl(),$limit,:v,:skip-empty)";
+          "{$string.raku}.split($splitter.raku(),$limit,:v,:skip-empty)";
 
         is split($splitter,$string,$limit,:k,:skip-empty), $rlkse,
-          "split($splitter.perl(),$string.perl(),$limit,:k,:skip-empty)";
+          "split($splitter.raku(),$string.raku(),$limit,:k,:skip-empty)";
         is $string.split($splitter,$limit,:k,:skip-empty), $rlkse,
-          "{$string.perl}.split($splitter.perl(),$limit,:k,:skip-empty)";
+          "{$string.raku}.split($splitter.raku(),$limit,:k,:skip-empty)";
 
         is split($splitter,$string,$limit,:kv,:skip-empty), $rlkvse,
-          "split($splitter.perl(),$string.perl(),$limit,:kv,:skip-empty)";
+          "split($splitter.raku(),$string.raku(),$limit,:kv,:skip-empty)";
         is $string.split($splitter,$limit,:kv,:skip-empty), $rlkvse,
-          "{$string.perl}.split($splitter.perl(),$limit,:kv,:skip-empty)";
+          "{$string.raku}.split($splitter.raku(),$limit,:kv,:skip-empty)";
 
         is split($splitter,$string,$limit,:p,:skip-empty), $rlpse,
-          "split($splitter.perl(),$string.perl(),$limit,:p,:skip-empty)";
+          "split($splitter.raku(),$string.raku(),$limit,:p,:skip-empty)";
         is $string.split($splitter,$limit,:p,:skip-empty), $rlpse,
-          "{$string.perl}.split($splitter.perl(),$limit,:p,:skip-empty)";
+          "{$string.raku}.split($splitter.raku(),$limit,:p,:skip-empty)";
 
         is $string, $original, "string did not get changed";
-    }, "tested $string.perl() with $comment.perl()";
+    }, "tested $string.raku() with $comment.raku()";
 }
 
 test( "abcde","",3,"empty string",
@@ -178,7 +178,7 @@ test( "abcd",/./,3,"any character",
 );
 
 #?DOES 3
-test( "aaaa",$_,3,"only chars matching $_.perl()",
+test( "aaaa",$_,3,"only chars matching $_.raku()",
   <<"" "" "" "" "">>,                           # r
   <<"" a "" a "" a "" a "">>,                   # rv
   <<"" 0 "" 0 "" 0 "" 0 "">>,                   # rk
@@ -543,7 +543,7 @@ subtest 'split skip-empty skips all empty chunks' => {
     my @tests = '' => ';', '' => '', '' => rx/^/, '' => /$/, ';' => ';';
     plan +@tests;
     cmp-ok .key.split(.value, :skip-empty), '==', 0,
-        "{.key}.split({.value.perl}, :skip-empty)"
+        "{.key}.split({.value.raku}, :skip-empty)"
     for @tests;
 }
 

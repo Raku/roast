@@ -53,12 +53,12 @@ $dt = ds('1984-04-29T07:02:00Z').local;
 is ~$dt, '1984-04-29T03:02:00-04:00', 'DateTime.local (from UTC, just after DST begins)';
 $dt = ds('2008-11-02T05:55:00Z').local;
 is ~$dt, '2008-11-02T01:55:00-04:00', 'DateTime.local (from UTC, just before DST ends)';
-is ~EVAL($dt.perl), '2008-11-02T01:55:00-04:00', 'DateTime.local (from UTC, just before DST ends, .perl)';
+is ~EVAL($dt.raku), '2008-11-02T01:55:00-04:00', 'DateTime.local (from UTC, just before DST ends, .raku)';
 $dt = ds('2008-11-02T06:55:00Z').local;
 #?rakudo todo "RT #122702"
 is ~$dt, '2008-11-02T01:55:00-05:00', 'DateTime.local (from UTC, just after DST ends)';
 #?rakudo todo "RT #122702"
-is ~EVAL($dt.perl), '2008-11-02T01:55:00-05:00', 'DateTime.local (from UTC, just after DST ends, .perl)';
+is ~EVAL($dt.raku), '2008-11-02T01:55:00-05:00', 'DateTime.local (from UTC, just after DST ends, .raku)';
 $dt = ds('2008-11-02T08:58:00+03:03').local;
 is ~$dt, '2008-11-02T01:55:00-04:00', 'DateTime.local (from +0303, just before DST ends)';
 $dt = ds('2008-11-01T14:43:00-16:12').local;

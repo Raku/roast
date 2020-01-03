@@ -25,7 +25,7 @@ class LoggingAspect is MethodBoundaryAspect {
         pass "Called $method with $args";
     }
     method exit($method, $obj, $args, $result) {
-        pass "$method returned with $result.perl()";
+        pass "$method returned with $result.raku()";
     }
 }
 class Example is LoggingAspect {

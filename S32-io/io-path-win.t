@@ -20,7 +20,7 @@ is $path.volume,   "C:",  'volume "C:foo//bar//" -> "C:"';
 is $path.dirname,  "foo", 'dirname "C:foo//bar//" -> "foo"';
 is $path.basename, "bar", 'basename "C:foo//bar//" -> "bar"';
 isa-ok $path.path, Str, ".path returns Str";
-is $path.perl.EVAL, $path, ".perl loopback";
+is $path.raku.EVAL, $path, ".raku loopback";
 
 my $uncpath = IO::Path::Win32.new("\\\\server\\share\\");
 is $uncpath.volume,   "\\\\server\\share",

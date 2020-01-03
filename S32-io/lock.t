@@ -21,7 +21,7 @@ sub test-lock (
         or die 'Provide :open-for-read, :open-for-write, or :fh to test';
     LEAVE $fh.close unless $no-close;
 
-    subtest "$args1.perl(), $args2.perl()" => sub {
+    subtest "$args1.raku(), $args2.raku()" => sub {
         quietly plan $fails-to-lock
             ?? 1
             !! (!$blocks-read and !$fails-read) + $blocks-write + $fails-write

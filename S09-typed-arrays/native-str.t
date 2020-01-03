@@ -218,8 +218,8 @@ is @replaced[1], "e", "Correct value in splice returned from $t array (2)";
 @arr = "a".."e";
 is @arr.Str,  'a b c d e', ".Str space-separates on $t array";
 is @arr.gist, '[a b c d e]', ".gist space-separates on $t array";
-is @arr.perl, qq/array[$t].new("a", "b", "c", "d", "e")/,
-  ".perl includes type and int values on $t array";
+is @arr.raku, qq/array[$t].new("a", "b", "c", "d", "e")/,
+  ".raku includes type and int values on $t array";
 
 is-deeply @arr[^2], array[$T].new("a","b"), 'does slice return same type';
 is-deeply @arr[my $ = ^2], "c", 'does slice handle containerized range';

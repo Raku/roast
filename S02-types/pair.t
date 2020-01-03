@@ -388,8 +388,8 @@ subtest 'Pair.ACCEPTS' => {
         <a z>.Mix, <a z>.MixHash, %(:a, :z), Map.new((:a, :z)), :a.Pair, :z.Pair;
     plan 6 + @true + @false;
     my $p = :3a;
-    is-deeply $p.ACCEPTS($_), True,  "{.perl} (True)"  for @true;
-    is-deeply $p.ACCEPTS($_), False, "{.perl} (False)" for @false;
+    is-deeply $p.ACCEPTS($_), True,  "{.raku} (True)"  for @true;
+    is-deeply $p.ACCEPTS($_), False, "{.raku} (False)" for @false;
     is-deeply :a.Pair.ACCEPTS(<a z>.Set    ), True, 'Set (True)';
     is-deeply :a.Pair.ACCEPTS(<a z>.SetHash), True, 'SetHash (True)';
 
@@ -409,13 +409,13 @@ subtest 'Pair.invert' => {
         ],;
 
     plan 3 + @tests;
-    is-deeply .[0].invert, .[1], .[0].perl for @tests;
+    is-deeply .[0].invert, .[1], .[0].raku for @tests;
 
 
     # Hashes are also Iterables, but don't guarantee order here:
     is-deeply (%(<a b c d>) => %(<e f g h>)).invert.sort,
       (:e<f> => %(<a b c d>), :g<h> => %(<a b c d>)).Seq.sort,
-      (%(<a b c d>) => %(<e f g h>)).perl;
+      (%(<a b c d>) => %(<e f g h>)).raku;
 
     subtest '(Any) => (Mu)' => {
         plan 4;
@@ -441,12 +441,12 @@ subtest 'Pair.invert' => {
 }
 
 # https://irclog.perlgeek.de/perl6-dev/2017-06-15#i_14734597
-subtest 'Pair.perl with type objects' => {
+subtest 'Pair.raku with type objects' => {
   plan 5;
-  cmp-ok Pair.new('foo', Bool).perl.EVAL, &[!eqv], :!foo.Pair,
+  cmp-ok Pair.new('foo', Bool).raku.EVAL, &[!eqv], :!foo.Pair,
       'roundtrip of Bool:U .value does not eqv :!foo';
 
-  is-deeply .perl.EVAL, $_, .perl for Pair.new(Str, Str),
+  is-deeply .raku.EVAL, $_, .raku for Pair.new(Str, Str),
       Pair.new(Rat, Num), Pair.new(Bool, Bool), Pair.new(Numeric, Numeric)
 }
 

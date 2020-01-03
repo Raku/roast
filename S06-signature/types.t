@@ -22,7 +22,7 @@ lives-ok { g(3)   },    'type check allows good implicit return';
 dies-ok  { g('m') },    'type check forbids bad implicit return';
 
 # RT #77158
-is-deeply .perl.EVAL, $_, ".perl on an {.perl} roundtrips"
+is-deeply .raku.EVAL, $_, ".raku on an {.raku} roundtrips"
     for :(Int), :(Array of Int);
 
 # RT #123789

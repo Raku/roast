@@ -117,9 +117,9 @@ is-deeply @searches[0].Array, @expected-searches, 'seq => array works 3';
 {
     # RT #127492;
     eager my \s = ().Seq; # eager consumes the Seq
-    cmp-ok s.perl.EVAL, '~~', Seq:D, '.perl.EVAL on consumed Seq gives Seq:D';
-    throws-like { s.perl.EVAL.list }, X::Seq::Consumed,
-        '.perl.EVAL-roundtripped Seq throws when attempting to consume again';
+    cmp-ok s.raku.EVAL, '~~', Seq:D, '.raku.EVAL on consumed Seq gives Seq:D';
+    throws-like { s.raku.EVAL.list }, X::Seq::Consumed,
+        '.raku.EVAL-roundtripped Seq throws when attempting to consume again';
 }
 
 {
@@ -143,8 +143,8 @@ is-deeply @searches[0].Array, @expected-searches, 'seq => array works 3';
 # RT#131222
 with (1, 2).Seq {
     .cache; # Cache the seq
-    is .perl, (1, 2).Seq.perl,
-        '.perl on cached Seq does not think it was consumed';
+    is .raku, (1, 2).Seq.raku,
+        '.raku on cached Seq does not think it was consumed';
 }
 
 subtest 'Seq.Capture' => {
@@ -218,8 +218,8 @@ subtest 'methods on cached Seqs' => {
     is-deeply (1..5).map({$_}).skip(*-3), (3, 4, 5), 'skip works with a WhateverCode';
 }
 
-is-deeply .perl.EVAL.flat, .flat,
-    'Seq.perl roundtrips containerized Seqs correctly'
+is-deeply .raku.EVAL.flat, .flat,
+    'Seq.raku roundtrips containerized Seqs correctly'
 with (1, $((2, 3).Seq));
 
 Seq.new(

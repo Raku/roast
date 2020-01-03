@@ -8,7 +8,7 @@ plan 13;
 dies-ok { Supplier.new.Supply.from-list(1..10) }, 'can not be called as an instance method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
+    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
     {
         my $s = Supply.from-list(1..10);

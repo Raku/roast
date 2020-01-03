@@ -10,30 +10,30 @@ plan 193;
 my $r = 1..5;
 isa-ok $r, Range, 'Type';
 is $r.WHAT.gist, Range.gist, 'Type';
-is $r.perl, '1..5', 'canonical representation';
+is $r.raku, '1..5', 'canonical representation';
 
-# XXX unspecced: exact value of Range.perl
-is (1..5).perl, '1..5', ".perl ..";
-is (1^..5).perl, '1^..5', ".perl ^..";
-is (1..^5).perl, '1..^5', ".perl ..^";
-is (1^..^5).perl, '1^..^5', ".perl ^..^";
+# XXX unspecced: exact value of Range.raku
+is (1..5).raku, '1..5', ".raku ..";
+is (1^..5).raku, '1^..5', ".raku ^..";
+is (1..^5).raku, '1..^5', ".raku ..^";
+is (1^..^5).raku, '1^..^5', ".raku ^..^";
 
 my @r = $r;
-is @r.perl, "[1..5,]", 'got the right array';
+is @r.raku, "[1..5,]", 'got the right array';
 
 # Range of Str
 
 $r = 'a'..'c';
 isa-ok $r, Range;
-# XXX unspecced: exact value of Range.perl
-is $r.perl, '"a".."c"', 'canonical representation';
+# XXX unspecced: exact value of Range.raku
+is $r.raku, '"a".."c"', 'canonical representation';
 @r = $r;
-is @r.perl, '["a".."c",]', 'got the right array';
+is @r.raku, '["a".."c",]', 'got the right array';
 
 # Stationary ranges
-is (1..1).perl, '1..1', "stationary num .perl ..";
+is (1..1).raku, '1..1', "stationary num .raku ..";
 is (1..1), [1,], 'got the right array';
-is ('a'..'a').perl, '"a".."a"', "stationary str .perl ..";
+is ('a'..'a').raku, '"a".."a"', "stationary str .raku ..";
 is ('a'..'a'), "a", 'got the right stationary string';
 
 {
@@ -41,8 +41,8 @@ is ('a'..'a'), "a", 'got the right stationary string';
     $x++ for (1..4).reverse;
     is $x, 4, '(1..4).reverse still turns into a list of four items';
     my $y = 0;
-    $y++ for @( EVAL((1..4).reverse.perl) );
-    is $y, 4, '(1..4).reverse.perl returns something useful';
+    $y++ for @( EVAL((1..4).reverse.raku) );
+    is $y, 4, '(1..4).reverse.raku returns something useful';
 }
 
 # ACCEPTS and equals tests
@@ -417,10 +417,10 @@ subtest 'Complex smartmatch against Range' => {
 
     plan @false + @true;
     for @false -> $t {
-        is-deeply ($t[0] ~~ $t[1]), False, "{$t[0].perl} ~~ {$t[1].perl}";
+        is-deeply ($t[0] ~~ $t[1]), False, "{$t[0].raku} ~~ {$t[1].raku}";
     }
     for @true -> $t {
-        is-deeply ($t[0] ~~ $t[1]), True,  "{$t[0].perl} ~~ {$t[1].perl}";
+        is-deeply ($t[0] ~~ $t[1]), True,  "{$t[0].raku} ~~ {$t[1].raku}";
     }
 }
 
@@ -430,7 +430,7 @@ subtest 'no .int-bounds for Infs and NaN as Range endpoints' => {
                  -Inf..-Inf, -Inf..1, 1..-Inf, -Inf..NaN, -Inf.. Inf,
                   Inf.. Inf,  Inf..1, 1.. Inf,  Inf..NaN,  Inf.. Inf;
     plan 1 + @ranges;
-    throws-like { .int-bounds }, Exception, "{.perl} throws" for @ranges;
+    throws-like { .int-bounds }, Exception, "{.raku} throws" for @ranges;
 
     # https://github.com/rakudo/rakudo/commit/16ef21c162
     is-deeply (0..5.5).int-bounds, (0, 5),
