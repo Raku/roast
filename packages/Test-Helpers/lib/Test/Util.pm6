@@ -94,11 +94,11 @@ sub _is-eqv (Mu $got, Mu $expected, Str:D $desc) {
     my $test = test-eqv $got, $expected;
     my $ok = ok ?$test, $desc;
     if !$test {
-        my $got_perl      = try { $got.perl };
-        my $expected_perl = try { $expected.perl };
-        if $got_perl.defined && $expected_perl.defined {
-            diag "expected: $expected_perl\n"
-                ~ "     got: $got_perl";
+        my $got_raku      = try { $got.raku };
+        my $expected_raku = try { $expected.raku };
+        if $got_raku.defined && $expected_raku.defined {
+            diag "expected: $expected_raku\n"
+                ~ "     got: $got_raku";
         }
     }
     $ok
@@ -146,9 +146,9 @@ multi sub is_run( Str $code, Str $input, %expected, Str $name, *%o ) {
         # The check for this attribute failed.
         # Note why for a diag() after the test failure is reported.
         if !$attr_good {
-            @diag_q.push(     "     got $attr: {%got{$attr}.perl}"      );
+            @diag_q.push(     "     got $attr: {%got{$attr}.raku}"      );
             if %expected{$attr} ~~ Str|Num {
-                @diag_q.push( "expected $attr: {%expected{$attr}.perl}" );
+                @diag_q.push( "expected $attr: {%expected{$attr}.raku}" );
             }
         }
 
@@ -414,7 +414,7 @@ sub throws-like-any($code, @ex_type, $reason?, *%matcher) is export {
                         my $ok = $got ~~ $v,;
                         ok $ok, ".$k matches $v.gist()";
                         unless $ok {
-                            diag "Expected: " ~ ($v ~~ Str ?? $v !! $v.perl)
+                            diag "Expected: " ~ ($v ~~ Str ?? $v !! $v.raku)
                               ~ "\nGot:      $got";
                         }
                     }
@@ -504,7 +504,7 @@ Tests whether two C<IO::Path> objects reference the same resource.
 =head2 is-eqv (Mu $got, Mu $expected, Str:D $description)
 
 Compare two items using `eqv` semantics. Basically this is the same
-as L<is-deeply|https://docs.perl6.org/language/testing#index-entry-is-deeply-is-deeply%28%24value%2C_%24expected%2C_%24description%3F%29>
+as L<is-deeply|https://docs.raku.org/language/testing#index-entry-is-deeply-is-deeply%28%24value%2C_%24expected%2C_%24description%3F%29>
 except without the C<Seq>-converted-to-C<List> issue, so you can
 compare C<Seq> with a C<List> and the test will fail (while
 C<is-deeply> would succeed if the elements are the same).
@@ -542,7 +542,7 @@ For example:
   is_run( 'rand.say', { out => sub { $^a > 0 && $^a < 1 }, err => '' },
           'output of rand is between zero and one' );
 
-You can use named arguments to pass arguments to the perl6 executable
+You can use named arguments to pass arguments to the Raku executable
 (C<:compiler-args>) or to the program being run (C<:args>):
 
     is_run 'use Foo; sub MAIN (:$test) {...}',

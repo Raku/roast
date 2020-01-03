@@ -63,7 +63,7 @@ throws-like '::No::Such::Grammar.parse()', Exception, '.parse on missing grammar
     }
 
     my $match = grr.parse('foo bar asd');
-    ok $match[0].perl, 'empty match is perlable, not Null PMC access';
+    ok $match[0].raku, 'empty match is rakuable, not Null PMC access';
 }
 
 # RT #116597

@@ -8,7 +8,7 @@ plan 2;
 # Some things don't stringify well, so cmp-ok should show something better
 # for them, like .gist or .perl:
 is_run ｢use Test; cmp-ok 'foo', '~~', class {
-    method perl { 'meowbar' }
+    method raku { 'meowbar' }
     method gist { 'meowbar' }
     method Str  { die 'test failed' }
 }.new｣, {:err(/meowbar/)},

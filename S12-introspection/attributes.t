@@ -96,7 +96,7 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
     my $a = Attribute.^attributes[0];
     like $a.gist, /^ <ident>+ \s '$!' <ident>+ $/, '.gist of a BOOTSTRAPATTR is the type and name';
     like $a.Str,  /^ '$!' <ident>+ $/,             '.Str of a BOOTSTRAPATTR is the name';
-    is   $a.perl, 'BOOTSTRAPATTR.new',             '.perl of a BOOTSTRAPATTR is the class name ~ ".new"';
+    is   $a.raku, 'BOOTSTRAPATTR.new',             '.raku of a BOOTSTRAPATTR is the class name ~ ".new"';
 }
 
 # RT #131174

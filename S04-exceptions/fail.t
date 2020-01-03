@@ -181,8 +181,8 @@ is_run ｢Failure.new(Exception.new); Nil｣, {:out(""), :err(*), :1status},
 #?rakudo.jvm skip 'block does not run'
 {
     without Failure.new {
-        is-deeply .perl.EVAL.handled, True,
-          'Failure:D.perl.EVAL roundtrips `handled` flag';
+        is-deeply .raku.EVAL.handled, True,
+          'Failure:D.raku.EVAL roundtrips `handled` flag';
     }
 }
 

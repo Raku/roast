@@ -220,7 +220,7 @@ group-of 4 => 'X::Multi::NoMatch correct shows named arguments' => {
         message => /':foo(Str)'/, 'type of named is correct';
     throws-like { RT129800.foo: :foo(my class Foo {}) }, X::Multi::NoMatch,
         message => /':foo(Foo)'/, 'custom types detected';
-    throws-like { RT129800.foo: :foo(my class Foo {method perl {die}}) },
+    throws-like { RT129800.foo: :foo(my class Foo {method raku {die}}) },
             X::Multi::NoMatch, message => /':Foo'/,
     'fallback mechanism works';
 }

@@ -6,7 +6,7 @@ my class ProfiledGrammarHOW is Metamodel::GrammarHOW {
 
     method find_method($obj, $name) {
         my $meth := callsame;
-        substr($name, 0, 1) eq '!' || $name eq any(<parse CREATE Bool defined MATCH perl name BUILD TWEAK DESTROY new bless BUILDALL sink>) ??
+        substr($name, 0, 1) eq '!' || $name eq any(<parse CREATE Bool defined MATCH raku perl name BUILD TWEAK DESTROY new bless BUILDALL sink>) ??
             $meth !!
             -> $c, |args {
                 my $grammar = $obj.WHAT.perl;

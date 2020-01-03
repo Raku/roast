@@ -434,10 +434,10 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 {
    my class Foo {
       multi method gist(Foo:D:) { "gisted"; }
-      multi method perl(Foo:D:) { "perled"; }
+      multi method raku(Foo:D:) { "rakued"; }
       multi method Str(Foo:D:) { "Stred"; }
    }
-   is any(Foo.new).perl, 'any(perled)', 'any(Foo.new).perl';
+   is any(Foo.new).raku, 'any(rakued)', 'any(Foo.new).raku';
    is any(Foo.new).gist, 'any(gisted)', 'any(Foo.new).gist';
 }
 

@@ -66,7 +66,7 @@ throws-like { EVAL 'my role F119643 { ... }; class C119643 does F119643 {}' },
 # RT #126606
 {
     my role R { method m() { ... } }
-    for <gist perl DUMP item Str Bool defined so not WHICH WHERE Stringy Numeric Real> {
+    for <gist raku DUMP item Str Bool defined so not WHICH WHERE Stringy Numeric Real> {
         lives-ok { R."$_"() }, ".$_ on role with requirement does not pun it and die";
     }
 }
