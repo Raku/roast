@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 301;
+plan 306;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -110,6 +110,7 @@ dies-ok  { dt second => -1 }, 'DateTime rejects second -1';
 dies-ok  { dt second => -1/2 }, 'DateTime rejects second -1/2';
 lives-ok { dt second => 59.5 }, 'DateTime accepts second 59.5';
 lives-ok { dtc second => 59.5 }, 'DateTime accepts second 59.5 (clone)';
+lives-ok { dt second => 59.987654321 }, 'DateTime accepts nanosecond precision';
 dies-ok  { dt second => 62 }, 'DateTime rejects second 62';
 dies-ok  { dtc second => 62 }, 'DateTime rejects second 62 (clone)';
 dies-ok  { ds '1999-01-01T12:10:62' }, 'DateTime rejects second 62 (ISO)';
@@ -226,6 +227,9 @@ is ds('2012-12-22T07:02:00-00:00'), '2012-12-22T07:02:00Z', 'colonated -00';
 is ds('2015-12-11T20:41:10.5Z'), '2015-12-11T20:41:10.500000Z', 'More seconds precision';
 is ds('2015-12-11T20:41:10.562000+00:00'), '2015-12-11T20:41:10.562000Z', 'More seconds precision';
 
+is ds('2015-12-11T20:41:10.987654321Z'), '2015-12-11T20:41:10.987654Z', 'Truncate precision on round-trip';
+is ds('2015-12-11T20:41:10.987654321Z').second, 10.987654321, 'Full precision maintained internally';
+
 dies-ok { ds('2012-12-22T07:02:00+00:') }, '+00 with trailing colon';
 dies-ok { ds('2012-12-22T07:02:00+0') }, 'single digit hour +0';
 dies-ok { ds('2012-12-22T07:02:00+0:') }, '+0 with trailing colon';
@@ -241,7 +245,10 @@ dies-ok { ds('2012-12-22T07:02:00+7:') }, 'single digit hour, trailing colon';
 {
     my $moon-landing = dt    # Although the seconds part is fictional.
        year => 1969, month => 7, day => 20,
-       hour => 8, minute => 17, second => 32.4;
+       hour => 8, minute => 17, second => 32.987654321;
+    is $moon-landing.Str, '1969-07-20T08:17:32.987654Z', 'Truncated to milliseconds by default';
+    is $moon-landing.second, 32.987654321, 'Full precision available';
+
     my $dt = $moon-landing.truncated-to('second');
     is $dt.second, 32, 'DateTime.truncated-to(second)';
     $dt = $moon-landing.truncated-to('minute');
