@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 81;
+plan 82;
 
 # L<S03/List infix precedence/the cross operator>
 ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -277,5 +277,10 @@ group-of 3 => 'cross with empty List on RHS does not crash' => {
     is-deeply (@z X* (@z  X* @z)), (1, 2, 2, 4, 2, 4, 4, 8),
         'X meta-op works with RHS input from parenthesized output of another X gives correct result';
 }
+
+# GH #3402
+my %h = %(:a);
+is-deeply cross(%h<>:v.map: *.flat), ((True,),),
+  'is a 1-element list handled correctly with cross';
 
 # vim: ft=perl6 et

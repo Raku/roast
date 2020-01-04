@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 76;
+plan 77;
 
 ok EVAL('<a b> Z <c d>'), 'zip non-meta operator parses';
 
@@ -191,5 +191,10 @@ is (<a b c> Z~ $(1, 2)), ('a1 2',),
     'Z meta-op respects itemization of arguments (2)';
 
 cmp-ok infix:<Z>(), 'eqv', ().Seq, 'artity-0 Z returns a Seq';
+
+# GH #3402
+my %h = %(:a);
+is-deeply zip(%h<>:v.map: *.flat), ((True,),),
+  'is a 1-element list handled correctly with zip';
 
 # vim: ft=perl6

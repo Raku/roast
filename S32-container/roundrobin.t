@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 7;
 
 # L<S32::Containers/Container/"=item roundrobin">
 
@@ -29,5 +29,10 @@ is roundrobin($(1, 2), <a b c>), (($(1, 2), 'a'), ('b',), ('c',)),
     'roundrobin respects itemization of arguments (1)';
 is roundrobin(<a b c>, $(1, 2)), (('a', $(1, 2)), ('b',), ('c',)),
     'roundrobin respects itemization of arguments (2)';
+
+# GH #3402
+my %h = %(:a);
+is-deeply roundrobin(%h<>:v.map: *.flat), ((True,),),
+  'is a 1-element list handled correctly with roundrobin';
 
 # vim: ft=perl6
