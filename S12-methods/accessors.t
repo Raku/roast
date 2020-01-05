@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 10;
 
 class A {
     has @.a;
@@ -40,6 +40,16 @@ is $a.test-scalar-a, 1, '$.a contextualizes as item (1)';
 is $a.test-list-b,   4, '@.b contextualizes as (flat) list (2)';
 is $a.test-scalar-b, 1, '$.b contextualizes as item (2)';
 is $a.test-hash-a,   2, '%.a contextualizes as hash';
+
+# GH #3399
+{
+    class C {
+        has $.x is rw;
+    }
+    my $o = C.new(x => 42);
+    lives-ok { $o.C::x = 5 }, 'can use qualified method name when assigning to rw attribute';
+    is $o.x, 5, 'attribute has new value after assignment with qualified method name';
+}
 
 # RT #78678
 {
