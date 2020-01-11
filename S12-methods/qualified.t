@@ -171,10 +171,11 @@ subtest "simple parameterized role" => {
 }
 
 subtest "parameterizations and inheritance" => {
-    plan 3;
+    plan 4;
     my sub type-sig(Mu \tobj, Mu $type = Nil) {
         tobj.^name ~ ($type ~~ Nil ?? "" !! "[" ~ $type.^name ~ "]")
     }
+    my class C1 { ... }
     my role R1[::T] {
         method of-type {
             type-sig($?ROLE, T)
@@ -211,7 +212,7 @@ subtest "parameterizations and inheritance" => {
     }
 
     # Despite R2 does R1 there is no ambiguity here because C1 resolves against it's immediate roles
-    class C1 does R1[Int] does R2[Num] {
+    my class C1 does R1[Int] does R2[Num] {
         method of-type {
             type-sig($?CLASS), |self.R1::of-type, |self.R2::of-type
         }
@@ -220,15 +221,22 @@ subtest "parameterizations and inheritance" => {
         }
     }
 
-    class C2 is C1 does R2 {
+    my class C2 is C1 does R2 {
         method of-type {
             type-sig($?CLASS), |callsame, |self.R2::of-type
+        }
+    }
+
+    my class C3 is C1 {
+        method C1-R1-of-type {
+            self.R1::of-type;
         }
     }
 
     is-deeply C2.new.of-type, ("C2", "C1", "R1[Int]", "R2[Num]", "R1[Num]", "R2", "R1[Bool]"), "relaxed qualified calls to parameterized roles";
     is C2.new.to-str, "R2:class C1", "dispatch from role code on a class parent";
     is C2.new.CR2-of-type, ("R2::CR2", "R1[Set]"), "dispatching in a class private to a role";
+    is C3.new.C1-R1-of-type, "R1[Int]", "dispatching to parent's role";
 }
 
 subtest "relaxed dispatch ambiguities" => {
