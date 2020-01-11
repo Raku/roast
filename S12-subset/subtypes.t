@@ -109,7 +109,7 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 }
 
 # Rakudo had a bug where 'where /regex/' failed
-# RT #60976
+# https://github.com/Raku/old-issue-tracker/issues/444
 #?DOES 2
 {
     subset HasA of Str where /a/;
@@ -185,7 +185,7 @@ ok 42 ~~ NW1,   'subset declaration without where clause accepts right value';
 ok 4.2 !~~ NW1, 'subset declaration without where clause rejects wrong value';
 ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 
-# RT #65700
+# https://github.com/Raku/old-issue-tracker/issues/999
 {
     subset Small of Int where { $^n < 10 }
     class RT65700 {
@@ -200,7 +200,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     lives-ok { T.new( teeny => 2 ) }, 'my subset type enforced as attribute in new() (2)';
 }
 
-# RT #78318
+# https://github.com/Raku/old-issue-tracker/issues/2221
 {
     my @*rt78318;
     subset Bug  of Int where { @*rt78318.push( 'bug' ) };
@@ -209,7 +209,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     is @*rt78318, <bug hunt>, 'code called when subtype built on subtype';
 }
 
-# RT #78322
+# https://github.com/Raku/old-issue-tracker/issues/2222
 {
     my $*call1;
     my $*call2;
@@ -243,7 +243,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 {
     role R { };
     subset S of R;
-    # RT #75718
+    # https://github.com/Raku/old-issue-tracker/issues/1815
     nok 1 ~~ S, 'subsets of roles (1)';
      ok R ~~ S, 'subsets of roles (2)';
 
@@ -252,7 +252,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 }
 
 
-# RT #89708
+# https://github.com/Raku/old-issue-tracker/issues/2421
 {
     subset Many::Parts of Str;
     ok 'a' ~~ Many::Parts, 'subset names with many parts work';
@@ -264,7 +264,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     dies-ok { EVAL('f(-2)') }, 'Cannot violate Int::Positive constraint';
 }
 
-# RT #131381
+# https://github.com/Raku/old-issue-tracker/issues/6279
 {
     subset PInt of Int where { $_ > 0 };
     my PInt @a = 2, 3;
@@ -273,7 +273,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     lives-ok { f(@a) }, 'Array of subset type as parameter to function';
 }
 
-# RT #71820
+# https://github.com/Raku/old-issue-tracker/issues/1468
 {
     subset Interesting of Int where * > 10;
     class AI { has Interesting $.x };
@@ -282,7 +282,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 
 }
 
-# RT #79160
+# https://github.com/Raku/old-issue-tracker/issues/2254
 {
     my Str subset MyStr;
     ok MyStr ~~ Str, 'my str subset MyStr creates basically a type alias (1)';
@@ -290,13 +290,13 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     ok 2    !~~ MyStr, 'Ints are not in there';
 }
 
-# RT #72948
+# https://github.com/Raku/old-issue-tracker/issues/1526
 {
     try { EVAL 'sub foo($x where { $x == $y }, $y) { }' };
     isa-ok $!, X::Undeclared, 'subset in signature cannot use non-predeclared variable';
 }
 
-# RT #123700
+# https://github.com/Raku/old-issue-tracker/issues/3661
 {
     throws-like q[
         subset Tiny of Any where ^3;
@@ -318,7 +318,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     'code runs without error (and does not mention "Obsolete"!)';
 }
 
-# RT #127394
+# https://github.com/Raku/old-issue-tracker/issues/5092
 {
     my subset JJ where { !.defined || $_ > 2 };
 
@@ -327,7 +327,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     is (-> JJ:D $a { 'yup' }(3)), 'yup', 'ASubType:D passes if passed matching concrete value';
 }
 
-# RT #127367
+# https://github.com/Raku/old-issue-tracker/issues/5086
 group-of 2 => 'multi with :D subset dispatches correctly' => {
     my @results;
     lives-ok {
@@ -342,7 +342,7 @@ group-of 2 => 'multi with :D subset dispatches correctly' => {
     is-deeply @results, ['T:D', 42, [2, 2]], 'dispatch happened in right order';
 }
 
-# RT #129430
+# https://github.com/Raku/old-issue-tracker/issues/5701
 {
     sub f(|c where { c.elems == 1 }) { 72 }
     is-deeply f(42), 72, 'where constraint on |c parameter works';
@@ -350,7 +350,7 @@ group-of 2 => 'multi with :D subset dispatches correctly' => {
         'where constraint on |c parameter is enforced';
 }
 
-# RT #126642
+# https://github.com/Raku/old-issue-tracker/issues/4748
 {
     multi f(UInt:D $) { "ok" };
     is f(42), 'ok', "UInt:D parameter doesn't fail in a multi";

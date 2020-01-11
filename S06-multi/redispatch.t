@@ -43,19 +43,19 @@ plan 14;
     is $tracker, 'IntAny4Int', 'called in the right order';
 }
 
-# RT #75008
+# https://github.com/Raku/old-issue-tracker/issues/1757
 {
     multi e() { nextsame };
     lives-ok &e, "It's ok to call nextsame in the last/only candidate";
 }
 
-# RT #76328
+# https://github.com/Raku/old-issue-tracker/issues/1920
 {
     try { nextsame };
     isa-ok $!, X::NoDispatcher, 'nextsame in main block dies due to lack of dispatcher';
 }
 
-# RT #125539
+# https://github.com/Raku/old-issue-tracker/issues/4376
 {
     multi a(Int $a) { samewith "$a" }
     multi a(Str $a) { is $a, "42", 'samewith $a stringified in sub' }

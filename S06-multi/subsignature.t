@@ -2,13 +2,13 @@ use v6;
 
 use Test;
 
-plan 100;
+plan 95;
 
 # Lots of the same tests from this directory run again with
 # the parameters in a subsignature.
 
 # from by-trait.t
-# RT #66588
+# https://github.com/Raku/old-issue-tracker/issues/1060
 {
     my $ro_call = 0;
     my $rw_call = 0;
@@ -46,7 +46,8 @@ dies-ok { EVAL("waz('vtak')") }, '...but lexical multi no longer callable';
 #L<S06/"Longname parameters">
 #L<S12/"Multisubs and Multimethods">
 
-# the single parameter cases named and positional below - part of RT #53814
+# the single parameter cases named and positional below - part of
+# https://github.com/Raku/old-issue-tracker/issues/78
 
 multi earth (|c(:$me!))                 {"me $me"};
 multi earth (|c(:$him!))                {"him $him"};
@@ -111,11 +112,12 @@ is( wind('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
     multi catch(| (*@all            )) { 1 }   #OK not used
     multi catch(| (*@all, :$really! )) { 2 }   #OK not used
     is catch(0, 5),           1, 'slurpy and named interact well (1)';
-    #?rakudo.jvm todo 'RT #126702'
+    # https://github.com/Raku/old-issue-tracker/issues/4771
+    #?rakudo.jvm todo 'slurpy and named'
     is catch(0, 5, :!really), 2, 'slurpy and named interact well (2)';
 }
 
-# RT #78738
+# https://github.com/Raku/old-issue-tracker/issues/2238
 {
     multi zero(|c())       { 'no args' };
     multi zero(|c(:$foo!)) { 'named'   };
@@ -142,21 +144,6 @@ multi foo(|c($x))   { 1 }  #OK not used
 is(foo(A.new), 2, 'dispatch on class worked');
 is(foo(B.new), 3, 'dispatch on class worked');
 is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
-
-#?rakudo skip "redeclaration of routine 'bar' RT #118069"
-{
-    # Test that proto makes all further subs in the scope also be multi.
-    proto bar(|c()) { "proto" }
-    sub bar(|c($x)) { 1 }    #OK not used
-    multi bar(|c($x, $y)) { 2 }    #OK not used
-    multi sub bar(|c($x, $y, $z)) { 3 }    #OK not used
-    sub bar(|c($x, $y, $z, $a)) { 4 }    #OK not used
-    is bar(),  "proto", "called the proto";#
-    is bar(1),       1, "sub defined without multi has become one";
-    is bar(1,2),     2, "multi ... still works, though";
-    is bar(1,2,3),   3, "multi sub ... still works too";
-    is bar(1,2,3,4), 4, "called another sub as a multi candidate, made a multi by proto";
-}
 
 # L<S03/"Reduction operators">
 {
@@ -185,7 +172,7 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
 throws-like 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};', X::Redeclaration,
     'attempt to define two proto subs with the same name dies';
 
-# RT #65322
+# https://github.com/Raku/old-issue-tracker/issues/3143
 {
     my $rt65322 = q[
         multi sub rt65322(|c( Int $n where 1 )) { 1 }
@@ -194,7 +181,7 @@ throws-like 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};', X::Redeclarat
     throws-like 'EVAL $rt65322', X::Redeclaration, "Can't define sub and multi sub without proto";
 }
 
-# RT #111454
+# https://github.com/Raku/old-issue-tracker/issues/2658
 {
     my package Cont {
         our proto sub ainer(|c($)) {*}
@@ -213,7 +200,7 @@ throws-like 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};', X::Redeclarat
     is f('a'), 7, 'can use {*} in an expression in a proto (1)';
     is f(1),  11, 'can use {*} in an expression in a proto (2)';
 
-    # RT #114882
+    # https://github.com/Raku/old-issue-tracker/issues/2893
     my $called_with = '';
     proto cached(|c($a)) {
         state %cache;
@@ -237,14 +224,14 @@ throws-like 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};', X::Redeclarat
     is maybe(-5), 0, "It's ok not to dispatch to the multis";
 }
 
-# RT #116164
+# https://github.com/Raku/old-issue-tracker/issues/3001
 {
     throws-like q[
         proto f(|c(Int $x)) {*}; multi f(|c($)) { 'default' }; f 'foo'
     ], Exception, 'proto signature is checked, not just that of the candidates';
 }
 
-# RT#125732
+# https://github.com/Raku/old-issue-tracker/issues/4450
 {
     my $tracker = '';
     multi a(|c($))     { $tracker ~= 'Any' };
@@ -255,7 +242,7 @@ throws-like 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};', X::Redeclarat
     is $tracker, 'IntAny', 'called in the right order';
 }
 
-# RT#125732
+# https://github.com/Raku/old-issue-tracker/issues/4450
 {
     my $tracker = '';
     multi b(|c($))     { $tracker ~= 'Any' };
@@ -266,7 +253,7 @@ throws-like 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};', X::Redeclarat
     is $tracker, 'IntAnyInt', 'called in the right order';
 }
 
-# RT#125732
+# https://github.com/Raku/old-issue-tracker/issues/4450
 {
     my $tracker = '';
     multi c(|c($x))     { $tracker ~= 'Any' ~ $x };
@@ -277,7 +264,7 @@ throws-like 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};', X::Redeclarat
     is $tracker, 'IntAny4', 'called in the right order';
 }
 
-# RT#125732
+# https://github.com/Raku/old-issue-tracker/issues/4450
 {
     my $tracker = '';
     multi d(|c($x))     { $tracker ~= 'Any' ~ $x };
@@ -288,13 +275,13 @@ throws-like 'proto rt68242(|c($a)){};proto rt68242(|c($c,$d)){};', X::Redeclarat
     is $tracker, 'IntAny4Int', 'called in the right order';
 }
 
-# RT #75008
+# https://github.com/Raku/old-issue-tracker/issues/1757
 {
     multi e(|c()) { nextsame };
     lives-ok &e, "It's ok to call nextsame in the last/only candidate";
 }
 
-# RT #125539
+# https://github.com/Raku/old-issue-tracker/issues/4376
 {
     multi a(|c(Int $a)) { samewith "$a" }
     multi a(|c(Str $a)) { is $a, "42", 'samewith $a stringified in sub' }
@@ -367,7 +354,7 @@ is(bar(S,S), 1, "not tied as only first type in the dispatch");
     is nsi_2(1, 2, 3),                   'nsi 2', 'interaction between named and slurpy (4)';
 }
 
-# RT #68234
+# https://github.com/Raku/old-issue-tracker/issues/1204
 {
     multi rt68234(|c(:$key!)) { 'with key' };    #OK not used
     multi rt68234(|c(*%_))    { 'unknown' };    #OK not used
@@ -375,7 +362,7 @@ is(bar(S,S), 1, "not tied as only first type in the dispatch");
     is rt68234(:unknown), 'unknown', 'can find multi method with slurpy';
 }
 
-# RT #68158
+# https://github.com/Raku/old-issue-tracker/issues/1198
 {
     multi rt68158(|c()) { 1 }
     multi rt68158(|c(*@x)) { 2 }    #OK not used
@@ -383,8 +370,8 @@ is(bar(S,S), 1, "not tied as only first type in the dispatch");
     is rt68158(9), 2, 'slurpy called when non-slurpy can not bind';
 }
 
-# RT #64922
-# RT #125732
+# https://github.com/Raku/old-issue-tracker/issues/928
+# https://github.com/Raku/old-issue-tracker/issues/4450
 {
     multi rt64922(|c($x, %h?)) { 1 }    #OK not used
     multi rt64922(|c(@x)) { 2 }    #OK not used
@@ -393,7 +380,7 @@ is(bar(S,S), 1, "not tied as only first type in the dispatch");
     is rt64922([1,2]), 2, 'optional parameter does not break type-based candidate sorting';
 }
 
-# RT #65672
+# https://github.com/Raku/old-issue-tracker/issues/997
 {
     multi rt65672(|c())   { 99 }
     multi rt65672(|c($x)) { $x }
@@ -401,7 +388,7 @@ is(bar(S,S), 1, "not tied as only first type in the dispatch");
     is rt65672caller( &rt65672 ), 99, 'multi can be passed as callable';
 }
 
-# RT #75136
+# https://github.com/Raku/old-issue-tracker/issues/1766
 # a multi declaration should only return the current candidate, not the whole
 # set of candidates.
 {
@@ -418,7 +405,8 @@ multi with_cap(|c($a)) { $a }
 multi with_cap(|c($a,$b,|cap)) { return with_cap($a + $b, |cap) }
 is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
 
-#RT #114886 - order of declaration matters
+# https://github.com/Raku/old-issue-tracker/issues/2894
+# order of declaration matters
 {
     proto sub fizzbuzz($) {*};
     multi sub fizzbuzz(|c(Int $ where * %% 15)) { 'FizzBuzz' };
@@ -430,11 +418,11 @@ is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
     is $a, <1 Fizz Buzz FizzBuzz>, "ordered multi subs";
 }
 
-# RT #68528
+# https://github.com/Raku/old-issue-tracker/issues/1226
 {
     multi rt68528(|c(:$a!, *%_)) { return "first"  };
     multi rt68528(|c(:$b,  *%_)) { return "second" };
-    is(rt68528(:a, :b), "first", "RT #68528 - first defined wins the tie");
+    is(rt68528(:a, :b), "first", "first defined wins the tie");
 }
 
 # vim: ft=perl6

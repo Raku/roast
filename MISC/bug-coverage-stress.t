@@ -9,7 +9,7 @@ use Test::Util;
 
 plan 12;
 
-# RT #132042
+# https://github.com/Raku/old-issue-tracker/issues/6501
 doesn't-hang ｢
     my $fh = ｣ ~ make-temp-file.raku ~ ｢.open: :w;
     await ^20 .map: -> $t {
@@ -29,7 +29,7 @@ doesn't-hang ｢
 ｣, :5wait, :out<pass>, 'no deadlock while acquiring mutex';
 
 
-# RT #132016
+# https://github.com/Raku/old-issue-tracker/issues/6490
 #?rakudo.jvm skip "The spawned command './perl6-j' exited unsuccessfully (exit code: 1)"
 #?DOES 1
 {
@@ -55,7 +55,7 @@ doesn't-hang ｢
   }
 }
 
-# RT #129845
+# https://github.com/Raku/old-issue-tracker/issues/5742
 with make-temp-dir() -> $dir {
     $dir.add("$_$_$_").spurt("") for "a".."z";
 
@@ -75,7 +75,7 @@ with make-temp-dir() -> $dir {
     'dir() does not produce wrong results under concurrent load';
 }
 
-# RT #129291
+# https://github.com/Raku/old-issue-tracker/issues/5678
 # "invalid free" bug is present on Rakudo 2016.07. Running something with
 # slower startup, like $*EXECUTABLE, does not exercise the bug, so we use `echo`
 #?rakudo.jvm skip 'hangs'
@@ -93,7 +93,7 @@ with make-temp-dir() -> $dir {
 }
 
 # https://github.com/tokuhirom/p6-WebSocket/issues/15#issuecomment-339120879
-# RT #132343
+# https://github.com/Raku/old-issue-tracker/issues/6628
 is_run ｢
     # fire up a few socks first to fill up affinity workers to make
     # the bug more prevalent
@@ -112,7 +112,7 @@ is_run ｢
     sleep 2;
 ｣, {:out<pass>, :err(''), :0status}, 'supply inside sock does not hang';
 
-# RT #127959
+# https://github.com/Raku/old-issue-tracker/issues/5254
 given make-temp-dir() {
     .child('myclass.pm6').spurt: ｢
         unit class myclass;

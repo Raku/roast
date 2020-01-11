@@ -87,9 +87,9 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is wins(Paper.new,   Paper.new),   0,  'multi dispatch with ::T generics';
     is wins(Paper.new,   Scissor.new), -1, 'fallback if there is a ::T variant';
 
-    # RT #114394
+    # https://github.com/Raku/old-issue-tracker/issues/2849
     sub p($a, $b) { wins($a, $b) };
-    is p(Paper, Paper), 0, 'Type captures and containers mix (RT #114394)';
+    is p(Paper, Paper), 0, 'Type captures and containers mix';
 
     multi wins2(Scissor $x, Paper   $y) { 1 }   #OK not used
     multi wins2($x, $y where { $x.WHAT.gist eq $y.WHAT.gist }) { 0 }
@@ -98,7 +98,8 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is wins2(Paper.new,   Paper.new),   0,  'multi dispatch with faked generics';
     is wins2(Paper.new,   Scissor.new), -1, 'fallback if there is a faked generic';
 
-    # now try again with anonymous parameters (see RT #69798)
+    # https://github.com/Raku/old-issue-tracker/issues/1363
+    # now try again with anonymous parameters
     multi wins_anon(Scissor $, Paper   $) { 1  }
     multi wins_anon(Paper   $, Stone   $) { 1  }
     multi wins_anon(Stone   $, Scissor $) { 1  }
@@ -164,7 +165,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 }
 
 # Multi-dispach on declared return type
-# RT #121426
+# https://github.com/Raku/old-issue-tracker/issues/3355
 {
     sub i() returns Int { 3 }
     sub s() returns Str { 'little pigs' }
@@ -178,7 +179,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
 # make sure that multi sub dispatch also works if the sub is defined
 # in a class (was a Rakudo regression)
-# RT #65674
+# https://github.com/Raku/old-issue-tracker/issues/998
 {
     throws-like q[
         class RT65674 {
@@ -242,13 +243,13 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     ok try { main '2+1i'  } eqv 2+1i,  "can distinguish Complex-like string in main";
 }
 
-# RT #123623
+# https://github.com/Raku/old-issue-tracker/issues/3648
 {
     multi foo($a where { $_ == False } = True) { }
     lives-ok { foo(False) }, 'Combination of where clause plus default parses correctly';
 }
 
-# RT #125483
+# https://github.com/Raku/old-issue-tracker/issues/4348
 {
     multi a (;; Any $b) { "one" }
     multi a (;; Int $a) { "two" }
@@ -256,7 +257,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
         'arguments after ;; not considered by multi-dispatch';
 }
 
-# RT #126003
+# https://github.com/Raku/old-issue-tracker/issues/4518
 {
     multi sub want-array(@array) { @array.elems }
     is want-array("abc".comb), 3, 'Can pass a Seq to an @-sigil arg in a multi';

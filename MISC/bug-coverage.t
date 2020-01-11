@@ -62,7 +62,7 @@ subtest 'enums with names of core types do not blow things up unexpectedly' => {
     is-deeply @a,      [<a b c>],         'Array works';
 }
 
-# RT #132718
+# https://github.com/Raku/old-issue-tracker/issues/6664
 subtest 'no crashes with native types in conditionals' => {;
     plan 6;
     subtest 'if' => {
@@ -186,41 +186,41 @@ subtest 'thunking closure scoping' => {
     # https://github.com/rakudo/rakudo/issues/1212
     is-deeply <a b c>[$_ xx 2], <b b>.Seq, 'xx inside `with`' with 1;
 
-    # RT #130575
+    # https://github.com/Raku/old-issue-tracker/issues/6008
     is-deeply gather {
         sub itcavuc ($c) { try {take $c} andthen 42 };
         itcavuc $_ for 2, 4, 6;
     }, (2, 4, 6).Seq, 'try with block and andthen';
 
-    # RT #132337
+    # https://github.com/Raku/old-issue-tracker/issues/6625
     is-deeply gather {
         sub foo ($str) { { take $str }() orelse Nil }
         foo "cc"; foo "dd";
     }, <cc dd>.Seq, 'block in a sub with orelse';
 
-    # RT #131548
+    # https://github.com/Raku/old-issue-tracker/issues/6340
     is-deeply gather for ^7 {
         my $x = 1;
         1 andthen $x.take andthen $x = 2 andthen $x = 3 andthen $x = 4;
     }, 1 xx 7, 'loop + lexical variable plus chain of andthens';
 
-    # RT #132211
+    # https://github.com/Raku/old-issue-tracker/issues/6554
     is-deeply gather for <a b c> { $^v.uc andthen $v.take orelse .say },
         <a b c>.Seq, 'loop + andthen + orelse';
 
-    # RT #126569
+    # https://github.com/Raku/old-issue-tracker/issues/4731
     is-deeply gather { (.take xx 10) given 42 }, 42 xx 10,
         'parentheses + xx + given';
 
-    # RT #128054
+    # https://github.com/Raku/old-issue-tracker/issues/5291
     is-deeply gather { take ("{$_}") for <aa bb> }, <aa bb>.Seq,
         'postfix for + take + block in a string';
 
-    # RT #126413
+    # https://github.com/Raku/old-issue-tracker/issues/4663
     is-deeply gather { take (* + $_)(32) given 10 }, 42.Seq,
         'given + whatever code closure execution';
 
-    # RT #126984
+    # https://github.com/Raku/old-issue-tracker/issues/4901
     is-deeply gather {
         sub foo($x) { (* ~ $x)($_).take given $x }; foo(1); foo(2)
     }, ("11", "22").Seq, 'sub + given + whatevercode closure execution';
@@ -229,13 +229,13 @@ subtest 'thunking closure scoping' => {
 
 ## test was moved from previous subtest 'thunking closure scoping' in order
 ## to make it fudgeable
-#?rakudo.jvm skip 'UnwindException in thread "main", RT #132172'
+# https://github.com/Raku/old-issue-tracker/issues/6553
+#?rakudo.jvm skip 'UnwindException in thread "main"'
 #?DOES 1
 {
   subtest 'thunking closure scoping (2)' => {
     plan 1;
 
-    # RT #132172
     is-deeply gather { sub {
         my $ver =.lines.uc with "totally-not-there".IO.open
             orelse "meow {$_ ~~ Failure}".take and return 42;
@@ -264,7 +264,7 @@ subtest 'block in string in parentheses in `for` statement mod' => {
 }
 
 {
-    # RT #127869
+    # https://github.com/Raku/old-issue-tracker/issues/5228
     my $failed = 0;
 
     sub match ($str, $flip) {
@@ -280,7 +280,7 @@ subtest 'block in string in parentheses in `for` statement mod' => {
         }
     }
 
-    is $failed, 0, '$match should not be true and false (RT#127869)';
+    is $failed, 0, '$match should not be true and false';
 }
 
 # https://github.com/rakudo/rakudo/issues/1695
