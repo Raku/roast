@@ -38,7 +38,8 @@ dies-ok {EVAL 'use Poison; 1'}, "EVAL dies on fatal use";
 # L<S04/Exception handlers/Raku's EVAL function only evaluates strings, not blocks.>
 dies-ok({EVAL {; 42} }, 'block EVAL is gone');
 
-# RT #63978, EVAL didn't work in methods
+# https://github.com/Raku/old-issue-tracker/issues/800
+# EVAL didn't work in methods
 {
     class EvalTester1 {
         method e($s) { EVAL $s };
@@ -58,10 +59,10 @@ dies-ok({EVAL {; 42} }, 'block EVAL is gone');
        'EVAL works inside instance methods, with outer lexicals';
 }
 
-# RT #122256
+# https://github.com/Raku/old-issue-tracker/issues/3432
 {
     is EVAL("'møp'".encode('UTF-8')), 'møp', 'EVAL(Buf)';
-#?rakudo skip 'RT #122256'
+#?rakudo skip 'Buf.EVAL NYI (if ever)'
     is "'møp'".encode('UTF-8').EVAL, 'møp', 'Buf.EVAL';
 }
 
@@ -74,7 +75,7 @@ dies-ok({EVAL {; 42} }, 'block EVAL is gone');
     is $number.EVAL, $number, '.EVAL of non-string variable works';
 }
 
-# RT #77646
+# https://github.com/Raku/old-issue-tracker/issues/2134
 {
     my $x = 0;
     EVAL '$x++' for 1..4;
@@ -82,30 +83,30 @@ dies-ok({EVAL {; 42} }, 'block EVAL is gone');
 
 }
 
-# RT #112472
+# https://github.com/Raku/old-issue-tracker/issues/2716
 {
     try EVAL(:lang<rt112472>, '1');
     ok "$!" ~~ / 'rt112472' /, 'EVAL in bogus language mentions the language';
 }
 
-# RT #115344
+# https://github.com/Raku/old-issue-tracker/issues/2933
 my $rt115344 = 115344;
 is('$rt115344'.EVAL, $rt115344, 'method form of EVAL sees outer lexicals');
 
-# RT #115774
+# https://github.com/Raku/old-issue-tracker/issues/2977
 {
     my int $a; EVAL('');
     ok(1, "presence of low level types doesn't cause EVAL error")
 }
 
-# RT #124304
+# https://github.com/Raku/old-issue-tracker/issues/3781
 {
     my \a = rand;
     lives-ok { EVAL 'a' }, 'Can EVAL with a sigilless var';
     is EVAL('a'), a, 'EVAL with sigilless var gives correct result';
 }
 
-# RT #128457
+# https://github.com/Raku/old-issue-tracker/issues/3781
 {
     is
         nqp::atkey(CompUnit::Loader.load-source(q<package Qux { BEGIN EVAL q<>; };>.encode).unit, q<$?PACKAGE>).^name,

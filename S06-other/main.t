@@ -25,10 +25,10 @@ sub MAIN($a, $b, *@c) {
 
 ok( @*ARGS == 5, '@*ARGS has correct elements');
 
-# RT #114354
+# https://github.com/Raku/old-issue-tracker/issues/2844
 lives-ok { require HasMain }, 'MAIN in a module did not get executed';
 
-# RT #126029
+# https://github.com/Raku/old-issue-tracker/issues/4527
 is_run 'sub MAIN() { map { print "ha" }, ^3 }',
     {
         out => "hahaha",
@@ -36,7 +36,7 @@ is_run 'sub MAIN() { map { print "ha" }, ^3 }',
     'MAIN return value is sunk';
 
 
-# RT #130131
+# https://github.com/Raku/old-issue-tracker/issues/5808
 subtest 'MAIN can take type-constrain using Enums' => {
     plan 3;
 

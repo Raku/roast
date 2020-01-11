@@ -43,7 +43,7 @@ is_run 'sub MAIN(:xen(:$xin)) { print $xin }', {out => "23"}, :args['--xin=23'],
 is_run 'sub MAIN(:xen(:$xin)) { print $xin }', {out => "23"}, :args['--xen=23'],
     'named alias (outer name)';
 
-# RT #71366
+# https://github.com/Raku/old-issue-tracker/issues/1443
 is_run 'sub MAIN($a, :$var) { say "a: $a, optional: $var"; }',
     {err => /\-\-var/, out => ''}, :args['param', '--var'],
     'Non Bool option last with no value';
@@ -55,7 +55,7 @@ is_run 'sub MAIN($a, Bool :$var) { say "a: $a, optional: $var"; }',
 # Arguments with vertical or horizontal space don't get quoted corrected using is_run
 # so many of the following tests use run directly to work around issues on windows.
 
-# RT #126532
+# https://github.com/Raku/old-issue-tracker/issues/4714
 subtest 'Valid arg with zero length value' => {
     my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN(:$y) { $y.ords.print }', '-y=';
     is $proc.out.slurp(:close), '';
@@ -133,23 +133,28 @@ subtest 'Extra arg with newline value' => {
 # Spacey options may be removed from core spec; for now, moving to end of tests
 # (discussion starts at http://irclog.perlgeek.de/perl6/2011-10-17#i_4578353 )
 
-#?rakudo todo 'nom regression RT #124664'
+# https://github.com/Raku/old-issue-tracker/issues/3949
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN(:$x) { print $x }', {:out<23>}, :args<--x 23>,
     'option with spacey value';
 
-#?rakudo todo 'nom regression RT #124665'
+# https://github.com/Raku/old-issue-tracker/issues/3949
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN(:xen(:$x)) { print $x }', {:out<23>}, :args<--xen 23>,
     'long option with spacey value';
 
-#?rakudo todo 'nom regression RT #124666'
+# https://github.com/Raku/old-issue-tracker/issues/3949
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN(:xen(:$xin)) { print $xin }', {:out<23>}, :args<--xin 23>,
     'named alias (inner name) with spacey value';
 
-#?rakudo todo 'nom regression RT #124667'
+# https://github.com/Raku/old-issue-tracker/issues/3949
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN(:xen(:$xin)) { print $xin }', {:out<23>}, :args<--xen 23>,
     'named alias (outer name) with spacey value';
 
-#?rakudo todo 'nom regression RT #124668'
+# https://github.com/Raku/old-issue-tracker/issues/3949
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN(:xen(:$x)) { print $x }', {:out<23>}, :args<-x 23>,
     'short option with spacey value';
 
@@ -159,7 +164,7 @@ is_run 'subset Command of Str where "run";
     ', {:out<2>};
 
 
-# RT #92986
+# https://github.com/Raku/old-issue-tracker/issues/2441
 is_run 'multi MAIN($) { print q[Any] }; multi MAIN(Str) { print q[Str] }',
     {:out<Str>}, :args['foo'],
     'best multi matches (not just first one)';
@@ -168,7 +173,7 @@ is_run 'sub MAIN() { print 42 }',
     {:out(''), err => rx:i/usage/}, :args['--foo'],
     'superfluous options trigger usage message';
 
-# RT #115744
+# https://github.com/Raku/old-issue-tracker/issues/2973
 is_run 'sub MAIN($arg) { print $arg }', {:out<--23>}, :args['--', '--23'],
     'Stopping option processing';
 
@@ -176,7 +181,8 @@ is_run 'sub MAIN($arg, Bool :$bool) { print $bool, $arg }',
     {:out<True-option>}, :args['--bool', '--', '-option'],
     'Boolean argument with --';
 
-# RT #124669  R#2797
+# https://github.com/Raku/old-issue-tracker/issues/3950
+# https://github.com/rakudo/rakudo/issues/2797
 is_run 'sub MAIN(:@foo) { print @foo }', {out => "bar"}, :args['--foo=bar'],
     'single occurence for named array param';
 
@@ -193,17 +199,17 @@ is_run 'multi MAIN(:$foo) { print "Scalar" }; multi MAIN(:@foo) { print "Array" 
     {out => "Array"}, :args['--foo=bar', '--foo=baz'],
     'correct select Array candidate from Scalar and Array candidates.';
 
-# RT #119001
+# https://github.com/Raku/old-issue-tracker/issues/3194
 is_run 'sub MAIN (Str $value) { print "String $value" }',
     {out => 'String 10', err => ''}, :args[10],
     'passing an integer matches MAIN(Str)';
 
-# RT #127977
+# https://github.com/Raku/old-issue-tracker/issues/5262
 is_run 'sub MAIN(*@arg where { False }) { }; sub USAGE { print "USAGE called" }',
     {out => 'USAGE called', err => ''},
     "failed constraint check doesn't leak internal exception out to the user";
 
-# RT #127621
+# https://github.com/Raku/old-issue-tracker/issues/5155
 is_run 'sub MAIN($, *%) { }', { err => '', }, :args['--help'],
     'use of anon slurpy hash does not cause a crash';
 
@@ -233,3 +239,5 @@ subtest '$*USAGE tests' => {
     ｣, {:out<PASS>, :err(''), :0status },
     'trying to assign to $*USAGE inside sub MAIN throws';
 }
+
+# vim: ft=perl6

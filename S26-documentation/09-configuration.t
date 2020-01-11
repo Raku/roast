@@ -31,13 +31,13 @@ is $r.config<formatted>, 'I';
 $r = $=pod[$p++].contents[0];
 is $r.config<number>, 42;
 
-{ # RT#127085
+{ # https://github.com/Raku/old-issue-tracker/issues/4958
   is-deeply $r.config<zebras>, True, 'bool config uses Bool type (True)';
   is-deeply $r.config<sheep>, False, 'bool config uses Bool type (False)';
 }
 
 
-# RT #124281
+# https://github.com/Raku/old-issue-tracker/issues/3778
 isa-ok $r.config<feist>, Str;
 
 
@@ -91,14 +91,12 @@ isa-ok $r, Pod::FormattingCode;
 #  results in an uninterpreted string literal.
 
 # tests for fixes for bugs:
-#   RT #124281 - colonpairs in POD config options always produce strings
-#   RT #126742 - config items should not include quotes for string values
+#   colonpairs in POD config options always produce strings: https://github.com/Raku/old-issue-tracker/issues/3778
+#   config items should not include quotes for string values: https://github.com/Raku/old-issue-tracker/issues/4789
 #
-#   RT #130477 - Pod config parses colopairs but simply stringifies
-#                whatever it matched
+#   Pod config parses colopairs but simply stringifies whatever it matched: https://github.com/Raku/old-issue-tracker/issues/5962
 #
-#   RT #132632 - List and hash configuration value formats are not yet
-#                implemented (NYI)
+#   List and hash configuration value formats are not yet implemented (NYI): https://github.com/Raku/old-issue-tracker/issues/6652
 
 #====================================================
 #=== strings
@@ -302,3 +300,4 @@ $r = $=pod[$p++];
 isa-ok $r.config<foo>, Int, '1foo: foo => 1';
 is $r.config<foo>, 1, 'foo => 1';
 
+# vim: ft=perl6
