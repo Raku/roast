@@ -7,13 +7,14 @@ $p = -1; # starting index for pod number
 plan 85;
 
 # includes tests for fixes for RT bugs:
-#   124403 - incorrect table parse:
-#   128221 - internal error
-#   129862 - uneven rows
-#   132341 - pad rows to add empty cells to ensure all rows have same number of cells
-#   132348 - handle inline Z<> comments on table rows
+#   incorrect table parse: https://github.com/Raku/old-issue-tracker/issues/3798
+#   internal error: https://github.com/Raku/old-issue-tracker/issues/5336
+#   uneven rows: https://github.com/Raku/old-issue-tracker/issues/5746
+#   pad rows to add empty cells to ensure all rows have same number of cells: https://github.com/Raku/old-issue-tracker/issues/6627
+#   handle inline Z<> comments on table rows: https://github.com/Raku/old-issue-tracker/issues/6630
 
-# test fix for RT #124403 - incorrect table parse:
+# https://github.com/Raku/old-issue-tracker/issues/3798
+# test fix - incorrect table parse:
 =table
 +-----+----+---+
 |   a | b  | c |
@@ -34,7 +35,8 @@ is @rows[0], "foo*52*Y";
 is @rows[1], "bar*17*N";
 is @rows[2], "dz*9*Y";
 
-# test fix for RT #128221
+# https://github.com/Raku/old-issue-tracker/issues/5336
+# test fix for internal error
 #       This test, with a '-r0c0' entry in
 #       the single table row, column 0,
 #       caused an exception.
@@ -46,7 +48,8 @@ is $r.contents.elems, 1;
 is $r.contents[0][0], "-r0c0"; # <= note leading hyphen which caused the original issue
 is $r.contents[0][1], "r0c1";
 
-# an expanded test (per Zoffix) for issue #128221
+# https://github.com/Raku/old-issue-tracker/issues/5746
+# an expanded test for uneven rows
 # note expected results have been corrected from that time
 =begin table
 -Col 1 | -Col 2 | _Col 3 | =Col 4
@@ -69,7 +72,7 @@ is @rows[0], "r0Col 1|-r0Col 2|_r0Col 3|=r0Col 4";
 is @rows[1], "r1Col 1 r1|-r1Col 2 r1Col 2|_r1Col 3 _r1Col 3|=r1Col 4 =r1Col 4", "test for merged cells";
 is @rows[2], "r2Col 1|r2Col 2|r2Col 3|r2Col 4";
 
-# test fix for issue RT #129862
+# https://github.com/Raku/old-issue-tracker/issues/5746
 # uneven rows
 =begin table
 a | b | c
@@ -87,8 +90,8 @@ is $r.contents[0].elems, 3;
 is $r.contents[1].elems, 3;
 is $r.contents[2].elems, 3;
 
-# test fix for RT #132341
-# also tests fix for RT #129862
+# test fix for https://github.com/Raku/old-issue-tracker/issues/6627
+# also tests fix for https://github.com/Raku/old-issue-tracker/issues/5746
 =table
     X   O
    ===========
@@ -106,8 +109,8 @@ is $r.contents[0].elems, 3;
 is $r.contents[1].elems, 3;
 is $r.contents[2].elems, 3;
 
-# test fix for RT #132348 (allow inline Z comments)
-# also tests fix for RT #129862
+# test fix for https://github.com/Raku/old-issue-tracker/issues/6630
+# also tests fix for https://github.com/Raku/old-issue-tracker/issues/5746
 =begin table
 a | b | c
 l | m | n
@@ -139,9 +142,9 @@ $r = $=pod[++$p];
 is $r.headers.elems, 1;
 is $r.contents.elems, 1;
 
-# test fix for rakudo repo issue #1282:
+# test fix for https://github.com/rakudo/rakudo/issues/1282:
 # need to handle table cells with char column separators as data
-# example table from <https://docs.perl6.org/language/regexes>
+# example table from <https://docs.raku.org/language/regexes>
 # WITHOUT the escaped characters (results in an extra, unwanted, incorrect column)
 =begin table
 
@@ -298,5 +301,4 @@ is @rows[1], "MidRat,Special infectiousness. See prose that follows.";
 is @rows[2], "Rat,";
 is @rows[3], "Int,";
 
-
-
+# vim: ft=perl6

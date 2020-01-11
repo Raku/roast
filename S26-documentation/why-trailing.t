@@ -311,7 +311,7 @@ our $fancy-var = 17;
 test-trailing($fancy-var.VAR, 'Very fancy!');
 )
 
-# RT #125253
+# https://github.com/Raku/old-issue-tracker/issues/4266
 sub has-where(Int $n where * > 10) {}
 #= where constraints shouldn't prevent declarative comments
 
@@ -324,3 +324,5 @@ my $block = {;
 test-trailing($block, 'this is a block');
 
 is $=pod.elems, $pod_index;
+
+# vim: ft=perl6

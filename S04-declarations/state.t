@@ -6,9 +6,8 @@ plan 44;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
-# RT #67040 -- state initialized with //= instead of =
-# (I've put this test here since it gets buggered by later tests
-#  unless RT #67058 has been fixed.)
+# https://github.com/Raku/old-issue-tracker/issues/1106
+# state initialized with //= instead of =
 {
     sub rt67040 {
         state $x //= 17;
@@ -219,7 +218,7 @@ plan 44;
     lives-ok { $y = 3 }, 'the state variable in subset types works (3)';
 }
 
-# Test for RT #67058
+# https://github.com/Raku/old-issue-tracker/issues/1109
 sub bughunt1 { (state $svar) }    #OK not used
 {
     sub bughunt2 { state $x //= 17; ++$x }
@@ -227,7 +226,7 @@ sub bughunt1 { (state $svar) }    #OK not used
        'a state variable in parens works with a state variable with //= init';
 }
 
-# RT #115614
+# https://github.com/Raku/old-issue-tracker/issues/2964
 {
     lives-ok { state $i++ }, 'can parse "state $i++"';
 }
@@ -247,8 +246,8 @@ sub bughunt1 { (state $svar) }    #OK not used
 # niecza regression: state not working at top level
 eval-lives-ok 'state $x; $x', 'state outside control structure';
 
-# RT #102994
-#?rakudo todo 'initialization happens only on first call(?) RT #102994'
+# https://github.com/Raku/old-issue-tracker/issues/2548
+#?rakudo todo 'initialization happens only on first call(?)'
 {
     sub f($x) {
         return if $x;
@@ -276,17 +275,17 @@ eval-lives-ok 'state $x; $x', 'state outside control structure';
     is foo(), 1, 'anonymous state variable (2)';
 }
 
-# RT #130855
+# https://github.com/Raku/old-issue-tracker/issues/6096
 lives-ok { sub foo () {$ = 42}; for ^2000000 { $ = foo } },
     'Intensive use of state variable in inline-friendly sub does not hit problems';
 
-# [Github Issue #1341](https://github.com/rakudo/rakudo/issues/1341)
+# https://github.com/rakudo/rakudo/issues/1341
 {
 	my @arr = do loop { state $x = 0; last if ++$x > 2; $x };
 	is-deeply @arr, [1, 2], 'Statevars work in block following "do" statement prefix';
 }
 
-# RT #129114
+# https://github.com/Raku/old-issue-tracker/issues/5622
 {
     my @arr = ();
     for ^2 { for ^2 { @arr.push( "{ (state $a)++ }") } };

@@ -5,7 +5,7 @@ plan 8;
 # L<S04/The Relationship of Blocks and Declarations/"If you declare a lexical
 #  twice in the same scope">
 
-# RT #83430
+# https://github.com/Raku/old-issue-tracker/issues/2348
 eval-lives-ok 'my $x; my $x',
               'it is legal to declare my $x twice in the same scope.';
 
@@ -26,11 +26,7 @@ throws-like 'sub foo {1; }; sub foo($x) {1; };', X::Redeclaration,
 throws-like 'only sub foo {1; }; sub foo($x) {1; };', X::Redeclaration,
     'multiple declarations need multi or proto';
 
-#?rakudo todo 'nom regression RT #125053'
-eval-lives-ok 'proto foo {1; }; sub foo {1; }; sub foo($x) {1; };',
-             'multiple declarations need multi or proto';
-
-# RT #118607
+# https://github.com/Raku/old-issue-tracker/issues/3175
 throws-like 'sub foo {1; }; sub foo($x) {1; };', X::Redeclaration,
     :message{.contains: 'multi'}, 'suggest multi-sub for sub redeclaration';
 

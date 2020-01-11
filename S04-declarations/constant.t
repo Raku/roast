@@ -15,8 +15,8 @@ plan 72;
     dies-ok { foo = 3 }, "can't reassign to a sigil-less constant";
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/1339
 {
-    # RT #69522
     sub foo0 { "OH NOES" };
     constant foo0 = 5;
     is foo0,   5,         'bare constant wins against sub of the same name';
@@ -31,7 +31,7 @@ plan 72;
     dies-ok { $bar0 = 2 }, "Can't reassign to a sigiled constant";
 }
 
-# RT #69740
+# https://github.com/Raku/old-issue-tracker/issues/1359
 {
     throws-like 'constant ($a, $b) = (3, 4)', X::Syntax::Missing, 'constant no longer takes list';
 }
@@ -219,7 +219,7 @@ plan 72;
     ok $ok, "the initializing values for constants are evaluated at compile-time";
 }
 
-# RT #64522
+# https://github.com/Raku/old-issue-tracker/issues/870
 {
     constant $x = 64522;
     dies-ok { $x += 2 }, 'dies: constant += n';
@@ -270,10 +270,10 @@ plan 72;
 {
     enum F::B <c d e>;
     my constant G = F::B;
-    # RT #66650
+    # https://github.com/Raku/old-issue-tracker/issues/1071
     ok F::B::c == G::c, 'can use "constant" to alias an enum';
     my constant Yak = F::B::c;
-    # RT #66636
+    # https://github.com/Raku/old-issue-tracker/issues/1068
     ok Yak === F::B::c, 'can use "constant" to alias an enum value';
 }
 
@@ -282,7 +282,7 @@ plan 72;
     is fib[100], 354224848179261915075, 'can have a constant using a sequence and index it';
 }
 
-# RT #115132
+# https://github.com/Raku/old-issue-tracker/issues/2909
 {
     lives-ok {constant x1 = "foo" ~~ /bar/},
         'can assign result of smart matching to constant';
@@ -292,31 +292,31 @@ plan 72;
     is x3, False, 'can assign False to constant';
 }
 
-# RT #112116
+# https://github.com/Raku/old-issue-tracker/issues/2690
 {
     constant %escapes = (^128).map({; chr($_) => sprintf '%%%02X', $_ }).hash;
     is %escapes<e>, '%65', 'constant hashes constructed by map';
 }
 
-# RT #119751
+# https://github.com/Raku/old-issue-tracker/issues/3231
 {
     class B { constant \a = 3; };
     is B::a, 3, 'escaped constant declaration in class';
 }
 
-# RT #122604
+# https://github.com/Raku/old-issue-tracker/issues/3487
 {
     constant lots = 0..*;
     lives-ok {lots[100_000]}, "can index an infinite constant list at 100K";
 }
 
-# RT #111734
+# https://github.com/Raku/old-issue-tracker/issues/2672
 {
     constant True = 42;
     is True, 42, 'can locally redefine True';
 }
 
-# RT #114506
+# https://github.com/Raku/old-issue-tracker/issues/2866
 {
     class RT114506 {
         has $.val;
@@ -329,7 +329,7 @@ plan 72;
 throws-like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
     symbol  => 'Mouse';
 
-# RT #122895
+# https://github.com/Raku/old-issue-tracker/issues/3538
 {
      # constants and non constants are consistently non flattening.
      is (my @ = 'a', <b c>)[1], <b c>, "non constant doesn't flatten";
@@ -381,7 +381,7 @@ throws-like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
     ok "foo" ~~ $constant-regex, 'Can match a exported constant regex';
 }
 
-# RT #127352
+# https://github.com/Raku/old-issue-tracker/issues/5079
 {
     constant $sepreg = rx/(<[\\/]>)/;
     my $filenameW = "c:\\g\\b.mp4";

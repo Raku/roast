@@ -77,7 +77,7 @@ is $r.contents[2].contents,
 $r = $=pod[4];
 is $r.contents[0].contents, 'C<boo> B<bar> asd';
 
-# RT #114510
+# https://github.com/Raku/old-issue-tracker/issues/2867
 =pod C< infix:<+> >
 =pod C<< infix:<+> >>
 

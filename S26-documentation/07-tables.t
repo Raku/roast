@@ -117,8 +117,8 @@ is $r.contents[0].join(','), 'X,O,';
 is $r.contents[1].join(','), ',X,O';
 is $r.contents[2].join(','), ',,X';
 
-# test for:
-#   RT #126740 - Pod::Block::Table node caption property is not populated properly
+# test for https://github.com/Raku/old-issue-tracker/issues/4776
+# Pod::Block::Table node caption property is not populated properly
 # Note that the caption property is just one of the table's %config key/value
 # pairs so any tests for other config keys in a single table are usually the same as testing
 # multiple tables, each for one caption test.
@@ -135,3 +135,5 @@ is $r.contents.elems, 2;
 is $r.caption, "foo";
 is $r.config<bar>, "0";
 is $r.config<baz>, "2.3";
+
+# vim: ft=perl6

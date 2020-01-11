@@ -143,7 +143,7 @@ throws-like 'use variables :foo',
   name => 'foo',
   'does use variables :foo fail';
 
-# RT #126291
+# https://github.com/Raku/old-issue-tracker/issues/4628
 {
     my Int:D $x is default(0);
     is $x, 0, 'Int:D with default value via trait';
@@ -156,7 +156,7 @@ throws-like 'use variables :foo',
         symbol => '@array', 'type check happens for Int:D array';
 }
 
-# RT #127958
+# https://github.com/Raku/old-issue-tracker/issues/5253
 {
     # At the time of writing these thrown at runtime. Though they
     # could/should be thrown at compile time in the future so EVAL is used.

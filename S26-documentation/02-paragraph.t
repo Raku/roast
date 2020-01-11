@@ -115,7 +115,7 @@ is $r.contents[4].contents[0].contents, "Turn into Jelly Beans!",
    '...Albi, the Racist Dragon';
 
 
-# RT#131400
+# https://github.com/Raku/old-issue-tracker/issues/6293
 is_run Q:to/♥♥♥/, :compiler-args['--doc=Text'],
     =for pod
     =for nested
@@ -123,3 +123,5 @@ is_run Q:to/♥♥♥/, :compiler-args['--doc=Text'],
     E<a;b>E<a;b;c>
     ♥♥♥
 {:err(''), :out("ababc\n"), :0status}, 'nested paras do not crash/warn';
+
+# vim: ft=perl6
