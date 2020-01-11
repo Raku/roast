@@ -161,20 +161,20 @@ is(EVAL('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $y #OK'), 2, '2nd m
     is($f, 5, "two lexicals declared in scope is noop");
 }
 
-# RT #121807
+# https://github.com/Raku/old-issue-tracker/issues/3381
 throws-like 'my %h is default(%h<foo>)',
     X::Syntax::Variable::Initializer, name => '%h';
 
-# RT #125371
+# https://github.com/Raku/old-issue-tracker/issues/4310
 throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
 
-# RT #125371
+# https://github.com/Raku/old-issue-tracker/issues/4310
 {
     my $py = 0 && try { my $py = 42; $py.bla() };
     is $py, 0, 'initializing a variable using a try block containing same name works';
 }
 
-# RT #87034
+# https://github.com/Raku/old-issue-tracker/issues/2395
 {
     throws-like 'my @foo := 1..3, (@foo Z+ 100)',
         X::Syntax::Variable::Initializer, name => '@foo';
@@ -206,7 +206,7 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
     throws-like '&x()', X::Undeclared::Symbols, '&x() dies when empty';
 }
 
-# RT #62766
+# https://github.com/Raku/old-issue-tracker/issues/655
 {
     eval-lives-ok 'my $a;my $x if 0;$a = $x', 'my $x if 0';
 
@@ -229,7 +229,7 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
     dies-ok { EVAL '$x = "abc"'; my Int $x; }, 'also a type error';
 }
 
-# RT #102414
+# https://github.com/Raku/old-issue-tracker/issues/2540
 {
     # If there is a regression this may die not just fail to make ints
     eval-lives-ok 'my (int $a);','native in declarator sig';
@@ -253,7 +253,7 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
     dies-ok { my int ($a, $b); $b = "str" }, 'Native type outside declarator sig 2/2 constrains';
 }
 
-# RT #115916
+# https://github.com/Raku/old-issue-tracker/issues/2983
 {
     throws-like { my (Str $rt115916) = 3 }, X::TypeCheck, 'another Type in declarator sig';
 }
@@ -267,7 +267,8 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
     }
 }
 
-# used to be RT #76366, #76466
+# https://github.com/Raku/old-issue-tracker/issues/1908
+# https://github.com/Raku/old-issue-tracker/issues/1930
 {
     nok &OUR::access_lexical_a().defined,
         'can call our-sub that accesses a lexical before the block was run';
@@ -282,16 +283,15 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
 
 eval-lives-ok 'my (%h?) #OK', 'my (%h?) lives';
 
-#RT #63588
+# https://github.com/Raku/old-issue-tracker/issues/734
 eval-lives-ok 'my $x = 3; class A { has $.y = $x; }; A.new.y.gist',
         'global scoped variables are visible inside class definitions';
 
-#RT #72814
 {
     lives-ok {my ::a $a}, 'typing a my-declared variable as ::a works.';    #OK not used
 }
 
-# RT #72946
+# https://github.com/Raku/old-issue-tracker/issues/1525
 {
     is ( my $ = 'foo' ), 'foo',
         'declaration of anonymous Scalar';
@@ -301,11 +301,11 @@ eval-lives-ok 'my $x = 3; class A { has $.y = $x; }; A.new.y.gist',
         'declaration of anonymous Hash';
 }
 
-# RT #76452
+# https://github.com/Raku/old-issue-tracker/issues/1927
 eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
               'can declare a variable inside a sub call';
 
-# RT #77112
+# https://github.com/Raku/old-issue-tracker/issues/2043
 # check that the presence of routines is checked before run time
 {
     my $bad = 0;
@@ -314,7 +314,7 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
     nok $bad, '... and it does so before run time';
 }
 
-#RT #102650
+# https://github.com/Raku/old-issue-tracker/issues/2532
 {
     my @tracker;
     my $outer;
@@ -323,10 +323,10 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
         @tracker.push($inner) and t() for $inner ?? () !! ^2;
     }
     t();
-    is @tracker.join(', '), '0, 0', 'RT #102650';
+    is @tracker.join(', '), '0, 0', 'inner / outer';
 }
 
-# RT #114202
+# https://github.com/Raku/old-issue-tracker/issues/2830
 # # check that anonymous variables don't overshare.
 {
     my @ = 1, 2, 3;
@@ -337,8 +337,8 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
     ok (my &) eqv Callable, q{anonymous sub doesn't overshare};
 }
 
-# RT #117043
-# RT #126626
+# https://github.com/Raku/old-issue-tracker/issues/3064
+# https://github.com/Raku/old-issue-tracker/issues/4743
 {
     my (\x1) = 1;
     is x1, 1,
@@ -361,7 +361,7 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
     is my sub {42}(), 42, 'can call postcircumfix () on subs inside my'
 }
 
-# RT #120397
+# https://github.com/Raku/old-issue-tracker/issues/3260
 ## this is only meant as a test for a NullPointerException
 ## (or a segfault which would abort the test)
 ## TODO: replace with a more specific test when the syntax
@@ -383,13 +383,13 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
         'no NullPointerException (and no segfault either)';
 }
 
-# RT #126125
+# https://github.com/Raku/old-issue-tracker/issues/4570
 group-of 2 => 'report Malformed my correctly' => {
     throws-like q[my Any :D $a], X::Syntax::Malformed;
     throws-like q[my Any ^:D $a], X::Syntax::Malformed;
 }
 
-# RT #126123
+# https://github.com/Raku/old-issue-tracker/issues/4568
 subtest 'dies on conflicting type constraints' => {
     plan 2;
 
@@ -399,27 +399,28 @@ subtest 'dies on conflicting type constraints' => {
         'Type + of Type + is default';
 }
 
-# RT #124210
+# https://github.com/Raku/old-issue-tracker/issues/3763
 subtest 'can assign to sigil-less variables' => {
     plan 3;
     my \a = 1;          is-deeply a, 1,           'simple';
     my (\b, \c) = 1, 2; is-deeply (b, c), (1, 2), 'complex';
     my (\d, (\e, (\f, (\g, \h)))) = 1, (2, (3, (4, 5)));
-    #?rakudo skip 'RT131071'
+    #?rakudo skip 'not implemented'
     is-deeply (d, e, f, g, h), (1, 2, 3, 4, 5),   'complexerastic';
 }
 
-# RT #124210
+# https://github.com/Raku/old-issue-tracker/issues/3763
 subtest 'can bind to sigil-less variables' => {
     plan 3;
     my \a := 1;          is-deeply a, 1,           'simple';
     my (\b, \c) := 1, 2; is-deeply (b, c), (1, 2), 'complex';
     my (\d, (\e, (\f, (\g, \h)))) := 1, (2, (3, (4, 5)));
-    #?rakudo skip 'RT131071'
+    # https://github.com/Raku/old-issue-tracker/issues/6165
+    #?rakudo skip 'not implemented'
     is-deeply (d, e, f, g, h), (1, 2, 3, 4, 5),   'complexerastic';
 }
 
-# RT #124210
+# https://github.com/Raku/old-issue-tracker/issues/3763
 subtest 'can compile-time bind to sigil-less variables' => {
     plan 3;
     #?rakudo 3 skip '::= NYI'

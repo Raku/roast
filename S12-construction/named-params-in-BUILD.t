@@ -20,6 +20,7 @@ is( $obj.v, 'bar',
 isa-ok($obj.v, Str, 'same arg should be of declared type' );
 isa-ok($obj, Foo, 'The object was constructed of the right type');
 
+# https://github.com/Raku/old-issue-tracker/issues/5216
 #?rakudo.jvm skip 'Native attributive binding not yet implemented (in submethod BUILD)'
 #?DOES 1
 {

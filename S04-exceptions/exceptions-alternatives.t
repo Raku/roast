@@ -51,8 +51,9 @@ is_run json-ex('justsomerandomsyntaxerror'), {
     :1status,
 }, 'can handle X::Undeclared::Symbols exception';
 
+# https://github.com/Raku/old-issue-tracker/issues/5726
 #?rakudo.js.browser skip "EVAL time use doesn't work in the browser"
-{ # RT#129810
+{
     is_run json-ex('use FakeModuleRT129810'), {
         :err({
             my $json = JSON::Tiny::Grammar.parse($_);

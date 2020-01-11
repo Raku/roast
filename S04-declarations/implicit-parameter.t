@@ -53,7 +53,7 @@ plan 20;
         'Placeholders not allowed in sub()';
 }
 
-# RT #114696
+# https://github.com/Raku/old-issue-tracker/issues/2881
 {
     my $string;
     $_ = 'Moo';
@@ -64,7 +64,7 @@ plan 20;
     is $string, 'MooMooMooMooMooMoo', 'outer $_ is seen within nested blocks';
 }
 
-# RT #125767
+# https://github.com/Raku/old-issue-tracker/issues/4459
 {
     is (1.map: { .sqrt => .sqrt }), (1 => 1), 'hash like block with implicit parameter'
 }

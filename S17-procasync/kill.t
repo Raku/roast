@@ -52,11 +52,12 @@ for @signals -> $signal {
     can-ok $pm.result, 'exitcode';
     is $pm.result.?exitcode, 0, 'did it exit with the right value';
 
-    #?rakudo skip 'RT #126425 - order of operations for Proc::Async is nondeterminstic'
+    # https://github.com/Raku/old-issue-tracker/issues/4669
+    #?rakudo skip 'order of operations for Proc::Async is nondeterminstic'
     is $stdout, "Started\n$signal\n", 'did we get STDOUT';
 }
 
-# RT #131479
+# https://github.com/Raku/old-issue-tracker/issues/6304
 doesn't-hang ｢
         await ^4 .map: -> $n {
             start {
@@ -73,7 +74,7 @@ doesn't-hang ｢
     ｣,   :out('All done!'), :err(''), :10wait,
 '.kill kills when multi-procs kill in multi-promises';
 
-# RT #125653
+# https://github.com/Raku/old-issue-tracker/issues/4418
 subtest 'can rapid-kill our Proc::Async without hanging' => {
     plan 1;
     my $proc = Proc::Async.new: $*EXECUTABLE, "-e", "sleep 1";
@@ -82,3 +83,5 @@ subtest 'can rapid-kill our Proc::Async without hanging' => {
     $ = await $prom;
     pass 'did not hang';
 }
+
+# vim: ft=perl6

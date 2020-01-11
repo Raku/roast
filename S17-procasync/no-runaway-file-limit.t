@@ -5,7 +5,7 @@ use Test::Util;
 
 plan 1;
 
-# RT #125616
+# https://github.com/Raku/old-issue-tracker/issues/4403
 is_run ｢
     my $prog   = $*DISTRO.is-win ?? 'cmd'   !! 'cat';
     my @target = $*DISTRO.is-win ?? «/c ""» !! '/dev/null';
@@ -18,3 +18,5 @@ is_run ｢
     }
     print 'pass'
 ｣, {:out<pass>, :err(''), :0status}, 'made it to the end';
+
+# vim: ft=perl6

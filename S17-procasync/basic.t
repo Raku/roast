@@ -83,13 +83,15 @@ await $print-promise;
 is $start-promise.status, Planned, 'external program still running (stdin still open)';
 $pc.close-stdin;
 
-#?rakudo 3 skip 'returns Nil (flapping tests) RT #125047'
+# https://github.com/Raku/old-issue-tracker/issues/4181
+#?rakudo 3 skip 'returns Nil (flapping tests)
 isa-ok $start-promise.result, Proc, 'Can finish, return Proc';
 
 is $stdout, 'Raku 6', 'got correct STDOUT';
 is $stderr, '',       'got correct STDERR';
 
-{ # RT #129362
+# https://github.com/Raku/old-issue-tracker/issues/5695
+{
     my @args := $*EXECUTABLE.absolute, "-e", "exit";
     is-deeply (await (my $p := Proc::Async.new: @args).start).command, @args,
         'Proc returned from .start has correct .command';
@@ -121,7 +123,7 @@ is $stderr, '',       'got correct STDERR';
     ok $no-output, "Process that doesn't output anything does not emit";
 }
 
-# RT #130788
+# https://github.com/Raku/old-issue-tracker/issues/6078
 {
     my $proc = Proc::Async.new($*EXECUTABLE, '-e', '$*OUT.write(Blob.new(65, 66, 67, 13, 10))');
     my $result = '';
@@ -175,3 +177,5 @@ subtest '.new accepts command + args via a single Iterable arg' => {
         cmp-ok $proc.exitcode, '==', 0,   'exit code successful';
     }
 }
+
+# vim: ft=perl6

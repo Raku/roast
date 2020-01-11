@@ -11,7 +11,7 @@ Tests C<CONTROL> blocks.
 
 =end desc
 
-# RT #124255
+# https://github.com/Raku/old-issue-tracker/issues/3774
 is_run( 'next; CONTROL { }',
         { status => sub { 0 != $^a },
           out    => '',
@@ -75,7 +75,7 @@ is_run( 'next; CONTROL { }',
     ok $ok, "done causes CX::Done control exception";
 }
 
-# RT #125339
+# https://github.com/Raku/old-issue-tracker/issues/4300
 is_run( 'sub mention-me() { take 1; }; mention-me',
         { status => sub { 0 != $^a },
           out    => '',
@@ -109,3 +109,5 @@ is_run( 'sub mention-me() { take 1; }; mention-me',
     is @catches.elems, 0, 'Exception doing X::Control not caught by CATCH block';
     isa-ok @controls[0], CX::Whatever, 'Correct control exception type';
 }
+
+# vim: ft=perl6

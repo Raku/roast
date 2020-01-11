@@ -64,7 +64,7 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
   is $foo.x[0], 3, "... and keeps its value properly."
 }
 
-# RT #64116
+# https://github.com/Raku/old-issue-tracker/issues/829
 {
     class RT64116 { has %.env is rw };
 
@@ -74,7 +74,7 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
     is $a.env<foo>, 'bar', 'assignment works';
 }
 
-# RT #76476
+# https://github.com/Raku/old-issue-tracker/issues/1931
 {
     use MONKEY-TYPING;
     class MonkeyNew { has $.x is rw };

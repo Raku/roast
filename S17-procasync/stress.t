@@ -5,7 +5,7 @@ use Test::Util;
 
 plan 24;
 
-# RT #125515
+# https://github.com/Raku/old-issue-tracker/issues/4365
 {
     constant $read-file = $?FILE.IO.parent(2).add("packages").add("README");
     $read-file.IO.r or bail-out "Missing $read-file that is needed to run a test";
@@ -23,7 +23,7 @@ plan 24;
     is @got.unique.elems, 1, 'Proc::Async consistently reads data';
 }
 
-# RT #129834
+# https://github.com/Raku/old-issue-tracker/issues/5738
 for ^10 {
     my $code = q:to'--END--';
 		for ^4 {
@@ -38,7 +38,7 @@ for ^10 {
     is_run $code, { status => 0 }, "No race/crash in concurrent setup of Proc::Async objects ($_)";
 }
 
-# RT #122709
+# https://github.com/Raku/old-issue-tracker/issues/3503
 for 1..10 {
     my $code = q:to/CODE/;
         my $waiter = $*DISTRO.is-win
@@ -52,7 +52,7 @@ for 1..10 {
 
 # We need something that's pretty fast to run; trying to use $*EXECUTABLE instead failed
 # to repro the bug this is covering (bug present in 2017 commit ce12e480316
-# RT #131763
+# https://github.com/Raku/old-issue-tracker/issues/6397
 if run :!out, :!err, «echo test» {
   #?rakudo.jvm todo 'hangs'
   doesn't-hang ｢
@@ -70,7 +70,7 @@ else {
     skip 'Need `echo` for this test'
 }
 
-# RT #130107
+# https://github.com/Raku/old-issue-tracker/issues/5802
 # Here, we start a proc that rapidly produces output. Theoretically,
 # using $*EXECUTABLE here should be possible, but currently in rakudo it
 # produces output too slowly to trigger the bug (bug is present in 2016.10
@@ -114,3 +114,5 @@ else {
     print 'pass'
   ｣, {:out<pass>, :err(''), :0status}, 'No memory corruption when starting many Proc::Async instances';
 }
+
+# vim: ft=perl6
