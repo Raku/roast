@@ -7,7 +7,8 @@ plan 31;
 #L<S06/"Longname parameters">
 #L<S12/"Multisubs and Multimethods">
 
-# the single parameter cases named and positional below - part of RT #53814
+# the single parameter cases named and positional below - part of
+# https://github.com/Raku/old-issue-tracker/issues/78
 
 multi earth (:$me!)                 {"me $me"};
 multi earth (:$him!)                {"him $him"};
@@ -61,7 +62,7 @@ is( wind('c', her => 3),      'pos c her 3',       'pos, named her');
 is( wind('d', 'e'),           'pos d pos e',       'pos, pos');
 is( wind('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
 
-# RT #118467
+# https://github.com/Raku/old-issue-tracker/issues/3164
 {
     multi catch(*@all            ) { 1 }   #OK not used
     multi catch(*@all, :$really! ) { 2 }   #OK not used
@@ -69,7 +70,7 @@ is( wind('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
     is catch(0, 5, :!really), 2, 'slurpy and named interact well (2)';
 }
 
-# RT #78738
+# https://github.com/Raku/old-issue-tracker/issues/2238
 {
     multi zero()       { 'no args' };
     multi zero(:$foo!) { 'named'   };
@@ -77,7 +78,7 @@ is( wind('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
         'presence of mandatory named multi does not corrupt calling a nullary'
 }
 
-# RT #119929
+# https://github.com/Raku/old-issue-tracker/issues/3239
 {
     multi optname() { 'no args' }
     multi optname(:$bar) { 'optional named' }
@@ -85,7 +86,7 @@ is( wind('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
         'optional named param in a multi still makes candidate narrower';
 }
 
-# RT #128522
+# https://github.com/Raku/old-issue-tracker/issues/5414
 {
     my ($m1, $m2, $m3);
 

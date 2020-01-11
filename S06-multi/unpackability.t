@@ -28,7 +28,7 @@ is bar(@a), "1|(Any)", "multi dispatch on array packed with one required element
 is bar(@b), "1|2", "multi dispatch on array packed with one required element + one optional";
 is bar(1,2,3), "1+2+3", "multi dispatch on slurpy packed with two required element + one optional";
 
-# RT #76486
+# https://github.com/Raku/old-issue-tracker/issues/1933
 {
     multi sub a(@a) { 1 ~ @a }
     multi sub a([]) { 2 ~ [] }

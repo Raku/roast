@@ -74,7 +74,7 @@ plan 32;
 
 }
 
-# RT #114026
+# https://github.com/Raku/old-issue-tracker/issues/2821
 {
     my $*res = 0;
     sub somesub () { $*res = 42; };
@@ -88,37 +88,42 @@ plan 32;
     my $foo = Foo.new;
     $foo.add(&somesub);
     $foo();
-    is $*res, 42, 'example code from RT #114026 works';
+    is $*res, 42, 'example code works';
 }
 
-# RT #112642
+# https://github.com/Raku/old-issue-tracker/issues/2821
 {
     class A { method CALL-ME (A:U:) { 3 } };
-    is A.(), 3, 'RT #112642 .() -> (:U) works, dotted form';
-    is A(:a), 3, 'RT #112642 (:a) -> (:U) works';
-    is A.(:a), 3, 'RT #112642 .(:a) -> (:U) works, dotted form';
+    is A.(), 3, '.() -> (:U) works, dotted form';
+    is A(:a), 3, '(:a) -> (:U) works';
+    is A.(:a), 3, '.(:a) -> (:U) works, dotted form';
 
     class B { method CALL-ME(B:U: $x) { 3 } };
-    is B(0), 3, 'RT #112642 ($: $) -> (:U, $) case';
-    is B.(0), 3, 'RT #112642 .($: $) -> (:U, $) case, dotted form';
-    throws-like 'class XYX { method CALL-ME(XYX:U: $x) { } }; XYX(:a);', Exception, 'RT #112642 ($:, :$) -> (:U, $) arity check';
-    throws-like 'class XYY { method CALL-ME(XYY:U: $x) { } }; XYY.();', Exception, 'RT #112642 .($:) -> (:U, $) arity check';
-    throws-like 'class YYY { method CALL-ME(YYY:U: $x) { } }; YYY.(:a);', Exception, 'RT #112642 .($:, :$) -> (:U, $) arity check';
-    throws-like 'class XYZ { method CALL-ME(XYZ:U: $x) { } }; XYZ(3,4,5);', Exception, 'RT #112642 ($: $, $, $) -> (:U, $) arity check';
-    throws-like 'class XZZ { method CALL-ME(XZZ:U: $x) { } }; XZZ.(3,4,5);', Exception, 'RT #112642 .($: $, $, $) -> (:U, $) arity check';
+    is B(0), 3, '($: $) -> (:U, $) case';
+    is B.(0), 3, '.($: $) -> (:U, $) case, dotted form';
+    throws-like 'class XYX { method CALL-ME(XYX:U: $x) { } }; XYX(:a);', Exception,
+      '($:, :$) -> (:U, $) arity check';
+    throws-like 'class XYY { method CALL-ME(XYY:U: $x) { } }; XYY.();', Exception,
+      '.($:) -> (:U, $) arity check';
+    throws-like 'class YYY { method CALL-ME(YYY:U: $x) { } }; YYY.(:a);', Exception,
+      '.($:, :$) -> (:U, $) arity check';
+    throws-like 'class XYZ { method CALL-ME(XYZ:U: $x) { } }; XYZ(3,4,5);', Exception,
+      '($: $, $, $) -> (:U, $) arity check';
+    throws-like 'class XZZ { method CALL-ME(XZZ:U: $x) { } }; XZZ.(3,4,5);', Exception,
+      '.($: $, $, $) -> (:U, $) arity check';
 
     isa-ok A().HOW, Metamodel::CoercionHOW, 'A() is a type coercion literal';
     isa-ok A(Any).HOW, Metamodel::CoercionHOW, 'A(Any) is a type coercion literal';
 }
 
-# RT #115850
+# https://github.com/Raku/old-issue-tracker/issues/2821
 {
     class Bar {
         has $.str;
         method CALL-ME($i, $k) { $.str.substr: $i, $k }
     }
     my Bar $x .= new: :str("abcde");
-    is $x(2, 1), 'c', 'example from RT #115850 works';
+    is $x(2, 1), 'c', 'example works';
 }
 
 # vim: ft=perl6
