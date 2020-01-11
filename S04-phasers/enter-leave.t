@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 32;
+plan 33;
 
 # L<S04/Phasers/ENTER "at every block entry time">
 # L<S04/Phasers/LEAVE "at every block exit time">
@@ -291,6 +291,18 @@ plan 32;
          last if ENTER $set<>;
      }
      is $set.elems, 2, 'decont in ENTER works without locals';
+}
+
+# https://github.com/rakudo/rakudo/issues/3411
+{
+    my $entered;
+    class A {
+        method a() {
+            ENTER ++$entered;
+        }
+    }
+    A.a;
+    is $entered, 1, 'Did ENTER only run once';
 }
 
 # vim: ft=perl6
