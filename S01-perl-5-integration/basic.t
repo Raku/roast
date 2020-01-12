@@ -77,16 +77,10 @@ my $s = 'str';
     is($result,4,$test);
 }
 
-#?rakudo skip "would need v5"
+# https://github.com/Raku/old-issue-tracker/issues/2127
 {
-    sub add_in_perl ($x, $y) {
-        use v5;
-        $x + $y;
-    }
-
-    eval-lives-ok("{use v5;}", "RT #77596 - use v5 in a block lives");
-
-    is(add_in_perl(42, 42), 84, 'Defining subroutines with "use v5" blocks');
+    dies-ok { q/sub a() { use v5; }/.EVAL }, 'cannot switch languages inside a sub';
+    dies-ok { q/{ use v5; }/.EVAL }, 'or any scope for that matter';
 }
 
 # vim: ft=perl6
