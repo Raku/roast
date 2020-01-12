@@ -74,7 +74,8 @@ throws-like { EVAL 'fo\ o.lc' },
   'unspace not allowed in identifier';
 is((foo\    .lc), 'a', 'longer dot');
 is((foo\#`( comment ).lc), 'a', 'unspace with embedded comment');
-#?rakudo todo 'NYI RT #125072'
+# https://github.com/Raku/old-issue-tracker/issues/4199
+#?rakudo todo 'unspace NYI'
 throws-like { EVAL 'foo\#\ ( comment ).lc' },
   Exception,
   'unspace can\'t hide space between # and opening bracket';
@@ -103,13 +104,15 @@ is(EVAL('foo\
 # unspace is allowed after a pod = ... which means pod is
 # syntactically recursive, i.e., you can put pod comments
 # inside pod directives recursively!
-#?rakudo skip 'pod and unspace: RT #122343'
+# https://github.com/Raku/old-issue-tracker/issues/3451
+#?rakudo skip 'pod and unspace'
 is(EVAL('foo\
 =\ begin comment
 blah blah blah
 =\ end comment
     .lc'), 'a', 'unspace with pod =begin/=end comment w/ pod unspace');
-#?rakudo skip '=for pod NYI (in STD.pm, from Perl): RT #122343'
+# https://github.com/Raku/old-issue-tracker/issues/3451
+#?rakudo skip '=for pod NYI (in STD.pm, from Perl)'
 {
 is(EVAL('foo\
 =\ for comment
@@ -119,11 +122,13 @@ blah
 
     .lc'), 'a', 'unspace with pod =for comment w/ pod unspace');
 }
-#?rakudo skip 'pod and unspace: RT #122343'
+# https://github.com/Raku/old-issue-tracker/issues/3451
+#?rakudo skip 'pod and unspace'
 is(EVAL('foo\
 =\ comment blah blah blah
     .lc'), 'a', 'unspace with pod =comment w/ pod unspace');
-#?rakudo skip 'pod and unspace: RT #122343'
+# https://github.com/Raku/old-issue-tracker/issues/3451
+#?rakudo skip 'pod and unspace'
 is(EVAL('foo\
 =\
 =begin nested_pod
@@ -137,7 +142,8 @@ blah blah blah
 =end nested_pod
 end comment
     .lc'), 'a', 'unspace with pod =begin/=end comment w/ pod-in-pod');
-#?rakudo skip '=for pod NYI (in STD.pm, from Perl): RT #122343'
+# https://github.com/Raku/old-issue-tracker/issues/3451
+#?rakudo skip '=for pod NYI (in STD.pm, from Perl)'
 {
 is(EVAL('foo\
 =\
@@ -299,17 +305,17 @@ throws-like { EVAL 'sub f { 3 } sub g { 3 }' },
 # Was a nasty niecza bug
 is 5.Str\.Str, "5", 'unspaced postfix after method call not misparsed';
 
-# RT #92826
+# https://github.com/Raku/old-issue-tracker/issues/2440
 is((foo\  ("x")\  .\  lc), 'x', 'unspace between parameter and before and after method .');
 
-# RT #79340
+# https://github.com/Raku/old-issue-tracker/issues/2264
 is &infix:<+>(5, 5), 10, 'sanity';
 is &infix:<+>(\ 5, 5), 10, 'unspace between method and first argument';
 is &infix:<+>( \ 5, 5), 10, 'unspace between method and first argument with leading space';
 is &infix:<+>( 5\ , 5), 10, 'unspace between first and second argument';
 is &infix:<+>( 5 \ , 5), 10, 'unspace between first and second argument with leading space';
 
-# RT #117465
+# https://github.com/Raku/old-issue-tracker/issues/3098
 is "foo".\ \ perl, "foo".raku, 'two unspace in a row after . for method call';
 is "foo"\ \ .raku, "foo".raku, 'two unspace in a row before . for method call';
 
@@ -332,7 +338,7 @@ is IO::Path\ .^name, "IO::Path", "bare longname metamethod call with unspace";
 is IO::Path\.^name, "IO::Path", "bare longname metamethod call with degenerate unspace";
 
 # sigilless variables/constants
-# RT #128462
+# https://github.com/Raku/old-issue-tracker/issues/5396
 eval-lives-ok 'my \term = 42; uc term\   .Str; term == 42 or die;',
     'unspace with method calls detached from sigiless terms works';
 eval-lives-ok 'my \term = [1,2]; my $v = term\   [1]; $v == 2 or die;',
@@ -352,7 +358,7 @@ eval-lives-ok 'my \term = {:a(1),:b(2)}; my $v = term\<b>; $v == 2 or die;',
 
 is 'a'.parse-base\   \   (16), 10, 'unspace can recurse';
 
-# RT #125985
+# https://github.com/Raku/old-issue-tracker/issues/4509
 {
     eval-lives-ok 'constant nums = 1; my \fizzbuzz = nums\ .map({ $_ });',
         'unspace combined with map and a constant';

@@ -22,7 +22,7 @@ lives-ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
     isa-ok($var, Regex, '$var = /foo/ returns a Regex object');
 }
 
-# fairly directly from RT #61662
+# https://github.com/Raku/old-issue-tracker/issues/531
 {
     $_ = "a";
     my $mat_tern_y = /a/ ?? "yes" !! "no";
@@ -31,7 +31,7 @@ lives-ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
         'basic implicit topic match test';
 }
 
-# Note for RT - change to $_ ~~ /oo/ to fudge ok
+# change to $_ ~~ /oo/ to fudge ok
 {
     $_ = "foo";
     my $mat_tern = /oo/ ?? "yes" !! "no";
@@ -89,9 +89,11 @@ lives-ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
     ok 'mmm, pasta' ~~ m/<food>/, 'named rule outside of a grammar works';
 }
 
-ok Any !~~ / 'RT #67234' /, 'match against undefined does not match';
+# https://github.com/Raku/old-issue-tracker/issues/1118
+ok Any !~~ / 'matching Any' /, 'match against undefined does not match';
 
-throws-like q['x' ~~ m/RT (#)67612 /], X::Comp::Group, 'commented capture end = parse error';
+# https://github.com/Raku/old-issue-tracker/issues/1143
+throws-like q['x' ~~ m/foo (#) bar /], X::Comp::Group, 'commented capture end = parse error';
 
 # L<S05/Simplified lexical parsing of patterns/The semicolon character>
 
@@ -102,7 +104,7 @@ throws-like q{';' ~~ /;/}, X::Syntax::Regex::UnrecognizedMetachar,
 isa-ok rx/\;/, Regex,       'escaped ";" in rx// works';
 ok ';' ~~ /\;/,             'escaped ";" in m// works';
 
-# RT #64668
+# https://github.com/Raku/old-issue-tracker/issues/886
 {
     try { EVAL '"RT #64668" ~~ /<nosuchrule>/' };
     ok  $!  ~~ Exception, 'use of missing named rule dies';
@@ -111,7 +113,7 @@ ok ';' ~~ /\;/,             'escaped ";" in m// works';
 
 eval-lives-ok '/<[..b]>/', '/<[..b]>/ lives';
 
-# RT #118985
+# https://github.com/Raku/old-issue-tracker/issues/3192
 {
     class HasSub {
         sub parse(Str $input) {
@@ -142,14 +144,15 @@ eval-lives-ok '/<[..b]>/', '/<[..b]>/ lives';
     is HasMethod.parse('foo'),       44, 'can have a lexical regex in a method in a class';
 }
 
-# RT #125302
+# https://github.com/Raku/old-issue-tracker/issues/4286
 throws-like 'Regex.new.raku', Exception, '"Regex.new.raku dies but does not segfault';
 
-# RT #77524
+# https://github.com/Raku/old-issue-tracker/issues/2108
 ok 'a' ~~ /a:/, '/a:/ is a valid pattern and matches a';
 ok 'a' ~~ /a: /, '/a: / is a valid pattern and matches a';
 
-{ # RT #128986
+# https://github.com/Raku/old-issue-tracker/issues/5592
+{
     throws-like '/\b/', X::Obsolete, 'bare \b is no longer supported';
     throws-like '/\B/', X::Obsolete, 'bare \B is no longer supported';
     ok "\b" ~~ /"\b"/, '\b still works when quoted';
@@ -157,10 +160,10 @@ ok 'a' ~~ /a: /, '/a: / is a valid pattern and matches a';
     is ("a\bc" ~~ m:g/<[\B]>/).join, 'ac', '\B still works in character class';
 }
 
-# RT #130911
-# RT #130127
-# RT #130125
-# RT #130124
+# https://github.com/Raku/old-issue-tracker/issues/6121
+# https://github.com/Raku/old-issue-tracker/issues/5794
+# https://github.com/Raku/old-issue-tracker/issues/5807
+# https://github.com/Raku/old-issue-tracker/issues/5806
 subtest '`**` quantifier' => {
     plan 6;
 
@@ -276,10 +279,10 @@ is_run ｢(try "" ~~ /. ** {NaN}/) for ^1000; print 'pass'｣,
     {:out('pass'), :err(''), :0status},
 'wrong value for `**` quantifier does not leave behind unhandled Failures';
 
-# RT #125021
+# https://github.com/Raku/old-issue-tracker/issues/4161
 is ~("ddd" ~~ / [ x | d ] **? 2..3 /), "dd", 'frugal match with alternation';
 
-# RT #126972
+# https://github.com/Raku/old-issue-tracker/issues/4896
 is_run ｢/a/; print "pass"｣, {:out<pass>, :err(''), :0status},
     '/a/ in sink context in in uppermost scope does not explode';
 

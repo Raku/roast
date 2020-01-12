@@ -74,7 +74,8 @@ my $str = 'a' x 7;
        'LTM - literal wins tie against \w*';
 }
 
-#?rakudo skip ':: RT #124526'
+# https://github.com/Raku/old-issue-tracker/issues/2268
+#?rakudo skip ':: LTM stopper'
 {
     # with LTM stoppers
     my token foo1 {
@@ -305,7 +306,7 @@ my $str = 'a' x 7;
         END
     }
 
-# RT #124333
+# https://github.com/Raku/old-issue-tracker/issues/3790
 # This exposed a dynamic optimizer bug, due to the huge number of basic blocks
 # a token with a load of alternations produces.
 {
@@ -422,7 +423,8 @@ my $str = 'a' x 7;
     ok $str ~~ m:i/b+|bb/, 'alternation with :i matches';
     is ~$/, 'bbBB', 'got longest alternative with :i';
 
-    #?rakudo.jvm 4 skip ':ignoremark needs NFG RT #124500'
+    # https://github.com/Raku/old-issue-tracker/issues/3841
+    #?rakudo.jvm 4 skip ':ignoremark needs NFG'
     ok $str ~~ m:m/ä|bb|a+/, 'alternation with :m matches';
     is ~$/, 'äa', 'got longest alternative with :m';
 
@@ -430,7 +432,7 @@ my $str = 'a' x 7;
     is ~$/, 'äaÄAÁ', 'got longest alternative with :i:m';
 }
 
-# RT #113884
+# https://github.com/Raku/old-issue-tracker/issues/2800
 {
     constant $x = 'ab';
     is ~('ab' ~~ / a | b | $x /), 'ab', 'got longest alternative with constant';
@@ -439,7 +441,7 @@ my $str = 'a' x 7;
     is ~('ab' ~~ / a | b | $y /), 'a', "non constants don't count toward LTM";
 }
 
-# RT #125608
+# https://github.com/Raku/old-issue-tracker/issues/4398
 {
     is ~('food' ~~ / 'foo' | ('food' || 'doof')/), 'food',
         'sequential alternation first branch involved in longest alternative (1)';
@@ -452,14 +454,14 @@ my $str = 'a' x 7;
         'sequential alternation branches after first not involved in LTM';
 }
 
-# RT #126573
+# https://github.com/Raku/old-issue-tracker/issues/4732
 ok "\r\n" ~~ /[";"|"\r\n"]/, '\r\n grapheme in an alternation matches correctly';
 
-# RT #122951
-#?rakudo todo 'negative lookahead does not LTM properly, RT #122951'
+# https://github.com/Raku/old-issue-tracker/issues/3548
+#?rakudo todo 'negative lookahead does not LTM properly'
 is "abcde" ~~ / ab <![e]> cde | ab.. /, "abcde", 'negative lookahead does LTM properly';
 
-# RT #130637
+# https://github.com/Raku/old-issue-tracker/issues/6032
 {
     my grammar Foo {
         token TOP {
@@ -479,7 +481,7 @@ is "abcde" ~~ / ab <![e]> cde | ab.. /, "abcde", 'negative lookahead does LTM pr
 
 # L<S05/Backtracking control>
 
-# RT #131973
+# https://github.com/Raku/old-issue-tracker/issues/6474
 {
     is 'ab' ~~ / [ab | a ] b /,       'ab', 'backtrack into |';
     is 'ab' ~~ / [ab | a ]: b /,      Nil,  'don\'t backtrack into [ | ]:';

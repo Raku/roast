@@ -52,7 +52,7 @@ throws-like  { EVAL 'my @rt80330; [+]@rt80330' },
   X::Syntax::Confused,
   'a [+] without whitespace dies';
 
-#RT #126959
+# https://github.com/Raku/old-issue-tracker/issues/4889
 {
     throws-like { EVAL '42.,' },
       X::Comp::Group, message => /"Decimal point must be followed by digit"/,

@@ -19,7 +19,7 @@ plan 50;
         Parens works also
     ) 1, 'multiline embedded comment with #`()';
 
-    # RT #115762
+    # https://github.com/Raku/old-issue-tracker/issues/2976
     eval-lives-ok "#`( foo )", "comment as first and only statement";
 
     eval-lives-ok "2 * 3\n #`<<<\n comment>>>", "multiline comment with <<<";
@@ -86,7 +86,7 @@ plan 50;
     >>> 1, '#`<<<...>>>';
 }
 
-# RT #121305
+# https://github.com/Raku/old-issue-tracker/issues/3341
 {
     eval-lives-ok( q{{
         my $var = \#`((( comment ))) 12;
@@ -176,8 +176,8 @@ plan 50;
 }
 
 # L<S02/Single-line Comments/"single-line comments">
+# https://github.com/Raku/old-issue-tracker/issues/1410
 {
-    # RT #70752
     lives-ok { EVAL "#=======\n#=======\nuse v6;" }, 
       "pragma use after single line comments";
 }

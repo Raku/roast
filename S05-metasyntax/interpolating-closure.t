@@ -25,20 +25,21 @@ $var = rx/<&abc>/;
 ok("aaabccc" ~~ m/aa <{ $_ ~~ $var ?? $var !! rx{<.null>} }> cc/, 'Rule block first');
 
 $var = rx/xyz/;
-#?rakudo todo 'dunno RT #124527'
+# https://github.com/Raku/old-issue-tracker/issues/3854
+#?rakudo todo 'dunno rule block fail'
 ok("aaabccc" !~~ m/aa <{ $_ ~~ $var ?? $var !! rx{abc} }> cc/, 'Rule block fail');
 
 $var = rx/<&abc>/;
 ok("aaabccc" ~~ m/aa <{ $_ ~~ $var ?? $var !! rx{abc} }> cc/, 'Rule block interp');
 
-# RT #102860
+# https://github.com/Raku/old-issue-tracker/issues/2546
 ok 'abc' ~~ /<{ '.+' }>/, 'interpolating string with meta characters';
 is $/.Str, 'abc', '... gives the right match';
 
-# RT #125973
+# https://github.com/Raku/old-issue-tracker/issues/4502
 is 't' ~~ /<{'a'...'z'}>/, 't', 'sequence in a closure interpolates ok';
 
-# RT #111474
+# https://github.com/Raku/old-issue-tracker/issues/2634
 is '123' ~~ / :my $a=2; <{ '$a' }> /, '2', 'scoping of variable in regex generated from <{}> metasyntax';
 is '123' ~~ / :my $a=2; <{ '$' ~ 'a' }> /, '2', 'stage of variable in regex generated from <{}> metasyntax';
 # Were $a to be interpolated before '', we'd get something like 'rx/2/' or 'rx[2]'

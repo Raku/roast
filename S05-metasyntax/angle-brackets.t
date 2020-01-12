@@ -194,8 +194,9 @@ character classes), and those are referenced at the correct spot.
     ok('abcdef' ~~ /<{'<al' ~ 'pha>'}>/, 'code interpolation');
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/3851
 # A leading & interpolates the return value of a subroutine call as a regex.
-#?rakudo skip '<&foo()> NYI RT #124523'
+#?rakudo skip '<&foo()> NYI'
 {
     my sub foo {return '<alpha>'}
     ok('abcdef' ~~ /<&foo()>/, 'subroutine call interpolation');
@@ -211,7 +212,8 @@ character classes), and those are referenced at the correct spot.
     is($counter, 1, 'code inside string was executed');
 
     'def' ~~ /<$subrule>/;
-    #?rakudo todo '<$subrule> NYI RT #124524'
+    # https://github.com/Raku/old-issue-tracker/issues/3852
+    #?rakudo todo '<$subrule> NYI'
     is($counter, 1, 'string value was cached');
 }
 
@@ -300,7 +302,7 @@ character classes), and those are referenced at the correct spot.
     is('foo123bar' ~~ /foo <( 123 [ <( xyz ]?/, '123', 'multiple <( backtracking');
 }
 
-# RT #129969
+# https://github.com/Raku/old-issue-tracker/issues/5776
 {
     is-eqv 'abc xbc'.comb(/a<(bc)>/), 'bc'.Seq,
         '.comb works well with <( )> (1)';
@@ -320,7 +322,7 @@ character classes), and those are referenced at the correct spot.
    is('!abc!' ~~ /<<abc>>/, 'abc', 'both word boundaries (\W character)');
 }
 
-# RT #131187
+# https://github.com/Raku/old-issue-tracker/issues/6201
 {
     grammar Parser {
         token TOP { <matcher>+ }

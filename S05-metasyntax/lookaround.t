@@ -24,7 +24,7 @@ ok(!( "abcd f" ~~ m/abc <!before d <.ws> f>/ ), 'Negative lookahead failure');
 ok("abcdef" ~~ m/abc <!before d <.ws> f> (.)/, 'Negative lookahead');
 is(~$0, 'd', 'Verify negative lookahead');
 
-# RT #131964
+# https://github.com/Raku/old-issue-tracker/issues/6468
 is ('abc' ~~ /<?after ^^>/).from, 0, '^^ in <?after ...>';
 is ('abc' ~~ /<?after ^>/).from,  0, '^ in <?after ...>';
 is ('abc' ~~ /<?after $$>/).from, 3, '$$ in <?after ...>';

@@ -56,9 +56,9 @@ is
     2,
     "evaluation";
 
-#RT #122340
-#?rakudo.jvm 2 skip 'Bogus postfix RT #122340'
-#?rakudo.js 2 skip 'Bogus postfix RT #122340'
+# https://github.com/Raku/old-issue-tracker/issues/3448
+#?rakudo.jvm 2 skip 'Bogus postfix'
+#?rakudo.js 2 skip 'Bogus postfix'
 lives-ok { my $पहला = 1; }, "hindi declaration";
 is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल($दूसरा) }), 4, "evaluation");
 
@@ -73,7 +73,7 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 }
 
 # Unicode parameters
-# RT #69959
+# https://github.com/Raku/old-issue-tracker/issues/1373
 {
     my sub abc (:$äöü) { 1000 + $äöü }
 
@@ -106,7 +106,7 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 }
 
 # L<S02/Unicode Semantics/Raku can count Unicode line and paragraph separators>
-# see also RT #122341
+# https://github.com/Raku/old-issue-tracker/issues/3449
 
 lives-ok { EVAL "\{ 1 \} \x0a \{ 1 \}" },
   "Unicode 000A (LINE FEED (LF)) can terminate lines";
