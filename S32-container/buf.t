@@ -192,7 +192,7 @@ subtest '.gist shows only first 100 els' => {
         with (1..1000).list;
 }
 
-# RT #127756
+# https://github.com/Raku/old-issue-tracker/issues/5189
 is-deeply Buf.allocate(10, (1,2,3)).reallocate(0).reallocate(5),
     Buf.new(0, 0, 0, 0, 0), 'resized Bufs do not have leftover values';
 
@@ -200,7 +200,7 @@ is-deeply Buf.allocate(10, (1,2,3)).reallocate(0).reallocate(5),
 is-deeply Buf.new(1 xx 2)».join, ("1", "1"),
     'no explosions when hypering .join over a Blob';
 
-# https://rt.perl.org/Ticket/Display.html?id=128655
+# https://github.com/Raku/old-issue-tracker/issues/5460
 is-deeply Buf.new((my int $i = 0x03) +& 0x6), Buf.new(2),
     'can use native int operations to create a Buf with';
 

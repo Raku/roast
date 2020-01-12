@@ -68,7 +68,8 @@ my @triplets =
   <a b b c>.Bag,             <b c d>.Bag,       <a b>.Bag,
   <a b b>.BagHash,           <c d>.BagHash,     <a b b>.BagHash,
   <a b b c>.BagHash,         <b c d>.BagHash,   <a b>.BagHash,
-  <a a a b>.Bag,             <a a>,             <a b>.Bag,  # RT #133016
+  # https://github.com/Raku/old-issue-tracker/issues/6679
+  <a a a b>.Bag,             <a a>,             <a b>.Bag,
 
   # result should be a Mix
   mix(),                     mix(),         mix(),

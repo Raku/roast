@@ -169,7 +169,8 @@ sub accumtest($expect, $op) {
 }
 
 # L<S03/Tight or precedence/'if all arguments are false'>
-# RT #72826 infix ^^ return wrong types
+# https://github.com/Raku/old-issue-tracker/issues/1502
+# infix ^^ return wrong types
 {
     is 0 ^^ False ^^ '', '', '^^ given all false values returns last (1)';
     is False ^^ '' ^^ 0, 0, '^^ given all false values returns last (2)';
@@ -250,7 +251,7 @@ sub accumtest($expect, $op) {
 
 ok (0 || 0 || 1), '0 || 0 || 1 is true';
 
-# RT #77864
+# https://github.com/Raku/old-issue-tracker/issues/2167
 {
     my $x;
     $x &&= 5;
@@ -275,14 +276,14 @@ ok (0 || 0 || 1), '0 || 0 || 1 is true';
 
 }
 
-# RT #90158
+# https://github.com/Raku/old-issue-tracker/issues/2426
 {
     my @a = 1;
     @a ||= ();
     is ~@a, '1', '||= works with array on the LHS';
 }
 
-# RT #116230
+# https://github.com/Raku/old-issue-tracker/issues/3014
 {
     my role SomeRole { };
     my $x = SomeRole;

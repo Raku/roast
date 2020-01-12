@@ -63,14 +63,15 @@ is((4 or 5 ?? 6 !! 7), 4, "operator priority");
     is($foo, "yay", "defining a postfix<!> doesn't screw up ternary op");
 }
 
-# RT #66840
+# https://github.com/Raku/old-issue-tracker/issues/1087
 {
     throws-like { EVAL '1 ?? 2,3 !! 4,5' },
         X::Syntax::ConditionalOperator::PrecedenceTooLoose,
-        'Ternary error (RT #66840)';
+        'Ternary error';
 }
 
-throws-like q[ 71704 !! 'bust' ], X::Syntax::Confused, 'Ternary error (RT #71704)';
+# https://github.com/Raku/old-issue-tracker/issues/1459
+throws-like q[ 71704 !! 'bust' ], X::Syntax::Confused, 'Ternary error';
 
 throws-like { EVAL '1 ?? 3 :: 2' },
     X::Syntax::ConditionalOperator::SecondPartInvalid,
@@ -82,7 +83,7 @@ throws-like { EVAL '1 ?? 3 :foo :: 2' },
     operator => ":foo",
     'adverbed literal in second part of ternary';
 
-# RT #124323
+# https://github.com/Raku/old-issue-tracker/issues/3785
 {
     my @x = ^10;
     my @y = 2..3;
@@ -117,7 +118,7 @@ throws-like { EVAL '1 ?? 2' },
     X::Syntax::Confused,
     'missing !! of conditional operator is compile time error';
 
-# RT #123115
+# https://github.com/Raku/old-issue-tracker/issues/3574
 {
     sub rt123115 { 2 };
     throws-like { EVAL '1 ?? rt123115 !! 3' },
@@ -125,7 +126,7 @@ throws-like { EVAL '1 ?? 2' },
         'typed exception when listop gobbles the !! of conditional operator';
 }
 
-# RT #129080
+# https://github.com/Raku/old-issue-tracker/issues/5613
 subtest 'fiddly meta error indicates what operator is used' => {
     my @ops = <Z R X S>;
     plan +@ops;

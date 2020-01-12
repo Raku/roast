@@ -139,7 +139,8 @@ plan 57;
     ok 'a' eqv any(<a b c>), "eqv autothreads correctly";
 }
 
-# RT #75322 - Rakudo used to be confused when lists began with ()
+# https://github.com/Raku/old-issue-tracker/issues/1785
+# Rakudo used to be confused when lists began with ()
 {
     nok ((), "x") eqv ((), 9), 'list starting with () - 1';
     nok ((), (), 1) eqv ((), 9), 'list starting with () - 1';

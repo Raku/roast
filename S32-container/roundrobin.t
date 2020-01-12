@@ -24,13 +24,13 @@ is(roundrobin(1..3).Str,  (1..3).Str, 'roundrobin list identity');
 is(roundrobin([], [1], [2..4], [5..7], <a b>).join(' '),
    (1, 2, 5, 'a', 3, 6, 'b', 4, 7).join(' '), 'basic roundrobin');
 
-# RT #126522
+# https://github.com/Raku/old-issue-tracker/issues/4705
 is roundrobin($(1, 2), <a b c>), (($(1, 2), 'a'), ('b',), ('c',)),
     'roundrobin respects itemization of arguments (1)';
 is roundrobin(<a b c>, $(1, 2)), (('a', $(1, 2)), ('b',), ('c',)),
     'roundrobin respects itemization of arguments (2)';
 
-# GH #3402
+# https://github.com/rakudo/rakudo/issues/3402
 my %h = %(:a);
 is-deeply roundrobin(%h<>:v.map: *.flat), ((True,),),
   'is a 1-element list handled correctly with roundrobin';

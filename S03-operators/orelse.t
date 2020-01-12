@@ -25,11 +25,11 @@ nok $tracker, 'orelse thunks';
     };
 }
 
-# RT #130034
+# https://github.com/Raku/old-issue-tracker/issues/5783
 is-deeply (Str andthen .uc orelse "foo"), 'foo',
     'orelse can be chained after andthen';
 
-# RT #130798
+# https://github.com/Raku/old-issue-tracker/issues/6085
 is-deeply (Nil andthen 'foo' orelse Nil orelse 'bar'), 'bar',
     'chain: andthen + orelse + orelse';
 
@@ -51,3 +51,5 @@ is-deeply infix:<orelse>([Int, 42]), (Int orelse 42),
     Foo orelse .&meow;
     is-deeply $calls, 1, 'orelse does not call .defined on last arg (1)';
 }
+
+# vim: ft=perl6

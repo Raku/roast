@@ -153,9 +153,9 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
     is 2000000000 - 4000000000, -2000000000, '2000000000 - 4000000000 == -2000000000';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/1569
 # Believe it or not, this one overflows on 32-bit Rakduo as of 3/8/2010.
 {
-    # RT #73262
     is-approx 7**(-1), 0.14285714285714, '7**(-1) works';
 }
 
@@ -256,7 +256,7 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
 
 }
 
-# RT #77016
+# https://github.com/Raku/old-issue-tracker/issues/2019
 {
     ok 1 / 10000000000000000000000000000000 < 1/1000,
         'can construct Rat (or similar) with big denominator';
