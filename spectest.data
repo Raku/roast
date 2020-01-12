@@ -881,6 +881,7 @@ S17-promise/in.t         # slow
 S17-promise/lock-async.t
 S17-promise/lock-async-stress.t # moar stress slow
 S17-promise/lock-async-stress2.t # moar stress slow
+S17-promise/nonblocking-await.t # moar
 S17-promise/single-assignment.t
 S17-promise/start.t      # slow
 S17-promise/stress.t     # stress
@@ -913,7 +914,6 @@ S17-supply/merge.t
 S17-supply/migrate.t
 S17-supply/min.t
 S17-supply/minmax.t
-S17-promise/nonblocking-await.t # moar
 S17-supply/on-demand.t
 S17-supply/Promise.t
 S17-supply/produce.t
@@ -924,6 +924,7 @@ S17-supply/rotor.t
 S17-supply/schedule-on.t
 S17-supply/skip.t
 S17-supply/sort.t
+S17-supply/split.t
 S17-supply/squish.t
 S17-supply/stable.t       # slow
 S17-supply/start.t        # slow
