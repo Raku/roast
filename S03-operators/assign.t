@@ -908,12 +908,11 @@ sub l () { 1, 2 };
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/1915
-#?rakudo skip ',= needs to be special cased after GLR to compile to push(@a, 3, 4)'
 {
     my @rt76414 = (1, 2);
-    @rt76414 ,= 3, 4;         # same as push(@rt76414,3,4) according to S03
-    is @rt76414, (1, 2, 3, 4),
-        'infix:<,=> has list precedence in the cases where infix:<=> does';
+    @rt76414 ,= 3, 4;
+    ok @rt76414 =:= @rt76414[0]<>,
+      'infix:<,=> has list precedence in the cases where infix:<=> does';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/1517
