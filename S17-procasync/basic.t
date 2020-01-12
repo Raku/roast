@@ -84,7 +84,7 @@ is $start-promise.status, Planned, 'external program still running (stdin still 
 $pc.close-stdin;
 
 # https://github.com/Raku/old-issue-tracker/issues/4181
-#?rakudo 3 skip 'returns Nil (flapping tests)
+#?rakudo 3 skip 'returns Nil (flapping tests)'
 isa-ok $start-promise.result, Proc, 'Can finish, return Proc';
 
 is $stdout, 'Raku 6', 'got correct STDOUT';
