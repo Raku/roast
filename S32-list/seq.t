@@ -114,8 +114,8 @@ is-deeply @searches[0].Array, @expected-searches, 'seq => array works 3';
 
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/5124
 {
-    # RT #127492;
     eager my \s = ().Seq; # eager consumes the Seq
     cmp-ok s.raku.EVAL, '~~', Seq:D, '.raku.EVAL on consumed Seq gives Seq:D';
     throws-like { s.raku.EVAL.list }, X::Seq::Consumed,
@@ -140,7 +140,7 @@ is-deeply @searches[0].Array, @expected-searches, 'seq => array works 3';
     is $count, 10, '&afterward is called after each call to &body.';
 }
 
-# RT#131222
+# https://github.com/Raku/old-issue-tracker/issues/6209
 with (1, 2).Seq {
     .cache; # Cache the seq
     is .raku, (1, 2).Seq.raku,
@@ -238,14 +238,14 @@ group-of 2 => 'ZEN slices do not cache Seqs' => {
 }
 
 
-# R#3014
+# https://github.com/Raku/old-issue-tracker/issues/3014
 {
     my $s = (1, 2, 3).Seq;
     is $s.iterator.pull-one, 1, 'did we get 1 as the first value';
     dies-ok { $s[0] }, 'did accessing first element die';
 }
 
-# RT #130572
+# https://github.com/Raku/old-issue-tracker/issues/6007
 {
     my $sum1 = 0;
     is (lazy for ^4 { $sum1 += $_; $_ }).WHAT, Seq,
@@ -269,3 +269,4 @@ group-of 2 => 'ZEN slices do not cache Seqs' => {
     }, 'elems call caches Seq';
 }
 
+# vim: expandtab shiftwidth=4 ft=perl6

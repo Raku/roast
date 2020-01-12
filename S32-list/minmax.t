@@ -23,8 +23,9 @@ is min(@array), -9, 'min(list)';
 is (@array.min: { $^a <=> $^b }), -9,
   "method form of min with identity comparison block works";
 
+# https://github.com/Raku/old-issue-tracker/issues/76
 is (@array.min:{ $^a <=> $^b }), -9,
-  "adverbial block form of min with identity comparison block works (RT #53804)";
+  "adverbial block form of min with identity comparison block works";
 
 is min(:by({ $^a <=> $^b }), @array), -9,
   "subroutine form of min with identity comparison block works";
@@ -159,7 +160,7 @@ is ([max] 5.4,10.7,-15.2,20.8), 20.8, 'reduce max numeric';
     is ([max] @strings), "we'll", '[max] works on array of strings';
 }
 
-# RT #103178
+# https://github.com/Raku/old-issue-tracker/issues/2552
 {
     class A { has $.d };
     is (A.new(d => 5), A.new(d => 1), A.new(d => 10)).min(*.d).d,
@@ -257,7 +258,7 @@ is ([max] 5.4,10.7,-15.2,20.8), 20.8, 'reduce max numeric';
         '.minmax combine .minmax of empty, non-empty, empty sublist of Strs';
 }
 
-# RT #112250
+# https://github.com/Raku/old-issue-tracker/issues/2673
 {
     my $rt112250 = [max] <2 11>;
     is $rt112250, 11,

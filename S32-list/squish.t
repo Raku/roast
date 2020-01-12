@@ -47,7 +47,7 @@ subtest 'with :as' => {
     is-deeply @a,                [<a b c d e f a>], 'meta-assign form (result)';
 }
 
-# RT #124204
+# https://github.com/Raku/old-issue-tracker/issues/3761
 subtest 'method form of squish does not stringify' => {
     plan 4;
     my @a = '', '', Any, Any;
@@ -185,7 +185,7 @@ subtest 'squish with [eqv] and objects' => {
     is-deeply @array, [{:a<1>}, {:b<1>}], 'meta-assign form (result)';
 }
 
-# RT #121434
+# https://github.com/Raku/old-issue-tracker/issues/3357
 {
     my $a = <a b b c>; $a .= squish;
     is-deeply $a, <a b c>.Seq, '.= squish in sink context works on $foo';
@@ -200,7 +200,7 @@ subtest 'squish with [eqv] and objects' => {
         ".squish doesn't flatten";
 }
 
-# RT #126293
+# https://github.com/Raku/old-issue-tracker/issues/4630
 {
     is-deeply <a a b b c c>.squish, <a b c>.Seq, 'do we squish at all?';
     is-deeply <a A b B c>.squish(:as{.lc}), <a b c>.Seq,

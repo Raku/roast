@@ -67,7 +67,7 @@ This test tests the C<head> builtin.
     is $range.head(5).List, (), "Range.head works if empty";
 } #3
 
-# RT #130285
+# https://github.com/Raku/old-issue-tracker/issues/5867
 is-deeply (4,5,6).head(-999999999999999999999999999), (),
     '.head works correctly with large negative Ints';
 

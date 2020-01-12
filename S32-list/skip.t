@@ -68,7 +68,7 @@ This test tests the C<skip> builtin.
     is $range.skip(5).List, (), "Range.skip works if empty";
 } #3
 
-# RT #132109
+# https://github.com/Raku/old-issue-tracker/issues/6529
 subtest '.skip-all and .push-all on slipping slippy iterators' => {
     # Some implementations implemented specific iterators to be used
     # in certain cases, such as a .map() that returns a Slip. It was found
@@ -111,7 +111,7 @@ subtest '.skip-all and .push-all on slipping slippy iterators' => {
     }
 }
 
-# RT #132184
+# https://github.com/Raku/old-issue-tracker/issues/6558
 subtest 'Seq.skip does not leave original Seq consumable' => {
     plan 4;
 

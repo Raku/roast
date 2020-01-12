@@ -14,7 +14,7 @@ throws-like 'pi("wtz")', X::Undeclared,
     "pi should not be defined to accept arguments either :) ";
 dies-ok { EVAL('a(3)') }, "this should die, no arguments defined";
 
-# RT #76096
+# https://github.com/Raku/old-issue-tracker/issues/1875
 {
     lives-ok {  sub foo($ where 1 --> Int) { return 42 } },
         "where clause combined with --> works";
@@ -22,13 +22,13 @@ dies-ok { EVAL('a(3)') }, "this should die, no arguments defined";
         "where clause combined with --> works";
 }
 
-# RT #118875
+# https://github.com/Raku/old-issue-tracker/issues/3189
 {
     lives-ok { sub ndr($r where ($r ||= 10) > 0 && 1) { } },
         'where clause followed by (non-parenthesized) expression with "&&" in it does parse';
 }
 
-# RT #117901
+# https://github.com/Raku/old-issue-tracker/issues/3125
 {
     my $rt117901;
     sub not-foo { $rt117901 = 2 };
@@ -42,7 +42,7 @@ dies-ok { EVAL('a(3)') }, "this should die, no arguments defined";
     is $rt117901, "string", "can name sub 'm-bar'";
 }
 
-# RT #125376
+# https://github.com/Raku/old-issue-tracker/issues/4312
 {
     throws-like 'my $rt125376 = Sub.new; say $rt125376', Exception,
         'no Segfault when creating a Sub object with .new and trying to say it';
@@ -51,7 +51,8 @@ dies-ok { EVAL('a(3)') }, "this should die, no arguments defined";
     throws-like 'Sub(0)', Exception, 'no Segfault when trying to invoke the Sub type object';
 }
 
-{ # RT #129780
+# https://github.com/Raku/old-issue-tracker/issues/5713
+{
     throws-like ｢sub foo($a where {* < 5 or $a > 9}) { say $a }｣,
         X::Syntax::Malformed, :what{.contains: 'closure'},
         'where clause with only one *, but two expressions';

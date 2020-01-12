@@ -71,7 +71,7 @@ my @list = (1 ... 10);
         'b', '.first also takes a junction as matcher (sub form)';
 }
 
-# RT #118141
+# https://github.com/Raku/old-issue-tracker/issues/3145
 {
     isa-ok (first * > 20, @list), Nil, "first() returns Nil when no values match";
     isa-ok @list.first(* < 0 ), Nil, ".first returns Nil when no values match"
@@ -85,7 +85,7 @@ my @list = (1 ... 10);
     is (True,False,Int).first(Bool), True, 'can we match on Bool as type';
 }
 
-# RT #118755
+# https://github.com/Raku/old-issue-tracker/issues/3180
 {
     my @a = 1..10;
     @a.first(* %% 2).++;

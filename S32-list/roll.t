@@ -122,7 +122,7 @@ is (0, 1).roll(*).[^10].elems, 10, '.roll(*) returns at least ten elements';
 is (1..^2).roll, 1, '1-elem Range roll';
 ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
 
-# RT #89972
+# https://github.com/Raku/old-issue-tracker/issues/2424
 #?rakudo.js.browser skip 'calling our subs from modules is broken in precompilation mode'
 {
     my $a = Test::Util::run( "print ~(1..10).pick(5)" );
@@ -144,7 +144,7 @@ ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
     is More.roll(0), (), 'zero roll on Enum is sane';
 }
 
-# RT #126664
+# https://github.com/Raku/old-issue-tracker/issues/4759
 {
     is-deeply (1.1 .. 3.1).roll(1000).Set, set(2.1, 1.1, 3.1),
         'roll on Range uses .succ';
@@ -162,7 +162,7 @@ ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
     }
 }
 
-# RT #132246
+# https://github.com/Raku/old-issue-tracker/issues/6585
 subtest '.pick on object Hashes' => {
     plan 2;
     my %obj{Any} = question => 42;

@@ -70,15 +70,16 @@ my @list = (1 .. 5);
         ' got the hash we expect';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4232
 # map with n-ary functions
 {
   # XXX GLR find hang-proof a way to test that map of 
   # 0-arity and Inf-arity (proto-less multi) does not hang.
   is ~(1,2,3,4).map({ $^a + $^b             }), "3 7", "map() works with 2-ary functions";
-  #?rakudo skip "Too few positionals passed; expected 3 arguments but got 1; RT #125146"
+  #?rakudo skip "Too few positionals passed; expected 3 arguments but got 1"
   is ~(1,2,3,4).map({ $^a + $^b + $^c       }), "6 4", "map() works with 3-ary functions";
   is ~(1,2,3,4).map({ $^a + $^b + $^c + $^d }), "10",  "map() works with 4-ary functions";
-  #?rakudo skip "Too few positionals passed; expected 5 arguments but got 4; RT #125146"
+  #?rakudo skip "Too few positionals passed; expected 5 arguments but got 4"
   is ~(1,2,3,4).map({ $^a+$^b+$^c+$^d+$^e   }), "10",  "map() works with 5-ary functions";
 }
 
@@ -227,21 +228,21 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
        '2 4 6 8', 'last in map works';
 }
 
-# RT #62332
+# https://github.com/Raku/old-issue-tracker/issues/622
 {
     my $x = :a<5>;
     is $x.map({ .key, .value + 1}), ('a', 6), 'map on pair works (comma)';
     is $x.map({ ; .key => .value + 1}), ('a' => 6), 'map on pair works (=>)';
 }
 
-# RT #112596
-# also RT #125207
+# https://github.com/Raku/old-issue-tracker/issues/2723
+# https://github.com/Raku/old-issue-tracker/issues/4249
 {
     my @a = map &sprintf.assuming("%x"), 9..12;
     is(@a, <9 a b c>, "map over a callable with a slurpy");
 }
 
-# RT #120620
+# https://github.com/Raku/old-issue-tracker/issues/3280
 {
     is [foo => (1,2,3).map: {$_}].[0].value.join(":"), '1:2:3',
         'map on list in array does not lose content';
@@ -249,20 +250,21 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
         'map on list in hash does not lose content';
 }
 
-# RT #116731
+# https://github.com/Raku/old-issue-tracker/issues/3050
 {
     my @a = <foo bar baz>;
     map { s/a/A/ }, @a;
     is @a.join(":"), "foo:bAr:bAz", 'map can modify what it iterates';
 }
 
-# RT #126883
+# https://github.com/Raku/old-issue-tracker/issues/4851
 {
     ok Any.map({ Slip }) ~~ :(Slip:U),
         'only defined Slips are treated specially';
 }
 
-{ # https://github.com/rakudo/rakudo/commit/86dc997cc2
+# https://github.com/rakudo/rakudo/commit/86dc997cc2
+{
     my @a = ^3 .map: -> \x --> Int { x };
     is-deeply @a, [0, 1, 2], 'non-slippy-non-phaser map push-all works';
 
