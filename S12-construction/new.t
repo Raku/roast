@@ -19,7 +19,7 @@ is $o.y, 3, '... worked for the child';
 is $o.x, 2, '... worked for the parent';
 
 # https://github.com/Raku/old-issue-tracker/issues/2236
-#?rakudo 3 skip 'parent attributes in initialization
+#?rakudo 3 skip 'parent attributes in initialization'
 lives-ok { $o = Child.new( :y(4), Parent{ :x<5> }) }, 
          'can instantiate class with explicit specification of parent attrib';
 
@@ -30,7 +30,7 @@ class GrandChild is Child {
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/2236
-#?rakudo 6 skip 'parent attributes in initialization
+#?rakudo 6 skip 'parent attributes in initialization'
 lives-ok { $o = GrandChild.new( Child{ :y(4) }, Parent{ :x<5> }) },
          'can instantiate class with explicit specification of parent attrib (many parents)';
 is $o.y, 4, '... worked for the class Child';
