@@ -93,7 +93,7 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
-# RT #122963
+# https://github.com/Raku/old-issue-tracker/issues/3549
 { # now read it without using the value, just using as loop control
     # On Windows we will have \r\n in the file, elsewhere \n. So tell could
     # be 2 or 3 bytes.

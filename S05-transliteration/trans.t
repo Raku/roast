@@ -111,7 +111,7 @@ is($b.trans('A..H..' => 'a..h__'), 'abcdefghIJKLMNOPQRSTUVWXYZ',
 is($b.trans('..A..H..' => '__a..h__'), 'abcdefghIJKLMNOPQRSTUVWXYZ',
     'leading, trailing ranges interpreted as string');
 
-# added as a consequence of RT #76720
+# https://github.com/Raku/old-issue-tracker/issues/1970
 is("hello".trans("l" => ""), "heo", "can replace with empty string");
 
 # complement, squeeze/squash, delete
@@ -229,7 +229,7 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
 # y/// is dead
 throws-like '$_ = "axbycz"; y/abc/def/', X::Obsolete, 'y/// does not exist any longer';
 
-# RT #71088
+# https://github.com/Raku/old-issue-tracker/issues/1429
 {
     lives-ok { "".subst(/x/, "").trans() },
         'trans on subst output lives';
@@ -253,10 +253,10 @@ is('ababab'.trans([/ab/, 'aba', 'bab', /baba/] =>
 is 'aa'.trans(/^a/ => 'b'), 'ba', 'trans with anchored regex';
 is 'aa'.trans(/ <after a> ./ => 'b'), 'ab', 'trans with look-around regex';
 
-# RT #83674
+# https://github.com/Raku/old-issue-tracker/issues/2358
 lives-ok { my @a = 1..2; @a>>.trans((1..2) => (14..15,1..2)); }, 'trans works with Cool signature';
 
-# RT #83766
+# https://github.com/Raku/old-issue-tracker/issues/2360
 is((1, 2)>>.trans((1..26) => (14..26,1..13)), <14 15>, '.trans with a pair of lists using postfix hypermetaoperator works');
 is ("!$_!" for (1, 2)>>.trans((1..26) => (14..26,1..13))), <!14! !15!>, "same with explicit for";
 
@@ -265,7 +265,7 @@ is ("!$_!" for (1, 2)>>.trans((1..26) => (14..26,1..13))), <!14! !15!>, "same wi
     is $f ~~ tr/o/u/, 'fuu', 'StrDistance stringifies to $!after';
 }
 
-# RT #129258
+# https://github.com/Raku/old-issue-tracker/issues/5665
 group-of 4 => 'Adverbs on Cool.trans work the same as on Str.trans' => {
     is-deeply 912381237    .trans(['7'..'9'] => '0',      :complement),
         '900080007',                                      ':complement';

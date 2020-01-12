@@ -90,11 +90,11 @@ my $pup = Puppy.new();
     is $found, "yapbow", "subclass got right methods called (on proto)";
 }
 
-# RT #76584
+# https://github.com/Raku/old-issue-tracker/issues/1948
 ok Str.can('split') ~~ /split/, 'return value of .can stringifies sensibly';
 
+# https://github.com/Raku/old-issue-tracker/issues/1991
 {
-    # RT #76882
     my class A {
         method b() { 'butterfly' }
     }
@@ -103,8 +103,8 @@ ok Str.can('split') ~~ /split/, 'return value of .can stringifies sensibly';
         'can call method reference outside the class';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/3647
 {
-    # RT #123621
     my class A {
         submethod x() { 42 }
     }

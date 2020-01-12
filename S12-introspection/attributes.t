@@ -78,7 +78,7 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
     like $g, /'test-name'/, '.gist of an Attribute includes name';
 }
 
-# RT #127059
+# https://github.com/Raku/old-issue-tracker/issues/4936
 {
     class RT127059 {
         has Str @.rt127059;
@@ -89,7 +89,7 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
         'introspection of type of typed array attribute works (using gist)';
 }
 
-# RT #77070
+# https://github.com/Raku/old-issue-tracker/issues/2033
 {
     # Attributes attributes are sure to actually be BOOTSTRAPATTRs because
     # of bootstrapping
@@ -99,7 +99,7 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
     is   $a.raku, 'BOOTSTRAPATTR.new',             '.raku of a BOOTSTRAPATTR is the class name ~ ".new"';
 }
 
-# RT #131174
+# https://github.com/Raku/old-issue-tracker/issues/6197
 {
     # shape introspection
     my class RT131174 {
@@ -107,12 +107,12 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
     }
     is-deeply RT131174.new(:a[1, 2]).a.shape, (2,),
         'shape of stantiated attribute';
-#?rakudo todo 'RT #131174'
+#?rakudo todo 'attribute container shape'
     is-deeply RT131174.^attributes[0].container.shape, (2,),
         'attribute container shape';
 }
 
-# R#2521
+# https://github.com/rakudo/rakudo/issues/2521
 {
     class R2521 { has $!a }
     R2521.^add_multi_method: "a", method () is rw {

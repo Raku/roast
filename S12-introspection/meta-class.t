@@ -40,7 +40,7 @@ subtest { plan 3;
     is M.^auth, 'me',         '.auth is correct';
 }, 'metamethods on a module';
 
-# RT #128579
+# https://github.com/Raku/old-issue-tracker/issues/5436
 subtest { plan 2;
     my package P:ver<1.2.3>:auth<me> {};
     throws-like { P.^ver  }, X::Method::NotFound, '.ver is absent';
@@ -48,20 +48,20 @@ subtest { plan 2;
 }, 'ID metamethods on a package are absent by design';
 
 
-# RT #115208
+# https://github.com/Raku/old-issue-tracker/issues/2913
 eval-lives-ok "True.HOW.say", "can output the .gist of a .HOW";
 
-# RT #114130
+# https://github.com/Raku/old-issue-tracker/issues/2827
 {
     throws-like 'Any.HOW(Foo)', X::Syntax::Argument::MOPMacro;
 }
 
-# RT #121885
+# https://github.com/Raku/old-issue-tracker/issues/3385
 class IntrospectAtBEGINTime {
     is BEGIN { IntrospectAtBEGINTime.^name }, 'IntrospectAtBEGINTime', '.^foo works at BEGIN time';
 }
 
-# RT #80694
+# https://github.com/Raku/old-issue-tracker/issues/2295
 {
     my class A {
         method foo { 'abc' };

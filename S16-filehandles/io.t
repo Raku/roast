@@ -129,34 +129,36 @@ is(@lines8[2], "The End", 'lines($in,3) worked in list context');
 is(@lines8[3], "and finally... Its not over yet!", 'get($in) worked after lines($in,$n)');
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4408
 {
-    # Test $fh.lines(*)  RT #125626
     my $in = open($filename);
     my @lines = try $in.lines(*);
-    is(+@lines, 4, 'we got all lines from the file');
+    is(+@lines, 4, 'we got all lines from the file with Whatever');
     $in.close;
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4408
 {
-    # Test $fh.lines(Inf)  RT #125626
     my $in = open($filename);
     my @lines = try $in.lines(Inf);
-    is(+@lines, 4, 'we got all lines from the file');
+    is(+@lines, 4, 'we got all lines from the file with Inf');
     $in.close;
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4408
 {
-    # Test lines($fh,*)  RT #125626
     my $in = open($filename);
     my @lines = try lines($in,*);
-    is(+@lines, 4, 'we got all lines from the file');
+    is(+@lines, 4, 'we got all lines sub from the file with Whatever');
     $in.close;
 }
+
+# https://github.com/Raku/old-issue-tracker/issues/4408
 {
-    # Test lines($fh,Inf)  RT #125626
+    # Test lines($fh,Inf)
     my $in = open($filename);
     my @lines = try lines($in,Inf);
-    is(+@lines, 4, 'we got all lines from the file');
+    is(+@lines, 4, 'we got all lines sub from the file with Inf');
     $in.close;
 }
 
@@ -201,14 +203,14 @@ ok($in8.close, 'file closed okay (in8)');
     #ok($fh10.close, 'file closed okay (10)');
 }
 
-# RT #65348
+# https://github.com/Raku/old-issue-tracker/issues/969
 {
     my $rt65348_out = open($filename, :w);
     isa-ok $rt65348_out, IO::Handle;
-    $rt65348_out.say( 'RT #65348' );
+    $rt65348_out.say( 'foo bar' );
     $rt65348_out.say( '13.37' );
     $rt65348_out.say( '42.17' );
-    ok $rt65348_out.close, 'close worked (rt65348 out)';
+    ok $rt65348_out.close, 'close worked out';
 
     my $rt65348_in = open( $filename );
     isa-ok $rt65348_in, IO::Handle;
@@ -216,7 +218,7 @@ ok($in8.close, 'file closed okay (in8)');
     is +@list_context, 1, '.get in list context reads only one line';
     ok $rt65348_in.get.Int ~~ Int, '.get.Int gets int';
     is $rt65348_in.get.Int, 42, '.get.Int gets the right int';
-    ok $rt65348_in.close, 'close worked (rt65348 in)';
+    ok $rt65348_in.close, 'close worked in';
 }
 
 ok(unlink($filename), 'file has been removed');
@@ -300,8 +302,7 @@ $out.say("Foo Bar Baz");
 $out.say("The End");
 $out.close;
 
-# RT #123347
-
+# https://github.com/Raku/old-issue-tracker/issues/3597
 {
     my $fh = open($filename, :r);
     ok(!$fh.t, 'checking if a file handle is a TTY - negative case');
@@ -317,7 +318,7 @@ $out.close;
 }
 unlink($filename);
 
-# RT #112130
+# https://github.com/Raku/old-issue-tracker/issues/2691
 {
     $out = open($filename, :w);
     $out.print('blarg');

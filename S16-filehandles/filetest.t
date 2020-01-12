@@ -111,7 +111,7 @@ unlink "empty_file";
     is(- f($*PROGRAM), -8, "- f(...) does not call the ~~:f filetest");
 }
 
-# RT #114000
+# https://github.com/Raku/old-issue-tracker/issues/2819
 {
     my $file = 'ThisDoesNotExistAtAll.link';
     if $file.IO.e {
@@ -124,7 +124,7 @@ unlink "empty_file";
     }
 }
 
-# RT #129162
+# https://github.com/Raku/old-issue-tracker/issues/5633
 {
     my $target = make-temp-file :content<foo>;
     my $link   = make-temp-file;

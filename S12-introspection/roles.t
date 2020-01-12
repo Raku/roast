@@ -54,7 +54,7 @@ Tests for .^roles from L<S12/Introspection>.
     does-names C1, <R2>.list, :!transitive, 'class C1 does R2 only with :!transitive';
     does-names C2, <R3[Int]>.list, 'class C2 does R3[Int]';
 
-    # RT #125731
+    # https://github.com/Raku/old-issue-tracker/issues/4449
     my role A { };
     my role B does A { };
     does-names B.new, <B A>, 'punned class shows transitively done roles';
