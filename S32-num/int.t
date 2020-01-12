@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 164;
+plan 165;
 
 # L<S32::Numeric/Real/=item truncate>
 # truncate and .Int are synonynms.
@@ -607,6 +607,11 @@ subtest 'no funny business with Ints that are not representable in double' => {
         ~ '71920237348580521128117458610065152598883843114511894880552129145'
         ~ '77569914657753004138471712457796504817585639507289533753975582208'
         ~ '7777506072339445587895905719156736', 'huge Ints stringify correctly';
+}
+
+# https://github.com/rakudo/rakudo/issues/3419
+{
+    dies-ok { Int.new(Int) }, 'does Int.new(Int) die?';
 }
 
 # vim: ft=perl6
