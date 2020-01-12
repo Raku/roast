@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 8;
+plan 7;
 
 # L<S04/The Relationship of Blocks and Declarations/"If you declare a lexical
 #  twice in the same scope">
