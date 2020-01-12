@@ -90,10 +90,9 @@ is(@a, @e, "list was reversed");
     is(@a[1], "foo", 'in place reversal works');
 }
 
-# RT #77914
-#?rakudo todo "RT #77914"
+# https://github.com/Raku/old-issue-tracker/issues/2177
 {
-    is (<a b>, <c d>).reverse.join, 'dcba', '.reverse flattens lists';
+    is-deeply (<a b>, <c d>).reverse, (<c d>, <a b>), '.reverse does NOT flatten lists';
 }
 
 # vim: ft=perl6
