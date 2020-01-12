@@ -867,7 +867,7 @@ sub l () { 1, 2 };
     my %correct = grep { .value ne "bar" }, %bughunt.pairs;
     %bughunt    = grep { .value ne "bar" }, %bughunt.pairs;
     is %bughunt, %correct,
-       'Assign to hash with the same hash on rhs (RT #77586)';
+       'Assign to hash with the same hash on rhs';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/2443
@@ -875,7 +875,7 @@ sub l () { 1, 2 };
     my $rt93972 = 1, 2, 3;
     $rt93972 = $rt93972.grep({1});
     is $rt93972, [1],
-       'Assign to array with the same array on rhs (RT #93972)';
+       'Assign to array with the same array on rhs';
     $rt93972 = (1, 2, 3);
     $rt93972 = $rt93972.grep({1});
     is $rt93972.join(','), '1,2,3', 'same with List';
@@ -885,7 +885,7 @@ sub l () { 1, 2 };
     my @bughunt = 1, 2, 3;
     @bughunt = @bughunt.grep(1);
     is @bughunt, [1],
-       'Assign to array with the same array on rhs (RT #93972)';
+       'Assign to array with the same array on rhs';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/2062

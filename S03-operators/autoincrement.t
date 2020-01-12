@@ -190,17 +190,16 @@ is(%z{0},           $base, '%z{0}');
     is $z.pred, -1, '.pred for Num'
 }
 
-# RT #63644
+# https://github.com/Raku/old-issue-tracker/issues/742
 throws-like 'my $a; $a++ ++;', Exception, 'parse error for "$a++ ++"';
 
-# RT #99731
 {
     $_ = 4;
     .++;
     is $_, 5, 'increment of $_ via .++';
 }
 
-# RT #113816 - autoincrement of bools
+# https://github.com/Raku/old-issue-tracker/issues/2798
 {
     my Bool $x;
     my $y;

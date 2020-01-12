@@ -251,8 +251,9 @@ my $x;
     $x = "\x[b67]AA";
     is( --$x, "\x[b66]ZZ", "'\x[b67]AA'-- is '\x[b66]ZZ'" );
 }
+
+# https://github.com/Raku/old-issue-tracker/issues/5545
 {
-    # RT #128868
     diag( "Tests for '\x[e50]' .. '\x[e59]' (Thai)" );
     $x = "\x[e59]\x[e59]";
     is( ++$x, "\x[e51]\x[e50]\x[e50]",
@@ -273,7 +274,5 @@ my $x;
     $x = "\x[e51]AA";
     is( --$x, "\x[e50]ZZ", "'\x[e51]AA'-- is '\x[e50]ZZ'" );
 }
-
-
 
 # vim: ft=perl6

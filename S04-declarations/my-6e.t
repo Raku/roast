@@ -324,7 +324,7 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
         @tracker.push($inner) and t() for $inner ?? () !! ^2;
     }
     t();
-    is @tracker.join(', '), '0, 0', 'RT #102650';
+    is @tracker.join(', '), '0, 0', 'inner/outer';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/2830
@@ -417,7 +417,7 @@ subtest 'can bind to sigil-less variables' => {
     my \a := 1;          is-deeply a, 1,           'simple';
     my (\b, \c) := 1, 2; is-deeply (b, c), (1, 2), 'complex';
     my (\d, (\e, (\f, (\g, \h)))) := 1, (2, (3, (4, 5)));
-    #?rakudo skip 'RT131071'
+    #?rakudo skip 'not implemented'
     is-deeply (d, e, f, g, h), (1, 2, 3, 4, 5),   'complexerastic';
 }
 

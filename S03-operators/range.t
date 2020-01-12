@@ -59,7 +59,7 @@ is ['b'^..^'a'], [], "double-exclusive string auto-rev range (^..^) can produce 
 is ['a' ^..^ 'a'], [], "double-exclusive range (x ^..^ x) where x is a char";
 is ('a'..'z').list.join(' '), 'a b c d e f g h i j k l m n o p q r s t u v w x y z', '"a".."z"';
 
-# RT #130554
+# https://github.com/Raku/old-issue-tracker/issues/6001
 is ['!'^..'&'], ['"'..'&'], "bottom-exclusive non-alphanumeric string range (^..) works";
 is ['!'..^'&'], ['!'..'%'], "top-exclusive non-alphanumeric string range (..^) works";
 is ['!'^..^'&'], ['"'..'%'], "double-exclusive non-alphanumeric string range (^..^) works";
@@ -122,8 +122,8 @@ is (1..6 Z 'a' .. 'c').flat.join, '1a2b3c',   'Ranges and infix:<Z>';
 
 # Test that the operands are forced to scalar context
 # Range.new coerces its arguments to numeric context if needed
-# RT #58018
-# RT #76950
+# https://github.com/Raku/old-issue-tracker/issues/262
+# https://github.com/Raku/old-issue-tracker/issues/2005
 {
     my @three = (1, 1, 1);
     my @one = 1;
@@ -164,7 +164,7 @@ is (1..6 Z 'a' .. 'c').flat.join, '1a2b3c',   'Ranges and infix:<Z>';
     is ~$range, "100.B 101.B 102.B", 'range is correct';
 }
 
-# RT #67882
+# https://github.com/Raku/old-issue-tracker/issues/1171
 {
     my $range;
     lives-ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = $0..$1 },
@@ -175,7 +175,7 @@ is (1..6 Z 'a' .. 'c').flat.join, '1a2b3c',   'Ranges and infix:<Z>';
     is ~$range, "1 2 3", 'range is correct';
 }
 # and another set, just for the lulz
-# RT #67882
+# https://github.com/Raku/old-issue-tracker/issues/1171
 {
     ok '1 3' ~~ /(\d) . (\d)/, 'regex sanity';
     isa-ok $0..$1, Range, '$0..$1 constructs a Range';
@@ -214,7 +214,7 @@ is (1..6 Z 'a' .. 'c').flat.join, '1a2b3c',   'Ranges and infix:<Z>';
 # Lists are allowed on the rhs if the lhs is numeric (Real):
 is ~(2 .. [<a b c d e>]), "2 3 4 5", '2 .. @list is legal';
 
-# RT #68788
+# https://github.com/Raku/old-issue-tracker/issues/1254
 {
     $_ = Any; # unsetting $_ to reproduce bug literally
     lives-ok {(1..$_)}, '(1..$_) lives';
@@ -234,7 +234,7 @@ is ~(2 .. [<a b c d e>]), "2 3 4 5", '2 .. @list is legal';
     is +$range.grep(Numeric), 10, "and they are all numbers";
 }
 
-# RT #82620
+# https://github.com/Raku/old-issue-tracker/issues/1889
 {
     lives-ok {("a".."b").map({.trans(""=>"")}).raku},
         "range doesn't leak Parrot types";
@@ -247,14 +247,14 @@ is ~(2 .. [<a b c d e>]), "2 3 4 5", '2 .. @list is legal';
     is $count, 3, 'can iterate over big Int range';
 }
 
-# RT #110350
+# https://github.com/Raku/old-issue-tracker/issues/2645
 {
     for 1e0 .. 1e0 {
         isa-ok $_, Num, 'Range of nums produces a Num';
     }
 }
 
-# RT #77572
+# https://github.com/Raku/old-issue-tracker/issues/2119
 throws-like '1..2..3', X::Syntax::NonAssociative, '.. is not associative';
 
 {
@@ -265,7 +265,7 @@ throws-like '1..2..3', X::Syntax::NonAssociative, '.. is not associative';
         'range optimizer is protected from cases with no block';
 }
 
-# RT #127279
+# https://github.com/Raku/old-issue-tracker/issues/5051
 my @opvariants = «.. ^.. ..^ ^..^ ' R..' ' R^..' ' R..^' ' R^..^'»;
 for @opvariants {
     throws-like "\{ use fatal; |4$_ 5 }", X::Worry::Precedence::Range, "$_ warns on common flattening mistake";

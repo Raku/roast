@@ -3,7 +3,7 @@ use Test;
 
 plan 1;
 
-#RT #112234
+# https://github.com/Raku/old-issue-tracker/issues/2697
 {
     enum A <e1 e2>;
     multi infix:<< - >>(e1, e2) { return "AWW" };

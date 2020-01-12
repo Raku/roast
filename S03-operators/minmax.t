@@ -80,8 +80,8 @@ This test min/max functions in their operator form. To see them tested in their 
     isnt @a max 4, 4, 'NYS';
 }
 
-# RT #61836
-# RT #77868
+# https://github.com/Raku/old-issue-tracker/issues/552
+# https://github.com/Raku/old-issue-tracker/issues/2168
 {
     # I am very suspicious of the following tests.  As I understand it, cmp can compare
     # Reals, and cmp can compare two objects of the same type.  Otherwise it is only
@@ -94,8 +94,8 @@ This test min/max functions in their operator form. To see them tested in their 
 }
 
 
-# RT #125334
-# RT #128573
+# https://github.com/Raku/old-issue-tracker/issues/4294
+# https://github.com/Raku/old-issue-tracker/issues/5435
 {
     no-fatal-throws-like "min +'a', +'a'", X::Str::Numeric,
         'min with two Failures throws';
@@ -115,7 +115,7 @@ This test min/max functions in their operator form. To see them tested in their 
         '.max with :&by on Failure throws';
 }
 
-# RT #128780
+# https://github.com/Raku/old-issue-tracker/issues/5501
 {
     subtest 'min/max operations on Hashes' => {
         plan 8;
@@ -131,3 +131,5 @@ This test min/max functions in their operator form. To see them tested in their 
         is-deeply min({ :2b, :1c, :3a }, :&by), "c" => 1, '&min(:by(*.value))';
     }
 }
+
+# vim: ft=perl6

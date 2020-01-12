@@ -23,7 +23,7 @@ try { EVAL '$str !~ m/bar/;' };
 ok  $!  ~~ Exception, 'caught "!~" braino';
 ok "$!" ~~ /'!~~'/, 'error for "!~" usage mentions "!~~"';
 
-# RT #76878
+# https://github.com/Raku/old-issue-tracker/issues/1990
 {
     my $x = 2;
     is EVAL('"$x =~ b"'), '2 =~ b', '=~ allowed in double quotes';

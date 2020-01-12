@@ -20,9 +20,9 @@ is('' x 6, '', 'repeating an empty string creates an empty string');
 is('a' x 0, '', 'repeating zero times produces an empty string');
 is('a' x -1, '', 'repeating negative times produces an empty string');
 is('a' x 2.2, 'aa', 'repeating with a fractional number coerces to Int');
-# RT #114670
+# https://github.com/Raku/old-issue-tracker/issues/2878
 is('str' x Int, '', 'x with Int type object');
-# RT #125628
+# https://github.com/Raku/old-issue-tracker/issues/4410
 {
     throws-like ｢'a' x -NaN｣, X::Numeric::CannotConvert,
         'repeating with -NaN dies';
@@ -88,7 +88,8 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
 }
 
 
-# tests for non-number values on rhs of xx (RT #76720)
+# https://github.com/Raku/old-issue-tracker/issues/1970
+# tests for non-number values on rhs of xx
 #?DOES 2
 {
     # make sure repeat numifies rhs, but respects whatever
@@ -99,7 +100,7 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
     is(@b.join('|'), 'a|1|b|1|c|1', 'xx understands Whatevers');
 }
 
-# RT #101446
+# https://github.com/Raku/old-issue-tracker/issues/2517
 # xxx now thunks the LHS
 {
     my @a = ['a'] xx 3;
@@ -107,18 +108,18 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
     is @a[1][0], 'a', 'xx thunks the LHS';
 }
 
-# RT #123830
+# https://github.com/Raku/old-issue-tracker/issues/3684
 {
     is 'ABC'.ords xx 2, (65,66,67,65,66,67), "xx works on a lazy list";
 }
 
-# RT #125627
+# https://github.com/Raku/old-issue-tracker/issues/4409
 is ('foo' xx Inf)[8], 'foo', 'xx Inf';
 
 ok (42 xx *).is-lazy, "xx * is lazy";
 ok !(42 xx 3).is-lazy, "xx 3 is not lazy";
 
-# RT #126576
+# https://github.com/Raku/old-issue-tracker/issues/4733
 is ((2, 4, 6) xx 2).elems, 2, 'xx retains structure with list on LHS';
 is ((2, 4, 6) xx 2).flat.elems, 6, 'xx retained list structure can be flattened with .flat';
 is ((2, 4, 6).Seq xx 2).elems, 2, 'xx retains structure with Seq on LHS';
@@ -128,8 +129,8 @@ is ((2, 4, 6) xx *)[^2], ((2, 4, 6), (2, 4, 6)),
 is ((2, 4, 6).Seq xx *)[^2], ((2, 4, 6), (2, 4, 6)),
     'xx * retains structure with Seq on LHS';
 
+# https://github.com/Raku/old-issue-tracker/issues/5368
 {
-    # RT #128382
     my $is-sunk = 0;
     my class A { method sink() { $is-sunk++ } };
     my @a = A.new xx 10;
@@ -148,13 +149,13 @@ is ((2, 4, 6).Seq xx *)[^2], ((2, 4, 6), (2, 4, 6)),
         '(& xx Num) works as & xx Int';
 }
 
-# RT 129899
+# https://github.com/Raku/old-issue-tracker/issues/5753
 {
     throws-like { 'a' x 'b' }, X::Str::Numeric, 'x does not silence failures';
     is-deeply 'a' x Int, '', 'type objects get interpreted as 0 iterations';
 }
 
-# RT #130288
+# https://github.com/Raku/old-issue-tracker/issues/5855
 {
     throws-like ｢rand xx '123aaa'｣, X::Str::Numeric,
         'Failures in RHS of xx explode (callable LHS)';
@@ -162,23 +163,23 @@ is ((2, 4, 6).Seq xx *)[^2], ((2, 4, 6), (2, 4, 6)),
         'Failures in RHS of xx explode (Int LHS)';
 }
 
-# RT #130281
+# https://github.com/Raku/old-issue-tracker/issues/5864
 warns-like { 'x' x Int }, *.contains('uninitialized' & 'numeric'),
     'using an unitialized value in repeat count throws';
 
-# RT #130619
+# https://github.com/Raku/old-issue-tracker/issues/6028
 is-deeply (|() xx *)[^5], (Nil, Nil, Nil, Nil, Nil),
     'empty slip with xx * works';
 
 ## Ensure that when the repeat operator is used, a normalized string is created
-# RT #131801
+# https://github.com/Raku/old-issue-tracker/issues/6412
 {
     is-deeply (0x0F75.chr x 2), "\x[0F75,0F75]", "Repeat operator keeps text normalized (normalization + canonical combining class reordering)";
     #?rakudo.jvm todo "NFG or normalization not supported on JVM"
     is-deeply (0x0F75.chr x 2).ords, (0xF71, 0xF71, 0xF74, 0xF74), "Repeat operator keeps text normalized (normalization + canonical combining class reordering)";
 }
 
-# RT #121327
+# https://github.com/Raku/old-issue-tracker/issues/3348
 {
     my @result = gather {
         for ^2 { my @b = 1 xx 4; my $ = take (@b.shift xx 2) xx 2; Nil }
@@ -187,7 +188,7 @@ is-deeply (|() xx *)[^5], (Nil, Nil, Nil, Nil, Nil),
         'Nested xx in for-loop';
 }
 
-# RT #130941
+# https://github.com/Raku/old-issue-tracker/issues/6129
 {
     my $y = 25;
     my $z = $y xx 1;
@@ -195,7 +196,7 @@ is-deeply (|() xx *)[^5], (Nil, Nil, Nil, Nil, Nil),
     is $z, 25, 'xx does not keep containers around';
 }
 
-# RT #126014
+# https://github.com/Raku/old-issue-tracker/issues/4523
 # https://github.com/rakudo/rakudo/issues/1708
 subtest 'sunk, plain value `xx` sink cheaply' => {
     plan +my @tests

@@ -116,7 +116,8 @@ plan 40;
 }
 
 # make sure {lhs,rhs} isn't evaluated when state is {true,false}
-#?rakudo skip 'dubious scoping? RT #124548'
+# https://github.com/Raku/old-issue-tracker/issues/3867
+#?rakudo skip 'dubious scoping?'
 {
 
     # keep track of # of times lhs and rhs are EVAL'd by adding

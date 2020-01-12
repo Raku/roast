@@ -92,7 +92,7 @@ is('b' gt 'c', Bool::False, 'gt false');
 is('b' le 'a', Bool::False, 'le false');
 is('b' ge 'c', Bool::False, 'ge false');
 
-# RT #127272
+# https://github.com/Raku/old-issue-tracker/issues/5050
 is ('a' xx 1000).map(+('a' le *)).index(0), Nil, 'le is ok over many iterations';
 is ('a' xx 1000).map(+('a' ge *)).index(0), Nil, 'ge is ok over many iterations';
 is ('b' xx 1000).map(+('a' lt *)).index(0), Nil, 'lt is ok over many iterations';
@@ -241,7 +241,7 @@ is-deeply -∞   =~=    ∞, Bool::False, '-∞ =~=  ∞ gives False';
     nok 0.00120 ≅ .001, '≅ pays attention to scaled-down $*TOLERANCE (more More)';
     nok 0.00080 ≅ .001, '≅ pays attention to scaled-down $*TOLERANCE (more Less)';
 
-    # RT#128421
+    # https://github.com/Raku/old-issue-tracker/issues/5386
     nok  100 =~= -100, '=~= correctly handles pos=~=neg comparison';
     nok -100 =~=  100, '=~= correctly handles pos=~=neg comparison (reversed)';
     nok  100  ≅  -100, '≅ correctly handles pos≅neg comparison';

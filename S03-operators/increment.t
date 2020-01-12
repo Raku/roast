@@ -115,7 +115,7 @@ is($moo, 0, "var was not touched");
     is $x.pred, Bool::False, '.succ on False works';
 }
 
-# RT #74912
+# https://github.com/Raku/old-issue-tracker/issues/1747
 throws-like 'my $x = 0; ++++$x', X::Multi::NoMatch,
     'can not double-increment, because the return value is not a container';
 

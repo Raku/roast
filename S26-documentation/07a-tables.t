@@ -6,7 +6,7 @@ $p = -1; # starting index for pod number
 
 plan 85;
 
-# includes tests for fixes for RT bugs:
+# includes tests for fixes for bugs:
 #   incorrect table parse: https://github.com/Raku/old-issue-tracker/issues/3798
 #   internal error: https://github.com/Raku/old-issue-tracker/issues/5336
 #   uneven rows: https://github.com/Raku/old-issue-tracker/issues/5746
