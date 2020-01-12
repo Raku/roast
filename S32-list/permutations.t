@@ -18,7 +18,7 @@ is-deeply permutations(0),   ((),)  .Seq, 'sub with 0 for its argument';
 is-deeply +().permutations, 1, 'there is 1 .permutation of empty list';
 is-deeply +permutations(0), 1, 'there is 1 &permutation with 0 values';
 
-# RT #127777
+# https://github.com/Raku/old-issue-tracker/issues/5195
 is-deeply permutations(-1), ((),).Seq, '&permutations with negative argument';
 
 subtest '&permutations with Iterable first argument match calls with method form' => {
@@ -28,3 +28,5 @@ subtest '&permutations with Iterable first argument match calls with method form
 
     is-deeply permutations($_).sort, .permutations.sort, .raku for @i;
 }
+
+# vim: ft=perl6

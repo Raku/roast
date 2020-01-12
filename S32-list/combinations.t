@@ -55,7 +55,7 @@ is-deeply (1, 2, 3).combinations(-2..-1), (), "-2..-1 items is empty";
 is-deeply combinations(3,-1), (), "negative k combinations function is empty";
 is-deeply combinations(3,4), (), "too high k combinations function is empty";
 
-# RT #127778
+# https://github.com/Raku/old-issue-tracker/issues/5196
 {
     is-deeply combinations(-2,2), (),
         'negative $n in sub combinations (1)';
@@ -67,7 +67,7 @@ is-deeply combinations(3,4), (), "too high k combinations function is empty";
         'negative $k in sub combinations gives empty list (2)';
 }
 
-# RT #127779
+# https://github.com/Raku/old-issue-tracker/issues/5197
 subtest {
     plan 12;
 
@@ -111,3 +111,5 @@ subtest '&combinations with Iterable first argument match calls with method form
     is-deeply combinations(<a b c>), <a b c>.combinations, 'sub with (3..4)';
     is-deeply combinations(()),           ().combinations, 'sub with (3..4)';
 }
+
+# vim: ft=perl6

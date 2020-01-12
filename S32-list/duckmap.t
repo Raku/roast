@@ -12,7 +12,8 @@ This test tests C<duckmap>.
 
 {
     my $list = (1, (2,3), "a");
-    is-deeply duckmap(-> Int $x { $x ~~ Int ?? $x !! Any }, $list), (1, (2, 3), 'a'), "duckmap doesn't hang"; # RT #129321
+    # https://github.com/Raku/old-issue-tracker/issues/5686
+    is-deeply duckmap(-> Int $x { $x ~~ Int ?? $x !! Any }, $list), (1, (2, 3), 'a'), "duckmap doesn't hang";
     is-deeply duckmap(-> Int $x { $x ~~ Int ?? $x + 1 !! Any }, $list), (2, (3, 4), 'a'), "duckmap works";
     is-deeply $list.duckmap({$_ ~~ Str ?? $_ ~ "b" !! Any}), (Any, Any, "ab"), "duckmap leaves Any alone";
 
@@ -21,7 +22,8 @@ This test tests C<duckmap>.
 
     is-deeply duckmap({ .elems }, ["a", ["bb", "cc", "d"], []]), [1, 3, 0], "duckmap doesn't consume iterables for defined ops";
 
-    #RT #129363 duckmap doesn't preserve structure types"
+    # https://github.com/Raku/old-issue-tracker/issues/5696
+    # duckmap doesn't preserve structure types"
     is-deeply duckmap(-> Int $x { $x ~~ Int ?? $x !! Any }, [1, [2,3], 4]), [1, [2,3], 4], 'duckmap preserves structure types';
     is-deeply duckmap(-> Int $x { $x ~~ Int ?? $x + 1 !! Any }, [1, [2,3], 4]), [2, [3,4], 5], 'duckmap preserves structure types';
 } #2

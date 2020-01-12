@@ -87,7 +87,7 @@ eval-lives-ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper 
     is( ((1..4).list.reduce: &infix:<*>), 24, '.reduce: &infix:<*> works' );
 }
 
-# RT #66352
+# https://github.com/Raku/old-issue-tracker/issues/1042
 {
     multi a (Str $a, Str $b) { [+$a, +$b] };
     multi a (Array $a,$b where "+") { [+] @($a) };  #OK not used

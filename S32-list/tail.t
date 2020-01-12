@@ -101,10 +101,10 @@ subtest 'tail makes use .count-only when it is implemented' => {
     is-deeply $pulled, 0|1, 'we did not pull (or pulled just one';
 }
 
-# RT #130285
+# https://github.com/Raku/old-issue-tracker/issues/5867
 is-deeply (4,5,6,7).tail(-2**100), (), 'can use ints over 64-bit in .tail';
 
-# RT #132543
+# https://github.com/Raku/old-issue-tracker/issues/6646
 is-deeply <a b c>.tail(2).tail, 'c', 'can .tail a .tail';
 
 # https://github.com/rakudo/rakudo/issues/1429
@@ -116,7 +116,7 @@ subtest 'degenerate .tail works' => {
     is-deeply      42.tail(*+0 ),      42.Seq, 'Int  (2)';
 }
 
-# RT #131617
+# https://github.com/Raku/old-issue-tracker/issues/6354
 is-deeply Seq.new(class :: does Iterator {
     has @!stuff = <a b c>;
     has Bool:D $!ended = False;

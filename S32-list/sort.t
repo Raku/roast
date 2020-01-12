@@ -183,13 +183,13 @@ plan 38;
     is ~(42,).sort, "42",  "method form of sort should work on lists";
 }
 
-# RT #67010
+# https://github.com/Raku/old-issue-tracker/issues/1094
 {
     my @list = 1, 2, Code, True;
     quietly lives-ok { @list.sort: { $^a cmp $^b } }, 'sort by class name';
 }
 
-# RT #68112
+# https://github.com/Raku/old-issue-tracker/issues/1190
 {
     sub foo () { 0 }   #OK not used
     throws-like { EVAL '(1..10).sort(&foo)' }, Exception,
@@ -198,7 +198,8 @@ plan 38;
         'sort does not accept &rand';
 }
 
-# RT #71258 (can sort a class without parrot internal error)
+# https://github.com/Raku/old-issue-tracker/issues/1435
+# can sort a class without parrot internal error
 {
     class RT71258_1 { };
 
@@ -208,7 +209,7 @@ plan 38;
         'sorting by stringified class instance (name and memory address)';
 }
 
-# RT #128779
+# https://github.com/Raku/old-issue-tracker/issues/5500
 {
     my &code-method = *.sort;
     my &code-sub    =  &sort;
@@ -216,13 +217,13 @@ plan 38;
     isa-ok code-sub(   <y z x>), Seq, '&sort stored in a sub returns a List';
 }
 
-# RT #126921
+# https://github.com/Raku/old-issue-tracker/issues/4855
 isa-ok (<2 1 3>   .sort), Seq, 'detached .sort returns a List';
 
-# RT #126859
+# https://github.com/Raku/old-issue-tracker/issues/4842
 isa-ok (*.sort)(<2 3 1>), Seq, 'auto-primed *.sort returns a Seq';
 
-# RT #130866
+# https://github.com/Raku/old-issue-tracker/issues/6101
 eval-lives-ok ｢.elems, .sort with @｣,
     '.sort on reified empty array does not crash';
 

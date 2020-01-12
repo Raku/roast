@@ -109,7 +109,7 @@ plan 40;
 
 is classify( { "foo" }, () ).elems, 0, 'classify an empty list';
 
-# RT #126032
+# https://github.com/Raku/old-issue-tracker/issues/4529
 {
     is-deeply
         <a b c>.classify({ ~($ ~= $_); }),
@@ -117,7 +117,7 @@ is classify( { "foo" }, () ).elems, 0, 'classify an empty list';
         '&test only run once for each item';
 }
 
-# RT #127803
+# https://github.com/Raku/old-issue-tracker/issues/5205
 subtest 'classify works with Junctions' => {
     plan 4;
     # Since we're returning a Junction from the mapper, it'll thread, sticking

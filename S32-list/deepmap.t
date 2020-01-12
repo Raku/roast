@@ -27,7 +27,7 @@ This test tests C<deepmap>.
     }
 }
 
-# RT #131477 
+# https://github.com/Raku/old-issue-tracker/issues/6302
 lives-ok { Array».gist; deepmap *.self, Array },
     'hypering or deepmapping an Iterable type object does not hang';
 

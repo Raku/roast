@@ -96,7 +96,7 @@ plan 301;
      ok(!defined($c), 'list assignment (*, @, $c) = @ works');
 }
 
-# RT #118075
+# https://github.com/Raku/old-issue-tracker/issues/3144
 {
     my ($one, $two, $three);
     ($one, $, $three) = 1..3;
@@ -129,7 +129,7 @@ plan 301;
     is(@b,'2 3',  "'@b' is '2 3'?: my (\$s,@a) = 1 .. 3");
 }
 
-# RT #74302
+# https://github.com/Raku/old-issue-tracker/issues/1683
 {
     my ($a, %b) = "!", a => "1", b => "2", c => "3";
     is $a, "!", "got scalar in (scalar,hash) = list";
@@ -369,7 +369,7 @@ my @p;
     is(@p[1],'plugh', "~= operator parses as item assignment 2");
 }
 
-# RT #64818
+# https://github.com/Raku/old-issue-tracker/issues/900
 {
     throws-like q{my $foo = 'foo'; $foo R~= 'foo';},
         X::Assignment::RO,
@@ -459,7 +459,7 @@ my @p;
     is $x, 'xyzzy', "^^= doesn't permanently falsify scalars";
 }
 
-# RT #76820
+# https://github.com/Raku/old-issue-tracker/issues/1982
 {
     my $x;
     @p = $x xor= 42, 43;
@@ -754,7 +754,7 @@ sub l () { 1, 2 };
     is  @a.join('|'), '1|2|3|4', ',= on lists works the same as push (effect on array)';
 }
 
-# RT #63642
+# https://github.com/Raku/old-issue-tracker/issues/741
 {
     my %part1 = a => 'b';
     my %part2 = d => 'c';
@@ -808,7 +808,7 @@ sub l () { 1, 2 };
     is((try {my $t = (1 == 0) ?? "true" !! "false"; $t}), "false", '.. also for false');
 }
 
-# RT #75950
+# https://github.com/Raku/old-issue-tracker/issues/1864
 {
     my $x;
     lives-ok { ($x,) = grep 5, 1..1_000_000 },
@@ -816,7 +816,7 @@ sub l () { 1, 2 };
     is $x, 5, '... with correct result';
 }
 
-# RT #80614
+# https://github.com/Raku/old-issue-tracker/issues/2292
 {
    my @a = 1,2,3;
    my @b;
@@ -836,7 +836,7 @@ sub l () { 1, 2 };
    is @d[0], 42, 'chained assignment works';
 }
 
-# RT #125407
+# https://github.com/Raku/old-issue-tracker/issues/4323
 {
     my @rt125407 = 84, 85;
     if False { # note how this never runs
@@ -847,7 +847,7 @@ sub l () { 1, 2 };
     is $rt125407, @rt125407[0], '$rt125407 and @rt125407[0] should be equal';
 }
 
-# RT #77142
+# https://github.com/Raku/old-issue-tracker/issues/2051
 {
     my $cc = 0;
     sub called($ignored) {  #OK not used
@@ -861,7 +861,7 @@ sub l () { 1, 2 };
 
 }
 
-# RT #77586
+# https://github.com/Raku/old-issue-tracker/issues/2123
 {
     my %bughunt = 1 => "foo", 2 => "bar", 3 => "foo";
     my %correct = grep { .value ne "bar" }, %bughunt.pairs;
@@ -870,7 +870,7 @@ sub l () { 1, 2 };
        'Assign to hash with the same hash on rhs (RT #77586)';
 }
 
-# RT #93972
+# https://github.com/Raku/old-issue-tracker/issues/2443
 {
     my $rt93972 = 1, 2, 3;
     $rt93972 = $rt93972.grep({1});
@@ -888,7 +888,7 @@ sub l () { 1, 2 };
        'Assign to array with the same array on rhs (RT #93972)';
 }
 
-# RT #77174
+# https://github.com/Raku/old-issue-tracker/issues/2062
 {
     my @a //= (3);
     is @a, "";
@@ -896,7 +896,7 @@ sub l () { 1, 2 };
     is @b, "3";
 }
 
-# RT #76444
+# https://github.com/Raku/old-issue-tracker/issues/1923
 {
     (my $a) = 1,2,3;
     is $a, (1,2,3), "Assignment into parentheses'd my works.";
@@ -907,7 +907,7 @@ sub l () { 1, 2 };
     is $x, (3,2,1), "Routine call taking a parenthesised my as argument works. #3";
 }
 
-# RT #76414
+# https://github.com/Raku/old-issue-tracker/issues/1915
 #?rakudo skip ',= needs to be special cased after GLR to compile to push(@a, 3, 4)'
 {
     my @rt76414 = (1, 2);
@@ -916,7 +916,7 @@ sub l () { 1, 2 };
         'infix:<,=> has list precedence in the cases where infix:<=> does';
 }
 
-# RT #72874
+# https://github.com/Raku/old-issue-tracker/issues/1517
 {
     throws-like { EVAL "6 >== 2" }, X::Syntax::CannotMeta,
         "Can't use diffy >= with the = metaop ";
@@ -927,14 +927,14 @@ sub l () { 1, 2 };
         "Can't use fiddly ~~ with the = metaop ";
 }
 
-# RT #116178
+# https://github.com/Raku/old-issue-tracker/issues/3003
 {
     my $x //= .uc for 'a';
     is $x, 'A',
         'default-assignment (//=) does mix with implicit-variable method call';
 }
 
-# RT #125416
+# https://github.com/Raku/old-issue-tracker/issues/4326
 {
     sub x(*@x) { +@x }
     is x(1.Int, my $x = 2, 3), 3, 'declarator gets its own precedence analysis (1)';
@@ -948,7 +948,7 @@ sub l () { 1, 2 };
     is @foo, '5 10', 'Internal chained item assignment does not mess up outer list assignment';
 }
 
-# RT #124316
+# https://github.com/Raku/old-issue-tracker/issues/3782
 {
     my @a;
     @a[^2] = 42,43;
@@ -966,7 +966,8 @@ sub l () { 1, 2 };
     is-deeply $thunky3, 0, 'orelse= thunks RHS';
 }
 
-{ # https://irclog.perlgeek.de/perl6-dev/2018-01-12#i_15681388
+# https://irclog.perlgeek.de/perl6-dev/2018-01-12#i_15681388
+{
     my $a; $a -= 2;
     is-deeply $a, -2, '-= with :U target gives right result';
     throws-like ｢my $b; $b %= 2｣, Exception, '%= with :U target throws';

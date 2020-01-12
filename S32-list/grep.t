@@ -68,10 +68,10 @@ my @list = (1 .. 10);
        '2|4', 'last works in grep';
     is (1..12).grep({next if $_ % 5 == 0; $_ % 2 == 0}).join('|'),
        '2|4|6|8|12', 'next works in grep';
-    # RT #130365
+    # https://github.com/Raku/old-issue-tracker/issues/5329
     is (^Inf).grep({last if $_ > 5; True}).eager.join, '012345',
         'last in grep on infinite list';
-    # RT #130529
+    # https://github.com/Raku/old-issue-tracker/issues/5992
     {
         my $retries = 0;
         is (1..5).grep({
@@ -95,7 +95,7 @@ my @list = (1 .. 10);
        '2,4,5', "grep() with non-Code matcher";
 }
 
-# RT #71544
+# https://github.com/Raku/old-issue-tracker/issues/1456
 {
     my @in = ( 1, 1, 2, 3, 4, 4 );
 
@@ -114,7 +114,7 @@ my @list = (1 .. 10);
 }
 
 # sensible boolification
-# RT #74056
+# https://github.com/Raku/old-issue-tracker/issues/1661
 # since rakudo returns an iterator (and not a list) and some internals leaked,
 # a zero item list/iterator would return True, which is obviously wrong
 {
@@ -138,7 +138,7 @@ my @list = (1 .. 10);
     is (True,False,Int).grep(Bool), (True,False), 'can we match on Bool as type';
 }
 
-# RT #118755
+# https://github.com/Raku/old-issue-tracker/issues/3180
 {
     my @a = 1..10;
     @a.grep(* %% 2).>>++;
@@ -146,7 +146,7 @@ my @list = (1 .. 10);
         'grep is rw-like, can chain it to modify elements of grepped list/array';
 }
 
-# RT #128773
+# https://github.com/Raku/old-issue-tracker/issues/5499
 {
     is (^∞).grep(*.is-prime).is-lazy, True, '.grep propagates .is-lazy';
     is (grep *.is-prime, ^∞).is-lazy, True, 'grep() propagates .is-lazy';
