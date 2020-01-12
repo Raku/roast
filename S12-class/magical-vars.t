@@ -123,7 +123,7 @@ class SimpleClass does Bar {}
     "there is no self outside of a method";
 }
 
-# RT #126754
+# https://github.com/Raku/old-issue-tracker/issues/4793
 {
   class ev {
     method foo {

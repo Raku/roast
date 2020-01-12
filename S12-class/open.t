@@ -37,7 +37,7 @@ is $x.in_Something, 'ab', 'basic OO sanity';
 }
 
 # now try to extend "core" types
-# RT #75114
+# https://github.com/Raku/old-issue-tracker/issues/1763
 {
     augment class Str {
         method mydouble {
@@ -48,7 +48,7 @@ is $x.in_Something, 'ab', 'basic OO sanity';
     is 'aBc'.mydouble, 'ABCabc', 'can extend Str';
 }
 
-# RT #75114
+# https://github.com/Raku/old-issue-tracker/issues/1763
 {
     augment class Int {
         method triple { self * 3 }
@@ -67,7 +67,11 @@ is $x.in_Something, 'ab', 'basic OO sanity';
     is @a.last-and-first, '01', 'can extend class Array';
 }
 
-throws-like 'use MONKEY-TYPING; class RT124017_A {}; augment class RT124017_A:D {}', X::Syntax::Augment::Adverb, "can't pass :D when augmenting class";
-throws-like 'use MONKEY-TYPING; class RT124017_B {}; augment class RT124017_B:auth<random_auth> {}', X::Syntax::Augment::Adverb, "can't pass :auth when augmenting class";
+throws-like 'use MONKEY-TYPING; class RT124017_A {}; augment class RT124017_A:D {}',
+  X::Syntax::Augment::Adverb,
+  "can't pass :D when augmenting class";
+throws-like 'use MONKEY-TYPING; class RT124017_B {}; augment class RT124017_B:auth<random_auth> {}',
+  X::Syntax::Augment::Adverb,
+  "can't pass :auth when augmenting class";
 
 # vim: ft=perl6

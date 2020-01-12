@@ -24,14 +24,14 @@ use MONKEY-TYPING;
         'augment on non-existent class dies';
 }
 
-# RT #74910
+# https://github.com/Raku/old-issue-tracker/issues/1746
 {
     my class LexFoo { };
     augment class LexFoo { method b { 'called LexFoo.b' } };
     is LexFoo.b, 'called LexFoo.b', 'can augment lexical class';
 }
 
-# RT #76104
+# https://github.com/Raku/old-issue-tracker/issues/1876
 {
     augment class Hash {
         method foo() { self.keys };
@@ -39,13 +39,13 @@ use MONKEY-TYPING;
     is { a => 1 }.foo, 'a', 'can augment Hash';
 }
 
-# RT #66694
+# https://github.com/Raku/old-issue-tracker/issues/1073
 throws-like q[
     class MethodClash { method foo() { 3 } };
     augment class MethodClash { method foo() { 3 } };
 ], X::Syntax::Augment::WithoutMonkeyTyping, 'cannot override a method by monkey-typing';
 
-# RT #76600
+# https://github.com/Raku/old-issue-tracker/issues/1950
 eval-lives-ok q[
     use MONKEY-TYPING;
     role Bar { has $.counter; }
@@ -69,15 +69,15 @@ eval-lives-ok q[
     is($o.d, 'called Bar.d', 'new method is present instead');
 }
 
-# RT #75432
+# https://github.com/Raku/old-issue-tracker/issues/1792
 {
     lives-ok {
         class A { multi method a() { }};
         augment class A { multi method a() { } }
-    }, 'RT #75432'
+    }, 'cannot add multis with augment'
 }
 
-# RT #71456
+# https://github.com/Raku/old-issue-tracker/issues/1447
 # some integers produces from ranges didn't have 
 # methods that augment added. Weird.
 
@@ -93,13 +93,13 @@ eval-lives-ok q[
     }, 'integers produced from ranges have augmented methods';
 }
 
-# RT #117163
+# https://github.com/Raku/old-issue-tracker/issues/3080
 {
     try EVAL 'class F { also is F; }';
     ok ~$! ~~ / 'cannot inherit from itself' /, "used to crash rakudo";
 }
 
-# RT #117165
+# https://github.com/Raku/old-issue-tracker/issues/3081
 {
     try EVAL 'class ::F { ... }; class F is ::F';
     ok ~$! ~~ / 'cannot inherit from itself' /, "used to crash rakudo";

@@ -96,7 +96,8 @@ class One::Two::Three { }  # auto-vivifies package One::Two
 class One::Two { }
 ok(One::Two.new, 'created One::Two after One::Two::Three');
 dies-ok { EVAL 'class One::Two { }' }, 'cannot redeclare an existing class';
-eval-lives-ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT #62898';
+# https://github.com/Raku/old-issue-tracker/issues/666
+eval-lives-ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'A after A::B';
 
 {
     class A61354_1 {
@@ -105,37 +106,37 @@ eval-lives-ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {
     is A61354_1.x, "OH HAI", "can just use EVAL to add method to class";
 }
 
-# RT #67784
+# https://github.com/Raku/old-issue-tracker/issues/1155
 {
     class class {}
     isa-ok( class.new, 'class' );
 }
 
-# RT #64686
+# https://github.com/Raku/old-issue-tracker/issues/887
 throws-like 'class Romeo::Tango {}; Romeo::Juliet.rt64686', Exception,
              'call to method in undeclared A::B dies after class A::C defined';
 
-# RT #72286
+# https://github.com/Raku/old-issue-tracker/issues/1477
 throws-like 'class WritableSelf { method f { self = 5 } }; WritableSelf.new.f',
     X::Assignment::RO, 'self is not writable';
 
-# RT #65022
+# https://github.com/Raku/old-issue-tracker/issues/944
 eval-lives-ok 'class Test1 { class A {};}; class Test2 {class A {};};',
-                'RT65022 - Nested classes in different classes can have the same name';
+                'Nested classes in different classes can have the same name';
 
-# RT #76270
+# https://github.com/Raku/old-issue-tracker/issues/1898
 {
     my $x = class Named { };
     isa-ok $x, Named, 'named class declaration returns the class object';
 }
 
-# RT #72916
+# https://github.com/Raku/old-issue-tracker/issues/1521
 {
     eval-lives-ok 'Rat.^add_method("lol", method ($what) { say "lol$what" }) ~~ Method',
           'add_method returns a Method object';
 }
 
-# RT #72338
+# https://github.com/Raku/old-issue-tracker/issues/1892
 {
     my $rt72338;
     class x {
@@ -150,7 +151,7 @@ eval-lives-ok 'class Test1 { class A {};}; class Test2 {class A {};};',
 is class :: { method foo { 42 }}.foo, 42, "Can call method on class definition without parens";
 
 
-# RT #124017
+# https://github.com/Raku/old-issue-tracker/issues/3723
 throws-like 'class RT124017_A:D {}', X::Syntax::Type::Adverb,
              "RT124017 - can't declare Foo:D";
 

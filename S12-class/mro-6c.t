@@ -32,7 +32,7 @@ plan 5;
         'Cannot do multi inheritance that causes inconsistent MRO';
 }
 
-# RT #77274
+# https://github.com/Raku/old-issue-tracker/issues/2077
 eval-lives-ok q[
     class GrandParent { };
     class Parent is GrandParent { };
@@ -88,3 +88,5 @@ subtest "Hidden classes", {
         is-deeply C4.^mro_unhidden[0..*-3], (C4, C3, C2, C1, R3b.^pun), "'hides' on a role hides its pun"
     }
 }
+
+# vim: ft=perl6
