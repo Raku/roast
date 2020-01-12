@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 60;
+plan 61;
 
 # L<S32::Containers/"List"/"=item map">
 
@@ -73,14 +73,16 @@ my @list = (1 .. 5);
 # https://github.com/Raku/old-issue-tracker/issues/4232
 # map with n-ary functions
 {
-  # XXX GLR find hang-proof a way to test that map of 
-  # 0-arity and Inf-arity (proto-less multi) does not hang.
-  is ~(1,2,3,4).map({ $^a + $^b             }), "3 7", "map() works with 2-ary functions";
-  #?rakudo skip "Too few positionals passed; expected 3 arguments but got 1"
-  is ~(1,2,3,4).map({ $^a + $^b + $^c       }), "6 4", "map() works with 3-ary functions";
-  is ~(1,2,3,4).map({ $^a + $^b + $^c + $^d }), "10",  "map() works with 4-ary functions";
-  #?rakudo skip "Too few positionals passed; expected 5 arguments but got 4"
-  is ~(1,2,3,4).map({ $^a+$^b+$^c+$^d+$^e   }), "10",  "map() works with 5-ary functions";
+  is-deeply (1,2,3,4).map({ $^a + $^b }), (3,7),
+    "map() works with 2-ary functions";
+  is-deeply (1,2,3).map({ $^a + $^b + $^c  }), (6,),
+    "map() works with 3-ary functions";
+  is-deeply (1,2,3,4).map({ $^a + $^b + $^c + $^d }), (10,),
+    "map() works with 4-ary functions";
+  is-deeply (1,2,3,4,5).map({ $^a+$^b+$^c+$^d+$^e }), (15,),
+    "map() works with 5-ary functions";
+  dies-ok { (1,2,3).map( { $^a + $^b } ) },
+    "argument number mismatch on odd-numbered list";
 }
 
 {
