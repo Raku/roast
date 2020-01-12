@@ -15,9 +15,11 @@ plan 6;
     is ?$value, False, '42 but False';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/3390
 {
     my $value = True but False;
-    # see RT #121940 - 'but False' is less magical than the blog post assumed
     is ~$value, 'False', 'True but False';
     is ?$value, False, 'True but False';
 }
+
+# vim: ft=perl6

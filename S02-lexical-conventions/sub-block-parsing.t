@@ -18,14 +18,14 @@ ok(sub { 42 }(), 'sub {...}() works'); # TODO: clarify
 
 ok(sub{ 42 }(),  'sub{...}() works'); # TODO: clarify
 
-# RT #114456
+# https://github.com/Raku/old-issue-tracker/issues/2860
 {
     is sub { 42 }(), 42, 'can invoke sub with "()" directly after declaration';
     is sub ($t) { $t }('arf'), 'arf',
         'can pass argument within "()" directly after sub declaration';
 }
 
-# RT #76432
+# https://github.com/Raku/old-issue-tracker/issues/1919
 throws-like { EVAL q[
     sub x { die }
     x();
@@ -40,14 +40,14 @@ throws-like { EVAL q[
   Exception, # no exception object yet
   'block parsing works with semicolon';
 
-# RT #85844
+# https://github.com/Raku/old-issue-tracker/issues/2387
 {
     throws-like { EVAL 'sub foo;' },
       X::UnitScope::Invalid,
-      'RT #85844';
+      'did not call foo';
 }
 
-# RT #76896:
+# https://github.com/Raku/old-issue-tracker/issues/1996
 # perl6 - sub/hash syntax
 {
     sub to_check_before {

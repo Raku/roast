@@ -11,7 +11,7 @@ Misc. Junction tests
 
 =end pod
 
-# RT #64184
+# https://github.com/Raku/old-issue-tracker/issues/834
 {
     isa-ok any(6,7), Junction;
     is any(6,7).WHAT.gist, Junction.gist, 'junction.WHAT works';
@@ -318,7 +318,7 @@ ok(!(?(1&0) != ?(1&&0)), 'boolean context');
 
 }
 
-# used to be a rakudo regression (RT #60886)
+# https://github.com/Raku/old-issue-tracker/issues/434
 ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 
 ## See also S03-junctions/autothreading.t
@@ -358,7 +358,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
   ok $res == 3, "index on junctions: 3";
 }
 
-# RT #63686
+# https://github.com/Raku/old-issue-tracker/issues/745
 {
     lives-ok { try { for any(1,2) -> $x {}; } },
              'for loop over junction in try block';
@@ -370,7 +370,8 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
     is rt63686(), 'happiness', 'for loop over junction in sub';
 }
 
-# RT #67866: [BUG] [LHF] Error with stringifying .WHAT on any junctions
+# https://github.com/Raku/old-issue-tracker/issues/1167
+# Error with stringifying .WHAT on any junctions
 {
     ok((WHAT any()) ~~ Junction, "test WHAT on empty any junction");
     ok(any().WHAT ~~ Junction, "test WHAT on empty any junction");
@@ -389,7 +390,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
     jok(5 < @x.all, '.all method works on array objects');
 }
 
-# RT #63126
+# https://github.com/Raku/old-issue-tracker/issues/688
 #?DOES 2
 {
     my @a = "foo", "foot";
@@ -404,7 +405,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
         'junction can be used to index Hash';
 }
 
-# RT #111726
+# https://github.com/Raku/old-issue-tracker/issues/2670
 {
     is (all() ~~ /^ \d+ $/).gist,  'all()',
         'regex match in all junction is an empty all junction (1)';
@@ -418,13 +419,13 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
         'successful regex match in any junction';
 }
 
-# RT #103106
+# https://github.com/Raku/old-issue-tracker/issues/2533
 {
     is ("foo" & "a nice old foo" ~~ /foo/).gist, 'all(｢foo｣, ｢foo｣)',
         'successful regex match in all junction';
 }
 
-# RT #120992
+# https://github.com/Raku/old-issue-tracker/issues/3313
 {
     is (all("a","b") ~~ /a/).gist, 'all(｢a｣, Nil)',
         'successful regex match in all junction if one element does not match';
@@ -441,13 +442,13 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
    is any(Foo.new).gist, 'any(gisted)', 'any(Foo.new).gist';
 }
 
-# RT #109188
+# https://github.com/Raku/old-issue-tracker/issues/2623
 ok { a => 1} ~~ List|Hash, 'Can construct junction with List type object';
 
-# RT #112392
+# https://github.com/Raku/old-issue-tracker/issues/2711
 ok (1|2).Str ~~ Str, 'Junction.Str returns a Str, not a Junction';
 
-# RT #101124
+# https://github.com/Raku/old-issue-tracker/issues/2511
 ok (0|1 == 0&1), 'test junction evaluation order';
 ok (0&1 == 0|1), 'test junction evaluation order';
 
@@ -496,7 +497,8 @@ throws-like 'multi sub foo($) { }; foo(Junction)', X::Multi::NoMatch,
 throws-like 'sub foo($) { }; foo(Junction)', X::TypeCheck::Binding,
     'Do not try to auto-thread Junction type object (only case)';
 
-{ # RT #129349
+# https://github.com/Raku/old-issue-tracker/issues/5691
+{
     my %h;
     %h{ any ^2 }.push: 42;
     is-deeply %h, %(0 => [42], 1 => [42]), 'Junctions with autovivification';

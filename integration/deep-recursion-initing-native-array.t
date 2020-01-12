@@ -2,7 +2,7 @@ use Test;
 
 plan 1;
 
-# RT #130294
+# https://github.com/Raku/old-issue-tracker/issues/5873
 # This test is in a file of its own, because the bug it covered was quite
 # sensitive to small changes.
 

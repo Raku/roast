@@ -41,7 +41,7 @@ is_run(
     :compiler-args['-p'],
 );
 
-# RT #124247
+# https://github.com/Raku/old-issue-tracker/issues/3772
 is_run(
     's[(\d)] = "{$0 * 10}"',      # program
     "5 breads and 2 fishes\n",  # input
@@ -51,3 +51,5 @@ is_run(
     '-p -e using $0 in {} in "" in rhs in assign to s[] form subst',
     :compiler-args['-p'],
 );
+
+# vim: ft=perl6

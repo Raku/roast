@@ -5,7 +5,7 @@ plan 8;
 
 # this was an issue with rakudo that some some assignment
 # to attributes worked more like binding:
-# RT #58818
+# https://github.com/Raku/old-issue-tracker/issues/308
 
 class Foo {
     has $.a is rw;
