@@ -24,20 +24,22 @@ loads_ok '42', "loads_ok is working";
 precomp_loads_ok '42', "precomp_loads_ok is working";
 
 # This was mysteriously broken with the previous CompUnit implementation.
-# May have had something to do with dynamics. Maybe RT #82790 is relevant.
+# May have had something to do with dynamics. Maybe
+# https://github.com/Raku/old-issue-tracker/issues/2336 is relevant.
 loads_is '42', 42, "loads_is is working";
 precomp_loads_is '42', 42, "precomp_loads_is is working";
 
-# RT #124162
+# https://github.com/Raku/old-issue-tracker/issues/3755
 precomp_loads_is '[ $(array[uint8].new(1)), $(array[uint8].new(1)) ]', [1,1],
                  "precompiled Array of native arrays (RT #124162)";
 
-# RT #123679
+# https://github.com/Raku/old-issue-tracker/issues/3657
 precomp_loads_ok(['role Bar { has Str $.my-str handles <lines words> }','class Foo does Bar { }; my $io = Foo.new(:my-str<OHAI>);'], "precompiled role with handles trait on attribute");
 
 precomp_loads_is 'BEGIN { EVAL "43" }', 43, "precompiled EVAL in BEGIN";
 
-# RT #129856
+# https://github.com/Raku/old-issue-tracker/issues/5744
 loads_ok ['package Pod { class Ber {} }', 'Pod::Ber.new;'], 'a class in Pod namespace';
 precomp_loads_ok ['package IO { class Ber {} }', 'IO::Ber.new;'], 'a class in IO namespace (precompiled)';
 
+# vim: ft=perl6

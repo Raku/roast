@@ -22,3 +22,5 @@ sub init-array($r, $c, $val) {
     init-array($r + 1, $c, $val - 1);
   }
 }
+
+# vim: ft=perl6

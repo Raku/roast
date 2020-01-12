@@ -24,7 +24,7 @@ is_run(
        'Can [].WHAT.say',
 );
 
-# RT #70922
+# https://github.com/Raku/old-issue-tracker/issues/1420
 is_run(
     'class A { method postcircumfix:<{ }>() {} }; my &r = {;}; if 0 { if 0 { my $a #OK not used' ~
      "\n" ~ '} }',
@@ -39,7 +39,8 @@ my $code = q:to'--END--';
     print 'alive';
     --END--
 
-# RT #123686 & RT #124318
+# https://github.com/Raku/old-issue-tracker/issues/3659
+# https://github.com/Raku/old-issue-tracker/issues/3784
 is_run(
        $code,
        { status => 0, out => "alive"},
@@ -50,14 +51,14 @@ throws-like { EVAL 'time(1, 2, 3)' },
   X::Undeclared::Symbols,
   'time() with arguments dies';
 
-# RT #76996
+# https://github.com/Raku/old-issue-tracker/issues/2013
 lives-ok { 1.^methods>>.sort }, 'can use >>.method on result of introspection';
 
-# RT #76946
+# https://github.com/Raku/old-issue-tracker/issues/2003
 throws-like ｢Any .= ()｣, Exception, :message{.contains: 'Any'},
     'typed, non-internal exception';
 
-# RT #90522
+# https://github.com/Raku/old-issue-tracker/issues/2429
 {
     my $i = 0;
     sub foo {
@@ -67,19 +68,19 @@ throws-like ｢Any .= ()｣, Exception, :message{.contains: 'Any'},
     lives-ok { foo }, 'can recurse many times into &EVAL';
 }
 
-# RT #77246
+# https://github.com/Raku/old-issue-tracker/issues/2073
 {
     throws-like { EVAL '_~*.A' },
       X::Undeclared::Symbols,
       'weird string that once parsed in rakudo';
 }
 
-# RT #115284
+# https://github.com/Raku/old-issue-tracker/issues/2923
 {
     lives-ok { EVAL 'say(;:[])' }, 'weird code that used to parsefail rakudo';
 }
 
-# RT #76432
+# https://github.com/Raku/old-issue-tracker/issues/1919
 {
     lives-ok { EVAL 'class A {
         has %!x;
@@ -93,7 +94,7 @@ throws-like ｢Any .= ()｣, Exception, :message{.contains: 'Any'},
     }' }, "still able to parse statement after sub decl ending in newline";
 }
 
-# RT #116268
+# https://github.com/Raku/old-issue-tracker/issues/3018
 {
     try EVAL '
         proto bar {*}
@@ -106,21 +107,21 @@ throws-like ｢Any .= ()｣, Exception, :message{.contains: 'Any'},
     ok ~$! ~~ / 'Calling bar(' .*? 'will never work' .*? 'proto' /, "fails correctly";
 }
 
-# RT #123570
+# https://github.com/Raku/old-issue-tracker/issues/3636
 {
     is ((((6103515625/5) * 4 + 123327057) ** 2) % 6103515625),
         (((1220703125 * 4 + 123327057) ** 2) % 6103515625),
-        "at one point rakudo evaluated the first expression to 0, RT #123570"
+        "at one point rakudo evaluated the first expression to 0"
 }
 
-# RT #125365
+# https://github.com/Raku/old-issue-tracker/issues/4309
 is_run(
        '0.^methods(:all).sort',
        { status => 0, err => -> $o {  $o.chars > 2 }},
        'sorting method list does not segfault',
 );
 
-# RT #123684
+# https://github.com/Raku/old-issue-tracker/issues/3658
 is_run '{;}',
     {
         status => 0,
@@ -128,7 +129,7 @@ is_run '{;}',
     },
     'empty code block does not crash (used to do that on JVM)';
 
-# RT #125227
+# https://github.com/Raku/old-issue-tracker/issues/4256
 {
     my $code = q:to'--END--';
         class C {
@@ -151,19 +152,19 @@ is_run '{;}',
     'concise error message when sinking last statement in a file' );
 }
 
-#RT #119999
+# https://github.com/Raku/old-issue-tracker/issues/3240
 #?rakudo todo 'Feels like a bogus test in light of recent changes'
 throws-like { EVAL '&&::{}[];;' },
   X::Undeclared::Symbols,
   "Doesn't die with weird internal error";
 
-#RT #127504
+# https://github.com/Raku/old-issue-tracker/issues/5128
 {
     throws-like { "::a".EVAL }, X::NoSuchSymbol, symbol => "a",
       "test throwing for ::a";
 }
 
-# RT #127748
+# https://github.com/Raku/old-issue-tracker/issues/5185
 {
     is_run(q:to/SEGV/, { out => "360360\n" }, 'Correct result instead of SEGV');
         my $a = 14;
@@ -176,18 +177,18 @@ throws-like { EVAL '&&::{}[];;' },
         SEGV
 }
 
-# RT #127878
-
+# https://github.com/Raku/old-issue-tracker/issues/5232
 sub decode_utf8c {
     my @ints = 103, 248, 111, 217, 210, 97;
     my $b = Buf.new(@ints);
     my Str $u=$b.decode("utf8-c8");
     $u.=subst("a","b");
 }
-#?rakudo.jvm todo "Unknown encoding 'utf8-c8' RT #127878"
-lives-ok &decode_utf8c, 'RT #127878: Can decode and work with interesting byte sequences';
+# https://github.com/Raku/old-issue-tracker/issues/5232
+#?rakudo.jvm todo "Unknown encoding 'utf8-c8'"
+lives-ok &decode_utf8c, 'Can decode and work with interesting byte sequences';
 
-# RT #128368
+# https://github.com/Raku/old-issue-tracker/issues/5366
 {
     sub bar() { foo; return 6 }
     sub foo() { return 42 }
@@ -197,14 +198,14 @@ lives-ok &decode_utf8c, 'RT #127878: Can decode and work with interesting byte s
     is $a, 158 * 6, 'SPESH inline works correctly after 158 iterations';
 }
 
-# RT #127473
+# https://github.com/Raku/old-issue-tracker/issues/5116
 eval-lives-ok '(;)', '(;) does not explode the compiler';
 eval-lives-ok '(;;)', '(;;) does not explode the compiler';
 eval-lives-ok '[;]', '[;] does not explode the compiler';
 eval-lives-ok '[;0]', '[;0] does not explode the compiler';
 
-# RT #127208
-#?rakudo skip 'RT127208'
+# https://github.com/Raku/old-issue-tracker/issues/5020
+#?rakudo skip 'non-deterministic segfaults in parallel code'
 #?DOES 1
 {
     # Purpose of the test is to check that despite having a race
@@ -222,7 +223,7 @@ eval-lives-ok '[;0]', '[;0] does not explode the compiler';
     }
 }
 
-# RT #114672
+# https://github.com/Raku/old-issue-tracker/issues/2879
 throws-like ｢class A114672 {}; class B114672 is A114672 { has $!x = 5; ｣
     ~ ｢our method foo(A114672:) { say $!x } }; &B::foo(A.new)｣,
     Exception,
@@ -241,7 +242,7 @@ throws-like ｢class A114672 {}; class B114672 is A114672 { has $!x = 5; ｣
         'using a null string to access a hash does not segfault';
 }
 
-# RT #128985
+# https://github.com/Raku/old-issue-tracker/issues/5591
 is (^1000 .grep: -> $n {([+] ^$n .grep: -> $m {$m and $n %% $m}) == $n }), (0, 6, 28, 496),
     'No SEGV/crash on reduction in grep using %%';
 
@@ -274,3 +275,5 @@ is_run ｢sub f1 { hash a=>1 }; f1 for ^100000｣, {:out(''), :err(''), :0status
 # https://github.com/rakudo/rakudo/issues/1374
 is_run ｢class Foo {}; -> Foo() $x { $x.say }("42")｣, {:out(''), :err(*), :1status },
     'no segfault when using coercers';
+
+# vim: ft=perl6

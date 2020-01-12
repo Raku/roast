@@ -6,7 +6,9 @@ plan 10;
 
 # the simplest tests are just that it lives, which isn't always the case
 # for early implementations. In particular there were some Rakudo
-# regressions, like RT #63904 and RT #64944
+# regressions, like;
+# https://github.com/Raku/old-issue-tracker/issues/787
+# https://github.com/Raku/old-issue-tracker/issues/931
 
 grammar ExprT1 {
     rule TOP { ^ \d+ [ <operator> \d+ ]* }
@@ -24,7 +26,7 @@ my regex o { o };
 ok "foo" ~~ /<f=&f> <o=&o>+ /, 'Regex matches (2)';
 lives-ok { $/.raku }, 'lives on quantified named captures';
 
-# RT #64874
+# https://github.com/Raku/old-issue-tracker/issues/918
 #?rakudo skip '<foo::bar>'
 {
     my $code_str = 'say <OH HAI>';

@@ -3,7 +3,7 @@ use Test;
 
 plan 1;
 
-# RT #130951
+# https://github.com/Raku/old-issue-tracker/issues/6131
 lives-ok {
     await Promise.allof((^3).map: {
         start {
@@ -13,3 +13,5 @@ lives-ok {
         }
     });
 }, 'Simple EVAL in a loop does not crash';
+
+# vim: ft=perl6

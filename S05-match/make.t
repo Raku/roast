@@ -8,7 +8,7 @@ plan 9;
 
 # L<S05/Match objects/"Fortunately, when you just want to return a different">
 
-# RT #76278
+# https://github.com/Raku/old-issue-tracker/issues/1901
 "blah foo blah" ~~ / foo                 # Match 'foo'
                       { make 'bar' }     # But pretend we matched 'bar'
                     /;
@@ -31,7 +31,7 @@ is $/.ast, 'bar', '$/.ast';
     cmp-ok $/.ast,  '===', FooBar, 'can get made type objects from .ast  (2)';
 }
 
-# R#2057
+# https://github.com/rakudo/rakudo/issues/2057
 {
     lives-ok { "" ~~ /{ (make 0 for 0) }/ for ^100 },
       'check that we did not regress';

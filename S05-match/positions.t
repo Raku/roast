@@ -33,7 +33,7 @@ is ('abc' ~~ /\d+/), Nil, 'Failed match returns Nil';
     is-deeply $/.to,   6, 'List.to';
 }
 
-# RT #126249
+# https://github.com/Raku/old-issue-tracker/issues/4596
 subtest '$/ is constructed in all blocks inside regexes' => {
     plan 2;
     my @res;

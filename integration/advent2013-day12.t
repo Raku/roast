@@ -75,7 +75,7 @@ is-deeply %h<a b c>:delete:k, ('a', 'b'), ':delete:k adverbs';
 # Arrays are not Hashes
 # ---------------------
 
-#RT #121622
+# https://github.com/Raku/old-issue-tracker/issues/3367
 {
     my @a;
     @a[3] = 1;
@@ -96,3 +96,5 @@ is-deeply %h<a b c>:delete:k, ('a', 'b'), ':delete:k adverbs';
     is-deeply @a[2,3,4], (2, 42, 4), '@a[2,3,4] (default)';
     is-deeply @a[2,3,4]:exists, (True, False, True), '@a[2,3,4] (default)';
 }
+
+# vim: ft=perl6
