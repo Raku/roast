@@ -135,7 +135,7 @@ class TestObj { has $!a }
     ok (1 =:= 1) ~~ Failure, 'misuse of =:= is failure (even when ==)';
 }
 
-# RT #127951
+# https://github.com/Raku/old-issue-tracker/issues/5252
 {
   my $a = 42;
   is-deeply $a =:= $a || $a.WHAT =:= $a.WHAT, True,

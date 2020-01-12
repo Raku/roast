@@ -25,11 +25,11 @@ plan 16;
     is (1..10).grep( * !%% 3 ), <1 2 4 5 7 8 10>, '%% works with whatever *';
 } #6
 
-# RT #76170
+# https://github.com/Raku/old-issue-tracker/issues/1882
 {
     # TODO: implement typed exception and adapt test
     throws-like { EVAL q[ 9 !% 0 ] }, X::Syntax::CannotMeta,
-        'infix<!%> is not iffy enough; RT #76170';
+        'infix<!%> is not iffy enough';
 } #1
 
 {
@@ -53,3 +53,5 @@ subtest 'no crashes with bigint args' => {
       % 100000000000000000000000000000000000000000000000577,
       23067200747291880127814827277075079921671259751791, '% op';
 }
+
+# vim: ft=perl6

@@ -59,7 +59,7 @@ is ~@b, "a b d e z", "inplace sort";
     is($_, 42, '.=foo form works on $_');
 }
 
-# RT #64268
+# https://github.com/Raku/old-issue-tracker/issues/842
 {
     my @a = 1,3,2;
     my @a_orig = @a;
@@ -74,7 +74,7 @@ is ~@b, "a b d e z", "inplace sort";
     is @a, [1,2,3],            'worked: @a.=sort';
 }
 
-# RT #70676
+# https://github.com/Raku/old-issue-tracker/issues/1408
 {
    my $x = 5.5;
    $x .= Int;
@@ -92,7 +92,7 @@ is ~@b, "a b d e z", "inplace sort";
    is $x, True, '.= Bool (value)';
 }
 
-# RT #69204
+# https://github.com/Raku/old-issue-tracker/issues/1290
 {
     my $a = 'oh hai';
     my $b = 'uc';

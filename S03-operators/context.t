@@ -98,7 +98,7 @@ is((@).push(42,43), '42 43', 'Anonymous @ variable can be pushed');
     is @seq, <a1 b2 c3>, 'Anonymous $ is really a state variable';
 }
 
-# RT #76320
+# https://github.com/Raku/old-issue-tracker/issues/1893
 {
     my $h = <a b c d>;
     is ~%$h.keys.sort, 'a c', '%$var coercion';

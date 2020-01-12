@@ -26,7 +26,7 @@ is($result_3, Order::Less, 'When spaceship terms are non-trivial members it pars
 %ball{12} = 0.5;
 is(%ball{12} <=> %ball{11}, Order::Less, 'When spaceship terms are non-integral numbers it parses incorrectly');
 
-# RT #126536
+# https://github.com/Raku/old-issue-tracker/issues/4717
 throws-like ｢say ’a‘ <=> ’b‘｣, X::Str::Numeric,
     '<=> with non-numerics throws correct exception';
 

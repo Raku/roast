@@ -65,7 +65,7 @@ tryeq -13.0 % -4.0, -1;
     tryeq 2.5 % 1, .5;
 }
 
-# RT #107492
+# https://github.com/Raku/old-issue-tracker/issues/2603
 ok 9 % (-9) == 0,    'modulo with negative divisor (1)';
 ok (-9) % (-9) == 0, 'modulo with negative divisor (2)';
 
@@ -184,7 +184,7 @@ is -13 mod  4, 3,  '-13 mod 4';
 is  13 mod -4, -3, '13 mod -4';
 is -13 mod -4, -1, '-13 mod -4';
 is 4850761783423467784 mod 256, 8, '4850761783423467784 mod 256';
-# RT #117933
+# https://github.com/Raku/old-issue-tracker/issues/3128
 is 2804985923338703271682399481743033703427656749129565173066 mod 256, 74,
     '2804985923338703271682399481743033703427656749129565173066 mod 256';
 
@@ -303,7 +303,7 @@ All uses of a zero modulus or divisor should 'die', and the
 
 =end pod
 
-# RT #77592
+# https://github.com/Raku/old-issue-tracker/issues/2125
 {
     throws-like { 3 mod 0 }, X::Numeric::DivideByZero,
         numerator => 3,
@@ -348,7 +348,7 @@ All uses of a zero modulus or divisor should 'die', and the
         'Division by zero with infix:</> dies and is catchable with VRef variables';
 }
 
-# RT #123077
+# https://github.com/Raku/old-issue-tracker/issues/3568
 {
     my $rt123077 = 1 / 0;
     throws-like '$rt123077.gist', X::Numeric::DivideByZero,
@@ -364,26 +364,26 @@ All uses of a zero modulus or divisor should 'die', and the
        'Can calculate 2**65 without loss of precision';
 }
 
-# RT #73264
+# https://github.com/Raku/old-issue-tracker/issues/1570
 # Rat literals are gone
 {
     ok 1/7 / 1/7 == 1/49, 'no more Rat literals, infix:</> has normal left assoc';
 }
 
-# RT #73386
+# https://github.com/Raku/old-issue-tracker/issues/1585
 {
     # TODO: implement typed exception and adapt test
     throws-like { EVAL q[ 3 !+ 4 ] }, X::Syntax::CannotMeta,
-        'infix<!+> is not iffy enough; RT #73386';
+        'infix<!+> is not iffy enough';
 }
 
-# RT #100768
+# https://github.com/Raku/old-issue-tracker/issues/2504
 {
     my $x = -Int;
     is $x, 0, '-Int warns (and yields 0) but does not give an error';
 }
 
-# RT #108052
+# https://github.com/Raku/old-issue-tracker/issues/2611
 {
     my role orig-string[$o] { method Str() { $o.Str } };
     my $a = 7 but orig-string['7'];
@@ -391,13 +391,14 @@ All uses of a zero modulus or divisor should 'die', and the
         'infix:<-> produces a proper Int, even if some of the types involved have mixins';
 }
 
-# RT #122053
+# https://github.com/Raku/old-issue-tracker/issues/3409
 isa-ok 4.8 / 1, Rat, 'infix:</> returns Rat when it can';
 isa-ok 4.8 % 1, Rat, 'infix:<%> returns Rat when it can';
 isa-ok 4 % 1.1, Rat, 'infix:<%> returns Rat when it can';
 isa-ok 4.8 % 1.1, Rat, 'infix:<%> returns Rat when it can';
 
-# RT #132083 - Broken math
+# https://github.com/Raku/old-issue-tracker/issues/6514
+# Broken math
 group-of 3 => '-0x7FFFFFFF - 1 math weirdness' => {
     is-deeply -0x7FFFFFFF - 1 == -2147483648, True, '== -2147483648';
     is-deeply -0x7FFFFFFF - 1 == -18446744071562067968, False,

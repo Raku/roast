@@ -174,7 +174,7 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
     is(@b, [1 .. 4], "parens work around this");
 };
 
-# RT #77848
+# https://github.com/Raku/old-issue-tracker/issues/2164
 {
     throws-like '4 X+> 1...2',
          X::Syntax::NonListAssociative,
@@ -218,11 +218,13 @@ is(@c, [1,2,3], "@ = binds looser than ,");
 {
     my $i = 2;
 
-    #?rakudo 2 skip 'superscript exponent associativity RT #130414'
+    # https://github.com/Raku/old-issue-tracker/issues/5917
+    #?rakudo 2 skip 'superscript exponent associativity'
     is(++$i², 9, "++ bind tighter than superscript exponent");
     is(--$i², 4, "-- does too");
 
-    #?rakudo todo 'superscript exponent associativity RT #130414'
+    # https://github.com/Raku/old-issue-tracker/issues/5917
+    #?rakudo todo 'superscript exponent associativity'
     is(2²**3, 256, "mixed exponent does right associative");
 
     is(-2², -4, "superscript exponent binds tighter than unary -");
@@ -264,35 +266,36 @@ throws-like '1, 2 Z 3, 4 X 5, 6',
     foo 3 != 3;
     is($r, False, 'sanity 3 != 3');
     $r = True;
-    #?rakudo 2 todo 'Inequality (!=) misparsed as assignment RT #121108'
+    # https://github.com/Raku/old-issue-tracker/issues/3322
+    #?rakudo 2 todo 'Inequality (!=) misparsed as assignment'
     lives-ok { foo 3 !=3 }, '3 !=3 does not die';
     is($r, False, 'ensure 3 !=3 gives same result as 3 != 3');
 }
 
-# RT #73266
+# https://github.com/Raku/old-issue-tracker/issues/1571
 {
     try { EVAL 'say and die 73266' };
     ok ~$! !~~ '73266', 'and after say is not interpreted as infix:<and>';
 }
 
-# RT #116100
+# https://github.com/Raku/old-issue-tracker/issues/2998
 {
     my $s = set(); my $e = 5; $s = $s (|) $e;
     is $s, Set.new(5), '(|) has correct precedence.';
 }
 
-# RT #114210
+# https://github.com/Raku/old-issue-tracker/issues/2832
 {
     is not(0) + 1, 2,
         '"not(0) + 1" is parsed as "(not 0) + 1"';
 }
 
-# RT #125210
+# https://github.com/Raku/old-issue-tracker/issues/4250
 throws-like 'my $lizmat = 42; ++$lizmat++',
     X::Syntax::NonAssociative,
     'prefix/postfix ++ are not associative';
 
-# RT #128042
+# https://github.com/Raku/old-issue-tracker/issues/5284
 {
     module RT128042 {
         multi infix:<§>($,$) is tighter(&[+]) is export {0};
