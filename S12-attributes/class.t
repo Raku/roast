@@ -12,7 +12,7 @@ Class Attributes
 #L<S12/Class attributes/"Class attributes are declared">
 #L<S12/Class methods/Such a metaclass method is always delegated>
 
-plan 24;
+plan 28;
 
 class Foo {
     our $.bar = 23;
@@ -162,6 +162,27 @@ subtest 'attribute access from where clauses' => {
     RT130748d.new.z-thunk:    42;
     RT130748d.new.z-block:    42;
     RT130748d.new.z-whatever: 42;
+}
+
+{
+    my class A {
+        has $!a is built = 42;
+        method b() { $!a }
+    }
+    my $a = A.new;
+    is $a.b, 42, 'is the private attribute initialized to default value';
+    $a = A.new(a => 666);
+    is $a.b, 666, 'is the private attribute initialized with .new';
+}
+
+{
+    my class A {
+        has $.a is built(False) = 42;
+    }
+    my $a = A.new;
+    is $a.a, 42, 'is the public attribute initialized to default value';
+    $a = A.new(a => 666);
+    is $a.a, 42, 'is the public attribute **NOT** initialized with .new';
 }
 
 # vim: ft=perl6
