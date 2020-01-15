@@ -294,7 +294,8 @@ plan 199;
     ok &none =:= &f1, '... and works';
     lives-ok { CORE::.<&none> := &f2 }, 'CORE::.{} binding lives';
     ok &none =:= &f2, '... and works';
-    #?rakudo 2 skip 'Cannot bind to &::("CORE")::foo RT #126113'
+    # https://github.com/Raku/old-issue-tracker/issues/4560
+    #?rakudo 2 skip 'Cannot bind to &::("CORE")::foo'
     lives-ok { &::($core)::none := &f3 }, '::("CORE") binding lives';
     ok &none =:= &f3, '... and works';
 
@@ -302,7 +303,8 @@ plan 199;
     # make sure accessing it in CORE works
     lives-ok { $CORE::_ := 50 }, 'Binding to $CORE::_ lives';
     is $CORE::_, 50, 'Accessing $CORE::_ works';
-    #?rakudo 2 skip 'Cannot bind to &::("CORE")::foo RT #126113'
+    # https://github.com/Raku/old-issue-tracker/issues/4560
+    #?rakudo 2 skip 'Cannot bind to &::("CORE")::foo'
     lives-ok { $::($core)::_ := 51 }, 'Binding to $::("CORE")::_ lives';
     is $::($core)::_, 51, 'Accessing $::("CORE")::_ works';
 }
@@ -327,7 +329,7 @@ plan 199;
     }
 }
 
-#RT #89706
+# https://github.com/Raku/old-issue-tracker/issues/2420
 {
     $PROCESS::PROGRAM-NAME = "otter";
     is $*PROGRAM-NAME, "otter", 'existing $* assignable via PROCESS';
@@ -498,7 +500,7 @@ my $x110 = 110; #OK
 
 # PARENT - NYI in any compiler
 
-# RT #123154
+# https://github.com/Raku/old-issue-tracker/issues/3578
 {
     my $x = 'really unlikely value';
     ok MY::.values.grep({ ($_ // '') eq 'really unlikely value' }),
@@ -509,10 +511,10 @@ my $x110 = 110; #OK
     }
 }
 
-# RT #129092
+# https://github.com/Raku/old-issue-tracker/issues/5617
 lives-ok { my @keys = CORE::.keys }, 'calling CORE::.keys lives';
 
-# RT #119521
+# https://github.com/Raku/old-issue-tracker/issues/3222
 subtest 'no guts spillage when going too high up scope in pseudopackages' => {
     plan 3 + my @packs = <
         DYNAMIC::  OUTER::   CALLER::   UNIT::     CORE::
@@ -588,11 +590,11 @@ subtest 'no guts spillage when going too high up scope in pseudopackages' => {
     }
 }
 
-# RT #127536
+# https://github.com/Raku/old-issue-tracker/issues/5134
 is_run q|BEGIN { UNIT; Nil }|, { :0status, :out(''), :err('') },
     'no crash if UNIT:: is used at compile time';
 
-# GH perl6/problem-solving#80
+# https://github.com/Raku/problem-solving/issues/80
 # Test for CORE::v6<rev> namespaces
 {
     for <c d e> -> $rev {

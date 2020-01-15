@@ -14,7 +14,7 @@ plan 10;
     is &OUR::eval_born(), 5, 'call to eval-born our sub via OUR works';
 }
 
-# RT #63882
+# https://github.com/Raku/old-issue-tracker/issues/782
 {
     my enum A <a b c>;
     is +c, 2, 'c is 2 from enum';
@@ -25,7 +25,7 @@ plan 10;
     is OUR::c(), 'sub c', 'sub c called with OUR:: works';
 }
 
-# RT #69460
+# https://github.com/Raku/old-issue-tracker/issues/1327
 {
     our $rt69460 = 1;
     lives-ok { EVAL 'class RT69460 { $GLOBAL::rt69460++ }' },

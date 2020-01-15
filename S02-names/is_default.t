@@ -65,7 +65,7 @@ plan 187;
     ok $a.d_var.default === Nil, 'is the default set correctly for $!d';
 } #19
 
-# RT #125324
+# https://github.com/Raku/old-issue-tracker/issues/4291
 {
     my ($a, $b) is default(42);
     is $a, 42, 'is default() works on a group of variables too (1)';
@@ -342,7 +342,8 @@ plan 187;
       X::Parameter::Default::TypeCheck,
       expected => Hash[Int],
       got      => Nil;
-#?rakudo 2 todo "LTA wrong kind of exception (RT #132081)"
+# https://github.com/Raku/old-issue-tracker/issues/6512
+#?rakudo 2 todo "LTA wrong kind of exception"
     throws-like 'class IntFoo { has Int $!a is default("foo") }',
       X::Parameter::Default::TypeCheck,
       expected => Int,
@@ -355,7 +356,8 @@ plan 187;
 
 # native types
 {
-    #?rakudo.jvm todo "RT #126519"
+    # https://github.com/Raku/old-issue-tracker/issues/4703
+    #?rakudo.jvm todo "defaults on native ints"
     throws-like 'my int $a is default(42)',
       X::Comp::Trait::NotOnNative,
       type    => 'is',
@@ -371,14 +373,14 @@ plan 187;
       subtype => 'default';
 } #4
 
-# RT #126104
+# https://github.com/Raku/old-issue-tracker/issues/4553
 lives-ok { EVAL 'my Any $a is default(3)' }, 'Default value that is subtype of constraint works fine';
 lives-ok { EVAL 'class Any3 { has Any $!a is default(3) }' }, 'Default value that is subtype of attribute constraint works fine';
 
-# RT #126110
+# https://github.com/Raku/old-issue-tracker/issues/4557
 lives-ok { EVAL 'my $a is default(Mu); 1' }, 'Mu as a default value on an unconstrained Scalar works';
 
-# RT #132082
+# https://github.com/Raku/old-issue-tracker/issues/6513
 subtest 'can use `Mu` as default for attributes' => {
     plan 3;
 
@@ -391,13 +393,13 @@ subtest 'can use `Mu` as default for attributes' => {
     }
 }
 
-# RT #126115
+# https://github.com/Raku/old-issue-tracker/issues/4561
 eval-lives-ok 'my $a is default(Failure.new); 1',
     'Failure.new as a default value on an unconstrained Scalar works';
 eval-lives-ok 'class NoneFailure { has $!a is default(Failure.new); 1}',
     'Failure.new as a default value on an unconstrained Scalar attribute works';
 
-# RT #126107
+# https://github.com/Raku/old-issue-tracker/issues/4555
 subtest 'is default() respects type constraint' => {
     plan 2;
     subtest 'variable' => {
@@ -421,7 +423,7 @@ subtest 'is default() respects type constraint' => {
     }
 }
 
-# RT #126107
+# https://github.com/Raku/old-issue-tracker/issues/4555
 subtest 'default `is default()` gets adjusted to type constraint' => {
     plan 2;
     subtest 'variable' => {
@@ -446,7 +448,7 @@ subtest 'default `is default()` gets adjusted to type constraint' => {
     }
 }
 
-# RT#126318
+# https://github.com/Raku/old-issue-tracker/issues/4640
 {
     class DefaultTyped { has Int:D $.a is rw is default(42) }
     is DefaultTyped.new.a, 42, 'uninitialized typed:D attribute should have its default';

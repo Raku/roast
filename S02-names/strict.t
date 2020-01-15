@@ -25,13 +25,13 @@ is $Foo::foo, 42, 'lax declared variable is package scoped';
     is EVAL('$bar'), Any, 'lax mode propagates into EVAL blocks'
 }
 
-# RT #123696
+# https://github.com/Raku/old-issue-tracker/issues/3660
 {
     lives-ok { EVAL '(6;)' },
         '"6;" no longer means "no strict;" and "(6;)" no longer results in a compile time error';
 }
 
-# RT #125398
+# https://github.com/Raku/old-issue-tracker/issues/4318
 subtest '`no strict` does not cause autovivification container issues' => {
     plan 4;
 
@@ -42,3 +42,5 @@ subtest '`no strict` does not cause autovivification container issues' => {
     lives-ok { %h<d><e> }, 'postcircumfix {} on Hash key'; # RT #125183
     isa-ok %h<non-existent>, Any, 'non-existent keys are `Any`';
 }
+
+# vim: ft=perl6

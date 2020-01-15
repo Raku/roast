@@ -36,7 +36,7 @@ plan 22;
     is foo-bar(), 'foo-bar', 'can call foo-bar()';
 }
 
-# RT #64656
+# https://github.com/Raku/old-issue-tracker/issues/885
 {
     my sub do-check { 'do-check' }
     is do-check(), 'do-check', 'can call do-check()';
@@ -73,13 +73,13 @@ plan 22;
     is redo-check(), 'redo-check', 'can call redo-check';
 }
 
-# RT #65804
+# https://github.com/Raku/old-issue-tracker/issues/1005
 {
     sub sub($foo) { $foo }
     is sub('RT #65804'), 'RT #65804', 'sub named "sub" works';
 }
 
-# RT #68358
+# https://github.com/Raku/old-issue-tracker/issues/1217
 {
     my ($x);
     sub my($a) { $a + 17 }
@@ -87,13 +87,13 @@ plan 22;
     is my($x), 22, 'call to sub named "my" works';
 }
 
-# RT #72898
+# https://github.com/Raku/old-issue-tracker/issues/1518
 {
     sub loop($a) { $a + 1 }
     is loop(5), 6, 'sub named "loop" works';
 }
 
-# RT #77218
+# https://github.com/Raku/old-issue-tracker/issues/2069
 # Rakudo had troubles with identifiers whos prefix is an alphanumeric infix
 # operator; for example 'sub order' would fail because 'order' begins with
 # 'or'
@@ -111,7 +111,7 @@ plan 22;
     is $tempo, 'walking pace',
         'can call subroutines whos name begin with an alphabetic infix (and)';
 
-    # RT #75710
+    # https://github.com/Raku/old-issue-tracker/issues/1833
     eval-lives-ok q{our sub xyz($abc) { $abc }; xyz(1);},
         'can call subroutine which starts with infix x';
 }

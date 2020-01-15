@@ -34,7 +34,7 @@ plan 10;
     is A."with space"(), 23, 'can declare indirect method name with space';
 }
 
-# RT #126385
+# https://github.com/Raku/old-issue-tracker/issues/4634
 {
     ok ::('&say')   =:= &say, '::("&foo") without whitespace';
     ok ::( '&say')  =:= &say, '::("&foo") with whitespace (1)';
@@ -42,3 +42,5 @@ plan 10;
     ok ::( # we do something explainable to have the need for a comment
         '&say' ) =:= &say, '::("&foo") with a comment';
 }
+
+# vim: ft=perl6

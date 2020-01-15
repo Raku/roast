@@ -166,7 +166,7 @@ throws-like { EVAL ' ::().Str ' },
   Exception,
   'Cannot look up empty name';
 
-# RT #76400
+# https://github.com/Raku/old-issue-tracker/issues/1913
 {
     throws-like { EVAL 'my $foo::; say $foo;' },
     X::Undeclared,

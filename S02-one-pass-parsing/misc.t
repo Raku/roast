@@ -5,7 +5,7 @@ use Test::Util;
 
 plan 1;
 
-# RT#123887
+# https://github.com/Raku/old-issue-tracker/issues/3692
 {
     is_run q[say $\\], { :1status, err => /'Confused'/ },
         'spurious backslash at end of file error must ask for semicolon';

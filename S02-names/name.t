@@ -67,7 +67,7 @@ plan 24;
 #    is &a.VAR.name, '&a', "initialized typed sub should have name";
 } #2
 
-# RT #126241
+# https://github.com/Raku/old-issue-tracker/issues/4616
 {
     is &[==].name, 'infix:<==>', '== op name uses <>';
     is &[=>].name, 'infix:«=>»', '=> op name uses «»';

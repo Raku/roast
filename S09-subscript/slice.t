@@ -64,13 +64,14 @@ plan 34;
     is +@other, 0, '@array[2..1] is an empty slice';
 }
 
-#?rakudo skip 'RT #61844'
+# https://github.com/Raku/old-issue-tracker/issues/556
+#?rakudo skip '*..* does not slice'
 {
     eval-lives-ok '(0,1)[ * .. * ]', 'Two Whatever stars slice lives';
     is EVAL('(0,1)[ * .. * ]'), [0, 1], 'Two Whatever stars slice';
 }
 
-# RT #63014
+# https://github.com/Raku/old-issue-tracker/issues/676
 {
     my @array = <1 2 3>;
     isa-ok @array, Array;
@@ -82,7 +83,7 @@ plan 34;
            'slice with one element specified by variables';
 }
 
-# RT #108508
+# https://github.com/Raku/old-issue-tracker/issues/2614
 {
     my @a1 = 1,2,3,4, 5;
     my @a2 = @a1[2 ..^ @a1];
@@ -90,22 +91,22 @@ plan 34;
     is @a3.join('|'), '4|5', 'can use 1..^@a for subscripting';
 }
 
-# RT #120383
-#?rakudo skip 'RT #120383'
+# https://github.com/Raku/old-issue-tracker/issues/3251
+#?rakudo skip '.= with non-identifier postfixes'
 {
     my @a = 42..50;
     is @a .= [1,2], (43,44), 'did we return right slice';;
     is @a, (43,44), 'did we assign slice ok';
 }
 
-# RT #123594
+# https://github.com/Raku/old-issue-tracker/issues/3643
 {
     my $b = Buf.new(0, 0);
     $b[0, 1] = 2, 3;
     is-deeply $b, Buf.new(2, 3), 'can assign to a Buf slice';
 }
 
-# RT #131827
+# https://github.com/Raku/old-issue-tracker/issues/6419
 {
     my %h;
     %h<a> = ('1','3','4');
