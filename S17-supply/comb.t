@@ -6,7 +6,7 @@ use Test::Tap;
 my @source = <old dog jumpso>;
 my @schedulers = ThreadPoolScheduler.new, CurrentThreadScheduler;
 
-plan @schedulers * 7;
+plan @schedulers * 9;
 
 for @schedulers -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
@@ -21,9 +21,15 @@ for @schedulers -> $*SCHEDULER {
       [<ol dd og ju mp so>],
       "comb a simple list of words for 2 chars at a time exactly";
 
-    tap-ok Supply.from-list(@source).comb(5),
-      [<olddo gjump so>],
-      "comb a simple list of words for 2 chars at a time with leftover";
+    tap-ok Supply.from-list(@source).comb(2,2),
+      [<ol dd>],
+      "comb a simple list of words for 2 chars at a time exactly for a max of 2";
+
+    for \(5), \(5,10) -> \c {
+        tap-ok Supply.from-list(@source).comb(|c),
+          [<olddo gjump so>],
+          "comb a simple list of words for 2 chars at a time with leftover";
+    }
 
     tap-ok Supply.from-list(@source).comb(20),
       ['olddogjumpso'],
