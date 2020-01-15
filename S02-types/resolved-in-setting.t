@@ -20,5 +20,5 @@ my class Regex { }
 is (-> $x { $x })(42), 42, 'Can use pointy block even with code types shadowed';
 is (sub ($x) { $x })(42), 42, 'Can declare sub even with code types shadowed';
 is class C { method m($x) { $x } }.m(42), 42, 'Can declare method even with code types shadowed';
-# RT #126728
+# https://github.com/Raku/old-issue-tracker/issues/4786
 is 'abc' ~~ /\w/, 'a', 'Can use regex even with code types shadowed';

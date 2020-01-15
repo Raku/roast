@@ -110,7 +110,8 @@ plan 70;
 
 # Non-object (native) types are lowercase: int, num, complex, rat, buf, bit.
 
-#?rakudo.jvm todo "RT #126526"
+# https://github.com/Raku/old-issue-tracker/issues/4709
+#?rakudo.jvm todo "trying to put a big Int into an int"
 {
  throws-like { my int $namcu; $namcu = 2**100 }, Exception,
     message => 'Cannot unbox 101 bit wide bigint into native integer',
@@ -142,7 +143,8 @@ plan 70;
  isa-ok($namcu,rat);
 }
 
-#?rakudo skip 'bit NYI RT #124465'
+# https://github.com/Raku/old-issue-tracker/issues/3814
+#?rakudo skip 'bit NYI'
 {
  my bit $namcu =1;
  isa-ok($namcu,bit);
@@ -411,7 +413,7 @@ plan 70;
 # my Hash:of(Array:of(Recipe)) %book;
 # my Hash of Array of Recipe %book; my %book of Hash of Array of Recipe
 
-#RT #75896
+# https://github.com/Raku/old-issue-tracker/issues/1858
 {
   my Array of Int @box;
   ok(1,'Array of Int @box');

@@ -5,7 +5,7 @@ use Test;
 
 plan 2;
 
-# RT#128880
+# https://github.com/Raku/old-issue-tracker/issues/5551
 throws-like ｢HyperWhatever.new｣, X::Cannot::New,
     '.new throws that it cannot be called';
 

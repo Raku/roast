@@ -121,17 +121,17 @@ plan 44;
         '|%h interpolation into \(...) works';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/2230
 {
-    # RT #78496
     my $c = ('OH' => 'HAI').Capture;
     is $c<key>,   'OH',  '.<key> of Pair.Capture';
     is $c<value>, 'HAI', '.<value> of Pair.Capture';
 }
 
-# RT #89766
+# https://github.com/Raku/old-issue-tracker/issues/2422
 nok (defined  \()[0]), '\()[0] is not defined';
 
-# RT #116002
+# https://github.com/Raku/old-issue-tracker/issues/2989
 {
     class RT116002 {
         method foo (Int) {}
@@ -146,20 +146,20 @@ nok (defined  \()[0]), '\()[0] is not defined';
         'capture with infix:<|> on one element array matches signature';
 }
 
-# RT #75850
+# https://github.com/Raku/old-issue-tracker/issues/1852
 {
     is @(\( (:a(2)) )).elems, 1, 'Parens around a colonpair in \(...) make a positional (1)';
     is %(\( (:a(2)) )).elems, 0, 'Parens around a colonpair in \(...) make a positional (2)';
 }
 
-# RT #114100
+# https://github.com/Raku/old-issue-tracker/issues/2825
 {
     sub f(|everything) { everything.raku };
     my %h = :a, :b, :!c;
     ok f(%h) ~~ /'\(' \s* '{'/, 'Hashes not flattened into capture list';
 }
 
-# RT #125505
+# https://github.com/Raku/old-issue-tracker/issues/4360
 {
     my $a = 41;
     my $c = \($a);
@@ -175,7 +175,7 @@ nok (defined  \()[0]), '\()[0] is not defined';
 
 lives-ok { (1..*).Capture.raku }, '.raku of Capture formed from Range does not explode';
 
-# RT #123581
+# https://github.com/Raku/old-issue-tracker/issues/3640
 throws-like '(1..*).list.Capture', X::Cannot::Lazy, :action('create a Capture from');
 throws-like '(my @ = 1..*).Capture', X::Cannot::Lazy, :action('create a Capture from');
 
@@ -188,7 +188,8 @@ throws-like '(my @ = 1..*).Capture', X::Cannot::Lazy, :action('create a Capture 
     ), '.antipairs returns correct result';
 }
 
-# RT #128977 and #130954
+# https://github.com/Raku/old-issue-tracker/issues/5587
+# https://github.com/Raku/old-issue-tracker/issues/6133
 {
     my $c1 = \(42);
     my $a = 42;
@@ -197,7 +198,7 @@ throws-like '(my @ = 1..*).Capture', X::Cannot::Lazy, :action('create a Capture 
     cmp-ok $c1, {$^a !=== $^b}, $c2;
 }
 
-# RT#131351
+# https://github.com/Raku/old-issue-tracker/issues/6257
 subtest 'non-Str-key Pairs in List' => {
     plan 3;
     quietly is-deeply (Mu => Any,).Capture, \(:Mu(Any)), '(Mu => Any,)';

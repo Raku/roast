@@ -415,7 +415,7 @@ sub showkv($x) {
       'do wrong values make initialization croak';
 }
 
-# RT #124454
+# https://github.com/Raku/old-issue-tracker/issues/3805
 isnt
   '91D95D6EDD0F0C61D02A2989781C5AEB10832C94'.Mix.WHICH,
   <a b c>.Mix.WHICH,
@@ -459,7 +459,7 @@ isnt
     is %h3.sort, (a=>1.1, b=>2.2, c=>3.3, d=>4.4), 'did we see all the antipairs';
 }
 
-# RT #128806
+# https://github.com/Raku/old-issue-tracker/issues/5513
 subtest '.hash does not cause keys to be stringified' => {
     plan 3;
     is Mix.new($(<a b>)).hash.keys[0][0], 'a', 'Mix.new';
@@ -514,7 +514,7 @@ subtest '.hash does not cause keys to be stringified' => {
     }
 }
 
-# RT #131561
+# https://github.com/Raku/old-issue-tracker/issues/6343
 {
     is-deeply (a => -1, a => 1).Mix,      mix(),
       'final value 0 disappears in Mix for empty mix';
@@ -522,14 +522,15 @@ subtest '.hash does not cause keys to be stringified' => {
       'final value 0 disappears in Mix';
 }
 
-# RT #131855
+# https://github.com/Raku/old-issue-tracker/issues/6430
 #?rakudo.jvm todo 'got: Nil'
 {
     is-deeply (a => ½).Mix    .roll, 'a', 'Mix.roll with fractional weights';
     is-deeply (a => ½).MixHash.roll, 'a', 'MixHash.roll with fractional weights';
 }
 
-# RT #132352, RT #132353
+# https://github.com/Raku/old-issue-tracker/issues/6632
+# https://github.com/Raku/old-issue-tracker/issues/6633
 {
     my %h is Mix = <a b b c c c d d d d>;
     is %h.elems, 4, 'did we get right number of elements';
@@ -541,7 +542,7 @@ subtest '.hash does not cause keys to be stringified' => {
     dies-ok { %h<a> = False }, 'cannot delete from Mix by assignment';
 }
 
-# R#2289
+# https://github.com/rakudo/rakudo/issues/2289
 is-deeply (1,2,3).Mix.ACCEPTS(().Mix), False, 'can we smartmatch empty';
 
 {

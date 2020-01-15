@@ -303,7 +303,7 @@ sub showkv($x) {
     @a = $b.pick(-2.5);
     is +@a, 0, '.pick(<negative number>) does not return any items';
 
-    # RT #131272
+    # https://github.com/Raku/old-issue-tracker/issues/6228
     is +$b.pick(2.5), 2, ".pick int-ifies arg";
 }
 
@@ -425,7 +425,7 @@ sub showkv($x) {
       'do wrong values make initialization croak';
 }
 
-# RT #124490
+# https://github.com/Raku/old-issue-tracker/issues/3836
 {
     my %h is BagHash = a => 1, b => 0, c => 2;
     nok %h<b>:exists, '"b", initialized to zero, does not exist';
@@ -435,7 +435,7 @@ sub showkv($x) {
     is %h<nonexisting>, 0, '%h<nonexisting> is 0';
 }
 
-# RT #124490
+# https://github.com/Raku/old-issue-tracker/issues/3836
 {
     my %h is BagHash = a => 1, b => 0, c => 2;
 
@@ -448,7 +448,7 @@ sub showkv($x) {
     is %h.keys.sort, <a c>, '++ on an item reinstates it';
 }
 
-# RT #124490
+# https://github.com/Raku/old-issue-tracker/issues/3836
 {
     my %h is BagHash = a => 1, c => 1;
 
@@ -529,7 +529,7 @@ sub showkv($x) {
     is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
 }
 
-# RT #117773
+# https://github.com/Raku/old-issue-tracker/issues/3115
 {
     my $b1 = BagHash.new( (a=>"b") );
     ok $b1.keys[0] ~~ ("a" => "b"), 'first key of BagHash is a Pair ("a" => "b")';
@@ -589,7 +589,7 @@ sub showkv($x) {
     is %h4.sort, (:1a, :2b, :3c, :4d), 'did we see all the kxxv';
 }
 
-# RT #128806
+# https://github.com/Raku/old-issue-tracker/issues/5513
 subtest '.hash does not cause keys to be stringified' => {
     plan 2;
     is BagHash.new($(<a b>)).hash.keys[0][0], 'a', 'BagHash.new';
@@ -681,7 +681,7 @@ group-of 10 => 'BagHash autovivification of non-existent keys' => {
     }
 }
 
-# RT #130366
+# https://github.com/Raku/old-issue-tracker/issues/5892
 subtest 'elements with weight zero are removed' => {
     plan 3;
     my $b = <a b b c d e f>.BagHash; $_-- for $b.values;
@@ -692,7 +692,7 @@ subtest 'elements with weight zero are removed' => {
     is-deeply $b, ().BagHash, 'weight set to zero';
 }
 
-# RT #131241 (zero case covered by RT #131241)
+# https://github.com/Raku/old-issue-tracker/issues/6215
 subtest "elements with negative weights are removed" => {
     plan 2;
     my $b = <a b b c d e f>.BagHash; $_ = -1 for $b.values;
@@ -701,11 +701,12 @@ subtest "elements with negative weights are removed" => {
     is-deeply $b, ().BagHash, 'Pair value < 0 removes element';
 }
 
-# RT #132279
+# https://github.com/Raku/old-issue-tracker/issues/6598
 is-deeply ('foo' => 10000000000000000000).BagHash.grab(1), ('foo',),
     'can .grab() a BagHash key with weight larger than 64 bits';
 
-# RT #132352, RT #132353
+# https://github.com/Raku/old-issue-tracker/issues/6632
+# https://github.com/Raku/old-issue-tracker/issues/6633
 {
     my %h is BagHash = <a b b c c c d d d d>;
     is %h.elems, 4, 'did we get right number of elements';
@@ -720,14 +721,14 @@ is-deeply ('foo' => 10000000000000000000).BagHash.grab(1), ('foo',),
     is %h.elems, 1, 'did we get right number of elements assignment';
 }
 
-# GH #1983
+# https://github.com/rakudo/rakudo/issues/1983
 {
     my %h is BagHash;
     %h<foo> = 10000000000000000000;
     is %h<foo>, 10000000000000000000, 'can successfully set >64-bit value';
 }
 
-# R#2289
+# https://github.com/rakudo/rakudo/issues/2289
 is-deeply (1,2,3).BagHash.ACCEPTS(().BagHash), False, 'can we smartmatch empty';
 
 {

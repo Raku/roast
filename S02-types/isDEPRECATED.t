@@ -129,7 +129,7 @@ Please use 'bar' instead.
 TEXT
 } #2
 
-# RT #120908
+# https://github.com/Raku/old-issue-tracker/issues/3302
 {
     sub rt120908 is DEPRECATED((sub { "a" })()) { };
     rt120908();

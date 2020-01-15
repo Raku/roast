@@ -148,7 +148,8 @@ is(+Range, 0, 'type numification');
     ok(-.2 ~~ $inf, 'negative non-int matches *..*');
 }
 
-# ranges constructed from parameters, from RT #63002
+# https://github.com/Raku/old-issue-tracker/issues/674
+# ranges constructed from parameters
 {
     sub foo($a) { ~($a .. 5) };
     is(foo(5), '5', 'range constructed from parameter OK');
@@ -158,7 +159,8 @@ is(+Range, 0, 'type numification');
 {
     for 1 -> $i {
         for $i..5 -> $j { };
-        is($i, 1, 'Iter range from param doesnt modify param (RT #66280)');
+        # https://github.com/Raku/old-issue-tracker/issues/1014
+        is($i, 1, 'Iter range from param doesnt modify param');
     }
 }
 
@@ -359,14 +361,14 @@ lives-ok({"\0".."~"}, "low ascii range completes");
     dies-ok { ^Inf .minmax },  "cannot have exclusions for minmax otherwise";
 }
 
-# RT #126990
+# https://github.com/Raku/old-issue-tracker/issues/4903
 is-deeply Int.Range, -Inf^..^Inf, 'Int.range is -Inf^..^Inf';
 
-# RT #128887
+# https://github.com/Raku/old-issue-tracker/issues/5553
 is-deeply (eager (^10+5)/2), (2.5, 3.5, 4.5, 5.5, 6.5),
     'Rat range constructed with Range ops does not explode';
 
-# RT #129104
+# https://github.com/Raku/old-issue-tracker/issues/5620
 subtest '.rand does not generate value equal to excluded endpoints' => {
     plan 3;
 
@@ -437,7 +439,7 @@ subtest 'no .int-bounds for Infs and NaN as Range endpoints' => {
         'we can get int-bounds from non-int range with `0` end-point';
 }
 
-# RT #125336
+# https://github.com/Raku/old-issue-tracker/issues/4297
 subtest 'no floating point drifts in degenerate Ranges' => {
     plan 3;
     (NaN..NaN).map: {
@@ -453,7 +455,7 @@ subtest 'no floating point drifts in degenerate Ranges' => {
     is-deeply (Inf..0).elems, 0, 'Inf..0 Range has zero elems'
 }
 
-# R#2517
+# https://github.com/rakudo/rakudo/issues/2517
 {
     my @a = "1"..9;
     is-deeply @a, ["1","2","3","4","5","6","7","8","9"], 'did we get strings';
