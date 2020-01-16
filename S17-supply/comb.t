@@ -6,10 +6,10 @@ use Test::Tap;
 my @source = <old dog jumpso>;
 my @schedulers = ThreadPoolScheduler.new, CurrentThreadScheduler;
 
-plan @schedulers * 18;
+plan @schedulers * 23;
 
 for @schedulers -> $*SCHEDULER {
-    diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
+    diag "**** scheduling with {$*SCHEDULER.^name}";
 
     for \(), \(1), \(0), \(-1) -> \c {
         tap-ok Supply.from-list(@source).comb(|c),
@@ -35,7 +35,7 @@ for @schedulers -> $*SCHEDULER {
           "comb a simple list of words with {c.raku.substr(1)}";
     }
 
-    for \(/...../), \(/...../,10) -> \c {
+    for \(/.**5/), \(/.**5/,10), \(/.**5/,:!match), \(/.**5/,10,:!match) -> \c {
         tap-ok Supply.from-list(@source).comb(|c),
           [<olddo gjump>],
           "comb a simple list of words with {c.raku.substr(1)}";
@@ -53,10 +53,15 @@ for @schedulers -> $*SCHEDULER {
           "comb a simple list of words with {c.raku.substr(1)}";
     }
 
-    for \('z'), \(/.**20/) -> \c {
+    for \('z'), \(/.**20/), \(/.**20/,:!match) -> \c {
         tap-ok Supply.from-list(@source).comb(|c),
           [],
           "comb a simple list of words with {c.raku.substr(1)}";
+    }
+
+    for \(/./,:match), \(/./,10,:match) -> \c {
+        dies-ok { Supply.from-list(@source).comb(|c) },
+          "died with {c.raku.substr(1)}";
     }
 }
 
