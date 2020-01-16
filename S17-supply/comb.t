@@ -6,7 +6,7 @@ use Test::Tap;
 my @source = <old dog jumpso>;
 my @schedulers = ThreadPoolScheduler.new, CurrentThreadScheduler;
 
-plan @schedulers * 9;
+plan @schedulers * 11;
 
 for @schedulers -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
@@ -34,6 +34,14 @@ for @schedulers -> $*SCHEDULER {
     tap-ok Supply.from-list(@source).comb(20),
       ['olddogjumpso'],
       "comb a simple list of words for 20 chars at a time";
+
+    tap-ok Supply.from-list(@source).comb('o'),
+      [<o o o>],
+      "comb a simple list of words for a Str needle";
+
+    tap-ok Supply.from-list(@source).comb('z'),
+      [],
+      "comb a simple list of words for a Str needle that is not there";
 }
 
 # vim: ft=perl6 expandtab sw=4
