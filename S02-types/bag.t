@@ -318,7 +318,7 @@ sub showkv($x) {
 
     # https://github.com/rakudo/rakudo/issues/1438
 	  lives-ok { $b.pick(1).gist }, ".pick() gives valid result with argument";
-    # RT #131272
+    # https://github.com/Raku/old-issue-tracker/issues/6228
     is +$b.pick(2.5), 2, ".pick int-ifies arg";
 }
 
@@ -461,13 +461,13 @@ sub showkv($x) {
       'do wrong values make initialization croak';
 }
 
-# RT #124454
+# https://github.com/Raku/old-issue-tracker/issues/3805
 isnt
   '91D95D6EDD0F0C61D02A2989781C5AEB10832C94'.Bag.WHICH,
   <a b c>.Bag.WHICH,
   'Faulty .WHICH creation';
 
-# RT #117915
+# https://github.com/Raku/old-issue-tracker/issues/3126
 {
     my @pairings;
     my Bag $bag .= new: <foo foo bar>;
@@ -480,7 +480,7 @@ isnt
         'can use cross operator X with bag keys';
 }
 
-# RT #125611
+# https://github.com/Raku/old-issue-tracker/issues/4399
 {
     my class MyBag is Bag { }
     my $b = MyBag.new(|<a foo a a a a b foo>);
@@ -529,7 +529,7 @@ isnt
     is %h4.sort, (:1a, :2b, :3c, :4d), 'did we see all the kxxv';
 }
 
-# RT #128806
+# https://github.com/Raku/old-issue-tracker/issues/5513
 subtest '.hash does not cause keys to be stringified' => {
     plan 3;
     is Bag.new($(<a b>)).hash.keys[0][0], 'a', 'Bag.new';
@@ -567,7 +567,8 @@ subtest '.hash does not cause keys to be stringified' => {
     }
 }
 
-# RT #132352, RT #132353
+# https://github.com/Raku/old-issue-tracker/issues/6632
+# https://github.com/Raku/old-issue-tracker/issues/6633
 {
     my %h is Bag = <a b b c c c d d d d>;
     is %h.elems, 4, 'did we get right number of elements';
@@ -579,7 +580,7 @@ subtest '.hash does not cause keys to be stringified' => {
     dies-ok { %h<a> = False }, 'cannot delete from Bag by assignment';
 }
 
-# R#2289
+# https://github.com/rakudo/rakudo/issues/2289
 is-deeply (1,2,3).Bag.ACCEPTS( ().Bag ), False, 'can we smartmatch empty';
 
 {

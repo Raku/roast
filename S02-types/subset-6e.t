@@ -26,7 +26,7 @@ is Even.^ver, '6.e', "subset created by 6.e language version";
 throws-like 'my Even $x = 3', X::TypeCheck::Assignment,
     "Can't assign value that violates type constraint via subset";
 
-# RT # 69518'
+# https://github.com/Raku/old-issue-tracker/issues/1337
 throws-like 'Even.new', Exception, 'Cannot instantiate a subtype';
 
 {
@@ -54,7 +54,7 @@ throws-like 'my Digit $x = -1', X::TypeCheck::Assignment,
 throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
     'original type prevents assignment';
 
-# RT #67818
+# https://github.com/Raku/old-issue-tracker/issues/1159
 {
     subset Subhash of Hash;
     lives-ok { my Subhash $a = {} },
@@ -110,7 +110,7 @@ throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
         'subset of Str where pattern enforces pattern';
 }
 
-# RT #67256
+# https://github.com/Raku/old-issue-tracker/issues/1120
 {
     subset RT67256 of Int where { $^i > 0 }
     my RT67256 $rt67256 = 1;
@@ -121,7 +121,7 @@ throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
     ok "$!" ~~ / RT67256 /, 'error for bad assignment mentions subset';
 }
 
-# RT #69334
+# https://github.com/Raku/old-issue-tracker/issues/1315
 {
     class Y {has $.z};
     subset sY of Y where {.z == 0};
@@ -130,14 +130,14 @@ throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
     ok 4 !~~ sY, 'and if nominal type check fails, it is False';
 }
 
-# RT #74234
+# https://github.com/Raku/old-issue-tracker/issues/1676
 {
     subset RT74234 of Mu;
     my RT74234 $rt74234 = 23;
     is $rt74234, 23, 'subset RT74234 of Mu + type check and assignment works';
 }
 
-# RT #77356
+# https://github.com/Raku/old-issue-tracker/issues/2085
 {
     sub limit() { 0 }
     subset aboveLexLimit of Int where { $_ > limit() };
@@ -145,7 +145,7 @@ throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
     nok -1 ~~ aboveLexLimit, 'can use subset that depends on lexical sub (2)';
 }
 
-# RT # 77356
+# https://github.com/Raku/old-issue-tracker/issues/2085
 {
     my $limit = 0;
     subset aboveLexVarLimit of Int where { $_ > $limit };
@@ -153,10 +153,11 @@ throws-like 'my Digit $x = 3.1', X::TypeCheck::Assignment,
     nok -1 ~~ aboveLexVarLimit, 'can use subset that depends on lexical variable (2)';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/2299
 subset Bug::RT80930 of Int where { !.defined || $_ %% 2 };
 lives-ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
 
-# RT #95500
+# https://github.com/Raku/old-issue-tracker/issues/2451
 {
     subset SomeStr of Str where any <foo bar>;
      ok 'foo' ~~ SomeStr, 'subset ... where any(...) (+)';
@@ -164,7 +165,7 @@ lives-ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
 }
 
 
-# RT #65308
+# https://github.com/Raku/old-issue-tracker/issues/963
 {
     subset FooStr of Str where /^foo/;
     my multi method uc(FooStr $self:) { return "OH HAI" }; #OK not used
@@ -172,7 +173,7 @@ lives-ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
 
 }
 
-# RT #73344
+# https://github.com/Raku/old-issue-tracker/issues/1555
 my $a = 1;
 {
     my $a = 3;
@@ -186,14 +187,14 @@ my $a = 1;
 }
 
 {
-    #RT #113434
+    # https://github.com/Raku/old-issue-tracker/issues/2780
     my subset MI of Int;
     ok MI ~~ Mu,   'subset conforms to Mu';
     ok MI ~~ Int,  'subset conforms to base type';
     nok Mu  ~~ MI, 'Mu does not conform to subset';
 }
 
-# RT #74352
+# https://github.com/Raku/old-issue-tracker/issues/1691
 {
     subset A of Array;
     subset B of A;
@@ -202,11 +203,11 @@ my $a = 1;
     ok [] ~~ D, "complicated subset combinations #74352";
 }
 
-# RT #126018
+# https://github.com/Raku/old-issue-tracker/issues/4525
 lives-ok { EVAL 'my class A { has $.integer where * > 0 = 1; method meth { 1 / $!integer } }' },
     'subset constraint in attribute does not blow up optimizer dispatch analysis';
 
-# RT #132073
+# https://github.com/Raku/old-issue-tracker/issues/6510
 {
     my subset S-Int of Int;
     my subset S-Str of Str;

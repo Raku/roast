@@ -40,7 +40,7 @@ isa-ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 
 {
     # check that it also works with Enums - used to be a Rakudo bug
-    # RT #63880
+    # https://github.com/Raku/old-issue-tracker/issues/781
     enum A <b c>;
     isa-ok (b < *), Code, 'Enums and Whatever star interact OK';
 }
@@ -54,16 +54,16 @@ isa-ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     ok !$code("bar"), 'and it works (-)';
 }
 
-# RT #64566
+# https://github.com/Raku/old-issue-tracker/issues/876
 {
     my @a = 1 .. 4;
     is @a[1..*], 2..4, '@a[1..*] skips first element, stops at last';
     is @a, 1..4, 'array is unmodified after reference to [1..*]';
-    # RT #61844
+    # https://github.com/Raku/old-issue-tracker/issues/556
     is (0, 1)[*-1..*], 1, '*-1..* lives and clips to range of List';
 }
 
-# RT #68894
+# https://github.com/Raku/old-issue-tracker/issues/1262
 {
     my @a = <a b>;
     my $t = join '', map { @a[$_ % *] }, ^5;
@@ -87,7 +87,8 @@ isa-ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     for 1..4 {
         @x1[+*] = $_;
     }
-    is @x1.join('|'), '1|2|3|4', '+* in hash slice (RT #67450)';
+    # https://github.com/Raku/old-issue-tracker/issues/1131
+    is @x1.join('|'), '1|2|3|4', '+* in hash slice';
 }
 
 # L<S02/Currying of Unary and Binary Operators/are internally curried into closures of one or two
@@ -172,7 +173,7 @@ is (0,0,0,0,0,0) >>+>> (Slip(1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
         'also if the last is not a *, but a normal value';
 }
 
-# RT #122708
+# https://github.com/Raku/old-issue-tracker/issues/3502
 {
     isa-ok * + 2,      Code, "'* + 2' curries";
     isa-ok * min 2,    Code, "'* min 2' curries";
@@ -198,13 +199,14 @@ is (0,0,0,0,0,0) >>+>> (Slip(1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
     is $x('dog'), 'GOD', 'we call both methods';
 }
 
-# chains of operators, RT #71846
+# chains of operators
+# https://github.com/Raku/old-issue-tracker/issues/1469
 {
     is (0, 1, 2, 3).grep(!(* % 2)).join('|'),
         '0|2', 'prefix:<!> Whatever-curries correctly';
 }
 
-# RT #69362
+# https://github.com/Raku/old-issue-tracker/issues/1317
 {
     my $x = *.uc;
     my $y = * + 3;
@@ -213,12 +215,12 @@ is (0,0,0,0,0,0) >>+>> (Slip(1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 
 }
 
-# RT #73162
+# https://github.com/Raku/old-issue-tracker/issues/1558
 # WAS:  eval-lives-ok '{*.{}}()', '{*.{}}() lives';
 # This is now supposed tobe a double-closure error:
 throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
 
-# RT #80256
+# https://github.com/Raku/old-issue-tracker/issues/2286
 {
     my $f = * !< 3;
     isa-ok $f, Code, 'Whatever-currying !< (1)';
@@ -277,7 +279,7 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
     is $f(<a b>), '1a3 2b4', 'Whatever-currying with Z+ lists (2)';
 }
 
-# RT #79166
+# https://github.com/Raku/old-issue-tracker/issues/2256
 {
     my $rt79166 = *;
     isa-ok $rt79166, Whatever, 'assignment of whatever still works';
@@ -285,19 +287,19 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
     is $rt79166, 'RT #79166', 'assignment to variable with whatever in it';
 }
 
-# RT #81448
+# https://github.com/Raku/old-issue-tracker/issues/2310
 {
     sub f($x) { $x x 2 };
     is *.&f.('a'), 'aa', '*.&sub curries';
 }
 
-# RT #77000
+# https://github.com/Raku/old-issue-tracker/issues/2015
 {
     isa-ok *[0], WhateverCode, '*[0] curries';
     is *[0]([1, 2, 3]), 1, '... it works';
 }
 
-# RT #102466
+# https://github.com/Raku/old-issue-tracker/issues/2542
 
 {
     my $chained = 1 < * < 3;
@@ -306,7 +308,7 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
     nok $chained(3), 'Chained comparison (3)';
 }
 
-# RT #120385
+# https://github.com/Raku/old-issue-tracker/issues/3258
 {
     isa-ok (*.[1]), Code, '*.[1] is some kind of code';
     isa-ok (*.<a>), Code, '*.<a> is some kind of code';
@@ -332,44 +334,47 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
 
 }
 
-# RT #127408
+# https://github.com/Raku/old-issue-tracker/issues/5098
 throws-like '*(42)', X::Method::NotFound, typename => 'Whatever';
 
-# RT #131106
+# https://github.com/Raku/old-issue-tracker/issues/6177
 {
     my $foo = "foo";
     ok $foo ~~ (* =:= $foo), 'Code.ACCEPTS preserves container';
 }
 
-# RT #126540
+# https://github.com/Raku/old-issue-tracker/issues/4719
 {
     is-deeply (* !~~ Int)(1),   False, 'Whatever-currying !~~ (1)';
     is-deeply (* !~~ Int)("x"), True,  'Whatever-currying !~~ (2)';
 }
 
-#?rakudo todo 'useless use corner case RT #130773'
+# https://github.com/Raku/old-issue-tracker/issues/6068
+#?rakudo todo 'useless use corner case'
 is_run "my &f = EVAL '*+*'", { err => '' }, '*+* does not warn from inside EVAL';
 
 is_run '-> +@foo { @foo.head.(41) }(* == 42)', { err => '' }, 'no warning when WhateverCode passed as arg and invoked';
 
-# RT #131846
+# https://github.com/Raku/old-issue-tracker/issues/6428
 is-eqv (1,2,3).combinations(2..*), ((1, 2), (1, 3), (2, 3), (1, 2, 3)).Seq,
     'combinations(2..*)';
 
-#?rakudo todo 'closure/scoping of outer parameter with rx RT #131409'
+# https://github.com/Raku/old-issue-tracker/issues/6296
+#?rakudo todo 'closure/scoping of outer parameter with rx'
 {
     my @match-rx = <foo fie>.map( -> $r { * ~~ /<$r>/ } );
     my @matches = (for <fee foo fie fum> -> $f { @match-rx.grep({$_($f)}).map({~$/}).list } );
     is-deeply @matches, [(), ("foo",), ("fie",), ()], 'outer parameter in rx in WhateverCode in closure';
 }
 
-# RT #126984
+# https://github.com/Raku/old-issue-tracker/issues/4901
 {
     my sub foo($x) { (* ~ $x)($_) given $x };
     is foo(1) ~ foo(2), '1122', 'topic refreshed in immediate invocation of WhateverCode';
 }
 
-{ # RT #126415
+# https://github.com/Raku/old-issue-tracker/issues/4664
+{
     my @isprime = False, False;
     is-deeply (
         for 1 .. 10 -> $i {
@@ -415,7 +420,7 @@ subtest 'compile time Junction in `where` thunk evaluation' => {
     is (my Foo $b is default(42)), 42, 'subset + default on variable';
 }
 
-# RT #131409
+# https://github.com/Raku/old-issue-tracker/issues/6296
 subtest 'regex whatever curry' => {
     plan 11;
     my @a = <foo bar>.map: { * ~~ /<$_>/ }
@@ -443,7 +448,7 @@ subtest 'regex whatever curry' => {
     is @d.head.('foo').so, True, '/<$_>/ curry';
 }
 
-# RT #128859
+# https://github.com/Raku/old-issue-tracker/issues/5539
 subtest 'chained ops with whatever curry in them' => {
     plan 6;
     is-deeply (1 < *+1 < 5)(3), True,  'op curry inside (1)';
@@ -477,7 +482,8 @@ subtest 'various wild cases' => {
     is-deeply (* + $a > $b(*) + *.flip + *.flip² > 2000)(50,17,13), True,  '9';
 }
 
-{ # RT #130859
+# https://github.com/Raku/old-issue-tracker/issues/6098
+{
     sub f { my $x = ++$; (*.[* - $x])(<a b c>) }
     is-deeply [f, f, f], [<c b a>], 'postfix curry with another curry inside';
 }

@@ -52,11 +52,11 @@ my @sorted = <
 vtest Order::Less, @sorted;
 vtest Order::More, @sorted.reverse;
 
-# RT #116016
+# https://github.com/Raku/old-issue-tracker/issues/2992
 is v12.3.4 cmp Version.new("12.3.4"), Order::Same, 'can parse literal versions where major version is more than one digit';
 
 {
-    # RT #128408
+    # https://github.com/Raku/old-issue-tracker/issues/5380
     is (v6   cmp v2), Order::More, 'v6   is newer than v2 [literals]';
     is (v6.c cmp v2), Order::More, 'v6.c is newer than v2 [literals]';
     is (v6.d cmp v2), Order::More, 'v6.d is newer than v2 [literals]';
@@ -80,3 +80,5 @@ subtest '`eqv` on containerized Version objects' => {
 # https://irclog.perlgeek.de/perl6/2017-06-24#i_14781849
 is_run ｢use v6c; print "OK";｣, {:out('OK'), :err(''), :0status},
     'can use `v6c` version literal (no dot) when specifying Raku version';
+
+# vim: ft=perl6

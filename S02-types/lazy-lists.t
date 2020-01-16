@@ -133,7 +133,7 @@ sub make-lazy-list($num) { gather { take $_ for 0..^$num; $was-lazy = 0 }.lazy }
     ok $was-lazy, "first argument of X~ is lazy";
 }
 
-# RT #121994
+# https://github.com/Raku/old-issue-tracker/issues/3401
 {
     my @a;
     @a.push: $("one,two,three".split(",").list);
@@ -143,7 +143,7 @@ sub make-lazy-list($num) { gather { take $_ for 0..^$num; $was-lazy = 0 }.lazy }
     is-deeply @b, [(<one two three>).list.item, ], "unshift: did we not lose the split?";
 }
 
-# RT #120035
+# https://github.com/Raku/old-issue-tracker/issues/3242
 {
     my $i;
     for gather { $i++, .take for 1..5 } {

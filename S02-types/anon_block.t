@@ -127,7 +127,7 @@ throws-like {(sub { { $^x } }).()},
   'implicit params become errors';
 isnt((sub { -> { 3 } }).(), 3, 'as are pointies');
 
-# RT #68116
+# https://github.com/Raku/old-issue-tracker/issues/1191
 {
     sub rt68116 { 68116 }
     is &rt68116(), 68116, 'check that sub is callable via &';
