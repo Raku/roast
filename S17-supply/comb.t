@@ -6,7 +6,7 @@ use Test::Tap;
 my @source = <old dog jumpso>;
 my @schedulers = ThreadPoolScheduler.new, CurrentThreadScheduler;
 
-plan @schedulers * 13;
+plan @schedulers * 16;
 
 for @schedulers -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
@@ -17,9 +17,11 @@ for @schedulers -> $*SCHEDULER {
           "comb a simple list of words with {c.raku.substr(1)}";
     }
 
-    tap-ok Supply.from-list(@source).comb(2),
-      [<ol dd og ju mp so>],
-      "comb a simple list of words for 2 chars at a time exactly";
+    for \(2), \(/../) -> \c {
+        tap-ok Supply.from-list(@source).comb(|c),
+          [<ol dd og ju mp so>],
+          "comb a simple list of words with {c.raku.substr(1)}";
+    }
 
     tap-ok Supply.from-list(@source).comb(2,2),
       [<ol dd>],
@@ -31,9 +33,17 @@ for @schedulers -> $*SCHEDULER {
           "comb a simple list of words with {c.raku.substr(1)}";
     }
 
-    tap-ok Supply.from-list(@source).comb(20),
-      ['olddogjumpso'],
-      "comb a simple list of words for 20 chars at a time";
+    for \(/...../) -> \c {
+        tap-ok Supply.from-list(@source).comb(|c),
+          [<olddo gjump>],
+          "comb a simple list of words with {c.raku.substr(1)}";
+    }
+
+    for \(20) -> \c {
+        tap-ok Supply.from-list(@source).comb(|c),
+          ['olddogjumpso'],
+          "comb a simple list of words with {c.raku.substr(1)}";
+    }
 
     for \("o"), \("o",Inf), \("o",*) -> \c {
         tap-ok Supply.from-list(@source).comb(|c),
@@ -41,9 +51,11 @@ for @schedulers -> $*SCHEDULER {
           "comb a simple list of words with {c.raku.substr(1)}";
     }
 
-    tap-ok Supply.from-list(@source).comb('z'),
-      [],
-      "comb a simple list of words for a Str needle that is not there";
+    for \('z'), \(/.**20/) -> \c {
+        tap-ok Supply.from-list(@source).comb(|c),
+          [],
+          "comb a simple list of words with {c.raku.substr(1)}";
+    }
 }
 
 # vim: ft=perl6 expandtab sw=4
