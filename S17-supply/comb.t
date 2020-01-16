@@ -6,7 +6,7 @@ use Test::Tap;
 my @source = <old dog jumpso>;
 my @schedulers = ThreadPoolScheduler.new, CurrentThreadScheduler;
 
-plan @schedulers * 16;
+plan @schedulers * 18;
 
 for @schedulers -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
@@ -23,9 +23,11 @@ for @schedulers -> $*SCHEDULER {
           "comb a simple list of words with {c.raku.substr(1)}";
     }
 
-    tap-ok Supply.from-list(@source).comb(2,2),
-      [<ol dd>],
-      "comb a simple list of words with (2,2)";
+    for \(2,2), (/../,2) -> \c {
+        tap-ok Supply.from-list(@source).comb(|c),
+          [<ol dd>],
+          "comb a simple list of words with {c.raku.substr(1)}";
+    }
 
     for \(5), \(5,10) -> \c {
         tap-ok Supply.from-list(@source).comb(|c),
@@ -33,7 +35,7 @@ for @schedulers -> $*SCHEDULER {
           "comb a simple list of words with {c.raku.substr(1)}";
     }
 
-    for \(/...../) -> \c {
+    for \(/...../), \(/...../,10) -> \c {
         tap-ok Supply.from-list(@source).comb(|c),
           [<olddo gjump>],
           "comb a simple list of words with {c.raku.substr(1)}";
