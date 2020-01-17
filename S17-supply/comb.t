@@ -59,10 +59,13 @@ for @schedulers -> $*SCHEDULER {
           "comb a simple list of words with {c.raku.substr(1)}";
     }
 
-    for \(/./,:match), \(/./,10,:match) -> \c {
-        dies-ok { Supply.from-list(@source).comb(|c) },
-          "died with {c.raku.substr(1)}";
-    }
+    tap-ok Supply.from-list(@source).comb(/./, :match),
+      [<o l d d o g j u m p s o>],
+      "comb with (/./, :match)";
+
+    tap-ok Supply.from-list(@source).comb(/./, 10, :match),
+      [<o l d d o g j u m p>],
+      "comb with (/./, 10, :match)";
 }
 
 # vim: ft=perl6 expandtab sw=4
