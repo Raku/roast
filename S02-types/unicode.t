@@ -10,11 +10,13 @@ my Str $u = "\x[0043,0323]";
 is $u.codes, 2, 'combining \x[0042,0323] is two codes';
 is "foo\r\nbar".codes, 8, 'CRLF is 2 codes';
 
-#?rakudo.jvm todo "NFG on JVM RT #124500"
+# https://github.com/Raku/old-issue-tracker/issues/3841
+#?rakudo.jvm todo "NFG on JVM"
 is $u.chars, 1, '.chars defaults to NFG';
 
-# RT #65170
-#?rakudo.jvm todo "NFG on JVM RT #124501"
+# https://github.com/Raku/old-issue-tracker/issues/953
+# https://github.com/Raku/old-issue-tracker/issues/3842
+#?rakudo.jvm todo "NFG on JVM"
 {
     my $rt65170;
 
@@ -24,4 +26,4 @@ is $u.chars, 1, '.chars defaults to NFG';
     is $rt65170.chars, 1, '.chars defaults to NFG (3)';
 }
 
-#vim: ft=perl6
+# vim: ft=perl6

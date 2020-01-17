@@ -378,7 +378,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s.elems, 0, '.grabpairs *should* change the SetHash';
 }
 
-# RT #124490"
+# https://github.com/Raku/old-issue-tracker/issues/3836
 {
     my %h is SetHash = a => True, b => False, c => True;
     is +%h.elems, 2, 'Inititalization worked';
@@ -452,7 +452,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
       'do wrong values make initialization croak';
 }
 
-# RT #125611
+# https://github.com/Raku/old-issue-tracker/issues/4399
 {
     class RT125611 is SetHash {
         method foo( $foo ) {
@@ -463,7 +463,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $rt125611<a>, True, 'can assign to subclassed SetHash';
 }
 
-# RT #127166
+# https://github.com/Raku/old-issue-tracker/issues/4975
 {
     ok <one two three>.map({$_}) ~~ SetHash.new(<two three one>), 'smartmatch a Seq';
 }
@@ -511,7 +511,7 @@ group-of 10 => 'SetHash autovivification of non-existent keys' => {
     is-deeply   $sh5<as>,       Bool::True,  'correct result of assignment';
 }
 
-# RT#127863
+# https://github.com/Raku/old-issue-tracker/issues/5223
 subtest 'cloned SetHash gets its own elements storage' => {
     plan 4;
     my $a = SetHash.new: <a b c>;
@@ -528,7 +528,6 @@ subtest 'cloned SetHash gets its own elements storage' => {
         'modifying second does not affect the first';
 }
 
-# RT 130240
 for SetHash, BagHash, MixHash -> \T {
     my $obj = T.new;
     my $i = 1001;
@@ -623,7 +622,7 @@ for SetHash, BagHash, MixHash -> \T {
     throws-like { SetHash.new(^Inf) }, X::Cannot::Lazy, :what<SetHash>;
 }
 
-# RT #130366
+# https://github.com/Raku/old-issue-tracker/issues/5892
 subtest 'elements with weight zero are removed' => {
     plan 3;
     my $b = <a b b c d e f>.SetHash; $_-- for $b.values;
@@ -634,7 +633,8 @@ subtest 'elements with weight zero are removed' => {
     is-deeply $b, ().SetHash, 'weight set to zero';
 }
 
-# RT #131241 (zero case covered by RT #130366)
+# https://github.com/Raku/old-issue-tracker/issues/6215
+# https://github.com/Raku/old-issue-tracker/issues/5892
 subtest "elements with negative weights are allowed in SetHashes" => {
     plan 2;
     my $b = <a b b c>.SetHash; $_ = -1 for $b.values;
@@ -643,7 +643,8 @@ subtest "elements with negative weights are allowed in SetHashes" => {
     is-deeply $b, ("b","a","c").SetHash, 'negative Pair value => True => element present';
 }
 
-# RT #132352, RT #132353
+# https://github.com/Raku/old-issue-tracker/issues/6632
+# https://github.com/Raku/old-issue-tracker/issues/6633
 {
     my %h is SetHash = <a b c d>;
     is %h.elems, 4, 'did we get right number of elements';
@@ -658,7 +659,7 @@ subtest "elements with negative weights are allowed in SetHashes" => {
     is %h.elems, 1, 'did we get right number of elements assignment';
 }
 
-# R#2289
+# https://github.com/rakudo/rakudo/issues/2289
 is-deeply (1,2,3).SetHash.ACCEPTS(().SetHash), False, 'can we smartmatch empty';
 
 {

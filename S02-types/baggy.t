@@ -13,7 +13,8 @@ plan 9;
     is-deeply $b.SetHash, SetHash.new(<a b>),   '.SetHash';
 }
 
-{ # RT#127863
+# https://github.com/Raku/old-issue-tracker/issues/5223
+{
     subtest 'cloned BagHash gets its own elements storage' => {
         plan 2;
         my $a = BagHash.new: <a b c>;
@@ -48,7 +49,7 @@ subtest 'Baggy:U forwards methods to Mu where appropriate' => {
     }
 }
 
-# https://rt.perl.org/Ticket/Display.html?id=131270
+# https://github.com/Raku/old-issue-tracker/issues/6227
 subtest '.pick/.roll/.grab reject NaN count' => {
     plan 3;
     throws-like { ^5 .BagHash.pick: NaN }, Exception, '.pick';
@@ -56,7 +57,7 @@ subtest '.pick/.roll/.grab reject NaN count' => {
     throws-like { ^5 .BagHash.grab: NaN }, Exception, '.grab';
 }
 
-# RT 131386
+# https://github.com/Raku/old-issue-tracker/issues/6284
 subtest 'can access key of empty list coerced to type' => {
     my @tests = <Set SetHash  Bag BagHash  Mix MixHash  Map Hash>;
     plan +@tests;

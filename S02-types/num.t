@@ -175,10 +175,10 @@ is(4_2.0_1, 42.01,  'single underscores are ok');
 is 0_1, 1, "0_1 is parsed as 0d1";
 is +^1, -2, '+^1 == -2 as promised';
 
-# RT #73238
+# https://github.com/Raku/old-issue-tracker/issues/1567
 ok 0xFFFFFFFFFFFFFFFF > 1, '0xFFFFFFFFFFFFFFFF is not -1';
 
-# RT #122593
+# https://github.com/Raku/old-issue-tracker/issues/3485
 ok Num === Num, 'Num === Num should be truthy, and not die';
 
 { # cover for https://github.com/rakudo/rakudo/commit/906719c8c528bb46c12ebd1ce857b7ec90ebe425
@@ -700,7 +700,8 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok asinh(my num $ =     -∞), '==', -∞,     '-∞';
 
         cmp-ok asinh(my num $ =  1e200), '==',  ∞,  '1e200';
-        #?rakudo 2 todo 'RT 129919'
+        # https://github.com/Raku/old-issue-tracker/issues/5760
+        #?rakudo 2 todo 'asinh does not comply with IEEE'
         cmp-ok asinh(my num $ = -1e200), '==', -∞, '-1e200';
         is asinh(my num $ = -0e0).Str, '-0', '-0e0 actually gives a minus 0';
 
@@ -784,7 +785,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
     }
 }
 
-# RT #130039
+# https://github.com/Raku/old-issue-tracker/issues/5784
 is-approx 1.2e308, 2*.6e308, 'Literal Nums close to the upper limit are not Inf';
 
 subtest '.Bool' => {
@@ -799,7 +800,7 @@ subtest '.Bool' => {
 }
 
 # https://github.com/rakudo/rakudo/issues/1626
-# RT #132330
+# https://github.com/Raku/old-issue-tracker/issues/6594
 subtest 'no parsing glitches in the way Num is parsed' => {
     plan 3;
 
@@ -811,7 +812,7 @@ subtest 'no parsing glitches in the way Num is parsed' => {
     cmp-ok  1.0e-1 +   2.0e-1, '!=',  3.0e-1, '(3)';
 }
 
-# RT #132330
+# https://github.com/Raku/old-issue-tracker/issues/6594
 cmp-ok 1.000000000000001e0, '!=', 1e0,
     'Nums that are close to each other parsed correctly as different';
 
@@ -825,7 +826,7 @@ subtest 'Num literals yield closest available Num to their nominal value' => {
 
 subtest 'parsed nums choose closest available representation' => {
     plan 13;
-    # RT#128913
+    # https://github.com/Raku/old-issue-tracker/issues/5564
     cmp-ok '9.9989999999999991e0'.EVAL, &[!<], '9.998999999999999e0'.EVAL;
 
     cmp-ok <241431045331557770.44e-161>,  '==', 241431045331557770.44e-161; # 2
@@ -849,7 +850,7 @@ subtest 'parsed nums choose closest available representation' => {
 
 }
 
-# RT#132329
+# https://github.com/Raku/old-issue-tracker/issues/6623
 cmp-ok Num(0.777777777777777777777), '==', Num(0.7777777777777777777771),
     'Rat->Num conversion is monotonic';
 
@@ -868,7 +869,7 @@ subtest 'parsed nums are the same as those produced from Str.Num' => {
       'parsed matches val()';
 }
 
-# RT#128820
+# https://github.com/Raku/old-issue-tracker/issues/5521
 subtest 'distinct num literals do not compare the same' => {
     plan 3;
     my $l1 := 1180591620717411303424e0;
@@ -876,11 +877,12 @@ subtest 'distinct num literals do not compare the same' => {
     cmp-ok $l1, &[!==],  $l2, '==';
     cmp-ok $l1, &[!===], $l2, '===';
 
-    # RT#128819
+    # https://github.com/Raku/old-issue-tracker/issues/5520
     cmp-ok $l1.WHICH, &[!===], $l2.WHICH, '=== of .WHICHes';
 }
 
-{ # RT#128817
+# https://github.com/Raku/old-issue-tracker/issues/5518
+{
     my $n := 1180591620717411303424.0e0;
     cmp-ok $n.Int, '==', $n.raku.EVAL.Int,
         '.raku roundtrips the Num correctly';

@@ -30,7 +30,8 @@ plan 59;
     is(@md.elems, 2, '.elems works on multidimensional array');
 }
 
-#?rakudo skip 'multi-dim sized arrays NYI RT #124483'
+# https://github.com/Raku/old-issue-tracker/issues/3830
+#?rakudo skip 'multi-dim sized arrays NYI'
 {
     my @md[*;*;2];
     @md[0;0;0] = 'foo';

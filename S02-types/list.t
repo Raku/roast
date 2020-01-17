@@ -34,7 +34,8 @@ is ?(1,2,3), True, 'non-empty List is True';
 
 lives-ok { <5 7 8>[] }, 'can zen slice a List';
 
-# WAS: RT #115282, modified for lolly brannch
+# https://github.com/Raku/old-issue-tracker/issues/2922
+# modified for lolly branch
 is $(;).elems, 0, '$(;) parses, and is empty';
 
 # .rotate
@@ -84,7 +85,8 @@ is $(;).elems, 0, '$(;) parses, and is empty';
     is ~$p, 'a b c d e', 'original still unmodified (negative)';
 } #13
 
-# RT125677 Make sure List.rotate is Cool with stuff
+# https://github.com/Raku/old-issue-tracker/issues/4433
+# Make sure List.rotate is Cool with stuff
 {
     my $p = <a b c d e>;
     is ~$p.rotate('2'), 'c d e a b', '.rotate("2")';
@@ -108,7 +110,7 @@ is $(;).elems, 0, '$(;) parses, and is empty';
     is $p, <a b c>, 'did we get what we put in';
 } #4
 
-#RT #116527
+# https://github.com/Raku/old-issue-tracker/issues/3035
 {
     role sidecat {};
     my @a = 1,2,3;
@@ -134,7 +136,7 @@ is $(;).elems, 0, '$(;) parses, and is empty';
       'fail if they are non-numeric strings';
 }
 
-# RT#129044
+# https://github.com/Raku/old-issue-tracker/issues/5610
 {
     is-deeply (a => 2).first(/a/), (a => 2), "first with a Regexp object";
     is-deeply (a => 2).grep(/a/), ((a => 2),), "grep with a Regexp object";
@@ -154,7 +156,7 @@ subtest '.sum can handle Junctions' => {
     ok     $sum   !==        42, 'sum is correct (6)';
 }
 
-# RT#130160
+# https://github.com/Raku/old-issue-tracker/issues/5819
 {
     my @a := <a b c>[0..2, 0..2].flat.cache;
     @a.Bool;
@@ -162,7 +164,7 @@ subtest '.sum can handle Junctions' => {
     is-deeply @a, <a b c a b c>, '.flat does not skip inner iterables';
 }
 
-# RT #125964
+# https://github.com/Raku/old-issue-tracker/issues/4500
 {
   my $a = (1, 2, 3);
   throws-like { $a[42] = 21 }, X::Assignment::RO,

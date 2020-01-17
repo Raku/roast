@@ -63,7 +63,7 @@ plan 22;
 sub foo ($baz is rw, $assign? ) { $baz = $assign if $assign }
 sub bar ($baz is readonly) { }
 
-# RT #77038
+# https://github.com/Raku/old-issue-tracker/issues/2025
 {
     my %h;
     push    %h<s-push><a>, 1, 2;
@@ -103,7 +103,7 @@ sub bar ($baz is readonly) { }
     is $a.join, '42', 'Can autovivify Array';
 }
 
-# RT #77048
+# https://github.com/Raku/old-issue-tracker/issues/2027
 {
     my Array $a;
     $a[0] = '4';

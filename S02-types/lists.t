@@ -10,7 +10,7 @@ plan 29;
 
 # Indexing lists
 
-# RT #105368
+# https://github.com/Raku/old-issue-tracker/issues/2575
 {
   my $foo = 42;
 
@@ -125,7 +125,7 @@ plan 29;
     is <1 2 3>.rt62836_x, 62836, 'call user-declared method in List:: class';
 }
 
-# RT #66304
+# https://github.com/Raku/old-issue-tracker/issues/1037
 {
     my $rt66304 = (1, 2, 4);
     isa-ok $rt66304, List, 'List assigned to scalar is-a List';
@@ -145,7 +145,7 @@ plan 29;
     is $z, 'bacon', "3rd-party reification of List doesn't duplicate rest";
 }
 
-# RT #112216
+# https://github.com/Raku/old-issue-tracker/issues/2695
 is 'foo'[2..*].elems, 0, 'can range-index a Str with infinite range';
 
 # vim: ft=perl6

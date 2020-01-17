@@ -33,7 +33,7 @@ ok Nil.JustAnyMethod === Nil, 'Any method on Nil should return Nil (no args)';
 ok Nil.JustAnyMethod('meows', 42, 'bars', :foos) === Nil,
     'Any method on Nil should return Nil (with args)';
 
-# RT #63894
+# https://github.com/Raku/old-issue-tracker/issues/783
 {
     my $calls;
     sub return_nil { $calls++; return; }
@@ -53,10 +53,10 @@ ok Nil.JustAnyMethod('meows', 42, 'bars', :foos) === Nil,
     is $x, 1, '$Statement for Nil; does one iteration';
 }
 
-# RT #118717
+# https://github.com/Raku/old-issue-tracker/issues/3178
 ok Nil.^mro.gist !~~ rx:i/iter/, "Nil is not any sort of Iter*";
 
-# RT #93980
+# https://github.com/Raku/old-issue-tracker/issues/2446
 ok (my $rt93980 = Nil) === Any, 'Nil assigned to scalar produces an Any'; #OK
 
 ok (my Str $str93980 = Nil) === Str; #OK
