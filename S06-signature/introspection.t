@@ -4,7 +4,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 use Test::Idempotence;
 
-plan 136;
+plan 152;
 
 # L<S06/Signature Introspection>
 
@@ -61,8 +61,7 @@ sub j(*@i) {
     sub d(:x(:y(:z($a)))) { };   #OK not used
     is ~&d.signature.params.[0].named_names.sort, 'x y z', 'multi named_names';
     is ~&d.signature.params.[0].name, '$a',    '... and .name still works';
-    #?rakudo todo 'needs/find RT: Logic to make :a($a) into :$a makes :a(:b($a) into ::b(:$a)'
-    is :(:a(:b($a))).raku, :(:b($a)).raku, '... and .raku abbreviates separated name/named_name';
+    is :(:a(:b($a))).raku, :(:b(:$a)).raku, '... and .raku abbreviates separated name/named_name';
 }
 
 {
@@ -121,7 +120,7 @@ sub j(*@i) {
 # RT #69492
 {
     sub foo(:$) {};
-    ok &foo.signature.raku ~~ / ':($)' /, '.raku of a signature with anonymous named parameter';
+    is &foo.signature.raku, ':(:$)', '.raku of a signature with anonymous named parameter';
 }
 
 # Capture param introspection
@@ -196,11 +195,15 @@ sub j(*@i) {
     is-perl-idempotent(:(Sub & = &say, Sub :a(&) = &say), Nil, { '= { ... }' => '= &say' },:eqv);
     is-perl-idempotent(:(@ ($a) = [2]), :eqv);
     is-perl-idempotent(:(% (:a($)) = {:a(2)}, % (:c(:d($))) = {:c(2)}), :eqv);
-    is-perl-idempotent(:($ is raw, & is raw, % is raw, | is raw), :eqv);
+    is-perl-idempotent(:($ is raw, & is raw, % is raw, & is raw, \, |), :eqv);
 
     is-perl-idempotent(:(::T $a, T $b), :eqv);
     # Not sure if this one makes much sense.
     is-perl-idempotent(:(::T T $a, T $b), :eqv);
+
+    is-perl-idempotent(:(+a), :eqv);
+    is-perl-idempotent(:(+$a), :eqv);
+    is-perl-idempotent(:(+$a is raw), :eqv);
 
     my $f;
     is-perl-idempotent($f = -> $a { }, Nil,
@@ -271,5 +274,34 @@ is-deeply sub ($,$,$,$){}.signature.gist, '($, $, $, $)',
     is B.^find_method("bar").signature.params[1].twigil, ".",
       'does a public attribute Parameter have a . twigil';
 }
+
+is :($ = 0).params[0].sigil, '$',
+    'anonymous scalar parameters with default values have the correct sigil';
+
+is :(*@).params[0].prefix, '*',
+    'slurpy positional parameters have the correct prefix';
+is :(**@).params[0].prefix, '**',
+    'multidimensional slurpy positional parameters have the correct prefix';
+is :(*%).params[0].prefix, '*',
+    'slurpy named parameters have the correct prefix';
+is :(+a).params[0].prefix, '+',
+    'slurpy one-argument parameters have the correct prefix';
+is :($).params[0].prefix, '',
+    'any other type of parameter has the correct prefix';
+
+is :($a).params[0].suffix, '',
+    'required positional parameters have the correct suffix';
+is :($a?).params[0].suffix, '?',
+    'optional positional parameters have the correct suffix';
+is :($a = 0).params[0].suffix, '',
+    'positional parameters with default values have the correct suffix';
+is :(:$a).params[0].suffix, '',
+    'optional named parameters have the correct suffix';
+is :(:$a!).params[0].suffix, '!',
+    'required named parameters have the correct suffix';
+is :(:$a = 0).params[0].suffix, '',
+    'named parameters with default values have the correct suffix';
+is :(|).params[0].suffix, '',
+    'any other type of parameter has the correct suffix';
 
 # vim: ft=perl6
