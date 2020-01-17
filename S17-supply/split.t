@@ -12,7 +12,7 @@ plan @schedulers * @needles * 17;
 for @schedulers -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
 
-    for "o", /o/ -> \needle {
+    for @needles -> \needle {
         tap-ok Supply.from-list(@source).split(needle),
           ['','ldd', 'gjumps', '', '', 'verthef', 'x', ''],
           "split a simple list of words";
