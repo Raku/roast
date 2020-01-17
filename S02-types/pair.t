@@ -300,7 +300,7 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     ok($pair eqv (code => &code), ':&foo syntax works');
 }
 
-# RT #67218
+# https://github.com/Raku/old-issue-tracker/issues/1103
 {
     eval-lives-ok ':a()',    'can parse ":a()"';
     lives-ok     {; :a() }, 'can execute ":a()"';
@@ -332,7 +332,7 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     is { a => (1,2), b => <x y z> }.pairs.invert.sort.gist, '(1 => a 2 => a x => b y => b z => b)', 'list of hash pairs can be inverted';
 }
 
-# RT #123215
+# https://github.com/Raku/old-issue-tracker/issues/3584
 {
     cmp-ok (:a(2) :b(3) :c(4)), "eqv", ( a => 2, b => 3, c => 4 ),
         "chained colonpairs in parens build a list of pairs";
@@ -358,14 +358,14 @@ Note, "non-chaining binary" was later renamed to "structural infix".
       'cannot assign a Str to an Int';
 }
 
-# RT #126369
+# https://github.com/Raku/old-issue-tracker/issues/4649
 {
     my $y = 42;
     $y := :$y;
     is-deeply $y, 'y' => 42, 'pair binding';
 }
 
-# RT #128860
+# https://github.com/Raku/old-issue-tracker/issues/5540
 {
     throws-like { (1,2,3).invert },
 	X::TypeCheck, got => Int, expected => Pair,

@@ -78,7 +78,7 @@ plan 47;
     is(@a.elems, 5, 'Hash flattened by .append');
 }
 
-# RT #112362
+# https://github.com/Raku/old-issue-tracker/issues/2708
 {
     my @a = <a b c d e f>;
     is @a[$[3, 4], 0,], 'c a', '$[] in array slice numifies (1)';
@@ -105,7 +105,7 @@ plan 47;
     is-deeply +@h-h, 3, '% sigil flattening of itemized hash';
 }
 
-# RT #126172
+# https://github.com/Raku/old-issue-tracker/issues/4588
 {
     my @a1 = 1,2,3; my @b1; @b1.push:   @a1,;
     my @a2 = 1,2,3; my @b2; @b2.push:   @a2;
@@ -118,7 +118,7 @@ plan 47;
     is-deeply @b4,  [1, 2, 3],   'method append does flatten an array arg (2)';
 }
 
-{ # RT #112662
+# https://github.com/Raku/old-issue-tracker/issues/2735
     sub foo (\v) {
         is-deeply v, True, 'slipping a Bool into arguments does not crash'
     }( |True )

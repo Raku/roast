@@ -7,7 +7,7 @@ plan 1;
 # various tests for built-in types
 # L<S02/Built-In Data Types>
 
-# RT #122094
+# https://github.com/Raku/old-issue-tracker/issues/3413
 # TODO: better test (e.g. typed exception instead of testing for backend specific error messages
 {
     throws-like {
