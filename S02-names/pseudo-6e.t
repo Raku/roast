@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use lib $?FILE.IO.parent(2).add("packages/S02-names/lib");
 use Test::Util;
 
-plan 203;
+plan 204;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -859,6 +859,47 @@ subtest "Dynamic chain in a Promise" => {
         is $*in-promise, pi/2, "asignment via DYNAMIC inside a Promise-wrapped code, level 1";
     }
     is $*out-of-promise, pi, "asignment via DYNAMIC inside a Promise-wrapped code, level 2";
+}
+
+subtest "Dynamic chain in a react" => {
+    plan 14;
+
+    my $*out-of-react = 1;
+    my $*out-of-whenever = 2;
+    PROCESS::<$in-PROCESS> = "proc react";
+    GLOBAL::<$in-GLOBAL> = "glob react";
+
+    sub bar {
+        react {
+            ok DYNAMIC::<$*FOO-VAR>:exists, "dynamic variable is visible within a react block";
+            is DYNAMIC::<$*FOO-VAR>, 42, "dynamic variable value in a react block";
+            is-containing DYNAMIC::.keys,
+                <$*out-of-react $*in-PROCESS $*in-GLOBAL $*IN $*OUT $*PROMISE $*FOO-VAR>,
+                "symbols outside of react block are visible";
+            is DYNAMIC::<$*in-PROCESS>, "proc react", "declared on PROCESS symbol value";
+            is DYNAMIC::<$*in-GLOBAL>, "glob react", "declared on GLOBAL symbol value";
+            is DYNAMIC::<$*out-of-react>, 1, "locally declared dynamic";
+            DYNAMIC::<$*out-of-react> = pi;
+            whenever Supply.from-list( ^1 ) {
+                is-containing DYNAMIC::.keys,
+                    <$*out-of-react $*in-PROCESS $*in-GLOBAL $*IN $*OUT $*PROMISE $*FOO-VAR>,
+                    "symbols outside of whenever block are visible";
+                ok DYNAMIC::<$*FOO-VAR>:exists, "dynamic variable is visible within a whenever block";
+                is DYNAMIC::<$*FOO-VAR>, 42, "dynamic variable value in a whenever block";
+                is DYNAMIC::<$*in-PROCESS>, "proc react", "declared on PROCESS symbol value";
+                is DYNAMIC::<$*in-GLOBAL>, "glob react", "declared on GLOBAL symbol value";
+                is DYNAMIC::<$*out-of-whenever>, 2, "locally declared dynamic";
+                DYNAMIC::<$*out-of-whenever> = pi / 2;
+            }
+        }
+    }
+    sub foo {
+        my $*FOO-VAR = 42;
+        await start { bar };
+    }
+    foo;
+    is $*out-of-react, pi, "dynamic changed within react";
+    is $*out-of-whenever, pi / 2, "dynamic changed within whenever";
 }
 
 done-testing;
