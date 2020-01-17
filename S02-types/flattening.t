@@ -119,6 +119,7 @@ plan 47;
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/2735
+{
     sub foo (\v) {
         is-deeply v, True, 'slipping a Bool into arguments does not crash'
     }( |True )
