@@ -903,6 +903,7 @@ S17-supply/delayed.t     # slow
 S17-supply/do.t
 S17-supply/elems.t       # slow
 S17-supply/encode.t
+S17-supply/first.t
 S17-supply/flat.t
 S17-supply/from-list.t
 S17-supply/grab.t
