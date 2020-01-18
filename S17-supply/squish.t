@@ -4,9 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 15;
-
-dies-ok { Supply.squish }, 'can not be called as a class method';
+plan 14;
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
