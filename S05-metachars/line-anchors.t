@@ -40,7 +40,7 @@ ok(   $str ~~ m/ghi$$/, 'ghi EOL' );
 ok(   $str ~~ m/ghi$/, 'ghi EOS' );
 ok(   $str ~~ m/^abc$$\n^^d.*f$$\n^^ghi$/, 'All dot' );
 
-# RT #126438
+# https://github.com/Raku/old-issue-tracker/issues/4675
 {
     throws-like q[/ ^+ /], X::Syntax::Regex::NonQuantifiable,
         'error when quantifying ^';
@@ -52,7 +52,7 @@ ok(   $str ~~ m/^abc$$\n^^d.*f$$\n^^ghi$/, 'All dot' );
         'error when quantifying $$';
 }
 
-# RT #122891
+# https://github.com/Raku/old-issue-tracker/issues/3537
 #?rakudo.jvm todo 'NFG'
 nok "a\r\n" ~~ /^^\s*$$/, 'No accidental match of ^^\s$$ between \r and \n';
 

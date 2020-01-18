@@ -110,7 +110,7 @@ for @inttypes -> $type {
     is(EVAL("my $type \$var = 1; \$var--; \$var"), 0, "$type \$var-- works");
 }
 
-# RT #127210
+# https://github.com/Raku/old-issue-tracker/issues/5022
 #?rakudo.js.browser skip "CUnion doesn't work in the browser we don't have proper NativeCall there"
 {
     class Overlap is repr('CUnion') {
@@ -125,7 +125,7 @@ for @inttypes -> $type {
     is $overlap.u8,      135,  "uint8 in union is unsigned";
 }
 
-# RT #131529
+# https://github.com/Raku/old-issue-tracker/issues/6332
 is-eqv byte.Range.int-bounds, (0, 255), "byte.Range works";
 
 # vim: ft=perl6 expandtab sw=4

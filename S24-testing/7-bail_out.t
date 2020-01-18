@@ -16,7 +16,7 @@ is_run 'use Test; ok 1, "test runs"; bail-out "some reason";',
     { :out("ok 1 - test runs\nBail out! some reason\n"), :err(''), :255status },
     'bail out with description';
 
-# RT#131408
+# https://github.com/Raku/old-issue-tracker/issues/6275
 is_run 'use Test; bail-out', { :err(''), :out("Bail out!\n"), :255status },
     'immediate bail out does not crash';
 

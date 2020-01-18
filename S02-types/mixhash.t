@@ -322,7 +322,7 @@ sub showkv($x) {
     is $m.elems, 0, '.grabpairs *should* change MixHash';
 }
 
-# RT #124490
+# https://github.com/Raku/old-issue-tracker/issues/3836
 {
     my %h is MixHash = a => 1, b => 0, c => 2;
     nok %h<b>:exists, '"b", initialized to zero, does not exist';
@@ -332,7 +332,7 @@ sub showkv($x) {
     is %h<nonexisting>, 0, '%h<nonexisting> is 0';
 }
 
-# RT #124490
+# https://github.com/Raku/old-issue-tracker/issues/3836
 {
     my %h is MixHash = a => 1, b => 0, c => 2;
 
@@ -345,7 +345,7 @@ sub showkv($x) {
     is %h.keys.sort, <a c>, '++ on an item reinstates it';
 }
 
-# RT #124490
+# https://github.com/Raku/old-issue-tracker/issues/3836
 {
     my %h is MixHash = a => 1, c => 1;
 
@@ -473,7 +473,7 @@ sub showkv($x) {
     is %h3.sort, (a=>1.1, b=>2.2, c=>3.3, d=>4.4), 'did we see all the antipairs';
 }
 
-# RT #128806
+# https://github.com/Raku/old-issue-tracker/issues/5513
 subtest '.hash does not cause keys to be stringified' => {
     plan 2;
     is MixHash.new($(<a b>)).hash.keys[0][0], 'a', 'MixHash.new';
@@ -589,7 +589,7 @@ group-of 10 => 'MixHash autovivification of non-existent keys' => {
       'do wrong values make initialization croak';
 }
 
-# RT #131561
+# https://github.com/Raku/old-issue-tracker/issues/6343
 {
     is-deeply (a => -1, a => 1).MixHash,      MixHash.new,
       'final value 0 disappears in MixHash (1)';
@@ -597,7 +597,7 @@ group-of 10 => 'MixHash autovivification of non-existent keys' => {
       'final value 0 disappears in MixHash (2)';
 }
 
-# RT #130366
+# https://github.com/Raku/old-issue-tracker/issues/5892
 subtest 'elements with weight zero are removed' => {
     plan 3;
     my $b = <a b b c d e f>.MixHash; $_-- for $b.values;
@@ -608,7 +608,8 @@ subtest 'elements with weight zero are removed' => {
     is-deeply $b, ().MixHash, 'weight set to zero';
 }
 
-# RT #131241 (zero case covered by RT #130366)
+# https://github.com/Raku/old-issue-tracker/issues/6215
+# https://github.com/Raku/old-issue-tracker/issues/5892
 subtest "elements with negative weights are allowed in MixHashes" => {
     plan 2;
     my $b = <a b b c>.MixHash; $_ = -1 for $b.values;
@@ -617,7 +618,8 @@ subtest "elements with negative weights are allowed in MixHashes" => {
     is-deeply $b, ("b"=>-1.5,"a"=>-1.5,"c"=>-1.5).MixHash, 'negative Pair values are ok';
 }
 
-# RT #132352, RT #132353
+# https://github.com/Raku/old-issue-tracker/issues/6632
+# https://github.com/Raku/old-issue-tracker/issues/6633
 {
     my %h is MixHash = <a b b c c c d d d d>;
     is %h.elems, 4, 'did we get right number of elements';

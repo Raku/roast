@@ -65,11 +65,11 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     is ($0,$1), ("c","b"), "~ operator in regexp does not revert capture order";
 }
 
-# RT #72440
+# https://github.com/Raku/old-issue-tracker/issues/1482
 ok "(f)oo" ~~ /^ \( ~ \) foo $/, 'Only take single atom after goal (1)';
 nok "(fo)o" ~~ /^ \( ~ \) foo $/, 'Only take single atom after goal (2)';
 
-# RT #130812
+# https://github.com/Raku/old-issue-tracker/issues/6086
 throws-like '/ ‘[’ ~? ‘]’/', X::Syntax::Regex::SolitaryQuantifier,
     'Correct error when quantifier placed after ~ metachar';
 

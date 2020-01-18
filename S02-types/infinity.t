@@ -20,14 +20,16 @@ plan 21;
     ok( $x eq '-Inf', 'negative string equal' );
 }
 
-#?rakudo skip 'integer Inf RT #124451'
+#?rakudo skip 'integer Inf'
+# https://github.com/Raku/old-issue-tracker/issues/520
 {
     my $x = Inf.Int;
     ok( $x == Inf,   'int numeric equal' );
     ok( $x eq 'Inf', 'int string equal' );
 }
 
-#?rakudo skip 'integer Inf RT #124452'
+#?rakudo skip 'integer -Inf'
+# https://github.com/Raku/old-issue-tracker/issues/520
 {
     my $x = ( -Inf ).Int;
     ok( $x == -Inf,   'int numeric equal' );
@@ -44,7 +46,7 @@ plan 21;
 
 ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
 
-# RT #124453
+# https://github.com/Raku/old-issue-tracker/issues/520
 {
     fails-like {    Inf.Int }, X::Numeric::CannotConvert,
         'attempting to convert Inf to Int throws';
@@ -62,13 +64,13 @@ ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
         'attempting to convert NaN to Int throws';
 }
 
-# RT #70730
+# https://github.com/Raku/old-issue-tracker/issues/1409
 {
     ok ( rand * Inf ) === Inf, 'multiply rand by Inf without maximum recursion depth exceeded';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4903
 {
-    #RT #126990
     throws-like ｢my Int $x = Inf｣, X::Syntax::Number::LiteralType,
         :value(Inf), :vartype(Int),
     'trying to assign Inf to Int gives a helpful error';
@@ -77,7 +79,8 @@ ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
     is $x, Inf, 'assigning Inf to Num works without errors';
 }
 
-{ # RT #129915
+# https://github.com/Raku/old-issue-tracker/issues/5759
+{
     is-deeply -Inf², -Inf, '-Inf² follows mathematical order of operations';
     is-deeply -∞², -Inf, '-∞² follows mathematical order of operations';
     is-deeply −Inf², -Inf,

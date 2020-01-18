@@ -7,7 +7,7 @@ use Test::Util;
 
 plan 6;
 
-# RT #115024
+# https://github.com/Raku/old-issue-tracker/issues/2904
 {
     my $code = 'use Test; my Str $str; is-deeply {b=>2}, {a=>$str, b=>2}, "should not work"';
     is_run $code,
@@ -27,7 +27,7 @@ plan 6;
         'expected output with passing test "is-deeply"';
 }
 
-# RT #77650
+# https://github.com/Raku/old-issue-tracker/issues/2135
 {
     is_run
         'use Test; eval-lives-ok q[foo<bar], "expected eval fail"',

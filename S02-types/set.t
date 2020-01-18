@@ -73,12 +73,12 @@ sub showset($s) { $s.keys.sort.join(' ') }
     isa-ok {a => 2, b => 4, c => 0}.Set, Set, '{a => 2, b => 4, c => 0}.Set makes a Set';
     is showset({a => 2, b => 4, c => 0}.Set), 'a b', '{a => 2, b => 4, c => 0}.Set makes the set a b';
 
-    # RT #130976
+    # https://github.com/Raku/old-issue-tracker/issues/6147
     is-deeply (:a, :!b, :3c, :0d, :e<meow>, :f(''), 'g').Set,
         set('a', 'c', 'e', 'g'),
     '.Set on List of Pairs treats Pair.value as weight';
 
-    # RT #130976
+    # https://github.com/Raku/old-issue-tracker/issues/6147
     is-deeply {:a, :!b, :3c, :0d, :e<meow>, :f('')}.Set,
         set('a', 'c', 'e'),
     '.Set on Hash of Pairs treats Pair.value as weight';
@@ -335,7 +335,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     dies-ok { $s.grabpairs }, 'cannot call .grabpairs on a Set';
 }
 
-# RT #107022
+# https://github.com/Raku/old-issue-tracker/issues/2585
 {
     my $s1 = Set.new(( set <a b c> ), <c d>);
     is +$s1, 2, "Two elements";
@@ -404,20 +404,20 @@ sub showset($s) { $s.keys.sort.join(' ') }
     dies-ok { $s.pairs[0].value = 0 }, 'Cannot change value of Set.pairs';
 }
 
-# RT #117103
+# https://github.com/Raku/old-issue-tracker/issues/3071
 {
     my $s = set();
     $s (|)= 5;
     is $s, set(5), 'can metaop set assign like: (|)=';
 }
 
-# RT #124489'
+# https://github.com/Raku/old-issue-tracker/issues/3835
 {
     isnt 'a Str|b Str|c'.Set.WHICH, <a b c>.Set.WHICH,
       'Faulty .WHICH creation';
 }
 
-# RT #116096
+# https://github.com/Raku/old-issue-tracker/issues/2997
 {
     my $s = Set.new([1,2],[3,4]);
     is $s.elems, 2, 'arrays not flattened out by Set.new (1)';
@@ -425,7 +425,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s.keys.sort[1], [3,4], 'arrays not flattened out by Set.new (3)';
 }
 
-# RT #125611
+# https://github.com/Raku/old-issue-tracker/issues/4399
 {
     class MySet is Set { };
     my $s = MySet.new([1, 2], 3);
@@ -446,7 +446,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $a.kv[1,3,5], (True, True, True), "Set.kv returns list of keys and values (2)";
 }
 
-# RT #127166
+# https://github.com/Raku/old-issue-tracker/issues/4975
 {
     ok <one two three>.map({$_}) ~~ set(<two three one>), 'smartmatch a Seq';
 }
@@ -455,7 +455,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     isa-ok set(42).Hash.keys[0], Int, "make sure set.Hash returns objects";
 }
 
-# RT #127402
+# https://github.com/Raku/old-issue-tracker/issues/5095
 subtest '.hash does not cause keys to be stringified' => {
     plan 3;
     is Set.new($(<a b>)).hash.keys[0][0], 'a', 'Set.new';
@@ -503,7 +503,7 @@ subtest '.hash does not cause keys to be stringified' => {
     throws-like { Set.new(^Inf) }, X::Cannot::Lazy, :what<Set>;
 }
 
-# RT #117997
+# https://github.com/Raku/old-issue-tracker/issues/3135
 {
     throws-like 'set;', Exception, message => /set/,
         'set listop called without arguments and parentheses dies (1)';
@@ -511,7 +511,7 @@ subtest '.hash does not cause keys to be stringified' => {
         'set listop called without arguments dies (2)';
 }
 
-# RT #131300
+# https://github.com/Raku/old-issue-tracker/issues/6240
 subtest 'set ops do not hang with Setty/Baggy/Mixy type objects' => {
     my @ops =
       &infix:<<∈>>,      '∈',
@@ -556,7 +556,8 @@ subtest 'set ops do not hang with Setty/Baggy/Mixy type objects' => {
     }
 }
 
-# RT #132352, RT #132353
+# https://github.com/Raku/old-issue-tracker/issues/6632
+# https://github.com/Raku/old-issue-tracker/issues/6633
 {
     my %h is Set = <a b c d>;
     is %h.elems, 4, 'did we get right number of elements';

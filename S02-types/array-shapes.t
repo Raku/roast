@@ -22,10 +22,11 @@ plan 40;
       'accessing past num items in my @arr[num] dies';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/3842
 {
     lives-ok { my @arr\    [7] },
       'array with fixed size with unspace';
-   #?rakudo 2 todo 'code does not die, array shapes RT #124502'
+   #?rakudo 2 todo 'code does not die, array shapes'
     throws-like 'my @arr.[8]',
       Exception,  # XXX fix when this block is no longer skipped
       'array with dot form dies';
@@ -65,11 +66,11 @@ plan 40;
       'boundary constraints on my @arr[Int] of Type works';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4223
 {
     my int @arr = 1, 2, 3, 4, 5;
     is(@arr, <1 2 3 4 5>, 'my type @arr works');
     is push(@arr, 6), [1,2,3,4,5,6], 'push on native @arr works';
-    # RT #125123'
     throws-like 'push @arr, "s"',
       X::TypeCheck,
       'type constraints on my type @arr works (1)';
@@ -96,7 +97,7 @@ plan 40;
       operation => 'push';
 }
 
-# RT 126800
+# https://github.com/Raku/old-issue-tracker/issues/4816
 {
     throws-like 'my @a[0]',
         X::IllegalDimensionInShape;
@@ -106,7 +107,7 @@ plan 40;
         X::IllegalDimensionInShape;
 }
 
-# RT #130513
+# https://github.com/Raku/old-issue-tracker/issues/5986
 subtest '.List on uninited shaped array' => {
     plan 2;
 
@@ -116,7 +117,7 @@ subtest '.List on uninited shaped array' => {
     is-deeply @result, [Any xx 4],  'gives correct results';
 }
 
-# R#2257
+# https://github.com/rakudo/rakudo/issues/2257
 subtest '.Array on uninited shaped array' => {
     plan 3;
 
@@ -127,13 +128,14 @@ subtest '.Array on uninited shaped array' => {
     lives-ok { @result[0] = 42 }, 'and is mutable';
 }
 
-{ # RT #130510
+# https://github.com/Raku/old-issue-tracker/issues/5983
+{
     my @c[2;2] .= new(:shape(2, 2), <a b>, <c d>);
     is @c.raku, Array.new(:shape(2, 2), <a b>, <c d>).raku,
       '@c[some shape] accepts a .new: :shape(same shape)...';
 }
 
-# RT #130440
+# https://github.com/Raku/old-issue-tracker/issues/5938
 {
     my @a[1;1]; for @a.pairs -> $p { $p.value = 42 };
     is-deeply @a[0;0], 42,
@@ -144,7 +146,7 @@ subtest '.Array on uninited shaped array' => {
         '@shaped-array.values provides with writable containers';
 }
 
-# RT #130451
+# https://github.com/Raku/old-issue-tracker/issues/5946
 {
     my @array[8];
     is-deeply ($_ for @array), (Any for 1..8), "For statement across simple uninitialized shaped array";
@@ -161,9 +163,9 @@ subtest '.Array on uninited shaped array' => {
     is @a[1;2], 5, 'Z= shape filling';
 }
 
-
-#?rakudo skip 'R#1297'
-{ # https://github.com/rakudo/rakudo/issues/1297
+# https://github.com/rakudo/rakudo/issues/1297
+#?rakudo skip 'coercion of shaped array indicesdd'
+{
     my @matrix[2;2]; @matrix['0'; '0'] = 42;
     is-deeply @matrix[0;0], 42, 'Str can be used to index shaped arrays';
 }
@@ -171,3 +173,5 @@ subtest '.Array on uninited shaped array' => {
 {
     eval-lives-ok 'my @*a[3]', "Accept dynamic shaped arrays"
 }
+
+# vim: ft=perl6

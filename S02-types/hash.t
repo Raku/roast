@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 99;
+plan 98;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -192,10 +192,10 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
       "doesn't really make sense, but shouldn't segfault, either ($!)";
 }
 
-# test for RT #62730
+# https://github.com/Raku/old-issue-tracker/issues/650
 lives-ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
-# RT #71022
+# https://github.com/Raku/old-issue-tracker/issues/1421
 {
     my %rt71022;
     %rt71022<bughunt> = %rt71022<bughunt>;
@@ -203,8 +203,7 @@ lives-ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
         'non-existent hash element assigned to itself is not defined, not segfault' );
 }
 
-# This test breaks all hash access after it in Rakudo, so keep it last.
-# RT #71064
+# https://github.com/Raku/old-issue-tracker/issues/1426
 {
     class RT71064 {
         method postcircumfix:<{ }>($x) { 'bughunt' }    #OK not used
@@ -229,14 +228,14 @@ lives-ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     is-deeply %h<foo>, (bar => "baz").hash, "multi-level auto-vivify";
 } #4
 
-#RT #76644
+# https://github.com/Raku/old-issue-tracker/issues/1960
 {
     my %h = statement => 3;
     is %h.keys.[0], 'statement',
         '"statement" autoquoted hash key does not collide with "state"';
 }
 
-# RT #58372
+# https://github.com/Raku/old-issue-tracker/issues/282
 # By collective knowledge of #perl6 and @larry, .{ } is actually defined in
 # Any
 {
@@ -260,7 +259,7 @@ lives-ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     is @result.elems, 3,        '{} zen slice decontainerizes';
 } #2
 
-# RT #75868
+# https://github.com/Raku/old-issue-tracker/issues/1855
 {
     my %h = (ab => 'x', 'a' => 'y');
     'abc' ~~ /^(.)./;
@@ -269,62 +268,58 @@ lives-ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
 }
 
-# RT #61412
+# https://github.com/Raku/old-issue-tracker/issues/492
 {
     my %hash;
     %hash<foo> := 'bar';
     is %hash<foo>, 'bar', 'binding hash value works';
 }
 
-# RT #118947
+# https://github.com/Raku/old-issue-tracker/issues/3190
 {
     my %hash;
     %hash<bar><baz> := 'zoom';
     is %hash<bar><baz>, 'zoom', 'binding on auto-vivified hash value works';
-    %hash<foo><baz> := my $b;
-    #?rakudo todo 'auto-vivified binding does not work yet: RT #118947'
-    ok $b =:= %hash<foo><baz>,
-        'identity test "=:=" ok after binding variable to autovivified hash value';
-    %hash<bar> := my $c;
-    ok $c =:= %hash<bar>,
-        'identity test "=:=" ok after binding variable to non autovivified hash value';
-} #1
+    my $b := %hash<foo><baz>;
+    $b = 42;   # vivifies
+    is %hash<foo><baz>, 42, 'did the assignment vivify';
+}
 
-# RT #75694
+# https://github.com/Raku/old-issue-tracker/issues/1829
 eval-lives-ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting with 'has-' in a hash");
 
-# RT #99854
+# https://github.com/Raku/old-issue-tracker/issues/2479
 {
     eval-lives-ok 'my $rt = { grammar => 5 }',
                   "can have a bareword 'grammar' as a hash key";
 }
 
-# RT #77922
+# https://github.com/Raku/old-issue-tracker/issues/2179
 {
     my $h = Hash.new(a => 3);
     $h<a> = 5;
     is $h<a>, 5, 'can normally modify items created from Hash.new';
 }
 
-# RT #77598
+# https://github.com/Raku/old-issue-tracker/issues/2112
 {
     isa-ok {}[*-1], Failure, 'array-indexing a hash with a negative index is Failure';
 }
 
-# RT #73230
+# https://github.com/Raku/old-issue-tracker/issues/1564
 {
     my Hash $RT73230;
     $RT73230[1];
-    is($RT73230.raku, 'Hash', 'test for positional (.[]) indexing on a Hash (RT #73230)');
+    is($RT73230.raku, 'Hash', 'test for positional (.[]) indexing on a Hash');
 }
 
-# RT #117431
+# https://github.com/Raku/old-issue-tracker/issues/3096
 {
     my %hash = a => 1;
     is item(%hash).raku, (${ a => 1 }).raku, 'item(%hash) is equivalent to ${%hash}';
 }
 
-# RT #77504
+# https://github.com/Raku/old-issue-tracker/issues/2106
 {
     throws-like { ~[]<c> }, Exception,
         message => 'Type Array does not support associative indexing.',
@@ -339,7 +334,7 @@ eval-lives-ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
         'adequate Failure error message when hash-indexing a non-hash using .{}';
 }
 
-# RT #123084
+# https://github.com/Raku/old-issue-tracker/issues/3571
 {
     my %hash = not => 42;
     is %hash<not>, 42, "can use bare 'not' as hash key";

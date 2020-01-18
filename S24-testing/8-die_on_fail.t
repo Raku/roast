@@ -28,7 +28,7 @@ is_run $Die-On ~ 'use Test; plan 2; todo "foo"; ok 0; ok 1, "test-ok"', {
     :0status,
 }, 'PERL6_TEST_DIE_ON_FAIL does not exit on failed TODO tests';
 
-# RT #129192
+# https://github.com/Raku/old-issue-tracker/issues/5638
 is_run $Die-On ~ 'use Test; plan 1; is "x", "test-ok"', {
     :err(/'test-ok'/),
     :255status,
