@@ -102,6 +102,7 @@ my @normal = <
   Pod::Item
   Pod::Raw
   PseudoStash
+  Raku
   Range
   Rat
   RatStr
