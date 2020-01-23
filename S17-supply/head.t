@@ -43,7 +43,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     await $p;
     $channel.send(44);
     $channel.close;
-    is $channel.list.join(', '), '42, 43, 44', 'RT #126824';
+    is $channel.list.join(', '), '42, 43, 44', 'does indeed fire';
 }
 
 # vim: ft=perl6 expandtab sw=4

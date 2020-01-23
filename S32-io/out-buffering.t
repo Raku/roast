@@ -82,8 +82,8 @@ for \(:w), \(:rw), \(:a) -> $open-args {
     }
 }
 
-# RT #131700
-#?rakudo.jvm skip 'hangs, RT #131700'
+# https://github.com/Raku/old-issue-tracker/issues/6374
+#?rakudo.jvm skip 'hangs'
 #?DOES 1
 {
   run-with-tty ｢say prompt "FOO"｣, :in<bar>,
@@ -96,3 +96,5 @@ for \(:w), \(:rw), \(:a) -> $open-args {
         False;
     }}, 'prompt does not hang';
 }
+
+# vim: ft=perl6 expandtab sw=4

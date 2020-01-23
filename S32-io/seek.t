@@ -75,12 +75,13 @@ group-of 5 => 'SeekFromEnd' => {
         'seeking past beginning throws';
 }
 
-# RT #131376
+# https://github.com/Raku/old-issue-tracker/issues/6276
 group-of 3 => '.seek on non-binary handle' => {
     group-of 4 => 'SeekFromCurrent' => {
         my $fh will leave {.close}
         = make-temp-file(content => [~] 'a'..'z').open;
-        #?rakudo.jvm 4 todo 'problem with equivalence of Buf objects, RT #128041'
+        # https://github.com/Raku/old-issue-tracker/issues/5283
+        #?rakudo.jvm 4 todo 'problem with equivalence of Buf objects'
         is-deeply $fh.read(4), Buf[uint8].new(97, 98, 99, 100), '1';
         $fh.seek: 1, SeekFromCurrent;
         is-deeply $fh.read(4), Buf[uint8].new(102, 103, 104, 105), '2';
@@ -93,7 +94,8 @@ group-of 3 => '.seek on non-binary handle' => {
     group-of 3 => 'SeekFromBeginning' => {
         my $fh will leave {.close}
         = make-temp-file(content => [~] 'a'..'z').open;
-        #?rakudo.jvm 3 todo 'problem with equivalence of Buf objects, RT #128041'
+        # https://github.com/Raku/old-issue-tracker/issues/5283
+        #?rakudo.jvm 3 todo 'problem with equivalence of Buf objects'
         is-deeply $fh.read(4), Buf[uint8].new(97, 98, 99, 100), '1';
         $fh.seek: 1, SeekFromBeginning;
         is-deeply $fh.read(4), Buf[uint8].new(98, 99, 100, 101), '2';
@@ -104,7 +106,8 @@ group-of 3 => '.seek on non-binary handle' => {
     group-of 3 => 'SeekFromEnd' => {
         my $fh will leave {.close}
         = make-temp-file(content => [~] 'a'..'z').open;
-        #?rakudo.jvm 3 todo 'problem with equivalence of Buf objects, RT #128041'
+        # https://github.com/Raku/old-issue-tracker/issues/5283
+        #?rakudo.jvm 3 todo 'problem with equivalence of Buf objects'
         is-deeply $fh.read(4), Buf[uint8].new(97, 98, 99, 100), '1';
         $fh.seek: -10, SeekFromEnd;
         is-deeply $fh.read(5), Buf[uint8].new(113,114,115,116,117), '2';

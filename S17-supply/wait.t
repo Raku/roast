@@ -20,7 +20,7 @@ dies-ok { Supply.wait }, 'can not be called as a class method';
     ok $waiting + 2 < now, "did we wait long enough?";
 }
 
-# RT #129247
+# https://github.com/Raku/old-issue-tracker/issues/5658
 #?rakudo.jvm skip 'hangs (sometimes?)'
 {
     my $supplier = Supplier.new;

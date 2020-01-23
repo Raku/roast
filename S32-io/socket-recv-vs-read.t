@@ -3,8 +3,10 @@ use Test;
 
 plan 13;
 
-# Covers RT #126315 (which wanted the right thing of recv) and RT #116288
-# (difference between recv and read semantics).
+# https://github.com/Raku/old-issue-tracker/issues/4637
+# https://github.com/Raku/old-issue-tracker/issues/3020
+# Covers (wanted the right thing of recv) and (difference
+# between recv and read semantics).
 
 my $hostname = 'localhost';
 my $port = 5002;
@@ -77,3 +79,5 @@ is $p.result[0].decode('ascii'), 'first thinganother t',
     'read gets the chars from across low level socket reads';
 is $p.result[1].decode('ascii'), 'hing',
     'read stops blocking when server closes connection';
+
+# vim: ft=perl6

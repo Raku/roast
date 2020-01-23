@@ -16,7 +16,7 @@ my $path = "io-handle-testfile";
     is slurp($path), "42", "buffer is flushed when IO handle is closed";
 }
 
-# RT #123888
+# https://github.com/Raku/old-issue-tracker/issues/3693
 {
     $path.IO.spurt("A+B+C+D+");
     my $RT123888 = $path.IO.open(:r);
@@ -190,7 +190,7 @@ subtest '.print-nl method' => {
         ':nl-out set via .open, then via attribute assignment';
 }
 
-# RT #131384
+# https://github.com/Raku/old-issue-tracker/issues/6282
 {
     my $file = make-temp-file;
     given $file.IO {
@@ -202,14 +202,14 @@ subtest '.print-nl method' => {
     }
 }
 
-# RT #131961
+# https://github.com/Raku/old-issue-tracker/issues/6466
 given make-temp-file() {
     .spurt: "a" x (2**20 - 1) ~ "«";
     #?rakudo.jvm todo 'OutOfMemoryError: Java heap space'
     lives-ok { for .lines { } }, 'No spurious malformed UTF-8 error';
 }
 
-# RT #132030
+# https://github.com/Raku/old-issue-tracker/issues/6493
 subtest 'opened filehandles get closed on exit automatically' => {
     plan 2;
     my $path = make-temp-file;
@@ -222,7 +222,8 @@ subtest 'opened filehandles get closed on exit automatically' => {
         'file has all the content we wrote into it';
 }
 
-{ # RT #131858
+# https://github.com/Raku/old-issue-tracker/issues/6434
+{
     is-deeply my class Z is IO::Handle { }.new.nl-in, $[“\n”, “\r\n”],
         ‘.nl-in in subclasses has \n and \r\n’;
 }
@@ -327,3 +328,5 @@ subtest '.EOF/.WRITE methods' => {
     is-deeply $fh.eof, True,
         '.eof after "slurp" of rest of data with .read call';
 }
+
+# vim: ft=perl6 expandtab sw=4

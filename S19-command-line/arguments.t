@@ -5,7 +5,7 @@ use Test::Util;
 
 plan 6;
 
-# RT #112988
+# https://github.com/Raku/old-issue-tracker/issues/2769
 {
     my Str $x;
     my $file = 'ThisDoesNotExistAtAll.p6';
@@ -22,7 +22,7 @@ plan 6;
     }
 }
 
-# RT #77894
+# https://github.com/Raku/old-issue-tracker/issues/2171
 {
     my $cmd = $*DISTRO.is-win 
         ?? 'echo exit(42) | \qq[$*EXECUTABLE] -'
@@ -31,7 +31,7 @@ plan 6;
     is shell($cmd).exitcode, 42, "'-' as argument means STDIN";
 }
 
-# RT #125600
+# https://github.com/Raku/old-issue-tracker/issues/4396
 {
     my $dir = 'omg-a-directory';
     mkdir $dir;
@@ -53,12 +53,14 @@ plan 6;
 }
 
 
-# RT#127925
+# https://github.com/Raku/old-issue-tracker/issues/5244
 is_run ｢@*ARGS.head.print｣, :args[<yağmur>],
     { :err(''), :out<yağmur>, :0status },
     'printed chars match input';
 
-# RT #130760
+# https://github.com/Raku/old-issue-tracker/issues/6064
 is_run(Str, :args['--nosucharg=foo', 'foo.p6'],
     { out => '' },
     'Unknown options do not spit warnings to stdout');
+
+# vim: ft=perl6

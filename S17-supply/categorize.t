@@ -62,7 +62,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 
             my $done = False;
             @supplies[1].tap(done => sub { $done = True });
-            ok $done, 'Sub-supply got .done (RT #123674)';
+            # https://github.com/Raku/old-issue-tracker/issues/3655
+            ok $done, 'Sub-supply got .done';
         }
     }
 }
