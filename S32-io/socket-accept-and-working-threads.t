@@ -2,7 +2,7 @@ use Test;
 
 plan 15;
 
-# RT #129213
+# https://github.com/Raku/old-issue-tracker/issues/5643
 {
     my class Dummy { has ($.a, $.b, $.c, $.d, $.e) }
 
@@ -39,8 +39,8 @@ plan 15;
     }
 }
 
-# MoarVM #165 (could not recv in a thread besides where the socket was
-# accepted)
+# https://github.com/MoarVM/MoarVM/issues/1650
+# could not recv in a thread besides where the socket was accepted
 {
     my $ready = Promise.new;
 
@@ -68,3 +68,5 @@ plan 15;
         $conn.close;
     }
 }
+
+# vim: ft=perl6

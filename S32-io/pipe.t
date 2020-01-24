@@ -41,7 +41,8 @@ sub proc_captures_out_ok($code, $out, $exitcode, $desc) {
     is $sh.out.slurp(:close), "baz\nbar\nfoo\n", 'Can talk to subprocess bidirectional';
 }
 
-#?rakudo.jvm skip 'hangs, RT #131393'
+# https://github.com/Raku/old-issue-tracker/issues/6288
+#?rakudo.jvm skip 'hangs'
 {
     my $sh1 = run($*EXECUTABLE, '-e', 'say join "\n", reverse lines', :in, :out);
     my $sh2 = run($*EXECUTABLE, '-e', 'my @l = lines; .say for @l; note @l.elems', :in($sh1.out), :out, :err);
@@ -52,7 +53,7 @@ sub proc_captures_out_ok($code, $out, $exitcode, $desc) {
     $sh1.out.close;
 }
 
-# RT #125796
+# https://github.com/Raku/old-issue-tracker/issues/4468
 {
     my $p     = run $*EXECUTABLE, '-e', 'say 42 for ^10', :out;
     my @lines = $p.out.lines;
@@ -87,7 +88,7 @@ group-of 5 => 'bin pipes in Proc do not crash on open' => {
     is $stderr.lines.head, "24", 'STDERR is right';
 }
 
-# RT #129882
+# https://github.com/Raku/old-issue-tracker/issues/5749
 {
     my $proc = run $*EXECUTABLE, '-e', 'print slurp', :in, :out, :bin;
     my $input = ('a' x 1_000_000).encode;
@@ -98,3 +99,5 @@ group-of 5 => 'bin pipes in Proc do not crash on open' => {
     is $proc.out.slurp(:close, :bin).bytes, 1_000_000, 'large blob can be piped';
     await $promise;
 }
+
+# vim: ft=perl6 expandtab sw=4

@@ -67,12 +67,11 @@ subtest 'open(:bin) handle' => {
     $fh.close;
 }
 
-# RT #132254
+# https://github.com/Raku/old-issue-tracker/issues/6590
 # TTY handles like STDOUT keep track of how many bytes were sent to give faked
 # out .tell results. The bug in #132254 existed due to .tell on TTY, so
 # let's use $*OUT for the test and rely on previous TAP output to have shifted
 # the .tell value by some bytes, due to previously printed content
 cmp-ok $*OUT.tell, '!=', 0, '.tell gave us some non-zero value';
-
 
 # vim: ft=perl6

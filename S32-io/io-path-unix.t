@@ -67,6 +67,8 @@ is $numfile.pred,      "foo/file00.txt", "pred basic";
 is IO::Path::Unix.new("foo/()").succ, "foo/()", "succ only effects basename";
 is IO::Path::Unix.new("foo/()").succ, "foo/()", "pred only effects basename";
 
-# RT#128840
+# https://github.com/Raku/old-issue-tracker/issues/5531
 isnt IO::Path::Unix.new("-a").absolute, '',
     '.absolute on paths starting with `-` does not produce empty string';
+
+# vim: ft=perl6

@@ -1,6 +1,7 @@
 use Test;
 
-# RT #130473, #130475
+# https://github.com/Raku/old-issue-tracker/issues/5959
+# https://github.com/Raku/old-issue-tracker/issues/5961
 
 my $localhost = '0.0.0.0';
 
@@ -56,3 +57,5 @@ sub family-too-high() {
         :family(FAMILY_VALUE_TOO_HIGH),
     );
 }
+
+# vim: ft=perl6

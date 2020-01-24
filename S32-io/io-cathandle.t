@@ -215,7 +215,8 @@ subtest 'getc method' => {
         my $fh2 = make-temp-file content => "\x[308]a♥b\x[308]♥c♥";
         my $cat = IO::CatHandle.new: $fh1, $fh2;
         my @res; @res.push($_) while ($_ = $cat.getc).DEFINITE;
-        #?rakudo todo 'RT 131365'
+        # https://github.com/Raku/old-issue-tracker/issues/6258
+        #?rakudo todo 'end of file'
         is-deeply @res, [
             "a\x[308]\x[308]\x[308]", "\n", "\x[308]\x[308]", "\n",
             "\x[308]", "c", "\x[308]", "a", "♥", "b\x[308]", "♥", "c", "♥"
@@ -685,7 +686,8 @@ subtest 'slurp method' => {
     sub files { make-files @data }
 
     is-deeply IO::CatHandle.new(files).slurp, @data.join, 'non-binary';
-    #?rakudo.jvm todo 'problem with equivalence of Buf objects, RT #128041'
+    # https://github.com/Raku/old-issue-tracker/issues/5283
+    #?rakudo.jvm todo 'problem with equivalence of Buf objects'
     is-deeply IO::CatHandle.new(files, :bin).slurp,
         Buf[uint8].new(@data.join.encode), 'binary';
 
@@ -697,8 +699,8 @@ subtest 'slurp method' => {
         ~ Blob[uint8].new(200, 200         ).decode('utf8-c8'),
         ':enc parameter works';
 
-    #?rakudo.moar todo 'malformed 1-char slurp returns empty string RT#131379'
-    # RT #131379
+    # https://github.com/Raku/old-issue-tracker/issues/6278
+    #?rakudo.moar todo 'malformed 1-char slurp returns empty string'
     throws-like {
       IO::CatHandle.new(files, make-temp-file content => Buf.new: 200).slurp
     }, Exception, 'file containing single non-valid-UTF8 byte throws in utf8 slurp';
@@ -763,7 +765,8 @@ subtest 'Supply method' => {
           'size 1000';
     }
     subtest 'non-binary cat, utf8' => { plan 4;
-        #?rakudo.moar 4 todo 'readchars reads wrong num of chars RT131383'
+        # https://github.com/Raku/old-issue-tracker/issues/6281
+        #?rakudo.moar 4 todo 'readchars reads wrong num of chars'
         is-deeply cat-supply,                    [$str],         'no args';
         is-deeply cat-supply(\(), \(:2size)),    [$str.comb: 2], 'size 2';
         is-deeply cat-supply(\(), \(:5size)),    [$str.comb: 5], 'size 5';
@@ -774,7 +777,8 @@ subtest 'Supply method' => {
         my @bits = buf8.new(200), buf8.new(200, 200), buf8.new(200, 42, 70);
         #?rakudo.jvm emit # Unsupported VM encoding 'utf8-c8'
         my $str = ([~] @bits).decode: 'utf8-c8';
-        #?rakudo.moar 4 todo 'readchars reads wrong num of chars RT131383'
+        # https://github.com/Raku/old-issue-tracker/issues/6281
+        #?rakudo.moar 4 todo 'readchars reads wrong num of chars'
         #?rakudo.jvm 4 skip "Unsupported VM encoding 'utf8-c8'"
         is-deeply cat-supply(c, \(         ), @bits), [$str],        'no args';
         is-deeply cat-supply(c, \(:2size   ), @bits), [$str.comb: 2], 'size 2';
@@ -864,7 +868,8 @@ subtest 'words method' => {
 }
 
 if $*DISTRO.is-win {
-    skip "Proc/Proc::Async with cmd.exe don't quite work on Windows: RT132258";
+    # https://github.com/Raku/old-issue-tracker/issues/6591
+    skip "Proc/Proc::Async with cmd.exe don't quite work on Windows";
 }
 else {
     # https://github.com/rakudo/rakudo/issues/1313
