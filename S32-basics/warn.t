@@ -5,8 +5,8 @@ use Test::Util;
 
 plan 10;
 
+# https://github.com/Raku/old-issue-tracker/issues/1338
 {
-    # RT #69520
     my $alive = 0;
     try {
         warn "# It's OK to see this warning during a test run";
@@ -24,7 +24,7 @@ plan 10;
     ok $caught, 'CONTROL catches exceptions'
 }
 
-# RT #73768
+# https://github.com/Raku/old-issue-tracker/issues/1621
 {
     my $caught = 0;
     {
@@ -42,7 +42,7 @@ is_run 'use v6; warn; say "alive"',
     },
     'warn() without arguments';
 
-# RT #124767
+# https://github.com/Raku/old-issue-tracker/issues/3987
 is_run 'use v6; warn("OH NOEZ"); say "alive"',
     {
         status => 0,
@@ -67,7 +67,7 @@ is_run 'use v6; quietly {warn("OH NOEZ") }; say "alive"',
     },
     'quietly suppresses warnings';
 
-# RT #132549
+# https://github.com/Raku/old-issue-tracker/issues/6647
 is_run ｢
     warn <foo-1  foo-2  foo-3>.all;
     warn ('foo-4',  ('foo-5', 'foo-6').any).all
@@ -75,7 +75,7 @@ is_run ｢
     .contains: <foo-1  foo-2  foo-3  foo-4  foo-5  foo-6>.all
 }}, 'no crashes or hangs with Junctions in warn()';
 
-# R#1833
+# https://github.com/rakudo/rakudo/issues/1833
 {
     my int $warnings;
     {

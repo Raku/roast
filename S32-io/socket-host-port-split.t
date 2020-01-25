@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# RT #130474
+# https://github.com/Raku/old-issue-tracker/issues/5960
 
 plan 2;
 

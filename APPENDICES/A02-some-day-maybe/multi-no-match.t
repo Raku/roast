@@ -10,7 +10,8 @@ use Test;
 
 plan 16;
 
-{ # RT #129773
+# https://github.com/Raku/old-issue-tracker/issues/5710
+{
     throws-like { [].splice: 0, [] }, X::Multi::NoMatch,
         '.splice(offset, array) throws';
     throws-like { [].splice: 0e0, 0 }, X::Multi::NoMatch,
@@ -41,14 +42,15 @@ dies-ok { 42.lines: |<bunch of incorrect args> },
 throws-like { "".match: Nil }, X::Multi::NoMatch,
     '.match with Nil matcher does not hang';
 
-{ # RT#131339
+# https://github.com/Raku/old-issue-tracker/issues/6259
+{
     throws-like { Pair.new: <foo bar ber meow>, <meows>, 42 }, X::Multi::NoMatch,
         'Pair.new with wrong positional args does not go to Mu.new';
     throws-like { Pair.new: :42a                            }, X::Multi::NoMatch,
         'Pair.new with wrong named args does not go to Mu.new';
 }
 
-# RT #131490
+# https://github.com/Raku/old-issue-tracker/issues/6308
 subtest "Junction.new does not use Mu.new's candidates" => {
     plan 3;
     throws-like { Junction.new: 42      }, X::Multi::NoMatch, 'positional';
@@ -66,6 +68,8 @@ throws-like { Int.new: <a b c>, 42, 'meow', 'wrong', 'args' },
         'Range.new with wrong args does not claim it takes only named args';
 }
 
-# RT #127016
+# https://github.com/Raku/old-issue-tracker/issues/4921
 dies-ok { Date.new(Int, 1, 1) },
     'dies when its year is given as an Int type object';
+
+# vim: ft=perl6

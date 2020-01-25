@@ -80,7 +80,7 @@ nok $non-existent-file.IO.e, "sanity check 2";
 ok unlink($existing-file1), 'clean-up 3';
 ok unlink($existing-file2), 'clean-up 4';
 
-# RT#131242
+# https://github.com/Raku/old-issue-tracker/issues/6216
 subtest 'moving when target and source are same file' => {
     plan 2;
     my $file = make-temp-file :content<foo>;

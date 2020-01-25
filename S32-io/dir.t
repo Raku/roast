@@ -32,7 +32,7 @@ nok dir( test=> none('.', '..', 't') ).grep(*.basename eq 't'), "can exclude t/ 
 
 is dir('t').[0].dirname, 't', 'dir("t") returns paths with .dirname of "t"';
 
-# RT #123308
+# https://github.com/Raku/old-issue-tracker/issues/3593
 {
     my $res = dir "/";
     ok $res !~~ m/ "/" ** 2 /,
@@ -62,7 +62,7 @@ subtest "dir-created IO::Paths' absoluteness controlled by invocant" => {
     cmp-ok +@files, '==', +@files.grep({    .is-absolute}), 'absolute invocant';
 }
 
-# RT #132675
+# https://github.com/Raku/old-issue-tracker/issues/6658
 subtest '.dir with relative paths sets right CWD' => {
     plan 3;
     (((my $dir := make-temp-dir).add('meow').mkdir).add('foos')).spurt: 'pass';

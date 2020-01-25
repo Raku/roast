@@ -68,14 +68,14 @@ do-test
         is $^client.recv(26), ([~] 'a' .. 'z'), "remaining 26 were buffered";
 
         # Multibyte characters
-        # RT #115862
+        # https://github.com/Raku/old-issue-tracker/issues/2981
         $received = $^client.recv(1);
         is $received, chr(0xA001), "received {chr 0xA001}";
         is $received.chars, 1, "... which is 1 character";
 
         $received = $^client.recv(1);
         is $received.chars, 1, "received another character";
-        # RT #115862
+        # https://github.com/Raku/old-issue-tracker/issues/2981
         is $received, chr(0xA002), "combined the bytes form {chr 0xA002}";
 
         $^client.close();
@@ -114,7 +114,7 @@ do-test
         $received = $^client.get();
         is $received, 'All mimsy were the borogoves,',
           "\\r\\n separator";
-        # RT #109306
+        # https://github.com/Raku/old-issue-tracker/issues/2627
         is $received.encode('ascii').elems, 29,
           "\\r was not left behind on the string";
 
@@ -166,7 +166,8 @@ do-test
         $^client.close();
     };
 
-# RT #116288, test 6 tests read with a parameter
+# https://github.com/Raku/old-issue-tracker/issues/3020
+# test 6 tests read with a parameter
 do-test
     # server
     {
@@ -310,10 +311,11 @@ do-test
 
 if $*DISTRO.is-win            or  # test for WSL below
    $*KERNEL.name eq "linux"   and $*KERNEL.release ~~ /:i <|w>Microsoft<|w>/ {
-    skip 'Winsock 1 second delay for connection failure RT #130892', 1
+    # https://github.com/Raku/old-issue-tracker/issues/6094
+    skip 'Winsock 1 second delay for connection failure', 1
 }
 else {
-    # MoarVM #234
+    # https://github.com/MoarVM/MoarVM/issues/234
     eval-lives-ok 'for ^2000 { IO::Socket::INET.new( :0port, :host<127.0.0.1> ); CATCH {next}; next }',
                   'Surviving without SEGV due to incorrect socket connect/close handling';
 }

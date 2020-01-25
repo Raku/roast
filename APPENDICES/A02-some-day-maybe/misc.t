@@ -15,7 +15,7 @@ plan 6;
 throws-like ｢*+42:foo｣, X::Syntax::Adverb, :what{.so},
     'error in Whatever closure with adverb mentions what cannot be adverbed';
 
-# RT #131414
+# https://github.com/Raku/old-issue-tracker/issues/6299
 subtest 'same exception with and without type smiley for failing coercion on var' => {
     plan 3;
     my \XSVB = X::Syntax::Variable::BadType;
@@ -31,7 +31,8 @@ subtest 'attempting to use defaults with slurpy parameters throws' => {
     for @slurpies;
 }
 
-{ # RT#126979
+# https://github.com/Raku/old-issue-tracker/issues/4900
+{
     my @a[;];
     pass 'shaped array declaration without numbers does not infini-loop';
 }
@@ -50,3 +51,5 @@ group-of 4 => '.pick/.grab/.kxxv with undecided semantics' => {
         'cannot call kxxv on Mix';
 
 }
+
+# vim: ft=perl6
