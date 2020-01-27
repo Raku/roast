@@ -5,7 +5,7 @@ use Test::Tap;
 
 my @schedulers = ThreadPoolScheduler.new, CurrentThreadScheduler;
 
-plan @schedulers * 3;
+plan @schedulers * 6;
 
 for @schedulers -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
@@ -17,6 +17,16 @@ for @schedulers -> $*SCHEDULER {
 
     with \(* < 4, :end) -> \c {
         tap-ok Supply.from-list(1,2,3,4,5).first(|c), [3,],
+          "first with {c.raku.substr(1)}";
+    }
+
+    for \(), \(:!end) -> \c {
+        tap-ok Supply.from-list(1,2,3,4,5).first(|c), [1,],
+          "first with {c.raku.substr(1)}";
+    }
+
+    with \(:end) -> \c {
+        tap-ok Supply.from-list(1,2,3,4,5).first(|c), [5,],
           "first with {c.raku.substr(1)}";
     }
 }
