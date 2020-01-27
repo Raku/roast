@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 57;
+plan 58;
 
 # L<S03/Comparison semantics/Binary eqv tests equality much like === does>
 # L<S32::Basics/Any/"=item eqv">
@@ -181,6 +181,45 @@ subtest 'Seq eqv List' => {
     is-deeply (.key eqv .value), False,
         "{.key.^name}({.key}) not eqv {.value.^name}({.value})"
     for @tests;
+}
+
+subtest 'Seq eqv Seq' => {
+    plan 7;
+
+    my $a = (^2).Seq;
+    my $b = $a; # .iterator can be called only once
+
+    my $result;
+    lives-ok { $result = $a eqv $b },
+        'eqv between identical Seqs does not die';
+
+    is-deeply $result, True,
+        'eqv between identical Seqs returns True';
+
+    $a = lazy ^2;
+    $b = $a;
+
+    $a.cache; # now .iterator can be called on both
+    lives-ok { $result = $a eqv $b },
+        'eqv between identical lazy Seqs does not die';
+
+    is-deeply $result, True,
+        'eqv between identical lazy Seqs returns True';
+
+    $a = (0,1).Seq;
+    $b = (0,1,2).Seq;
+    is-deeply $a eqv $b, False,
+        'eqv between shorter and longer Seq';
+
+    $a = (0,1,2).Seq;
+    $b = (0,1).Seq;
+    is-deeply $a eqv $b, False,
+        'eqv between longer and shorter Seq';
+
+    $a = (0,1,2).Seq;
+    $b = (0,1,42).Seq;
+    is-deeply $a eqv $b, False,
+        'eqv between Seqs with different end values';
 }
 
 subtest 'Throws/lives in lazy cases' => {
