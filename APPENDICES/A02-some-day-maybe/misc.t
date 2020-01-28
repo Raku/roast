@@ -18,10 +18,10 @@ throws-like ｢*+42:foo｣, X::Syntax::Adverb, :what{.so},
 # https://github.com/Raku/old-issue-tracker/issues/6299
 subtest 'same exception with and without type smiley for failing coercion on var' => {
     plan 3;
-    my \XSVB = X::Syntax::Variable::BadType;
-    throws-like ｢class { has Int() $.x = "42"}.new.x｣,           XSVB, 'no type smiley';
-    throws-like ｢class { has Int:D() $.x = "42"}.new.x｣,         XSVB, ':D (1)';
-    throws-like ｢class { has Int:D() $.x = "42"}.new(:x("43"))｣, XSVB, ':D (2)';
+    my \XTAD = X::TypeCheck::Attribute::Default;
+    throws-like ｢class { has Int() $.x = "42"}.new.x｣,           XTAD, 'no type smiley';
+    throws-like ｢class { has Int:D() $.x = "42"}.new.x｣,         XTAD, ':D (1)';
+    throws-like ｢class { has Int:D() $.x = "42"}.new(:x("43"))｣, XTAD, ':D (2)';
 }
 
 subtest 'attempting to use defaults with slurpy parameters throws' => {
