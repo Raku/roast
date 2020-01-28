@@ -13,9 +13,9 @@ is class { has Int:_ $.a = 42  }.new.a,    42, 'can Int:_ take an Int:D';
 
 is class { has Int:U $.a       }.new.a,   Int, 'can Int:U be on its own';
 is class { has Int:U $.a = Int }.new.a,   Int, 'can Int:U take an Int:U';
-throws-like { class { has Int:U $.a = 42 }.new.a },
-  X::TypeCheck::Assignment,
-  symbol => '$!a',                             'can Int:U take an Int:D';
+throws-like ｢class { has Int:U $.a = 42 }.new.a｣,
+  X::TypeCheck::Attribute::Default,
+  name => '$!a',                               'can Int:U take an Int:D';
 
 throws-like 'class { has Int:D $.a }',
   X::Syntax::Variable::MissingInitializer,
@@ -37,9 +37,9 @@ is class { has Int:D $.a = 42  }.new.a,    42, 'can Int:D take an Int:D';
 
     is class { has Int:U $.a       }.new.a,   Int, 'with :_, can Int:U be on its own';
     is class { has Int:U $.a = Int }.new.a,   Int, 'with :_, can Int:U take an Int:U';
-    throws-like { class { has Int:U $.a = 42 }.new },
-      X::TypeCheck::Assignment,
-      symbol => '$!a',                             'with :_, can Int:U take an Int:D';
+    throws-like ｢class { has Int:U $.a = 42 }.new｣,
+      X::TypeCheck::Attribute::Default,
+      name => '$!a',                               'with :_, can Int:U take an Int:D';
 
     throws-like 'class { has Int:D $.a }',
       X::Syntax::Variable::MissingInitializer,
@@ -52,11 +52,11 @@ is class { has Int:D $.a = 42  }.new.a,    42, 'can Int:D take an Int:D';
 
 {
     use attributes :U;
-    is class { has Int   $.a       }.new.a, Int, 'with :U, can Int   be on its own';
+    is class { has Int   $.a       }.new.a, Int,   'with :U, can Int   be on its own';
     is class { has Int   $.a = Int }.new.a,   Int, 'with :U, can Int   take an Int:U';
-    throws-like { class { has Int $a = 42 }.new },
-      X::TypeCheck::Assignment,
-      symbol => '$!a',                             'with :U, can Int   take an Int:D';
+    throws-like ｢use attributes :U; class { has Int $a = 42 }.new｣, # XXX pragma's not seen in EVAL
+      X::TypeCheck::Attribute::Default,
+      name => '$!a',                               'with :U, can Int   take an Int:D';
 
     is class { has Int:_ $.a       }.new.a,   Int, 'with :U, can Int:_ be on its own';
     is class { has Int:_ $.a = Int }.new.a,   Int, 'with :U, can Int:_ take an Int:U';
@@ -64,9 +64,9 @@ is class { has Int:D $.a = 42  }.new.a,    42, 'can Int:D take an Int:D';
 
     is class { has Int:U $.a       }.new.a,   Int, 'with :U, can Int:U be on its own';
     is class { has Int:U $.a = Int }.new.a,   Int, 'with :U, can Int:U take an Int:U';
-    throws-like { class { has Int:U $.a = 42 }.new },
-      X::TypeCheck::Assignment,
-      symbol => '$!a',                             'with :U, can Int:U take an Int:D';
+    throws-like ｢use attributes :U; class { has Int:U $.a = 42 }.new｣,
+      X::TypeCheck::Attribute::Default,
+      name => '$!a',                               'with :U, can Int:U take an Int:D';
 
     throws-like 'use attributes :U; class { has Int:D $a }', # XXX pragma's not seen in EVAL
       X::Syntax::Variable::MissingInitializer,
@@ -93,9 +93,9 @@ is class { has Int:D $.a = 42  }.new.a,    42, 'can Int:D take an Int:D';
 
     is class { has Int:U $.a       }.new.a,   Int, 'with :D, can Int:U be on its own';
     is class { has Int:U $.a = Int }.new.a,   Int, 'with :D, can Int:U take an Int:U';
-    throws-like { class { has Int:U $.a = 42 }.new },
-      X::TypeCheck::Assignment,
-      symbol => '$!a',                             'with :D, can Int:U take an Int:D';
+    throws-like ｢class { has Int:U $.a = 42 }.new｣,
+      X::TypeCheck::Attribute::Default,
+      name => '$!a',                               'with :D, can Int:U take an Int:D';
 
     throws-like 'use attributes :D; class { has Int:D $.a }', # XXX pragma's not seen in EVAL
       X::Syntax::Variable::MissingInitializer,
