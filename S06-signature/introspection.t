@@ -121,7 +121,7 @@ sub j(*@i) {
 # RT #69492
 {
     sub foo(:$) {};
-    ok &foo.signature.raku ~~ / ':($)' /, '.raku of a signature with anonymous named parameter';
+    ok &foo.signature.raku ~~ / ':(:$)' /, '.raku of a signature with anonymous named parameter';
 }
 
 # Capture param introspection
