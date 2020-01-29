@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 756;
+plan 757;
 
 ### for now
 sub matchcheck(*@) { 1 }
@@ -2390,7 +2390,11 @@ throws-like '/  /', X::Syntax::Regex::NullRegex, 'ws null pattern';
 
 throws-like '"b" ~~ /b| /', X::Syntax::Regex::NullRegex, 'null pattern after alternation';
 
-# RT #71702
+# https://github.com/Raku/old-issue-tracker/issues/1458
 throws-like '"foo" ~~ /<[d..b]>? foo/', Exception, 'no reversed char ranges';
+
+# https://github.com/rakudo/rakudo/issues/2059
+lives-ok { $/ := 42; dd /./.ACCEPTS("a") },
+  'Regex.ACCEPTS survives immutable $/';
 
 # vim: ft=perl6 sw=4 expandtab
