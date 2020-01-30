@@ -4,7 +4,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 use Test::Idempotence;
 
-plan 136;
+plan 147;
 
 # L<S06/Signature Introspection>
 
@@ -271,5 +271,29 @@ is-deeply sub ($,$,$,$){}.signature.gist, '($, $, $, $)',
     is B.^find_method("bar").signature.params[1].twigil, ".",
       'does a public attribute Parameter have a . twigil';
 }
+
+is :($a).params[0].prefix, '',
+  'parameters do not give any prefix by default';
+is :(*@a).params[0].prefix, '*',
+  'slurpy positional parameters give a * prefix';
+is :(**@a).params[0].prefix, '**',
+  'slurpy LoL parameters give a ** prefix';
+is :(*%s).params[0].prefix, '*',
+  'slurpy named parameters give a * prefix';
+is :(+@a).params[0].prefix, '+',
+  'slurpy onearg parameters give a + prefix';
+
+is :($a).params[0].suffix, '',
+  'positional parameters do not give any suffix by default';
+is :(:$a).params[0].suffix, '',
+  'named parameters do not give any suffix by default';
+is :($a?).params[0].suffix, '?',
+  'optional positional parameters give a ? suffix';
+is :(:$a!).params[0].suffix, '!',
+  'required named parameters give a ! suffix';
+is :(@a = [1,2,3]).params[0].suffix, '',
+  'default values for positional parameters do not give a ? suffix';
+is :(:@a = [1,2,3]).params[0].suffix, '',
+  'default values for named parameters do not give a ! suffix';
 
 # vim: ft=perl6
