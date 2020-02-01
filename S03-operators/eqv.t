@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 58;
+plan 59;
 
 # L<S03/Comparison semantics/Binary eqv tests equality much like === does>
 # L<S32::Basics/Any/"=item eqv">
@@ -222,6 +222,18 @@ subtest 'Seq eqv Seq' => {
         'eqv between Seqs with different end values';
 }
 
+# rakudo/issues/3346
+{
+    my $test = start {
+        my $a = (0,1).hyper;
+        my $b = (0,2).hyper;
+        die if $a eqv $b;
+    };
+
+    await Promise.anyof($test, Promise.in(5));
+    is $test.status, Kept, 'HyperSeq eqv HyperSeq';
+}
+
 subtest 'Throws/lives in lazy cases' => {
     plan 8;
 
@@ -243,19 +255,6 @@ subtest 'Throws/lives in lazy cases' => {
     lives-ok    { (1…∞)       eqv (1…3)       }, 'Seqs, only one lazy';
     lives-ok    { (1…∞).List  eqv (1…3).List  }, 'Lists, only one lazy';
     lives-ok    { (1…∞).Array eqv (1…3).Array }, 'Arrays, only one lazy';
-}
-
-# rakudo/issues/3346
-{
-    my class Null does Iterable does Iterator {
-        method iterator  { self }
-        method pull-one  { IterationEnd }
-    }
-
-    my $p = start { Null.new eqv Null.new };
-    await Promise.anyof($p, Promise.in(5));
-    ok $p.status == Kept,
-     'eqv comparison between non-Positional Iterables does not hang';
 }
 
 # vim: ft=perl6
