@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 149;
+plan 150;
 
 =begin pod
 
@@ -368,6 +368,13 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
         return 'happiness';
     }
     is rt63686(), 'happiness', 'for loop over junction in sub';
+}
+
+# https://github.com/rakudo/rakudo/issues/3198
+{
+    my @seen;
+    @seen.push(.^name) for any 1;
+    is-deeply @seen, ['Junction'], 'for loop over Junction gets the Junction';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/1167
