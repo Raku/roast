@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 15;
+plan 16;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl>
 
@@ -96,6 +96,16 @@ plan 15;
         { $res = $_; last } if $_ == 2;
     }
     is $res, 2, 'Correct handling of $_ in block to left of statement modifer if';
+}
+
+# https://github.com/rakudo/rakudo/issues/3034
+{
+    my $called = False;
+    my module M {
+        our sub foo() { $called = True; }
+    }
+    M::foo if True;
+    ok $called, 'List-op call to sub in a package in `if` statement modifier works';
 }
 
 # vim: ft=perl6
