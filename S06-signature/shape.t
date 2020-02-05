@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 35;
+plan 36;
 
 sub single-dim(@a[3]) { }
 lives-ok { single-dim(Array.new(:shape(3))) }, '[3] shape constraint accepts matcing array';
@@ -50,3 +50,7 @@ dies-ok { dependent(4, Array.new()) }, 'can use earlier parameters in shape spec
 dies-ok { dependent(4, Array.new(:shape(4,3))) }, 'can use earlier parameters in shape specification (5)';
 
 is-deeply (my @a[Bool]).shape, (2,), "can have an Enum as a shape definition";
+
+# https://github.com/rakudo/rakudo/issues/3314
+is (-> @a[3] { @a[1] })(my @b[3] = <a b c>), 'b',
+    'Shape-constrained array in signature declares a variable that we can access';
