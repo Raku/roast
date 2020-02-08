@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 36;
+plan 37;
 
 # L<S32::Numeric/Numeric/"=item is-prime">
 
@@ -77,3 +77,7 @@ subtest 'Complex.is-prime with Complex that cannot be Real throw' => {
         throws-like {  is-prime $_ }, X::Numeric::Real, "{.raku} (sub form)";
     }
 }
+
+is-deeply is-prime(-2), False, 'negative numbers are *not* prime';
+
+# vim: ft=perl6
