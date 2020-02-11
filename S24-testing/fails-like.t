@@ -10,12 +10,22 @@ sub check-test-fail (&test-to-run) {
 }
 
 subtest 'Callable arg' => {
-    plan 11;
+    plan 13;
     fails-like { sub { fail }() }, Exception;
     fails-like { sub { fail }() }, Exception, 'plain fail';
     fails-like {
         sub { fail X::Syntax::Reserved.new: :instead<foo>, :pos<bar> }()
     }, X::Syntax::Reserved, :instead<foo>, :pos<bar>, 'typed fail';
+
+    fails-like {
+        sub { fail X::Syntax::Reserved.new: :instead, :pos<bar> }()
+    }, X::Syntax::Reserved, instead => * === True, 'whatever bool matcher';
+
+    throws-like {
+        fails-like {
+            sub { fail X::Syntax::Reserved.new: :instead, :pos<bar> }()
+        }, X::Syntax::Reserved, :instead;
+    }, X::Match::Bool, message => *.contains('instead'), 'bool matcher throws';
 
     check-test-fail {
         fails-like { sub { fail }().sink }, Exception, 'plain fail (thrown)'
@@ -33,12 +43,22 @@ subtest 'Callable arg' => {
 }
 
 subtest 'Str arg' => {
-    plan 11;
+    plan 13;
     fails-like ｢sub { fail }() ｣, Exception;
     fails-like ｢sub { fail }() ｣, Exception, 'plain fail';
     fails-like ｢
         sub { fail X::Syntax::Reserved.new: :instead<foo>, :pos<bar> }()
     ｣, X::Syntax::Reserved, :instead<foo>, :pos<bar>, 'typed fail';
+
+    fails-like ｢
+        sub { fail X::Syntax::Reserved.new: :instead, :pos<bar> }()
+    ｣, X::Syntax::Reserved, instead => * === True, 'whatever bool matcher';
+
+    throws-like {
+        fails-like ｢
+            sub { fail X::Syntax::Reserved.new: :instead, :pos<bar> }()
+        ｣, X::Syntax::Reserved, :instead;
+    }, X::Match::Bool, message => *.contains('instead'), 'bool matcher throws';
 
     check-test-fail {
         fails-like ｢ sub { fail }().sink ｣, Exception, 'plain fail (thrown)'
