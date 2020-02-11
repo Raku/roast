@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 80;
+plan 82;
 
 # Object array
 {
@@ -139,4 +139,15 @@ plan 80;
     @a = @a.reverse;
     is-deeply @a, Array.new(:shape(5,), [0, 4, 3, 2, 1]),
         'can we assign after a .reverse?';
+}
+
+# https://github.com/rakudo/rakudo/issues/3334
+{
+    my @a[2;2] = (1,1),(1,1);
+
+    my @b := @a.clone;
+    is-deeply @b.shape, (2,2), 'Shape is retained when a shaped array is cloned';
+
+    @a[1;1] = 'X';
+    is @b[1;1], 1, 'Clone of shaped array has independent containers';
 }
