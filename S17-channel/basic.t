@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 27;
+plan 28;
 
 {
     my Channel $c .= new;
@@ -92,6 +92,16 @@ plan 27;
 
     pass("Both workers detected end-of-channel after a shared channel close");
     $timer.close;
+}
+
+{
+    my $c = Channel.new;
+    $c.send(1);
+    $c.send(2);
+
+    react whenever $c { done }
+
+    is $c.poll, 2, 'second value should still be in the channel';
 }
 
 { # coverage; 2016-09-26
