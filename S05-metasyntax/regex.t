@@ -240,32 +240,32 @@ subtest '`**` quantifier' => {
         subtest $*frugal ?? 'frugal' !! 'greedy' => {
             plan 14;
 
-            does-match-throw "x".."y",     :non-numeric-range;
-            does-match-throw  42..NaN,     :non-numeric-range;
-            does-match-throw NaN..42,      :non-numeric-range;
-            does-match-throw <0/0>..<0/0>, :non-numeric-range;
+            does-match-throw "x".."y",     :non-numeric-range(? *);
+            does-match-throw  42..NaN,     :non-numeric-range(? *);
+            does-match-throw NaN..42,      :non-numeric-range(? *);
+            does-match-throw <0/0>..<0/0>, :non-numeric-range(? *);
 
-            does-match-throw 5..4,         :empty-range;
-            does-match-throw 4^..^5,       :empty-range;
-            does-match-throw 4^..4,        :empty-range;
-            does-match-throw 5..^5,        :empty-range;
+            does-match-throw 5..4,         :empty-range(? *);
+            does-match-throw 4^..^5,       :empty-range(? *);
+            does-match-throw 4^..4,        :empty-range(? *);
+            does-match-throw 5..^5,        :empty-range(? *);
 
-            does-match-throw Inf..<1/0>,   :inf;
-            does-match-throw Inf,          :inf;
-            does-match-throw <1/0>,        :inf;
+            does-match-throw Inf..<1/0>,   :inf(? *);
+            does-match-throw Inf,          :inf(? *);
+            does-match-throw <1/0>,        :inf(? *);
 
-            does-match-throw <0/0>,        :non-numeric;
-            does-match-throw "meow",       :non-numeric;
-            does-match-throw NaN,          :non-numeric;
+            does-match-throw <0/0>,        :non-numeric(? *);
+            does-match-throw "meow",       :non-numeric(? *);
+            does-match-throw NaN,          :non-numeric(? *);
         }
     }
 
     throws-like ｢"xxxxx" ~~ /x **? 2..1/｣,
-          Exception, :empty-range,
+          Exception, :empty-range(? *),
     'block-less empty range throws (frugal)';
 
     throws-like ｢"xxxxx" ~~ /x **  2..1/｣,
-          Exception, :empty-range,
+          Exception, :empty-range(? *),
     'block-less empty range throws (greedy)';
 }
 
