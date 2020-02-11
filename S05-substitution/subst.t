@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 186;
+plan 190;
 
 # L<S05/Substitution/>
 
@@ -669,6 +669,25 @@ subtest '.subst with multi-match args set $/ to a List of matches' => {
           }
         }
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/3358
+{
+    $_ = "12345";
+    is-deeply ([3,4].map:{S{5}=$^a}), ('12343', '12344'),
+        'Placeholder parameter in substitution assignment';
+
+    $_ = "12345";
+    is-deeply ([3,4].map:{S/5/$^a/}), ('12343', '12344'),
+        'Placeholder parameter in substitution quoted';
+
+    $_ = "12345";
+    is-deeply ([3,4].map:{S{$^a}='X'}), ('12X45', '123X5'),
+        'Placeholder parameter in substitution regex ({} quoter)';
+
+    $_ = "12345";
+    is-deeply ([3,4].map:{S/$^a/X/}), ('12X45', '123X5'),
+        'Placeholder parameter in substitution regex (// quoter)';
 }
 
 # vim: ft=perl6
