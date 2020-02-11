@@ -7,7 +7,7 @@ use Test::Util;
 
 # L<S02/Allomorphic value semantics>
 
-plan 117;
+plan 118;
 
 ## Sanity tests (if your compiler fails these, there's not much hope for the
 ## rest of the test)
@@ -456,3 +456,6 @@ group-of 4 => '.comb on allomorphs uses Str variant' => {
     is-eqv <0001.0>   .comb, <0 0 0 1 . 0    >».Str.Seq, 'RatStr';
     is-eqv <01.0+42i >.comb, <0 1 . 0 + 4 2 i>».Str.Seq, 'ComplexStr';
 }
+
+# https://github.com/rakudo/rakudo/issues/3308
+is Str($*USER).^name, "Str", 'No leaking of guts types when coercing allomorph to Str';
