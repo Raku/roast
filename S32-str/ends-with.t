@@ -2,22 +2,83 @@ use v6;
 
 use Test;
 
-plan 9;
-
 # L<S32::Str/Str/=item ends-with>
 
-my $s = "foobar";
-ok $s.ends-with("bar"),      "'foobar' ending with 'bar'";
-ok $s.ends-with("foobar"),   "'foobar' ending with 'foobar'";
-nok $s.ends-with("baz"),     "'foobar' not ending with 'baz'";
-nok $s.ends-with("zfoobar"), "'foobar' not ending with 'zfoobar'";
+my $backend = $*RAKU.compiler.backend;
 
-my $i = 342;
-ok $i.ends-with(42),    "342 ending with 42";
-ok $i.ends-with(342),   "342 ending with 342";
-nok $i.ends-with(43),   "342 not ending with 43";
-nok $i.ends-with(7342), "342 not ending with 7342";
+dies-ok { 42.ends-with: Str },
+  "Cool.ends-with with wrong args does not hang";
 
-try { 42.ends-with: Str }; pass "Cool.ends-with with wrong args does not hang";
-#
+# tests with just lowercase and no markings
+for
+  "foobar", (
+    \("bar"),     True,
+    \("foobar"),  True,
+    \("goo"),     False,
+    \("foobarx"), False,
+  ),
+  342, (
+    \(42),   True,
+    \(342),  True,
+    \(43),   False,
+    \(3428), False,
+  )
+-> \invocant, @tests {
+    for @tests -> \capture, \result {
+        for (
+          \(|capture, :!i),
+          \(|capture, :!ignorecase),
+          \(|capture, :!m),
+          \(|capture, :!ignoremark),
+          \(|capture, :!i, :!m),
+          \(|capture, :!ignorecase, :!ignoremark),
+          \(|capture, :i),
+          \(|capture, :ignorecase),
+          \(|capture, :m),
+          \(|capture, :ignoremark),
+          \(|capture, :i, :m),
+          \(|capture, :ignorecase, :ignoremark),
+        ) -> \c {
+            if $backend eq "moar"          # MoarVM supports all
+              || !(c<m> || c<ignoremark>)  # others do not support ignoremark
+            {
+                is-deeply invocant.ends-with(|c), result,
+                  "{invocant.raku}.ends-with{c.raku.substr(1)} is {result.gist}";
+            }
+        }
+    }
+}
+
+# tests with uppercase and markings
+for
+  "foöbÀr", (
+    \("bar"),                              False,
+    \("bar", :i),                          False,
+    \("bar", :ignorecase),                 False,
+    \("BAR"),                              False,
+    \("BÀR", :i),                          True,
+    \("BÀR", :ignorecase),                 True,
+    \("bAr", :m),                          True,
+    \("bAr", :ignoremark),                 True,
+    \("foobar"),                           False,
+    \("foobar", :i),                       False,
+    \("foobar", :ignorecase),              False,
+    \("foobar", :m),                       False,
+    \("foobar", :ignoremark),              False,
+    \("foobar", :i, :m),                   True,
+    \("foobar", :ignorecase, :ignoremark), True,
+  )
+-> \invocant, @tests {
+    for @tests -> \c, \result {
+        if $backend eq "moar"          # MoarVM supports all
+          || !(c<m> || c<ignoremark>)  # others do not support ignoremark
+        {
+            is-deeply invocant.ends-with(|c), result,
+              "{invocant.raku}.ends-with{c.raku.substr(1)} is {result.gist}";
+        }
+    }
+}
+
+done-testing;
+
 # vim: ft=perl6
