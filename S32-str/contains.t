@@ -2,37 +2,97 @@ use v6;
 
 use Test;
 
-plan 21;
+my $backend = $*RAKU.compiler.backend;
+
+dies-ok { 42.contains: Str },
+  "Cool.contains with wrong args does not hang";
 
 # L<S32::Str/Str/=item contains>
 
-my $s = "foobar";
-ok $s.contains("foo"),      "'foobar' contains 'foo'";
-ok $s.contains("foobar"),   "'foobar' contains 'foobar'";
-nok $s.contains("goo"),     "'foobar' does not contain 'goo'";
-nok $s.contains("foobarx"), "'foobar' does not contain 'foobarx'";
+# tests with just lowercase and no markings
+for
+  "foobara", (
+    \("bar"),     True,
+    \("foobar"),  True,
+    \("goo"),     False,
+    \("foobarx"), False,
+  ),
+  342, (
+    \(42),   True,
+    \(342),  True,
+    \(43),   False,
+    \(3428), False,
+  )
+-> \invocant, @tests {
+    for @tests -> \capture, \result {
+        for (
+          \(|capture, :!i),
+          \(|capture, :!ignorecase),
+          \(|capture, :!m),
+          \(|capture, :!ignoremark),
+          \(|capture, :!i, :!m),
+          \(|capture, :!ignorecase, :!ignoremark),
+          \(|capture, :i),
+          \(|capture, :ignorecase),
+          \(|capture, :m),
+          \(|capture, :ignoremark),
+          \(|capture, :i, :m),
+          \(|capture, :ignorecase, :ignoremark),
+        ) -> \capture {
+            if $backend eq "moar"                      # MoarVM supports all
+              || !(capture<m> || capture<ignoremark>)  # no support ignoremark
+            {
+                for (
+                  capture,
+                  \(|capture, 0),
+                  \(|capture, "0"),
+                ) -> \c {
+                    is-deeply invocant.contains(|c), result,
+                      "{invocant.raku}.contains{c.raku.substr(1)} is {result.gist}";
+                }
+            }
+        }
+    }
+}
 
-ok $s.contains("foo",0),      "pos 0, 'foobar' contains 'foo'";
-ok $s.contains("foobar",0),   "pos 0, 'foobar' contains 'foobar'";
-nok $s.contains("goo",0),     "pos 0, 'foobar' does not contain 'goo'";
-nok $s.contains("foobarx",0), "pos 0, 'foobar' does not contain 'foobarx'";
+# tests with uppercase and markings
+for
+  "foöbÀra", (
+    \("bar"),                              False,
+    \("bar", :i),                          False,
+    \("bar", :ignorecase),                 False,
+    \("BAR"),                              False,
+    \("BÀR", :i),                          True,
+    \("BÀR", :ignorecase),                 True,
+    \("bAr", :m),                          True,
+    \("bAr", :ignoremark),                 True,
+    \("foobar"),                           False,
+    \("foobar", :i),                       False,
+    \("foobar", :ignorecase),              False,
+    \("foobar", :m),                       False,
+    \("foobar", :ignoremark),              False,
+    \("foobar", :i, :m),                   True,
+    \("foobar", :ignorecase, :ignoremark), True,
+  )
+-> \invocant, @tests {
+    for @tests -> \capture, \result {
+        if $backend eq "moar"                      # MoarVM supports all
+          || !(capture<m> || capture<ignoremark>)  # no support ignoremark
+        {
+            for (
+              capture,
+              \(|capture, 0),
+              \(|capture, "0"),
+              \(capture[0].substr(1), 1, |capture.hash),
+              \(capture[0].substr(1), "1", |capture.hash),
+            ) -> \c {
+                is-deeply invocant.contains(|c), result,
+                  "{invocant.raku}.contains{c.raku.substr(1)} is {result.gist}";
+            }
+        }
+    }
+}
 
-ok $s.contains("oo",1),       "pos 1, 'foobar' contains 'oo'";
-ok $s.contains("oobar",1),    "pos 1, 'foobar' contains 'oobar'";
-nok $s.contains("goo",1),     "pos 1, 'foobar' does not contain 'goo'";
-nok $s.contains("foobarx",1), "pos 1, 'foobar' does not contain 'foobarx'";
+done-testing;
 
-my $i = 342;
-ok $i.contains(34),        "342 contains 34";
-ok $i.contains(342),       "342 contains 342";
-nok $i.contains(43),       "342 does not contain 43";
-nok $i.contains(3428),     "342 does not contain 3428";
-
-ok $i.contains(34,"0"),    "pos 0, 342 contains 34";
-ok $i.contains(342,"0"),   "pos 0, 342 contains 342";
-nok $i.contains(43,"0"),   "pos 0, 342 does not contain 43";
-nok $i.contains(3428,"0"), "pos 0, 342 does not contain 3428";
-
-try { 42.contains: Str }; pass "Cool.contains with wrong args does not hang";
-#
 # vim: ft=perl6
