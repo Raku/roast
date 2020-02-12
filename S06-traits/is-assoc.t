@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 6;
+plan 7;
 
 {
     sub infix:<lea>($a, $b) is assoc<left> {
@@ -53,4 +53,12 @@ plan 6;
         "($a)"
     }
     is (_pre_r_ 'a' _post_r_), '(<a>)', 'assoc<left> on prefix/postfix ops';
+}
+
+# https://github.com/rakudo/rakudo/issues/3370
+{
+    sub infix:<eog> ( $a,  $b ) is assoc<chain> is pure {
+        so $a == $b+1
+    }
+    ok 5 eog 4 eog 3 eog 2 eog 1, 'User-defined chaining operators with assoc<chain> work';
 }
