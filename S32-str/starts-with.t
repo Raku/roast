@@ -2,22 +2,83 @@ use v6;
 
 use Test;
 
-plan 9;
-
 # L<S32::Str/Str/=item starts-with>
 
-my $s = "foobar";
-is-deeply $s.starts-with("foo"),     True, "'foobar' starts with 'foo'";
-is-deeply $s.starts-with("foobar"),  True, "'foobar' starts with 'foobar'";
-is-deeply $s.starts-with("goo"),     False, "'foobar' doesn't start with 'goo'";
-is-deeply $s.starts-with("foobarx"), False, "'foobar' doesn't start with 'foobarx'";
+my $backend = $*RAKU.compiler.backend;
 
-my $i = 342;
-is-deeply $i.starts-with(34),   True,  "342 starts with 34";
-is-deeply $i.starts-with(342),  True,  "342 starts with 342";
-is-deeply $i.starts-with(43),   False, "342 doesn't start with 43";
-is-deeply $i.starts-with(3428), False, "342 doesn't start with 3428";
+dies-ok { 42.starts-with: Str },
+  "Cool.starts-with with wrong args does not hang";
 
-try { 42.starts-with: Str }; pass "Cool.starts-with with wrong args does not hang";
+# tests with just lowercase and no markings
+for
+  "foobar", (
+    \("foo"),     True,
+    \("foobar"),  True,
+    \("goo"),     False,
+    \("foobarx"), False,
+  ),
+  342, (
+    \(34),   True,
+    \(342),  True,
+    \(43),   False,
+    \(3428), False,
+  )
+-> \invocant, @tests {
+    for @tests -> \capture, \result {
+        for (
+          \(|capture, :!i),
+          \(|capture, :!ignorecase),
+          \(|capture, :!m),
+          \(|capture, :!ignoremark),
+          \(|capture, :!i, :!m),
+          \(|capture, :!ignorecase, :!ignoremark),
+          \(|capture, :i),
+          \(|capture, :ignorecase),
+          \(|capture, :m),
+          \(|capture, :ignoremark),
+          \(|capture, :i, :m),
+          \(|capture, :ignorecase, :ignoremark),
+        ) -> \c {
+            if $backend eq "moar"          # MoarVM supports all
+              || !(c<m> || c<ignoremark>)  # others do not support ignoremark
+            {
+                is-deeply invocant.starts-with(|c), result,
+                  "{invocant.raku}.starts-with{c.raku.substr(1)} is {result.gist}";
+            }
+        }
+    }
+}
+
+# tests with uppercase and markings
+for
+  "foöbÀr", (
+    \("foo"),                              False,
+    \("foo", :i),                          False,
+    \("foo", :ignorecase),                 False,
+    \("FOO"),                              False,
+    \("FOÖ", :i),                          True,
+    \("FOÖ", :ignorecase),                 True,
+    \("foo", :m),                          True,
+    \("foo", :ignoremark),                 True,
+    \("foobar"),                           False,
+    \("foobar", :i),                       False,
+    \("foobar", :ignorecase),              False,
+    \("foobar", :m),                       False,
+    \("foobar", :ignoremark),              False,
+    \("foobar", :i, :m),                   True,
+    \("foobar", :ignorecase, :ignoremark), True,
+  )
+-> \invocant, @tests {
+    for @tests -> \c, \result {
+        if $backend eq "moar"          # MoarVM supports all
+          || !(c<m> || c<ignoremark>)  # others do not support ignoremark
+        {
+            is-deeply invocant.starts-with(|c), result,
+              "{invocant.raku}.starts-with{c.raku.substr(1)} is {result.gist}";
+        }
+    }
+}
+
+done-testing;
 
 # vim: ft=perl6
