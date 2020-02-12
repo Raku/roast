@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 7;
+plan 8;
 
 # L<S04/The Relationship of Blocks and Declarations/"If you declare a lexical
 #  twice in the same scope">
@@ -11,6 +11,11 @@ eval-lives-ok 'my $x; my $x',
 
 eval-lives-ok 'state $x; state $x',
               'it is legal to declare state $x twice in the same scope.';
+
+# https://github.com/rakudo/rakudo/issues/3102
+# https://github.com/rakudo/rakudo/issues/2909
+eval-lives-ok 'no worries; sub foo( :$input ) { my $input //= 1; }',
+              'no error to declare a variable that is also a parameter';
 
 {
     my $x = 2;
