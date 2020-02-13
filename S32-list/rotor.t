@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 19;
+plan 20;
 
 #?DOES 1
 sub r(\pos, $expected, $descr? is copy, *%named) {
@@ -87,5 +87,10 @@ is-eqv <a b c d e f g h>.rotor((1,2,3,*)),
 is-eqv <a b c d e f g h>.rotor((1,2,3,Inf)),
     (("a",), ("b", "c",), ("d", "e", "f",), ("g", "h",)).Seq,
     '.rotor with Inf consumes everything';
+
+# https://github.com/rakudo/rakudo/issues/3444
+is-eqv (1,2,3).rotor( 1 Xxx 1 ),
+    ((1,), (2,), (3,)).Seq,
+    '.rotor with a Seq as a specification source';
 
 # vim: ft=perl6
