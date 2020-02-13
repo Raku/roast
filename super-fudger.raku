@@ -1,4 +1,4 @@
-#!/usr/bin/env perl6
+#!/usr/bin/env raku
 # This is a script to fudge ALL failing tests in a test file.
 # It detects if the line is a testing line by whether it starts
 # with certain words. For now it only works with one line tests
