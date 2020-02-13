@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item index">
 
-plan 46;
+my $backend = $*RAKU.compiler.backend;
 
 # Type of return value
 isa-ok('abc'.index('b'), Int);
@@ -101,5 +101,82 @@ fails-like { index("xxy", "y", -1) }, X::OutOfRange,
 }
 
 dies-ok { 42.index: Str }, "Cool.index with wrong args does not hang";
+
+fails-like { "foo".substr-eq("o",-42) }, X::OutOfRange,
+  "substr-eq with negative position fails";
+fails-like { "foo".substr-eq("o",9999999999999999999999999999) }, X::OutOfRange,
+  "substr-eq with very large positive position fails";
+
+# tests with just lowercase and no markings
+for
+  "foobara", (
+    \("bar",3),   3,
+    \("foobar"),  0,
+    \("goo",2),   Nil,
+    \("foobarx"), Nil,
+  ),
+  342, (
+    \(42,1), 1,
+    \(342),  0,
+    \(43,2), Nil,
+    \(3428), Nil,
+  )
+-> \invocant, @tests {
+    for @tests -> \capture, \result {
+        for (
+          \(|capture, :!i),
+          \(|capture, :!ignorecase),
+          \(|capture, :!m),
+          \(|capture, :!ignoremark),
+          \(|capture, :!i, :!m),
+          \(|capture, :!ignorecase, :!ignoremark),
+          \(|capture, :i),
+          \(|capture, :ignorecase),
+          \(|capture, :m),
+          \(|capture, :ignoremark),
+          \(|capture, :i, :m),
+          \(|capture, :ignorecase, :ignoremark),
+        ) -> \c {
+            if $backend eq "moar"          # MoarVM supports all
+              || !(c<m> || c<ignoremark>)  # no support ignoremark
+            {
+                is-deeply invocant.index(|c), result,
+                  "{invocant.raku}.index{c.raku.substr(1)} is {result.gist}";
+            }
+        }
+    }
+}
+
+# tests with uppercase and markings
+for
+  "foöbÀra", (
+    \("bar", 3),                           Nil,
+    \("bar", 3, :i),                       Nil,
+    \("bar", "3", :ignorecase),            Nil,
+    \("BAR", "3"),                         Nil,
+    \("BÀR", 3, :i),                       3,
+    \("BÀR", :ignorecase),                 3,
+    \("bAr", "3", :m),                     3,
+    \("bAr", "0", :ignoremark),            3,
+    \("foobar"),                           Nil,
+    \("foobar", :i),                       Nil,
+    \("foobar", 0, :ignorecase),           Nil,
+    \("foobar", "0", :m),                  Nil,
+    \("foobar", :ignoremark),              Nil,
+    \("foobar", "0", :i, :m),              0,
+    \("foobar", :ignorecase, :ignoremark), 0,
+  )
+-> \invocant, @tests {
+    for @tests -> \c, \result {
+        if $backend eq "moar"          # MoarVM supports all
+          || !(c<m> || c<ignoremark>)  # no support ignoremark
+        {
+            is-deeply invocant.index(|c), result,
+              "{invocant.raku}.index{c.raku.substr(1)} is {result.gist}";
+        }
+    }
+}
+
+done-testing;
 
 # vim: ft=perl6
