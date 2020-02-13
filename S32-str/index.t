@@ -142,6 +142,8 @@ for
             {
                 is-deeply invocant.index(|c), result,
                   "{invocant.raku}.index{c.raku.substr(1)} is {result.gist}";
+                is-deeply index(invocant, |c), result,
+                  "index({invocant.raku}, {c.raku.substr(2,*-1)}) is {result.gist}";
             }
         }
     }
@@ -173,6 +175,8 @@ for
         {
             is-deeply invocant.index(|c), result,
               "{invocant.raku}.index{c.raku.substr(1)} is {result.gist}";
+            is-deeply index(invocant, |c), result,
+              "index({invocant.raku}, {c.raku.substr(2,*-1)}) is {result.gist}";
         }
     }
 }
