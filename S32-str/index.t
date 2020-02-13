@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item index">
 
-plan 47;
+plan 46;
 
 # Type of return value
 isa-ok('abc'.index('b'), Int);
@@ -43,7 +43,8 @@ nok(index("Hello", "", 999).defined, "Substr is empty, pos > length of str");
 
 is(index("ababcabcd", "abcd"), 5, "Start-of-substr matches several times");
 
-is(index("uuúuúuùù", "úuù"), 4, "Accented chars"); # RT #73122
+# https://github.com/Raku/old-issue-tracker/issues/1546
+is(index("uuúuúuùù", "úuù"), 4, "Accented chars");
 is(index("Ümlaut", "Ü"), 0, "Umlaut");
 
 #  call directly with the .notation
@@ -75,25 +76,30 @@ ok 1234.index(3) == 2, '.index on non-strings (here: Int)';
 }
 
 # index with negative start position not allowed
-ok(index("xxy", "y", -1) ~~ Failure, 'index with negative start position fails (1)');
-throws-like 'index("xxy", "y", -1)', X::OutOfRange, 'index with negative start position fails (2)';
+fails-like { index("xxy", "y", -1) }, X::OutOfRange,
+  got => -1,
+  'index with negative start position fails';
 
-# RT #125784
+# https://github.com/Raku/old-issue-tracker/issues/4466
 {
     for -1e34, -1e35 -> $pos {
-        ok index( 'xxy','y', $pos ) ~~ Failure, "sub does $pos fails";
-        ok 'xxy'.index( 'y', $pos ) ~~ Failure, "method does $pos fails";
-    }
-    for 1e34, 1e35 -> $pos {
-        throws-like index( 'xxy','y', $pos ), X::OutOfRange,
+        fails-like { index( 'xxy','y', $pos ) }, X::OutOfRange,
           got => $pos,
           "sub does $pos fails";
-        throws-like 'xxy'.index( 'y', $pos ), X::OutOfRange,
+        fails-like { 'xxy'.index( 'y', $pos ) }, X::OutOfRange,
+          got => $pos,
+          "method does $pos fails";
+    }
+    for 1e34, 1e35 -> $pos {
+        fails-like { index( 'xxy','y', $pos ) }, X::OutOfRange,
+          got => $pos,
+          "sub does $pos fails";
+        fails-like { 'xxy'.index( 'y', $pos ) }, X::OutOfRange,
           got => $pos,
           "method does $pos fails";
     }
 }
 
-try { 42.index: Str }; pass "Cool.index with wrong args does not hang";
+dies-ok { 42.index: Str }, "Cool.index with wrong args does not hang";
 
 # vim: ft=perl6
