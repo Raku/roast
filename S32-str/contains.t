@@ -7,6 +7,11 @@ my $backend = $*RAKU.compiler.backend;
 dies-ok { 42.contains: Str },
   "Cool.contains with wrong args does not hang";
 
+fails-like { "foo".contains("o",-42) }, X::OutOfRange,
+  "contains with negative position fails";
+fails-like { "foo".contains("o",99999999999999999999999999999) }, X::OutOfRange,
+  "contains with very large positive position fails";
+
 # L<S32::Str/Str/=item contains>
 
 # tests with just lowercase and no markings
