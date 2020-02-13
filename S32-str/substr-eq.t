@@ -2,26 +2,88 @@ use v6;
 
 use Test;
 
-plan 13;
+my $backend = $*RAKU.compiler.backend;
 
 # L<S32::Str/Str/=item substr-eq>
 
-my $s = "foobar";
-ok $s.substr-eq("bar",3),       "'foobar' equal to 'bar',3";
-ok $s.substr-eq("foobar",0),    "'foobar' equal to 'foobar',0";
-nok $s.substr-eq("baz",3),      "'foobar' not equal to 'baz',3";
-nok $s.substr-eq("zfoobar",0),  "'foobar' not equal to 'zfoobar',0";
-nok $s.substr-eq("foobar",-42), "'foobar' not equal to 'foobar',-42";
-nok $s.substr-eq("foobar",999), "'foobar' not equal to 'foobar',999";
+dies-ok { 42.substr-eq: Str },
+  "Cool.substr-eq with wrong args does not hang";
 
-my $i = 342;
-ok $i.substr-eq(42,1),     "342 equal to 42,1";
-ok $i.substr-eq(342,0),    "342 equal to 342,0";
-nok $i.substr-eq(43,1),    "342 not equal to 43,1";
-nok $i.substr-eq(7342,0),  "342 not equal to 7342,0";
-nok $i.substr-eq(342,-42), "342 not equal to 342,-42";
-nok $i.substr-eq(342,999), "342 not equal to 342,999";
+fails-like { "foo".substr-eq("o",-42) }, X::OutOfRange,
+  "substr-eq with negative position fails";
+fails-like { "foo".substr-eq("o",9999999999999999999999999999) }, X::OutOfRange,
+  "substr-eq with very large positive position fails";
 
-try { 42.substr-eq: Str, 0 }; pass "Cool.substr-eq with wrong args does not hang";
-#
+# tests with just lowercase and no markings
+for
+  "foobara", (
+    \("bar",3),   True,
+    \("foobar"),  True,
+    \("goo",2),   False,
+    \("foobarx"), False,
+  ),
+  342, (
+    \(42,1), True,
+    \(342),  True,
+    \(43,2), False,
+    \(3428), False,
+  )
+-> \invocant, @tests {
+    for @tests -> \capture, \result {
+        for (
+          \(|capture, :!i),
+          \(|capture, :!ignorecase),
+          \(|capture, :!m),
+          \(|capture, :!ignoremark),
+          \(|capture, :!i, :!m),
+          \(|capture, :!ignorecase, :!ignoremark),
+          \(|capture, :i),
+          \(|capture, :ignorecase),
+          \(|capture, :m),
+          \(|capture, :ignoremark),
+          \(|capture, :i, :m),
+          \(|capture, :ignorecase, :ignoremark),
+        ) -> \c {
+            if $backend eq "moar"          # MoarVM supports all
+              || !(c<m> || c<ignoremark>)  # no support ignoremark
+            {
+                is-deeply invocant.substr-eq(|c), result,
+                  "{invocant.raku}.substr-eq{c.raku.substr(1)} is {result.gist}";
+            }
+        }
+    }
+}
+
+# tests with uppercase and markings
+for
+  "foöbÀra", (
+    \("bar", 3),                           False,
+    \("bar", 3, :i),                       False,
+    \("bar", "3", :ignorecase),            False,
+    \("BAR", "3"),                         False,
+    \("BÀR", 3, :i),                       True,
+    \("BÀR", 3, :ignorecase),              True,
+    \("bAr", "3", :m),                     True,
+    \("bAr", "3", :ignoremark),            True,
+    \("foobar"),                           False,
+    \("foobar", :i),                       False,
+    \("foobar", 0, :ignorecase),           False,
+    \("foobar", "0", :m),                  False,
+    \("foobar", :ignoremark),              False,
+    \("foobar", "0", :i, :m),              True,
+    \("foobar", :ignorecase, :ignoremark), True,
+  )
+-> \invocant, @tests {
+    for @tests -> \c, \result {
+        if $backend eq "moar"          # MoarVM supports all
+          || !(c<m> || c<ignoremark>)  # no support ignoremark
+        {
+            is-deeply invocant.substr-eq(|c), result,
+              "{invocant.raku}.substr-eq{c.raku.substr(1)} is {result.gist}";
+        }
+    }
+}
+
+done-testing;
+
 # vim: ft=perl6
