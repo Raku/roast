@@ -16,44 +16,40 @@ fails-like { "foo".contains("o",99999999999999999999999999999) }, X::OutOfRange,
 
 # tests with just lowercase and no markings
 for
-  "foobara", (
+  ("foobara", "foobara".match(/\w+/)), (
     \("bar"),     True,
     \("foobar"),  True,
     \("goo"),     False,
     \("foobarx"), False,
-  ),
-  342, (
-    \(42),   True,
-    \(342),  True,
-    \(43),   False,
-    \(3428), False,
   )
--> \invocant, @tests {
-    for @tests -> \capture, \result {
-        for (
-          \(|capture, :!i),
-          \(|capture, :!ignorecase),
-          \(|capture, :!m),
-          \(|capture, :!ignoremark),
-          \(|capture, :!i, :!m),
-          \(|capture, :!ignorecase, :!ignoremark),
-          \(|capture, :i),
-          \(|capture, :ignorecase),
-          \(|capture, :m),
-          \(|capture, :ignoremark),
-          \(|capture, :i, :m),
-          \(|capture, :ignorecase, :ignoremark),
-        ) -> \capture {
-            if $backend eq "moar"                      # MoarVM supports all
-              || !(capture<m> || capture<ignoremark>)  # no support ignoremark
-            {
-                for (
-                  capture,
-                  \(|capture, 0),
-                  \(|capture, "0"),
-                ) -> \c {
-                    is-deeply invocant.contains(|c), result,
-                      "{invocant.raku}.contains{c.raku.substr(1)} is {result.gist}";
+-> @invocants, @tests {
+    for @invocants -> \invocant {
+        for @tests -> \capture, \result {
+            for (
+              \(|capture, :!i),
+              \(|capture, :!ignorecase),
+              \(|capture, :!m),
+              \(|capture, :!ignoremark),
+              \(|capture, :!i, :!m),
+              \(|capture, :!ignorecase, :!ignoremark),
+              \(|capture, :i),
+              \(|capture, :ignorecase),
+              \(|capture, :m),
+              \(|capture, :ignoremark),
+              \(|capture, :i, :m),
+              \(|capture, :ignorecase, :ignoremark),
+            ) -> \capture {
+                if $backend eq "moar"                      # MoarVM supports all
+                  || !(capture<m> || capture<ignoremark>)  # no support ignoremark
+                {
+                    for (
+                      capture,
+                      \(|capture, 0),
+                      \(|capture, "0"),
+                    ) -> \c {
+                        is-deeply invocant.contains(|c), result,
+                          "{invocant.raku}.contains{c.raku.substr(1)} is {result.gist}";
+                    }
                 }
             }
         }
@@ -62,7 +58,7 @@ for
 
 # tests with uppercase and markings
 for
-  "foöbÀra", (
+  ("foöbÀra", "foöbÀra".match(/\w+/)), (
     \("bar"),                              False,
     \("bar", :i),                          False,
     \("bar", :ignorecase),                 False,
@@ -79,20 +75,22 @@ for
     \("foobar", :i, :m),                   True,
     \("foobar", :ignorecase, :ignoremark), True,
   )
--> \invocant, @tests {
-    for @tests -> \capture, \result {
-        if $backend eq "moar"                      # MoarVM supports all
-          || !(capture<m> || capture<ignoremark>)  # no support ignoremark
-        {
-            for (
-              capture,
-              \(|capture, 0),
-              \(|capture, "0"),
-              \(capture[0].substr(1), 1, |capture.hash),
-              \(capture[0].substr(1), "1", |capture.hash),
-            ) -> \c {
-                is-deeply invocant.contains(|c), result,
-                  "{invocant.raku}.contains{c.raku.substr(1)} is {result.gist}";
+-> @invocants, @tests {
+    for @invocants -> \invocant {
+        for @tests -> \capture, \result {
+            if $backend eq "moar"                      # MoarVM supports all
+              || !(capture<m> || capture<ignoremark>)  # no support ignoremark
+            {
+                for (
+                  capture,
+                  \(|capture, 0),
+                  \(|capture, "0"),
+                  \(capture[0].substr(1), 1, |capture.hash),
+                  \(capture[0].substr(1), "1", |capture.hash),
+                ) -> \c {
+                    is-deeply invocant.contains(|c), result,
+                      "{invocant.raku}.contains{c.raku.substr(1)} is {result.gist}";
+                }
             }
         }
     }
