@@ -19,6 +19,8 @@ for
   )
 -> @invocants, @tests {
     for @invocants -> \invocant {
+        my \invocantraku := invocant ~~ Match
+          ?? invocant.gist !! invocant.raku;
         for @tests -> \capture, \result {
             for (
               \(|capture, :!i),
@@ -37,8 +39,6 @@ for
                 if $backend eq "moar"          # MoarVM supports all
                   || !(c<m> || c<ignoremark>)  # others do not support ignoremark
                 {
-                    my \invocantraku := invocant ~~ Match
-                      ?? invocant.gist !! invocant.raku;
                     is-deeply invocant.starts-with(|c), result,
                       "{invocantraku}.starts-with{c.raku.substr(1)} is {result.gist}";
                 }
@@ -68,12 +68,12 @@ for
   )
 -> @invocants, @tests {
     for @invocants -> \invocant {
+        my \invocantraku := invocant ~~ Match
+          ?? invocant.gist !! invocant.raku;
         for @tests -> \c, \result {
             if $backend eq "moar"          # MoarVM supports all
               || !(c<m> || c<ignoremark>)  # others do not support ignoremark
             {
-                my \invocantraku := invocant ~~ Match
-                  ?? invocant.gist !! invocant.raku;
                 is-deeply invocant.starts-with(|c), result,
                   "{invocantraku}.starts-with{c.raku.substr(1)} is {result.gist}";
             }

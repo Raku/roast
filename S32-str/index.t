@@ -166,19 +166,19 @@ for
   )
 -> @invocants, @tests {
     for @invocants -> \invocant {
+        my \invocantraku = invocant ~~ Match
+          ?? invocant.gist !! invocant.raku;
         for @tests -> \c, \result {
             if $backend eq "moar"          # MoarVM supports all
               || !(c<m> || c<ignoremark>)  # no support ignoremark
             {
-                my \invocantraku = invocant ~~ Match
-                  ?? invocant.gist !! invocant.raku;
-                is-deeply invocant.index(|c), result,
-                  "{invocantraku}.index{c.raku.substr(1)} is {result.gist}";
-                is-deeply index(invocant, |c), result,
-                  "index({invocantraku}, {c.raku.substr(2,*-1)}) is {result.gist}";
-            }
+            is-deeply invocant.index(|c), result,
+              "{invocantraku}.index{c.raku.substr(1)} is {result.gist}";
+            is-deeply index(invocant, |c), result,
+              "index({invocantraku}, {c.raku.substr(2,*-1)}) is {result.gist}";
         }
     }
+}
 }
 
 done-testing;
