@@ -11,39 +11,37 @@ dies-ok { 42.ends-with: Str },
 
 # tests with just lowercase and no markings
 for
-  "foobar", (
+  ("foobar", "foobar".match(/\w+/)), (
     \("bar"),     True,
     \("foobar"),  True,
     \("goo"),     False,
     \("foobarx"), False,
-  ),
-  342, (
-    \(42),   True,
-    \(342),  True,
-    \(43),   False,
-    \(3428), False,
   )
--> \invocant, @tests {
-    for @tests -> \capture, \result {
-        for (
-          \(|capture, :!i),
-          \(|capture, :!ignorecase),
-          \(|capture, :!m),
-          \(|capture, :!ignoremark),
-          \(|capture, :!i, :!m),
-          \(|capture, :!ignorecase, :!ignoremark),
-          \(|capture, :i),
-          \(|capture, :ignorecase),
-          \(|capture, :m),
-          \(|capture, :ignoremark),
-          \(|capture, :i, :m),
-          \(|capture, :ignorecase, :ignoremark),
-        ) -> \c {
-            if $backend eq "moar"          # MoarVM supports all
-              || !(c<m> || c<ignoremark>)  # others do not support ignoremark
-            {
-                is-deeply invocant.ends-with(|c), result,
-                  "{invocant.raku}.ends-with{c.raku.substr(1)} is {result.gist}";
+-> @invocants, @tests {
+    for @invocants -> \invocant {
+        my \invocantraku := invocant ~~ Match
+          ?? invocant.gist !! invocant.raku;
+        for @tests -> \capture, \result {
+            for (
+              \(|capture, :!i),
+              \(|capture, :!ignorecase),
+              \(|capture, :!m),
+              \(|capture, :!ignoremark),
+              \(|capture, :!i, :!m),
+              \(|capture, :!ignorecase, :!ignoremark),
+              \(|capture, :i),
+              \(|capture, :ignorecase),
+              \(|capture, :m),
+              \(|capture, :ignoremark),
+              \(|capture, :i, :m),
+              \(|capture, :ignorecase, :ignoremark),
+            ) -> \c {
+                if $backend eq "moar"          # MoarVM supports all
+                  || !(c<m> || c<ignoremark>)  # others do not support ignoremark
+                {
+                    is-deeply invocant.ends-with(|c), result,
+                      "{invocantraku}.ends-with{c.raku.substr(1)} is {result.gist}";
+                }
             }
         }
     }
@@ -51,7 +49,7 @@ for
 
 # tests with uppercase and markings
 for
-  "foöbÀr", (
+  ("foöbÀr", "foöbÀr".match(/\w+/)), (
     \("bar"),                              False,
     \("bar", :i),                          False,
     \("bar", :ignorecase),                 False,
@@ -68,13 +66,17 @@ for
     \("foobar", :i, :m),                   True,
     \("foobar", :ignorecase, :ignoremark), True,
   )
--> \invocant, @tests {
-    for @tests -> \c, \result {
-        if $backend eq "moar"          # MoarVM supports all
-          || !(c<m> || c<ignoremark>)  # others do not support ignoremark
-        {
-            is-deeply invocant.ends-with(|c), result,
-              "{invocant.raku}.ends-with{c.raku.substr(1)} is {result.gist}";
+-> @invocants, @tests {
+    for @invocants -> \invocant {
+        my \invocantraku := invocant ~~ Match
+          ?? invocant.gist !! invocant.raku;
+        for @tests -> \c, \result {
+            if $backend eq "moar"          # MoarVM supports all
+              || !(c<m> || c<ignoremark>)  # others do not support ignoremark
+            {
+                is-deeply invocant.ends-with(|c), result,
+                  "{invocantraku}.ends-with{c.raku.substr(1)} is {result.gist}";
+            }
         }
     }
 }
