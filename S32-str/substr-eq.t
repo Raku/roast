@@ -16,39 +16,37 @@ fails-like { "foo".substr-eq("o",9999999999999999999999999999) }, X::OutOfRange,
 
 # tests with just lowercase and no markings
 for
-  "foobara", (
+  ("foobara", "foobara".match(/\w+/)), (
     \("bar",3),   True,
     \("foobar"),  True,
     \("goo",2),   False,
     \("foobarx"), False,
-  ),
-  342, (
-    \(42,1), True,
-    \(342),  True,
-    \(43,2), False,
-    \(3428), False,
   )
--> \invocant, @tests {
-    for @tests -> \capture, \result {
-        for (
-          \(|capture, :!i),
-          \(|capture, :!ignorecase),
-          \(|capture, :!m),
-          \(|capture, :!ignoremark),
-          \(|capture, :!i, :!m),
-          \(|capture, :!ignorecase, :!ignoremark),
-          \(|capture, :i),
-          \(|capture, :ignorecase),
-          \(|capture, :m),
-          \(|capture, :ignoremark),
-          \(|capture, :i, :m),
-          \(|capture, :ignorecase, :ignoremark),
-        ) -> \c {
-            if $backend eq "moar"          # MoarVM supports all
-              || !(c<m> || c<ignoremark>)  # no support ignoremark
-            {
-                is-deeply invocant.substr-eq(|c), result,
-                  "{invocant.raku}.substr-eq{c.raku.substr(1)} is {result.gist}";
+-> @invocants, @tests {
+    for @invocants -> \invocant {
+        my \invocantraku := invocant ~~ Match
+          ?? invocant.gist !! invocant.raku;
+        for @tests -> \capture, \result {
+            for (
+              \(|capture, :!i),
+              \(|capture, :!ignorecase),
+              \(|capture, :!m),
+              \(|capture, :!ignoremark),
+              \(|capture, :!i, :!m),
+              \(|capture, :!ignorecase, :!ignoremark),
+              \(|capture, :i),
+              \(|capture, :ignorecase),
+              \(|capture, :m),
+              \(|capture, :ignoremark),
+              \(|capture, :i, :m),
+              \(|capture, :ignorecase, :ignoremark),
+            ) -> \c {
+                if $backend eq "moar"          # MoarVM supports all
+                  || !(c<m> || c<ignoremark>)  # no support ignoremark
+                {
+                    is-deeply invocant.substr-eq(|c), result,
+                      "{invocantraku}.substr-eq{c.raku.substr(1)} is {result.gist}";
+                }
             }
         }
     }
@@ -56,7 +54,7 @@ for
 
 # tests with uppercase and markings
 for
-  "foöbÀra", (
+  ("foöbÀra", "foöbÀra".match(/\w+/)), (
     \("bar", 3),                           False,
     \("bar", 3, :i),                       False,
     \("bar", "3", :ignorecase),            False,
@@ -73,13 +71,17 @@ for
     \("foobar", "0", :i, :m),              True,
     \("foobar", :ignorecase, :ignoremark), True,
   )
--> \invocant, @tests {
-    for @tests -> \c, \result {
-        if $backend eq "moar"          # MoarVM supports all
-          || !(c<m> || c<ignoremark>)  # no support ignoremark
-        {
-            is-deeply invocant.substr-eq(|c), result,
-              "{invocant.raku}.substr-eq{c.raku.substr(1)} is {result.gist}";
+-> @invocants, @tests {
+    for @invocants -> \invocant {
+        my \invocantraku := invocant ~~ Match
+          ?? invocant.gist !! invocant.raku;
+        for @tests -> \c, \result {
+            if $backend eq "moar"          # MoarVM supports all
+              || !(c<m> || c<ignoremark>)  # no support ignoremark
+            {
+                is-deeply invocant.substr-eq(|c), result,
+                  "{invocantraku}.substr-eq{c.raku.substr(1)} is {result.gist}";
+            }
         }
     }
 }
