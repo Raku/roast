@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item indices">
 
-plan 31;
+my $backend = $*RAKU.compiler.backend;
 
 # Type of return value
 isa-ok 'abc'.indices('b')[0], Int;
@@ -42,6 +42,116 @@ is "42424242".indices(4, 2.0),    (2, 4, 6), "Str, Int, Rat";
 is 42424242.indices(4, 2),        (2, 4, 6), "Int, Int, Int";
 is 42424242.indices(4, 2.0),      (2, 4, 6), "Int, Int, Rat";
 
-try { 42.indices: Str }; pass "Cool.indices with wrong args does not hang";
+dies-ok { 42.indices: Str }, "Cool.indices with wrong args does not hang";
+
+# work on variables
+
+# index with negative start position not allowed
+fails-like { indices("xxy", "y", -1) }, X::OutOfRange,
+  got => -1,
+  'indices with negative start position fails';
+
+# https://github.com/Raku/old-issue-tracker/issues/4466
+{
+    for -1e34, -1e35 -> $pos {
+        fails-like { indices( 'xxy','y', $pos ) }, X::OutOfRange,
+          got => $pos,
+          "sub does $pos fails";
+        fails-like { 'xxy'.indices( 'y', $pos ) }, X::OutOfRange,
+          got => $pos,
+          "method does $pos fails";
+    }
+    for 1e34, 1e35 -> $pos {
+        fails-like { indices( 'xxy','y', $pos ) }, X::OutOfRange,
+          got => $pos,
+          "sub does $pos fails";
+        fails-like { 'xxy'.indices( 'y', $pos ) }, X::OutOfRange,
+          got => $pos,
+          "method does $pos fails";
+    }
+}
+
+fails-like { "foo".substr-eq("o",-42) }, X::OutOfRange,
+  "substr-eq with negative position fails";
+fails-like { "foo".substr-eq("o",9999999999999999999999999999) }, X::OutOfRange,
+  "substr-eq with very large positive position fails";
+
+# tests with just lowercase and no markings
+for
+  ("foobara", "foobara".match(/\w+/)), (
+    \("a",3),   (4,6),
+    \("foobar"),  (0,),
+    \("goo",2),   (),
+    \("foobarx"), (),
+  )
+-> @invocants, @tests {
+    for @invocants -> \invocant {
+        my \invocantraku := invocant ~~ Match
+          ?? invocant.gist !! invocant.raku;
+        for @tests -> \capture, \result {
+            for (
+              \(|capture, :!i),
+              \(|capture, :!ignorecase),
+              \(|capture, :!m),
+              \(|capture, :!ignoremark),
+              \(|capture, :!i, :!m),
+              \(|capture, :!ignorecase, :!ignoremark),
+              \(|capture, :i),
+              \(|capture, :ignorecase),
+              \(|capture, :m),
+              \(|capture, :ignoremark),
+              \(|capture, :i, :m),
+              \(|capture, :ignorecase, :ignoremark),
+            ) -> \c {
+                if $backend eq "moar"          # MoarVM supports all
+                  || !(c<m> || c<ignoremark>)  # no support ignoremark
+                {
+                    is-deeply invocant.indices(|c), result,
+                      "{invocantraku}.index{c.raku.substr(1)} is {result.gist}";
+                    is-deeply indices(invocant, |c), result,
+                      "index({invocantraku}, {c.raku.substr(2,*-1)}) is {result.gist}";
+                }
+            }
+        }
+    }
+}
+
+# tests with uppercase and markings
+for
+  ("foöbÀra", "foöbÀra".match(/\w+/)), (
+    \("bar", 3),                           (),
+    \("bar", 3, :i),                       (),
+    \("bar", "3", :ignorecase),            (),
+    \("BAR", "3"),                         (),
+    \("BÀR", 3, :i),                       (3,),
+    \("BÀR", :ignorecase),                 (3,),
+    \("bAr", "3", :m),                     (3,),
+    \("bAr", "0", :ignoremark),            (3,),
+    \("foobar"),                           (),
+    \("foobar", :i),                       (),
+    \("foobar", 0, :ignorecase),           (),
+    \("foobar", "0", :m),                  (),
+    \("foobar", :ignoremark),              (),
+    \("foobar", "0", :i, :m),              (0,),
+    \("foobar", :ignorecase, :ignoremark), (0,),
+  )
+-> @invocants, @tests {
+    for @invocants -> \invocant {
+        my \invocantraku = invocant ~~ Match
+          ?? invocant.gist !! invocant.raku;
+        for @tests -> \c, \result {
+            if $backend eq "moar"          # MoarVM supports all
+              || !(c<m> || c<ignoremark>)  # no support ignoremark
+            {
+                is-deeply invocant.indices(|c), result,
+                  "{invocantraku}.indices{c.raku.substr(1)} is {result.gist}";
+                is-deeply indices(invocant, |c), result,
+                  "indices({invocantraku}, {c.raku.substr(2,*-1)}) is {result.gist}";
+            }
+        }
+    }
+}
+
+done-testing;
 
 # vim: ft=perl6
