@@ -3,7 +3,7 @@ use Test;
 
 use experimental :cached;
 
-plan 38;
+plan 47;
 
 {
     my @seen;
@@ -84,5 +84,51 @@ plan 38;
     #?rakudo.jvm todo "is cached is only a hint"
     is-deeply @str, [<Camelia>], 'was the code done (4)';
 } #4
+
+lives-ok {
+    my method () is cached { }
+}, 'can create cached methods';
+
+{
+    my class Cached {
+        has Bool:D $.modified is rw = False;
+
+        method public($value) is cached { (state $)++ }
+
+        method !private($value) is cached { (state $)++ }
+
+        method ^meta($value) is cached { (state $)++ }
+
+        proto method proto($value) is cached { (state $)++ }
+
+        multi method multi($value) is cached { (state $)++ }
+
+        proto method proto-and-multi($value) is cached {*}
+        multi method proto-and-multi($value) is cached { (state $)++ }
+    }
+
+    my &private = Cached.^find_private_method('private');
+    cmp-ok Cached.public(1), &[==], Cached.public(1),
+        'public methods can cache';
+    cmp-ok private(Cached, 1), &[==], private(Cached, 1),
+        'private methods can cache';
+    cmp-ok Cached.HOW.meta(1), &[==], Cached.HOW.meta(1),
+        'metamethods can cache';
+    cmp-ok Cached.proto(1), &[==], Cached.proto(1),
+        'proto methods can cache';
+    cmp-ok Cached.multi(1), &[==], Cached.multi(1),
+        'multi methods can cache';
+    cmp-ok Cached.proto-and-multi(1), &[==], Cached.proto-and-multi(1),
+        'a mix of proto and multi methods can cache';
+
+    my $cached = Cached.new;
+    cmp-ok Cached.public(1), &[!==], $cached.public(1),
+        'different invocants of cached methods do not share a cache';
+
+    my $result = $cached.public: 1;
+    $cached.modified = True;
+    cmp-ok $result, &[==], $cached.public(1),
+        'modifying the state of the invocant of a cached method does not affect its cache';
+}
 
 # vim: ft=perl6
