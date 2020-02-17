@@ -9,16 +9,16 @@ if $*DISTRO.is-win {
     my IO::Socket::INET:_ $server;
     my IO::Socket::INET:_ $client;
     my IO::Socket::INET:_ $accepted;
-    my Str:D              $host      = $?FILE.IO.sibling('test.sock').Str;
+    my IO::Path:D         $path      = $?FILE.IO.sibling: 'test.sock';
     my Str:D              $sent      = 'Hello, world!';
     my Str:_              $received;
-    LEAVE $host.IO.unlink if $host.IO.e;
+    LEAVE $path.unlink if $path.e;
 
     lives-ok {
-        $server = IO::Socket::INET.listen: $host, 0, family => PF_UNIX;
+        $server = IO::Socket::INET.listen: $path, family => PF_UNIX;
     }, 'can create TCP UNIX socket servers';
     lives-ok {
-        $client = IO::Socket::INET.connect: $host, $server.localport, family => PF_UNIX;
+        $client = IO::Socket::INET.connect: $path, family => PF_UNIX;
     }, 'can create TCP UNIX socket clients';
     lives-ok {
         $accepted = $server.accept;
