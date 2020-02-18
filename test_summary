@@ -34,13 +34,19 @@ unless (GetOptions('timing' => \$timing, 'view' => \$view, 'archive:s' => \$arch
 }
 if ($view) { Simple::Relative::Benchmarking::view(); exit(0); }
 
-my $benchmark;
-# Comment out the next line to skip benchmarking; see docs below
-$benchmark = Simple::Relative::Benchmarking::begin() if $timing;
-
 # Which implementation are we running?
 my $implementation = $ARGV[0] ||
     die "Must specify an implementation";
+
+my $runner;
+if    ($implementation =~ /moar/) { $runner = 'rakudo-m';  }
+elsif ($implementation =~ /jvm/)  { $runner = 'rakudo-j';  }
+elsif ($implementation =~ /js/)   { $runner = 'rakudo-js'; }
+else                              { die "Unknown implementation $implementation" }
+
+my $benchmark;
+# Comment out the next line to skip benchmarking; see docs below
+$benchmark = Simple::Relative::Benchmarking::begin() if $timing;
 
 my $impl_class = $archive ? 'ArchiveRunner' : 'RealRunner';
 
@@ -303,16 +309,16 @@ sub begin {
         }
     }
     open( $self->{'file_out'}, '>', 'docs/test_summary.times.tmp') or die "cannot create docs/test_summary.times.tmp: $!";
-    my $parrot_version = qx{./rakudo -e'print \$*VM.config<revision>'};
+    my $compiler_version = qx{./$runner -e 'print \$*RAKU.compiler.version'};
     my $impl_version = qx{git log --pretty=oneline --abbrev-commit --max-count=1 .}; chomp $impl_version;
     $impl_version =~ s/^([0-9a-f])+\.\.\./$1/; # delete possible ...
     $impl_version =~ s/\\/\\\\/g; # escape all backslashes
     $impl_version =~ s/\"/\\\"/g; # escape all double quotes
     my $file_out = $self->{'file_out'};
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time());
-    push @test_history, sprintf("[\"%4d-%02d-%02d %02d:%02d:%02d\",%d,\"%s\"]",
+    push @test_history, sprintf("[\"%4d-%02d-%02d %02d:%02d:%02d\",\"%s\",\"%s\"]",
         $year+1900, $mon+1, $mday, $hour, $min, $sec,
-        $parrot_version, $impl_version );
+        $compiler_version, $impl_version );
     # Delete the oldest test test_history if there are too many.
     while ( @test_history > $self->{'Timings'} ) { shift @test_history; }
     print $file_out qq!{"test_history":[\n!;
@@ -375,7 +381,7 @@ sub log_script_times {
     for ( my $test_number=0; $test_number<$testcount; $test_number++) {
         unless ( defined($times[$test_number]) ) { $times[$test_number] = 0; }
         my ( @times_in_file );
-        if ( @{$logged_results[$test_number]} ) {
+        if ( @logged_results && @{$logged_results[$test_number]} ) {
             @times_in_file = ( @{$logged_results[$test_number]} );
         }
         push @times_in_file, $times[$test_number];
@@ -487,7 +493,6 @@ sub get_test_names {
         my ($specfile, $fudgespec) = split ' ', $_, 2;
         next unless $specfile;
         # XXX each implementation should tell us what files to use
-        next if $fudgespec =~ /conc/ && $implementation =~ /parrot/;
         next if $fudgespec =~ /jvm/ && $implementation !~ /jvm/;
         next if $fudgespec =~ /moar/ && $implementation !~ /moar/;
         push @tfiles, "t/spec/$specfile";
@@ -508,7 +513,7 @@ sub get_test_names {
 sub run_test {
     my ($self, $tfile) = @_;
 
-    my $cmd = "./rakudo $tfile";
+    my $cmd = "./$runner $tfile";
     # Run the test, collecting all stdout in @results
     scalar qx{$cmd};
 }
