@@ -30,7 +30,7 @@ doesn't-hang ｢
 
 
 # https://github.com/Raku/old-issue-tracker/issues/6490
-#?rakudo.jvm skip "The spawned command './perl6-j' exited unsuccessfully (exit code: 1)"
+#?rakudo.jvm skip "The spawned command './rakudo-j' exited unsuccessfully (exit code: 1)"
 #?DOES 1
 {
   if $*DISTRO.is-win {

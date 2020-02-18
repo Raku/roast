@@ -20,7 +20,7 @@ subtest 'EVAL/EVALFILE evals Buf like perl would execute source file' => {
 
     # The $result Buf was obtained by running:
     # perl -e 'no warnings; print qq|♥\x{26666}|; { use utf8; print qq|♥\x{26666}| }' |
-    #    ./perl6 -e '$*IN.encoding(Nil); $*IN.slurp.raku.say'
+    #    ./rakudo -e '$*IN.encoding(Nil); $*IN.slurp.raku.say'
     my $result = Buf[uint8].new(195,162,194,153,194,165,240,166,153,166,226,153,165,240,166,153,166);
 
     my $code = ｢no warnings; print qq|♥\x{26666}|; { use utf8; print qq|♥\x{26666}| }｣;
