@@ -1,19 +1,16 @@
 use v6;
 use Test;
 
-plan 5;
+plan 6;
 
 role R1 is rw {
     has $.r1;
     has $.r1-ro is readonly;
 }
 
-role R2 {
-    has $.r2;
-}
-
-sub test-R1(Mu \type) {
-    subtest "rw/ro" => {
+sub test-R1(Mu \type, Str $msg?) {
+    my $title = $msg // "rw/ro";
+    subtest $title => {
         plan 4;
         my $obj = type.new(r1 => 41, r1-ro => 12);
 
@@ -26,6 +23,11 @@ sub test-R1(Mu \type) {
 
 subtest "Default is readonly" => {
     plan 4;
+
+    my role R2 {
+        has $.r2;
+    }
+
     dies-ok { R2.new.r2 = 0 }, "pun of a role preserves default readonly";
     my role R3 does R2 { }
     dies-ok { R3.new.r2 = 0 }, "pun of a role doing role preserves default readonly";
@@ -57,4 +59,15 @@ subtest "Class consuming role doing a role" => {
     my role R3 does R1 { }
     my class C2 does R3 { }
     test-R1 C2;
+}
+
+subtest "use 'also is rw'" => {
+    my role R3 {
+        has $.r1;
+        also is rw;
+        has $.r1-ro is readonly;
+    }
+    test-R1 R3, "role puning";
+    my role R4 does R3 { }
+    test-R1 R4, "role doing role puning";
 }
