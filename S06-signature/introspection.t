@@ -4,7 +4,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 use Test::Idempotence;
 
-plan 147;
+plan 148;
 
 # L<S06/Signature Introspection>
 
@@ -295,5 +295,9 @@ is :(@a = [1,2,3]).params[0].suffix, '',
   'default values for positional parameters do not give a ? suffix';
 is :(:@a = [1,2,3]).params[0].suffix, '',
   'default values for named parameters do not give a ! suffix';
+
+# https://github.com/rakudo/rakudo/issues/3492
+is :($ is raw where 42).params.head.sigil, '$',
+  "an unnamed raw parameter should have the '\$' sigil";
 
 # vim: ft=perl6
