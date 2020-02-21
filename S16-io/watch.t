@@ -13,17 +13,15 @@ plan 1;
     my $fh = $watch-file.IO.open: :w, :0out-buffer;
     my $start-writing = Promise.new;
     my $start-vow = $start-writing.vow;
-    my $done-writing = Promise.new;
-    my $done-vow = $done-writing.vow;
     my @proceed = Promise.new xx 10;
     @proceed[0].keep;
     start {
         await $start-writing;
         for ^10 {
             await @proceed[$_];
-            $fh.say: time;
+            $fh.say: $_;
+            $fh.flush;
         }
-        $done-vow.keep(True);
     }
 
     my $count = 0;
@@ -32,9 +30,7 @@ plan 1;
         whenever $watch-file.IO.watch -> $e {
             $count++;
             @proceed[$count].?keep;
-        }
-        whenever $done-writing {
-            done
+            done if $count == 10;
         }
         whenever $timeout {
             done;
