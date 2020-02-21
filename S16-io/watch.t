@@ -36,7 +36,10 @@ plan 1;
         whenever $timeout {
             done;
         }
-        $start-vow.keep(True);
+        # Allow time for the file watcher to get set up
+        whenever Promise.in(0.5) {
+            $start-vow.keep(True);
+        }
     }
 
     if $timeout.status ~~ Planned {
