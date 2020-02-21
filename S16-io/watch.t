@@ -15,11 +15,13 @@ plan 1;
     my $start-vow = $start-writing.vow;
     my $done-writing = Promise.new;
     my $done-vow = $done-writing.vow;
+    my @proceed = Promise.new xx 10;
+    @proceed[0].keep;
     start {
         await $start-writing;
         for ^10 {
+            await @proceed[$_];
             $fh.say: time;
-            sleep .01;
         }
         $done-vow.keep(True);
     }
@@ -29,6 +31,7 @@ plan 1;
     react {
         whenever $watch-file.IO.watch -> $e {
             $count++;
+            @proceed[$count].?keep;
         }
         whenever $done-writing {
             done
