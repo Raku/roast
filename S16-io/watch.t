@@ -9,15 +9,16 @@ plan 1;
 #?DOES 1
 {
     # Test if file change events are not lost.
+    my constant RUNS = 10;
     my $watch-file = $*SPEC.catfile( $*TMPDIR, "watchme" );
     my $fh = $watch-file.IO.open: :w, :0out-buffer;
     my $start-writing = Promise.new;
     my $start-vow = $start-writing.vow;
-    my @proceed = Promise.new xx 10;
+    my @proceed = Promise.new xx RUNS;
     @proceed[0].keep;
     start {
         await $start-writing;
-        for ^10 {
+        for ^RUNS {
             await @proceed[$_];
             $fh.say: $_;
             $fh.flush;
@@ -30,7 +31,7 @@ plan 1;
         whenever $watch-file.IO.watch -> $e {
             $count++;
             @proceed[$count].?keep;
-            done if $count == 10;
+            done if $count == RUNS;
         }
         whenever $timeout {
             done;
@@ -39,7 +40,7 @@ plan 1;
     }
 
     if $timeout.status ~~ Planned {
-        is $count, 10, "all watch events received";
+        is $count, RUNS, "all watch events received";
     }
     else {
         flunk "timed out waiting for file change events";
