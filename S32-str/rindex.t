@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item rindex">
 
-plan 46;
+plan 50;
 
 # Type of return value
 isa-ok('abc'.rindex('b'), Int);
@@ -87,6 +87,11 @@ throws-like 'rindex("xxyxx", "y", -1)', X::OutOfRange, 'rindex with negative sta
     }
 }
 
-try { 42.rindex: Str }; pass "Cool.rindex with wrong args does not hang";
+dies-ok { 42.rindex: Str }, "Cool.rindex with wrong args does not hang";
+
+for "foobar","foobar".match(/\w+/) {
+    is .rindex(<o a>), 4, "does a list of needles work ok with method";
+    is rindex($_,<a o>), 4, "does a list of needles work ok with sub";
+}
 
 # vim: ft=perl6
