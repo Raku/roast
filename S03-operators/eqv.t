@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 58;
+plan 59;
 
 # L<S03/Comparison semantics/Binary eqv tests equality much like === does>
 # L<S32::Basics/Any/"=item eqv">
@@ -220,6 +220,18 @@ subtest 'Seq eqv Seq' => {
     $b = (0,1,42).Seq;
     is-deeply $a eqv $b, False,
         'eqv between Seqs with different end values';
+}
+
+# rakudo/issues/3346
+{
+    my $test = start {
+        my $a = (0,1).hyper;
+        my $b = (0,2).hyper;
+        die if $a eqv $b;
+    };
+
+    await Promise.anyof($test, Promise.in(5));
+    is $test.status, Kept, 'HyperSeq eqv HyperSeq';
 }
 
 subtest 'Throws/lives in lazy cases' => {
