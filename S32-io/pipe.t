@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 15;
+plan 16;
 
 proc_captures_out_ok '1',               '',    0, 'Child succeeds but does not print anything';
 proc_captures_out_ok '42.say',         '42',   0, 'Child succeeds and prints something';
@@ -98,6 +98,15 @@ group-of 5 => 'bin pipes in Proc do not crash on open' => {
     }
     is $proc.out.slurp(:close, :bin).bytes, 1_000_000, 'large blob can be piped';
     await $promise;
+}
+
+{
+    my $temp = make-temp-file;
+    my $out = $temp.IO.open :w;
+    my $proc = run $*EXECUTABLE, '-e', '$*ERR.say: "stderr out"; $*OUT.say: "stdout out"', :$out, :merge;
+    $out.close;
+    my $result = $temp.slurp;
+    is $result, "stderr out\nstdout out\n", 'merge with :out(Handle:D)';
 }
 
 # vim: ft=perl6 expandtab sw=4
