@@ -620,7 +620,6 @@ S11-modules/module-file.t
 S11-modules/need.t
 S11-modules/nested.t
 S11-modules/perl6lib.t
-S11-modules/rakudolib.t
 S11-modules/rakulib.t
 S11-modules/require.t
 S11-modules/runtime.t
