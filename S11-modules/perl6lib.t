@@ -7,10 +7,11 @@ plan 1;
 
 # Test deprecated environment variable PERL6LIB
 # TODO remove this file when PERL6LIB is removed
-is_run 'BEGIN { BEGIN { q{S11modulesRakuLibTest.rakumod}.IO.spurt(q{package { say q{all your base} }}); %*ENV<PERL6LIB>=qq{}; }; use S11modulesRakuLibTest }',
+is_run 'BEGIN { BEGIN { q{S11modules-PERL6LIB-Test.rakumod}.IO.spurt(q{package { say q{all your base} }}); %*ENV<PERL6LIB>=qq{}; };\
+        use S11modules-PERL6LIB-Test }',
 {
     out    => "",
     status => * != 0,
 }, 'RT 130883 is fixed, PERL6LIB works';
 
-unlink "S11modulesRakuLibTest.rakumod";
+unlink "S11modules-PERL6LIB-Test.rakumod";
