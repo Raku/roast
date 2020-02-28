@@ -1357,6 +1357,7 @@ integration/advent2014-day13.t
 integration/advent2014-day16.t
 integration/code-blocks-as-sub-args.t
 integration/deep-recursion-initing-native-array.t # moar
+integration/diamond.t
 integration/error-reporting.t  # slow
 integration/eval-and-threads.t  # slow
 integration/failure-and-callsame.t
