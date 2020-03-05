@@ -1,7 +1,7 @@
 use v6;
 use Test;
 use soft;
-plan 2;
+plan 3;
 
 subtest "Dispatcher Chain" => {
     plan 13;
@@ -77,7 +77,7 @@ subtest "Dispatcher Chain" => {
     $inst.foo("");
     is-deeply @order.List, <C4(Any) C3 C2(Str) C1>, "proto can be unwrapped";
 
-    # This should be foo(Rat) candidate
+    # This should be foo(Num) candidate
     my \cand = proto.candidates[2];
     # Note that next* can't be used with blocks.
     $wh1 = cand.wrap(-> *@ { @order.push('foo-num-wrap'); callsame });
@@ -104,10 +104,10 @@ subtest "Dispatcher Chain" => {
     cand.unwrap($wh1);
     @order = [];
     $inst.foo(pi);
-    is-deeply @order.List, <C4(Any) C3 multi-wrap(Num) multi-wrap(Any) C2(Num) C1>, "we can use a multi as a wrapper of a candidate";
+    is-deeply @order.List, <C4(Any) C3 multi-wrap(Num) multi-wrap(Any) C2(Num) C1>, "we can unwrap a multi";
 
     # Even nastier thing: wrap a candidate of our wrapper!
-    my $wwh = &multi-wrap.candidates[1].wrap(sub (|) { @order.push: 'cand-wrap'; nextsame });
+    my $wwh = &multi-wrap.candidates[1].wrap(sub wrap-wrapper(|) { @order.push: 'cand-wrap'; nextsame });
     @order = [];
     $inst.foo(pi);
     is-deeply @order.List, <C4(Any) C3 multi-wrap(Num) cand-wrap multi-wrap(Any) C2(Num) C1>, "we can use a multi as a wrapper of a candidate";
@@ -155,6 +155,44 @@ subtest "Regression: nextcallee" => {
     @order = [];
     $inst.foo;
     is-deeply @order.List, <C3 C2::foo::wrapper C2 C1>, "nextcallee doesn't break the dispatcher chain";
+}
+
+subtest "Regression: broken chain" => {
+    plan 2;
+    # A stray $*NEXT-DISPATCHER could wrongfully be picked up by a dispatcher vivified by a nested routine invocation.
+    my @order;
+    my class C1 {
+        multi method foo {
+            @order.push: "C1::foo";
+            $.bar;
+        }
+
+        proto method bar(|) {*}
+        multi method bar {
+            @order.push: "C1::bar";
+            nextsame
+        }
+    }
+
+    my class C2 is C1 {
+        proto method bar(|) {*}
+        multi method bar {
+            @order.push: "C2::bar";
+            nextsame
+        }
+
+        method foo {
+            @order.push: "C2::foo";
+            nextsame;
+        }
+    }
+
+    my $inst = C2.new;
+    $inst.bar;
+    is-deeply @order.List, <C2::bar C1::bar>, "control: multi dispatches as expected";
+    @order = [];
+    $inst.foo;
+    is-deeply @order.List, <C2::foo C1::foo C2::bar C1::bar>, "multi-dispatch is not broken";
 }
 
 done-testing;
