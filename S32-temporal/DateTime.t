@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 306;
+plan 307;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -924,7 +924,7 @@ subtest 'subsecond .later/.earlier' => {
         DateTime.new('1879-03-13T23:59:57.293Z'), '2.707s earlier';
 }
 
-# R#2615
+# https://github.com/rakudo/rakudo/issues/2615
 {
     class DateTimed is DateTime { }
     my $date = DateTimed.new('2019-01-24T11:10:32');
@@ -933,3 +933,6 @@ subtest 'subsecond .later/.earlier' => {
       "does .later work on on DateTime subclasses $_"
       for ^2;
 }
+
+lives-ok { DateTime.new(2020,3,10,11,38,.000001).Str },
+  'Check of default stringification of second 0 partial works';
