@@ -12,7 +12,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 =end description
 
-plan 17;
+plan 18;
 
 # L<S32::Containers/List/=item reduce>
 
@@ -98,6 +98,15 @@ eval-lives-ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper 
     doesn't-warn {
         (^10).reduce(sub f ($a, $b) is assoc<right> {"Tuple $a ($b)"})
     }, 'no warnings when setting associativity on the reduce &with';
+}
+
+# https://github.com/rakudo/rakudo/issues/3541
+{
+    sub infix:<eog> ( $a,  $b ) is assoc<chain> is pure { 
+        so $a == $b+1 
+    }
+    ok (5,4,3,2,1).reduce(&infix:<eog>),
+        'Reduce method respects chain associativity';
 }
 
 # vim: ft=perl6

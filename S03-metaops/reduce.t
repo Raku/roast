@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 560;
+plan 561;
 
 =begin pod
 
@@ -741,6 +741,15 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is-deeply [\minmax]((1, 2, 3))                              , (1..1, 1..2, 1..3).Seq    , "Triangle reduce minmax";
     is-deeply [\minmax]((1, 2, 3), (-1, -2, -3))                , (1..3, -3..3).Seq         , "Triangle reduce minmax";
     is-deeply [\minmax]((1, 2, 3), (-1, -2, -3), (1, 10, 100))  , (1..3, -3..3, -3..100).Seq, "Triangle reduce minmax";
+}
+
+# https://github.com/rakudo/rakudo/issues/3541
+{
+    sub infix:<eog> ( $a,  $b ) is assoc<chain> is pure { 
+        so $a == $b+1 
+    }
+    ok ([eog] 5,4,3,2,1),
+        'Reduce meta-operator respects chain associativity';
 }
 
 # vim: ft=perl6 et
