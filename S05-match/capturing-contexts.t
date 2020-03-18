@@ -3,7 +3,6 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-use MONKEY-TYPING;
 
 plan 64;
 
@@ -43,6 +42,7 @@ plan 64;
 
 # https://github.com/Raku/old-issue-tracker/issues/640
 {
+  use MONKEY-TYPING;
   augment class Match { method keys () {return %(self).keys }; };
   my rule a {H};
   "Hello" ~~ /<a=&a>/;
