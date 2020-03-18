@@ -1,5 +1,4 @@
 use v6;
-use nqp;
 use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
@@ -108,6 +107,7 @@ is('$rt115344'.EVAL, $rt115344, 'method form of EVAL sees outer lexicals');
 
 # https://github.com/Raku/old-issue-tracker/issues/3781
 {
+    use nqp;
     is
         nqp::atkey(CompUnit::Loader.load-source(q<package Qux { BEGIN EVAL q<>; };>.encode).unit, q<$?PACKAGE>).^name,
         "GLOBAL",
