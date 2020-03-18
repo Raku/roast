@@ -1,6 +1,6 @@
 use v6;
-use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Compile;
 
 # Test::Compile is new and untested.  It is for simple precompilation

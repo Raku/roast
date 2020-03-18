@@ -1,6 +1,6 @@
 use v6;
-use lib <t/packages>;
 use Test;
+use lib <t/packages>;
 use Test::Helpers;
 
 my $lib-path = $?FILE.IO.parent(2).add("packages/S11-modules/lib");

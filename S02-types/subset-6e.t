@@ -1,7 +1,7 @@
 use v6.e.PREVIEW;
+use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use lib $?FILE.IO.parent(2).add("packages/S02-types/lib");
-use Test;
 use Test::Util;
 
 plan 60;

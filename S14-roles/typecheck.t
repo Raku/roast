@@ -1,7 +1,7 @@
 use v6;
-use lib $?FILE.IO.parent(2).add("packages/Roles/lib");
 
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Roles/lib");
 
 plan 7;
 
