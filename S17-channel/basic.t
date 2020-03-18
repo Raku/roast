@@ -72,8 +72,6 @@ plan 28;
      'Closing an empty channel immediately keeps its .closed promise';
 }
 
-#?rakudo.jvm skip 'NullPointerException'
-#?DOES 1
 {
     my $c = Channel.new;
     my $timer = Supply.interval(5).tap: {

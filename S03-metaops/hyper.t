@@ -956,19 +956,14 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
     my @a = «"Furthermore, Subhuti," "the basic nature" "of the five" "aggregates" "is emptiness."»;
     # <list> <hyper> <empty list>
     is @a «+« (), (), "left-dwim hyper against empty RHS doesn't hang";
-    #?rakudo.jvm skip 'RT #126528'
     is @a »+» (), (), "right-dwim hyper against empty RHS doesn't hang";
-    #?rakudo.jvm skip 'RT #126528'
     is @a «+» (), (), "both-dwim hyper against empty RHS doesn't hang";
-    #?rakudo.jvm skip 'RT #126528'
     throws-like {@a »+« ()}, X::HyperOp::NonDWIM,
         left-elems => 5, right-elems => 0,
         "non-dwim hyper against empty RHS dies";
     # <empty list> <hyper> <list>
-    #?rakudo.jvm skip 'RT #126528'
     is () «+« @a, (), "left-dwim hyper against empty LHS doesn't hang";
     is () »+» @a, (), "right-dwim hyper against empty LHS doesn't hang";
-    #?rakudo.jvm skip 'RT #126528'
     is () «+» @a, (), "both-dwim hyper against empty LHS doesn't hang";
     throws-like {() »+« @a}, X::HyperOp::NonDWIM,
         left-elems => 0, right-elems => 5,

@@ -194,7 +194,6 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
         }
     }
     my @ps = start { } xx 20;
-    #?rakudo.jvm todo 'UnwindException'
     lives-ok { await $p1, $p2, @ps },
         'No error due to trying to do non-blocking await when lock held (protect)';
 }
@@ -211,7 +210,6 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
         $l.unlock();
     }
     my @ps = start { } xx 20;
-    #?rakudo.jvm todo 'NullPointerException'
     lives-ok { await $p1, $p2, @ps },
         'No error due to trying to do non-blocking await when lock held (lock/unlock)';
 }
@@ -256,7 +254,6 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
 }
 
 # RT #132091
-#?rakudo.jvm skip 'NullPointerException'
 {
     my @foo = do {
         await start { do for ^2 { my uint64 @ = 9, 9; }.Slip },
@@ -264,7 +261,6 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     }
     is @foo.elems, 4, "slips awaited over get flattened out";
 }
-#?rakudo.jvm skip 'UnwindException'
 {
   await start {
     my @foo = do {
