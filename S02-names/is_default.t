@@ -356,8 +356,6 @@ plan 187;
 
 # native types
 {
-    # https://github.com/Raku/old-issue-tracker/issues/4703
-    #?rakudo.jvm todo "defaults on native ints"
     throws-like 'my int $a is default(42)',
       X::Comp::Trait::NotOnNative,
       type    => 'is',
