@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4 * 19 + 105;
+plan 4 * 19 + 106;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -466,6 +466,11 @@ subtest 'Clone of Pair does not share .WHICH' => {
     my Pair $p;
     is-deeply ($p .= new :key<foo> :value<bar>), :foo<bar>.Pair,
         'fake-infix adverbs (named args) on a construct inside args to another routine';
+}
+
+# https://github.com/rakudo/rakudo/issues/3555
+{
+    is ('$foo' => 42).raku, Q/"\$foo" => 42/, "did we not do parens?";
 }
 
 # vim: ft=perl6
