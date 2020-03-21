@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 56;
+plan 57;
 
 # L<S14/Run-time Mixins/>
 
@@ -260,5 +260,9 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
 
 cmp-ok sub () is nodal { }, &[~~], Callable,
   'can typecheck mixins of routines against Callable';
+
+lives-ok {
+    class { } but role { has $!foo is built(:bind) }
+}, 'can mix in roles that use the "is built" trait at runtime';
 
 # vim: syn=perl6
