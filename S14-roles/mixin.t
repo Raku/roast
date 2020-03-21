@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 55;
+plan 56;
 
 # L<S14/Run-time Mixins/>
 
@@ -257,5 +257,8 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
         is so $b, True;
     }
 }
+
+cmp-ok sub () is nodal { }, &[~~], Callable,
+  'can typecheck mixins of routines against Callable';
 
 # vim: syn=perl6
