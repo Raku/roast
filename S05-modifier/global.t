@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 9;
 
 =begin description
 
@@ -28,6 +28,16 @@ Testing the C<:global> regex modifier - more tests are always welcome
     is ~(@matches[0]), "el", "First match is 'el'";
     is ~(@matches[1]), "o ", "Second match is 'o '";
     is ~(@matches[2]), "or", "Third match is 'or'";
+}
+
+# https://github.com/rakudo/rakudo/issues/3554
+{
+    my @got;
+    if "test1 test2 test3 test4" ~~ m:g/ (\w+) {} / {
+        @got.push(~$_) for $/.list;
+    }
+    is-deeply @got, ['test1', 'test2', 'test3', 'test4'],
+        'm:g/.../ with an embedded {} produces correct results';
 }
 
 # vim: syn=perl6 sw=4 ts=4 expandtab
