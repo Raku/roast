@@ -5,23 +5,23 @@ use Test::Util;
 
 plan 3;
 
-subtest 'is-deeply with Seqs does not claim `Seq.new-consumed` expected/got' => {
+subtest 'is-deeply with Seqs does not claim `Seq.new` expected/got' => {
     plan 4;
 
     is-deeply (1, 2).Seq, (1, 2).Seq, 'two Seqs, passing';
     is_run ｢use Test; is-deeply (1, 2).Seq, (1, 3).Seq｣, %(
-        :err{ not $^s.contains: 'Seq.new-consumed' }
-        :out{ not $^s.contains: 'Seq.new-consumed' }
+        :err{ not $^s.contains: 'Seq.new()' }
+        :out{ not $^s.contains: 'Seq.new()' }
         :status(1)
     ), 'two Seqs, failing';
     is_run ｢use Test; is-deeply (1, 2).Seq, [1, 3]｣, %(
-        :err{ not $^s.contains: 'Seq.new-consumed' }
-        :out{ not $^s.contains: 'Seq.new-consumed' }
+        :err{ not $^s.contains: 'Seq.new()' }
+        :out{ not $^s.contains: 'Seq.new()' }
         :status(1)
     ), '`got` Seq, failing';
     is_run ｢use Test; is-deeply [1, 2], (1, 3).Seq｣, %(
-        :err{ not $^s.contains: 'Seq.new-consumed' }
-        :out{ not $^s.contains: 'Seq.new-consumed' }
+        :err{ not $^s.contains: 'Seq.new()' }
+        :out{ not $^s.contains: 'Seq.new()' }
         :status(1)
     ), '`expected` Seq, failing';
 }
