@@ -15,7 +15,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 27;
 
 {
     my @a = (1..Inf);
@@ -171,6 +171,12 @@ sub make-lazy-list($num) { gather { take $_ for 0..^$num; $was-lazy = 0 }.lazy }
     my \one = make-lazy-list(10);
     my @res = one.antipairs;
     ok $was-lazy, 'antipairs is lazy';;
+}
+
+# https://github.com/rakudo/rakudo/issues/3570
+{
+    my @wat = flat [2,3,4], 10,11 ... *;
+    is @wat[^5], "2 3 4 10 11", 'did the array get flattened';
 }
 
 # vim: ft=perl6
