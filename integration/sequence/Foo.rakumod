@@ -1,0 +1,1 @@
+constant @lines is export = '⎽'...'⎺';
