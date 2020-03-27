@@ -4,7 +4,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 use Test::Idempotence;
 
-plan 148;
+plan 150;
 
 # L<S06/Signature Introspection>
 
@@ -213,7 +213,6 @@ sub j(*@i) {
                        :{ rx/Block\|\d+/ => '' });
     is-perl-idempotent(-> $a ($b) { }, Nil,
                        :{ rx/Block\|\d+/ => '' });
-
 }
 
 role A { sub a ($a, $b, ::?CLASS $c) { }; method foo { &a } };
@@ -299,5 +298,16 @@ is :(:@a = [1,2,3]).params[0].suffix, '',
 # https://github.com/rakudo/rakudo/issues/3492
 is :($ is raw where 42).params.head.sigil, '$',
   "an unnamed raw parameter should have the '\$' sigil";
+
+class {
+    has $!private;
+    has $.public;
+    method run-tests() {
+        is :($!private).params[0].name, '$!private',
+          'private attribute parameters have the correct name';
+        is :($.public).params[0].name, '$.public',
+          'public attribute parameters have the correct name';
+    }
+}.run-tests;
 
 # vim: ft=perl6
