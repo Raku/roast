@@ -4,7 +4,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 use Test::Idempotence;
 
-plan 150;
+plan 154;
 
 # L<S06/Signature Introspection>
 
@@ -70,8 +70,6 @@ sub j(*@i) {
     my @l = &e.signature.params>>.default;
     ok ?( all(@l >>~~>> Code) ), '.default returns closure';
     is @l[0].(),    3, 'first closure works';
-    # XXX The following test is very, very dubious...
-    #?rakudo skip 'expected Any but got Mu instead'
     is @l[1].().(), 5, 'closure as default value captured outer default value';
 }
 
@@ -197,6 +195,9 @@ sub j(*@i) {
     is-perl-idempotent(:(@ ($a) = [2]), :eqv);
     is-perl-idempotent(:(% (:a($)) = {:a(2)}, % (:c(:d($))) = {:c(2)}), :eqv);
     is-perl-idempotent(:($ is raw, & is raw, % is raw, | is raw), :eqv);
+    is-perl-idempotent(:(+), :eqv);
+    is-perl-idempotent(:(\), :eqv);
+    is-perl-idempotent(:(Int), :eqv);
 
     is-perl-idempotent(:(::T $a, T $b), :eqv);
     # Not sure if this one makes much sense.
@@ -243,10 +244,10 @@ is $rolesig, ':($a, $b, ::?CLASS $c)', ".raku of a sigature that has ::?CLASS";
         'Callable in signature stringifies correctly using .gist';
 
 
-    is :(Callable).raku, ':(Callable $)', 'perl on :(Callable)';
-    is :(Array of Callable).raku, ':(Array[Callable] $)',
+    is :(Callable).raku, ':(Callable)', 'perl on :(Callable)';
+    is :(Array of Callable).raku, ':(Array[Callable])',
         '.raku on :(Array of Callable)';
-    is :(Hash of Callable).raku, ':(Hash[Callable] $)',
+    is :(Hash of Callable).raku, ':(Hash[Callable])',
         '.raku on :(Hash of Callable)';
 }
 
@@ -309,5 +310,8 @@ class {
           'public attribute parameters have the correct name';
     }
 }.run-tests;
+
+is { $_ }.signature.params[0].sigil, '$',
+  'block topic variables have the $ sigil';
 
 # vim: ft=perl6
