@@ -61,7 +61,7 @@ is-primed-sig(sub ($, $) { }, :($), Nil);
 is-primed-sig(sub ($, $) { }, :($), *, 2);
 is-primed-sig(sub ($, $b, $) { }, :($b), 1, *, 3);
 is-primed-sig(sub ($, $, $) { }, :($), 1, *, 3);
-is-primed-sig(sub ($, 2) { }, :(Int $), 1);
+is-primed-sig(sub ($, 2) { }, :(Int), 1);
 is-primed-sig(sub (Int $a, Int $b) { }, :(Int $b), 1);
 is-primed-sig(sub (Int $, Int $b) { }, :(Int $b), 1);
 is-primed-sig(sub (Int $, Int $) { }, :(Int $), 1);
