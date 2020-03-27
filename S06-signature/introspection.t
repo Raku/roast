@@ -4,7 +4,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 use Test::Idempotence;
 
-plan 150;
+plan 151;
 
 # L<S06/Signature Introspection>
 
@@ -309,5 +309,8 @@ class {
           'public attribute parameters have the correct name';
     }
 }.run-tests;
+
+cmp-ok { $_ }.signature.params[0].raku, &[~~], / 'OUTER::<$_>' /,
+  'OUTER defaults have the correct .raku';
 
 # vim: ft=perl6
