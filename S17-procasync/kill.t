@@ -1,4 +1,4 @@
-use v6;
+use v6.d;
 use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
@@ -9,7 +9,7 @@ try {
 }
 
 my @signals = SIGINT;
-plan 2 + @signals * 8;
+plan 2 + @signals * 5;
 
 for @signals -> $signal {
     my $program = (make-temp-file content => q:to/END/).absolute;
@@ -21,40 +21,33 @@ for @signals -> $signal {
         say 'Done';
         END
 
-    my $pc = Proc::Async.new( $*EXECUTABLE, $program, :w );
-    isa-ok $pc, Proc::Async;
+    with Proc::Async.new($*EXECUTABLE, $program, :w) -> $proc {
+        isa-ok $proc, Proc::Async;
 
-    my $so = $pc.stdout;
-    cmp-ok $so, '~~', Supply;
+        my $so = $proc.stdout;
+        cmp-ok $so, '~~', Supply;
 
-    my $stdout = "";;
-    $so.act: { $stdout ~= $_ };
-
-    is $stdout, "", "STDOUT for $signal should be empty";
-
-    my $pm = $pc.start;
-    isa-ok $pm, Promise;
-
-    sleep 1;
-
-    cmp-ok $pc.ready.status, '~~', Kept, "ready Promise should be Kept by now";
-
-    # give it a little time
-    $pc.print("1\n");
-
-    # stop what you're doing
-    $pc.kill($signal);
-    $pc.print("2\n");
-
-    # done processing, from sleep
-    await $pm;
-
-    can-ok $pm.result, 'exitcode';
-    is $pm.result.?exitcode, 0, 'did it exit with the right value';
-
-    # https://github.com/Raku/old-issue-tracker/issues/4669
-    #?rakudo skip 'order of operations for Proc::Async is nondeterminstic'
-    is $stdout, "Started\n$signal\n", 'did we get STDOUT';
+        react {
+            whenever $proc.stdout.lines {
+                when 'Started' {
+                    $proc.say(1).then: {
+                        $proc.kill($signal);
+                        $proc.say(2);
+                    }
+                }
+                when 'Done' {
+                }
+                default {
+                    is $_, $signal, 'Output correct for Supply.merge on signals';
+                }
+            }
+            whenever $proc.start {
+                can-ok $_, 'exitcode';
+                is .?exitcode, 0, 'did it exit with the right value';
+                is .?signal, 0, "signal $signal got handled";
+            }
+        }
+    }
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/6304
