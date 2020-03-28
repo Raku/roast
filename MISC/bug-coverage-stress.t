@@ -7,7 +7,7 @@ use Test::Util;
 # or ones that need to be only part of strestest and not spectest.
 # Feel free to move the tests to more appropriate places.
 
-plan 12;
+plan 14;
 
 # https://github.com/Raku/old-issue-tracker/issues/6501
 doesn't-hang ｢
@@ -33,26 +33,32 @@ doesn't-hang ｢
 #?rakudo.jvm skip "The spawned command './rakudo-j' exited unsuccessfully (exit code: 1)"
 #?DOES 1
 {
-  if $*DISTRO.is-win {
-    skip 'Test hangs on Windows: https://github.com/rakudo/rakudo/issues/1975';
-  }
-  else {
-    with Proc::Async.new: $*EXECUTABLE, '-e',
-      ｢react whenever signal(SIGTERM).merge(signal SIGINT) { print ‘pass’; exit 0 }｣
-    -> $proc {
-      my $out = ''; $proc.Supply.tap: { $out ~= $_ };
-      my $p = $proc.start;
-      await $proc.ready;
-      Promise.in(
-          # Currently JVM backend takes longer to start the proc, so
-          # let's wait longer before killing
-          ($*VM.name eq 'jvm' ?? 20/3 !! 1) * (%*ENV<ROAST_TIMING_SCALE>//1)
-      ).then: {$proc.kill: SIGINT}; # give it a chance to boot up, then kill it
-      await $p;
-      #?rakudo.jvm todo 'Died with the exception: Cannot unbox a type object'
-      is-deeply $out, 'pass', 'Supply.merge on signals does not crash';
+    if $*DISTRO.is-win {
+        skip 'Test hangs on Windows: https://github.com/rakudo/rakudo/issues/1975', 3;
     }
-  }
+    else {
+        with Proc::Async.new: $*EXECUTABLE, '-e',
+            ｢react { whenever signal(SIGTERM).merge(signal SIGINT) { say ‘pass’; exit 0 }; say ‘started’; $*OUT.flush}｣
+        -> $proc {
+            react {
+                whenever $proc.stdout.lines {
+                    when 'started' {
+                        $proc.kill: SIGINT;
+                    }
+                    when 'pass' {
+                        pass 'Supply.merge on signals does not crash';
+                    }
+                    default {
+                        is $_, 'pass', 'Output correct for Supply.merge on signals';
+                    }
+                }
+                whenever $proc.start {
+                    is .exitcode, 0, "Supply.merge on signals does not crash";
+                    is .signal, 0, "Supply.merge on signals handles signal";
+                }
+            }
+        }
+    }
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5742
