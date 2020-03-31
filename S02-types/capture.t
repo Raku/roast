@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 44;
+plan 45;
 
 {
     my $capture = \(1,2,3);
@@ -366,5 +366,8 @@ subtest 'types whose .Capture behaves like Mu.Capture' => {
     is-deeply f(:a($c--), :a($c*=5)), ("a", 5).Seq,
         'Eliminated named argument with named-only passing';
 }
+
+isnt class :: is Capture { }.new.WHICH, \().WHICH,
+  'captures and instances of subclasses of Capture do not have the same WHICH';
 
 # vim: ft=perl6
