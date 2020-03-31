@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 45;
+plan 46;
 
 {
     my $capture = \(1,2,3);
@@ -369,5 +369,9 @@ subtest 'types whose .Capture behaves like Mu.Capture' => {
 
 isnt class :: is Capture { }.new.WHICH, \().WHICH,
   'captures and instances of subclasses of Capture do not have the same WHICH';
+
+lives-ok {
+    [].Capture.<foo>:exists
+}, 'can call EXISTS-KEY on captures w/o a concrete %!hash';
 
 # vim: ft=perl6
