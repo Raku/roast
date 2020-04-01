@@ -14,15 +14,10 @@ constant PORT_VALUE_TOO_HIGH    = 65_536;
 
 plan 4;
 
-dies-ok &port-too-low,    'Fails when port is too low';
-
-dies-ok &port-too-high,   'Fails when port is too high';
-
-dies-ok &family-too-low,  'Fails when family is too low';
-
-dies-ok &family-too-high, 'Fails when family is too high';
-
-done-testing;
+fails-like &port-too-low,    X::AdHoc, 'Fails when port is too low';
+fails-like &port-too-high,   X::AdHoc, 'Fails when port is too high';
+fails-like &family-too-low,  X::AdHoc, 'Fails when family is too low';
+fails-like &family-too-high, X::AdHoc, 'Fails when family is too high';
 
 sub port-too-low() {
     my $listen = IO::Socket::INET.new(
