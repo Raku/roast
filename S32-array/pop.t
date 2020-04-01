@@ -83,8 +83,6 @@ plan 38;
     throws-like '42.pop', X::Method::NotFound, '.pop should not work on scalars';
     throws-like 'pop(@pop,10)', Exception,     'pop() should not allow extra arguments';
     throws-like '@pop.pop(10)', Exception,     '.pop() should not allow extra arguments';
-    #?rakudo todo 'code does not die'
-    ## TODO test for correct exception once the code dies
     throws-like '@pop.pop = 3', Exception,  'Cannot assign to a readonly variable or a value';
     throws-like 'pop(@pop) = 3', Exception, 'Cannot assign to a readonly variable or a value';
 } #6
@@ -106,7 +104,7 @@ plan 38;
 }
 
 # RT #131245
-subtest 'no gost elements after pop/shift' => {
+subtest 'no ghost elements after pop/shift' => {
     plan 5;
 
     my @a = <a b c>; @a.pop;    @a[3] = 42;
