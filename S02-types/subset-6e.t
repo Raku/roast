@@ -322,7 +322,7 @@ subtest 'Junction arguments to `where` parameters' => {
             CODE
         {
             :out(''),
-            :err(rx:s/Variable definition of type SSDefinite .* requires an initializer/),
+            :err(rx:s/Variable definition of type SSDefinite .* needs to be given an initializer/),
             :status(1),
         },
         "subset of a definite type needs initialization";
@@ -333,7 +333,7 @@ subtest 'Junction arguments to `where` parameters' => {
             CODE
         {
             :out(''),
-            :err(rx:s/Variable definition of type SSDefinedOnly .* requires an initializer/),
+            :err(rx:s/Variable definition of type SSDefinedOnly .* needs to be given an initializer/),
             :status(1),
         },
         "subset requiring a defined value needs initialization";
@@ -368,7 +368,7 @@ subtest 'Junction arguments to `where` parameters' => {
             CODE
         {
             :out(''),
-            :err(rx:s/Variable definition of type SSDefined6e .* requires an initializer/),
+            :err(rx:s/Variable definition of type SSDefined6e .* needs to be given an initializer/),
             :status(1),
         },
         :compiler-args['-I' ~ $?FILE.IO.parent(2).add("packages/S02-types/lib")],
