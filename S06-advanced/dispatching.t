@@ -1,7 +1,7 @@
 use v6;
 use Test;
 use soft;
-plan 3;
+plan 4;
 
 subtest "Dispatcher Chain" => {
     plan 13;
@@ -193,6 +193,63 @@ subtest "Regression: broken chain" => {
     @order = [];
     $inst.foo;
     is-deeply @order.List, <C2::foo C1::foo C2::bar C1::bar>, "multi-dispatch is not broken";
+}
+
+# GH Raku/problem-solving#170
+subtest "Wrap parent's first multi-candidate" => {
+    plan 3;
+    my @order;
+    my $inst;
+
+    my class C1 {
+        method foo(|) {
+            @order.push: 'C1::foo'
+        }
+    }
+
+    my class C2 is C1 {
+        proto method foo(|) {*}
+        multi method foo(Int) {
+            @order.push: 'C2::foo(Int)';
+            nextsame;
+        }
+        multi method foo(Any) {
+            @order.push: 'C2::foo(Any)';
+            nextsame;
+        }
+    }
+
+    my class C3 is C2 {
+        method foo(|) {
+            @order.push: 'C3::foo';
+            nextsame
+        }
+    }
+
+    my @orig-order = <C3::foo C2::foo(Int) C2::foo(Any) C1::foo>;
+    $inst = C3.new;
+    $inst.foo(42);
+    is-deeply @order, @orig-order, "control: multi-dispatch as expected";
+
+    my $wh = C2.^lookup('foo').candidates[0].wrap(
+        -> | {
+            @order.push: "C2::foo::wrapper";
+            callsame
+        }
+    );
+
+    @order = [];
+    $inst.foo(42);
+    is-deeply
+        @order.List,
+        <C3::foo C2::foo::wrapper C2::foo(Int) C2::foo(Any) C1::foo>,
+        "wrapping of the first candidate doesn't break the chain";
+
+    $wh.restore;
+
+    @order = [];
+    $inst.foo(42);
+    is-deeply @order, @orig-order, "unwrapping of the candidate restores the order";
 }
 
 done-testing;
