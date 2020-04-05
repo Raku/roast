@@ -7,6 +7,9 @@ use Test;
 
 # L<S03/List infix precedence/"the sequence operator">
 
+# some arrays needed for tests
+my @fib = 0, 1, *+* ... *;
+
 # Test a sequence by seed and endpoint, with the given description
 # and the expected result.
 #
@@ -261,6 +264,96 @@ my @tests = (
 
   '-3 ... ^3 produces just one zero',
     -3, ^3, [(-3,-2,-1,0,1,2),(-3,-2,-1,1,2),(-2,-1,0,1,2),(-2,-1,1,2)],
+
+  'geometric sequence started in one direction and continues the other',
+    4, ^5, [(4,3,2,1,0,1,2,3,4),(4,3,2,1,1,2,3,4),(3,2,1,0,1,2,3,4),(3,2,1,1,2,3,4)],
+
+  'geometric sequence that does not hit the limit in its seed',
+    (1,2,4), 3, [(1,2) xx 2, (2,) xx 2],
+
+  'sequence that aborts during LHS',
+    (1,2,4), 2, (1,2),
+
+  'sequence that does not hit the limit',
+    (1,2,4), 1.5, [(1,) xx 2, () xx 2],
+
+  'sequence that aborts during LHS',
+    (1,2,4), 1, 1,
+
+  'geometric sequence with smaller RHS and sign change',
+    (1,-2,4), 1, 1,
+
+  'geometric sequence with smaller RHS and sign change',
+    (1,-2,4), 2, (1,-2,4,-8,16,-32,64,-128,256,-512),
+
+  'geometric sequence with smaller RHS and sign change',
+    (1,-2,4), 3, [(1,-2) xx 2, (-2,) xx 2],
+
+  'geometric sequence with sign-change and non-matching end point',
+    (1,-2,4), 25, [(1,-2,4,-8,16) xx 2, (-2,4,-8,16) xx 2],
+
+  'sequence that aborts during LHS, before actual calculations kick in',
+    (1,2,4,5,6), 2, (1,2),
+
+  'sequence that aborts during LHS, before actual calculations kick in',
+    (1,2,4,5,6), 3, [(1,2) xx 2, (2,) xx 2],
+
+  '1, +* works for sequence',
+    (1,+*), *, 1 xx 10,
+
+  'sequence with code on the rhs',
+    (1,2), *>=5, 1..5,
+
+  'sequence with code on the rhs',
+    (1,2), *>5, 1..6,
+
+  'sequence that lasts in the last item of lhs',
+    (1,2,{last if $_>=5;$_+1}), *, [(1..5) xx 2, (2..5) xx 2],
+
+  'sequence may be terminated by calling last from the generator function',
+    (5,4,3,{$_-1||last}), *, [(5,4,3,2,1) xx 2, (4,3,2,1) xx 2],
+
+  'range as LHS with fixed endpoint',
+    (1..*), 5, 1..5,
+
+  'using a lazy array as a LHS',
+    @fib, 8, (0,1,1,2,3,5,8),
+
+  'stop on a matching type (1)',
+    (32,16,8), Rat, (32,16.0),
+
+  'stop on a matching type (2)',
+    (32,{($_/2).narrow}), Rat, (32,16,8,4,2,1,0.5),
+
+  'use &[+] on infix:<...> series',
+    (1,1,&[+]), *, (1,1,2,3,5,8,13,21,34,55),
+
+  'WhateverCode with arity > 3 gets enough arguments',
+    (1,1,2,4,8,*+*+*+*), *, (1,1,2,4,8,15,29,56,108,208),
+
+  'arity-2 convergence limit',
+    (8,*/2), (*-*).abs < 2, (8,4.0,2.0,1.0),
+
+  'arity-Inf limit',
+    1, {@_ eq "1 2 3"}, (1,2,3),
+
+  'sequence stops when type of endpoint matches',
+    {quietly $_ > 3 ?? 'liftoff' !! $_ + 1}, Str, (1,2,3,4,'liftoff'),
+
+  'sequence of two interleaved sequences',
+    (1,1,{slip $^a+1, $^b*2}), *,  (1,1,2,2,3,4,4,8,5,16),
+
+  'sequence of three interleaved sequences',
+    (1,1,1,{slip $^a+1, $^b*2, $^c-1}), *, (1,1,1,2,2,0,3,4,-1,4),
+
+  'sequence with list-returning block',
+    (1,{|($^n+1 xx $^n+1)}), *, (1,2,2,3,3,3,4,4,4,4),
+
+  'sequence with arity < number of return values',
+    ('a','b',{slip $^a~'x', $^a~$^b, $^b~'y'}), *, <a b ax ab by abx abby byy abbyx abbybyy>,
+
+  'sequence with arity > number of return values',
+    ('a','b','c',{slip $^x~'x', $^y~'y'~$^z~'z'}), *, <a b c ax bycz cx axybyczz byczx cxyaxybyczzz axybyczzx>,
 );
 
 # Run the tests
