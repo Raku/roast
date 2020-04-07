@@ -2,6 +2,7 @@ use v6;
 
 # Uncomment for quick results on any test failure
 BEGIN %*ENV<RAKU_TEST_DIE_ON_FAIL> = True;
+BEGIN %*ENV<RAKU_TEST_TIME> = True;
 
 use Test;
 
@@ -9,6 +10,15 @@ use Test;
 
 # some arrays needed for tests
 my @fib = 0, 1, *+* ... *;
+my @abc = <a b c>;
+
+# some classes that are used
+my class H {
+    has $.x;
+    method new($x) { self.bless(:$x) }
+    method succ()  { H.new($!x + 1)  }
+    method raku()  { "H.new($!x)"    }
+}
 
 # Test a sequence by seed and endpoint, with the given description
 # and the expected result.
@@ -26,7 +36,7 @@ my @fib = 0, 1, *+* ... *;
 # If the endpoint is Whatever, then the tests will automatically also be
 # performed with Inf as the endpoint.
 
-sub test-seq($description, \seed, \endpoint, \list) {
+sub test-seq($description, Mu \seed, Mu \endpoint, \list) {
     my $result;
     my $resultV;
     my $Vresult;
@@ -354,6 +364,63 @@ my @tests = (
 
   'sequence with arity > number of return values',
     ('a','b','c',{slip $^x~'x', $^y~'y'~$^z~'z'}), *, <a b c ax bycz cx axybyczz byczx cxyaxybyczzz axybyczzx>,
+
+  '0-ary generator output can be slipped from the start',
+     -> {slip 'zero','one'}, *, <zero one zero one zero one zero one zero one>,
+
+  'sequence with RHS junction I',
+    (10,8), 2|3, (10,8,6,4,2),
+
+  'sequence with RHS junction II',
+    (11,9), 2|3, (11,9,7,5,3),
+
+  'finite sequence started with one letter',
+    'a', 'g', "a" .. "g",
+
+  'sequence started with one letter',
+    'a', *, 'a' .. 'j',
+
+  'sequence started with two different letters',
+    <a b>, *, 'a' .. 'j',
+
+  'character sequence started from array',
+    @abc, *, 'a' .. 'j',
+
+  'descending sequence started with one letter',
+    'i', 'a', <i h g f e d c b a>,
+
+  'descending sequence started with two different letters',
+    <i h>, 'a', <i h g f e d c b a>,
+
+  'descending sequence started with three different letters',
+    <i h g>, 'a', <i h g f e d c b a>,
+
+  'characters and arity-1',
+    ('a','b',{.succ}), *, 'a' .. 'j',
+
+  'sequence ending with "z" does not cross to two-letter strings',
+    'x', 'z', <x y z>,
+
+  'single letters follow codepoint logic 1',
+    'Z', 'a', ('Z','[','\\',']','^','_','`','a'),
+
+  'single letters follow codepoint logic 2',
+    'α', 'θ', <α β γ δ ε ζ η θ>,
+
+  'sequence from "☀" to "☆"',
+    "☀", "☆", ("☀", "☁", "☂", "☃", "☄", "★", "☆"),
+
+  'unicode blocks',
+    "▁", "█", ("▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"),
+
+  'unicode blocks reversed',
+    "█", "▁", ("█", "▇", "▆", "▅", "▄", "▃", "▂", "▁"),
+
+  'mixture',
+    '.', '0', ('.','/','0'),
+
+  'intuition does not try to cmp a WhateverCode',
+    H.new(5), *.x > 8, (H.new(5),H.new(6),H.new(7),H.new(8),H.new(9)),
 );
 
 # Run the tests
