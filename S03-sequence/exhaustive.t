@@ -101,6 +101,21 @@ my @tests = (
   'multiple endpoints 0 3 0',
     [0,3], 0, [(0,1,2,3,2,1,0),(0,1,2,2,1),(1,2,3,1,0),(1,2,1)],
 
+  'simple chained finite arithmetic sequence',
+    [1,5], 10, [1..10,(0,1,2,3,4,6,7,8,9),(1,2,3,4,5,7,8,9,10),(1,2,3,4,6,7,8,9)],
+
+  'chained finite arithmetic sequence',
+    [3,(5,10),(25,50)], 100, [(3,4,5,10,15,20,25,50,75,100),(3,4,10,15,20,50,75),(4,5,15,20,25,75,100),(4,15,20,75)],
+
+  'chained finite geometric sequence',
+    [3,(4,8,16),(64,63)], 60, [(3,4,8,16,32,64,63,62,61,60),(3,8,16,32,63,62,61,60),(4,8,32,64,62,61,60),(4,8,32,62,61)],
+
+  'chained infinite numeric sequence',
+    [(1/4,1/2,1),(8,9)], *, [(1/4,1/2,1.0,2.0,4.0,8,9,10,11,12),(1/4,1/2,1.0,4.0,9,10,11),(1/2,1.0,2.0,4.0,8,10,11),(1/2,1.0,2.0,4.0,10,11)],
+
+  'chained eventually constant numeric sequence',
+    [(1,4,7),(16,16)], *, [(1,4,7,10,13,16,16,16,16,16),(1,4,7,10,13,16,16,16,16),(4,7,10,13,16,16,16,16,16),(4,7,10,13,16,16,16,16)],
+
   'single term sequence numeric',
     1, 1, 1,
 
@@ -119,6 +134,12 @@ my @tests = (
   'simple decreasing sequence with two items on the LHS',
     (1,0), -3, (1,0,-1,-2,-3),
 
+  'simple sequence of Rats',
+    (1.0,2.0), 7, 1.0..7.0,
+
+  'simple sequence of Nums',
+    (1e0,2e0), 7, 1e0..7e0,
+
   'simple decreasing additive sequence with two items on the LHS',
     (1,-1), -3, (1,-1,-3),
 
@@ -130,6 +151,12 @@ my @tests = (
 
   'simple multiplicative sequence with three items on the LHS',
     (1,3,9), 81, (1,3,9,27,81),
+
+  'simple geometric sequence of Rats',
+    (1.0,2.0,4.0), 64, (1.0,2.0,4.0,8.0,16.0,32.0,64.0),
+
+  'simple geometric sequence of Nums',
+    (1e0,2e0,4e0), 64, (1e0,2e0,4e0,8e0,16e0,32e0,64e0),
 
   'decreasing multiplicative sequence with three items on the LHS',
     (81,27,9), 1, (81,27.0,9.0,3.0,1.0),  # XXX
@@ -404,6 +431,9 @@ my @tests = (
   'character sequence started from array',
     @abc, *, 'a' .. 'j',
 
+  'using a lazy array as a LHS',
+    @fib, 8, (0,1,1,2,3,5,8),
+
   'descending sequence started with one letter',
     'i', 'a', <i h g f e d c b a>,
 
@@ -439,9 +469,6 @@ my @tests = (
 
   'intuition does not try to cmp a WhateverCode',
     H.new(5), *.x > 8, (H.new(5),H.new(6),H.new(7),H.new(8),H.new(9)),
-
-  'using a lazy array as a LHS',  # MUST BE LAST, messes with laziness
-    @fib, 8, (0,1,1,2,3,5,8),
 );
 
 # Run the tests
