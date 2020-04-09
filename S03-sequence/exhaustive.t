@@ -2,7 +2,6 @@ use v6;
 
 # Uncomment for quick results on any test failure
 BEGIN %*ENV<RAKU_TEST_DIE_ON_FAIL> = True;
-BEGIN %*ENV<RAKU_TEST_TIME> = True;
 
 use Test;
 
@@ -10,7 +9,7 @@ use Test;
 
 # some arrays needed for tests
 my @fib = 0, 1, *+* ... *;
-my @abc = <a b c>;
+my @abc = lazy <a b c>;
 
 # some classes that are used
 my class H {
@@ -61,25 +60,47 @@ sub test-seq($description, Mu \seed, Mu \endpoint, \list) {
 
     # run the tests
     subtest $description => {
-        plan 4;
-        is-deeply infix:<...>(  seed, endpoint).head(10).List, $result,
-          " ...  {$result.raku}";
-        is-deeply infix:<...^>( seed, endpoint).head(10).List, $resultV,
-          " ...^ {$resultV.raku}";
-        is-deeply infix:<^...>( seed, endpoint).head(9).List, $Vresult,
-          "^...  {$Vresult.raku}";
-        is-deeply infix:<^...^>(seed, endpoint).head(9).List, $VresultV,
-          "^...^ {$VresultV.raku}";
+
+        # multiple start / endpoints
+        if seed ~~ Array && !seed.is-lazy {
+            seed.push(endpoint);
+
+            plan 1;
+            is-deeply infix:<...>(|seed).head(10).List, $result,
+              " ...  {$result.raku}";
+#            is-deeply infix:<...^>(|seed).head(10).List, $resultV,
+#              " ...^  {$resultV.raku}";
+#            is-deeply infix:<^...>(|seed).head(10).List, $Vresult,
+#              " ^...  {$Vresult.raku}";
+#            is-deeply infix:<^...^>(|seed).head(10).List, $VresultV,
+#              " ^...^  {$VresultV.raku}";
+        }
+
+        # only a single start / endpoint
+        else {
+            plan 4;
+            is-deeply infix:<...>(  seed, endpoint).head(10).List, $result,
+              " ...  {$result.raku}";
+            is-deeply infix:<...^>( seed, endpoint).head(10).List, $resultV,
+              " ...^ {$resultV.raku}";
+            is-deeply infix:<^...>( seed, endpoint).head(9).List, $Vresult,
+              "^...  {$Vresult.raku}";
+            is-deeply infix:<^...^>(seed, endpoint).head(9).List, $VresultV,
+              "^...^ {$VresultV.raku}";
+        }
     }
 
     # optionally run same test for Inf as endpoint
     test-seq($description, seed, Inf, [$result,$resultV,$Vresult,$VresultV])
-      if endpoint ~~ Whatever;
+      if endpoint ~~ Whatever && !seed ~~ Array;
 }
 
 # Set up tests, in order: description, LHS, RHS, result (either an Array,
 # or someting that can be coerced to a List).
 my @tests = (
+  'multiple endpoints 0 3 0',
+    [0,3], 0, [(0,1,2,3,2,1,0),(0,1,2,2,1),(1,2,3,1,0),(1,2,1)],
+
   'single term sequence numeric',
     1, 1, 1,
 
@@ -326,9 +347,6 @@ my @tests = (
   'range as LHS with fixed endpoint',
     (1..*), 5, 1..5,
 
-  'using a lazy array as a LHS',
-    @fib, 8, (0,1,1,2,3,5,8),
-
   'stop on a matching type (1)',
     (32,16,8), Rat, (32,16.0),
 
@@ -421,6 +439,9 @@ my @tests = (
 
   'intuition does not try to cmp a WhateverCode',
     H.new(5), *.x > 8, (H.new(5),H.new(6),H.new(7),H.new(8),H.new(9)),
+
+  'using a lazy array as a LHS',  # MUST BE LAST, messes with laziness
+    @fib, 8, (0,1,1,2,3,5,8),
 );
 
 # Run the tests
