@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 # L<S04/"Loop statements"/"next, last, and redo">
-plan 6;
+plan 8;
 
 {
     my $x = 0;
@@ -74,4 +74,15 @@ throws-like { EVAL q[label1: say "OH HAI"; label1: say "OH NOES"] }, X::Redeclar
 {
     throws-like 'A: for 1 { for 1 { last A }; CONTROL { default { die $_ } } }', CX::Last,
         "last-ing and outer loop and catching that in a CONTROL block doesn't SEGV";
+}
+
+# https://github.com/rakudo/rakudo/issues/2699
+{
+    my @nexts;
+    FOO: for <a b> { NEXT @nexts.push($_); next FOO }
+    is @nexts, "a b", 'did the labelled NEXTs run?';
+
+    my @lasts;
+    BAR: for <a b> { LAST @lasts.push($_); last BAR }
+    is @lasts, "a", 'did the labelled LASTs run?';
 }
