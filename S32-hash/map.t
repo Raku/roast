@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 21;
+plan 23;
 
 {
     my %hash = :foo, :42bar;
@@ -105,6 +105,13 @@ subtest 'Map.gist shows only the first sorted 100 els' => {
     my %args = a => [1, 2, 3];
     my $foo = Foo.new(|%args.Map);
     is-deeply $foo.a, [1, 2, 3], "array attribute initializer from Hash coerced to Map";
+}
+
+# https://github.com/rakudo/rakudo/issues/3617
+{
+    my %m is Map = a => 42, b => 666;
+    dies-ok { %m<a> = 666 }, 'cannot assign to existing key';
+    dies-ok { %m<c> = 666 }, 'cannot assign to non-existing key';
 }
 
 # vim: ft=perl6
