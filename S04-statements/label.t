@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 # L<S04/"Loop statements"/"next, last, and redo">
-plan 8;
+plan 12;
 
 {
     my $x = 0;
@@ -85,4 +85,45 @@ throws-like { EVAL q[label1: say "OH HAI"; label1: say "OH NOES"] }, X::Redeclar
     my @lasts;
     BAR: for <a b> { LAST @lasts.push($_); last BAR }
     is @lasts, "a", 'did the labelled LASTs run?';
+}
+
+# https://github.com/rakudo/rakudo/issues/3622
+# NB(bartolin) As of 2020-04-13 Rakudo has different classes for different loop
+#              types. The tests resemble Rakudo's current internal structure,
+#              but the code should work for all implementations.
+{
+    my @res;
+    @ = (L1: while True { while True { @res.push: "WhileLoop"; last L1 } });
+    @ = (L2: until False { until False { @res.push: "WhileLoop"; last L2 } });
+    @ = (L3: Seq.from-loop(
+        { loop { @res.push: "WhileLoop"; last L3 } },
+        { True },
+        :label(L3)
+    ));
+    is-deeply @res, ["WhileLoop", "WhileLoop", "WhileLoop"],
+        'nested loop with labeled last (1)';
+
+    @res = [];
+    @ = (L4: Seq.from-loop(
+        { loop { @res.push: "RepeatLoop"; last L4 } },
+        { True },
+        :label(L4),
+        :repeat(1)
+    ));
+    is-deeply @res, ["RepeatLoop"], 'nested loop with labeled last (2)';
+
+    @res = [];
+    @ = (L5: loop { loop { @res.push: "CStyleLoop"; last L5 } });
+    @ = (L6: Seq.from-loop(
+        { loop { @res.push: "CStyleLoop"; last L6 } },
+        { True },
+        { my $foo = 47 },
+        :label(L6)
+    ));
+    is-deeply @res, ["CStyleLoop", "CStyleLoop"],
+        'nested loop with labeled last (3)';
+
+    @res = [];
+    L7: Seq.from-loop( { loop { @res.push: "Loop"; last L7 } }, :label(L7));
+    is-deeply @res, ["Loop"], 'nested loop with labeled last (4)';
 }
