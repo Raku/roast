@@ -42,9 +42,10 @@ group-of 6 => 'Mu.iterator' => {
     cmp-ok  $i.pull-one, '=:=', Mu,           'first   value    (:U)';
     cmp-ok  $i.pull-one, '=:=', IterationEnd, 'no more values   (:U)';
 
-    $i := Mu.new.iterator;
+    my \Munew := Mu.new;
+    $i := Munew.iterator;
     does-ok $i,                 Iterator,     'returns Iterator (:D)';
-    cmp-ok  $i.pull-one, '=:=', Mu,           'first   value    (:D)';
+    cmp-ok  $i.pull-one, '=:=', Munew,        'first   value    (:D)';
     cmp-ok  $i.pull-one, '=:=', IterationEnd, 'no more values   (:D)';
 }
 
