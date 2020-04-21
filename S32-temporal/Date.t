@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 128;
+plan 134;
 
 # construction
 {
@@ -286,4 +286,18 @@ is Date.today.clone(:1day, :2month, :2017year).Str, '2017-02-01',
       ).join(' '),
       "20190501 20190502 20190503 20190504 20190505 20190506 20190507 20190508 20190509 20190510 20190511 20190512 20190513 20190514 20190515 20190516 20190517 20190518 20190519 20190520 20190521 20190522 20190523 20190524 20190525 20190526 20190527 20190528 20190529 20190530 20190531",
       "make sure we didn't lose the formatter";
+}
+
+{
+    my $fmt =  { sprintf "%04d%02d%02d", .year, .month, .day };
+    my $date = Date.new(2020,2,20, formatter => $fmt);
+    dies-ok { Date.first-date-in-month }, 'must be an instance';
+    is-deeply $date.first-date-in-month, Date.new(2020,2,1),
+      'did we get the correct first date in month';
+    is $date.first-date-in-month, "20200201", 'did we keep formatter';
+
+    dies-ok { Date.last-date-in-month }, 'must be an instance';
+    is-deeply $date.last-date-in-month, Date.new(2020,2,29),
+      'did we get the correct last date in month';
+    is $date.last-date-in-month, "20200229", 'did we keep formatter';
 }
