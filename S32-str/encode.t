@@ -63,25 +63,25 @@ lives-ok { "\x[effff]".encode('utf-8') },           'Can encode noncharacters to
 is "\x[effff]".encode('utf-8').decode, "\x[effff]", 'Noncharacters round-trip with UTF-8';
 
 # RT #123673
-for (
-    'å', 'ascii', '?',
-    '☃', 'latin-1', '?',
-    '☃', 'windows-1252', '?',
-    "\x[FFFFFF]", 'utf-8', "\x[FFFD]",
-    "\x[FFFFFF]", 'utf-16', "\x[FFFD]",
-) -> $string, $encoding, $default-replacement {
-#!rakudo.moar todo 'Only moar handles this'
-    subtest {
-        throws-like { $string.encode($encoding) }, Exception, message => rx:s:i/Error encoding $encoding string/,
-            'No replacement dies';
-        is $string.encode($encoding, :replacement).decode($encoding), $default-replacement,
-            'Default replacement';
-        is $string.encode($encoding, :replacement('')).decode($encoding), '',
-            'Zero-character replacement';
-        is $string.encode($encoding, :replacement('XXX')).decode($encoding), 'XXX',
-            'Multi-character replacement';
-    }, "Non-$encoding character";
-
+#?DOES 5
+#?rakudo.jvm skip 'Only moar handles this'
+{
+    for (
+        'å', 'ascii', '?',
+        '☃', 'latin-1', '?',
+        '☃', 'windows-1252', '?',
+    ) -> $string, $encoding, $default-replacement {
+        subtest {
+            throws-like { $string.encode($encoding) }, Exception, message => rx:s:i/Error encoding $encoding string/,
+                'No replacement dies';
+            is $string.encode($encoding, :replacement).decode($encoding), $default-replacement,
+                'Default replacement';
+            is $string.encode($encoding, :replacement('')).decode($encoding), '',
+                'Zero-character replacement';
+            is $string.encode($encoding, :replacement('XXX')).decode($encoding), 'XXX',
+                'Multi-character replacement';
+        }, "Non-$encoding character";
+    }
 }
 
 done-testing;
