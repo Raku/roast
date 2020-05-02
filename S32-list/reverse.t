@@ -3,9 +3,7 @@ use Test;
 
 # L<S32::Containers/List/"=item reverse">
 
-plan 19;
-
-
+plan 22;
 
 =begin pod
 
@@ -93,6 +91,22 @@ is(@a, @e, "list was reversed");
 # https://github.com/Raku/old-issue-tracker/issues/2177
 {
     is-deeply (<a b>, <c d>).reverse, (<c d>, <a b>), '.reverse does NOT flatten lists';
+}
+
+{
+    my Int @a = ^5;
+    @a[2]:delete;
+    is-deeply @a.reverse, (4,3,Int,1,0),
+      'reverses correctly over holes';
+
+    @a[2]:delete;
+    my int $i = 0;
+    $_ = ++$i for @a.reverse;
+    is-deeply @a, Array[Int].new(5,4,3,2,1),
+      'reverse returns containers, also for holes';
+
+    is-deeply (1,2,3,4,5).reverse, (5,4,3,2,1),
+      'reverse also works on Lists';
 }
 
 # vim: ft=perl6
