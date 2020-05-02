@@ -3,6 +3,7 @@ use Test;
 use soft;
 plan 4;
 
+#?rakudo todo 'Until 2020 dispatcher proposal is implemented'
 subtest "Dispatcher Chain" => {
     plan 13;
     my @order;
@@ -119,6 +120,7 @@ subtest "Dispatcher Chain" => {
     is-deeply @order.List, <C4(Any) C3  C2(Num) C1>, "we can use a multi as a wrapper of a candidate";
 }
 
+#?rakudo todo 'Until 2020 dispatcher proposal is implemented'
 subtest "Regression: nextcallee" => {
     plan 2;
     my @order;
@@ -157,6 +159,7 @@ subtest "Regression: nextcallee" => {
     is-deeply @order.List, <C3 C2::foo::wrapper C2 C1>, "nextcallee doesn't break the dispatcher chain";
 }
 
+#?rakudo todo 'Until 2020 dispatcher proposal is implemented'
 subtest "Regression: broken chain" => {
     plan 2;
     # A stray $*NEXT-DISPATCHER could wrongfully be picked up by a dispatcher vivified by a nested routine invocation.
@@ -196,6 +199,7 @@ subtest "Regression: broken chain" => {
 }
 
 # GH Raku/problem-solving#170
+#?rakudo todo 'Until 2020 dispatcher proposal is implemented'
 subtest "Wrap parent's first multi-candidate" => {
     plan 3;
     my @order;
