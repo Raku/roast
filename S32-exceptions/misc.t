@@ -285,7 +285,12 @@ throws-like 'for ^5 { return; }', X::ControlFlow::Return;
 throws-like 'return;', X::ControlFlow::Return;
 
 # RT #125595
-throws-like 'loop (my $i = 0; $i <= 5; $i++;) { say $i }', X::Syntax::Malformed, what => 'loop spec';
+throws-like 'loop (my $i = 0; $i <= 5; $i++;) { say $i }', X::Syntax::Malformed, what => /^'loop spec'/;
+# RT #127857
+throws-like 'loop () { say $i }', X::Syntax::Malformed, what => /^'loop spec' .* 'semicolon'/;
+throws-like 'loop (my $i = 0, $i <= 5, $i++) { say $i }', X::Syntax::Malformed, what => /^'loop spec' .* 'got 1'/;
+throws-like 'loop (my $i = 0; $i <= 5, $i++) { say $i }', X::Syntax::Malformed, what => /^'loop spec' .* 'got 2'/;
+throws-like 'loop (my $i = 0; $i <= 5; $i++; $i++) { say $i }', X::Syntax::Malformed, what => /^'loop spec' .* 'got more'/;
 
 # RT #115398
 throws-like 'my package P { }; P[Int]', X::NotParametric;
