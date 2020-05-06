@@ -96,10 +96,10 @@ class E is D {
     dies-ok { $e.*foo(Mu) }, '.* dies if there is no matching multi in subclass';
     dies-ok { $e.*foo(1, 2, 3) }, '.* dies if there is no matching multi in a base class';
 
-    is $e.+foo(), <e d>, '.* calls multis up inheritance hierarchy';
-    is $e.+foo(2.5), <dAny dAny>, '.* behaves as single dispatch at each step';
-    dies-ok { $e.+foo(Mu) }, '.* dies if there is no matching multi in subclass';
-    dies-ok { $e.+foo(1, 2, 3) }, '.* dies if there is no matching multi in a base class';
+    is $e.+foo(), <e d>, '.+ calls multis up inheritance hierarchy';
+    is $e.+foo(2.5), <dAny dAny>, '.+ behaves as single dispatch at each step';
+    dies-ok { $e.+foo(Mu) }, '.+ dies if there is no matching multi in subclass';
+    dies-ok { $e.+foo(1, 2, 3) }, '.+ dies if there is no matching multi in a base class';
 }
 
 # Some tests to make sure we walk methods from roles too.
