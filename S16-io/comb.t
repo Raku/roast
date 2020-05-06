@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 26;
+plan 30;
 
 my $filename = $?FILE.IO.parent.child('comb.testing');
 LEAVE unlink $filename; # cleanup
@@ -37,6 +37,17 @@ for "::", /\:\:/ -> $sep {
     my $text  = ":zero::one::two::three::four:";
     my @clean = "::" xx 4;
     test-comb($text,@clean,$sep);
+}
+
+# multi-char string sep with possible overlapping matches
+for "aa", /aa/ -> $sep {
+    my $text  = "aaa";
+    my @clean = "aa" xx 1;
+    test-comb($text, @clean, $sep);
+
+    $text  = "aaaa";
+    @clean = "aa" xx 2;
+    test-comb($text, @clean, $sep);
 }
 
 # single star string sep

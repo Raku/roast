@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 84;
+plan 86;
 
 # L<S32::Str/Str/=item comb>
 
@@ -50,7 +50,7 @@ is "a ab bc ad ba".comb(/\S*a\S*/, 2), <a ab>, 'matcher and limit';
 
 is "forty-two".comb().join('|'), 'f|o|r|t|y|-|t|w|o', q{Str.comb(/./)};
 
-ok("forty-two".comb() ~~ Iterable, '.comb() returns something Positional' );
+ok("forty-two".comb() ~~ Iterable, '.comb() returns something Iterable' );
 
 # comb a list
 
@@ -102,6 +102,8 @@ is (<a ab>, <bc ad ba>).comb(rx:Perl5/\S*a\S*/), <a ab ad ba>,
     is "asdf".comb("z"), (), "Str.comb(Str) with no match";
     is "Bacon ipsum dolor amet t-bone cupim pastrami flank".comb("on"), <on on>, "Str.comb - partial match";
     is "Bacon ipsum dolor amet t-bone cupim pastrami flank".comb("on", 1), <on>, "Str.comb - partial match with a limit";
+    is "aaaa".comb("aa"), <aa aa>, "Str.comb - Str partial matches are non-overlapping";
+    is "aaaa".comb(/aa/), <aa aa>, "Str.comb - Regex partial matches are non-overlapping";
     is 3.14159265358979323.comb("3"), 3 xx 4 , "Cool.comb";
     is 3.14159265358979323.comb("3", 2), 3 xx 2 , "Cool.comb with a limit";
 }
