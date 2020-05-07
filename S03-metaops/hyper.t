@@ -436,7 +436,7 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».repeated.gist, "(() ())", ".repeated is nodal";
     is [[2, 3], [4, [5, 6]]]».reverse.gist, "((3 2) ([5 6] 4))", ".reverse is nodal";
     is [[2, 3], [4, [5, 6]]]».roll(*).gist, "((...) (...))", ".roll is nodal";
-    is [[2, 3], [4, [5, 6]]]».rotate(1).gist, "([3 2] [[5 6] 4])", ".rotate is nodal";
+    is [[2, 3], [4, [5, 6]]]».rotate(1).gist, "((3 2) ([5 6] 4))", ".rotate is nodal";
     is [[2, 3], [4, [5, 6]]]».rotor(2).gist, "(((2 3)) ((4 [5 6])))", ".rotor is nodal";
     is [[2, 3], [4, [5, 6]]]».Seq.gist, "((2 3) (4 [5 6]))", ".Seq is nodal";
     is [[2, 3], [4, [5, 6]]]».SetHash».keys».sort.gist, "((2 3) (4 [5 6]))", ".SetHash is nodal";

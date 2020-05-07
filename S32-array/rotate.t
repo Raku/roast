@@ -1,7 +1,7 @@
 use v6.d;
 use Test;
 
-plan 30;
+plan 29;
 
 # L<S32::Containers/Array/rotate>
 
@@ -9,7 +9,6 @@ plan 30;
     my @a = <a b c d e>;
     is ~@a.rotate, 'b c d e a', 'Array.rotate defaults to +1';
     is ~@a, 'a b c d e', 'original array unmodified';
-    ok @a.rotate ~~ Positional, 'Array.rotate returns a Positional';
 
     is ~@a.rotate(2), 'c d e a b', '.rotate(2)';
     is ~@a, 'a b c d e', 'original array still unmodified';
@@ -63,10 +62,10 @@ subtest '.rotate can be used on empty List' => {
     plan 8;
     is-deeply ()          .rotate,     (),           'List (1)';
     is-deeply ()          .rotate(-1), (),           'List (-1)';
-    is-deeply []          .rotate,     [],           'Array (1)';
-    is-deeply []          .rotate(-1), [],           'Array (-1)';
-    is-deeply ().Slip     .rotate,     ().Slip,      'Slip (1)';
-    is-deeply ().Slip     .rotate(-1), ().Slip,      'Slip (-1)';
+    is-deeply []          .rotate,     (),           'Array (1)';
+    is-deeply []          .rotate(-1), (),           'Array (-1)';
+    is-deeply ().Slip     .rotate,     (),           'Slip (1)';
+    is-deeply ().Slip     .rotate(-1), (),           'Slip (-1)';
     is-deeply ().Seq.cache.rotate,     ().Seq.cache, ‘Seq's cache (1)’;
     is-deeply ().Seq.cache.rotate(-1), ().Seq.cache, ‘Seq's cache (-1)’;
 }
