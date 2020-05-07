@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 78;
+plan 77;
 
 isa-ok (5, 7, 8), List, '(5, 7, 8) is List';
 is +(5, 7, 8), 3, 'prefix:<+> on a List';
@@ -43,7 +43,6 @@ is $(;).elems, 0, '$(;) parses, and is empty';
     my $p = <a b c d e>;
     is ~$p.rotate, 'b c d e a', 'List.rotate defaults to +1';
     is ~$p, 'a b c d e', 'original list unmodified';
-    ok $p.rotate ~~ List, 'List.rotate returns a List';
 
     is ~$p.rotate(2), 'c d e a b', '.rotate(2)';
     is ~$p, 'a b c d e', 'original list still unmodified';

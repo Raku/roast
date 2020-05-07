@@ -122,9 +122,10 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
 # RT #126060
 {
     sub identity-matrix($n) {
-	[$[1, |(0 xx $n-1)], *.rotate(-1).item ... *[*-1] == 1]
+	[$[1, |(0 xx $n-1)], *.rotate(-1).list ... *[*-1] == 1]
     }
-    is identity-matrix(5).raku, [[1,0,0,0,0], [0,1,0,0,0], [0,0,1,0,0], [0,0,0,1,0], [0,0,0,0,1]].raku, "code endpoint protects item";
+    # note the first element is not produced, but passed verbatim
+    is identity-matrix(5).raku, [[1,0,0,0,0], (0,1,0,0,0), (0,0,1,0,0), (0,0,0,1,0), (0,0,0,0,1)].raku, "code endpoint protects item";
 }
 
 is-deeply (<a b c>, *.reverse ... *)[5], <c b a>.Seq,
