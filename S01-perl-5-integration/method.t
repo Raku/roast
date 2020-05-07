@@ -89,7 +89,7 @@ my $obj;
 
 {
     my $r = $obj.echo("bar");
-    is($r, 'bar', 'invoke method with perl6 arg');
+    is($r, 'bar', 'invoke method with Perl arg');
 }
 
 {
@@ -120,12 +120,12 @@ my $obj;
 }
 
 {
-    class Foo6 {
-        method me ($class: $arg) { 'Foo6'~$arg };    #OK not used
+    class FooRaku {
+        method me ($class: $arg) { 'FooRaku'~$arg };    #OK not used
     };
-    my $obj6 = Foo6.new;
+    my $objraku = FooRaku.new;
     $obj = EVAL("FooBar->new", :lang<Perl5>);
-    is($obj.invoke($obj6), 'Foo6invoking', 'invoke p6 method from p5');
+    is($obj.invoke($objraku), 'FooRakuinvoking', 'invoke Raku method from Perl');
 }
 
 {
