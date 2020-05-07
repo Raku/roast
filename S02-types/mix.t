@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 232;
+plan 235;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -552,6 +552,15 @@ is-deeply (1,2,3).Mix.ACCEPTS(().Mix), False, 'can we smartmatch empty';
     is-deeply $mix.Bag,     <a b c>.Bag,     'coerce Mix -> Bag';
     is-deeply $mix.BagHash, <a b c>.BagHash, 'coerce Mix -> BagHash';
     is-deeply $mix.MixHash, <a b c>.MixHash, 'coerce Mix -> MixHash';
+}
+
+# https://github.com/Raku/old-issue-tracker/issues/6689
+{
+    my %m is Mix[Int] = 1,2,3;
+    is-deeply %m.keys.sort, (1,2,3), 'parameterized Mix';
+    is-deeply %m.keyof, Int, 'did it parameterize ok';
+
+    dies-ok { my %m is Mix[Int] = <a b c> }, 'must have Ints on creation';
 }
 
 # vim: ft=perl6

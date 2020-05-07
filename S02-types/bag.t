@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 242;
+plan 245;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -590,6 +590,15 @@ is-deeply (1,2,3).Bag.ACCEPTS( ().Bag ), False, 'can we smartmatch empty';
     is-deeply $bag.BagHash, <a b c>.BagHash, 'coerce Bag -> BagHash';
     is-deeply $bag.Mix,     <a b c>.Mix,     'coerce Bag -> Mix';
     is-deeply $bag.MixHash, <a b c>.MixHash, 'coerce Bag -> MixHash';
+}
+
+# https://github.com/Raku/old-issue-tracker/issues/6689
+{
+    my %b is Bag[Int] = 1,2,3;
+    is-deeply %b.keys.sort, (1,2,3), 'parameterized Bag';
+    is-deeply %b.keyof, Int, 'did it parameterize ok';
+
+    dies-ok { my %b is Bag[Int] = <a b c> }, 'must have Ints on creation';
 }
 
 # vim: ft=perl6

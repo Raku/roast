@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 234;
+plan 237;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -588,6 +588,15 @@ is-deeply (1,2,3).Set.ACCEPTS(().Set), False, 'can we smartmatch empty';
     is-deeply $set.BagHash, <a b c>.BagHash, 'coerce Set -> BagHash';
     is-deeply $set.Mix,     <a b c>.Mix,     'coerce Set -> Mix';
     is-deeply $set.MixHash, <a b c>.MixHash, 'coerce Set -> MixHash';
+}
+
+# https://github.com/Raku/old-issue-tracker/issues/6689
+{
+    my %s is Set[Int] = 1,2,3;
+    is-deeply %s.keys.sort, (1,2,3), 'parameterized Set';
+    is-deeply %s.keyof, Int, 'did it parameterize ok';
+
+    dies-ok { my %s is Set[Int] = <a b c> }, 'must have Ints';
 }
 
 # vim: ft=perl6

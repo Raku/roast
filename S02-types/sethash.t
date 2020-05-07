@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 267;
+plan 271;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -669,6 +669,16 @@ is-deeply (1,2,3).SetHash.ACCEPTS(().SetHash), False, 'can we smartmatch empty';
     is-deeply $set.BagHash, <a b c>.BagHash, 'coerce SetHash -> BagHash';
     is-deeply $set.Mix,     <a b c>.Mix,     'coerce SetHash -> Mix';
     is-deeply $set.MixHash, <a b c>.MixHash, 'coerce SetHash -> MixHash';
+}
+
+# https://github.com/Raku/old-issue-tracker/issues/6689
+{
+    my %sh is SetHash[Int] = 1,2,3;
+    is-deeply %sh.keys.sort, (1,2,3), 'parameterized SetHash';
+    is-deeply %sh.keyof, Int, 'did it parameterize ok';
+
+    dies-ok { %sh<foo> = True }, 'adding element of wrong type fails';
+    dies-ok { my %sh is SetHash[Int] = <a b c> }, 'must have Ints on creation';
 }
 
 # vim: ft=perl6

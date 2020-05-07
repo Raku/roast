@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 313;
+plan 317;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -738,6 +738,16 @@ is-deeply (1,2,3).BagHash.ACCEPTS(().BagHash), False, 'can we smartmatch empty';
     is-deeply $bag.Bag,     <a b c>.Bag,     'coerce BagHash -> Bag';
     is-deeply $bag.Mix,     <a b c>.Mix,     'coerce BagHash -> Mix';
     is-deeply $bag.MixHash, <a b c>.MixHash, 'coerce BagHash -> MixHash';
+}
+
+# https://github.com/Raku/old-issue-tracker/issues/6689
+{
+    my %bh is BagHash[Int] = 1,2,3;
+    is-deeply %bh.keys.sort, (1,2,3), 'parameterized BagHash';
+    is-deeply %bh.keyof, Int, 'did it parameterize ok';
+
+    dies-ok { %bh<foo> = 42 }, 'adding element of wrong type fails';
+    dies-ok { my %bh is BagHash[Int] = <a b c> }, 'must have Ints on creation';
 }
 
 # vim: ft=perl6
