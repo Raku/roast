@@ -79,7 +79,6 @@ my $obj;
         pass "Perl classes not yet shadowed in Raku";
     }
     {
-        #?rakudo skip "Probably bogus test. Tests if the P5 object stringifies to something containing the class name, like FooBar=HASH(0x12345678)"
         like($obj, rx:Perl5/FooBar/, "blessed");
     }
 }
