@@ -15,12 +15,12 @@ sub temp_name(Str $fnbase is copy) {
 # Directories
 
 my @roast-files = map {$_.relative}, dir;
-my @roast-expected = <Makefile LICENSE README.md>;
+my @roast-expected = <TODO LICENSE README.md>;
 ok @roast-expected (<=) @roast-files, "dir"
    or diag "missing: {@roast-expected (-) @roast-files}";
 
-my @test-files = map *.relative.subst('\\', '/'), dir 't';
-my @test-expected = <t/fudge.t t/fudgeandrun.t>;
+my @test-files = (dir 't').map: *.relative ;
+my @test-expected = (<fudge fudgeandrun>.map: {  ("t/" ~ $_ ~ ".t").IO }).map: *.relative;
 ok @test-expected (<=) @test-files, 'dir'
    or diag "got: {@test-files} missing: {@test-expected (-) @test-files}";
 
