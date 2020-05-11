@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent(2).add($*SPEC.catdir(<packages Test-Helpers lib>));
 use Test;
+use Test::Util;
 
 plan 2;
 
@@ -51,58 +53,28 @@ for %h.keys -> $s {
 
     # test 1: the test without the envvar (default)
     {
-        is-run $s,                   # the code script
+        is_run $s,                   # the code script
+        {
+            #:in, :args, :err,           # not yet used
+            :out($r1wo),                 # exact expected output
+            :status(0),
+        },
         "without env var '$envvar'", # test description
-        :compiler-args['--doc'],
-        #:in, :args, :err,           # not yet used
-        :out($r1wo),                 # exact expected output
-        :exitcode(0);
+        :compiler-args['--doc'];
     }
 
     # test 2: the test without the envvar (default)
     {
         (temp %*ENV){$envvar} = 1;
-        is-run $s,                   # the code script
+        is_run $s,                   # the code script
+        {
+            #:in, :args, :err,           # not yet used
+            :out($r1w),                  # exact expected output
+            :status(0),
+        },
         "with env var '$envvar'",    # test description
-        :compiler-args['--doc'],
-        #:in, :args, :err,           # not yet used
-        :out($r1w),                  # exact expected output
-        :exitcode(0);
+        :compiler-args['--doc'];
     }
 
 
-}
-
-sub is-run (
-    Str() $code, $desc = "$code runs",
-    Stringy :$in, :@compiler-args, :@args, :$out = '', :$err = '', :$exitcode = 0
-) is export {
-    my @proc-args = flat do if $*DISTRO.is-win {
-        # $*EXECUTABLE is a batch file on Windows, that goes through cmd.exe
-        # and chokes on standard quoting. We also need to remove any newlines
-        <cmd.exe  /S /C>, $*EXECUTABLE, @compiler-args, '-e',
-        ($code,  @args).subst(:g, "\n", " ")
-    }
-    else {
-        $*EXECUTABLE, @compiler-args, '-e', $code, @args
-    }
-
-    with run :in, :out, :err, @proc-args {
-        $in ~~ Blob ?? .in.write: $in !! .in.print: $in if $in;
-        $ = .in.close;
-        my $proc-out      = .out.slurp: :close;
-        my $proc-err      = .err.slurp: :close;
-        my $proc-exitcode = .exitcode;
-
-        my $wanted-exitcode = $exitcode // 0;
-        my $wanted-out      = $out    // '';
-        my $wanted-err      = $err    // '';
-
-        subtest $desc => {
-            plan 3;
-            cmp-ok $proc-out,      '~~', $wanted-out,      'STDOUT';
-            cmp-ok $proc-err,      '~~', $wanted-err,      'STDERR';
-            cmp-ok $proc-exitcode, '~~', $wanted-exitcode, 'Exit code';
-        }
-    }
 }
