@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 307;
+plan 309;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -936,3 +936,14 @@ subtest 'subsecond .later/.earlier' => {
 
 lives-ok { DateTime.new(2020,3,10,11,38,.000001).Str },
   'Check of default stringification of second 0 partial works';
+
+# https://github.com/rakudo/rakudo/issues/3683
+{
+    my $then = now;
+    is-deeply DateTime($then), DateTime.new($then),
+      'does DateTime(then) work';
+
+    my $then-str = DateTime.now.Str;
+    is-deeply DateTime($then-str), DateTime.new($then-str),
+      'does DateTime(then-str) work';
+}

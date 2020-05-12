@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 134;
+plan 136;
 
 # construction
 {
@@ -253,7 +253,7 @@ is Date.today.clone(:formatter{'test is good'}).Str, 'test is good',
 is Date.today.clone(:1day, :2month, :2017year).Str, '2017-02-01',
     'Date.clone without formatter uses default formatter';
 
-# R#2615
+# https://github.com/rakudo/rakudo/issues/2615
 {
     class Dated is Date { }
     my $date = Dated.new('2019-01-18');
@@ -267,7 +267,7 @@ is Date.today.clone(:1day, :2month, :2017year).Str, '2017-02-01',
       for ^2;
 }
 
-# R#2707
+# https://github.com/rakudo/rakudo/issues/2707
 {
     is -100 + Date.new("2019-01-01"), Date.new("2018-09-23"),
       'does adding Date to negative value work ok';
@@ -277,7 +277,7 @@ is Date.today.clone(:1day, :2month, :2017year).Str, '2017-02-01',
       'does subtracting negative values from Date work ok';
 }
 
-# R#3069
+# https://github.com/rakudo/rakudo/issues/3069
 {
     my $fmt =  { sprintf "%04d%02d%02d", .year, .month, .day };
     is
@@ -300,4 +300,15 @@ is Date.today.clone(:1day, :2month, :2017year).Str, '2017-02-01',
     is-deeply $date.last-date-in-month, Date.new(2020,2,29),
       'did we get the correct last date in month';
     is $date.last-date-in-month, "20200229", 'did we keep formatter';
+}
+
+# https://github.com/rakudo/rakudo/issues/3683
+{
+    my $then = now;
+    is-deeply Date($then), Date.new($then),
+      'does Date(then) work';
+
+    my $yyyy-mm-dd = Date.today.yyyy-mm-dd;
+    is-deeply Date($yyyy-mm-dd), Date.new($yyyy-mm-dd),
+      'does Date(yyyy-mm-dd) work';
 }
