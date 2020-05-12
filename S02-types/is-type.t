@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 14;
 
 {
     my @a is Buf;
@@ -50,4 +50,15 @@ for ^2 {
     my %h := C.new.h;
     is %h.elems, 0, "Get fresh BagHash in new object per iteration ($_)";
     %h<a>++; # Create state that should not leak to next iteration
+}
+
+{
+    role Foo[*@t] { method STORE(|) { } }  # don't care whether it functions
+    eval-lives-ok q/my @a is Foo[Int,Str,Instant]/,
+      'can we have parameterized type';
+    throws-like q/my @a is Int is Str/,
+      X::Syntax::Variable::ConflictingTypes,
+      outer => Int,
+      inner => Str,
+      'did we throw on multiple "is" types';
 }
