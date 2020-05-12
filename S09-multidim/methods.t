@@ -59,7 +59,7 @@ plan 82;
     is @arr.sort, <a b c d>, '.sort is over leaves';
     is @arr.Slip, <a b c d>.Slip, '.Slip is over leaves';
 
-    is @arr.gist, '[[a b] [c d]]', '.gist represents structure';
+    is @arr.gist, "[[a b]\n [c d]]", '.gist represents structure';
     is @arr.raku, 'Array.new(:shape(2, 2), ["a", "b"], ["c", "d"])',
         '.raku retains structure';
 
@@ -126,7 +126,7 @@ plan 82;
     is @arr.sort(-*), (45,44,43,42), '.sort is over leaves (native)';
     is @arr.Slip, (42, 43, 44, 45).Slip, '.Slip is over leaves (native)';
 
-    is @arr.gist, '[[42 43] [44 45]]', '.gist represents structure (native)';
+    is @arr.gist, "[[42 43]\n [44 45]]", '.gist represents structure (native)';
     is @arr.raku, 'array[int].new(:shape(2, 2), [42, 43], [44, 45])',
         '.raku retains structure (native)';
 }
