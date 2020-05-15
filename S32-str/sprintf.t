@@ -237,13 +237,38 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
     is sprintf('%G', -Inf),  "-Inf",   '-Inf properly handled %G';
 }
 
-# RT #106594, #62316, #74610
-throws-like { sprintf("%d-%s", 42) }, X::Str::Sprintf::Directives::Count,
-    'no gut spillage in sprintf with wrong arguments';
+# RT #129088  RT #130509
+{
+    throws-like { sprintf 'D6.2', 'foo' }, X::Str::Sprintf::Directives::Count,
+    :message('Your printf-style directives specify 0 arguments, but 1 argument was supplied.'),
+    'Invalid formats do not spill internal details';
+}
 
+# RT #106594, #62316, #74610
+{
+    throws-like { sprintf("%d-%s", 42) }, X::Str::Sprintf::Directives::Count,
+    :message('Your printf-style directives specify 2 arguments, but 1 argument was supplied.'
+             ~ "\nAre you using an interpolated '\$'?"),
+    "Warn of possible '\$' in format";
+}
+
+# GH #3682
+{
+    throws-like {
+        my $k = 'foo';
+        my $v = 'bar %s';
+        sprintf("%s => $v", $k) }, X::Str::Sprintf::Directives::Count,
+    :message('Your printf-style directives specify 2 arguments, but 1 argument was supplied.'
+             ~ "\nAre you using an interpolated '\$'?"),
+    "Warn of possible '\$' in format";
+}
 # RT #122907
-throws-like { sprintf "%d" }, X::Str::Sprintf::Directives::Count,
-    'sprintf %d directive with find a corresponding argument throws';
+#
+#   This test was removed since it is a duplicate of the test found in
+#   "rakudo/t/05-messages/02-errors.t", line 135.
+#
+#   That test was added due to:
+#     https://github.com/Raku/old-issue-tracker/issues/3542
 
 # found by japhb
 {
@@ -268,12 +293,6 @@ throws-like { sprintf "%d" }, X::Str::Sprintf::Directives::Count,
 {
     throws-like { sprintf "%q", 0 }, X::Str::Sprintf::Directives::Unsupported,
         'sprintf complains about unsupported directives';
-}
-
-# RT #129088  RT #130509
-{
-    throws-like { sprintf 'D6.2', 'foo' }, X::Str::Sprintf::Directives::Count,
-    'Invalid formats do not spill internal details';
 }
 
 { # https://irclog.perlgeek.de/perl6/2016-11-28#i_13640361
