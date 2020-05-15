@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 68;
+plan 69;
 
 isa-ok 1, Int, '1 produces a Int';
 does-ok 1, Numeric, '1 does Numeric';
@@ -132,4 +132,18 @@ subtest '#2094 prefix as post fix works on number literals' => {
    cmp-ok 42.:["~"],   '===', "42", 'use [" "] to wrap the prefix';
    cmp-ok 42.:<<'~'>>, '===', "42", "use <<' '>> to wrap the prefix";
 }
+
+# https://github.com/rakudo/rakudo/issues/3694
+subtest "check simple non-ascii numerification" => {
+
+    for (^0x0FFF).grep({
+        .uniprop eq 'Nd' and .unival == 1|2|3
+    }).batch(3)>>.chr>>.join -> $string {
+        is-deeply $string.Numeric, 123, "is '$string'.Numeric ok?";
+        is-deeply $string.Int,     123, "is '$string'.Int ok?";
+    }
+
+    done-testing;
+}
+
 # vim: ft=perl6 sw=4 ts=4 expandtab
