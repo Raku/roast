@@ -14,21 +14,21 @@ sub temp_name(Str $fnbase is copy) {
 
 # Directories
 
-my @rakudo-files = map {$_.relative}, dir;
-my @rakudo-expected = <Makefile CREDITS LICENSE README.md>;
-ok @rakudo-expected (<=) @rakudo-files, "dir"
-   or diag "missing: {@rakudo-expected (-) @rakudo-files}";
+my @roast-files = map {$_.relative}, dir;
+my @roast-expected = <TODO LICENSE README.md>;
+ok @roast-expected (<=) @roast-files, "dir"
+   or diag "missing: {@roast-expected (-) @roast-files}";
 
-my @test-files = map *.relative.subst('\\', '/'), dir 't';
-my @test-expected = <t/harness5 t/harness6>;
+my @test-files = (dir 't').map: *.relative ;
+my @test-expected = (<fudge fudgeandrun>.map: {  ("t/" ~ $_ ~ ".t").IO }).map: *.relative;
 ok @test-expected (<=) @test-files, 'dir'
    or diag "got: {@test-files} missing: {@test-expected (-) @test-files}";
 
-my $fh = open 'CREDITS';
+my $fh = open 'TODO';
 
 is $fh.gist.substr(0,2), 'IO', 'IO handle gist';
-is $fh.getc, '=', 'first char of CREDITS';
-is $fh.get.chomp, 'pod', 'first line of CREDITS';
+is $fh.getc, 'T', 'first char of TODO';
+is $fh.get.chomp, 'ODO items for the Raku Test Suite', 'first line of TODO';
 
 my $new = temp_name 'new';
 $fh.close; $fh = open "$new", :w; # open for writing
