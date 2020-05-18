@@ -126,7 +126,7 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
         is-deeply Buf.new($buf.decode('utf8-c8').encode('utf8-c8').list), $buf,
             ".decode.encode roundtrips correctly for utf8-c8 [Buf #{$i+1}]";
 
-        spurt $test-file, $buf, :bin;
+        spurt $test-file, $buf;
         my $fh = open $test-file, :enc<utf8-c8>;
         my $from-file = $fh.slurp;
         $fh.close;
