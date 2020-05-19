@@ -74,14 +74,14 @@ subtest '.perl.EVAL rountrips' => {
         if .DEFINITE {
             subtest "using {.perl}" => {
                 plan 4;
-                is-path   .IO.perl.EVAL,      .IO,      'equivalent object';
-                is-deeply .IO.perl.EVAL.path, .IO.path, 'same .path';
-                is-deeply .IO.perl.EVAL.CWD,  .IO.CWD,  'same .CWD';
-                is-deeply .IO.perl.EVAL.SPEC, .IO.SPEC, 'same .SPEC';
+                is-path   .perl.EVAL,      $_,    'equivalent object';
+                is-deeply .perl.EVAL.path, .path, 'same .path';
+                is-deeply .perl.EVAL.CWD,  .CWD,  'same .CWD';
+                is-deeply .perl.EVAL.SPEC, .SPEC, 'same .SPEC';
             }
         }
         else {
-            is-deeply .IO.perl.EVAL, .IO, "new eqv old using {.perl}";
+            is-deeply .perl.EVAL, $_, "new eqv old using {.perl}";
         }
     }
 }
