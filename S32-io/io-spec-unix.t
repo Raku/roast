@@ -69,10 +69,10 @@ is $Unix.rootdir, '/',         'rootdir is "/"';
 
 is $Unix.updir,   '..',        'updir is ".."';
 
-isnt '.',    $Unix.curupdir,   "curupdir: '.'";
-isnt '..',   $Unix.curupdir,   "curupdir: '..'";
-is   '.git', $Unix.curupdir,   "curupdir: '.git'";
-is   'file', $Unix.curupdir,   "curupdir: 'file'";
+is-deeply $Unix.curupdir.ACCEPTS('.'),   False, "curupdir: '.'";
+is-deeply $Unix.curupdir.ACCEPTS('..'),  False, "curupdir: '..'";
+is-deeply $Unix.curupdir.ACCEPTS('.git'), True, "curupdir: '.git'";
+is-deeply $Unix.curupdir.ACCEPTS('file'), True, "curupdir: 'file'";
 
 ok  $Unix.is-absolute( '/abcd/ef' ), 'is-absolute: ok "/abcd/ef"';
 ok  $Unix.is-absolute( '/'    ),  'is-absolute: ok "/"';
