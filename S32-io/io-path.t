@@ -74,14 +74,14 @@ subtest '.raku.EVAL rountrips' => {
         if .DEFINITE {
             subtest "using {.raku}" => {
                 plan 4;
-                is-path   .IO.raku.EVAL,      .IO,      'equivalent object';
-                is-deeply .IO.raku.EVAL.path, .IO.path, 'same .path';
-                is-deeply .IO.raku.EVAL.CWD,  .IO.CWD,  'same .CWD';
-                is-deeply .IO.raku.EVAL.SPEC, .IO.SPEC, 'same .SPEC';
+                is-path   .raku.EVAL,      $_,      'equivalent object';
+                is-deeply .raku.EVAL.path, .path, 'same .path';
+                is-deeply .raku.EVAL.CWD,  .CWD,  'same .CWD';
+                is-deeply .raku.EVAL.SPEC, .SPEC, 'same .SPEC';
             }
         }
         else {
-            is-deeply .IO.raku.EVAL, .IO, "new eqv old using {.raku}";
+            is-deeply .raku.EVAL, $_, "new eqv old using {.raku}";
         }
     }
 }
