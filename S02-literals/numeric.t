@@ -134,7 +134,10 @@ subtest '#2094 prefix as post fix works on number literals' => {
 }
 
 # https://github.com/rakudo/rakudo/issues/3694
-subtest "check simple non-ascii numerification" => {
+#?rakudo.jvm skip 'uniprop NYI'
+#?DOES 1
+{
+  subtest "check simple non-ascii numerification" => {
 
     for (^0x0FFF).grep({
         .uniprop eq 'Nd' and .unival == 1|2|3
@@ -144,6 +147,7 @@ subtest "check simple non-ascii numerification" => {
     }
 
     done-testing;
+  }
 }
 
 # vim: ft=perl6 sw=4 ts=4 expandtab

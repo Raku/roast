@@ -31,7 +31,7 @@ doesn't-hang ｢
 
 # https://github.com/Raku/old-issue-tracker/issues/6490
 #?rakudo.jvm skip "The spawned command './rakudo-j' exited unsuccessfully (exit code: 1)"
-#?DOES 1
+#?DOES 3
 {
     if $*DISTRO.is-win {
         skip 'Test hangs on Windows: https://github.com/rakudo/rakudo/issues/1975', 3;
