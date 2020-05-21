@@ -22,8 +22,10 @@ plan 1 + 2*@tests;
         }
         group-of 2 => "$in.raku() (sub form)" => {
             my $fh = $file.open: :w;
+            #?rakudo.jvm skip 'https://github.com/rakudo/rakudo/issues/3707'
             is-deeply $fh.put(|$in), True, 'return value';
             $fh.close;
+            #?rakudo.jvm todo 'https://github.com/rakudo/rakudo/issues/3707'
             is-deeply $file.slurp, $out, 'put content';
         }
     }

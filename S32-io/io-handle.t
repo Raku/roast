@@ -51,6 +51,7 @@ with IO::Handle.new(:path('foo'.IO)) {
     is-deeply      .Str, 'foo',    '.Str returns IO::Path :path as Str';
 }
 
+#?rakudo.jvm skip 'https://github.com/rakudo/rakudo/issues/3706'
 ok run(:err, $*EXECUTABLE, <blah blah blah>).err.slurp(:close),
     'can non-explosively .slurp(:close) a pipe with failed Proc';
 
@@ -137,7 +138,10 @@ subtest '.encoding attribute' => {
     is-deeply  $fh.encoding,           Nil,     'attribute got set (bin)';
 }
 
-subtest '.say method' => {
+#?rakudo.jvm skip 'https://github.com/rakudo/rakudo/issues/3707'
+#?DOES 1
+{
+  subtest '.say method' => {
     plan 5*5;
 
     my $file = make-temp-file;
@@ -165,6 +169,7 @@ subtest '.say method' => {
           )
         ), '((Mu) (Foo) I ♥ Raku 1 2 [3 5 (foos)] {meow => bar} bar => 42)';
     }
+  }
 }
 
 subtest '.print-nl method' => {

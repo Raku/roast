@@ -72,6 +72,7 @@ plan 41;
 }
 
 # RT #122803
+#?rakudo.jvm todo 'fails most of the time'
 {
     for ^4 {
         is_run q[ await ^9 .map: { start { say "start"; sleep 1; say "end" } };],
