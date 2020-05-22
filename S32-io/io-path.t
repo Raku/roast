@@ -419,7 +419,7 @@ subtest '.parent(Int)' => {
 
     for @paths -> $p is raw {
         my $d := $p.raku;
-        throws-like { $p.parent(-1) }, X::Multi::NoMatch, 'no candidate to handle negative parents';
+        dies-ok { $p.parent(-1) }, 'negative parents handled ok';
         is-deeply $p.parent(0), $p, "0 $d";
         is-deeply $p.parent(1), $p.parent, "1 $d";
         is-deeply $p.parent(2), $p.parent.parent, "2 $d";
