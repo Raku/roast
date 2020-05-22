@@ -266,7 +266,7 @@ subtest '.parts attribute' => {
     sub check-parts($in, $desc, *%parts) {
         subtest 'parts match' => {
             plan 1 + %parts;
-            is-deeply $in.WHAT, Map, 'parts is a Map';
+            does-ok $in, Associative, 'parts does the Associative role';
             is-deeply $in{$_}, %parts{$_}, "$_ is correct" for %parts.keys;
         }
     }
