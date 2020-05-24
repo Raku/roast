@@ -138,10 +138,7 @@ subtest '.encoding attribute' => {
     is-deeply  $fh.encoding,           Nil,     'attribute got set (bin)';
 }
 
-#?rakudo.jvm skip 'https://github.com/rakudo/rakudo/issues/3707'
-#?DOES 1
-{
-  subtest '.say method' => {
+subtest '.say method' => {
     plan 5*5;
 
     my $file = make-temp-file;
@@ -169,7 +166,6 @@ subtest '.encoding attribute' => {
           )
         ), '((Mu) (Foo) I ♥ Raku 1 2 [3 5 (foos)] {meow => bar} bar => 42)';
     }
-  }
 }
 
 subtest '.print-nl method' => {
