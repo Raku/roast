@@ -1,7 +1,7 @@
 ﻿use v6;
 use Test;
 
-plan 165;
+plan 170;
 
 # Basic native str array tests.
 my $T := str;
@@ -245,6 +245,21 @@ is @ssa ~~ @ssb, True, "Smartmatching same $t arrays works";
 
 @ssb.push("z");
 is @ssa ~~ @ssb, False, "Smartmatching different $t arrays works";
+
+my @unsorted := array[$T].new("d","e","a","b","c");
+is @unsorted.sort, "a b c d e", "Can we sort $t array";
+
+@unsorted = "a","b";
+is @unsorted.sort, "a b", "Can we sort 2-element sorted $t array";
+
+@unsorted = "b","a";
+is @unsorted.sort, "a b", "Can we sort 2-element unsorted $t array";
+
+@unsorted = "a";
+is @unsorted.sort, "a", "Can we sort 1-element $t array";
+
+@unsorted = ();
+is @unsorted.sort, "", "Can we sort 0-element $t array";
 
 # Interaction of native int arrays and untyped arrays.
 {

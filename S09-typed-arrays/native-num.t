@@ -6,7 +6,7 @@ if $*KERNEL.bits == 64 {
     @num.push:  num64;
 }
 
-plan @num * 152 + 1;
+plan @num * 157 + 1;
 
 # Basic native num array tests.
 for @num -> $T {
@@ -283,6 +283,21 @@ for @num -> $T {
 
     @ssb.push(42e0);
     is @ssa ~~ @ssb, False, "Smartmatching different $t arrays works";
+
+    my @unsorted := array[$T].new(4e0,5e0,1e0,2e0,3e0);
+    is @unsorted.sort, "1 2 3 4 5", "Can we sort $t array";
+
+    @unsorted = 1e0,2e0;
+    is @unsorted.sort, "1 2", "Can we sort 2-element sorted $t array";
+
+    @unsorted = 2e0,1e0;
+    is @unsorted.sort, "1 2", "Can we sort 2-element unsorted $t array";
+
+    @unsorted = 1e0;
+    is @unsorted.sort, "1", "Can we sort 1-element $t array";
+
+    @unsorted = ();
+    is @unsorted.sort, "", "Can we sort 0-element $t array";
 }
 
 # R#2912

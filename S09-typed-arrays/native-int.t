@@ -8,7 +8,7 @@ if $*KERNEL.bits == 64 {
     @uint.push: uint64;
 }
 
-plan (@int + @uint) * 164 + @uint * 2 + 3;
+plan (@int + @uint) * 169 + @uint * 2 + 3;
 
 # Basic native int array tests.
 for flat @int,@uint -> $T {
@@ -275,6 +275,21 @@ for flat @int,@uint -> $T {
 
     @ssb.push(42);
     is @ssa ~~ @ssb, False, "Smartmatching different $t arrays works";
+
+    my @unsorted := array[$T].new(4,5,1,2,3);
+    is @unsorted.sort, "1 2 3 4 5", "Can we sort $t array";
+
+    @unsorted = 1,2;
+    is @unsorted.sort, "1 2", "Can we sort 2-element sorted $t array";
+
+    @unsorted = 2,1;
+    is @unsorted.sort, "1 2", "Can we sort 2-element unsorted $t array";
+
+    @unsorted = 1;
+    is @unsorted.sort, "1", "Can we sort 1-element $t array";
+
+    @unsorted = ();
+    is @unsorted.sort, "", "Can we sort 0-element $t array";
 }
 
 # some unsigned native int tests
