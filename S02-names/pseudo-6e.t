@@ -528,7 +528,7 @@ subtest 'no guts spillage when going too high up scope in pseudopackages' => {
     #?rakudo.jvm skip 'unknown problem'
     eval-lives-ok($mixed, 'mixed') or diag "Failing mixed combination: $mixed";
     #?rakudo.jvm skip 'unknown problem'
-    #?DOES 11
+    #?DOES 10
     eval-lives-ok $_ x 100 ~ 'True', $_ for @packs;
 }
 

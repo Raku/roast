@@ -68,6 +68,7 @@ throws-like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
 }
 
 # RT #78012
+#?rakudo.jvm todo 'correct method, but result for .private is empty'
 throws-like 'my class A { method b { Q<b> } }; my $a = A.new; my $b = &A::b.assuming($a); $b();',
     X::Method::NotFound, method => { m/'assuming'/ }, private => { $_ === False };
 

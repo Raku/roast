@@ -395,6 +395,7 @@ throws-like 'done', X::ControlFlow, illegal => 'done';
 }
 
 # multiple whenevers with channels
+#?rakudo.jvm todo 'fails sometimes'
 {
     my $c1 = Channel.new;
     my $c2 = Channel.new;
