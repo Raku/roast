@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 25;
+plan 27;
 
 is "a\nb\n\nc".lines.join('|'),
   'a|b||c', 'LF .lines without trailing';
@@ -72,5 +72,12 @@ is_run( 'print lines[0]',
 # RT #130430
 is-deeply "a\nb\nc".lines(2000), ('a', 'b', 'c'),
     'we stop when data ends, even if limit has not been reached yet';
+
+{
+    is-deeply "foo\nbar\nbaz\n".lines(:chomp), <foo bar baz>,
+      'does explicit chomp chomp';
+    is-deeply "foo\nbar\nbaz\n".lines(:!chomp), ("foo\n", "bar\n", "baz\n"),
+      'does explicit !chomp not chomp';
+}
 
 # vim: ft=perl6
