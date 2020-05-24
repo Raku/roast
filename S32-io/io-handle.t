@@ -51,7 +51,6 @@ with IO::Handle.new(:path('foo'.IO)) {
     is-deeply      .Str, 'foo',    '.Str returns IO::Path :path as Str';
 }
 
-#?rakudo.jvm skip 'https://github.com/rakudo/rakudo/issues/3706'
 ok run(:err, $*EXECUTABLE, <blah blah blah>).err.slurp(:close),
     'can non-explosively .slurp(:close) a pipe with failed Proc';
 

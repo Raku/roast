@@ -665,7 +665,6 @@ ok qq:to/EOF/ ~~ /\t/, '\t in heredoc does not turn into spaces';
 }
 
 #?rakudo.js.browser skip "can't run shell commands in browser"
-#?rakudo.jvm todo 'https://github.com/rakudo/rakudo/issues/3706'
 # https://irclog.perlgeek.de/perl6-dev/2017-06-16#i_14744333
 {
     diag 'The following test might STDERR about unfound command';

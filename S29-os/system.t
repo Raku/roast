@@ -165,10 +165,8 @@ subtest '.out/.err proc pipes on failed command' => {
         X::Proc::Unsuccessful, '.out.close Proc explodes when sunk';
     throws-like { run(:err, "meooooooows").err.close; Nil },
         X::Proc::Unsuccessful, '.err.close Proc explodes when sunk';
-    #?rakudo.jvm skip 'https://github.com/rakudo/rakudo/issues/3706'
     is-deeply run(:out, "meooooooows").out.slurp(:close), '',
         '.out.slurp is empty';
-    #?rakudo.jvm skip 'https://github.com/rakudo/rakudo/issues/3706'
     is-deeply run(:err, "meooooooows").err.slurp(:close), '',
         '.err.slurp is empty';
 }
