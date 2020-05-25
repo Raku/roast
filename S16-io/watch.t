@@ -12,11 +12,12 @@ plan 1;
     my constant RUNS = 10;
     my $watch-file = $*SPEC.catfile( $*TMPDIR, "watchme" );
     my $fh = $watch-file.IO.open: :w, :0out-buffer;
+    my $ready = Promise.new;
     my $start-writing = Promise.new;
-    my $start-vow = $start-writing.vow;
     my @proceed = Promise.new xx RUNS;
     @proceed[0].keep;
     start {
+        $ready.keep;
         await $start-writing;
         for ^RUNS {
             await @proceed[$_];
@@ -25,8 +26,11 @@ plan 1;
         }
     }
 
+    # Know for sure that the writer thread is ready awaiting for the main thread.
+    await $ready;
+
     my $count = 0;
-    my $timeout = Promise.in(5);
+    my $timeout = Promise.in(30);
     react {
         whenever $watch-file.IO.watch -> $e {
             $count++;
@@ -36,9 +40,11 @@ plan 1;
         whenever $timeout {
             done;
         }
-        # Allow time for the file watcher to get set up
-        whenever Promise.in(0.5) {
-            $start-vow.keep(True);
+        # Allow everything to settle down and be ready for processing. Having $start-writing.keep outside of the react
+        # block makes it sometimes to happen so that the writer thread updates the file before react taps IO.watch.
+        # But if we signal the start from inside a whenever then it means react is equipped and working.
+        whenever Promise.kept {
+            $start-writing.keep;
         }
     }
 
