@@ -63,7 +63,7 @@ for %h.keys -> $s {
         :compiler-args['--doc'];
     }
 
-    # test 2: the test without the envvar (default)
+    # test 2: the test with the envvar
     {
         (temp %*ENV){$envvar} = 1;
         is_run $s,                   # the code script
@@ -75,6 +75,4 @@ for %h.keys -> $s {
         "with env var '$envvar'",    # test description
         :compiler-args['--doc'];
     }
-
-
 }
