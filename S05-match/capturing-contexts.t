@@ -171,8 +171,9 @@ plan 64;
 # https://github.com/Raku/old-issue-tracker/issues/2352
 {
     'x' ~~ /(y)? (z)*/;
-    is $0.defined, False, 'quantifier ? matching 0 values returns Nil';
-    is $1.defined, True, 'quantifier * matching 0 values returns empty list';
+    is-deeply $0, Nil, 'quantifier ? matching 0 values returns Nil';
+    ok $1 ~~ Positional && $1.elems == 0,
+      'quantifier * matching 0 values returns empty list';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/4304

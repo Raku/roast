@@ -25,8 +25,26 @@ my @ip4addrs = .comb(/ (\d ** 1..3) ** 4 % '.' /);
 is-deeply @ip4addrs, [<127.0.0.1 173.194.32.32>], '.comb';
 
 @ip = ();
-@ip.push(.list>>.Str[0].raku) for m:g/ (\d ** 1..3) ** 4 % '.' /;
+@ip.push(.list) for m:g/ (\d ** 1..3) ** 4 % '.' /;
 # https://github.com/Raku/old-issue-tracker/issues/3377
-is-deeply @ip, [q<$["127", "0", "0", "1"]>, q<$["173", "194", "32", "32"]>], 'integer parse';
+subtest 'integer parse' => {
+    plan 11;
+
+    is +@ip, 2, "did we get two top level matches";
+    if @ip[0][0] -> $first {
+        is $first, "127 0 0 1", 'first IP number';
+        is $first[0], 127;
+        is $first[1],   0;
+        is $first[2],   0;
+        is $first[3],   1;
+    }
+    if @ip[1][0] -> $second {
+        is $second, "173 194 32 32", 'second IP number';
+        is $second[0], 173;
+        is $second[1], 194;
+        is $second[2],  32;
+        is $second[3],  32;
+    }
+}
 
 # vim: ft=perl6
