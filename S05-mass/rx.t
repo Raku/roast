@@ -512,7 +512,7 @@ ok 'dbaacb' ~~ /<!after c|d><[ab]>/, 'lookbehind <!after>';
 ok 'cbaccb' ~~ /<!after cd><[ab]>/, 'lookbehind <!after>';
 
 #### $ <after ^a>		a		y				lookbehind <after>
-ok 'a' ~~ /$ <after ^a>/, 'lookbehind <after>'; # RT #124898'
+ok 'a' ~~ /$ <after ^a>/, 'lookbehind <after>'; # RT #124898
 
 #### <after x+>y		axxbxxyc	y				lookbehind <after>
 ok 'axxbxxyc' ~~ /<after x+>y/, 'lookbehind <after>';
