@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 179;
+plan 180;
 
 # RT #77270
 throws-like 'sub foo(--> NoSuchType) { }; foo', X::Undeclared, what => { m/'Type'/ }, symbol => { m/'NoSuchType'/ };
@@ -558,5 +558,42 @@ say 42;｣, X::Comp::FailGoal, line => 2, message => /«'line 1'»/;
 throws-like ｢say ‘hello';
 say 42;
 say 50;｣, X::Comp::FailGoal, line => 3, message => /«'line 1'»/;
+
+# https://github.com/rakudo/rakudo/issues/3751
+{
+    my $code = q:to/END/;
+        say 'first both';\
+        <<<<<<< HEAD
+        say 'your';
+        =======
+        say 'their';
+        >>>>>>> branch
+
+        say 'middle both';
+
+        <<<<<<< HEAD
+        say 'your';
+        =======
+        say 'their';
+        >>>>>>> branch
+
+        q:to/QUOTED/;
+        <<<<<<< HEAD
+        this is not 
+        =======
+        a vcs conflict
+        >>>>>>> branch
+        QUOTED
+        END
+    throws-like $code, X::Comp::Group,
+        sorrows => sub (@s) {
+            +@s == 1 && @s[0] ~~ X::Comp::AdHoc && @s[0].line == 2
+            && @s[0].payload eq 'Found a version control conflict marker'
+        },
+        panic => sub ($p) {
+            $p ~~ X::Comp::AdHoc && $p.line == 10
+            && $p.payload eq 'Found a version control conflict marker'
+        };
+}
 
 # vim: ft=perl6
