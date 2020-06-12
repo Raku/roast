@@ -76,7 +76,7 @@ plan 22;
 # https://github.com/Raku/old-issue-tracker/issues/1005
 {
     sub sub($foo) { $foo }
-    is sub('RT #65804'), 'RT #65804', 'sub named "sub" works';
+    is sub('foobar'), 'foobar', 'sub named "sub" works';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/1217

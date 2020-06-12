@@ -45,7 +45,8 @@ plan 101;
 # ok(EVAL('sub ret { return }; 1'), "return without value parses ok");
 
 sub bare_return { return };
-sub implicit_bare_return { }; # RT #126049 (rejected)
+# RT #126049
+sub implicit_bare_return { };
 
 ok(bare_return() =:= Nil, "A bare return is Nil");
 ok(implicit_bare_return() =:= Nil, "An implicit bare return is Nil");
