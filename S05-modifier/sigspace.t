@@ -32,8 +32,8 @@ is '  a'          ~~ m:s/       a/, 'a', "m:s/  / starting whitespace between de
 ok 'abc def' ~~ ms/c d/, 'ms// works, implies :s (+)';
 ok 'abcdef' !~~ ms/c d/, 'ms// works, implies :s (-)';
 
-# RT #119053
-# RT #109874
+# https://github.com/Raku/old-issue-tracker/issues/3195
+# https://github.com/Raku/old-issue-tracker/issues/2640
 {
     role Foo { rule foo { foo } }
     grammar Spacey does Foo {

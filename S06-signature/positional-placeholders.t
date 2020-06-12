@@ -28,11 +28,11 @@ non_twigil(5);
 throws-like ' {$foo; $^foo;}(1) ', X::Undeclared,
     'A non-twigil variable should not precede a corresponding twigil variable';
 
-# RT #64310
+# https://github.com/Raku/old-issue-tracker/issues/847
 throws-like ' {my $foo; $^foo;}(1) ', X::Redeclaration,
     'my $foo; $^foo; is an illegal redeclaration';
 
-# RT #74778
+# https://github.com/Raku/old-issue-tracker/issues/1733
 {
     my $tracker = '';
     for 1, 2 {
@@ -41,14 +41,15 @@ throws-like ' {my $foo; $^foo;}(1) ', X::Redeclaration,
     is $tracker, '11|22|', 'two occurrences of $^a count as one param';
 }
 
-# RT #99734
+# https://github.com/Raku/old-issue-tracker/issues/2478
 {
     sub rt99734 { "$^c is $^a and $^b" };
     is rt99734("cake", "tasty", "so on"), 'so on is cake and tasty',
+       # https://github.com/Raku/old-issue-tracker/issues/2478
        'RT #99734';
 }
 
-# RT #73688
+# https://github.com/Raku/old-issue-tracker/issues/1614
 {
     sub inner(*@a) { @a.join(', ') };
     sub outer { &^c($^a, $^b)  };
@@ -56,14 +57,14 @@ throws-like ' {my $foo; $^foo;}(1) ', X::Redeclaration,
         'can have invocable placeholder with arguments';
 }
 
-# RT #123470
+# https://github.com/Raku/old-issue-tracker/issues/3616
 throws-like 'my $a; sub weird{ $a = 42; $^a * 2 }', X::Placeholder::NonPlaceholder,
     :variable_name<$a>,
     :placeholder<$^a>,
     :decl<sub>,
     ;
 
-# RT #123470
+# https://github.com/Raku/old-issue-tracker/issues/3616
 throws-like 'my $a; my $block = { $a = 42; $^a * 2 }', X::Placeholder::NonPlaceholder,
     :variable_name<$a>,
     :placeholder<$^a>,

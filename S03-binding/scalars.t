@@ -35,7 +35,7 @@ plan 33;
   is($z, 'Just Another', 'z is still "Just Another" because it was not bound to x');
 }
 
-# RT #77594
+# https://github.com/Raku/old-issue-tracker/issues/2126
 throws-like '0 := 1', X::Bind, 'cannot bind to a literal';
 
 
@@ -56,6 +56,7 @@ throws-like '0 := 1', X::Bind, 'cannot bind to a literal';
 }
 
 # Binding to swap
+# https://github.com/Raku/old-issue-tracker/issues/3459
 #?rakudo skip 'list binding: RT #122369'
 {
   my $a = "a";
@@ -70,6 +71,7 @@ throws-like '0 := 1', X::Bind, 'cannot bind to a literal';
 }
 
 # More tests for binding a list
+# https://github.com/Raku/old-issue-tracker/issues/3459
 #?rakudo skip 'list binding: RT #122369'
 {
   my $a = "a";
@@ -121,6 +123,7 @@ throws-like '0 := 1', X::Bind, 'cannot bind to a literal';
 }
 
 # := actually takes subroutine parameter list
+# https://github.com/Raku/old-issue-tracker/issues/3459
 #?rakudo skip 'list binding: RT #122369'
 {
   my $a;
@@ -131,21 +134,21 @@ throws-like '0 := 1', X::Bind, 'cannot bind to a literal';
   ok($a == 1 && ~@tail eq '2 3', 'bound slurpy');
 }
 
-# RT #77462
+# https://github.com/Raku/old-issue-tracker/issues/2102
 # binding how has the same precedence as list assignment
 {
     my $x := 1, 2;
     is $x.join, '12', 'binding has same precdence as list assignment'
 }
 
-# RT #76508
+# https://github.com/Raku/old-issue-tracker/issues/1938
 {
     my $a := 2;
     $a := $a;
     is $a, 2, 'can bind variable to itself (no-oop)';
 }
 
-# RT #89484
+# https://github.com/Raku/old-issue-tracker/issues/2417
 {
     my $x = 5;
     sub f($y) { $x := 5 }	#OK not used
@@ -153,7 +156,7 @@ throws-like '0 := 1', X::Bind, 'cannot bind to a literal';
     is $x, 5, 'interaction between signature binding and ordinary binding';
 }
 
-# RT #87034
+# https://github.com/Raku/old-issue-tracker/issues/2395
 {
     my $x = 1;
     my $y := $x;

@@ -92,7 +92,7 @@ is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
 
 is ('1a', '1b' ... '1e').Str, '1a 1b 1c 1d 1e', 'sequence with strings that starts with a digit but cannot convert to numbers';
 
-#RT #118519
+# https://github.com/Raku/old-issue-tracker/issues/3168
 {
     is ('▁' ... '█').Str, "▁ ▂ ▃ ▄ ▅ ▆ ▇ █", "unicode blocks";
     is ('.' ... '0').Str, ". / 0",             "mixture";

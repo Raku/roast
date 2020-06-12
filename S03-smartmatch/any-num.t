@@ -40,7 +40,7 @@ subtest 'Str ~~ Num' => {
     is-deeply '−0e0' ~~  0e0, True,  ｢'−0e0' ~~  0e0 (U+2212 minus)｣;
 }
 
-# RT #126927
+# https://github.com/Raku/old-issue-tracker/issues/4876
 ok num64 ~~ Num, 'can smartmatch num64 against Num';
 
 # vim: ft=perl6

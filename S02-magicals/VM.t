@@ -4,6 +4,7 @@ use Test;
 
 plan 32;
 
+# https://github.com/Raku/old-issue-tracker/issues/3918
 #?rakudo.moar   skip 'VM.properties does not exist RT #124624'
 #?rakudo.js   skip 'I have no information how it is supposed to work'
 {
@@ -13,6 +14,7 @@ plan 32;
 }
 
 # $?VM.name is the Virtual machine we were compiled in.
+# https://github.com/Raku/old-issue-tracker/issues/3918
 #?rakudo skip 'unimpl $?VM RT #124624'
 {
     ok $?VM.name,           "We were compiled in '{$?VM.name}'";
@@ -42,6 +44,7 @@ plan 32;
 ok $*VM.name,           "We are running under '{$*VM.name}'";
 ok $*VM.auth,           "Authority is '{$*VM.auth}'";
 ok $*VM.version,        "Version is '{$*VM.version}'";
+# https://github.com/Raku/old-issue-tracker/issues/3918
 #?rakudo todo 'no VM.signature yet RT #124624'
 ok $*VM.signature,      "Signature is '{$*VM.signature}'";
 ok $*VM.desc,           "Description is '{$*VM.desc}'";
@@ -59,6 +62,7 @@ diag "'{$*VM.name}' is an unknown VM, please report" if !
   "We know of the VM we are running under";
 
 isa-ok $*VM.version, Version;
+# https://github.com/Raku/old-issue-tracker/issues/3918
 #?rakudo todo 'no VM.signature yet RT #124624'
 isa-ok $*VM.signature, Blob;
 

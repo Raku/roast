@@ -46,11 +46,11 @@ sub test_lines(@lines) {
     test_lines(@lines);
 }
 
-# RT #124391
+# https://github.com/Raku/old-issue-tracker/issues/3794
 throws-like { open("this-surely-won't-exist", :r) }, Exception,
     message => { m/"this-surely-won't-exist"/ };
 
-# RT #124394
+# https://github.com/Raku/old-issue-tracker/issues/3796
 {
     my $fh = open('basic-open-tests', :w);
     $fh.print('+');
@@ -62,7 +62,7 @@ throws-like { open("this-surely-won't-exist", :r) }, Exception,
     unlink 'basic-open-tests';
 }
 
-# RT #126598
+# https://github.com/Raku/old-issue-tracker/issues/4740
 is-deeply make-temp-file(content => "\n").open.get, "",
     '.get returns last empty line';
 

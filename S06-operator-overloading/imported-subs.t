@@ -41,7 +41,7 @@ plan 20;
 
 throws-like '5!', X::Syntax::Confused, 'import of operators is lexical';
 
-# RT #126761
+# https://github.com/Raku/old-issue-tracker/issues/4798
 {
     my @results;
     module m {

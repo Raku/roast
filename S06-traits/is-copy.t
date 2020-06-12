@@ -61,7 +61,7 @@ plan 28;
     is(%test<x>, 1,    '...and original is unmodified.');
 }
 
-# RT #76242
+# https://github.com/Raku/old-issue-tracker/issues/1896
 {
     sub t(@a is copy) {
         my $x = 0;
@@ -73,7 +73,7 @@ plan 28;
     is t($a), 3, 'passing [1,2,3] to @a is copy does results in three array items';
 }
 
-# RT #76804
+# https://github.com/Raku/old-issue-tracker/issues/1980
 {
     sub f($arg is copy) {
         my $other;
@@ -84,13 +84,13 @@ plan 28;
     is f(1), 5, 'list assignment (1)';
 }
 
-# RT #74454
+# https://github.com/Raku/old-issue-tracker/issues/1675
 {
     sub g(%hash? is copy) { };  #OK not used
     lives-ok { g() }, 'can call a sub with an optional "is copy" hash param';
 }
 
-# RT #75302
+# https://github.com/Raku/old-issue-tracker/issues/1781
 {
     sub h($x is copy) {
         $x = 'abc';
@@ -99,30 +99,30 @@ plan 28;
     is h(*), 'abc', 'can re-assign to "is copy" parameter that held a Whatever';
 }
 
-# RT #82810
+# https://github.com/Raku/old-issue-tracker/issues/2337
 {
     sub j(@a is copy) { @a ||= -1, -1, +1, +1; @a.join(',') }
     is j([1, 2, 3, 4]), '1,2,3,4', 'can use ||= on "is copy" array';
 }
 
-# RT #74430
+# https://github.com/Raku/old-issue-tracker/issues/1697
 {
     sub foo(@items is copy) { @items[0..^1] };
     my @items = 'a'...'g';
     is foo(@items), 'a', 'can slice "is copy" arrays';
 }
 
-# RT #117583
+# https://github.com/Raku/old-issue-tracker/issues/3101
 # the redeclaration thingy is only a warning
 eval-lives-ok 'sub f ($x is copy) { my $x }';
 
-# RT #118183
+# https://github.com/Raku/old-issue-tracker/issues/3147
 {
     sub a ($a is copy) { $a = 5 }
     is a(1), 5, 'Simple, easily inlinable, sub with copy trait not broken';
 }
 
-# RT #122220
+# https://github.com/Raku/old-issue-tracker/issues/3422
 {
     sub a (@list is copy, $l = @list.elems) {
         @list.elems ~ '-' ~ $l;

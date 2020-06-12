@@ -28,9 +28,11 @@ plan 156;
 {
     my $bear = 2.16;
     is($bear,       2.16, 'simple variable lookup');
+    # https://github.com/Raku/old-issue-tracker/issues/4424
     #?rakudo skip 'this kind of lookup NYI RT #125659'
     is($::{'bear'}, 2.16, 'variable lookup using $::{\'foo\'}');
     is(::{'$bear'}, 2.16, 'variable lookup using ::{\'$foo\'}');
+    # https://github.com/Raku/old-issue-tracker/issues/4424
     #?rakudo skip 'this kind of lookup NYI RT #125659'
     is($::<bear>,   2.16, 'variable lookup using $::<foo>');
     is(::<$bear>,   2.16, 'variable lookup using ::<$foo>');
@@ -45,7 +47,7 @@ plan 156;
     is(::<$!@#$>,   2.22, 'variable lookup using ::<$symbols>');
 }
 
-# RT #65138, Foo::_foo() parsefails
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     module A {
         our sub _b() { 'sub A::_b' }
@@ -53,10 +55,10 @@ plan 156;
     is A::_b(), 'sub A::_b', 'A::_b() call works';
 }
 
-# RT #77750
+# https://github.com/Raku/old-issue-tracker/issues/2149
 is-deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
 
-# RT #63646
+# https://github.com/Raku/old-issue-tracker/issues/743
 {
     throws-like 'OscarMikeGolf::whiskey_tango_foxtrot()',
       Exception,
@@ -64,23 +66,23 @@ is-deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
     throws-like 'Test::bravo_bravo_quebec()',
       Exception,
       'dies when calling non-existent sub in existing package';
-    # RT #74520
+    # https://github.com/Raku/old-issue-tracker/issues/1706
     class TestA { };
     throws-like 'TestA::frobnosticate(3, :foo)',
       Exception,
       'calling non-existing function in foreign class dies';;
 }
 
-# RT #71194
+# https://github.com/Raku/old-issue-tracker/issues/1433
 {
     sub self { 4 };
     is self(), 4, 'can define and call a sub self()';
 }
 
-# RT #77528
+# https://github.com/Raku/old-issue-tracker/issues/2110
 # Subroutines whose names begin with a keyword followed by a hyphen
 # or apostrophe
-# RT #72438
+# https://github.com/Raku/old-issue-tracker/issues/1481
 # Subroutines with keywords for names (may need to be called with
 # parentheses).
 #?DOES 114
@@ -107,22 +109,22 @@ is-deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
     is m, 42, 'local subs override quoters';
 }
 
-# RT #77006
+# https://github.com/Raku/old-issue-tracker/issues/2016
 isa-ok (rule => 1), Pair, 'rule => something creates a Pair';
 
-# RT #69752
+# https://github.com/Raku/old-issue-tracker/issues/1360
 {
     throws-like { EVAL 'Module.new' },
       X::Undeclared::Symbols,
       'error message mentions name not recognized, no maximum recursion depth exceeded';
 }
 
-# RT #74276
+# https://github.com/Raku/old-issue-tracker/issues/1680
 # Rakudo had troubles with names starting with Q
 lives-ok { EVAL 'class Quox { }; Quox.new' },
   'class names can start with Q';
 
-# RT #58488
+# https://github.com/Raku/old-issue-tracker/issues/288
 throws-like {
     EVAL 'class A { has $.a};  my $a = A.new();';
     EVAL 'class A { has $.a};  my $a = A.new();';
@@ -131,19 +133,19 @@ throws-like {
   X::Redeclaration,
   'can *not* redefine a class in EVAL -- classes are package scoped';
 
-# RT #83874
+# https://github.com/Raku/old-issue-tracker/issues/2362
 {
     class Class { };
     ok Class.new ~~ Class, 'can call a class Class';
 }
 
-# RT #75646
+# https://github.com/Raku/old-issue-tracker/issues/1822
 {
     throws-like 'my ::foo $x, say $x', Exception,
         'no Null PMC access when printing a variable typed as ::foo ';
 }
 
-# RT #113892
+# https://github.com/Raku/old-issue-tracker/issues/2803
 {
     my module A {
         enum Day is export <Mon Tue>;
@@ -154,7 +156,7 @@ throws-like {
     is &Day(), 'sub Day', 'can get sub using & to disamgibuate';
 }
 
-# RT #115608
+# https://github.com/Raku/old-issue-tracker/issues/2962
 {
     my module foo {}
     sub foo() { "OH HAI" }
@@ -163,7 +165,8 @@ throws-like {
     is &foo(), 'OH HAI', 'can get sub using & to disambiguate';
 }
 
-subtest 'can use compile-time variables in names' => { # RT #128712
+# https://github.com/Raku/old-issue-tracker/issues/5479
+subtest 'can use compile-time variables in names' => { 
     plan 2;
     constant $i = 42;
     my $foo:bar«$i» = 'meow';

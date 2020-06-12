@@ -57,7 +57,8 @@ plan 12;
   is (elems ([1,2,3,4],)), 1, "elems ([1,2,3,4],) should return 1";
 }
 
-# RT#125576
+# https://github.com/Raku/old-issue-tracker/issues/4387
+
 eval-dies-ok 'my Int @a = 1..Inf; @a[*-1]',
      'Attempting to view last element of Int Array with Inf in it dies';
 

@@ -13,6 +13,7 @@ plan 55;
     my $rh = EVAL(%h.raku);
     is-deeply $rh, $%h, 'can we roundtrip simple hash';
     is $rh.of,    Mu,       'make sure any value can be stored';
+    # https://github.com/Raku/old-issue-tracker/issues/6659
     #?rakudo.jvm todo 'Coercion type Str(Any) returned from .keyof is not the same object as Str(Any) RT #132694'
     is $rh.keyof, Str(Any), 'make sure keys are Str(Any)';
 } #4
@@ -25,6 +26,7 @@ plan 55;
     my $rh = EVAL(%h.raku);
     is-deeply $rh, %h, 'can we roundtrip hash constrained values';
     is $rh.of,    Int,      'make sure roundtripped values are Int';
+    # https://github.com/Raku/old-issue-tracker/issues/6659
     #?rakudo.jvm todo 'Coercion type Str(Any) returned from .keyof is not the same object as Str(Any) RT #132694'
     is $rh.keyof, Str(Any), 'make sure roundtripped keys are Str(Any)';
 } #4
@@ -53,14 +55,16 @@ plan 55;
         'can .raku.EVAL roundtrip a circular hash';
 }
 
-# RT #120656
+# https://github.com/Raku/old-issue-tracker/issues/3286
 {
     my %b = ^512;
     my %c = EVAL(%b.raku);
+    # https://github.com/Raku/old-issue-tracker/issues/3286
     is %c.elems, 256, 'Can create large hash with "=>", RT #120656'
 }
 
-# RT#132119
+# https://github.com/Raku/old-issue-tracker/issues/6535
+
 {
     for Hash.new, Hash.new(k => "v"),
         Hash[Any].new, Hash[Any].new(k => "v"),

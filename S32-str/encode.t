@@ -28,13 +28,16 @@ is '€‚ƒ„…†‡ˆ‰Š‹ŒŽ'.encode('windows-1252').values, (0x80,0x8
 #?rakudo.jvm todo 'builtin JVM cp1252 code folds these'
 is ''.encode('windows-1252').values, (0x81,0x8d,0x8f), 'cp1252 encode tolerates unassigned C1 characters';
 
-# RT#107204
+# https://github.com/Raku/old-issue-tracker/issues/2587
+
 #?rakudo.jvm todo 'JVM builtin code folds these'
 throws-like '"aouÄÖÜ".encode("latin1").decode("utf8")', Exception, message => rx:s:i/line 1 col\w* 4/;
 #?rakudo.jvm todo 'JVM builtin code folds these'
 throws-like '"ssß".encode("latin1").decode("utf8")', Exception, message => rx:s:i/term/;
+# https://github.com/Raku/old-issue-tracker/issues/2587
 #?rakudo todo 'RT#107204 should say line and column or mention term(ination)'
 throws-like '"aoaou".encode("latin1").decode("utf16")', Exception, message => rx:s:i/line 1 col\w* 2|term/;
+# https://github.com/Raku/old-issue-tracker/issues/2587
 #?rakudo todo 'RT#107204 should say line and column'
 throws-like '"aouÄÖÜ".encode("latin1").decode("utf16")', Exception, message => rx:s:i/line 1 col\w* 2/;
 
@@ -43,6 +46,7 @@ is-deeply 'abc'.encode()[1, 2], (98, 99), 'can slice-index a Buf';
 
 # verified with Perl:
 # perl -CS -Mutf8 -MUnicode::Normalize -e 'print NFD("ä")' | hexdump -C
+# https://github.com/Raku/old-issue-tracker/issues/3966
 #?rakudo skip 'We do not handle NDF yet RT #124687'
 ok ('ä'.encode('UTF-8', 'D') eqv Buf.new(:16<61>, :16<cc>, :16<88>)),
                 'encoding to UTF-8, with NFD';
@@ -72,11 +76,11 @@ is 'abc'.encode('ascii').list.join(','), '97,98,99', 'Buf.list gives list of cod
     is $temp.decode(), "\x1F63E",          'decoding utf16 Buf to original value';
 }
 
-# RT #120651
+# https://github.com/Raku/old-issue-tracker/issues/3285
 lives-ok { "\x[effff]".encode('utf-8') },           'Can encode noncharacters to UTF-8';
 is "\x[effff]".encode('utf-8').decode, "\x[effff]", 'Noncharacters round-trip with UTF-8';
 
-# RT #123673
+# https://github.com/Raku/old-issue-tracker/issues/3654
 #?DOES 3
 #?rakudo.jvm skip 'encoding with replacement NYI'
 {

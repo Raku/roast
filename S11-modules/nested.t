@@ -16,11 +16,13 @@ eval-lives-ok 'use A::A; use A::B; A::B::D ~~ A::B::B or die()',
 eval-lives-ok 'use A::A; use A::B; A::B::D.new()',
               '... and instantiation works';
 
+# https://github.com/Raku/old-issue-tracker/issues/600
 eval-lives-ok 'use A; A.new()', 'RT #62162';
 
 eval-dies-ok "use DependencyLoop::A;", 'dependency loop detected in use';
 
 eval-lives-ok 'use RoleA',
+              # https://github.com/Raku/old-issue-tracker/issues/1179
               'can use multiple "Role $name" statements (in multiple files) RT #67976';
 
 eval-lives-ok

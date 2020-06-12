@@ -10,13 +10,13 @@ sub tester(:$a, :$b, :$c) {
     "a$a b$b c$c";
 }
 
-# RT #125207
+# https://github.com/Raku/old-issue-tracker/issues/4249
 {
     my $w = &tester.assuming(b => 'x');
     is $w(a => 'w', c => 'y'), 'aw bx cy', 'currying one named param';
 }
 
-# RT #125207
+# https://github.com/Raku/old-issue-tracker/issues/4249
 {
     my $w = &tester.assuming(b => 'b');
     my $v =  $w.assuming(c => 'c');
@@ -53,6 +53,7 @@ is-primed-sig(sub (:$a! is raw where { True }) { }, :(:$a? is raw), :a);
 is-primed-sig(sub (:$a! is copy where { True }) { }, :(:$a? is copy), :a);
 
 # This will not even compile.  Maybe this should be a runtime error?
+# https://github.com/Raku/old-issue-tracker/issues/3686
 ##?rakudo todo 'RT #123835'
 #is-primed-sig(sub (:$a! is rw where { True }) { }, :(:$a is rw), :a);
 is-primed-sig(sub (:$a is copy where { True } = 4) { }, :(:$a is copy), :a);

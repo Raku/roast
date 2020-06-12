@@ -138,13 +138,13 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
     is(Bar::bar($a, "moonlight"), "moonlight", 'Bar::bar($a, ) gets default value');
 }
 
-# RT #118501
+# https://github.com/Raku/old-issue-tracker/issues/3166
 {
     ok EXPORT::ALL ~~ EXPORT::<ALL>, 'EXPORT::ALL is identical to EXPORT::<ALL>';
     ok EXPORT::ALL:: ~~ Stash,       'EXPORT::ALL:: is a Stash that keeps exported symbols';
 }
 
-# RT #83354
+# https://github.com/Raku/old-issue-tracker/issues/2345
 {
     use RT83354_B;
     use RT83354_A;
@@ -152,7 +152,7 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
     ok( $a ~~ RT83354_B && $a.b == 7, "multi imports don't conflict" );
 }
 
-# RT #84280
+# https://github.com/Raku/old-issue-tracker/issues/2370
 {
     use RT84280;
     throws-like { bar { 1 } }, X::Multi::NoMatch,
@@ -160,7 +160,7 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
         'adequate error message when multi sub exported out of a module fails to bind to an argument that happens to be a block';
 }
 
-# RT #125715
+# https://github.com/Raku/old-issue-tracker/issues/4445
 {
     use RT125715;
 
@@ -172,21 +172,24 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
         'Using EXPORT-d type as attribute type works';
 }
 
-# RT #129215
+# https://github.com/Raku/old-issue-tracker/issues/5645
 {
     use RT129215;
     ok str_d("foo"), 'Str:D istype across module seam';
     ok str_u(Str),   'Str   istype across module seam';
     ok str_u(Str:U), 'Str:U istype across module seam';
+    # https://github.com/Raku/old-issue-tracker/issues/5645
     #?rakudo.jvm 3 todo 'RT#129215'
     ok array_str(Array[Str].new("A","B")), 'Array[Str] istype across module seam';
     ok hash_str(Hash[Str].new({ak => "ak"})), 'Hash[Str] istype across module seam';
     ok hash_hash_str(Hash[Hash[Str]].new({akk => Hash[Str].new: { ak => "ak" }})), 'Hash[Hash[Str]] istype across module seam';
 
+    # https://github.com/Raku/old-issue-tracker/issues/5645
     #?rakudo.jvm 3 todo 'RT#129215'
     ok array_str_d(Array[Str:D].new("A","B")), 'Array[Str:D] istype across module seam';
     ok hash_str_d(Hash[Str:D].new({ak => "ak"})), 'Hash[Str:D] istype across module seam';
     ok hash_hash_str_d(Hash[Hash[Str:D]].new({akk => Hash[Str:D].new: { ak => "ak" }})), 'Hash[Hash[Str:D]] istype across module seam';
+    # https://github.com/Raku/old-issue-tracker/issues/5645
     #?rakudo.jvm 6 todo 'RT#129215'
     ok array_str_u(Array[Str:U].new(Str,Str)), 'Array[Str:U] istype across module seam (Str)';
     ok hash_str_u(Hash[Str:U].new({ak => Str})), 'Hash[Str:U] istype across module seam (Str)';

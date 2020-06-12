@@ -7,7 +7,7 @@ plan 2;
 
 # L<S11/Runtime Importation>
 
-# RT #126688
+# https://github.com/Raku/old-issue-tracker/issues/4767
 subtest 'circular dependencies are detected and reported' => {
     plan 2;
 
@@ -20,7 +20,7 @@ subtest 'circular dependencies are detected and reported' => {
     "`use` $_" for 'first run', 'second run (precompiled)';
 }
 
-# RT #132249
+# https://github.com/Raku/old-issue-tracker/issues/6587
 throws-like ｢use lib ‘’｣, X::LibEmpty,
     'use lib with empty string throws a useful error';
 

@@ -13,6 +13,7 @@ grammar Grammar::Foo {
     token so { 'so' };
 };
 
+# https://github.com/Raku/old-issue-tracker/issues/2083
 #?rakudo todo 'RT #77350'
 is( try { Grammar::Foo.parse( 'so', :rule<so> ) }, 'so',
   "don't let a Mu based action method fail the parse" );

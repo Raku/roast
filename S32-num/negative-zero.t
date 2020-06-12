@@ -29,7 +29,8 @@ subtest 'sprintf formats' => {
     is-deeply '%g'.sprintf( -0e0), '-0',            'method, %g, -0e0';
 }
 
-# RT#128897
+# https://github.com/Raku/old-issue-tracker/issues/5557
+
 {
     is-neg-zero val(<-0e0>), 'val() negative zero, U+002D minus';
     is-neg-zero val(<−0e0>), 'val() negative zero, U+2212 minus';
@@ -61,7 +62,7 @@ subtest 'cmp on num zeros' => {
 }
 
 
-# RT #128395
+# https://github.com/Raku/old-issue-tracker/issues/5373
 subtest 'infix:<===> on num zeros' => {
     plan 12;
 
@@ -83,7 +84,7 @@ subtest 'infix:<===> on num zeros' => {
     is-deeply ( -0e0 ===  $pz), False, '-0e0 ===  0e0 (native)';
 }
 
-# RT #128999
+# https://github.com/Raku/old-issue-tracker/issues/5595
 subtest 'infix:<===> on complex zeros' => {
     plan 16;
 

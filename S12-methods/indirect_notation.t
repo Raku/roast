@@ -49,7 +49,7 @@ class T2 {
     is  b($o: 21, 21), 42, "The indirect object notation call with multiple arguments with ()";
 }
 
-# RT #125440
+# https://github.com/Raku/old-issue-tracker/issues/4314
 is EVAL('abs -42:'), 42, 'indirect object notation with colon at EOF works';
 
 # L<S12/Fancy method calls/"There are several forms of indirection for the method name">

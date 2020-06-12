@@ -51,9 +51,10 @@ plan 10;
         'prefix operator overloading for existing operator');
 }
 
-# RT #123216
+# https://github.com/Raku/old-issue-tracker/issues/3585
 subtest 'coverage for crashes in certain operator setups' => {
     plan 2;
+    # https://github.com/Raku/old-issue-tracker/issues/6662
     skip 'RT#132711', 2;
     # is-deeply do {
     #     sub postfix:<_post_l_>($a) is assoc<left> is equiv(&prefix:<+>) {

@@ -413,7 +413,7 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
 # Miscellany
 # --------------------------------------------------------------------
 
-# RT #77910
+# https://github.com/Raku/old-issue-tracker/issues/2174
 # Ensure that any method of producing a DateTime keeps attributes
 # that should be Ints Ints.
 {
@@ -622,7 +622,7 @@ is DateTime.now.Date, Date.today,
     }, '.later does not try to create an impossible datetime';
 }
 
-# RT #121990 Smartmatch against a Date
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     my $now = DateTime.now;
     my $today = Date.today;
@@ -632,7 +632,7 @@ is DateTime.now.Date, Date.today,
     ok $not-now !~~ $today, "negative smartmatch against a Date";
 }
 
-# RT #125555 Comparison ops
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     my $d0 = ds('1971-10-28T10:45:00');
     my $d1 = $d0;
@@ -653,22 +653,22 @@ is DateTime.now.Date, Date.today,
     ok $d2 after $d1,   "$d2 after $d1";
 }
 
-# RT #124683
+# https://github.com/Raku/old-issue-tracker/issues/3963
 throws-like { DateTime.new("1994-05-03T00:00:00+00:99") }, X::OutOfRange, what => rx{minute};
 
-# RT #125872
+# https://github.com/Raku/old-issue-tracker/issues/4484
 is ds("2015-08-23T02:27:33-07:00"), ds("2015-08-23t02:27:33-07:00"), "t and T work, are same";
 is ds("2015-08-23T02:27:33Z"), ds("2015-08-23t02:27:33z"), "z and Z work, are same";
 
-# RT #125686 Date overflows
+# https://github.com/Raku/old-issue-tracker/issues/2593
 is ds('1994-05-03T12:00:00Z').later(days => 536106031).Str, "+1469802-10-18T12:00:00Z", "adding large values of days does not overflow";
 is ds('2015-12-24T12:23:00Z').later(days => -537643699).Str, "-1470003-07-12T12:23:00Z", "subtracting large values days does not overflow";
 
-# RT #127003 comma not accepted
+# https://github.com/Raku/old-issue-tracker/issues/2593
 is ds("2000-01-01T00:00:00,456"), "2000-01-01T00:00:00.456000Z",
   'second value with a comma works';
 
-# RT #127004
+# https://github.com/Raku/old-issue-tracker/issues/4909
 is ds("+9992000-01-01T00:00:00"), "+9992000-01-01T00:00:00Z",
   'large value of year in string works';
 is ds("-4004-10-23T00:00:00"), "-4004-10-23T00:00:00Z",
@@ -682,7 +682,7 @@ is DateTime.new(127317232781632218937129), "+4034522497029953-07-13T17:38:49Z",
 is ds("2016-02-29T00:00:00").later(:1year), "2017-02-28T00:00:00Z",
   'moving a year from a leap-date into a year without leap-date';
 
-# RT #127170
+# https://github.com/Raku/old-issue-tracker/issues/5000
 {
     my role Foo { has @.a = 7, 8, 9 }
     my class BarDate is DateTime does Foo {}
@@ -709,7 +709,7 @@ is ds("2016-02-29T00:00:00").later(:1year), "2017-02-28T00:00:00Z",
     }
 }
 
-# RT #128545
+# https://github.com/Raku/old-issue-tracker/issues/5421
 subtest 'synthetics not allowed in date formats' => {
     plan 2;
     throws-like { DateTime.new: "20\x[308]16-07-05T00:00:00+01:00" },

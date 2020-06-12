@@ -42,7 +42,7 @@ plan 6;
     is($a, 3, "post while");
 }
 
-# RT #79174
+# https://github.com/Raku/old-issue-tracker/issues/2257
 {
     eval-lives-ok '1,2, while $++ < 1', "while is a terminator even after comma";
 }

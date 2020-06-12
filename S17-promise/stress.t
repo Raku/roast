@@ -3,7 +3,7 @@ use Test;
 
 plan 1;
 
-# RT #123883
+# https://github.com/Raku/old-issue-tracker/issues/3690
 is ([+] await do for ^8 {
     start {
         my $i;

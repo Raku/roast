@@ -69,6 +69,7 @@ ok( "foo" ~~ /<[f] #`[comment] + [o]>/, 'comment embedded in charset works' );
 ok "\x[FFEF]" ~~ /<[\x0..\xFFEF]>/, 'large \\x char spec';
 
 # https://github.com/Raku/old-issue-tracker/issues/1458
+# https://github.com/Raku/old-issue-tracker/issues/1458
 throws-like "'RT #71702' ~~ /<[d..b]>? RT/", Exception,
     'reverse range in charset is lethal';
 
@@ -119,6 +120,7 @@ nok '^'   ~~ /  <[ \[ .. \] ]>    /, '... does not match outside its range';
     dies-ok { 'a' ~~ / <+xdigit-digit> / }, "accidental kebabs disallowed";
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4454
 #?rakudo.jvm 2 todo 'ignorecase and character ranges RT #125753'
 dies-ok { EVAL '/<[Ḍ̇..\x2FFF]>/' }, 'Cannot use NFG synthetic as range endpoint';
 

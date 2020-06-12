@@ -8,8 +8,10 @@ grammar Alts {
     proto token alt {*}
     token alt:sym<foo> { <sym> };
     token alt:sym<bar> { 'bar' };
-    token alt:sym«baz» { 'argl' };    # RT #113590
-    token alt:sym«=>»  { <sym> };     # RT #113590
+    # https://github.com/Raku/old-issue-tracker/issues/2787
+    token alt:sym«baz» { 'argl' };    
+    # https://github.com/Raku/old-issue-tracker/issues/2787
+    token alt:sym«=>»  { <sym> };     
 }
 
 ok (my $match = Alts.subparse('foo')), 'can parse with proto regexes (1)';
@@ -26,7 +28,7 @@ ok !Alts.subparse('baz'), 'does not match sym of third alternative';
 ok !Alts.subparse('aldkfj'), 'does not match completely unrelated string';
 ok !Alts.subparse(''), 'does not match empty string';
 
-# RT #113590
+# https://github.com/Raku/old-issue-tracker/issues/2787
 ok Alts.subparse('=>'), 'can parse symbol inside double-angles';
 
 
@@ -119,7 +121,7 @@ is ~LTM.subparse('aaa', :rule('ass1')),    'aaa',    '<?{...}> does not terminat
 is ~LTM.subparse('aaa', :rule('ass2')),    'aaa',    '<!{...}> does not terminate LTM';
 is ~LTM.subparse('aaa', :rule('block')),   'aa',     'However, code blocks do terminate LTM';
 
-# RT #120146
+# https://github.com/Raku/old-issue-tracker/issues/3246
 {
     grammar G {
 
@@ -141,6 +143,7 @@ is ~LTM.subparse('aaa', :rule('block')),   'aa',     'However, code blocks do te
     is ~G.subparse("-42", :rule<num>), '-42', 'num parse';
     is ~G.subparse("-my_id", :rule<ident>), '-my_id', 'id parse';
     is ~G.subparse("my_id", :rule<term>), 'my_id', 'term parse';
+    # https://github.com/Raku/old-issue-tracker/issues/3246
     #?rakudo 2 todo 'RT #120146'
     is ~G.subparse("-my_id", :rule<term>), '-my_id', '<ident> override';
     is ~G.subparse("-my_id", :rule<term2>), '-my_id', '<ident> alias';

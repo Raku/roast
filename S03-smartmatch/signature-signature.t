@@ -38,7 +38,7 @@ plan 23;
     ok (:(&foo:(Str --> Bool)) ~~ :(&bar:(Str --> Bool))),
         "Code params with signatures";
 
-    # RT #127223
+    # https://github.com/Raku/old-issue-tracker/issues/5028
     nok :(Int --> Int) ~~ :(), 'Can smartmatch against empty signature (False)';
     nok :() ~~ :(Int ), 'Can smartmatch an empty signature (False)';
     ok :() ~~ :(), 'Can smartmatch against empty signature (True)';

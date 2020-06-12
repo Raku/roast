@@ -46,7 +46,8 @@ ok(("b" ~~ rx:P5/(?<!c)b/), 're_tests 661  (845)');
 is(("b" ~~ rx:P5/(?<!c)b/ && $/), "b", 're_tests 663/0 (847)');
 is(("aba" ~~ rx:P5/(?:..)*a/ && $/), "aba", 're_tests 665/0 (849)');
 is(("aba" ~~ rx:P5/(?:..)*?a/ && $/), "a", 're_tests 667/0 (851)');
-#?rakudo todo "unknown issue RT #125023"
+# https://github.com/Raku/old-issue-tracker/issues/4162
+#?rakudo todo "unknown issue"
 is(("abc" ~~ rx:P5/^(?:b|a(?=(.)))*\1/ && $/), "ab", 're_tests 669/0 (853)');
 is(("aax" ~~ rx:P5/^(a+)*ax/ && $0), "a", 're_tests 671/1 (855)');
 is(("aax" ~~ rx:P5/^((a|b)+)*ax/ && $0), "a", 're_tests 673/1 (857)');

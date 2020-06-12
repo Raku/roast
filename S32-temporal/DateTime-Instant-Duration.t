@@ -158,7 +158,7 @@ for 1, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1449755609 {
 throws-like { $ = Duration.new: "meow" }, X::Str::Numeric,
     'Duration.new with wrong-typed arg throws';
 
-# RT #127341
+# https://github.com/Raku/old-issue-tracker/issues/5074
 does-ok Duration.new(Inf).tai, Rational, 'Duration.new(Inf) works';
 does-ok Duration.new(NaN).tai, Rational, 'Duration.new(NaN) works';
 

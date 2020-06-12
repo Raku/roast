@@ -79,7 +79,7 @@ is(~$/, "DeF", '.Yet::Another.def $/');
 
 throws-like q{ 'abc' ~~ m/ (<Another.sea>) /  }, Exception, '<Another.sea>';
 
-# RT #63466
+# https://github.com/Raku/old-issue-tracker/issues/725
 {
     throws-like q{ 'x' ~~ / <No::Such::Rule> / }, Exception,
             'match against No::Such::Rule dies';

@@ -20,6 +20,7 @@ ok("abcd" ~~ m/a  $<foo>=(..)  d/, 'Hypothetical variable capture');
 is(~$/<foo>, "bc", 'Hypothetical variable captured');
 
 my $foo;
+# https://github.com/Raku/old-issue-tracker/issues/4222
 #?rakudo 2 skip 'Package variable capture RT #125122'
 ok("abcd" ~~ m/a  $foo=(..)  d/, 'Package variable capture');
 is(~$foo, "bc", 'Package variable captured');
@@ -38,6 +39,7 @@ is(~$/<two>, "bc", 'Implicit hypothetical variable captured');
 is(~$/<foo>, "bc", 'Explicit hypothetical variable captured');
 
 $foo = "";
+# https://github.com/Raku/old-issue-tracker/issues/4222
 #?rakudo 3 todo 'Package variable capture RT #125122'
 ok("abcd" ~~ m/a  $foo=[<two>]  d/, 'Mixed capture');
 is(~$/<two>, "bc", 'Implicit hypothetical variable captured');
@@ -65,7 +67,7 @@ is(~$42, 'f',   'Capture starting at non-zero, explicit');
 is(~$43, 'oo',  'Capture starting at non-zero, incremented once');
 is(~$44, 'bar', 'Capture starting at non-zero, incremented twice');
 
-# RT #129249
+# https://github.com/Raku/old-issue-tracker/issues/5660
 {
     my %what = foo => 42, bar => 43;
     my $m = 'foo3bar4' ~~ /$<cat>=@(%what.keys)  4/;

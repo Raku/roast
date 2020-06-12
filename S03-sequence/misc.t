@@ -24,9 +24,9 @@ throws-like {(() ... *)[0]}, X::Cannot::Empty, 'Nil sequence';
 is (1, 1, { slip $^a + 1, $^b * 2 } ... *).[^12].join(' '), '1 1 2 2 3 4 4 8 5 16 6 32', 'sequence of two interleaved sequences';
 is (1, 1, 1, { slip $^a + 1, $^b * 2, $^c - 1 } ... *).[^18].join(' '), '1 1 1 2 2 0 3 4 -1 4 8 -2 5 16 -3 6 32 -4', 'sequence of three interleaved sequences';
 is (1, { |($^n + 1 xx $^n + 1) } ... *)[^10].join(' '), '1 2 2 3 3 3 4 4 4 4', 'sequence with list-returning block';
-#RT #80574
+# https://github.com/Raku/old-issue-tracker/issues/2276
 is ('a', 'b', { slip $^a ~ 'x', $^a ~ $^b, $^b ~ 'y' } ... *)[^11].join(' '), 'a b ax ab by abx abby byy abbyx abbybyy byyy', 'sequence with arity < number of return values';
-#RT #80574
+# https://github.com/Raku/old-issue-tracker/issues/2276
 is ('a', 'b', 'c', { slip $^x ~ 'x', $^y ~ 'y' ~ $^z ~ 'z' } ... *)[^9].join(' '), 'a b c ax bycz cx axybyczz byczx cxyaxybyczzz', 'sequence with arity > number of return values';
 
 # L<S03/List infix precedence/it will be taken as a yada>
@@ -78,7 +78,7 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
     '1 3 7 15 31 36 41 46 a az azz azzz azzzz',
     'chained sequence with closures (2)';
 
-#RT #123329
+# https://github.com/Raku/old-issue-tracker/issues/3596
 {
     is (1, *+1 ... { $_ == 9 }, 10, *+10 ... { $_ == 90 }, 100, *+100 ... { $_ == 900 }).join(' '),
         '1 2 3 4 5 6 7 8 9 10 20 30 40 50 60 70 80 90 100 200 300 400 500 600 700 800 900',
@@ -92,13 +92,13 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
 # is (1, 2 ... 0, 1 ... 3).join(' '),
 #     '0 1 2 3',
 #     'chained sequence with an empty subsequence';
-#RT #80574'
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     my @rt80574 = -> { slip 'zero', 'one' } ... *;
     is @rt80574[0], 'zero', '0-ary generator output can be slipped from the start';
 }
 
-# RT #116348
+# https://github.com/Raku/old-issue-tracker/issues/3024
 {
     is (10, 8 ... 2|3).join(' '), '10 8 6 4 2', 'sequence with RHS junction I';
     is (11, 9 ... 2|3).join(' '), '11 9 7 5 3', 'sequence with RHS junction II';
@@ -106,12 +106,12 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
     is (4!!, 5!!).join(' '), "8 15", 'sequence with RHS junction III';
 }
 
-# RT #1233303
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     throws-like { (1, 2, 5 ... 10)[0] }, X::Sequence::Deduction, from => '1,2,5'
 }
 
-# RT #112288
+# https://github.com/Raku/old-issue-tracker/issues/2702
 {
     throws-like { (1, 2, 6 ... *)[5] }, X::Sequence::Deduction, from => '1,2,6',
         'non-deducible sequence ending in * throws X::Sequence::Deduction (1)';
@@ -119,7 +119,7 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
         'non-deducible sequence ending in * throws X::Sequence::Deduction (2)';
 }
 
-# RT #126060
+# https://github.com/Raku/old-issue-tracker/issues/4535
 {
     sub identity-matrix($n) {
 	[$[1, |(0 xx $n-1)], *.rotate(-1).list ... *[*-1] == 1]

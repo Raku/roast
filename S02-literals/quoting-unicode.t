@@ -48,7 +48,7 @@ plan 101;
 {
     my @ps_pe = (
             '(' => ')', '[' => ']', '{' => '}', '༺' => '༻', '༼' => '༽',
-            '᚛' => '᚜', '⁅' => '⁆', '⁽' => '⁾', '₍' => '₎', '〈' => '〉',
+            '᚛' => '᚜', '⁅' => '⁆', '⁽' => '⁾', '₍' => '₎', '〈' => '〉',
             '❨' => '❩', '❪' => '❫', '❬' => '❭', '❮' => '❯', '❰' => '❱',
             '❲' => '❳', '❴' => '❵', '⟅' => '⟆', '⟦' => '⟧', '⟨' => '⟩',
             '⟪' => '⟫', '⦃' => '⦄', '⦅' => '⦆', '⦇' => '⦈', '⦉' => '⦊',
@@ -85,11 +85,12 @@ plan 101;
     is $var, 'b', 'q-style string with LEFT/RIGHT ANGLE BRACKET';
 }
 
-# RT #66498
+# https://github.com/Raku/old-issue-tracker/issues/1049
 {
     throws-like { EVAL "q\c[SNOWMAN].\c[COMET]" },
       X::Comp,
       "Can't quote a string with a snowman and comet (U+2603 and U+2604)";
+    # https://github.com/Raku/old-issue-tracker/issues/1049
     throws-like { EVAL "'RT #66498' ~~ m\c[SNOWMAN].\c[COMET]" },
       X::Comp::Group,
       "Can't quote a regex with a snowman and comet (U+2603 and U+2604)";

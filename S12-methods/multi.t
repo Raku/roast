@@ -38,6 +38,7 @@ is($foo.bar("Hello"), 'Foo.bar() called with Str : Hello', '... multi-method dis
 is($foo.bar(5), 'Foo.bar() called with Int : 5', '... multi-method dispatched on Int');
 is($foo.bar(4.2), 'Foo.bar() called with Numeric : 4.2', '... multi-method dispatched on Numeric');
 
+# https://github.com/Raku/old-issue-tracker/issues/1019
 #?rakudo todo 'RT #66006'
 try { EVAL '$foo.baz()' };
 ok ~$! ~~ /:i argument[s?]/, 'Call with wrong number of args should complain about args';
@@ -55,15 +56,16 @@ class Bar is Foo2 {
 
 is Bar.new.a("not an Int"), 'Any-method in Foo';
 
-# RT #67024
+# https://github.com/Raku/old-issue-tracker/issues/1105
 {
     try { EVAL 'class RT67024 { method a(){0}; method a($x){1} }' };
+    # https://github.com/Raku/old-issue-tracker/issues/1105
     ok  $!  ~~ Exception, 'redefinition of non-multi method (RT #67024)';
     ok "$!" ~~ /multi/, 'error message mentions multi-ness';
 }
 
-# RT #69192
-# RT #124848'
+# https://github.com/Raku/old-issue-tracker/issues/1286
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     role R5 {
         multi method rt69192()       { push @.order, 'empty' }
@@ -84,6 +86,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     {
         my RT69192 $bot .= new();
         $bot does (R5, R6);
+        # https://github.com/Raku/old-issue-tracker/issues/1286
         $bot.*rt69192('RT #69192');
         is $bot.order, <Str>, 'multi method called once on Str signature';
     }
@@ -153,7 +156,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
         'error message for failed dispatch contains invocant type';
 }
 
-# RT #68996
+# https://github.com/Raku/old-issue-tracker/issues/1272
 {
     class A {
         has $.foo = "bar";
@@ -171,7 +174,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
         '$.foo attribute has no accessor when foo() method is present';
 }
 
-# RT #57788
+# https://github.com/Raku/old-issue-tracker/issues/226
 {
     throws-like 'class RT57788 { method m() { }; method m() { } }', Exception;
 }
@@ -186,7 +189,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
         'multis with different names but same signatures are not ambiguous';
 }
 
-# RT #74646
+# https://github.com/Raku/old-issue-tracker/issues/1722
 {
     my class A {
         multi method foo($a) { "general" }

@@ -33,7 +33,8 @@ plan 47;
 # unfreak perl6.vim:  >>
 
 # Overloading by setting the appropriate code variable
-#?rakudo skip "cannot bind with this LHS RT #124979"
+# https://github.com/Raku/old-issue-tracker/issues/4128
+#?rakudo skip "cannot bind with this LHS"
 {
   my &infix:<plus>;
   BEGIN {
@@ -95,6 +96,7 @@ plan 47;
   is EVAL('($obj as OtherClass).x'), 23, "our object was coerced correctly";
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4131
 #?rakudo skip 'infix Z will never work; no lexical Z RT #124983'
 {
   my sub infix:<Z> ($a, $b) {
@@ -103,6 +105,7 @@ plan 47;
   is (2 Z 1 Z 2), 4, "default Left-associative works.";
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4131
 #?rakudo skip 'no lexical Z RT #124983'
 {
   my sub infix:<Z> ($a, $b) is assoc('left') {
@@ -112,6 +115,7 @@ plan 47;
   is (2 Z 1 Z 2), 4, "Left-associative works.";
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4131
 #?rakudo skip 'no lexical Z RT #124983'
 {
   my sub infix:<Z> ($a, $b) is assoc('right') {
@@ -121,6 +125,7 @@ plan 47;
   is (2 Z 1 Z 2), 2, "Right-associative works.";
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4131
 #?rakudo skip 'no lexical Z RT #124983'
 {
   my sub infix:<Z> ($a, $b) is assoc('chain') {
@@ -174,17 +179,19 @@ plan 47;
 }
 
 # test that multis with other arity don't interfere with existing ones
+# https://github.com/Raku/old-issue-tracker/issues/993
 # used to be RT #65640
 {
     multi sub infix:<+>() { 42 };
     ok 5 + 5 == 10, "New multis don't disturb old ones";
 }
 
-# RT #65638
+# https://github.com/Raku/old-issue-tracker/issues/992
 {
     is EVAL('sub infix:<,>($a, $b) { 42 }; 5, 5'), 42, 'infix:<,>($a, $b)';
     is EVAL('sub infix:<,>(Int $x where 1, Int $y where 1) { 42 }; 1, 1'), 42,
        'very specific infix:<,>';
+    # https://github.com/Raku/old-issue-tracker/issues/992
     #?rakudo todo 'RT #65638'
     is EVAL('sub infix:<#>($a, $b) { 42 }; 5 # 5'), 42, 'infix:<comment char>($a, $b)';
     is EVAL('multi sub infix:<+>() { 42 }; 5 + 5'), 10, 'infix:<+>()';
@@ -220,23 +227,25 @@ plan 47;
 
 }
 
-# RT #74104
+# https://github.com/Raku/old-issue-tracker/issues/1669
 {
     class RT74104 {}
     multi sub infix:<+>(RT74104 $, RT74104 $) { -1 }
     is 2+2, 4, 'overloading an operator does not hide other candidates';
 }
 
-# RT #111418
-# RT #112870
+# https://github.com/Raku/old-issue-tracker/issues/2656
+# https://github.com/Raku/old-issue-tracker/issues/2760
 {
     sub infix:<*+>($a, $b) { $a * $b + $b }
+    # https://github.com/Raku/old-issue-tracker/issues/2656
     is 2 *+ 5, 15, 'longest operator wins (RT #111418)';
     sub infix:<~eq>(Str $a, Str $b) { uc($a) eq uc($b) }
+    # https://github.com/Raku/old-issue-tracker/issues/2760
     ok 'a' ~eq 'A', 'longest operator wins (RT #112870)';
 }
 
-# RT #109800
+# https://github.com/Raku/old-issue-tracker/issues/2639
 {
     my &infix:<c> = { $^a + $^b };
     is 1 c 2, 3, 'assignment to code variable works.';
@@ -245,7 +254,7 @@ plan 47;
 is infix:['+'](2,3), 5, 'can call existing infix via compile-time string lookup';
 is infix:['Z~'](<a b>, <c d>), 'ac bd', 'can call autogen infix via compile-time string lookup';
 
-# RT #68024
+# https://github.com/Raku/old-issue-tracker/issues/1183
 {
     BEGIN my $plus = '+';
     is &infix:<<$plus>>(3,4), 7, '&infix:<<$foo>> works';

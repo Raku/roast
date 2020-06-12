@@ -315,9 +315,11 @@ plan 110;
 {
     my @array;
     lives-ok { for @array[*]:kv -> $k, $v { } },
+        # https://github.com/Raku/old-issue-tracker/issues/3290
         'RT #120739 :kv on an whatever slice of an empty array used in for loop';
     my %hash;
     lives-ok { for %hash{*}:kv -> $k, $v { } },
+        # https://github.com/Raku/old-issue-tracker/issues/3290
         'RT #120739 :kv on an whatever slice of an empty hash used in for loop';
 }
 

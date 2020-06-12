@@ -48,7 +48,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     dies-ok { $foo.() }, "invocation of a parameterized block expecting a param without a param dies";
 }
 
-# RT #63974
+# https://github.com/Raku/old-issue-tracker/issues/798
 {
     my $topic = 'topic unchanged';
     my @topic_array = <topic array unchanged>;
@@ -56,6 +56,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 
     $c( 2, 3, 4, 5 );
 
+    # https://github.com/Raku/old-issue-tracker/issues/798
     #?rakudo 2 todo 'RT #63974'
     is $topic, 2, '$_ got right value for code ref';
     is @topic_array, ( 3, 4, 5 ), '@_ got right value in code ref';

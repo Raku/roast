@@ -135,7 +135,7 @@ plan 40;
 
 }
 
-# RT #114526
+# https://github.com/Raku/old-issue-tracker/issues/2868
 {
     my $str = 'ab';
     substr-rw($str, 0, 3) = '/';
@@ -143,14 +143,14 @@ plan 40;
         'substr-rw handles end positions that are out of range';
 }
 
-# RT #125402
+# https://github.com/Raku/old-issue-tracker/issues/4321
 {
     my $s = 'foobar';
     $s.substr-rw(3, 3) = 1;
     is $s, 'foo1', 'assigning a non-string coerces';
 }
 
-# RT #127782
+# https://github.com/Raku/old-issue-tracker/issues/5198
 {
     my $s = '.' x 4 ~ 'a';
     $s.substr-rw(1,1) = '';

@@ -38,7 +38,7 @@ ok(!$res, "shell() to a nonexisting program does not die (and returns something 
 isa-ok($res, Proc, 'shell() returns a Proc even when not successful');
 ok($res.exitcode != 0, 'shell() exit code is not zero on failure');
 
-# RT #117039
+# https://github.com/Raku/old-issue-tracker/issues/3062
 throws-like { run("program_that_does_not_exist_ignore_errors_please.exe") },
     X::Proc::Unsuccessful,
     'run in sink context throws on unsuccessful exit';
@@ -46,7 +46,7 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
     X::Proc::Unsuccessful,
     'shell in sink context throws on unsuccessful exit';
 
-# RT #104794
+# https://github.com/Raku/old-issue-tracker/issues/2564
 {
 
     is_run 'my $a = qx{echo woot>&2}; say "___ $a ___"',
@@ -57,7 +57,7 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
         'qx{} does not capture stderr';
 }
 
-# RT #115390
+# https://github.com/Raku/old-issue-tracker/issues/2943
 {
     my $rt115390;
     for 1..100 -> $i {
@@ -75,7 +75,7 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
     is $rt115390, 5050, 'no crash with run() in loop; run() not in sink context';
 }
 
-# RT #128594
+# https://github.com/Raku/old-issue-tracker/issues/5443
 {
     for ^10 {
         is_run q{run("non-existent-program-RT128594", :merge).out.slurp},
@@ -84,7 +84,7 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
     }
 }
 
-# RT #128398
+# https://github.com/Raku/old-issue-tracker/issues/5374
 #?rakudo.jvm skip 'hangs'
 {
     my $p = Proc::Async.new: :w, $*EXECUTABLE, "-ne",
@@ -179,7 +179,7 @@ subtest 'all Proc pipes return Proc on .close' => {
     cmp-ok $p.err.close, '===', $p, 'err';
 }
 
-# RT #129296
+# https://github.com/Raku/old-issue-tracker/issues/5679
 subtest 'Proc.encoding is set correctly' => {
     plan 2;
     my $p = run :out, $*EXECUTABLE, '-e', 'print 42';
@@ -187,7 +187,7 @@ subtest 'Proc.encoding is set correctly' => {
     is $p.out.split(0.chr, :skip-empty), (“42”,), '.out is read correctly';
 }
 
-# RT #126380
+# https://github.com/Raku/old-issue-tracker/issues/4654
 subtest 'Proc.pid is set correctly' => {
     plan 4;
     my $p = run $*EXECUTABLE, '-e', "print 42", :out;

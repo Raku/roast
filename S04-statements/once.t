@@ -104,7 +104,7 @@ for <first second> {
         'our once { ...; Mu } block was invoked exactly once';
 }
 
-# RT #114914
+# https://github.com/Raku/old-issue-tracker/issues/2899
 {
     my $run = False;
     my $i = 0;

@@ -6,7 +6,7 @@ plan 5;
 # TODO: smart match against a grammar to get a Match object 
 # isn't specced and will likely change; see
 #
-# RT #58676
+# https://github.com/Raku/old-issue-tracker/issues/302
 #
 # http://irclog.perlgeek.de/parrot/2008-05-31#i_322527
 
@@ -18,6 +18,7 @@ S05-Grammar namespace-related tests
 
 =begin description
 
+# https://github.com/Raku/old-issue-tracker/issues/303
 check that grammar and regex namespaces don't collide, RT #58678
 
 =end description

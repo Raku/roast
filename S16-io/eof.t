@@ -13,10 +13,10 @@ plan 5;
     close $fh;
 }
 
-# RT #127370
+# https://github.com/Raku/old-issue-tracker/issues/5087
 {
   if $*KERNEL.name eq 'linux' {
-    # RT #128831
+    # https://github.com/Raku/old-issue-tracker/issues/5527
     my $files = gather {
         for '/proc/1'.IO.dir() -> $file {
             take $file if $file.f && $file.r;
@@ -33,7 +33,7 @@ plan 5;
   }
 }
 
-# RT # 132349
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo.jvm skip 'hangs'
 #?DOES 1
 {

@@ -30,7 +30,7 @@ my $anon_block = { 1 };
 isa-ok($anon_block, Block);
 is($anon_block(), 1, '{} <anon block> works');
 
-# RT #64844
+# https://github.com/Raku/old-issue-tracker/issues/907
 {
     EVAL '$anon_block( 1 )';
     #?rakudo todo 'Parrot support for zero-arg subs?'
@@ -42,6 +42,7 @@ is($anon_block(), 1, '{} <anon block> works');
     else {
         my $errmsg = ~$!;
 
+        # https://github.com/Raku/old-issue-tracker/issues/907
         EVAL '$anon_block( foo => "RT #64844" )';
         ok $! ~~ Exception, 'too many parameters';
         is ~$!, $errmsg, 'same error for named param as positional';

@@ -72,7 +72,7 @@ plan 13;
     is-deeply $i, 3, 'asigning to an array in a signature is sane';
 }
 
-# RT #83512
+# https://github.com/Raku/old-issue-tracker/issues/2354
 {
     my @list = 1..4;
     my (:@even, :@odd) := classify { $_ %% 2 ?? 'even' !! 'odd' }, @list;

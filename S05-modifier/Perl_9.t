@@ -34,17 +34,20 @@ ok((not ("a\nb\n" ~~ rx:P5/(?m)b\s^/)), 're_tests 1238  (1448)');
 ok(("a" ~~ rx:P5/\ba/), 're_tests 1239  (1449)');
 is(("ab" ~~ rx:P5/^(a(??{"(?!)"})|(a)(?{1}))b/ && $1), "a", 're_tests 1241/2 (1451)');
 ok((not ("AbCd" ~~ rx:P5/ab(?i)cd/)), 're_tests 1242  (1452)');
-#?rakudo 3 todo "test file needs review RT #125028"
+# https://github.com/Raku/old-issue-tracker/issues/4167
+#?rakudo 3 todo "test file needs review"
 ok(("abCd" ~~ rx:P5/ab(?i)cd/), 're_tests 1244  (1454)');
 is(("CD" ~~ rx:P5/(A|B)*(?(1)(CD)|(CD))/ && $1), "", 're_tests 1246/2 (1456)');
 is(("CD" ~~ rx:P5/(A|B)*(?(1)(CD)|(CD))/ && $2), "CD", 're_tests 1246/3 (1457)');
 is(("ABCD" ~~ rx:P5/(A|B)*(?(1)(CD)|(CD))/ && $1), "CD", 're_tests 1248/2 (1460)');
-#?rakudo 3 todo "test file needs review RT #125029"
+# https://github.com/Raku/old-issue-tracker/issues/2593
+#?rakudo 3 todo "test file needs review"
 is(("ABCD" ~~ rx:P5/(A|B)*(?(1)(CD)|(CD))/ && $2), "", 're_tests 1248/3 (1461)');
 is(("CD" ~~ rx:P5/(A|B)*?(?(1)(CD)|(CD))/ && $1), "", 're_tests 1250/2 (1464)');
 is(("CD" ~~ rx:P5/(A|B)*?(?(1)(CD)|(CD))/ && $2), "CD", 're_tests 1250/3 (1465)');
 is(("ABCD" ~~ rx:P5/(A|B)*?(?(1)(CD)|(CD))/ && $1), "CD", 're_tests 1252/2 (1468)');
-#?rakudo 2 todo "test file needs review RT #125030"
+# https://github.com/Raku/old-issue-tracker/issues/2593
+#?rakudo 2 todo "test file needs review"
 is(("ABCD" ~~ rx:P5/(A|B)*?(?(1)(CD)|(CD))/ && $2), "", 're_tests 1252/3 (1469)');
 ok((not ("Oo" ~~ rx:P5/(?i)^(o)(?!.*\1)/)), 're_tests 1254  (1472)');
 is(("abc12bc" ~~ rx:P5/(.*)\d+\1/ && $0), "bc", 're_tests 1256/1 (1474)');
@@ -84,7 +87,8 @@ is(("abcd" ~~ rx:P5/(.*?)(?<=c|b)c/ && $0), "ab", 're_tests 1321/1 (1539)');
 is(("abcd" ~~ rx:P5/(.*?)(?<=[bc])/ && $0), "ab", 're_tests 1323/1 (1541)');
 is(("abcd" ~~ rx:P5/(.*?)(?<=[bc])c/ && $0), "ab", 're_tests 1325/1 (1543)');
 is(("2" ~~ rx:P5/2(]*)?$\1/ && $/), "2", 're_tests 1327/0 (1545)');
-#?rakudo todo "test file needs review RT #125031"
+# https://github.com/Raku/old-issue-tracker/issues/2593
+#?rakudo todo "test file needs review"
 ok(("x" ~~ rx:P5/(??{})/), 're_tests 1329  (1547)');
 is(("foobarbar" ~~ rx:P5/^.{3,4}(.+)\1\z/ && $0), "bar", 're_tests 1330/1 (1548)');
 is(("foobarbar" ~~ rx:P5/^(?:f|o|b){3,4}(.+)\1\z/ && $0), "bar", 're_tests 1332/1 (1550)');

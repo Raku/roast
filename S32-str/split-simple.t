@@ -86,6 +86,7 @@ ok (''.split('')).elems == 0, q{''.split('') returns empty list};
 ok (split('', '')).elems == 0, q{''.split('') returns empty list};
 
 # split with :v should return capture
+# https://github.com/Raku/old-issue-tracker/issues/4764
 # also RT #126679
 {
     my @split = 'abc def ghi'.split(/(\s+)/, :v);
@@ -94,6 +95,7 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
     ok @split[3] eq ' ', q{split captured multiple spaces};
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4764
 # also RT #126679
 {
     my @split = split(/\d+/, 'a4b5', :v);
@@ -102,15 +104,17 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
        'split(:v) and trailing delimiter (values)';
 }
 
-# RT #112868
+# https://github.com/Raku/old-issue-tracker/issues/2759
 {
     my $rt112868 = 'splitting on empty';
     ok $rt112868.split('').elems > 0, q<.split('') does something>;
     is $rt112868.split(''), $rt112868.split(/''/),
+       # https://github.com/Raku/old-issue-tracker/issues/2759
        q<.split('') does the same thing as .split(/''/) (RT #112868)>;
 }
 
-# RT #128034
+# https://github.com/Raku/old-issue-tracker/issues/5278
+# https://github.com/Raku/old-issue-tracker/issues/5278
 subtest 'split with NaN limit throws (RT #128034)', {
     plan 3;
     dies-ok { split 'o',        'o', NaN }, X::TypeCheck;

@@ -75,7 +75,7 @@ plan 24;
     is $a, 5, 'successful match preserves new :let value';
 }
 
-# RT #121229
+# https://github.com/Raku/old-issue-tracker/issues/3331
 {
     ok "+123.456e10" ~~ rx {
         :my token SIGN { <[+-]> }

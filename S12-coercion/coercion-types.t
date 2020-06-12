@@ -43,7 +43,7 @@ class NastyChild is Parent { };
 # with definedness checks
 
 
-# RT #124839 / RT#123770
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     sub f1(Str:D(Cool:D) $x) { $x }
     sub f2(Str(Cool:D)   $x) { $x; }
@@ -98,7 +98,7 @@ class NastyChild is Parent { };
 
 is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
 
-# RT #131611
+# https://github.com/Raku/old-issue-tracker/issues/6353
 {
     my \a = -42;
     is Int(a), -42, "Sigilless variable does not confuse coercion type parsing";

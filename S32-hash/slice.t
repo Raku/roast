@@ -121,6 +121,7 @@ Quoting Larry:
     is(@s, [%hash{(1,2,3) >>+<< (0,1,2)}], "calculated slice: hyperop");
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/895
 # Whatever-slices plus hyper op, RT #64768
 {
     my %h = 'foo' => [1,2,3], 'bar' => [4,5,6];

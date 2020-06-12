@@ -7,12 +7,12 @@ use experimental :macros;
 
 plan 2;
 
-#RT #115506
+# https://github.com/Raku/old-issue-tracker/issues/2952
 lives-ok
     { EVAL 'macro pathological { AST.new }; pathological();' },
     "macro returning AST.new doesn't blow up";
 
-#RT #115504
+# https://github.com/Raku/old-issue-tracker/issues/2951
 {
     try EVAL 'macro ma { die 1 }; ma';
     is $!, 1, "die-ing inside a macro dies normally.";

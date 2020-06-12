@@ -98,7 +98,7 @@ sub gen_hash {
     }
 } #46
 
-# RT #122497
+# https://github.com/Raku/old-issue-tracker/issues/3478
 {
     BEGIN my %cache = 1 => 0;
     sub foo($n) {%cache{$n}:exists}

@@ -43,7 +43,8 @@ plan 7;
 
 # mkdir a dir that already exists
 # https://github.com/Raku/old-issue-tracker/issues/3999
-#?rakudo skip "mkdir NYI RT #124792"
+# https://github.com/Raku/old-issue-tracker/issues/2593
+#?rakudo skip "mkdir NYI"
 {
     # XXX: mkdir returns True (pre 2017.05) or the IO::Path itself
     # when dir already exists, so does this test make sense?

@@ -71,7 +71,7 @@ is $str, 'io', 'INIT {} always runs before the mainline code runs';
     }
 }
 
-# RT #122765
+# https://github.com/Raku/old-issue-tracker/issues/3517
 {
     module RT122765m {
         my $foo;

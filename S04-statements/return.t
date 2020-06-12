@@ -59,7 +59,7 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
     is($bar, '42 1', 'Should not return empty string');
 }
 
-# RT #81962
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     my $tracker = '';
     my &r = &return;
@@ -81,7 +81,7 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
     isa-ok b, Junction;
 }
 
-# RT #130825
+# https://github.com/Raku/old-issue-tracker/issues/6088
 throws-like Q[sub { INIT return }],
     X::ControlFlow::Return,
     'INIT return handled correctly';
@@ -95,7 +95,7 @@ throws-like Q[sub {CHECK return;}],
 throws-like ｢sub { eager sub { ^1 .map: { return } }() }()｣,
     X::ControlFlow::Return, :out-of-dynamic-scope{.so},
    'X::ControlFlow::Return tells when return is outside of dyn scope';
-# RT #114042
+# https://github.com/Raku/old-issue-tracker/issues/2823
 throws-like ｢sub a1 { my &x = { return }; &x }; my &y = a1; &y()｣,
     X::ControlFlow::Return, :out-of-dynamic-scope{.so},
    'X::ControlFlow::Return tells when return is outside of dyn scope';

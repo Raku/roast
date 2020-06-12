@@ -3,7 +3,7 @@ use Test;
 
 plan 5;
 
-# RT #125248
+# https://github.com/Raku/old-issue-tracker/issues/4263
 my $test-str = "N̴͔̈F̷͚́G̶͔̈́ ̷̃͜i̴̡͘s̴̰͘ ̶̫̉a̵̬͆w̴̢͒ę̴̏s̴̱̋o̴̫̓m̸̜͐e̶̥̋";
 is $test-str.chars, 14, 'Correct value of .chars for string with many combiners';
 is "N̴͔̈F̷͚́G̶͔̈́ ̷̃͜i̴̡͘s̴̰͘ ̶̫̉a̵̬͆w̴̢͒ę̴̏s̴̱̋o̴̫̓m̸̜͐e̶̥̋".NFC.elems, 56, 'Can .NFC string with many combiners';

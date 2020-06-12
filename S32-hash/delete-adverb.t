@@ -252,7 +252,7 @@ sub gen_hash {
     is +%h, 0,                      "* should be deleted now";
 } #8
 
-# RT #74946
+# https://github.com/Raku/old-issue-tracker/issues/1750
 {
     my %h = a => "b";
     %h{"a"} = %h{"a"} :delete;

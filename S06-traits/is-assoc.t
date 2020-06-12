@@ -29,10 +29,11 @@ plan 7;
     sub infix:<na>(*@a) is assoc<non> {
         '(' ~ join('|', @a) ~ ')';
     }
-    # RT #116238
+    # https://github.com/Raku/old-issue-tracker/issues/3016
     dies-ok { EVAL '1 na 2 na 3' }, 'assoc<non>';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo skip 'RT #116244'
 {
     sub postfix:<_post_l_>($a) is assoc<left> is equiv(&prefix:<+>) {
@@ -44,6 +45,7 @@ plan 7;
     is (_pre_l_ 'a' _post_l_), '<(a)>', 'assoc<left> on prefix/postfix ops';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo skip 'RT #116244'
 {
     sub postfix:<_post_r_>($a) is assoc<left> is equiv(&prefix:<+>) {

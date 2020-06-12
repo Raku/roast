@@ -25,7 +25,7 @@ is-deeply ($a, $a, $a).join($b).chars, 3, 'join respects NFG (1)';
 is-deeply ($a, $a, $a).join($c).chars, 3, 'join respects NFG (2)';
 is-deeply ($a, $a, $a).join($b ~ $c).chars, 3, 'join respects NFG (3)';
 
-# RT #127530 (normalization on concat SEGV bug)
+# https://github.com/Raku/old-issue-tracker/issues/2593
 is-deeply "\xfacf" ~ "\n", "\xfacf\n", '\xfacf ~ \n is ok';
 is-deeply "\xfad0" ~ "\n", "\xfad0\n", '\xfad0 ~ \n is ok';
 is-deeply "\xfad7" ~ "\n", "\xfad7\n", '\xfad7 ~ \n is ok';

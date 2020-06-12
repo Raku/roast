@@ -43,7 +43,7 @@ ok !defined(%*ENV<PUGS_ROCKS>), "there's still no env variable 'PUGS_ROCKS'";
 
 my ($redir,$squo) = (">", "'");
 
-# RT #77906 - can we modify the ENV?
+# https://github.com/Raku/old-issue-tracker/issues/2593
 my $expected = 'Hello from subprocess';
 %*ENV<PUGS_ROCKS> = $expected;
 # Note that the "?" preceding the "(" is necessary, because we need a Bool,
@@ -60,6 +60,7 @@ throws-like { EVAL "%ENV" },
   X::Undeclared,
   '%ENV not visible by default';
 
+# https://github.com/Raku/old-issue-tracker/issues/3447
 #?rakudo skip 'import fails, ENV not available: RT #122339'
 {
     # It must be importable
@@ -74,7 +75,7 @@ throws-like { EVAL "%ENV" },
     1;
 }
 
-# RT #78256
+# https://github.com/Raku/old-issue-tracker/issues/2212
 {
     nok %*ENV<NOSUCHENVVAR>.defined, 'non-existing vars are undefined';
     nok %*ENV<NOSUCHENVVAR>:exists, 'non-existing vars do not exist';
@@ -92,19 +93,19 @@ throws-like { EVAL "%ENV" },
     'ENV members persist to child processes';
 }
 
-# RT #77458
+# https://github.com/Raku/old-issue-tracker/issues/2100
 {
     %*ENV<ABC> = 'def';
     ok %*ENV.gist ~~ /ABC/, '%*ENV.gist generates something with ABC in it';
     ok %*ENV.raku ~~ /ABC/, '%*ENV.raku generates something with ABC in it';
 }
 
-# RT #117951
+# https://github.com/Raku/old-issue-tracker/issues/3130
 {
     ok $%*ENV, "itemizer works on %*ENV.";
 }
 
-# RT #125953
+# https://github.com/Raku/old-issue-tracker/issues/4498
 #?rakudo.js.browser skip "spawning a new process in a browser doesn't work"
 {
     %*ENV<FOOBAR> = 1;

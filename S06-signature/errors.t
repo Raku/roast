@@ -17,14 +17,15 @@ throws-like 'sub quuux ($?VERSION) { ... }', X::Parameter::Twigil,
     'parser rejects magicals as args (1)';
 eval-lives-ok 'sub quuuux ($!) { ... }', 'but $! is OK';
 
-# RT #64344
+# https://github.com/Raku/old-issue-tracker/issues/850
 {
     sub empty_sig() { return };
+    # https://github.com/Raku/old-issue-tracker/issues/850
     dies-ok { EVAL('empty_sig("RT #64344")') },
             'argument passed to sub with empty signature';
 }
 
-# RT #71478
+# https://github.com/Raku/old-issue-tracker/issues/1452
 {
     dies-ok { EVAL 'sub foo(%h) { %h }; foo(1, 2); 1' },
         "Passing two arguments to a function expecting one hash is an error";
@@ -36,12 +37,12 @@ eval-lives-ok 'sub quuuux ($!) { ... }', 'but $! is OK';
     ok $error ~~ /'foo(Int, Int)' /, '... error message mentions call profile';
 }
 
-# RT #109064
+# https://github.com/Raku/old-issue-tracker/issues/2620
 throws-like 'my class A { submethod BUILD(:$!notthere = 10) { } }; A.new',
     X::Attribute::Undeclared,
     'named parameter of undeclared attribute dies';
 
-# RT #72082
+# https://github.com/Raku/old-issue-tracker/issues/1473
 {
     try { EVAL 'sub rt72082(@a, $b) {}; rt72082(5)' }
     my $error = ~$!;
@@ -51,7 +52,7 @@ throws-like 'my class A { submethod BUILD(:$!notthere = 10) { } }; A.new',
     ok $error ~~ / :i call /, '... error message mentions "call"';
 }
 
-# RT #76368
+# https://github.com/Raku/old-issue-tracker/issues/1909
 {
     try { EVAL 'sub foo(Str) {}; foo 42' }
     my $error = ~$!;
@@ -73,7 +74,7 @@ throws-like 'my class A { submethod BUILD(:$!notthere = 10) { } }; A.new',
     ok $error ~~ / :i call /, '... error message mentions "call"';
 }
 
-# RT #78670
+# https://github.com/Raku/old-issue-tracker/issues/2235
 {
     try { EVAL 'multi rt78670(Int) {}; my $str = "foo"; rt78670 $str' }
     my $error = ~$!;

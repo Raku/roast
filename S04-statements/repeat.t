@@ -102,7 +102,7 @@ plan 21;
   is($x, 10, 'redo works in repeat until {}');
 }
 
-# RT #69178
+# https://github.com/Raku/old-issue-tracker/issues/1283
 {
     my $b = 1;
     my $tracker;
@@ -113,7 +113,7 @@ plan 21;
     ok $tracker === True, 'placeholders and "repeat while" mix';
 }
 
-# RT #114836
+# https://github.com/Raku/old-issue-tracker/issues/2892
 {
     lives-ok {
         my $condition;
@@ -123,13 +123,13 @@ plan 21;
     }, 'can share variable between loop body and condition';
 }
 
-# RT #114432
+# https://github.com/Raku/old-issue-tracker/issues/2855
 #?DOES 3
 {
     throws-like 'repeat { "but I myself" }', X::Syntax::Missing, what => '"while" or "until"';
 }
 
-# RT #128596
+# https://github.com/Raku/old-issue-tracker/issues/5445
 {
     my $runs = 0;
     my sub foo { repeat { $runs++; } while 0; };
@@ -139,7 +139,7 @@ plan 21;
     'repeat inside sub inside a loop executes even when condition is false';
 }
 
-# RT #127563
+# https://github.com/Raku/old-issue-tracker/issues/5140
 {
     sub foo($c) {
 	return if $c == 0;

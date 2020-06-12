@@ -84,7 +84,7 @@ class BarCallWithInt is Foo {
     is($o.show, 'barint,fooint,ret2,', 'callwith(42) multimethod/inheritance test');
 }
 
-# RT #69756
+# https://github.com/Raku/old-issue-tracker/issues/1361
 {
     multi sub f(0) { };
     multi sub f($n) {
@@ -93,7 +93,7 @@ class BarCallWithInt is Foo {
     lives-ok { f(3) }, 'can recurse several levels with callwith()';
 }
 
-# RT #125783
+# https://github.com/Raku/old-issue-tracker/issues/4465
 {
     use soft;
     my @xs;

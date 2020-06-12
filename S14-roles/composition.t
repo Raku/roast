@@ -72,6 +72,7 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
 }
 
 # diamond composition
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo skip 'diamond composition RT #124749'
 {
     role DA { 
@@ -85,7 +86,7 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
     is DE.new.foo, 'OH HAI', 'same with punning and inheritance';
 }
 
-# RT #69919
+# https://github.com/Raku/old-issue-tracker/issues/1371
 {
     role RT69919 {
         my $lex = 'Luthor';
@@ -98,7 +99,7 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
 
 
 # inheritance through role composition - specced in A12
-# RT #69254
+# https://github.com/Raku/old-issue-tracker/issues/1303
 {
     class irA {};
     role  irB is   irA {};
@@ -108,7 +109,7 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
 
 }
 
-# RT #72856
+# https://github.com/Raku/old-issue-tracker/issues/1512
 {
     role RT72856A { method foo {} };
     role RT72856B { method foo {} };
@@ -119,7 +120,7 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
     ok $! ~~ /RT72856B/, 'colliding role mentioned in error (2)';
 }
 
-# RT #74078
+# https://github.com/Raku/old-issue-tracker/issues/1666
 {
     role UsesSettingSub {
         method doit() {
@@ -131,7 +132,7 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
         'can use a sub from the setting in a method composed from a role';
 }
 
-# RT #64766
+# https://github.com/Raku/old-issue-tracker/issues/894
 {
     my class A {
         method foo { "OH HAI" }
@@ -163,7 +164,7 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
         END
 }
 
-# RT #124393
+# https://github.com/Raku/old-issue-tracker/issues/3795
 {
     my role R1 {
         multi method m(Int $x) { ... }

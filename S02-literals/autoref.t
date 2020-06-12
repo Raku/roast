@@ -182,7 +182,7 @@ plan 38;
     is +$pair.key, 2, '({...} => "value") works';
 }
 
-# RT #76462
+# https://github.com/Raku/old-issue-tracker/issues/1929
 {
     lives-ok { my $a = (\my %h)<a> },
         'no Null PMC access when hash indexing a hash ref';

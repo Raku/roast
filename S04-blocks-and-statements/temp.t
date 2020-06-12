@@ -89,6 +89,7 @@ plan 46;
   {
     temp %hash<z> = 42;
   }
+  # https://github.com/Raku/old-issue-tracker/issues/4676
   #?rakudo 2 todo 'RT #126447'
   ok not %hash<z>:exists, "temp() removed previously non-existent key";
   is %hash.elems, 3, "temp() restored hash has correct .elems";
@@ -230,7 +231,8 @@ plan 46;
 throws-like { temp $*foo = 42 }, X::Dynamic::NotFound,
     'Useful error conveyed when trying to temp a non-existing dynamic';
 
-{ # RT#127291
+# https://github.com/Raku/old-issue-tracker/issues/5057
+{ 
     my %h{Pair}; %h{a => 1} = 2;
     my %c{Pair}; %c{a => 1} = 2;
     {

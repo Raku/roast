@@ -235,7 +235,7 @@ my @e;
     is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
 }
 
-# RT #122342
+# https://github.com/Raku/old-issue-tracker/issues/3450
 {
     my (@r, @e);
     @e = (2, 5, 10);
@@ -314,11 +314,11 @@ my @e;
     @r = ("f", "oo", "bar")>>.chars;
     is(~@r, ~@e, "method call on list elements (ASCII)");
 
-    # RT #74890 analogue
+    # https://github.com/Raku/old-issue-tracker/issues/2593
     @r = ("f", "oo", "bar").>>.chars;
     is(~@r, ~@e, "method call on list elements (ASCII, Same thing, dot form)");
 
-    # RT #122342
+    # https://github.com/Raku/old-issue-tracker/issues/3450
     @r = ("f", "oo", "bar")»."chars"();
     is(~@r, ~@e, "method call on list elements (quoted method name)");
 
@@ -806,6 +806,7 @@ my @e;
 }
 
 # test non-UTF-8 input
+# https://github.com/Raku/old-issue-tracker/issues/3432
 #?rakudo skip 'EVAL(Buf) RT #122256'
 #?DOES 1
 {
@@ -822,7 +823,7 @@ my @e;
 }
 
 # L<S03/"Hyper operators"/is assumed to be infinitely extensible>
-# RT #122230'
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     @r = <A B C D E> »~» (1, 2, 3, *);
     @e = <A1 B2 C3 D3 E3>;
@@ -849,19 +850,19 @@ my @e;
     is ~@r, ~@e, 'dwimmy hyper takes longer length given two arguments ending with *';
 }
 
-# RT #77010
+# https://github.com/Raku/old-issue-tracker/issues/2017
 
 {
     # niecza doesn't propagate slangs into &EVAL yet
     eval-lives-ok 'sub infix:<+++>($a, $b) { ($a + $b) div 2 }; 10 >>+++<< 14', 'can use hypers with local scoped user-defined operators';
 }
 
-# RT #74530
+# https://github.com/Raku/old-issue-tracker/issues/1709
 {
     is ~(-<<(1..3)), '-1 -2 -3', 'ranges and hyper ops mix';
 }
 
-# RT #77800
+# https://github.com/Raku/old-issue-tracker/issues/2158
 # Parsing hyper-subtraction
 {
     is ((9, 8) <<-<< (1, 2, 3, 4)), (8, 6, 6, 4), '<<-<<';
@@ -870,7 +871,7 @@ my @e;
     is ((9, 8) <<->> (1, 2, 5)), (8, 6, 4), '<<->>';
 }
 
-# RT #77876
+# https://github.com/Raku/old-issue-tracker/issues/2169
 # L<S03/Hyper operators/'@array »+=»'>
 # Hyper assignment operators
 {
@@ -896,11 +897,11 @@ my @e;
     is "$a, $b, $c", $e, '»~=» changes each scalar';
 }
 
-# RT #83510
+# https://github.com/Raku/old-issue-tracker/issues/2353
 is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
     '>>[+]<< works';
 
-# RT #77670
+# https://github.com/Raku/old-issue-tracker/issues/2139
 {
     is ( { 1 + 1 }, { 2 + 2 } ).>>.(),
        (2, 4),
@@ -910,7 +911,7 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
        '.>>.() means the same as >>.()';
 }
 
-# RT #77668
+# https://github.com/Raku/old-issue-tracker/issues/2138
 {
     sub infix:<+-*/>($a, $b) {
         ( { $a + $b }, { $a - $b }, { $a * $b }, { $a / $b } )>>.()
@@ -920,19 +921,19 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
         'can call Callable objects in a list in parallel using >>.()';
 }
 
-# RT #77114
+# https://github.com/Raku/old-issue-tracker/issues/2044
 {
     #?rakudo todo "can_meta check for meta operators NYI"
     throws-like 'my @a >>[=]>> (1,2,3)', Exception, "hypering assignment dies correctly";
 }
 
-# RT #123178
+# https://github.com/Raku/old-issue-tracker/issues/3581
 {
     is 42 «~~« (Array, List, Seq), (False, False, False), "hyper against an undefined Iterable doesn't hang";
     is 42 «~~« (Hash, Bag, Pair), (False, False, False), "hyper against an undefined Associative doesn't hang";
 }
 
-# RT #120662
+# https://github.com/Raku/old-issue-tracker/issues/3287
 {
     # <empty list> <hyper> <empty list>
     is () »+« (), (), "no-dwim hyper between empty lists doesn't hang";
@@ -972,7 +973,7 @@ is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
 
 throws-like '3 «.» foo', Exception, "«.» can't be hypered";
 
-# RT #125265
+# https://github.com/Raku/old-issue-tracker/issues/4272
 {
     is 10 <<*<< (1 .. 4), <10 20 30 40>,
         'hyper op works with range on non-magical side (1)';
@@ -1007,13 +1008,13 @@ my &post = &postfix:<»i>;
 is post((2,3,4)).gist, '(0+2i 0+3i 0+4i)', "Hyper postfix can autogen with &";
 is &postfix:<»i>((2,3,4)).gist, '(0+2i 0+3i 0+4i)', "Hyper postfix can autogen without &";
 
-# RT #118223
+# https://github.com/Raku/old-issue-tracker/issues/3148
 is_run # shouldn't warn about unitialized values of type Any in Numeric context
     ｢my %l = foo => 1, bar => 2; my %r = bar => 3, baz => 4; say %l >>+<< %r｣,
     {:out{.contains: all <bar baz foo>}, :err(''), :0status},
     "union hyperoperator on a hash shouldn't warn about missing keys";
 
-# RT #130721
+# https://github.com/Raku/old-issue-tracker/issues/6058
 subtest 'method call variants respect nodality' => {
     plan 20;
 

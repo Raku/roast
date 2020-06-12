@@ -122,6 +122,7 @@ is $o.x, 5, '... worked for the class Parent (other order)';
 
 # https://github.com/Raku/old-issue-tracker/issues/2506
 {
+    # https://github.com/Raku/old-issue-tracker/issues/2506
     dies-ok { X.new }, 'RT #100780'
 }
 

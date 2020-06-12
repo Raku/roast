@@ -5,13 +5,13 @@ use Test::Util;
 
 plan 18;
 
-# RT #125938
+# https://github.com/Raku/old-issue-tracker/issues/4495
 throws-like '2**10000000000', X::Numeric::Overflow,
     'attempting to raise to a huge power throws';
 throws-like '2**-10000000000', X::Numeric::Underflow,
     'attempting to raise to a huge negative power throws';
 
-# RT #130369
+# https://github.com/Raku/old-issue-tracker/issues/5893
 throws-like '2**-999999', X::Numeric::Underflow,
     'attempting to raise to a large negative power throws';
 
@@ -35,7 +35,7 @@ throws-like '(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵', X::Numeri
 
 #?rakudo.jvm 2 skip 'implementation specific limit'
 #?rakudo.js 2 skip 'implementation specific limit'
-# RT #112788
+# https://github.com/Raku/old-issue-tracker/issues/2751
 # if no throwage happens, as is wanted, the program will take forever to run
 # so we wait for 2 seconds, then print success message and exit; if the throw
 # occurs, the Promise won't have a chance to print the success message.
@@ -58,7 +58,8 @@ throws-like 'say 1.0000001 ** (10 ** 90000)',
         'rat (large nu / small de) to large negative power';
 }
 
-if $?BITS >= 64 { # RT #121071
+# https://github.com/Raku/old-issue-tracker/issues/3319
+if $?BITS >= 64 { 
     my int $low  = 10**15;
     my int $high = 2**60 - 1;
     is $low, 1_000_000_000_000_000,
@@ -70,7 +71,8 @@ else {
     skip "this test doesn't make sense on 32bit platforms", 2;
 }
 
-# RT #125811
+# https://github.com/Raku/old-issue-tracker/issues/4471
+# https://github.com/Raku/old-issue-tracker/issues/5127
 #?rakudo.moar 1 skip 'overflow exception is not thrown on OSX RT #127500'
 throws-like { 2 ** 99999999999999999999999999999999999 }, X::Numeric::Overflow,
     'extremely large exponents must throw numeric overflow';

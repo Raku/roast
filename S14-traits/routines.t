@@ -52,7 +52,7 @@ plan 16;
     is $recorder, 'wrap', 'and the wrapper has been called once';
 }
 
-# RT #112664
+# https://github.com/Raku/old-issue-tracker/issues/2736
 {
     multi trait_mod:<is>(Routine $m, :$a!) {
 	multi y(|) { my $x = $m }   #OK not used
@@ -61,10 +61,11 @@ plan 16;
     sub rt112664 is a {}
 
     lives-ok { rt112664 },
+    # https://github.com/Raku/old-issue-tracker/issues/2736
     '[BUG] multi without proto gets wrong lexical lookup chain (RT #112664)';
 }
 
-# RT #74092
+# https://github.com/Raku/old-issue-tracker/issues/1668
 {
     try { EVAL 'sub yulia is krassivaya { }' };
     diag $!
@@ -93,7 +94,7 @@ plan 16;
         'Applying traits to submethods retains submethod semantics';
 }
 
-# RT #112666
+# https://github.com/Raku/old-issue-tracker/issues/2737
 # Note: it's important this test stays in its nested block, not in the test
 # mainline, as there was a bug that was hidden in the case it was in the
 # mainline.

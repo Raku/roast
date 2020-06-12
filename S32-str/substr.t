@@ -44,6 +44,7 @@ plan 58;
 { # codepoints greater than 0xFFFF
     my $str = join '', 0x10426.chr, 0x10427.chr;
     is $str.codes, 2, "Sanity check string";
+    # https://github.com/Raku/old-issue-tracker/issues/3970
     #?rakudo.jvm 2 todo 'wrong result RT #124692'
     is substr($str, 0, 1), 0x10426.chr, "Taking first char of Deseret string";
     is substr($str, 1, 1), 0x10427.chr, "Taking second char of Deseret string";
@@ -94,7 +95,7 @@ plan 58;
     is $str.substr(10..*),  "and bar", "substr (substr(Range Inf))";
 }
 
-# RT #115086
+# https://github.com/Raku/old-issue-tracker/issues/2906
 {
     is "abcd".substr(2, Inf), 'cd', 'substr to Inf';
 }
@@ -104,14 +105,14 @@ plan 58;
 
 }
 
-# RT #123602
+# https://github.com/Raku/old-issue-tracker/issues/3646
 {
     is ("0" x 3 ~ "1").substr(2), '01',
         'substr on a string built with infix:<x> works';
 }
 
-# RT #76682
-# RT #128038
+# https://github.com/Raku/old-issue-tracker/issues/1966
+# https://github.com/Raku/old-issue-tracker/issues/5281
 subtest '.substr fails when start is beyond end of string' => {
     plan 4;
     fails-like { 'foo'.substr: 5    }, X::OutOfRange, '(from) method';
@@ -120,7 +121,7 @@ subtest '.substr fails when start is beyond end of string' => {
     fails-like { substr 'foo', 5, 3 }, X::OutOfRange, '(from, chars) sub';
 }
 
-# RT #122789
+# https://github.com/Raku/old-issue-tracker/issues/3515
 lives-ok { BEGIN "a".subst: /a/, "b" }, '.subst in BEGIN does not die';
 
 subtest 'substr coerces from/to to Ints' => {

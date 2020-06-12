@@ -14,7 +14,7 @@ is foo($obj:),  'method', 'method with colon notation';
 is $obj.foo,    'method', 'method with dot notation';
 is foo($obj),   'sub', 'adding trailing comma should call the "sub"';
 
-# RT #69610
+# https://github.com/Raku/old-issue-tracker/issues/1346
 {
     class RT69610 {
         our method rt69610() {
@@ -23,15 +23,17 @@ is foo($obj),   'sub', 'adding trailing comma should call the "sub"';
     }
 
     ok( { "foo" => &RT69610::rt69610 }.<foo>( RT69610.new ) ~~ RT69610,
+        # https://github.com/Raku/old-issue-tracker/issues/1346
         "Can return from method called from a hash lookup (RT #69610)" );
 }
 
-# RT #92192
+# https://github.com/Raku/old-issue-tracker/issues/2432
 {
     my @a;
     my $n;
     for 1..5 -> $i { @a.push(anon method foo { $n++ }) };
     .($_) for @a;
+    # https://github.com/Raku/old-issue-tracker/issues/2432
     is $n, 5, 'RT #92192';
 }
 

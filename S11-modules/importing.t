@@ -53,7 +53,7 @@ dies-ok( { EVAL '&foo' }, 'Foo::foo is undefined in outer scope' );
 }
 
 #?rakudo.js.browser skip "EVAL time use doesn't work in the browser"
-# RT #125846
+# https://github.com/Raku/old-issue-tracker/issues/4483
 throws-like 'use Foo :NoSucTag;', X::Import::NoSuchTag,
                 :source-package<Foo>,
                 :tag<NoSucTag>,

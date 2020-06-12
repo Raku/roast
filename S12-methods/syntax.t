@@ -29,7 +29,7 @@ is (.doit\  (1, 2): 3), 'a:1|b:2!3',    'list op with colon, unspace';
 # L<S12/Fancy method calls/"if any term in a list is a bare closure">
 is (1..8).grep({ $_ % 2 }).map({ $_ - 1 }).join('|'), '0|2|4|6',
    'sanity check, should give same result as the next two tests';
-# RT #67700
+# https://github.com/Raku/old-issue-tracker/issues/1148
 {
     is ((1..8).map:{ "$^x$^y" }.assuming: 'x').join('|'), 'x1|x2|x3|x4|x5|x6|x7|x8',
        'block as arg in methodcall is the invocant of a following methodcall';
@@ -37,6 +37,7 @@ is (1..8).grep({ $_ % 2 }).map({ $_ - 1 }).join('|'), '0|2|4|6',
        'block as arg in methodcall is the invocant of a following methodcall';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/580
 # Used to be Rakudo RT #61988, $.foo form didn't accept arguments
 
 {
@@ -51,7 +52,7 @@ is (1..8).grep({ $_ % 2 }).map({ $_ - 1 }).join('|'), '0|2|4|6',
     is B.new.c, 42, '`$.a: <arguments>` works';
 }
 
-# RT #69350
+# https://github.com/Raku/old-issue-tracker/issues/1316
 # test that you can't manipulate methods by writinig to the symbol table
 {
     class Manip { method a { 1} };

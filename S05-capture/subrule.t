@@ -68,14 +68,14 @@ is(~$/, "abcabcabcabc", 'Caprep matched');
 is(~$/<caprep>, "abcabcabcabc", 'Caprep captured');
 is(~$/<caprep>[0], "abcabcabcabc", 'Caprep abc one captured');
 
-# RT #76892
+# https://github.com/Raku/old-issue-tracker/issues/1994
 {
     nok 'abc' !~~ /<alpha>(.)/, 'unsuccessful non-match';
     is $0,       'b', 'failed !~~ still makes $0 available';
     is $<alpha>, 'a', 'failed !~~ still makes $<foo> available';
 }
 
-# RT #96424
+# https://github.com/Raku/old-issue-tracker/issues/2458
 {
     ok '0' ~~ /<alpha>|<digit>/, 'regex matches';
     is $<alpha>.Str, '', 'Can call methods on captures from unsuccessful matches';
@@ -88,7 +88,7 @@ is(~$/<caprep>[0], "abcabcabcabc", 'Caprep abc one captured');
         'can use $/ and subrule capture in embeeded code block';
 }
 
-# RT #107254
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     grammar G {
         rule TOP { ^ <w1> <w2>? <w3>? $ }
@@ -106,7 +106,7 @@ is(~$/<caprep>[0], "abcabcabcabc", 'Caprep abc one captured');
     is $<w2>, 'two', 'got the right sub capture for quantified subrule';
 }
 
-# RT #112148
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     my grammar H {
         token TOP { ^[ '?' <digit> ]? [ '#' <digit> ]? $ };

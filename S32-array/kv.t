@@ -59,7 +59,7 @@ is( 42.kv, [0, 42], "(42).kv works");
     is kv($y).[0],  'bar',  'kv(Pair) (first key (colonpair))';
 }
 
-# RT #71086
+# https://github.com/Raku/old-issue-tracker/issues/1428
 {
     use MONKEY-TYPING;
     augment class List {

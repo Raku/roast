@@ -64,7 +64,7 @@ try { unless (die "should die") { $foo = 3 }};
 is $foo, 1, "die should stop execution immediately.";
 
 # L<S04/Conditional statements/"The unless statement does not allow an elsif">
-# RT #130279
+# https://github.com/Raku/old-issue-tracker/issues/5863
 subtest '`else` and kin with `unless` errors out' => {
     plan 3;
     throws-like 'unless 1 {} else     {}', X::Syntax::UnlessElse,

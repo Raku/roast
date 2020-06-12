@@ -70,7 +70,7 @@ plan 12;
 
 throws-like { EVAL q[label1: say "OH HAI"; label1: say "OH NOES"] }, X::Redeclaration;
 
-# RT #126490
+# https://github.com/Raku/old-issue-tracker/issues/4688
 {
     throws-like 'A: for 1 { for 1 { last A }; CONTROL { default { die $_ } } }', CX::Last,
         "last-ing and outer loop and catching that in a CONTROL block doesn't SEGV";

@@ -43,7 +43,7 @@ throws-like ' class T { method t { $!t := 1 }}; ::T.new.t; ',
     X::Attribute::Undeclared,
     "Test Undeclared private attribute binding from a class";
 
-# RT #102478
+# https://github.com/Raku/old-issue-tracker/issues/2543
 {
     throws-like { EVAL q[has $.x] },
         X::Attribute::NoPackage,

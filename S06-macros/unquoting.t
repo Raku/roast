@@ -41,6 +41,7 @@ plan 6;
     is einstein(), 4, "can build ASTs incrementally";
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/3353
 #?rakudo.moar skip 'Specified code ref has no outer, RT #121533'
 #?rakudo.js skip 'Skipping failed macro test, it fail on moar too'
 { # building an AST incrementally in a for loop
@@ -74,7 +75,7 @@ plan 6;
                 line     => 1;
 }
 
-# RT #122746
+# https://github.com/Raku/old-issue-tracker/issues/3512
 {
     macro postfix:<!!>($o) {
         quasi {

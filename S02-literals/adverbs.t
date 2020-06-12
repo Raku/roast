@@ -21,9 +21,11 @@ plan 35;
     is-deeply (:%a), (a => %a), ":%a works";
     is-deeply (:&a), (a => &a), ":&a works";
     is-deeply (:42nd), (nd => 42), "Basic numeric adverb works";
+    # https://github.com/Raku/old-issue-tracker/issues/5354
     #?rakudo.jvm todo 'RT #128306'
     #?rakudo.js todo 'unimplemented unicody thing'
-    is-deeply (:๔߂nd), (nd => 42), "Unicode numeric adverb works"; # RT #128306
+    # https://github.com/Raku/old-issue-tracker/issues/5354
+    is-deeply (:๔߂nd), (nd => 42), "Unicode numeric adverb works"; 
     throws-like { EVAL ':69th($_)' },
       X::Comp,
       "Numeric adverb can't have an extra value";
@@ -49,6 +51,7 @@ plan 35;
     is-deeply ({ :$:f }(:f(3))), (f => 3), 'Adverb with $: twigil works';
     is-deeply ({ :@:f }(:f(3,3))), (f => (3,3)), 'Adverb with @: twigil works';
     is-deeply ({ :%:f }(:f(:a<3>))), (f => :a<3>), 'Adverb with %: twigil works';
+    # https://github.com/Raku/old-issue-tracker/issues/3318
     # Not using sigils in rx due to RT #121061 but we do not need to for this
     "aaaa" ~~ m/$<fee>=a $<fie>=((a)(a)) $<foe>=($<fum>=(a))/;
     is-deeply (:$<fee>), (fee => $<fee>), 'Adverb with $< twigil works';
@@ -61,7 +64,7 @@ plan 35;
 
 } # 30
 
-# RT #74492
+# https://github.com/Raku/old-issue-tracker/issues/1704
 {
     sub foo(:$a, :$b, :$c) {
         ok $a && $b && $c, "Adverbs without punctuations is allowed"
@@ -70,7 +73,7 @@ plan 35;
     foo(:a:b:c);
 } # 32
 
-# RT #117739
+# https://github.com/Raku/old-issue-tracker/issues/3113
 {
     is-deeply (:99999999999999999999999dd),
               (dd => 99999999999999999999999),

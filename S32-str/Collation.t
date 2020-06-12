@@ -57,7 +57,8 @@ subtest {
     is-deeply <a á A Á ó ø 1 z t ṫ>.collate, <1 Á á A a ø ó ṫ t z>, '!secondary, !tertiary; <a á A Á ó ø 1 z t ṫ>.collate';
 }
 
-{ # RT #132216
+# https://github.com/Raku/old-issue-tracker/issues/6568
+{ 
     (my $*COLLATION = Collation.new).set: :!tertiary, :!quaternary;
     is-deeply "a" coll "A", Same,
       ':!tertiary, :!quaternary collation puts "a" and "A" as Same';

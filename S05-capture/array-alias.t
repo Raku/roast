@@ -31,12 +31,14 @@ ok("abcd" ~~ m/a  @<foo>=(.(.))  d/, 'Hypothetical array capture');
 is(~@<foo>, "bc", 'Hypothetical variable captured');
 
 our @GA;
+# https://github.com/Raku/old-issue-tracker/issues/4617
 #?rakudo 3 skip 'capturing to lexical variable NYI RT #126243'
 ok("abcxyd" ~~ m/a  @GA=(.(.))+  d/, 'Global array capture');
 is("@GA[]", "c y", 'Global array captured');
 ok(%$/.keys == 0, 'No vestigal captures');
 
 my @foo;
+# https://github.com/Raku/old-issue-tracker/issues/4617
 #?rakudo 2 skip 'capturing to lexical variable NYI RT #126243'
 ok("abcxyd" ~~ m/a  @foo=(.(.))+  d/, 'Package array capture');
 is("@foo[]", "c y", 'Package array captured');
@@ -82,17 +84,19 @@ is(~@<chars>[2][1], "c", 'Multiple capture value of nested AoA[2][1]');
 
 
 my @bases = ();
+# https://github.com/Raku/old-issue-tracker/issues/4617
 #?rakudo 2 skip 'capturing to lexical variable NYI RT #126243'
 ok("GATTACA" ~~ m/ @bases=(A|C|G|T)+ /, 'All your bases...');
 is("@bases[]", "G A T T A C A", '...are belong to us');
 
 @bases = ();
+# https://github.com/Raku/old-issue-tracker/issues/4617
 #?rakudo 3 skip 'capturing to lexical variable NYI RT #126243'
 ok("GATTACA" ~~ m/ @bases=(A|C|G|T)**{4} (@bases+) /, 'Array reinterpolation');
 is("@bases[]", "G A T T", '...are belong to...');
 is("$0", "A", '...A');
 
-# RT #121061
+# https://github.com/Raku/old-issue-tracker/issues/3318
 {
     ok("a" ~~ /@<from1>=(.)*/,
         'no error with array alias and list-quantified subpattern (1)');

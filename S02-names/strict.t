@@ -39,7 +39,8 @@ subtest '`no strict` does not cause autovivification container issues' => {
     %h<a> = 42;
     lives-ok { temp %h<b> = 8 },  '`temp` on Hash key';
     lives-ok { let  %h<c> = 9 },  '`let`  on Hash key';
-    lives-ok { %h<d><e> }, 'postcircumfix {} on Hash key'; # RT #125183
+    # https://github.com/Raku/old-issue-tracker/issues/4244
+    lives-ok { %h<d><e> }, 'postcircumfix {} on Hash key'; 
     isa-ok %h<non-existent>, Any, 'non-existent keys are `Any`';
 }
 

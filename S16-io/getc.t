@@ -26,7 +26,7 @@ my $tmpfile = "temp-test" ~ nonce();
     dies-ok { open('t').getc }, 'getc on a directory fails';
 }
 
-# RT #131365
+# https://github.com/Raku/old-issue-tracker/issues/6258
 with $tmpfile.IO {
     .spurt: "a♥c";
     with .open {

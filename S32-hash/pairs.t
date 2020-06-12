@@ -79,7 +79,7 @@ Basic C<pairs> tests, see S32::Containers.
     is $pair.value, 142, 'aliases returned by $pair.kv should be rw (2)';
 }
 
-# RT #117935
+# https://github.com/Raku/old-issue-tracker/issues/3129
 {
     my %rt117935;
     %rt117935<a> = 1;

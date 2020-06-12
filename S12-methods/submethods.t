@@ -119,7 +119,7 @@ Basic submethod tests. See L<S12/"Submethods">
   is( $C2.double_value, 200, '... or value passed in' );
 }
 
-# RT #127660
+# https://github.com/Raku/old-issue-tracker/issues/5163
 {
     my class M { method Bool { True } }
     is M || 42, M, 'Bool method in class is used in boolificiation';

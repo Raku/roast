@@ -56,7 +56,7 @@ is 0o᠗5᠕, 493, "Octal literals with a mixture of scripts work";
 throws-like "say 0o7₅₅", X::Syntax::Confused, "Numerals in category 'No' can't be used in octal literals";
 throws-like "say 0oⅦ55", X::Syntax::Confused, "Numerals in category 'Nl' can't be used in octal literals";
 {
-    # RT #119339
+    # https://github.com/Raku/old-issue-tracker/issues/3211
     is_run 'say 069', {
         err => /'Potential difficulties:'
             .* "Leading 0" .+ '0o'
@@ -104,6 +104,6 @@ is :36<utf១៦>, 51760986, "Nd numerals can be used in general radix numbers";
 throws-like "say :36<utfⅧ>", X::Syntax::Malformed, "Nl numerals are not allowed in general radix numbers";
 throws-like "say :36<utf㉜>", X::Syntax::Malformed, "No numerals are not allowed in general radix numbers";
 
-# RT #127866
+# https://github.com/Raku/old-issue-tracker/issues/5226
 throws-like { "௰".Int }, X::Str::Numeric,
     'converting string with "No" characters to numeric is not supported';

@@ -59,19 +59,20 @@ plan 41;
     is $p.cause.payload, "Died", "Default exception payload is 'Died'";
 }
 
-{ # RT #124190
+# https://github.com/Raku/old-issue-tracker/issues/3758
+{ 
     my $p = Promise.new;
     my $vowname = $p.vow.^name;
 
     ok Promise.WHO{$vowname} :!exists, "the nested Vow class is lexically scoped";
 }
 
-# RT #125257
+# https://github.com/Raku/old-issue-tracker/issues/4268
 {
     throws-like 'await', Exception, 'bare "await" dies';
 }
 
-# RT #122803
+# https://github.com/Raku/old-issue-tracker/issues/3527
 #?rakudo.jvm todo 'fails most of the time'
 {
     for ^4 {
@@ -81,11 +82,11 @@ plan 41;
     }
 }
 
-# RT #129753
+# https://github.com/Raku/old-issue-tracker/issues/5703
 is-deeply Promise.new ~~ Planned, False,
     'smartmatching Promise against an Enum does not hang';
 
-# RT #130064
+# https://github.com/Raku/old-issue-tracker/issues/5790
 {
     my $p = Promise.new;
     $p.break("OH NOES");

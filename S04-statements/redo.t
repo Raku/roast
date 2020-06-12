@@ -109,7 +109,7 @@ plan 12;
 }
 
 {
-    # RT #72442
+    # https://github.com/Raku/old-issue-tracker/issues/1483
     throws-like '{redo}', X::ControlFlow, 'redo without loop construct dies';
 }
 

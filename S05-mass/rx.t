@@ -34,10 +34,12 @@ ok 'verify' ~~ /[ if    not | ify ]/, 'control';
 # L<S05/Backtracking control/"Evaluating a double colon">
 
 #### [ if :: not | ify ]	verify		n	inside a group
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo skip ':: NYI RT #124889'
 ok 'verify' !~~ /[ if :: not | ify ]/, 'inside a group';
 
 ####   if :: not | ify	verify		n	the default all group
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo skip ':: NYI RT #124890'
 ok 'verify' !~~ /  if :: not | ify/, 'the default all group';
 
@@ -45,6 +47,7 @@ ok 'verify' !~~ /  if :: not | ify/, 'the default all group';
 ok 'verify' ~~ /[ if :  not | ify ]/, 'simple backtrack still works';
 
 #### [ if :: not | ify ] | verify	verify	y	rule continues
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo skip ':: NYI RT #124891'
 ok 'verify' ~~ /[ if :: not | ify ] | verify/, 'rule continues';
 
@@ -53,26 +56,32 @@ ok 'verify' ~~ /[ if :: not | ify ] | verify/, 'rule continues';
 ok 'whence' ~~ /[ when     ever ] | whence/, 'full backtrack failure';
 
 #### [ when ::: ever ] | whence	whence	n	full backtrack failure
+# https://github.com/Raku/old-issue-tracker/issues/4054
 #?rakudo skip '::: NYI RT #124892'
 ok 'whence' !~~ /[ when ::: ever ] | whence/, 'full backtrack failure';
 
 #### ab::cd | gh::ij		xyabghij	y	group cut at top
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo skip ':: NYI RT #124893'
 ok 'xyabghij' ~~ /ab::cd | gh::ij/, 'group cut at top';
 
 #### ab:::cd | gh:::ij	xyabghij	n	rule cut at top
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo skip ':: NYI RT #124894'
 ok 'xyabghij' !~~ /ab:::cd | gh:::ij/, 'rule cut at top';
 
 #### [ab::cd | gh::ij]	xyabghij	y	group cut in group
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo skip ':: NYI RT #124895'
 ok 'xyabghij' ~~ /[ab::cd | gh::ij]/, 'group cut in group';
 
 #### [ab:::cd | gh:::ij]	xyabghij	n	rule cut in group
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo skip '::: NYI RT #124896'
 ok 'xyabghij' !~~ /[ab:::cd | gh:::ij]/, 'rule cut in group';
 
 #### [ ab | abc ]: de	xyzabcde	n	no backtrack into group
+# https://github.com/Raku/old-issue-tracker/issues/3343
 #?rakudo todo 'RT #121307'
 ok 'xyzabcde' !~~ /[ ab | abc ]: de/, 'no backtrack into group';
 
@@ -80,6 +89,7 @@ ok 'xyzabcde' !~~ /[ ab | abc ]: de/, 'no backtrack into group';
 ok 'xyzabcde' !~~ /( ab || abc ): de/, 'no backtrack into subpattern';
 
 #### [ when <commit> ever ] | whence	whence	n	full backtrack failure
+# https://github.com/Raku/old-issue-tracker/issues/4074
 #?rakudo todo '<commit> NYI RT #124897'
 ok 'whence' !~~ /[ when <commit> ever ] | whence/, 'full backtrack failure';
 
@@ -402,15 +412,15 @@ ok "ab\x5cyz" ~~ /'ab\\yz'/, 'literal match with backslash';
 ok '... --- ...' ~~ /"... --- ..."/, 'literal match (\")';
 
 #### "... --- ..."		...---...	n	literal match (\")
-# RT #64880
+# https://github.com/Raku/old-issue-tracker/issues/921
 ok '...---...' !~~ /"... --- ..."/, 'literal match (\")';
 
 #### "ab<\">cd"		ab<">cd		y	literal match with quote
-# RT #64880
+# https://github.com/Raku/old-issue-tracker/issues/921
 ok 'ab<">cd' ~~ /"ab<\">cd"/, 'literal match with quote';
 
 #### "ab<'>cd"		ab<\'>cd		y	literal match with quote
-# RT #64880
+# https://github.com/Raku/old-issue-tracker/issues/921
 ok 'ab<\'>cd' ~~ /"ab<'>cd"/, 'literal match with quote';
 
 #### "ab\\cd"		ab\x5ccd	y	literal match with backslash
@@ -460,7 +470,7 @@ ok 'abcdef' !~~ /<[A..Z0..9]>/, 'two enumerated ranges';
 #### <[A..Z0..9]>		abcDef		y	two enumerated ranges
 ok 'abcDef' ~~ /<[A..Z0..9]>/, 'two enumerated ranges';
 
-# RT #120753
+# https://github.com/Raku/old-issue-tracker/issues/3291
 ok 'Z' ~~ /<[A..MZ]>/, 'range and singleton';
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/"The special named assertions">
@@ -512,7 +522,8 @@ ok 'dbaacb' ~~ /<!after c|d><[ab]>/, 'lookbehind <!after>';
 ok 'cbaccb' ~~ /<!after cd><[ab]>/, 'lookbehind <!after>';
 
 #### $ <after ^a>		a		y				lookbehind <after>
-ok 'a' ~~ /$ <after ^a>/, 'lookbehind <after>'; # RT #124898
+# https://github.com/Raku/old-issue-tracker/issues/4075
+ok 'a' ~~ /$ <after ^a>/, 'lookbehind <after>'; 
 
 #### <after x+>y		axxbxxyc	y				lookbehind <after>
 ok 'axxbxxyc' ~~ /<after x+>y/, 'lookbehind <after>';
@@ -1457,18 +1468,22 @@ ok 'foo - bar' ~~ /:s foo '-'? bar/, 'basic ws match';
 ok 'foo - bar' ~~ /:s<?wb>foo '-'? bar/, 'basic ws match with boundary modifier separation';
 
 #### :s::foo '-'? bar			foo - bar	y	basic ws match with backtrack no-op modifier separation
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo skip ':: NYI RT #124900'
 ok 'foo - bar' ~~ /:s::foo '-'? bar/, 'basic ws match with backtrack no-op modifier separation';
 
 #### :s::(\w+) ':=' (\S+)		dog := spot	/mob 0: <dog @ 0>/	sigspace and capture together
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo skip ':: NYI RT #124901'
 ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 0: <dog @ 0>/), 'sigspace and capture together';
 
 #### :s::(\w+) ':=' (\S+)		dog := spot	/mob 1: <spot @ 7>/	sigspace and capture together
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo skip ':: NYI RT #124902'
 ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 1: <spot @ 7>/), 'sigspace and capture together';
 
 #### :Perl \A.*? bcd\Q$\E..\z	a bcd$ef	y	Perl syntax (:Perl5)
+# https://github.com/Raku/old-issue-tracker/issues/4077
 #?rakudo todo 'parse error RT #124903'
 ok 'a bcd$ef' ~~ m:Perl5/\A.*? bcd\Q$\E..\z/, 'Perl syntax (:Perl5)';
 
@@ -2030,44 +2045,54 @@ ok '11 12 13 abc' ~~ /:s^[\d+ ]* abc/, '<?ws> before closing bracket';
     nok 'aa'   ~~ /a**۳/,        'Unicode Nd digits work (no match case)';
 }
 
-# RT #112450
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
+    # https://github.com/Raku/old-issue-tracker/issues/2593
     ok 'foooo' ~~ /^ f o ** 4 $/, 'RT #112450 sanity';
     my $rt112450 = 4;
+    # https://github.com/Raku/old-issue-tracker/issues/2593
     ok 'foooo' ~~ /^ f o ** {$rt112450} $/, 'RT #112450 closure interpolation';
 }
 
-# RT #112454
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     my $rt112454 = 3;
     my $ten_x = 'x' x 10;
 
+    # https://github.com/Raku/old-issue-tracker/issues/2593
     ok $ten_x ~~ / x ** 3 /, 'RT #112454 match sanity';
+    # https://github.com/Raku/old-issue-tracker/issues/2593
     is $/.Str, 'x' x 3, 'RT #112454 quantifier sanity';
 
+    # https://github.com/Raku/old-issue-tracker/issues/2593
     ok $ten_x ~~ / x ** {$rt112454} /, 'Simple match (RT #112454)';
+    # https://github.com/Raku/old-issue-tracker/issues/2593
     is $/.Str, 'x' x $rt112454, '** quantifier with braces (RT #112454)';
 }
 
-# RT #116415
+# https://github.com/Raku/old-issue-tracker/issues/3027
 {
     my $rt116415 = 0;
 
+    # https://github.com/Raku/old-issue-tracker/issues/3027
     ok 'foobar' ~~ / . ** 0 /, 'RT #116415 match sanity';
+    # https://github.com/Raku/old-issue-tracker/issues/3027
     is $/.Str, '', 'RT #116415 quantifier sanity';
 
+    # https://github.com/Raku/old-issue-tracker/issues/3027
     ok 'foobar' ~~ / . ** {$rt116415} /, 'Simple match (RT #116415)';
+    # https://github.com/Raku/old-issue-tracker/issues/3027
     is $/.Str, '', '** quantifier with braces (RT #116415)';
 }
 
-# RT #115294
+# https://github.com/Raku/old-issue-tracker/issues/2925
 {
     $_ = 'foo bar';
     is m/ "{ $_ }" /, 'foo bar',
         'using variable in interpolated block in double-quoted string';
 }
 
-# RT #115298
+# https://github.com/Raku/old-issue-tracker/issues/2927
 ok 'foobar' ~~ /$( $_ )/, '$( $_ ) will match literally';
 is $/, 'foobar', '... will match correctly';
 

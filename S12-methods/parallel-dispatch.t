@@ -124,7 +124,7 @@ class Bar is Foo {
 
 }
 
-# RT #77436
+# https://github.com/Raku/old-issue-tracker/issues/2098
 {
     is (1,2,3)».$( * + 42 ), [43, 44, 45], '$( ) after dotty parallel dispatch';
     is (1,2,3)».&( * + 42 ), [43, 44, 45], '&( ) after dotty parallel dispatch';

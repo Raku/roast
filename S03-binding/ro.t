@@ -38,7 +38,7 @@ plan 11;
     is @x.join(''), 'd|e|k', 'assignment relly worked';
 }
 
-# RT #65900
+# https://github.com/Raku/old-issue-tracker/issues/1008
 {
     throws-like q[my $a is readonly = 5;], X::Comp::Trait::Unknown,
         'variable trait "is readonly" is no longer valid (1)';

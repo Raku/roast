@@ -38,10 +38,10 @@ try {
 }
 ok($ok, 'can use captured type in declaration');
 
-#RT #114216
+# https://github.com/Raku/old-issue-tracker/issues/2833
 eval-lives-ok q':(::T $x)', "No error on type capture";
 
-# RT #125537
+# https://github.com/Raku/old-issue-tracker/issues/4375
 {
     sub foo(::T) {
         {
@@ -52,7 +52,7 @@ eval-lives-ok q':(::T $x)', "No error on type capture";
     foo(1)
 }
 
-# RT #114724
+# https://github.com/Raku/old-issue-tracker/issues/2886
 {
     sub f (::T $g) {
         for ($g) -> T $h {
@@ -62,7 +62,7 @@ eval-lives-ok q':(::T $x)', "No error on type capture";
     is f("blah"), "blah:Str", 'Type variable matches in signature to "for" loop';
 }
 
-# RT #126383
+# https://github.com/Raku/old-issue-tracker/issues/4657
 {
     sub accum( ::T \a, T(Cool) \b ) { a += b };
 

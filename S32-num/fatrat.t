@@ -178,6 +178,7 @@ isa-ok (1/2R).FatRat, FatRat, '... and actually returns a FatRat';
 ok 1/2R === 1/2R, 'FatRats are value types, so 1/2R === 1/2R';
 ok 1/2R !=== 1/3R, '=== with false outcome';
 
+# https://github.com/Raku/old-issue-tracker/issues/4016
 #'FatRat arith + type objects RT #124814'
 {
     my FatRat $a;
@@ -297,7 +298,8 @@ subtest '=== with 0-denominator FatRats' => {
     is-deeply <2/0>F  ===  <0/0>F, False, ' 2/0 === 0/0';
 }
 
-# RT#130427
+# https://github.com/Raku/old-issue-tracker/issues/5926
+
 cmp-ok FatRat.Range, '===', -∞..∞,
     'FatRat.Range is from -inf to inf, including end points';
 

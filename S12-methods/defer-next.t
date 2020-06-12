@@ -132,7 +132,7 @@ class BarNextWithInt is Foo {
     nok $after-ns, 'control does not reach beyond nextsame that has nowhere to go';
 }
 
-# RT #123989
+# https://github.com/Raku/old-issue-tracker/issues/3718
 {
     my @output;
 	proto foo($) { * }

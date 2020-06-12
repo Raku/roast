@@ -17,7 +17,7 @@ my %e1 = enum <foo>;
 is %e1.keys.elems, 1, 'single-value anonymous enum created correct sized hash';
 is %e1<foo>,       0, 'single-value anonymous enum created correctly';
 
-# RT #123083
+# https://github.com/Raku/old-issue-tracker/issues/3570
 {
     anon enum <un>;
     is +un, 0, 'anon enum <un> is identical to enum :: <un>';

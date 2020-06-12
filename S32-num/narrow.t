@@ -8,7 +8,8 @@ is     (1+2i).narrow,     1+2i, 'narrow on complex with imaginary part != 0';
 isa-ok (2.5e0+0i).narrow, Num,  'narrow on complex without imaginary part (Num)';
 isa-ok (2+0i).narrow,     Int,  'narrow on complex without imaginary part (Int)';
 
-{ # RT #126828
+# https://github.com/Raku/old-issue-tracker/issues/4828
+{ 
   isa-ok (0+1.5e0i).narrow, Complex,  'narrow on complex without real part (Num)';
   is (0+2i).narrow,         2i,       'narrow on complex without real part (Int)';
   is (0+0i).narrow,         0,        'narrow on complex 0';

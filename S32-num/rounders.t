@@ -128,7 +128,7 @@ for @testkeys -> $t {
         'large positive numbers rounded do not give negative numbers (2)';
 }
 
-# RT #118545  Round with arguments
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     my $integer = 987654321;
     is $integer.round(1),   987654321, "round integer with argument";

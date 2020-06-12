@@ -24,18 +24,18 @@ is $x, 42, 'regex in a grammar can see outer lexicals';
 grammar WithAttrib {
     has Str $.sep;
 }
-# RT #73680
+# https://github.com/Raku/old-issue-tracker/issues/1613
 is WithAttrib.new(sep => ',').sep, ',', 'attributes work in grammars too';
 isa-ok WithAttrib.new.sep, Str, 'empty attribute intilized to Str';
 
-# RT #113552
+# https://github.com/Raku/old-issue-tracker/issues/2786
 {
     try { EVAL 'grammar A { token a { ... }; token a { ... } }' };
     my $error = ~$!;
     ok $error ~~ /:i 'already has a Regex \'a\'' /, "duplicate methods err sanely";
 }
 
-# RT #125169
+# https://github.com/Raku/old-issue-tracker/issues/4240
 {
     grammar D { our token doo { doo }; };
     ok 'doo' ~~ &D::doo,        'our token as rhs of smartmatch';

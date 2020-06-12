@@ -11,6 +11,7 @@ plan 47;
 {
     my Int %h;
     is %h.of,    Int, 'my Int %h declares a Hash of Int';
+    # https://github.com/Raku/old-issue-tracker/issues/6659
     #?rakudo.jvm todo 'Coercion type Str(Any) returned from .keyof is not the same object as Str(Any) RT #132694'
     is %h.keyof, Str(Any), 'my Int %h declares a Hash with Str(Any) keys';
     lives-ok { %h = (a => 3, b => 7) }, 'can assign Ints to an Hash of Int';
@@ -64,7 +65,7 @@ plan 47;
     ok %h{2}:!exists, ':delete adverb works with key constraint hashes';
 } #13
 
-# RT #118031
+# https://github.com/Raku/old-issue-tracker/issues/3138
 {
     my Int %h{Int} = 1 => 2, 3 => 4;
     my %bound := %h;
@@ -93,7 +94,8 @@ plan 47;
     '.invert on typed Hash';
 }
 
-# RT#130870
+# https://github.com/Raku/old-issue-tracker/issues/6103
+
 subtest 'self-referential top-level hash assignment' => {
     plan 4;
 

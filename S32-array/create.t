@@ -26,13 +26,14 @@ is(+$array_obj, 3, 'Finding the length functions properly.');
     is-deeply [],                [], '[ ] creates Array';
 }
 
-# RT #130583
+# https://github.com/Raku/old-issue-tracker/issues/6009
 eval-lives-ok ｢
        (1,2,3).Array[0]++ == 1 or die;
     ++((1,2,3).Array[1])  == 3 or die;
 ｣, 'array elements get writable containers';
 
-{ # RT #129762
+# https://github.com/Raku/old-issue-tracker/issues/5706
+{ 
     subtest 'Array.clone [partially-reified]' => {
         plan 7;
 

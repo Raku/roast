@@ -449,6 +449,7 @@ my $str = 'a' x 7;
         'sequential alternation first branch involved in longest alternative (2)';
     is ~('food' ~~ / 'foo' | ('food' <!> || 'doof')/), 'foo',
         'sequential alternation first branch failure after LTM tries next best option';
+    # https://github.com/Raku/old-issue-tracker/issues/6003
     # related RT #130562
     is ~('food' ~~ / 'foo' | ['doof' || 'food']/), 'foo',
         'sequential alternation branches after first not involved in LTM';

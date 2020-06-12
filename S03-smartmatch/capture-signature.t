@@ -25,13 +25,13 @@ sub t2(@a) {
 is t2([1]), "godis", "signature smart-match against array works (1)";
 is t2([1,2]), "om nom nom", "signature smart-match against array works (2)";
 
-# RT #77164
+# https://github.com/Raku/old-issue-tracker/issues/2059
 {
     sub f($ = rand) { };
     ok \() ~~ &f.signature, 'can smart-match against a signature with a default value';
 }
 
-# RT #118581
+# https://github.com/Raku/old-issue-tracker/issues/3173
 {
     lives-ok { \(1) ~~ :(Str(int) $x) },
         'can match integer capture against signature with native integer coercing to Str';

@@ -252,7 +252,8 @@ is-primed-call(&testsubproto, \(44), ["Str + 44"], "a Str");
 is-primed-call(&atan2, \(2), [atan2(1,2)],1);
 is-primed-call(&atan2, \(1), [atan2(1,2)],*,2);
 
-# RT#126332
+# https://github.com/Raku/old-issue-tracker/issues/4641
+
 is-primed-call(&substr, \(0,2), $[substr("hello world", 0, 2)], "hello world");
 is-primed-call(sub ( *@x) { @x.raku }, \("c","d","e"), [sub ( *@x) { @x.raku }("a","b","c","d","e")], "a", "b");
 is-primed-call(sub (**@x) { @x.raku }, \("c","d","e"), [sub (**@x) { @x.raku }("a","b","c","d","e")], "a", "b");

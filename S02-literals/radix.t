@@ -27,14 +27,14 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
     is(:10('0b1110'),   0b1110, ":10('0b1110') overrides default decimal");
     is(:10(':2<1110>'), 0b1110, ":10(':2<1110>') overrides default decimal");
     is(:10('0x20'),     0x20,   ":10('0x20') overrides default decimal");
-    # RT #77624
+    # https://github.com/Raku/old-issue-tracker/issues/2130
     is(:10(':16<20>'),  0x20,   ":10(':16<20>') overrides default decimal");
     is(:10('0o377'),    0o377,  ":10('0o255') overrides default decimal");
     is(:10(':8<377>'),  0o377,  ":10(':8<255>') overrides default decimal");
     is(:10('0d37'),     0d37,   ":10('0d37') overrides default decimal");
     is(:10(':10<37>'),  0d37,   ":10(':10<37>') overrides default decimal");
 
-    # RT #107756
+    # https://github.com/Raku/old-issue-tracker/issues/2607
     throws-like ':10(42)',
       X::Numeric::Confused,
       :num(42),
@@ -136,6 +136,7 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
     is-approx(:16<dead_beef> * 16**0, :16<dead_beef*16**0>,
         'Zero powers inside');
 
+    # https://github.com/Raku/old-issue-tracker/issues/3688
     #?rakudo skip "RT #123862 - negative radix"
     is-approx(:16<dead_beef> * 16**-1, :16<dead_beef*16**-1>,
         'Negative powers inside');
@@ -283,18 +284,18 @@ for 2..36 {
     is EVAL(":{$_}<11>"), $_ + 1, "Adverbial form of base $_ works";
 }
 
-# RT #112728
+# https://github.com/Raku/old-issue-tracker/issues/2745
 {
     throws-like { EVAL ':2()' }, X::Numeric::Confused, ':2() is Confused';
     throws-like { EVAL ':2' }, X::Syntax::Malformed, ':2 is Malformed';
 }
 
-# RT #129279
+# https://github.com/Raku/old-issue-tracker/issues/5676
 #?rakudo.jvm skip 'Error while compiling: Radix 0 out of range (allowed: 2..36)'
 #?rakudo.js skip 'Error while compiling: Radix 0 out of range (allowed: 2..36)'
 is-deeply :۳<12>, 5, 'Unicode digit radix bases work';
 
-# RT #128804
+# https://github.com/Raku/old-issue-tracker/issues/5511
 subtest 'sane errors on failures to parse rad numbers' => {
     plan 12;
 

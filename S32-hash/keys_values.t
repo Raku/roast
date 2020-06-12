@@ -42,7 +42,7 @@ is($pair.values.elems,  1,  'we have one value');
 }
 #vim: ft=perl6
 
-# RT #131962
+# https://github.com/Raku/old-issue-tracker/issues/6467
 {
     is (4    => Mu).kv.raku, (4,  Mu).Seq.raku, ".kv on pair with Mu in value";
     is ((Mu) => 4 ).kv.raku, (Mu,  4).Seq.raku, ".kv on pair with Mu in key";

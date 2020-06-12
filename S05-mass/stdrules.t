@@ -310,7 +310,7 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 ok 'abc' !~~ /a <!>/, '<!> fails';
 ok '' !~~ /<!>/, '<!> fails (empty string)';
 
-#RT #109674
+# https://github.com/Raku/old-issue-tracker/issues/2636
 {
     ok 'abc' !~~ /a <[]>/, '<[]> fails like <!>';
     ok '' !~~ /<[]>/, '<[]> fails like <!> (empty string)';

@@ -40,6 +40,7 @@ is ca($/.caps), '0:a|0:b|1:c', '.caps distinguishes quantified () and multiple (
 is ca($/.chunks), '0:a|~: |0:b|~: |1:c', '.chunks distinguishes quantified () and multiple ()';
 
 ok 'a b c d' ~~ /:s [(\w) <wc=&wc> ]+/, 'regex matches';
+# https://github.com/Raku/old-issue-tracker/issues/1799
 #'RT #75484 (fails randomly) (noauto)'
 is ca($/.caps), '0:a|wc:b|0:c|wc:d',
                       'mixed named/positional flattening with quantifiers';
@@ -52,7 +53,7 @@ ok '  abcdef' ~~ m/.*?(a(.).)/, 'Regex matches';
 is ca($0.caps),     '0:b',      '.caps on submatches';
 is ca($0.chunks),   '~:a|0:b|~:c',  '.chunks on submatches';
 
-# RT #117831 separator captures
+# https://github.com/Raku/old-issue-tracker/issues/2593
 ok 'a;b,c,' ~~ m/(<.alpha>) +% (<.punct>)/, 'Regex matches';
 is ca($/.caps),     '0:a|1:;|0:b|1:,|0:c',  '.caps on % separator';
 is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c',  '.chunks on % separator';
@@ -81,7 +82,7 @@ is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on %% separator';
     is ca($/.caps),     'alpha:a|alpha:b',    '.caps on quantified &&';
 }
 
-# RT #125391
+# https://github.com/Raku/old-issue-tracker/issues/4317
 {
     my grammar Gram {
         regex TOP { ('XX')+ %% $<delim>=<[a..z]>* }

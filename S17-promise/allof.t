@@ -44,14 +44,15 @@ plan 13;
     is ~$a, "0 1 2 3 4 5 6 7 8 9", 'got the right order';
 }
 
-# RT #122802
+# https://github.com/Raku/old-issue-tracker/issues/3526
 {
     my $job1 = start { print "" };
     my $job2 = start { print "" };
+    # https://github.com/Raku/old-issue-tracker/issues/3526
     ok (await Promise.allof($job1, $job2)), "start + await + allof combo, RT #122802";
 }
 
-# RT #127101
+# https://github.com/Raku/old-issue-tracker/issues/4969
 {
     my $p = Promise.allof(my @promises);
     is $p.status, Kept, 'an empty list should give a kept Promise';

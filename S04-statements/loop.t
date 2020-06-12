@@ -94,20 +94,21 @@ plan 18;
     is $rt65962, '4 5', 'loop with two variables in init works';
 }
 
-# RT #71466
+# https://github.com/Raku/old-issue-tracker/issues/1450
 eval-lives-ok('class A { has $!to; method x { loop { (:$!to); } } };', 'pair colon syntax in a loop refers to an attribute works');
 
-# RT #63760
+# https://github.com/Raku/old-issue-tracker/issues/761
 throws-like 'loop { say "# RT63760"; last } while 1', X::Syntax::Confused,
+             # https://github.com/Raku/old-issue-tracker/issues/761
              '"loop {} while" is a syntax error (RT #63760)';
 
-# RT #112654
+# https://github.com/Raku/old-issue-tracker/issues/2732
 {
     my @a = gather loop { take 1; take 2; last };
     is @a.join, '12', 'gather, take and loop work together';
 }
 
-# RT #127238
+# https://github.com/Raku/old-issue-tracker/issues/5039
 {
     my @rt127238;
     sub rt127238 {
@@ -117,7 +118,7 @@ throws-like 'loop { say "# RT63760"; last } while 1', X::Syntax::Confused,
     is @rt127238.join("-"), '0-1-2-3-4', 'loop variable inside sub is correctly set';
 }
 
-# RT #130354
+# https://github.com/Raku/old-issue-tracker/issues/5885
 {
     # Test the `last` used with $mod aborts the `loop`
     # In the process, test that other CONTROL exceptions continue to work
@@ -127,6 +128,7 @@ throws-like 'loop { say "# RT63760"; last } while 1', X::Syntax::Confused,
         ~ $mod ~ ｢; say "Test:fail" }｣
     }
     for ｢without Any｣, ｢with 42｣ -> $mod {
+        # https://github.com/Raku/old-issue-tracker/issues/5885
         #?rakudo.jvm todo 'RT #130354'
 
         doesn't-hang(

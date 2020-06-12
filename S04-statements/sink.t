@@ -5,26 +5,26 @@ use Test::Util;
 
 plan 9;
 
-# RT #117235
+# https://github.com/Raku/old-issue-tracker/issues/3084
 {
     my $c = [[1], [2], [3]].map( { $_ } ).Array;
     $c.unshift(7);
     is $c.elems, 4, ".unshift in sink context doesn't empty Array";
 }
 
-# RT #117923
+# https://github.com/Raku/old-issue-tracker/issues/3127
 {
     eval-lives-ok "List.sink", "can sink a List";
 }
 
-# RT #127491
+# https://github.com/Raku/old-issue-tracker/issues/5123
 {
     my $sunk = False;
     my ($a) = class { method sink { $sunk = True } }.new;
     is $sunk, False, 'my ($a) = ... does not trigger sinking';
 }
 
-# RT #127879
+# https://github.com/Raku/old-issue-tracker/issues/5233
 {
     my @results = gather for 1..1 { ^10 .map: *.take }
 

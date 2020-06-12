@@ -64,14 +64,14 @@ is($s.lc.tc.rindex("w"), 6, ".lc.tc.rindex");
 # rindex on non-strings
 ok 3459.rindex(5) == 2, 'rindex on integers';
 
-# RT #112818
+# https://github.com/Raku/old-issue-tracker/issues/2754
 is "\x261b perl \x261a".rindex('e'), 3, 'rindex with non-latin-1 strings';
 
 # rindex with negative start position not allowed
 ok rindex("xxyxx", "y", -1) ~~ Failure, 'rindex with negative start position fails (1)';
 throws-like 'rindex("xxyxx", "y", -1)', X::OutOfRange, 'rindex with negative start position fails (2)';
 
-# RT #125784
+# https://github.com/Raku/old-issue-tracker/issues/4466
 {
     for -1e34, -1e35 -> $pos {
         ok rindex( 'xxyxx','y', $pos ) ~~ Failure, "sub does $pos fails";

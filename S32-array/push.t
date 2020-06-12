@@ -145,7 +145,7 @@ plan 56;
     is(@push[0][*-1],  25, 'nested arrayref, last value is 25');
 }
 
-# RT #69548
+# https://github.com/Raku/old-issue-tracker/issues/1340
 {
     {
         my $x = 1;
@@ -165,21 +165,21 @@ plan 56;
     }
 }
 
-# RT #109476
+# https://github.com/Raku/old-issue-tracker/issues/2626
 {
     my %h = ( <foo> => []);
     push %h<foo>, my $foo = 'bar';
     is %h<foo>, 'bar', 'pushing assignment to array-in-hash';
 }
 
-# RT #119061
+# https://github.com/Raku/old-issue-tracker/issues/3196
 {
     my Int @a;
     throws-like '@a.push: "a"', X::TypeCheck,
         "cannot push strings onto in Int array";
 }
 
-# RT #112660
+# https://github.com/Raku/old-issue-tracker/issues/2733
 {
     class RT112660 { has Method @.slots; };
     throws-like 'RT112660.new.slots.push: [1, 2, 3]', X::TypeCheck::Assignment,

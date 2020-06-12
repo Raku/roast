@@ -29,6 +29,7 @@ contain whitespace.
 
 C<\xA0> is specifically an I<nonbreaking> whitespace
 character and thus should B<not> break the list.
+# https://github.com/Raku/old-issue-tracker/issues/3436
 (RT #122285)
 
 =end kwid
@@ -59,7 +60,7 @@ for @nonseparators -> $sep {
 is < foo  
 	    >, 'foo', 'various combinations of whitespace are stripped';
 
-# RT #73772
+# https://github.com/Raku/old-issue-tracker/issues/1622
 isa-ok < >, List, '< > (only whitespace) is empty List';
 is < >.elems, 0, ".. and it's really empty";
 

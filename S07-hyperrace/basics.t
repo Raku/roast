@@ -48,7 +48,8 @@ for <hyper race> -> $meth {
             is-deeply @result, [0, 1, 2, 3, 4], "$meth + grep";
         }
 
-        # RT #127191
+        # https://github.com/Raku/old-issue-tracker/issues/5008
+        
         for <batch degree> -> $name {
             for (-1,0) -> $value {
                 throws-like { (^10)."$meth"(|($name => $value)) },
@@ -57,7 +58,8 @@ for <hyper race> -> $meth {
             }
         }
 
-        # RT #129234
+        # https://github.com/Raku/old-issue-tracker/issues/5651
+        
         dies-ok { for (1..1)."$meth"() { die } },
             "Exception thrown in $meth for is not lost (1..1)";
         dies-ok { for (1..1000)."$meth"() { die } },
@@ -71,7 +73,8 @@ for <hyper race> -> $meth {
         dies-ok { sink (1..1000)."$meth"().grep: { die } },
             "Exception thrown in $meth grep is not lost (1..1000)";
 
-        # RT #127452
+        # https://github.com/Raku/old-issue-tracker/issues/5111
+        
         subtest ".$meth with .map that sleep()s" => {
             plan 10;
 
@@ -86,7 +89,8 @@ for <hyper race> -> $meth {
             for ^5;
         }
 
-        # RT #128084
+        # https://github.com/Raku/old-issue-tracker/issues/5301
+        
         {
             multi sub f { $^a² }
             is-deeply (^10)."$meth"().map(&f).&hr.List,
@@ -94,14 +98,16 @@ for <hyper race> -> $meth {
                 "$meth map with a multi sub works";
         }
 
-        # RT #131865
+        # https://github.com/Raku/old-issue-tracker/issues/6435
+        
         {
             my atomicint $got = 0;
             for <a b c>."$meth"() { $got⚛++ }
             is $got, 3, "for <a b c>.$meth \{ } actually iterates";
         }
 
-        # RT #130576
+        # https://github.com/Raku/old-issue-tracker/issues/5994
+        
         is-deeply ([+] (1..100)."$meth"()), 5050,
             "Correct result for [+] (1..100).$meth";
         is-deeply ([+] (1..100)."$meth"().grep(* != 22)), 5028,
@@ -167,10 +173,11 @@ for <hyper race> -> $meth {
         'hyper to sequential Seq switch does not break results or disorder';
 }
 
-# RT #127099
+# https://github.com/Raku/old-issue-tracker/issues/4967
 is-deeply ^1000 .hyper.map(*+1).Array, [^1000 + 1], '.hyper preserves order';
 
-# RT#126752
+# https://github.com/Raku/old-issue-tracker/issues/4792
+
 {
     sub foo() {
         my $x = "*" x 2;
@@ -181,7 +188,7 @@ is-deeply ^1000 .hyper.map(*+1).Array, [^1000 + 1], '.hyper preserves order';
     is-deeply @a, [‘++’ xx 100], ‘hyperized s/…/…/;’
 }
 
-# RT #127974
+# https://github.com/Raku/old-issue-tracker/issues/5261
 #?rakudo skip 'reliably hangs / segfaults on at least MacOS'
 {
     is-deeply (^100).race(batch=>1).map({ sprintf '%1$s %2$s', 5, 42 }).List, ‘5 42’ xx 100, 

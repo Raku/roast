@@ -15,7 +15,7 @@ my $o = CoercionTest.new();
 is ~$o, 'foo', 'method Stringy takes care of correct stringification';
 ok +$o == 1.2, 'method Numeric takes care of correct numification';
 
-# RT #69378
+# https://github.com/Raku/old-issue-tracker/issues/1319
 {
     class RT69378 {
         has $.x = 'working';
@@ -24,13 +24,17 @@ ok +$o == 1.2, 'method Numeric takes care of correct numification';
     is RT69378.new.Str, 'working', 'call to .Str works';
 
     class RT69378str is Cool {
+        # https://github.com/Raku/old-issue-tracker/issues/1319
         has $.a = 'RT #69378';
         method Str() { $.a }
     }
+    # https://github.com/Raku/old-issue-tracker/issues/1319
     is RT69378str.new.a, 'RT #69378', 'call to RT69378str.new properly initializes $.a';
+    # https://github.com/Raku/old-issue-tracker/issues/1319
     is RT69378str.new.Str, 'RT #69378', 'call to .Str works on "class is Str"';
+    # https://github.com/Raku/old-issue-tracker/issues/1319
     is Str(RT69378str.new), 'RT #69378', 'Str(...) coercion syntax calls our .Str too';
-    # RT #72834
+    # https://github.com/Raku/old-issue-tracker/issues/1504
     ok Int() == 0, 'Int()';
 }
 

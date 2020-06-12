@@ -10,7 +10,7 @@ is 86400.polymod(60,60,24), (0,0,0,1), '86400 60 60 24';
 
 is 1234567890.polymod(10 xx *), (0,9,8,7,6,5,4,3,2,1), '1234567890 10 xx *';
 
-#RT #128176
+# https://github.com/Raku/old-issue-tracker/issues/5327
 subtest '.polymod with a lazy list does not lose divisors when list runs out', {
     plan 3;
     is-deeply 42    .polymod(lazy 2, 3),

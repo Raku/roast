@@ -35,7 +35,7 @@ plan 136;
     lives-ok { $date.clone(:month(2), :year(2000)) }, '..but not 29 February 2000 (Date.clone)';
 }
 
-# RT #112376, stringification
+# https://github.com/Raku/old-issue-tracker/issues/2593
 is ~Date.new(:year(2010), :month(3), :day(5)), '2010-03-05',
     'normal Date strinfies sanely';
 
@@ -144,19 +144,19 @@ ok d('2011-01-14') ~~ d('2011-01-14'), 'Can smartmatch Date objects';
     is d('2014-02-07').earlier(year => 1), d('2013-02-07'), 'subtracting 1 year';
 }
 
-# RT #125681
+# https://github.com/Raku/old-issue-tracker/issues/4436
 {
     is d("0000-01-01").truncated-to("week"), "-0001-12-27", "negative dates ISO-8601 rendering";
     is d("9900-01-01") + 100000, "+10173-10-16", "very large years, ISO-8601 rendering";
 }
 
-# RT #125682 Overflows
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     is d('2015-12-25').later( years => 1_000_000_000_000 ), "+1000000002015-12-25", "adding large years does not overflow";
     is d('2015-12-25').earlier( days => 1_000_000_000_000 ),   "-2737904992-12-29", "subtracting large days does not underflow";
 }
 
-# RT #127010 negative years
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     is d('-1234-12-24'), '-1234-12-24', 'negative years handled correctly';
 }
@@ -170,7 +170,7 @@ is Date.new(2015,12,29,:formatter({sprintf "%2d/%2d/%4d",.day,.month,.year})),
 is Date.new('2015-12-29',:formatter({sprintf "%2d/%2d/%4d",.day,.month,.year})),
    '29/12/2015', 'formatter with "yyyy-mm-dd"';
 
-# RT #127170
+# https://github.com/Raku/old-issue-tracker/issues/5000
 {
     my role Foo { has @.a = 7, 8, 9 }
     my class BarDate is Date does Foo {}
@@ -191,7 +191,7 @@ is Date.new('2015-12-29',:formatter({sprintf "%2d/%2d/%4d",.day,.month,.year})),
     }
 }
 
-# RT #128545
+# https://github.com/Raku/old-issue-tracker/issues/5421
 throws-like { Date.new: "2016-07\x[308]-05" }, X::Temporal::InvalidFormat,
     'synthetics are rejected in constructor string';
 
@@ -220,7 +220,7 @@ throws-like { Date.new: "2016-07\x[308]-05" }, X::Temporal::InvalidFormat,
     is-deeply $date.Date,    $date,       'Date:D.Date returns self';
 }
 
-# RT #130313
+# https://github.com/Raku/old-issue-tracker/issues/5877
 subtest 'all Date constructors throw on invalid dates' => {
     plan 3;
     subtest '.new($year, $month, $day)' => {

@@ -171,7 +171,7 @@ is chr(0x1F42A).ord, 0x1F42A, "chr > ord round trip of high character";
 
 is chrs("104", "101", "108", "108", "111"), 'hello', 'chrs works with a list of numifiable strings';
 
-# RT #130913
+# https://github.com/Raku/old-issue-tracker/issues/2593
 subtest 'chr with large codepoints throws useful error' => {
     my @tests = 'chr 2⁶³-1',   '(2⁶³-1).chr', 'chr 2⁶³',
                 '2⁶³.chr',     'chr 2¹⁰⁰',    '(2¹⁰⁰).chr';

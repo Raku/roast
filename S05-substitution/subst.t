@@ -29,7 +29,7 @@ is 'a'.subst(/(.)/,"$0"), 'nope',     '.. bare strings cannot see $/ because the
 is 'a'.subst(/(.)/,{$0~$0}),'aa',     '.. you must wrap it in a closure to delay evaluation';
 is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
 
-# RT #116224
+# https://github.com/Raku/old-issue-tracker/issues/3012
 {
     $/ = ('-');   #  parens to avoid looking like a P5 irs directive
     is 'a'.subst("a","b"), 'b', '"a".subst("a", "b") is "b"';
@@ -87,7 +87,8 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
 
 # :nth
 {
-    throws-like '"a b c d".subst(/\w/, "x", :nth(0))', Exception, message => rx/nth/; # RT #125815
+    # https://github.com/Raku/old-issue-tracker/issues/4475
+    throws-like '"a b c d".subst(/\w/, "x", :nth(0))', Exception, message => rx/nth/; 
     is 'a b c d'.subst(/\w/, 'x', :nth(1)), 'x b c d', '.subst and :nth(1)';
     is 'a b c d'.subst(/\w/, 'x', :nth(2)), 'a x c d', '.subst and :nth(2)';
     is 'a b c d'.subst(/\w/, 'x', :nth(3)), 'a b x d', '.subst and :nth(3)';
@@ -95,7 +96,8 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
     is 'a b c d'.subst(/\w/, 'x', :nth(5)), 'a b c d', '.subst and :nth(5)';
 
     # string pattern versions
-    throws-like '"a a a a".subst("a", "x", :nth(0))', Exception, message => rx/nth/; # RT #125815
+    # https://github.com/Raku/old-issue-tracker/issues/4475
+    throws-like '"a a a a".subst("a", "x", :nth(0))', Exception, message => rx/nth/; 
     is 'a a a a'.subst('a', 'x', :nth(1)), 'x a a a', '.subst (str pattern) and :nth(1)';
     is 'a a a a'.subst('a', 'x', :nth(2)), 'a x a a', '.subst (str pattern) and :nth(2)';
     is 'a a a a'.subst('a', 'x', :nth(3)), 'a a x a', '.subst (str pattern) and :nth(3)';
@@ -207,6 +209,7 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
 }
 
 # L<S05/Modifiers/The :s modifier is considered sufficiently important>
+# https://github.com/Raku/old-issue-tracker/issues/4764
 # also RT #126679
 {
     dies-ok {"a b c" ~~ ss/a b c/x y z/}, 'Cannot ss/// string literal';
@@ -220,7 +223,7 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
     # note, the ss here implies :samespace, not just :sigspace
     #?rakudo.jvm 2 skip 'samemark NYI'
     ok ss/a b c d/w x y z/, 'successful ss substitution returns truthy';
-    # RT #120526
+    # https://github.com/Raku/old-issue-tracker/issues/3275
     is $_, "w\nx\ty z", 'ss/.../.../ preserves whitespace';
 
     $_ = "a\nb\tc d";
@@ -236,7 +239,7 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
     $_ = "A\nb\tC d";
     #?rakudo.jvm 2 skip 'samemark NYI'
     ok ss:i/A B c d/w x y z/, 'successful ss:i substitution returns truthy';
-    # RT #120526
+    # https://github.com/Raku/old-issue-tracker/issues/3275
     is $_, "w\nx\ty z", 'ss:i/.../.../ preserves whitespace';
 
     $_ = "A\nb\tC D";
@@ -245,17 +248,20 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
 
 
     $_ = "Ä\nb\tć D";
+    # https://github.com/Raku/old-issue-tracker/issues/4454
     #?rakudo.jvm 2 todo 'RT #125753'
     ok s:ss:ii:mm/a ḇ?   c D/w x y z/, 'successful s:ss:ii:mm substitution returns truthy';
     is $_, "Ẅ\nx\tý Z", 's:ss:ii:mm/.../.../ preserves whitespace, case, and marks';
 
     $_ = "a\nḇ\tĆ d";
+    # https://github.com/Raku/old-issue-tracker/issues/4454
     #?rakudo.jvm 2 todo 'RT #125753'
     ok ss:i:m/Å b C d/w x y z/, 'successful ss substitution returns truthy';
-    # RT #120526
+    # https://github.com/Raku/old-issue-tracker/issues/3275
     is $_, "w\nx̱\tý z", 'ss/.../.../ preserves whitespace';
 
     $_ = "Å\nḇ\tć d";
+    # https://github.com/Raku/old-issue-tracker/issues/4454
     #?rakudo.jvm 2 todo 'RT #125753'
     ok s:s:ii:mm/a  B+  c   D/w x y z/, 'successful s:s substitution returns truthy';
     is $_, "W̊ x̱ ý z", 's:s/.../.../ does not preserve whitespace but preserves case and marks';
@@ -357,7 +363,7 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
     is $x,  'AoAoo', 's:2x:nth(1,3) works in combination';
 }
 
-# RT #83484
+# https://github.com/Raku/old-issue-tracker/issues/2351
 # s// with other separators
 {
     my $x = 'abcde';
@@ -388,7 +394,7 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
     }
 }
 
-# RT #69044
+# https://github.com/Raku/old-issue-tracker/issues/1274
 {
     sub s { 'sub s' }
     $_ = "foo";
@@ -426,7 +432,7 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
 
 }
 
-# RT #66816
+# https://github.com/Raku/old-issue-tracker/issues/1080
 {
     my $str = "a\nbc\nd";
     is $str.subst(/^^/, '# ', :g), "# a\n# bc\n# d",
@@ -447,7 +453,7 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
     is $_, 'boo', 'can use $0 in RHS of s///';
 }
 
-# RT #76664
+# https://github.com/Raku/old-issue-tracker/issues/1963
 {
     class SubstInsideMethod {
         method ro($_ ) { s/c// }
@@ -456,7 +462,7 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
     dies-ok { SubstInsideMethod.new.ro('ccc') }, '(sanely) dies when trying to s/// a read-only variable';
 }
 
-# RT #83552
+# https://github.com/Raku/old-issue-tracker/issues/2355
 #?DOES 3
 {
     $_ = "foo"; s[f] = 'bar';
@@ -464,7 +470,7 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
     throws-like q{$_ = "foo"; s[] = "bar";}, X::Syntax::Regex::NullRegex;
 }
 
-# RT #119201
+# https://github.com/Raku/old-issue-tracker/issues/3204
 {
     my $RT119201_s = 'abcdef';
     my $RT119201_m = '';
@@ -472,12 +478,12 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
     is($RT119201_m, 'a', 'get match variable in replacement of subst-mutator');
 }
 
-# RT #122349
+# https://github.com/Raku/old-issue-tracker/issues/3456
 {
     eval-lives-ok '$_ = "a";s/a$/b/;s|b$|c|;s!c$!d!;', '$ anchor directly at the end of the search pattern works';
 }
 
-# RT #123168
+# https://github.com/Raku/old-issue-tracker/issues/3555
 {
     my $foo = "bar";
     $foo ~~ s:g [ r ] = 'z' if $foo.defined;
@@ -491,13 +497,13 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
     is $_, 'xxx', 's/// can modify a container that contains a non-string';
 }
 
-# RT #123597
+# https://github.com/Raku/old-issue-tracker/issues/3645
 {
     $_ = 0; s{^(\d+)$} = sprintf "%3d -", $_;
     is $_, "  0 -", 's{}="" can modify a container that contains a non-string';
 }
 
-# RT #114388
+# https://github.com/Raku/old-issue-tracker/issues/2848
 {
     $_ = "real";
     s[ea] = "rea";
@@ -508,7 +514,8 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
         X::Syntax::Regex::NullRegex;
 }
 
-# RT #114388 -- part two
+# https://github.com/Raku/old-issue-tracker/issues/2593
+# https://github.com/Raku/old-issue-tracker/issues/2848
 #?rakudo todo "RT #114388 -- expected: '', got: (Any)"
 {
     $_ = Any;
@@ -516,7 +523,7 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
     is $_, "", 'can use s[]="" when $_ is not set';
 }
 
-# RT #126476
+# https://github.com/Raku/old-issue-tracker/issues/4683
 {
     $_ = "foo";
     is S/a/A/, "foo", "non-mutating single substitution works ($/)";
@@ -548,23 +555,24 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
     is S:g[(o)] = $0.uc, "fOO", "non-mutating global substitution assignment works ($0)";
 }
 
-# RT #128809
+# https://github.com/Raku/old-issue-tracker/issues/5514
 {
     is_run 'await ^30 .map: { start { S/.+/{$/.chars.print}/ given "abc"; } }', {
         :err(''), :out('3' x 30)
     }, 'code in replacement part of s/// has correct scoping';
 }
 
-{ # RT #129374
+# https://github.com/Raku/old-issue-tracker/issues/5699
+{ 
     throws-like { "".subst: /\w/, "", :x(my class SomeInvalidXParam {}.new) },
         X::Str::Match::x, 'giving .subst invalid args throws';
 }
 
-# RT #130289
+# https://github.com/Raku/old-issue-tracker/issues/5869
 is-deeply (S:g/FAIL// with 'foo'), 'foo',
     'S:g/// returns original string on failure to match';
 
-# RT #130355
+# https://github.com/Raku/old-issue-tracker/issues/5886
 is-deeply (eager <a b c aab ac>.map: {S/a/x/}), <x b c xab xc>,
     'S/// can be used in map (does not reuse a container)';
 
@@ -640,7 +648,7 @@ subtest '.subst(Str:D, Str:D)' => {
     is-deeply 'a♥bc'.subst('a♥', '♦z'), '♦zbc',   'replace with samelength (2)';
 }
 
-# RT #130688
+# https://github.com/Raku/old-issue-tracker/issues/6043
 subtest '.subst with multi-match args set $/ to a List of matches' => {
     plan 2*(2+5);
     for 1234567, '1234567' -> $type {

@@ -1,4 +1,4 @@
-﻿use v6;
+use v6;
 use Test;
 
 my @int  =  int, int8, int16, int32;
@@ -134,7 +134,7 @@ for flat @int,@uint -> $T {
     is @arr.push(42), (42,), "can push to $t array";
     is @arr.elems, 1, "push to $t array works (1)";
     is @arr[0], 42,   "push to $t array works (2)";
-    # RT #125123
+    # https://github.com/Raku/old-issue-tracker/issues/4223
     throws-like { @arr.push('it real good') }, X::TypeCheck,
       got => Str,
       "Cannot push non-int/Int to $t array";
@@ -173,7 +173,7 @@ for flat @int,@uint -> $T {
     is @arr.elems, 6, "unshift to $t array works (1)";
     is @arr[0],  1,   "unshift to $t array works (2)";
     is @arr[1], 42,   "unshift to $t array works (3)";
-    # RT #125123
+    # https://github.com/Raku/old-issue-tracker/issues/4223
     throws-like { @arr.unshift('part of the day not working') }, Exception,
       "Cannot unshift non-int/Int to $t array";
 
@@ -299,13 +299,16 @@ for @uint -> $T {
 
     my @arr := array[$T].new;
     is (@arr[0] = -1), -1, "assigning -1 on $t array passes value on through?";
+    # https://github.com/Raku/old-issue-tracker/issues/3740
     # DRY once the failing cases pass. RT #124088
     if $t eq "uint" or $t eq "uint64" {
+        # https://github.com/Raku/old-issue-tracker/issues/3740
         #?rakudo todo 'highest bit length stays negative, RT #124088'
         ok @arr[0] > 0,        "negative value on $t array becomes positive";
     }
     elsif $t eq "uint32" {
         #?rakudo.jvm todo 'missing an invert? (-1 --> 0, -2 --> -1)'
+        # https://github.com/Raku/old-issue-tracker/issues/3740
         #?rakudo.js todo 'the js backend is 32bit so we get RT #124088 here'
         ok @arr[0] > 0,        "negative value on $t array becomes positive";
     } else {
@@ -313,7 +316,7 @@ for @uint -> $T {
     }
 }
 
-# RT #130443
+# https://github.com/Raku/old-issue-tracker/issues/5941
 dies-ok { my int @a = ^Inf; 42 }, 'Trying to assign ^Inf to an int array dies';
 
 {

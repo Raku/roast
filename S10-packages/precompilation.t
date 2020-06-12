@@ -22,7 +22,7 @@ my @precompiled = Test::Util::run( "use lib $example-lib-prefix.raku();\n" ~ q:t
 is @precompiled.elems, 3;
 is $_, 'True' for @precompiled;
 
-# RT #122773
+# https://github.com/Raku/old-issue-tracker/issues/3521
 my @keys = Test::Util::run( "use lib $example-lib-prefix.raku();\n" ~ q:to"--END--").lines;
     use Example::A;
     use Example::B;
@@ -41,7 +41,7 @@ my @precompiled2 = Test::Util::run( "use lib $example2-lib-prefix.raku();\n" ~ q
 is @precompiled2.elems, 15;
 is $_, 'True' for @precompiled2;
 
-# RT #123272
+# https://github.com/Raku/old-issue-tracker/issues/3587
 my @keys2 = Test::Util::run( "use lib $example2-lib-prefix.raku();\n" ~ q:to"--END--").lines;
     use Example2::T;
 
@@ -56,6 +56,7 @@ my @keys2 = Test::Util::run( "use lib $example2-lib-prefix.raku();\n" ~ q:to"--E
 #?rakudo.jvm todo 'got: $["C", "K"]'
 is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 
+# https://github.com/Raku/old-issue-tracker/issues/3539
 #?rakudo.js todo 'RT #122896'
 {
     is_run
@@ -69,35 +70,35 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
        'precompile exported cached sub';
 }
 
-# RT #76456
+# https://github.com/Raku/old-issue-tracker/issues/1928
 {
     use lib $?FILE.IO.parent(2).add("packages/RT76456/lib");
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT76456>));
     ok $comp-unit.precompiled, 'precompiled a parameterized role';
 }
 
-#RT #122447
+# https://github.com/Raku/old-issue-tracker/issues/3467
 {
     use lib $?FILE.IO.parent(2).add("packages/RT122447/lib");
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT122447>));
     ok $comp-unit.precompiled, 'precompiled a sub with params returning a proxy';
 }
 
-#RT #115240
+# https://github.com/Raku/old-issue-tracker/issues/2916
 {
     use lib $?FILE.IO.parent(2).add("packages/RT115240/lib");
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT115240>));
     ok $comp-unit.precompiled, 'precomp curried role compose';
 }
 
-#RT #126878
+# https://github.com/Raku/old-issue-tracker/issues/4847
 {
     use lib $?FILE.IO.parent(2).add("packages/RT126878/lib");
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT126878::Precomp>));
     ok !$comp-unit.precompiled, '"need" survives "no precompilation"';
 }
 
-#RT #123276
+# https://github.com/Raku/old-issue-tracker/issues/3589
 {
     my $rt123276-lib-prefix = $lib-path.add('packages/RT123276/lib').absolute;
 
@@ -120,11 +121,12 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
         say RT123276::B::C1.^methods.grep( *.name ne "BUILDALL" )
         --END--
 
-    #RT #123276
+    # https://github.com/Raku/old-issue-tracker/issues/3589
+    
     is-deeply @keys, [<(foo)>], 'RT123276';
 }
 
-#RT #124162
+# https://github.com/Raku/old-issue-tracker/issues/3755
 {
     use lib $?FILE.IO.parent(2).add("packages/RT124162/lib");
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT124162>));
@@ -148,21 +150,21 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 }
 
 
-# RT #125090
+# https://github.com/Raku/old-issue-tracker/issues/4214
 {
     use lib $?FILE.IO.parent(2).add("packages/RT125090/lib");
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT125090>));
     ok $comp-unit.precompiled, 'precomp of BEGIN using $*KERNEL and $*DISTRO';
 }
 
-# RT #125245
+# https://github.com/Raku/old-issue-tracker/issues/4261
 {
     use lib $?FILE.IO.parent(2).add("packages/RT125245/lib");
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT125245>));
     ok $comp-unit.precompiled, 'precomp of assignment to variable using subset type';
 }
 
-# RT #127176
+# https://github.com/Raku/old-issue-tracker/issues/5003
 {
     my $rt127176-lib-prefix = $lib-path.add('packages/RT127176/lib').absolute;
 
@@ -176,7 +178,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
        'no duplicate compilation error';
 }
 
-# RT #128156
+# https://github.com/Raku/old-issue-tracker/issues/5319
 {
     my $rt128156-lib-prefix = $lib-path.add('packages/RT128156/lib').absolute;
 
@@ -202,7 +204,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     is $after.status,  0, 'Can precompile modules after touching source file';
 }
 
-# RT #128156 (another)
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     my $rt128156-lib-prefix = $lib-path.add('packages/RT128156/lib').absolute;
 
@@ -243,7 +245,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     }
 }
 
-# RT #112626
+# https://github.com/Raku/old-issue-tracker/issues/2726
 {
     my $rt112626-lib-prefix = $lib-path.add('packages/RT112626/lib').absolute;
 
@@ -256,7 +258,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     }
 }
 
-# RT #129266
+# https://github.com/Raku/old-issue-tracker/issues/5670
 subtest 'precompiled module constants get updated on change' => {
     plan 2;
 
@@ -278,7 +280,8 @@ subtest 'precompiled module constants get updated on change' => {
     "modified content has updated";
 }
 
-# RT#131924
+# https://github.com/Raku/old-issue-tracker/issues/6454
+
 with make-temp-dir() -> $dir {
     $dir.add('Simple131924.pm6').spurt: ｢
         unit class Simple131924; sub buggy-str is export { “: {‘’}\n\r” ~ “\n\r” }

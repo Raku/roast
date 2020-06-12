@@ -28,6 +28,7 @@ Basic tests for the hash() built-in
 }
 
 {
+    # https://github.com/Raku/old-issue-tracker/issues/1983
     lives-ok {(a => 1, b => 2).hash.raku}, 'hash() on list of pairs lives (RT #76826)';
 }
 

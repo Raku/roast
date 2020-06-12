@@ -50,12 +50,12 @@ is('fooäàaáâåbar' ~~ m:m/<-[a]>+/, 'foo',      'Ignoremark with negated cha
 
 is('fooäàaáâåbar' ~~ m:m/<[a..b]>+/, 'äàaáâåba', 'Ignoremark with range in character class');
 
-# RT #116256
+# https://github.com/Raku/old-issue-tracker/issues/3017
 {
     ok("ü" ~~ /:ignoremark 'u'/, 'Ignoremark with subrule');
 }
 
-# RT #130465
+# https://github.com/Raku/old-issue-tracker/issues/5956
 {
     ok qq["\c[COMBINING TILDE]"] ~~ / ^ :ignoremark '"'/,
         'Ignoremark on quoted double-quote';

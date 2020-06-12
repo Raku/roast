@@ -22,7 +22,7 @@ my $sub6 = "f fo foo fooo foooo fooooo bar";
 
 # :nth(N)...
 
-#RT #125815
+# https://github.com/Raku/old-issue-tracker/issues/4475
 throws-like '$data ~~ m:nth(0)/fo+/', Exception, message => rx/nth/;
 throws-like '$data ~~ m:nth(-1)/fo+/', Exception, message => rx/nth/;
 throws-like '$data ~~ m:nth(-Inf)/fo+/', Exception, message => rx/nth/;
@@ -158,7 +158,7 @@ ok(!( $data ~~ m:7th/fo+/ ), 'No match 7th');
 {
     my $try = $data;
 
-#RT #125815
+# https://github.com/Raku/old-issue-tracker/issues/4475
     throws-like '$try ~~ s:0th{fo+}=q{bar}', Exception, message => rx/nth/;
     is($try, $data, 'No change to data for 0th');
     throws-like '$try ~~ s:th(-1){fo+}=q{bar}', Exception, message => rx/nth/;

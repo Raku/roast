@@ -66,7 +66,7 @@ plan 16;
 }
 
 # return value of false 'if' should be Empty
-# RT #66544
+# https://github.com/Raku/old-issue-tracker/issues/1053
 {
     is-deeply (42 if 0), Empty, '"$something if 0" is Empty';
 }
@@ -77,14 +77,14 @@ plan 16;
     is $a, 'ok', 'Statement-modifier if runs bare block';
 }
 
-# RT #78142
+# https://github.com/Raku/old-issue-tracker/issues/2199
 {
     my $a = 'oops';
     { $a = $^x } if 100;
     is $a, 100, 'Statement-modifier if runs block with placeholder';
 }
 
-# RT #79174
+# https://github.com/Raku/old-issue-tracker/issues/2257
 {
     is (1,2, if 3), "1 2", "if is a terminator even after comma";
 }

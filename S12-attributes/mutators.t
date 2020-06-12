@@ -60,6 +60,7 @@ is($count-s, 1, "mutator by sub was called");
 is($mv.varies-s, 14, "attribute with overridden mutator by sub");
 is($count-s, 2, "accessor and mutator by sub were called");
 
+# https://github.com/Raku/old-issue-tracker/issues/4594
 #?rakudo skip 'RT #126198'
 {
     is($mv.varies-m, 6, "mutator by method called during object construction");

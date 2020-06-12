@@ -182,7 +182,7 @@ plan 39;
 }
 
 {
-    # RT #74076
+    # https://github.com/Raku/old-issue-tracker/issues/1665
     my $t;
     for 'a' {
         $t = sub { $OUTER::_ };

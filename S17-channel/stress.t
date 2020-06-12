@@ -3,6 +3,7 @@ use Test;
 
 plan 5;
 
+# https://github.com/Raku/old-issue-tracker/issues/5255
 # This covers RT #127960, which crashed over GCing a locked mutex due to some bug.
 {
 	sub sleep_sort (*@list where .all >= 0) {
@@ -24,7 +25,9 @@ plan 5;
 	ok all(@a).elems == 5, 'Sleep sort code produced correct lists on all runs';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/5770
 # This stress test covers a SEGV in the following code, submitted in RT #129949.
+# https://github.com/Raku/old-issue-tracker/issues/5770
 #?rakudo.jvm skip 'Does not finish fourth run RT #129949'
 #?DOES 4
 {

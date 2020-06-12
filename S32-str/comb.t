@@ -16,6 +16,7 @@ is "a\nb".comb, ('a', "\n", 'b'), 'comb on string with \n';
 
 is "äbcd".comb, <ä b c d>, 'comb on string with non-ASCII letter';
 
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo.jvm 2 todo 'NFG on JVM RT #124737'
 is "a\c[COMBINING DIAERESIS]b".comb, ("ä", "b",), 'comb on string with grapheme precomposed';
 is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
@@ -77,11 +78,12 @@ is (<a ab>, <bc ad ba>).comb(rx:Perl5/\S*a\S*/), <a ab ad ba>,
     is @l[1].to, 9, '.to of the second item is correct';
 }
 
-# RT #66340
+# https://github.com/Raku/old-issue-tracker/issues/1040
 {
     my $expected_reason = rx:s/none of these signatures match/;
 
     my $calls = 0;
+    # https://github.com/Raku/old-issue-tracker/issues/1040
     try { 'RT #66340'.comb( { $calls++ } ) };
     is $calls, 0, 'code passed to .comb is not called';
     ok $! ~~ Exception, '.comb({...}) dies';
@@ -95,7 +97,7 @@ is (<a ab>, <bc ad ba>).comb(rx:Perl5/\S*a\S*/), <a ab ad ba>,
     is comb(/\d+/ , "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng" , 2), <3 3>, 'Subroutine form with limit';
 }
 
-# RT #123760
+# https://github.com/Raku/old-issue-tracker/issues/3672
 {
     is comb("o","ooo"), <o o o>, "comb(Str,Str)";
     is "qqq".comb("q"), <q q q>, "Str.comb(Str)";
@@ -160,7 +162,7 @@ is (<a ab>, <bc ad ba>).comb(rx:Perl5/\S*a\S*/), <a ab ad ba>,
     }
 }
 
-# RT #127215
+# https://github.com/Raku/old-issue-tracker/issues/5025
 is-deeply "hello".comb(/:m <[o]>/), ('o',).Seq,
     '.comb(/:m <[o]>/) construct does not crash';
 
@@ -196,7 +198,7 @@ subtest 'edge-case combers' => {
     }
 }
 
-# RT #130186
+# https://github.com/Raku/old-issue-tracker/issues/5827
 is (gather 'abc'.comb(/. { take $/.Str } <!> /)).join(','),
     'a,b,c',
     '$/ inside comb';

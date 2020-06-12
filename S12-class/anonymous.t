@@ -52,6 +52,7 @@ is($t3.x, 42,        'anonymous classes can have attributes');
     sub rt64888 {
         (
          class {
+             # https://github.com/Raku/old-issue-tracker/issues/924
              method Stringy() { 'RT #64888' }
              method Numeric() { 64888 }
          }
@@ -63,6 +64,7 @@ is($t3.x, 42,        'anonymous classes can have attributes');
     lives-ok { $i1 = rt64888() }, 'can get anonymous class instance once';
     lives-ok { $i2 = rt64888() }, 'can get anonymous class instance twice';
 
+    # https://github.com/Raku/old-issue-tracker/issues/924
     is ~$i1, 'RT #64888', 'anonymous class stringified works';
     is +$i1, 64888, 'anonymous class numified works';
 }

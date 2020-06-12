@@ -18,7 +18,8 @@ plan 20;
 
 # L<S04/"Phasers">
 
-#?rakudo todo "NEXT/LEAVE ordering RT #124952"
+# https://github.com/Raku/old-issue-tracker/issues/4107
+#?rakudo todo "NEXT/LEAVE ordering"
 {
     my $str;
 
@@ -41,7 +42,8 @@ plan 20;
        'trait blocks work properly in for loop';
 }
 
-#?rakudo todo "NEXT/LEAVE ordering RT #124952"
+# https://github.com/Raku/old-issue-tracker/issues/4107
+#?rakudo todo "NEXT/LEAVE ordering"
 {
     my $str;
 
@@ -73,7 +75,7 @@ plan 20;
        'trait blocks work properly in for loop';
 }
 
-# RT #122011
+# https://github.com/Raku/old-issue-tracker/issues/3404
 {
     my $str = "";
 
@@ -85,7 +87,7 @@ plan 20;
        'LAST does not fire for empty loop';
 }
 
-# RT #121145
+# https://github.com/Raku/old-issue-tracker/issues/3324
 {
     my $rt121156;
     my $i = 0;
@@ -104,19 +106,20 @@ plan 20;
         $i++;
         $rt121156 ~= $i;
     }
+    # https://github.com/Raku/old-issue-tracker/issues/3324
     #?rakudo.jvm todo 'this test works "standalone", but not after previous test; RT #121145'
     is $rt121156, '1leaving2leaving3leaving',
         'LEAVE in while loop works as expected';
 }
 
-# RT #122134
+# https://github.com/Raku/old-issue-tracker/issues/3417
 {
     my $rt122134;
     for 1 { last; ENTER { $rt122134 = "hurz" } };
     is $rt122134, 'hurz', 'no UnwindException with "last" and "ENTER" in for loop';
 }
 
-# RT #126001
+# https://github.com/Raku/old-issue-tracker/issues/4517
 {
     sub rt126001_a () { for 1, 2       { LAST   return $_   } }
     sub rt126001_b () { for 1, 2 -> $x { LAST { return $x } } }
@@ -147,7 +150,7 @@ plan 20;
         'LAST in loop works fine with recursion';
 }
 
-# RT #125488
+# https://github.com/Raku/old-issue-tracker/issues/4352
 {
   {
     my @a = [];
