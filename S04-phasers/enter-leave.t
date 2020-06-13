@@ -184,7 +184,6 @@ plan 33;
         LEAVE { $str ~= '2'; die 'foo' }
     }
     is $str, '21', 'die doesn\'t abort LEAVE queue';
-    # https://github.com/Raku/old-issue-tracker/issues/3363
     #?rakudo.jvm todo 'RT #121530'
     is $!.message, 'foo', 'single exception from LEAVE is rethrown after running LEAVEs';
 }

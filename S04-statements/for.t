@@ -299,9 +299,9 @@ class TestClass{ has $.key is rw  };
     is($a, $b, 'List context');
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/284
 {
     # this was a rakudo bug with mixed 'for' and recursion, which seems to
-    # https://github.com/Raku/old-issue-tracker/issues/284
     # confuse some lexical pads or the like, see RT #58392
     my $gather = '';
     sub f($l) {
@@ -319,6 +319,7 @@ class TestClass{ has $.key is rw  };
     is $gather, '21....1....1....', 'Can mix recursion and for';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/2555
 # another variation
 {
     my $t = '';
@@ -329,7 +330,6 @@ class TestClass{ has $.key is rw  };
         for 1 { $t ~= $h };
     };
     r 3;
-    # https://github.com/Raku/old-issue-tracker/issues/2555
     is $t, '3210', 'can mix recursion and for (RT #103332)';
 }
 
@@ -537,7 +537,6 @@ lives-ok {
 {
     my $a = 0;
     for 1, 2, 3 { sub foo {}; $a++ }
-    # https://github.com/Raku/old-issue-tracker/issues/2209
     is $a, 3, 'RT #78232';
 }
 

@@ -45,7 +45,6 @@ throws-like ' {my $foo; $^foo;}(1) ', X::Redeclaration,
 {
     sub rt99734 { "$^c is $^a and $^b" };
     is rt99734("cake", "tasty", "so on"), 'so on is cake and tasty',
-       # https://github.com/Raku/old-issue-tracker/issues/2478
        'RT #99734';
 }
 

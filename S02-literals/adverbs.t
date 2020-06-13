@@ -24,7 +24,6 @@ plan 35;
     # https://github.com/Raku/old-issue-tracker/issues/5354
     #?rakudo.jvm todo 'RT #128306'
     #?rakudo.js todo 'unimplemented unicody thing'
-    # https://github.com/Raku/old-issue-tracker/issues/5354
     is-deeply (:๔߂nd), (nd => 42), "Unicode numeric adverb works"; 
     throws-like { EVAL ':69th($_)' },
       X::Comp,

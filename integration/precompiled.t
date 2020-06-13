@@ -31,7 +31,6 @@ precomp_loads_is '42', 42, "precomp_loads_is is working";
 
 # https://github.com/Raku/old-issue-tracker/issues/3755
 precomp_loads_is '[ $(array[uint8].new(1)), $(array[uint8].new(1)) ]', [1,1],
-                 # https://github.com/Raku/old-issue-tracker/issues/3755
                  "precompiled Array of native arrays (RT #124162)";
 
 # https://github.com/Raku/old-issue-tracker/issues/3657

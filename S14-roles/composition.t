@@ -53,6 +53,7 @@ ok C2 ~~ rB, 'class matches second role';
 ok rA !~~ C2, 'first role does not match class';
 ok rB !~~ C2, 'second role does not match class';
 
+# https://github.com/Raku/old-issue-tracker/issues/803
 role RT64002 does rA does rB {}
 ok RT64002 ~~ rA, 'role matches first role it does';
 ok RT64002 ~~ rB, 'role matches second role it does';

@@ -225,11 +225,8 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 
 # https://github.com/Raku/old-issue-tracker/issues/3019
 {
-    # https://github.com/Raku/old-issue-tracker/issues/3019
     is sprintf('%12.5f',  NaN), '         NaN', 'RT #116280';
-    # https://github.com/Raku/old-issue-tracker/issues/3019
     is sprintf('%12.5f',  Inf), '         Inf', 'RT #116280';
-    # https://github.com/Raku/old-issue-tracker/issues/3019
     is sprintf('%12.5f', -Inf), '        -Inf', 'RT #116280';
 
     is sprintf('% 6e', Inf), "   Inf", 'Inf properly handled %e';
@@ -302,13 +299,15 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
         'sprintf complains about unsupported directives';
 }
 
-{ # https://irclog.perlgeek.de/perl6/2016-11-28#i_13640361
+# https://irclog.perlgeek.de/perl6/2016-11-28#i_13640361
+{
     is_run ｢print sprintf 'pass'｣, {
         :out<pass>, :err(''), :0status
     }, 'sprintf($format) does not issue spurious warnings';
 }
 
-{ # https://irclog.perlgeek.de/perl6-dev/2017-01-22#i_13966753
+# https://irclog.perlgeek.de/perl6-dev/2017-01-22#i_13966753
+{
     is sprintf( '%.3d', [42]),   '042', '%.3d';
     is sprintf('%2.4d', [42]),  '0042', '%2.4d';
     is sprintf('%5.3d', [42]), '  042', '%5.3d';

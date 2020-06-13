@@ -280,7 +280,7 @@ group-of 7 => 'Pair.freeze' => {
         is $p.value, 42, 'did not change integer value';
     }
 
-    # RT 131887
+    # https://github.com/Raku/old-issue-tracker/issues/6442
     {
         my $value = 17;
         my $pair = number => $value;

@@ -59,7 +59,6 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 # https://github.com/Raku/old-issue-tracker/issues/1105
 {
     try { EVAL 'class RT67024 { method a(){0}; method a($x){1} }' };
-    # https://github.com/Raku/old-issue-tracker/issues/1105
     ok  $!  ~~ Exception, 'redefinition of non-multi method (RT #67024)';
     ok "$!" ~~ /multi/, 'error message mentions multi-ness';
 }

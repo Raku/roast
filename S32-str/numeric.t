@@ -17,6 +17,7 @@ sub f($str) {
 }
 
 check '',           Int,      0;
+# https://github.com/Raku/old-issue-tracker/issues/5419
 check ' ',          Int,      0; # RT128543
 check '   ',        Int,      0;
 check '123',        Int,    123;
@@ -156,7 +157,6 @@ f      '3+Infi';
 
 # https://github.com/Raku/old-issue-tracker/issues/2505
 {
-    # https://github.com/Raku/old-issue-tracker/issues/2505
     is +Str.new, 0, 'RT #100778'
 }
 

@@ -244,7 +244,6 @@ is (5,4,3, { $_ - 1 || last } ... *)[lazy ^10].join(', '), '5, 4, 3, 2, 1', "seq
 throws-like '1, 2, 3, ... 5', Exception, 'comma before sequence operator is caught';
 
 # https://github.com/Raku/old-issue-tracker/issues/1572
-# https://github.com/Raku/old-issue-tracker/issues/1572
 is ~(1...^*).[^10], '1 2 3 4 5 6 7 8 9 10', 'RT #73268';
 
 # https://github.com/Raku/old-issue-tracker/issues/1871
@@ -256,11 +255,8 @@ is (|(1,1,2,4,8)[^4], *+*+*+* ... *)[4], 8, 'WhateverCode with arity > 3 gets en
 
 # https://github.com/Raku/old-issue-tracker/issues/1825
 {
-    # https://github.com/Raku/old-issue-tracker/issues/1825
     is (4 ... ^5), <4 3 2 1 0 1 2 3 4>, "RT #75674";
-    # https://github.com/Raku/old-issue-tracker/issues/1825
     is (4 ... 0,1,2,3,4), <4 3 2 1 0 1 2 3 4>, "RT #75674";
-    # https://github.com/Raku/old-issue-tracker/issues/1825
     is (-5 ... ^5), <-5 -4 -3 -2 -1 0 1 2 3 4>, "RT #75674";
 }
 

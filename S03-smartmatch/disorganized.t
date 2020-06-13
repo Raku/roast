@@ -86,10 +86,10 @@ caught that case.
     ok $result, 'C<all(@x) ~~ {...} when true for one';
 };
 
+# https://github.com/Raku/old-issue-tracker/issues/609
 # need to test in EVAL() since class definitions happen at compile time,
 # ie before the plan is set up.
 eval-lives-ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
-              # https://github.com/Raku/old-issue-tracker/issues/609
               'smartmatch in a class lives (RT #62196)';
 
 # https://github.com/Raku/old-issue-tracker/issues/2593

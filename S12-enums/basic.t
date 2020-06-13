@@ -101,6 +101,7 @@ eval-lives-ok 'my enum Empty2 ()', 'empty enum with () can be constructed';
     ok Color.pick(2) == 2, '.pick(2) on enums';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/1448
 {
     my enum RT71460::Bug <rt71460 bug71460 ticket71460>;
     ok bug71460 == 1, 'enum element of enum with double colons is in namespace';
@@ -118,7 +119,6 @@ eval-lives-ok 'my enum Empty2 ()', 'empty enum with () can be constructed';
 {
     my enum somenum <a b c d e>;
     my somenum $temp = d;
-    # https://github.com/Raku/old-issue-tracker/issues/1788
     ok $temp eq 'd', "RT #75370 enum name";
 }
 

@@ -176,7 +176,6 @@ my @tests = (
 {
     class RT67790 {}
     lives-ok { RT67790.HOW.raku }, 'can .raku on .HOW';
-    # https://github.com/Raku/old-issue-tracker/issues/1156
     #?rakudo skip 'RT #67790'
     ok EVAL(RT67790.HOW.raku) === RT67790.HOW, '... and it returns the right thing';
 }

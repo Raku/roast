@@ -61,7 +61,6 @@ plan 16;
     sub rt112664 is a {}
 
     lives-ok { rt112664 },
-    # https://github.com/Raku/old-issue-tracker/issues/2736
     '[BUG] multi without proto gets wrong lexical lookup chain (RT #112664)';
 }
 

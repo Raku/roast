@@ -37,9 +37,11 @@ class ProvidesA { method a() { 5 } };
 lives-ok { EVAL 'class ChildA is ProvidesA does WithStub { }' },
         'stubbed method can come from parent class too';
 
+# https://github.com/Raku/old-issue-tracker/issues/2914
 lives-ok { EVAL 'class RT115212 does WithStub { has $.a }' }, 'stubbed method can come from accessor';
 
 class HasA { has $.a }
+# https://github.com/Raku/old-issue-tracker/issues/2914
 lives-ok { EVAL 'class RT115212Child is HasA does WithStub { }' }, 'stubbed method can come from accessor in parent class';
 
 # https://github.com/Raku/old-issue-tracker/issues/3227
@@ -52,7 +54,6 @@ throws-like { EVAL 'my role F119643 { ... }; class C119643 does F119643 {}' },
     my role WithPrivateStub { method !foo { ... } };
     my class ClassPrivate does WithPrivate does WithPrivateStub { method bar {self!foo } };
 
-    # https://github.com/Raku/old-issue-tracker/issues/4397
     is ClassPrivate.new.bar(), 'p', 'RT #125606: Stub resolution works for private methods too';
 }
 

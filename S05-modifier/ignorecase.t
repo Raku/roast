@@ -127,6 +127,7 @@ my $fi   = 'fi';
 my $fi_d = 'ﬁ';
 ok $fi   ~~ /:i $fi_d /, "ignorecase with ligature needle in variable matches";
 ok 'fi'   ~~ /:i $fi_d /, "ignorecase with ligature needle in variable matches (literal haystack)";
+# https://github.com/Raku/old-issue-tracker/issues/6577
 #?rakudo.moar 2 todo "ignorecase doesn't use foldcase semantics when the haystack is interpolated RT132233"
 #?rakudo.js 2 todo "ignorecase doesn't use foldcase semantics when the haystack is interpolated RT132233"
 ok $fi_d ~~ /:i $fi /, "ignorecase with ligature haystack in variable matches";
@@ -134,6 +135,7 @@ ok 'ﬁ' ~~ /:i $fi /, "ignorecase with ligature literal haystack matches";
 ok $fi_d ~~ /:i  fi /, "ignorecase with ligature haystack in variable matches";
 
 is 'ﬁ' ~~ /:i fi /, "ﬁ", "ignorecase with ligature haystack returns ligature match";
+# https://github.com/Raku/old-issue-tracker/issues/6577
 #?rakudo.moar 1 todo "ignorecase returns too many graphemes for expanding foldcase graphemes. RT132232"
 is '_ﬁ_' ~~ /:i fi /, "ﬁ", "ignorecase with ligature haystack matches only ligature needle";
 # vim: syn=perl6 sw=4 ts=4 expandtab

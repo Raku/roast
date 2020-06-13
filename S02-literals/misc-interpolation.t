@@ -121,9 +121,7 @@ is "{($_ * $_ if $_ % 2 for 0..10)}", '1 9 25 49 81', '{(...)} list comprehensio
 # https://github.com/Raku/old-issue-tracker/issues/1953
 {
     my $y = "foo$(my $x = 42)bar";
-    # https://github.com/Raku/old-issue-tracker/issues/1953
     ok $x eq 42, "RT #76608 simple assignment";
-    # https://github.com/Raku/old-issue-tracker/issues/1953
     ok $y eq "foo42bar", "RT #76608 variable interpolation inside string";
 }
 

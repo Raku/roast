@@ -99,7 +99,6 @@ eval-lives-ok('class A { has $!to; method x { loop { (:$!to); } } };', 'pair col
 
 # https://github.com/Raku/old-issue-tracker/issues/761
 throws-like 'loop { say "# RT63760"; last } while 1', X::Syntax::Confused,
-             # https://github.com/Raku/old-issue-tracker/issues/761
              '"loop {} while" is a syntax error (RT #63760)';
 
 # https://github.com/Raku/old-issue-tracker/issues/2732
@@ -128,7 +127,6 @@ throws-like 'loop { say "# RT63760"; last } while 1', X::Syntax::Confused,
         ~ $mod ~ ｢; say "Test:fail" }｣
     }
     for ｢without Any｣, ｢with 42｣ -> $mod {
-        # https://github.com/Raku/old-issue-tracker/issues/5885
         #?rakudo.jvm todo 'RT #130354'
 
         doesn't-hang(

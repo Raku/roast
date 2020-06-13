@@ -107,7 +107,6 @@ ok Bool::True.raku ~~/^ 'Bool::True'/, 'Bool::True.raku';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/2526
-# https://github.com/Raku/old-issue-tracker/issues/2526
 #?rakudo todo 'RT #101900'
 {
     throws-like 'enum rt_101900 < a b >; class A { }; note A but rt_101900::a',

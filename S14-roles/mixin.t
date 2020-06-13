@@ -112,16 +112,13 @@ is $y.test,     42,         'method from other role was OK too';
 {
     throws-like { EVAL q[{ role A { my $!foo; }; role B { my $!foo; }; class C does A does B {} }] },
        X::Syntax::Variable::Twigil, twigil => '!', scope => 'my',
-       # https://github.com/Raku/old-issue-tracker/issues/2064
        'RT #77184'
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/2494
 {
     my $a = 0 but True;
-    # https://github.com/Raku/old-issue-tracker/issues/2494
     is +$a, 0, 'RT #100782 1/2';
-    # https://github.com/Raku/old-issue-tracker/issues/2494
     is ?$a, Bool::True, 'RT #100782 2/2';
 }
 

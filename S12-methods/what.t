@@ -112,7 +112,6 @@ ok 1.1 == 11/10, 'decimal == the equivalent rational';
     class RT112364 {
         our sub xyz() { 'xyz' }
     };
-    # https://github.com/Raku/old-issue-tracker/issues/2709
     ok RT112364::.WHAT ~~ Stash, 'RT #112364';
 }
 

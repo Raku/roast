@@ -350,7 +350,6 @@ is Foo::official(), 44,
 # https://github.com/Raku/old-issue-tracker/issues/537
 {
     sub rt61732_c { 1; CATCH {} }
-    # https://github.com/Raku/old-issue-tracker/issues/537
     #?rakudo todo 'RT #61732'
     is rt61732_c(), 1, 'sub with empty catch block returns value before block';
 }

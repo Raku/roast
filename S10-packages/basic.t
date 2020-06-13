@@ -150,8 +150,8 @@ our $outer_package = 19;
         'another simple package case that should not blow platform';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/881
 eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
-              # https://github.com/Raku/old-issue-tracker/issues/881
               'map works in a module (RT #64606)';
 
 {

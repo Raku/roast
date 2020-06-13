@@ -26,7 +26,6 @@ is $<T1::r3><ws>, 'x',     'explicit  <ws> did capture';
 {
     ok '' ~~ / <ws>  /, 'match <ws>  against empty string';
     ok '' ~~ / <ws>? /, 'match <ws>? against empty string';
-    # https://github.com/Raku/old-issue-tracker/issues/2593
     #?rakudo 2 skip 'infinite loop: RT #64094 (noauto)'
     ok '' ~~ / <ws>+ /, 'match <ws>+ against empty string';
     ok '' ~~ / <ws>* /, 'match <ws>* against empty string';

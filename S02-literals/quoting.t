@@ -541,9 +541,7 @@ Hello, World
 
 # https://github.com/Raku/old-issue-tracker/issues/1784
 {
-    # https://github.com/Raku/old-issue-tracker/issues/1784
     is "$foo >>", "FOO >>", 'quoting and >> (RT #75320, 1)';
-    # https://github.com/Raku/old-issue-tracker/issues/1784
     is "$foo>>",  "FOO>>",  'quoting and >> (RT #75320, 2)';
 }
 

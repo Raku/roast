@@ -71,7 +71,6 @@ group-of 10 => 'numeric literals as type constraints' => {
         eval-lives-ok ｢sub f(−42){}(−42)｣, 'U+2212 minus';
     }
     group-of 4 => 'unum' => {
-        # https://github.com/Raku/old-issue-tracker/issues/5759
         #?rakudo.jvm 4 todo 'Missing block / Malformed parameter on JVM, RT #129915'
         eval-lives-ok ｢sub f( ½){}( .5)｣, 'bare';
         eval-lives-ok ｢sub f(+½){}( .5)｣, 'plus';

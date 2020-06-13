@@ -20,7 +20,6 @@ eval-lives-ok 'sub quuuux ($!) { ... }', 'but $! is OK';
 # https://github.com/Raku/old-issue-tracker/issues/850
 {
     sub empty_sig() { return };
-    # https://github.com/Raku/old-issue-tracker/issues/850
     dies-ok { EVAL('empty_sig("RT #64344")') },
             'argument passed to sub with empty signature';
 }

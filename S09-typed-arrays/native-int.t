@@ -292,6 +292,7 @@ for flat @int,@uint -> $T {
     is @unsorted.sort, "", "Can we sort 0-element $t array";
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/3740
 # some unsigned native int tests
 for @uint -> $T {
     my $t = $T.^name;
@@ -299,16 +300,13 @@ for @uint -> $T {
 
     my @arr := array[$T].new;
     is (@arr[0] = -1), -1, "assigning -1 on $t array passes value on through?";
-    # https://github.com/Raku/old-issue-tracker/issues/3740
     # DRY once the failing cases pass. RT #124088
     if $t eq "uint" or $t eq "uint64" {
-        # https://github.com/Raku/old-issue-tracker/issues/3740
         #?rakudo todo 'highest bit length stays negative, RT #124088'
         ok @arr[0] > 0,        "negative value on $t array becomes positive";
     }
     elsif $t eq "uint32" {
         #?rakudo.jvm todo 'missing an invert? (-1 --> 0, -2 --> -1)'
-        # https://github.com/Raku/old-issue-tracker/issues/3740
         #?rakudo.js todo 'the js backend is 32bit so we get RT #124088 here'
         ok @arr[0] > 0,        "negative value on $t array becomes positive";
     } else {

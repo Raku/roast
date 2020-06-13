@@ -40,7 +40,6 @@ is_run( 'my %h= flat <a b c> Z 1,2,3; for %h.sort(*.key) { .say }',
             out    => "a => 1\nb => 2\nc => 3\n",
             err    => '',
         },
-        # https://github.com/Raku/old-issue-tracker/issues/1737
         'for %h { .say } (RT #74822)' );
 
 # vim: ft=perl6

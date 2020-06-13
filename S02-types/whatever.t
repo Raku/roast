@@ -283,9 +283,7 @@ throws-like '{*.{}}()', X::Syntax::Malformed, '{*.{}}() dies';
 {
     my $rt79166 = *;
     isa-ok $rt79166, Whatever, 'assignment of whatever still works';
-    # https://github.com/Raku/old-issue-tracker/issues/2256
     $rt79166 = 'RT #79166';
-    # https://github.com/Raku/old-issue-tracker/issues/2256
     is $rt79166, 'RT #79166', 'assignment to variable with whatever in it';
 }
 

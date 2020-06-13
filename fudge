@@ -216,7 +216,6 @@ sub fudgeblock {
             my $cmd = $4;
             my $applies = 0;
 
-            # https://github.com/Raku/old-issue-tracker/issues/2593
             # Guard against false match with shebang line.  See roast RT #268
             next if $sense eq '!' && ! scalar m/\b(DOES|skip|emit|todo|eval|try)\b/ ;
 

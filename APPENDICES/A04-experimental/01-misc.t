@@ -239,7 +239,6 @@ subtest 'mistyped typenames in coercers give good error' => {
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5582
-# https://github.com/Raku/old-issue-tracker/issues/5582
 #?rakudo.jvm skip 'RT #128964 Type check failed for return value; expected Str(Any) but got Int (42)'
 #?DOES 1
 {

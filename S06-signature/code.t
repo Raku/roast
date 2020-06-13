@@ -43,7 +43,6 @@ is tester2({ 'block' }), 1, 'Can pass a block to a &parameter';
     sub foo(&foo = &foo) {
         $tracker = &foo
     };
-    # https://github.com/Raku/old-issue-tracker/issues/1174
     #?rakudo todo 'RT #67932'
     lives-ok { foo },
         'can call a sub with a code object defaulting to something of its own name';

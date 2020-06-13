@@ -48,7 +48,6 @@ plan 13;
 {
     my $job1 = start { print "" };
     my $job2 = start { print "" };
-    # https://github.com/Raku/old-issue-tracker/issues/3526
     ok (await Promise.allof($job1, $job2)), "start + await + allof combo, RT #122802";
 }
 

@@ -106,7 +106,6 @@ plan 20;
         $i++;
         $rt121156 ~= $i;
     }
-    # https://github.com/Raku/old-issue-tracker/issues/3324
     #?rakudo.jvm todo 'this test works "standalone", but not after previous test; RT #121145'
     is $rt121156, '1leaving2leaving3leaving',
         'LEAVE in while loop works as expected';

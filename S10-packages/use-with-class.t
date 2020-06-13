@@ -53,7 +53,6 @@ ok Stupid::Class.new(), 'can instantiate object of "imported" class';
 # https://github.com/Raku/old-issue-tracker/issues/1642
 {
     use Foo;
-    # https://github.com/Raku/old-issue-tracker/issues/1642
     lives-ok { class Bar { } }, 'declaring a class after use-ing a module (RT #73910)'
 }
 

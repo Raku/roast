@@ -92,7 +92,6 @@ subtest 'can smartmatch against regexes stored in variables' => {
 
     # non-str orig, NFD
     # https://github.com/Raku/old-issue-tracker/issues/5951
-    # https://github.com/Raku/old-issue-tracker/issues/5951
     #?rakudo.jvm skip 'Undeclared name: NFD, RT #130458'
     ok "7\x[308]".NFD ~~ /^ \d+ $/, 'sanity';
     # https://github.com/Raku/old-issue-tracker/issues/5951

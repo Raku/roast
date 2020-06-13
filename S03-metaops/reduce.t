@@ -354,8 +354,8 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
     is ([~] 1, 2, 5), '125', '[~] works outside class';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/2327
 ok [+](1..10) + 0 == ([+] 1..10) + 0,
-   # https://github.com/Raku/old-issue-tracker/issues/2327
    'a listop with immediate () is a function call (RT #82210)';
 # https://github.com/Raku/old-issue-tracker/issues/1976
 ok [+](1, 2, 3) / 2 == 3, '[+] is a normal listop';
@@ -366,7 +366,6 @@ ok ([+]) == 0, 'argumentless [+] parses';
 # https://github.com/Raku/old-issue-tracker/issues/2483
 {
     sub rt99942 { [+] @_ };
-    # https://github.com/Raku/old-issue-tracker/issues/2483
     is rt99942(1, 42), 43, 'RT #99942'
 }
 

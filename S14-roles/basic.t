@@ -86,6 +86,7 @@ lives-ok { HasC.new.x = DoesC.new },
 dies-ok { HasC.new.x = Mu },    'typed attribute rejects things it should';
 dies-ok { HasC.new.x = 42 },    'typed attribute rejects things it should';
 
+# https://github.com/Raku/old-issue-tracker/issues/1028
 throws-like '0 but RT66178', X::Undeclared::Symbols, '"but" with non-existent role dies';
 
 {
@@ -131,7 +132,6 @@ throws-like 'role RRR { }; class RRR does RRR { };', X::Redeclaration,
 lives-ok {0 but True}, '0 but True has applicable candidate';
 
 # https://github.com/Raku/old-issue-tracker/issues/1153
-# https://github.com/Raku/old-issue-tracker/issues/1153
 #?rakudo skip 'RT #67768'
 {
     eval-lives-ok 'role List { method foo { 67768 } }',
@@ -145,7 +145,6 @@ lives-ok {0 but True}, '0 but True has applicable candidate';
 # https://github.com/Raku/old-issue-tracker/issues/2847
 {
     lives-ok { my role R { my $.r }; my class C does R {} },
-        # https://github.com/Raku/old-issue-tracker/issues/2847
         'Can have "my $.r" in a role (RT #114380)';
 }
 

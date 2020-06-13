@@ -83,7 +83,6 @@ is (<a ab>, <bc ad ba>).comb(rx:Perl5/\S*a\S*/), <a ab ad ba>,
     my $expected_reason = rx:s/none of these signatures match/;
 
     my $calls = 0;
-    # https://github.com/Raku/old-issue-tracker/issues/1040
     try { 'RT #66340'.comb( { $calls++ } ) };
     is $calls, 0, 'code passed to .comb is not called';
     ok $! ~~ Exception, '.comb({...}) dies';

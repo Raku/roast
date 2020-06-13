@@ -47,9 +47,9 @@ throws-like 'sub wrong1 ($a?, $b) {...}', X::Parameter::WrongOrder,
         '...and the default is 0';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/78
 sub foo_53814($w, $x?, :$y = 2) { $w~"|"~$x~"|"~$y };
 dies-ok {foo_53814(1,Mu,'something_extra',:y(3))},
-      # https://github.com/Raku/old-issue-tracker/issues/78
       'die on too many parameters (was once bug RT #53814)';
 
 

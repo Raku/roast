@@ -24,8 +24,8 @@ throws-like { EVAL 'my F $x;' },
 # https://github.com/Raku/old-issue-tracker/issues/466
 # so you couldn't name a class 'Task' - RT #61128
 
+# https://github.com/Raku/old-issue-tracker/issues/466
 lives-ok { EVAL 'class Task { has $.a }; Task.new(a => 3 );' },
-  # https://github.com/Raku/old-issue-tracker/issues/466
   'can call a class "Task" - RT #61128';
 
 # L<S02/Bare identifiers/If a postdeclaration is not seen, the compile fails at CHECK

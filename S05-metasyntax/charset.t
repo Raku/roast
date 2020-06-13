@@ -69,7 +69,6 @@ ok( "foo" ~~ /<[f] #`[comment] + [o]>/, 'comment embedded in charset works' );
 ok "\x[FFEF]" ~~ /<[\x0..\xFFEF]>/, 'large \\x char spec';
 
 # https://github.com/Raku/old-issue-tracker/issues/1458
-# https://github.com/Raku/old-issue-tracker/issues/1458
 throws-like "'RT #71702' ~~ /<[d..b]>? RT/", Exception,
     'reverse range in charset is lethal';
 

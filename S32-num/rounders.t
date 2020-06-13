@@ -146,7 +146,8 @@ for @testkeys -> $t {
         "($num).round(1e-5) =~= 123.45679e0";
 }
 
-{  # RT 126825
+# https://github.com/Raku/old-issue-tracker/issues/4825
+{
     my $complex = 5.123456789+3.987654321i;
     is $complex.round(1),             5+4i,  "complex round with argument";
     is $complex.round(5),             5+5i,  "($complex).round(5) == 5+5i";

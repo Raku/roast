@@ -59,7 +59,6 @@ plan 55;
 {
     my %b = ^512;
     my %c = EVAL(%b.raku);
-    # https://github.com/Raku/old-issue-tracker/issues/3286
     is %c.elems, 256, 'Can create large hash with "=>", RT #120656'
 }
 

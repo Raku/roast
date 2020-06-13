@@ -37,6 +37,7 @@ eval-lives-ok
     'use Main::Nested; my Main::Nested $foo;',
     'Nested package not cought by lexically imported main package';
 
+# https://github.com/Raku/old-issue-tracker/issues/3075
 use RT117117::Backends;
 use RT117117::Backend::AST;
 use RT117117::Backend::GNUC;

@@ -109,11 +109,9 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
     my $rt112868 = 'splitting on empty';
     ok $rt112868.split('').elems > 0, q<.split('') does something>;
     is $rt112868.split(''), $rt112868.split(/''/),
-       # https://github.com/Raku/old-issue-tracker/issues/2759
        q<.split('') does the same thing as .split(/''/) (RT #112868)>;
 }
 
-# https://github.com/Raku/old-issue-tracker/issues/5278
 # https://github.com/Raku/old-issue-tracker/issues/5278
 subtest 'split with NaN limit throws (RT #128034)', {
     plan 3;

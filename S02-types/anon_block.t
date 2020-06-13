@@ -42,7 +42,6 @@ is($anon_block(), 1, '{} <anon block> works');
     else {
         my $errmsg = ~$!;
 
-        # https://github.com/Raku/old-issue-tracker/issues/907
         EVAL '$anon_block( foo => "RT #64844" )';
         ok $! ~~ Exception, 'too many parameters';
         is ~$!, $errmsg, 'same error for named param as positional';

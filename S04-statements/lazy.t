@@ -6,12 +6,12 @@ use Test;
 
 plan 10;
 
+# https://github.com/Raku/old-issue-tracker/issues/3885
 {
   my $was_in_lazy;
 
   my $var := lazy { $was_in_lazy++; 42 };
 
-  # https://github.com/Raku/old-issue-tracker/issues/3885
   #?rakudo todo 'lazy NYI, currently works like "do"; RT #124571'
   ok !$was_in_lazy,     'lazy block wasn\'t yet executed (1)';
 
@@ -22,22 +22,22 @@ plan 10;
   is $was_in_lazy,   1, 'lazy block was not executed again';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/3885
 # dies-ok/lives-ok tests:
 {
   my $was_in_lazy;
   my $lazy := lazy { $was_in_lazy++; 42 };
   dies-ok { $lazy = 23 }, "reassigning var bound to a lazy dies";
-  # https://github.com/Raku/old-issue-tracker/issues/3885
   #?rakudo todo 'lazy NYI, currently works like "do"; RT #124571'
   ok !$was_in_lazy,       "trying to reassign var bound to a lazy does not evaluate lazy block";
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/3885
 {
   my $was_in_lazy;
   my $lazy := lazy { $was_in_lazy++; 42 };
   $lazy := 23;
   is $lazy, 23,     "rebinding var bound to a lazy worked (2)";
-  # https://github.com/Raku/old-issue-tracker/issues/3885
   #?rakudo todo 'lazy NYI, currently works like "do"; RT #124571'
   ok !$was_in_lazy, "rebinding var bound to a lazy does not evaluate lazy block";
 }

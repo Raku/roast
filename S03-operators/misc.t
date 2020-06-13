@@ -119,11 +119,9 @@ is (2 Z 3), @z, 'joining of single items';
 {
     # https://github.com/Raku/old-issue-tracker/issues/1562
     throws-like "1%^^1", X::Syntax::DuplicatedPrefix, prefixes => "^^",
-        # https://github.com/Raku/old-issue-tracker/issues/1562
         "%^^ fails to parse (RT #73198)";
     # https://github.com/Raku/old-issue-tracker/issues/1921
     throws-like "555 ~~!~~ 666", X::Syntax::DuplicatedPrefix, prefixes => "~~",
-        # https://github.com/Raku/old-issue-tracker/issues/1921
         "~~!~~ fails to parse (RT #76436)";
 }
 

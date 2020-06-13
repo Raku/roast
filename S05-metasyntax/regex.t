@@ -106,7 +106,6 @@ ok ';' ~~ /\;/,             'escaped ";" in m// works';
 
 # https://github.com/Raku/old-issue-tracker/issues/886
 {
-    # https://github.com/Raku/old-issue-tracker/issues/886
     try { EVAL '"RT #64668" ~~ /<nosuchrule>/' };
     ok  $!  ~~ Exception, 'use of missing named rule dies';
     ok "$!" ~~ /nosuchrule/, 'error message mentions the missing rule';
