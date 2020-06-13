@@ -75,3 +75,5 @@ sub say(*@a) { $said = @a.map(*.gist).join }   # don't care about the new line
     say "value = ", A;
     is $said, q/value = bar/;
 }
+
+# vim: expandtab shiftwidth=4

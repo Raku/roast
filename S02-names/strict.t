@@ -44,4 +44,4 @@ subtest '`no strict` does not cause autovivification container issues' => {
     isa-ok %h<non-existent>, Any, 'non-existent keys are `Any`';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

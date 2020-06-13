@@ -12,4 +12,4 @@ my $module = $dir.child("Foo.rakumod");
 is run($*EXECUTABLE, $script, :out).out.slurp(:close), "⎽ ⎼ ⎻ ⎺",
   "did the module get precompiled ok and return '⎽ ⎼ ⎻ ⎺'";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

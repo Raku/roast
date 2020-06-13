@@ -137,4 +137,4 @@ is_run 'use MONKEY-SEE-NO-EVAL; EVAL q|print "I ® U"|.encode',
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

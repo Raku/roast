@@ -41,3 +41,5 @@ plan 18;
         method print (*@a) { "`@a[]`" }; method nl-out {42, 72}
     }.print-nl, ｢`42 72`｣, 'Any.print-nl calls self.print(self.nl-out)';
 }
+
+# vim: expandtab shiftwidth=4

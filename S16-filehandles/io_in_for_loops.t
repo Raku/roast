@@ -115,4 +115,4 @@ my $filename = 'tempfile_io_in_for_loop';
 
 ok(unlink($filename), 'file has been removed');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

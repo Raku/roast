@@ -8,4 +8,4 @@ use Test;
 plan 1;
 ok "'use Perl:ver<6.*>' works (and means the same as 'use v6')";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

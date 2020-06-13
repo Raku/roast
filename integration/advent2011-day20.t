@@ -43,3 +43,5 @@ is-deeply %song, {
                   "dying civilization"],
     "Photek" => ["ni ten ichi ryu", "modus operandi"]
 }, 'inversion push';
+
+# vim: expandtab shiftwidth=4

@@ -46,4 +46,4 @@ is 'Sigma looks like Σ.'.lc, 'sigma looks like σ.', 'final sigma does not appl
     is-deeply "\c[arabic number sign]A".lc, "\c[arabic number sign]a", "Uppercasing works even with prepend codepoints";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

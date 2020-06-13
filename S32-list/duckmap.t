@@ -28,4 +28,4 @@ This test tests C<duckmap>.
     is-deeply duckmap(-> Int $x { $x ~~ Int ?? $x + 1 !! Any }, [1, [2,3], 4]), [2, [3,4], 5], 'duckmap preserves structure types';
 } #2
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

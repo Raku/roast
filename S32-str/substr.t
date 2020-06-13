@@ -141,4 +141,4 @@ subtest 'substr coerces from/to to Ints' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

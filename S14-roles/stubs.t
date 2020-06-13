@@ -72,3 +72,5 @@ throws-like { EVAL 'my role F119643 { ... }; class C119643 does F119643 {}' },
         lives-ok { R."$_"() }, ".$_ on role with requirement does not pun it and die";
     }
 }
+
+# vim: expandtab shiftwidth=4

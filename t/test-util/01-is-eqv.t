@@ -30,3 +30,5 @@ is-eqv-fails ｢is-eqv (1,), (1, 2, 3).Seq, 'meows'    ｣, 'List:D, Seq:D';
 is-eqv-fails ｢is-eqv (1,), (1, 2, 3), 'meows'        ｣, 'List:D, different List:D';
 is-eqv-fails ｢is-eqv (1,), 1, 'meows'                ｣, 'List:D, Int:D';
 
+
+# vim: expandtab sw=4

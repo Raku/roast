@@ -615,4 +615,4 @@ subtest 'no funny business with Ints that are not representable in double' => {
     dies-ok { Int.new(Int) }, 'does Int.new(Int) die?';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

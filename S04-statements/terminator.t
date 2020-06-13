@@ -63,4 +63,4 @@ eval-lives-ok q:b"my &f;\nsub g() { }\n&f;", 'implicit terminator before & sigil
     eval-lives-ok '0,', 'trailing comma allowed (5)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -32,4 +32,4 @@ ok(cat({'a'=>1,'b'=>2,'c'=>3}) eqv ('a'=>1, 'b'=>2, 'c'=>3),
 ok(cat((); 1; 2..4; [5..7], {'a'=>1,'b'=>2}) eqv (1..7, 'a'=>1, 'b'=>2),
     'basic cat');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

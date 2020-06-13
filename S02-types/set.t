@@ -599,4 +599,4 @@ is-deeply (1,2,3).Set.ACCEPTS(().Set), False, 'can we smartmatch empty';
     dies-ok { my %s is Set[Int] = <a b c> }, 'must have Ints';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

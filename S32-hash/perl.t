@@ -96,3 +96,5 @@ is (($ = Map.new: (:42a, :70b, :20c)).raku.EVAL,).flat.elems, 1,
 }
 
 #vim: ft=perl6
+
+# vim: expandtab shiftwidth=4

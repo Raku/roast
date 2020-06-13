@@ -362,3 +362,5 @@ group-of 15 => 'tests that use unspecced $?BITS to make decisions' => {
         skip "this test doesn't make sense 32bit platforms";
     }
 }
+
+# vim: expandtab sw=4

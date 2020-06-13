@@ -113,4 +113,4 @@ plan 16;
     ok $called, 'interaction of mixin to routine with array attribute and wrap is correct';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

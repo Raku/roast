@@ -74,4 +74,4 @@ is( 42.kv, [0, 42], "(42).kv works");
     is (1, 2).test_kv, '0|a|1|b|2|c', '.kv works within class List';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

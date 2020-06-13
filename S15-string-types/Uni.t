@@ -24,3 +24,5 @@ is $uni.gist, 'Uni:0x<0044 0307 0323>', '.gist works on Uni';
 
 ok $uni, 'A non-empty Uni boolifies to true';
 nok Uni.new, 'An empty Uni boolifies to false';
+
+# vim: expandtab shiftwidth=4

@@ -114,4 +114,4 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     is($inc2(), 1, "closures: inc2 == 1");
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

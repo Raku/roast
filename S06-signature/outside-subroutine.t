@@ -69,4 +69,4 @@ eval-lives-ok ｢:($:)｣, 'invocant marker is allowed in bare signature';
 # https://github.com/Raku/old-issue-tracker/issues/5507
 is :(*%) ~~ :(), False, 'smartmatch with no slurpy on right side';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

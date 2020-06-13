@@ -21,4 +21,4 @@ BEGIN {
     is C1.new.foo(Any), "C1::foo(Mu)", "candidate choice for parent class";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

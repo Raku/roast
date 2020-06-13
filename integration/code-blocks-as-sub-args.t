@@ -24,4 +24,4 @@ throws-like {foo2(-> { die "test" }, "a", "b")},
   'pointy block is not a sub (with optional last arg)';
 lives-ok {foo2( sub { die "test" }, 'a', 'b')}, 'anonymous sub as argument not executed (with optional last arg)';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

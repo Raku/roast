@@ -38,3 +38,5 @@ plan 2;
     await @p;
     is-deeply @r, [1 xx 4000], 'Semaphore protected array operations';
 }
+
+# vim: expandtab shiftwidth=4

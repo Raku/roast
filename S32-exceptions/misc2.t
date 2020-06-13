@@ -489,4 +489,4 @@ if $emits_suggestions {
     throws-like { my Str @a; @a.AT-POS(0) = 1 }, X::TypeCheck::Assignment, "ContainerDescriptor::BindArrayPos has a 'name' method";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

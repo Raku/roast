@@ -256,4 +256,4 @@ $sub6 = "f bar bar bar bar bar bar";
     is($try, $data, 'did not substitute 7x');
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

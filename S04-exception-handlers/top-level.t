@@ -12,3 +12,5 @@ CATCH {
         pass 'Top-level handler caught exception'
     }
 }
+
+# vim: expandtab shiftwidth=4

@@ -2422,4 +2422,4 @@ throws-like '"foo" ~~ /<[d..b]>? foo/', Exception, 'no reversed char ranges';
 lives-ok { $/ := 42; dd /./.ACCEPTS("a") },
   'Regex.ACCEPTS survives immutable $/';
 
-# vim: ft=perl6 sw=4 expandtab
+# vim: expandtab shiftwidth=4

@@ -171,4 +171,4 @@ lives-ok { my $a = do given 5 {} }, 'empty do block lives (RT #61034)';
     is (do if 42 { $_ }), 101, 'Correct $_ value visible inside do if 42 { ... } construct';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -698,4 +698,4 @@ subtest '.subst with multi-match args set $/ to a List of matches' => {
         'Placeholder parameter in substitution regex (// quoter)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

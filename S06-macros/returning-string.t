@@ -45,4 +45,4 @@ plan 8;
     "simple string returning macro without argparens is parsed correctly (2)";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -312,3 +312,5 @@ is Date.today.clone(:1day, :2month, :2017year).Str, '2017-02-01',
     is-deeply Date($yyyy-mm-dd), Date.new($yyyy-mm-dd),
       'does Date(yyyy-mm-dd) work';
 }
+
+# vim: expandtab shiftwidth=4

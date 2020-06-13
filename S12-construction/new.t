@@ -153,4 +153,4 @@ is $o.x, 5, '... worked for the class Parent (other order)';
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -8,3 +8,5 @@ class Example2::N does Example2::D does Example2::P {
         "" # XXX if you remove this, it works?!
     }
 }
+
+# vim: expandtab sw=4

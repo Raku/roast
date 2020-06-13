@@ -94,4 +94,4 @@ Basic C<pairs> tests, see S32::Containers.
     is-deeply pairs(@a), @a.pairs, 'pairs() gives same result as .pairs';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

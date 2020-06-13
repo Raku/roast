@@ -162,4 +162,4 @@ throws-like { $ = Duration.new: "meow" }, X::Str::Numeric,
 does-ok Duration.new(Inf).tai, Rational, 'Duration.new(Inf) works';
 does-ok Duration.new(NaN).tai, Rational, 'Duration.new(NaN) works';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

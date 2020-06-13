@@ -132,4 +132,4 @@ for @list -> $letter {
      is $_, 1, 'outer $_ is unchanged'
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

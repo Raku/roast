@@ -74,4 +74,4 @@ plan 7;
     is $str, 'Here', 'last in FIRST in for loop works';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

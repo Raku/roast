@@ -62,4 +62,4 @@ plan 12;
   is (end ([1,2,3,4],)), 0, "end ([1,2,3,4],) should return 0";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

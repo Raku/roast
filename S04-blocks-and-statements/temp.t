@@ -254,4 +254,4 @@ throws-like { temp $*foo = 42 }, X::Dynamic::NotFound,
     is-deeply %h, %c, '`temp` keeps Nils around in Hashes when they exist';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

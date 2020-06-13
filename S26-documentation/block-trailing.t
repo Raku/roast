@@ -318,3 +318,5 @@ test-trailing($fancy-var.VAR, 'Very fancy!');
 )
 
 is $=pod.elems, $pod_index;
+
+# vim: expandtab shiftwidth=4

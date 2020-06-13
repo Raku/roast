@@ -90,4 +90,4 @@ subtest 'TR:d:c:s///' => { plan 2;
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

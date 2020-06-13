@@ -84,3 +84,5 @@ plan 44;
     is map(* + 2, @arr), (44,45,46,47), '.map is over leaves (native)';
     is sort(-*, @arr), (45,44,43,42), '.sort is over leaves (native)';
 }
+
+# vim: expandtab shiftwidth=4

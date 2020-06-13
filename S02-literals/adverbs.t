@@ -85,3 +85,5 @@ plan 35;
       {a => "A", b => "B", c => "C"},
       "lack of comma does not cause LTA error"
 }
+
+# vim: expandtab shiftwidth=4

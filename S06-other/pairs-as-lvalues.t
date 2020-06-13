@@ -25,4 +25,4 @@ throws-like 'my $var; (key => $var) = "value"', X::Assignment::RO;
 
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

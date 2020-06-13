@@ -836,4 +836,4 @@ nok "a" ~~ /<:Numeric_Type<Digit>>/, "Digit doesn't match normal letters";
 is "a" ~~ /<:Numeric_Type<None>>/, "a", "None matches normal letter";
 nok "9" ~~ /<:Numeric_Type<Digit>>/, "Digit doesn't match things with property value Decimal";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

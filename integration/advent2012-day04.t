@@ -129,3 +129,5 @@ is +(2..100 X=> 2..100).classify({ .key ** .value }), 9183, 'distinct term count
     is ((A - 1) * (B - 1) + %count - [+] %count.values), 9183, 'distinct term count - optimized';
 }
 
+
+# vim: expandtab shiftwidth=4

@@ -117,4 +117,4 @@ ok Str.can('split') ~~ /split/, 'return value of .can stringifies sensibly';
     nok B.can("x"), 'submethods from base classes not bogusly found by .can';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

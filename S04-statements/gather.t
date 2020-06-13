@@ -302,4 +302,4 @@ plan 39;
     is @result.elems, 3, 'take inside m:g runs the expected number of times';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

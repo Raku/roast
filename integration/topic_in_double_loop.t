@@ -13,4 +13,4 @@ for (1, 5) {
 
 ok True, "Got here!";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -131,4 +131,4 @@ ok Bool::True.raku ~~/^ 'Bool::True'/, 'Bool::True.raku';
     is AA.m, 44, "Can mix a private method into an enum value"
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -276,4 +276,4 @@ is_run ｢sub f1 { hash a=>1 }; f1 for ^100000｣, {:out(''), :err(''), :0status
 is_run ｢class Foo {}; -> Foo() $x { $x.say }("42")｣, {:out(''), :err(*), :1status },
     'no segfault when using coercers';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

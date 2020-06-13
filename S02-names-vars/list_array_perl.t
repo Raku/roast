@@ -108,4 +108,4 @@ my @tests = (
         'no duplicate keys in .gist of Match of regex which backtracked';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

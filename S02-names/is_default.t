@@ -454,4 +454,4 @@ subtest 'default `is default()` gets adjusted to type constraint' => {
                 X::TypeCheck::Assignment;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

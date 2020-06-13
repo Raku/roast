@@ -242,3 +242,5 @@ if $*DISTRO.is-win {
 {
     is-deeply Blob[uint8].new(101, 204, 129).decode("utf8-c8").encode("utf8-c8"), Blob[uint8].new(101, 204, 129), 'Non normalized NFC is not mangled by utf-c8';
 }
+
+# vim: expandtab shiftwidth=4

@@ -121,4 +121,4 @@ throws-like 'role ABCD[EFGH] { }', X::Parameter::InvalidType, 'role with undefin
 lives-ok { EVAL 'my role A [ :$bs where { True } = 512] { }; class B does A { }' },
     'role with where clause and default in parametric signature works out OK';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

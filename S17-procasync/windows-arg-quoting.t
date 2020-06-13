@@ -54,4 +54,4 @@ sub test-run-verbatim(@args, $expected) { test-run(@args, $expected, True) }
     test-run-verbatim (Q[a escape\"],   'b'), Q[a escape\" b];
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

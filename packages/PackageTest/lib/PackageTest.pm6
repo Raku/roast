@@ -35,3 +35,5 @@ package PackageTest {
 
     sub dummy_sub_with_params($arg1, $arg2) is export { "[$arg1] [$arg2]" }
 }
+
+# vim: expandtab shiftwidth=4

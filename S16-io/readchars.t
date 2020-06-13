@@ -33,4 +33,4 @@ with make-temp-file.IO {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

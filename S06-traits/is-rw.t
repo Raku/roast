@@ -47,4 +47,4 @@ plan 8;
 # https://github.com/Raku/old-issue-tracker/issues/6366
 throws-like { sub ($ is rw) {}(42) }, X::Parameter::RW;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

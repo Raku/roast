@@ -275,4 +275,4 @@ my $x;
     is( --$x, "\x[e50]ZZ", "'\x[e51]AA'-- is '\x[e50]ZZ'" );
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

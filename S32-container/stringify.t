@@ -29,4 +29,4 @@ is BagHash.raku, 'BagHash', 'BagHash.raku';
 is BagHash.Str, "", "BagHash.Str is empty string";
 is ~BagHash, "", "~BagHash is empty string";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

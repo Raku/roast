@@ -409,4 +409,4 @@ is-deeply sub { sub foo($x = return 42) { 70 }; say foo }(), 42,
 lives-ok { sub foo(--> Callable:D) is rw { my $x is default(Nil) = Nil; $x }; foo },
     'Containerized Nil passes Callable:D constraint';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

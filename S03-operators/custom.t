@@ -10,4 +10,4 @@ plan 1;
     is e1 - e2, "AWW", "can use <<>> for infix defs";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -120,4 +120,4 @@ throws-like q[class Foo {method bar () {try {self!wrong()}}};
     is C2.m.gist, "(C2)", "No wrong private method caching in roles"
 }
 
-# vim: syn=perl6
+# vim: expandtab shiftwidth=4

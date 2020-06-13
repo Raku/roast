@@ -33,3 +33,5 @@ my Str $x;
         },
         "negation of short option that needs a value fails";
 }
+
+# vim: expandtab shiftwidth=4

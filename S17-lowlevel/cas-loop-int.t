@@ -23,3 +23,5 @@ for 1..4 -> $attempt {
     is $total, 4 * [+](1..10000),
         "Block form of CAS on integer lexical works ($attempt)";
 }
+
+# vim: expandtab shiftwidth=4

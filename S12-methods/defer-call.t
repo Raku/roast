@@ -125,4 +125,4 @@ class BarCallWithInt is Foo {
     ok $after-cs, 'control reaches after callsame that has nowhere to go';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

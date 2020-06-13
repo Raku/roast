@@ -50,4 +50,4 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
         ':delete of slice on Hash:U returns a list of Nils';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

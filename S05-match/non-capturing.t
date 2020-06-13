@@ -36,4 +36,4 @@ ok(!defined($/[0]), "Correctly didn't capture 2");
 }
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

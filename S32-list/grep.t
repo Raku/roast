@@ -197,4 +197,4 @@ is-deeply ("foo").grep({ /foo/ }), ("foo",),
       'is none junction handled correctly in grep';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -108,4 +108,4 @@ is((@).push(42,43), '42 43', 'Anonymous @ variable can be pushed');
     is $c, 4, '@$var coercion';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

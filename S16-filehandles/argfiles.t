@@ -115,4 +115,4 @@ is_run ｢run(:in, $*EXECUTABLE, '-e', 'get').in.close｣,
 
 $tmp-file-name.IO.unlink;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

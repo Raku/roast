@@ -30,4 +30,4 @@ is( $a .= samecase('aaaaaaaaaaaaaaaaaaaaaaaa'), 'just another raku hacker', 'aft
 is( 'ä€»«'.samecase('xXxX'), 'ä€»«', 'some unicode characters' );
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

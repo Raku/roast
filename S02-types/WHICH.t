@@ -495,4 +495,4 @@ subtest 'Mixins to Code:U objects do not cause crash on .WHICH' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

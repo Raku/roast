@@ -519,4 +519,4 @@ subtest 'empty ranges sum to 0' => {
     is-deeply sum(10..^10),  0, '..^';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

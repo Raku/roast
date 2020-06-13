@@ -34,4 +34,4 @@ ok(!( "\x2028" ~~ m/\N/ ), 'not LINE SEP');
 ok("abc" ~~ m/\N/, 'abc');
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

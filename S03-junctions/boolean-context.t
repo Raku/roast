@@ -145,4 +145,4 @@ ok do if 1 <= 1 & 2 & 3 & 4 <= 3 { 0 } else { 1 };
     is $invoc, 1, "operator with Mu argument doesn't get autothreaded.";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

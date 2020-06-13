@@ -35,4 +35,4 @@ plan 15;
 # TODO: This could definitely use tests to make sure that @a.Bool only examines
 # the first (few?) elements of @a.
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

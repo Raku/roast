@@ -32,4 +32,4 @@ throws-like 'my $a of Int is default("foo")', X::Parameter::Default::TypeCheck,
     expected => Int,
 'error message for default() type mismatch indicates correct expected type';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

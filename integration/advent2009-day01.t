@@ -10,3 +10,5 @@ plan(2);
 is( (10/7).WHAT.gist, '(Rat)', 'WHAT');
 
 is(([+] (1..999).grep( { $_ % 3 == 0 || $_ % 5 == 0 } )), 233168, 'Project Euler #1');
+
+# vim: expandtab shiftwidth=4

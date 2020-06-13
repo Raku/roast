@@ -34,3 +34,5 @@ for <A 2 3 4 5 6 7 8 9 T J Q K> -> $rank
     @deck .= pick(*);
     is @deck.elems, 4 * 13, 'Shuffled card deck';
 }
+
+# vim: expandtab shiftwidth=4

@@ -46,4 +46,4 @@ is $x.dog.VAR.doc, 'barks', 'trait applied to scalar attribute correctly';
 is $x.birds.doc,   'tweet', 'trait applied to array attribute correctly';
 is $x.cows.doc,    'moooo', 'trait applied to hash attribute correctly';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

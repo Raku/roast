@@ -192,4 +192,4 @@ plan 38;
         'no Null PMC access when trying to hash index a Capture';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

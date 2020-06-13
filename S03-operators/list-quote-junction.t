@@ -51,4 +51,4 @@ for @nonmatching_strings -> $str {
   ok( $str !~~ any(<foo bar baz>), "'$str' does not match any(<foo bar baz>)" );
 };
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

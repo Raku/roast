@@ -39,3 +39,5 @@ plan 10;
 
     is $NFKD.comb, <s ̣ ̇>, "NFKD correctly normalized ẛ̣";
 }
+
+# vim: expandtab shiftwidth=4

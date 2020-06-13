@@ -19,4 +19,4 @@ is_run( 'quietly { note "eton" }; say "life"',
         { status => 0, err => "eton\n", out => "life\n" },
         '"note" in "quietly" works' );
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

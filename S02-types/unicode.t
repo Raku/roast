@@ -26,4 +26,4 @@ is $u.chars, 1, '.chars defaults to NFG';
     is $rt65170.chars, 1, '.chars defaults to NFG (3)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -52,4 +52,4 @@ my %ref2 = (a => [1, 4, 5], b => 2, c => 3);
     is-deeply %a, %( :a[1, 2, 3, 4] ), 'Hash.append appends to array elements';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

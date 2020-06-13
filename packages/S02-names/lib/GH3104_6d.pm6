@@ -20,3 +20,5 @@ sub client-revision is export {
 sub client-package is export {
     CLIENT::LEXICAL::<$?PACKAGE>
 }
+
+# vim: expandtab sw=4

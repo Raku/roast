@@ -184,4 +184,4 @@ subtest '.Slip and .List on Arrays with holes' => {
 # TODO More exclusive bounds checks
 
 # TODO W/ multiple ranges
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

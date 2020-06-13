@@ -80,4 +80,4 @@ subtest '$limit does not pad result with Nils' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -20,3 +20,5 @@ is @x.pick(*).elems, @x.elems, 'pick(*)';
     my @list = 1, 5, 'a', 10, 6;
     is (@list.sort: ~*), [1, 10, 5, 6, "a"], '~* used to sort as list of strings';
 }
+
+# vim: expandtab shiftwidth=4

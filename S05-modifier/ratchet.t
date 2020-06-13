@@ -24,4 +24,4 @@ ok 'aaaa'  ~~ m/ :ratchet ^ [ :!ratchet <aplus> a ]  /,
 ok 'aaaa'  ~~ m/ ^ :!ratchet <aplus> :ratchet a  /,
    'Same if not grouped';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

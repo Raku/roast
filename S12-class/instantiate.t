@@ -44,4 +44,4 @@ is($foo2.check(), 42, 'initializing attributes in new');
     is($y.WHAT.gist, Str.gist, "instantiating from class name string creates a Str object");
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

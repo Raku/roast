@@ -63,4 +63,4 @@ priming-fails-bind-ok(sub (Str :$a!) { }, '$a', Str, :a);
 
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

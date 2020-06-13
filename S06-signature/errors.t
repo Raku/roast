@@ -88,4 +88,4 @@ throws-like 'sub foo($a: $b) { }', X::Syntax::Signature::InvocantNotAllowed;
 throws-like '-> $a: { }', X::Syntax::Signature::InvocantNotAllowed;
 throws-like '-> $a: $b { }', X::Syntax::Signature::InvocantNotAllowed;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

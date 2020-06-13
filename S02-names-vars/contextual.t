@@ -86,4 +86,4 @@ throws-like 'say $*a; my $*a;', X::Dynamic::Postdeclaration, symbol => '$*a';
 throws-like 'my $*FOO::BAR = 2', X::Dynamic::Package, symbol => '$*FOO::BAR';
 throws-like 'say $*OH::BAZ::WAZ', X::Dynamic::Package, symbol => '$*OH::BAZ::WAZ';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

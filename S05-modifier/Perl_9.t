@@ -108,4 +108,4 @@ is(("foobarbar" ~~ rx:P5/^.{2,3}?((?:b|a|r)+?)\1\z/ && $0), "bar", 're_tests 135
 is(("foobarbar" ~~ rx:P5/^(?:f|o|b){2,3}?((?:b|a|r)+?)\1\z/ && $0), "bar", 're_tests 1360/1 (1578)');
 ok((not ("......abef" ~~ rx:P5/.*a(?!(b|cd)*e).*f/)), 're_tests 1362  (1580)');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

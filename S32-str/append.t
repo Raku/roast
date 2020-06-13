@@ -28,4 +28,4 @@ is('' ~ '', '', 'Concatenating two empty strings');
 is($d ~ '', $d, 'Concatenente non-empty and empty string');
 is('' ~ $d, $d, 'Concatenente empty and non-empty string');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

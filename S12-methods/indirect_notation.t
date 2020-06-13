@@ -137,4 +137,4 @@ dies-ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";   #OK use
     lives-ok { $o.?@cand-num([]) }, "it's ok with .? if no candidate matched (type)";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

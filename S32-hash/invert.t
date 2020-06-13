@@ -20,4 +20,4 @@ plan 5;
     is-deeply %h, {a => <b c>, d => 'e'}, 'original remains unchanged';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

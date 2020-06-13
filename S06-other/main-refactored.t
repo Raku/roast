@@ -289,4 +289,4 @@ for @named-anywhere-ok -> \args, @expected, %expected {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

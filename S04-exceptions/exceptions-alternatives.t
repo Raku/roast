@@ -70,4 +70,4 @@ is_run json-ex('justsomerandomsyntaxerror'), {
     }, 'using wrong module gives us a JSON error instead of crashing';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

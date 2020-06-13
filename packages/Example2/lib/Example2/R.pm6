@@ -4,3 +4,5 @@ use Example2::D;
 
 class Example2::R does Example2::D {
 }
+
+# vim: expandtab sw=4

@@ -57,4 +57,4 @@ sub chain { B.try_it_caller_B(@_) }
 
 # WRITEME: label tests
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

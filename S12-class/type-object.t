@@ -13,3 +13,5 @@ is Any.raku,    'Any',   'Any.raku does not have parens';
 is Any.^name,   'Any',   '.^name';
 
 isa-ok (class A { }).new, A, 'can instantiate return value of class declaration';
+
+# vim: expandtab shiftwidth=4

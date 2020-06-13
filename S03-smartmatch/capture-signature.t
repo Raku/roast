@@ -51,4 +51,4 @@ subtest 'non-Capture/non-Signature types on LHS' => {
         False, 'Rat (2)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

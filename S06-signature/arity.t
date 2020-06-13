@@ -164,4 +164,4 @@ is (-> *%a { }).count, 0,   'slurpy named causes no count change';      #OK not 
     is h(3, 11), 14, 'correct number of required parameters for assuming-derived method (1)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

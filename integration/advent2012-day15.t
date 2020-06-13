@@ -93,4 +93,4 @@ for <yay yippe sinbad good baddie> {
 is-deeply @success, [qw<yay yippe good>], 'KEEP';
 is-deeply @failure, [qw<sinbad baddie>], 'UNDO';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

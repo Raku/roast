@@ -151,3 +151,5 @@ plan 82;
     @a[1;1] = 'X';
     is @b[1;1], 1, 'Clone of shaped array has independent containers';
 }
+
+# vim: expandtab shiftwidth=4

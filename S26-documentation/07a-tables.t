@@ -301,4 +301,4 @@ is @rows[1], "MidRat,Special infectiousness. See prose that follows.";
 is @rows[2], "Rat,";
 is @rows[3], "Int,";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

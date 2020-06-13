@@ -18,4 +18,4 @@ eval-lives-ok ' class A {}; class B is A {}; ', "base before derived: lives";
 throws-like ' class D is C {}; class C {}; ', X::Inheritance::UnknownParent,
     "derived before base: dies";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

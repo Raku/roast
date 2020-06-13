@@ -195,4 +195,4 @@ is_run ｢indir '.', {;}; print 'ok'｣,
     {:out<ok>, :err(''), :0status},
     'indir does not generate spurious warnings';
 
-# vim: expandtab shiftwidth=4 ft=perl6
+# vim: expandtab shiftwidth=4

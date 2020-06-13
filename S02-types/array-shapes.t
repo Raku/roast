@@ -174,4 +174,4 @@ subtest '.Array on uninited shaped array' => {
     eval-lives-ok 'my @*a[3]', "Accept dynamic shaped arrays"
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

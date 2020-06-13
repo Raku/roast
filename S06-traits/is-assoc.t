@@ -64,3 +64,5 @@ plan 7;
     }
     ok 5 eog 4 eog 3 eog 2 eog 1, 'User-defined chaining operators with assoc<chain> work';
 }
+
+# vim: expandtab shiftwidth=4

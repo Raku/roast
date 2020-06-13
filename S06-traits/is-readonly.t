@@ -12,4 +12,4 @@ plan 1;
     ok (try { VAR($a).defined }), ".VAR on a plain normal initialized variable returns true";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

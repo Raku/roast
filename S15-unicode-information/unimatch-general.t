@@ -243,4 +243,4 @@ ok unimatch("\x1EE5F", "Other_Math"), "ARABIC MATHEMATICAL TAILED DOTLESS QAF ma
 ok unimatch("\x1EEAB", "Other_Math"), "ARABIC MATHEMATICAL DOUBLE-STRUCK LAM matches Other_Math";
 ok unimatch(0x1000, 'Myanmar', 'sc'), 'Unimatch properly checks alternate/short canonical Unicode names';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

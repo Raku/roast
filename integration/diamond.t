@@ -26,4 +26,4 @@ MODULE
 is run($*EXECUTABLE, $script,:out).out.slurp, "bar",
   "did the module get precompiled ok and return 'bar'";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

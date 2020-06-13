@@ -656,4 +656,4 @@ is-deeply (1,2,3).MixHash.ACCEPTS(().MixHash), False, 'can we smartmatch empty';
     dies-ok { my %mh is MixHash[Int] = <a b c> }, 'must have Ints on creation';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

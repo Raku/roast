@@ -31,4 +31,4 @@ is $<T1::r3><ws>, 'x',     'explicit  <ws> did capture';
     ok '' ~~ / <ws>* /, 'match <ws>* against empty string';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -64,4 +64,4 @@ is join('|', |(1..5)), '1|2|3|4|5', 'can interpolate ranges into arglists';
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

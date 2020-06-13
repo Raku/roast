@@ -110,4 +110,4 @@ is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
     pass 'coercer with subset target did not crash';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

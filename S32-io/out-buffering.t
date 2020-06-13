@@ -97,4 +97,4 @@ for \(:w), \(:rw), \(:a) -> $open-args {
     }}, 'prompt does not hang';
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

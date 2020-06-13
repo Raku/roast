@@ -27,4 +27,4 @@ $v.shift; $v.shift;
 is($v.elems, 2, "shifting .values removes an element...");
 is(@array.elems, 4, "...while leaving original list alone.");
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

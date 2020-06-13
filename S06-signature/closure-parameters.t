@@ -96,4 +96,4 @@ subtest 'can use signature unpacking with anonymous parameters' => {
     throws-like '-> &:(Int) {}({;})', X::TypeCheck::Binding::Parameter,
         'typcheck correctly fails with wrong arg';
 }
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -342,4 +342,4 @@ lives-ok { uc(EVAL("")) }, 'can use EVAL("") in further expressions';
     is $d, 42, "temp restore default value after undefine";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

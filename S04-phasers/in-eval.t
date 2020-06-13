@@ -95,4 +95,4 @@ plan 35;
     is $h, '12', 'END {} does not run at run time either';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

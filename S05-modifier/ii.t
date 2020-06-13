@@ -72,4 +72,4 @@ for @todo -> $t {
         'duplicated before-regexp modifier ":i" allowed (3)';
 }
 
-# vim: syn=perl6 sw=4 ts=4 expandtab
+# vim: expandtab shiftwidth=4

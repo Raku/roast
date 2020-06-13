@@ -62,4 +62,4 @@ throws-like 'use Foo :NoSucTag;', X::Import::NoSuchTag,
 # GH rakudo/rakudo#3116
 eval-lives-ok q<use NoPrecompilation;>, "`use` of module with `no precompilation` inside EVAL";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

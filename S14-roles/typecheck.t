@@ -27,3 +27,5 @@ ok TestGH2613 ~~ GH2613::R1, "class smartmatches against full role name";
     my \r = R2714_1[Int];
     ok r ~~ C2714_2, "Curryied role matches its parent class";
 }
+
+# vim: expandtab shiftwidth=4

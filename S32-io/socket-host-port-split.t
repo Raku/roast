@@ -62,4 +62,4 @@ sub split-host-port(:$localhost, :$host, :$family) {
     $connection.close;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

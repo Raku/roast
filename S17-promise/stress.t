@@ -11,3 +11,5 @@ is ([+] await do for ^8 {
         $i
     }
  }), 8_000_000, 'Large number of iterations in threads work fine';
+
+# vim: expandtab shiftwidth=4

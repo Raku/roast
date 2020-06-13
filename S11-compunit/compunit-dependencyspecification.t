@@ -11,4 +11,4 @@ is $ds.version-matcher, True;
 is $ds.auth-matcher, True;
 is $ds.api-matcher, True;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

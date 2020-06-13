@@ -72,3 +72,5 @@ DOC INIT {
 is_run( $main2,  { out => $expected-pod,
                   err => ''}, :compiler-args['--doc'], '--doc + DOC INIT {}');
 
+
+# vim: expandtab shiftwidth=4

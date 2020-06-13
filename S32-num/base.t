@@ -122,3 +122,5 @@ throws-like 'Inf.base: 16', X::Numeric::CannotConvert,
     'Inf.base throws useful error';
 throws-like 'NaN.base: 16', X::Numeric::CannotConvert,
     'NaN.base throws useful error';
+
+# vim: expandtab shiftwidth=4

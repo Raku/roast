@@ -97,4 +97,4 @@ sub gen_array { (1..10).list }
     is @a.elems, 10, "should be untouched";
 } #46
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

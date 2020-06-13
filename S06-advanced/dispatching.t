@@ -257,3 +257,5 @@ subtest "Wrap parent's first multi-candidate" => {
 }
 
 done-testing;
+
+# vim: expandtab shiftwidth=4

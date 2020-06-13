@@ -55,4 +55,4 @@ throws-like q[
     ], Exception, :message{.lc.contains: all <attribute conflict grfuffle>},
 'attribute conflict with pun';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

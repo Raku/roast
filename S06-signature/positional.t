@@ -51,4 +51,4 @@ throws-like 'sub foo( \a, \a ) { }', X::Redeclaration,
 throws-like 'sub foo( ::T, ::T) { }', X::Redeclaration,
     'two sub params with the same type capture name';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

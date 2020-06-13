@@ -16,4 +16,4 @@ plan 2;
       '%hash \s+ <subscript> doesnt parse';
 };
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -360,4 +360,4 @@ subtest 'sprintf with Numeric/Str type objects' => {
 is sprintf("%.16e", sqrt 3.0e0), '1.7320508075688772e+00',
     'sprintf maintains sane precision when stringifying nums'
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -85,4 +85,4 @@ plan 38;
     is-deeply @str, [<Camelia>], 'was the code done (4)';
 } #4
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

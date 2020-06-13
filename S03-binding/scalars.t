@@ -164,4 +164,4 @@ throws-like '0 := 1', X::Bind, 'cannot bind to a literal';
     is $y, 1, 'rebinding';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

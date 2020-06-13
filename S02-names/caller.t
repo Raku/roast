@@ -110,4 +110,4 @@ plan 12;
   is $foo, 24,               'rebinding $CALLER:: variables works (3)';
 } #2
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -94,4 +94,4 @@ subtest 'chaining of !before/!after' => {
     is-deeply (1 !after  3 !before 2), False, '!after/!before (Int) (2)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

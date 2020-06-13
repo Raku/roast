@@ -153,4 +153,4 @@ subtest 'chdir into IO::Path respects its :CWD attribute' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

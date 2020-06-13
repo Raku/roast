@@ -81,3 +81,5 @@ subtest 'export of SUPERSEDE::class' => {
     }
 }
 
+
+# vim: expandtab shiftwidth=4

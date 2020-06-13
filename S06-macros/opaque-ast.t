@@ -61,4 +61,4 @@ is(four, 4, "macro returning quasi");
        'A macro can declare lexicals that are visible where called';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

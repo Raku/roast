@@ -107,4 +107,4 @@ is @list.grep( { ($_ % 2) }, :k ), (0,2,4,6,8).list.item,
     is (True,False,Int).grep(Bool, :k), (0,1), 'can we match on Bool as type';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

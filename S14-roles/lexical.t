@@ -44,4 +44,4 @@ throws-like '{ my class R3 {}; R3; }; R3', X::Undeclared::Symbols,
     is DrunkGymnast.new.go-to-bar, "ouch", 'the $obj.RoleName::meth() syntax works on lexical roles';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

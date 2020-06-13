@@ -48,4 +48,4 @@ is "hello".Str, "hello", ".Str can be called on Str";
     isa-ok DerivedFromStr.new.Str, Str, 'DerivedFromStr.new.Str isa Str';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -54,4 +54,4 @@ plan 12;
   is "@array[]", "a\t  b  c", "array whose elements do contain whitespace stringify correctly (3-2)";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

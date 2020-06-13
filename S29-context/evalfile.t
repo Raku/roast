@@ -54,4 +54,4 @@ sub nonce () { return (".{$*PID}." ~ 1000.rand.Int) }
     END { unlink $tmpfile }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

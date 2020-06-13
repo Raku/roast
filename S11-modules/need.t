@@ -14,4 +14,4 @@ plan 2;
         X::Undeclared::Symbols, '"need" did not import the default export list';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

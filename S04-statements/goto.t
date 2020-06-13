@@ -75,4 +75,4 @@ is($test6, 1, "goto expr");
 
 is(++$phase, 6, "phase completed");
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -645,4 +645,4 @@ group-of 4 => 'no funny business in stringification of huge Rationals' => {
     is-deeply 3 / < 42/17>,  17/14, 'Can we perform Int / on a RatStr';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

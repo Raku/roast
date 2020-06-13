@@ -24,4 +24,4 @@ class Foo {
     is $foo.topic(), "echo", '...unless $_ the invocant name is specified to be "$_"';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

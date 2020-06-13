@@ -354,4 +354,4 @@ subtest '.printf()' => {
 is-deeply make-temp-file(:content<foo>).IO.open.read, buf8.new('foo'.encode),
     'IO::Handle.read has some reasonable size default value';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

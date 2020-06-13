@@ -322,4 +322,4 @@ for @int-infixes -> $name, &op, &metaop {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

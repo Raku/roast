@@ -35,4 +35,4 @@ is($r-list.key.value, 3, 'the value of the key is a number');
 
 is($r-list.raku, '((1 => 2) => 3) => 4', 'key-nested pairs .raku correctly');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -17,3 +17,5 @@ my %t = get-timing();
 
 ok %t<MyGrammar><num><calls>, "num calls recorded";
 ok %t<MyGrammar><num><time> ~~ Real:D, "time recorded";
+
+# vim: expandtab shiftwidth=4

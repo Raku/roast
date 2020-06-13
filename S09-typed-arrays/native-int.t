@@ -338,3 +338,5 @@ dies-ok { my int @a = ^Inf; 42 }, 'Trying to assign ^Inf to an int array dies';
     my int @b = @a;
     is-deeply @b, (my int @ = 0,1), 'did we survive the hole';
 }
+
+# vim: expandtab shiftwidth=4

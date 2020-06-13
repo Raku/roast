@@ -117,4 +117,4 @@ is_run ｢
     .lc.contains: <duplicate tighter looser equiv rw default readonly raw>.all
 }, :out<pass>}, 'duplicate traits warn';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -285,4 +285,4 @@ plan 25;
     is @array, <a c d>, '... and have the correct list as the result';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -9,4 +9,4 @@ plan 1;
         '.WHAT on $*USER after using $*USER values lives';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

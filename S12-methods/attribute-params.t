@@ -87,4 +87,4 @@ throws-like 'sub optimal($!x) { }', X::Syntax::NoSelf, variable => '$!x';
     is C.new.bar("foo").foo, "foo", 'any Signature binds attributively to the next self in the outer chain';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

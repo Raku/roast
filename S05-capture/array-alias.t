@@ -108,4 +108,4 @@ is("$0", "A", '...A');
     is(~$m<from3>, "c", 'array alias works with quantified non-capturing structure');
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

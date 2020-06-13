@@ -173,3 +173,5 @@ sub gen-test($f) {
 
     return slurp $f;
 }
+
+# vim: expandtab shiftwidth=4

@@ -489,4 +489,4 @@ is "abcde" ~~ / ab <![e]> cde | ab.. /, "abcde", 'negative lookahead does LTM pr
     is 'ab' ~~ / :r [ab | a ]:! b /,  'ab', 'backtrack into [ | ]:! despite :r';
 }
 
-# vim: ft=perl6 et
+# vim: expandtab shiftwidth=4

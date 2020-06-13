@@ -406,4 +406,4 @@ group-of 3 => '-0x7FFFFFFF - 1 math weirdness' => {
     is-deeply (-0x7FFFFFFF - 1).base(16), '-80000000', '.base(16)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

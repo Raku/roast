@@ -18,4 +18,4 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     isa-ok Supply.from-list(42..50) .Seq, Seq, "Supply.Seq should return a Seq";
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

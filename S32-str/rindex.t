@@ -94,4 +94,4 @@ for "foobar","foobar".match(/\w+/) {
     is rindex($_,<a o>), 4, "does a list of needles work ok with sub";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

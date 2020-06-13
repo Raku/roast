@@ -196,4 +196,4 @@ sub fiddle(:$x,:$y){ violin($x) ~ violin($y) }
 
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

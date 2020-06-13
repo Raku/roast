@@ -259,4 +259,4 @@ lives-ok { for ^1000 { die Exception.new; CATCH { default {} } } },
 lives-ok { loop { CATCH { default { say 'hi' } }; last if $++ > 100 } },
     'CATCH in a loop lives';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

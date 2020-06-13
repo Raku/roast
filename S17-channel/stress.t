@@ -51,3 +51,5 @@ plan 5;
         is bogosort_concurrent(@test_data), [<e l p r>], "Correct answer ($_)";
     }
 }
+
+# vim: expandtab shiftwidth=4

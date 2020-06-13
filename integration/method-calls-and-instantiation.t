@@ -33,4 +33,4 @@ my Foo $bar .= new;
 lives-ok { $bar.test2; $bar.test2 },
 "Multiple method calls can be made in the same instance, to the same method. (2)";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

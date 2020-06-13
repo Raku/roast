@@ -38,3 +38,5 @@ is_run $x, :args['-e', '@*ARGS.say', '-e=foo'],
         status  => 0,
     },
     '-e works correctly as a stopper';
+
+# vim: expandtab shiftwidth=4

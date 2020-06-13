@@ -27,4 +27,4 @@ is %e1<foo>,       0, 'single-value anonymous enum created correctly';
     is +baz, 2, 'my %e = enum :: works';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

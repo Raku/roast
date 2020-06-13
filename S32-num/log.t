@@ -74,4 +74,4 @@ isa-ok( log10(-1+0i), Complex, 'log10 of a complex returns a complex, not a list
 #?rakudo todo 'HugeInt.log'
 is-approx (10 ** 1000).log10, 1000, "Can take the log of very large Ints";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

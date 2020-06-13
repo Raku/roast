@@ -306,4 +306,4 @@ subtest 'coverage default .Bridge impls in core' => {
         'Real.Bridge delegates to Num';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

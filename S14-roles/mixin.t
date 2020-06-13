@@ -266,4 +266,4 @@ lives-ok {
     class { } but role { has $!foo is built(:bind) }
 }, 'can mix in roles that use the "is built" trait at runtime';
 
-# vim: syn=perl6
+# vim: expandtab shiftwidth=4

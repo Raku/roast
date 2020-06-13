@@ -77,4 +77,4 @@ else {
 throws-like { 2 ** 99999999999999999999999999999999999 }, X::Numeric::Overflow,
     'extremely large exponents must throw numeric overflow';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

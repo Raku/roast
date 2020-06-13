@@ -183,3 +183,5 @@ group-of 5 => 'ops on native attributes' => {
       'run 5';
 
 }
+
+# vim: expandtab shiftwidth=4

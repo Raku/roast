@@ -214,4 +214,4 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
     is C2.new.bar, "default", "unsignatured exported role applied";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -268,4 +268,4 @@ subtest "relaxed dispatch ambiguities" => {
 }
 
 done-testing;
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

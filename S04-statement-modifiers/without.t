@@ -58,4 +58,4 @@ plan 9;
     is (1,2, without Nil), "1 2", "without is a terminator even after comma";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

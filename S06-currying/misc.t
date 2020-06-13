@@ -36,3 +36,5 @@ throws-like { 42 same-in-Int "42" }, X::TypeCheck::Binding,
 sub abc123 (| ($a,$b,$c,$o,$t,$th)) { $a,$b,$c,$o,$t,$th; }
 #?rakudo.jvm skip 'NullPointerException'
 is-primed-call(&abc123, \(1,2,3), ['a','b','c',1,2,3], 'a','b','c');
+
+# vim: expandtab shiftwidth=4

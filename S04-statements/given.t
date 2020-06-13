@@ -294,4 +294,4 @@ eval-lives-ok 'sub a() { } given 3',     'can define a sub inside a statement-mo
     ok $capture-is-correct, 'matches in when correctly set $0';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -292,4 +292,4 @@ lives-ok { sub foo () {$ = 42}; for ^2000000 { $ = foo } },
     is-deeply @arr, ["0", "0", "0", "0"], 'Statevar uses the correct scope';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

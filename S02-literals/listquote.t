@@ -100,4 +100,4 @@ throws-like { EVAL '<STDIN>' },
     is f(my @x = (1, 2, 3)), 1, 'function call with assignment to list';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

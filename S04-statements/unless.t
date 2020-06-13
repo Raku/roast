@@ -77,4 +77,4 @@ subtest '`else` and kin with `unless` errors out' => {
 
 ok (unless 1 { 2 }) ~~ Slip, "unless returns Slip when not taken";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -54,4 +54,4 @@ is_run( 'use MONKEY-SEE-NO-EVAL; my $a = 2; EVAL q[my $x = 3; END { $a = $x * $x
 END { pass("exit does not prevent running of END blocks"); }
 exit;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

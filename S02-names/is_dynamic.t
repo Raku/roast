@@ -91,4 +91,4 @@ plan 28;
     is $c, 666, 'did the assignment work pass through with is rw';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

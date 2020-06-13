@@ -153,3 +153,5 @@ plan 23;
             "Correct result and no crash in lock/condvar use ($iter)";
     }
 }
+
+# vim: expandtab shiftwidth=4

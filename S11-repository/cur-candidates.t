@@ -199,3 +199,5 @@ subtest 'Basic recommendation manager queries' => {
 
 
 done-testing;
+
+# vim: expandtab shiftwidth=4

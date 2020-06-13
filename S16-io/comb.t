@@ -148,4 +148,4 @@ subtest '.comb(Regex) returns Seq' => {
     cmp-ok $path.comb(/\w/, 2), 'eqv', <a b>.Seq, 'IO::Path with limit';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

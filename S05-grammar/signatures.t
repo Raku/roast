@@ -58,4 +58,4 @@ ok(Grammar::With::Signatures.parse("foobar"), 'foobar doesnt match');
     ok AllTheArgKinds.parse('abc'), 'Grammar with various subrule arg passings parsed';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

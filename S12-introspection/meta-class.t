@@ -82,4 +82,4 @@ is Any.^lookup('supercalafajalistickexpialadojus').defined,
 is Any.^find_method('supercalafajalistickexpialadojus').defined,
     False, 'failed .^find_method returns Mu';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -36,4 +36,4 @@ throws-like '/\Y/', Exception, 'backslash rules are lexically scoped';
     ok 'Haxe' ~~ m/^\moepe$/, '... with correct end of escape sequence';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

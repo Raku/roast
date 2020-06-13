@@ -88,4 +88,4 @@ isa-ok $C.version, Version;
 #?rakudo todo 'no Raku.compiler.signature yet'
 isa-ok $C.signature, Blob;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

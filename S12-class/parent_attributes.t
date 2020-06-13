@@ -37,4 +37,4 @@ is($u.boo, 5, 'set attribute');
     is($u.boo, 9,  'reset parent attribute');
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

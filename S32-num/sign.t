@@ -52,4 +52,4 @@ is(sign(NaN),NaN, 'sign of NaN is NaN');
 throws-like { sign(Int) }, Exception;
 throws-like { sign(3+4i) }, X::Numeric::Real;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

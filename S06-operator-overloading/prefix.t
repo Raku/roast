@@ -78,3 +78,5 @@ subtest 'coverage for crashes in certain operator setups' => {
     #     (MYMINUS 1 MYPLUS 2 MYPLUS 3)
     # }, -6, '(2)';
 }
+
+# vim: expandtab shiftwidth=4

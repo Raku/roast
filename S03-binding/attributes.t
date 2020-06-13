@@ -91,4 +91,4 @@ plan 16;
     is $a.code.bar,   42, 'is the code attribute mixed in?';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

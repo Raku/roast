@@ -12,4 +12,4 @@ do for <a b> -> $j {
 
 is $i, 42, '$i still has proper value';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

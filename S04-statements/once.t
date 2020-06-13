@@ -117,4 +117,4 @@ for <first second> {
 throws-like ｢my \z := once 42; z = 100｣, X::Assignment::RO,
     '`once` does not containerize its values';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

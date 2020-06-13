@@ -15,4 +15,4 @@ throws-like { IO::CatHandle.new.slurp-rest }, X::Obsolete,
 
 is IO::CatHandle.new.Str, '<closed IO::CatHandle>', '.Str on closed handle';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

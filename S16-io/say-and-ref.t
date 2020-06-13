@@ -26,4 +26,4 @@ is_run q{IO.say},
         out => "(IO)\n";
     }, 'Can do IO.say';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

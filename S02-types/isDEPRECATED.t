@@ -137,4 +137,4 @@ TEXT
         'right deprecation for rt120908()';
 }
 
-# vim:set ft=perl6
+# vim: expandtab shiftwidth=4

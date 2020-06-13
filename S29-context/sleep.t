@@ -83,4 +83,4 @@ my $b;
     }, 'huge values to sleep() work';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

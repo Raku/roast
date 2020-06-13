@@ -11,4 +11,4 @@ plan 5;
     ok  !(Mu ~~ ''),         'Mu !~~ ""';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

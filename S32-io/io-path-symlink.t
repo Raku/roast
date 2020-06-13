@@ -30,4 +30,4 @@ for IO::Path.^lookup('symlink'), &symlink -> &sl {
         'fail when link already exists';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

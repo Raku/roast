@@ -185,4 +185,4 @@ throws-like 'class X is nosuchtrait { }', X::Inheritance::UnknownParent,
     is SubParameter.new(p2829 => 'p2829').p2829, 'p2829', 'Parameter subclass initializes attributes';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

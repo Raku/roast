@@ -141,4 +141,4 @@ subtest 'infinite ranges and whatever stars' => {
     is        (^3)[{ $^elems - 1 }], 2,         'Callable';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -88,4 +88,4 @@ plan 24;
     is &[$<].name, 'infix:<$\<>', 'custom $< op name uses <> and backslash';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

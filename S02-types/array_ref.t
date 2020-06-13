@@ -127,4 +127,4 @@ is     $array9[1][1][1][0], 42, "recursive array access (3)";
   ok $arrayref[0] !=:= $foo, "creating arrays using [] creates new containers (2)";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

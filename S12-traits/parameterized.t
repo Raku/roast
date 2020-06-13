@@ -31,4 +31,4 @@ is           $b, 23, "basic sanity (2)";
 ok $b does cool("hi"), "imperative does worked (2)";
 is $b.cool,      "hi", "attribute was set correctly (2)";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

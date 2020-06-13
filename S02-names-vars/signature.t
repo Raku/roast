@@ -79,4 +79,4 @@ plan 13;
     is-deeply @even, [2, 4], 'signature binding with a hash works';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

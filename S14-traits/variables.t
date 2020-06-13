@@ -33,4 +33,4 @@ is $dog.VAR.doc, 'barks', 'trait applied to scalar variable correctly';
 is @birds.doc,   'tweet', 'trait applied to array variable correctly';
 is %cows.doc,    'moooo', 'trait applied to hash variable correctly';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

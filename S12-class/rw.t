@@ -55,4 +55,4 @@ subtest "With 'also is rw'" => {
     is $obj.a-ro, 42, "readonly attribute value unchanged";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

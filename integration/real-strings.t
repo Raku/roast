@@ -86,4 +86,4 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns HLL strings';
        'Still works with strings returned from slurp() (lives)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

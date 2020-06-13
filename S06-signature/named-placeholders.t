@@ -18,4 +18,4 @@ sub two_placeholders {
 
 two_placeholders(:a(2), :b(1));
 
-# vim: syn=perl6
+# vim: expandtab shiftwidth=4

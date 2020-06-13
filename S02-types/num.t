@@ -921,4 +921,4 @@ subtest 'no hangs/crashes when parsing nums with huge exponents' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

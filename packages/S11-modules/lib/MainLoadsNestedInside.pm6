@@ -19,3 +19,5 @@ class MainLoadsNestedInside {
     method bar(MainLoadsNestedInside $b) {
     }
 }
+
+# vim: expandtab sw=4

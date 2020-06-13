@@ -52,4 +52,4 @@ my $string = "1a2a3a";
     is $/, 'foo', 'is $/ set correctly in a for loop';
 }
 
-# vim: syn=perl6 sw=4 ts=4 expandtab
+# vim: expandtab shiftwidth=4

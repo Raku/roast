@@ -18,4 +18,4 @@ lives-ok
     is $!, 1, "die-ing inside a macro dies normally.";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

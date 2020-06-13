@@ -50,4 +50,4 @@ is ~(0.wordcase), ~0, '.wordcase on Int';
 
 # TODO: add tests for wordcase arguments
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

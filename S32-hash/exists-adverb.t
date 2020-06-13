@@ -106,4 +106,4 @@ sub gen_hash {
         'no internal error with :exists adverb on non existing key of hash initialized at BEGIN time';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

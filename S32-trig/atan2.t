@@ -338,4 +338,4 @@ is-approx(atan2(-4, -4), -3 * pi / 4, "atan2(-4, -4) is -3pi / 4");
 
 done-testing;
 
-# vim: ft=perl6 nomodifiable
+# vim: expandtab shiftwidth=4

@@ -75,4 +75,4 @@ is(~$44, 'bar', 'Capture starting at non-zero, incremented twice');
     is $m<cat>,'bar', 'Correct capture of $<cat>=@(...) construct';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

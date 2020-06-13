@@ -164,4 +164,4 @@ group-of 5 => '$limit works right with any combination of args' => {
     'heuristic for testing whether handle is closed';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

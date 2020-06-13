@@ -51,3 +51,5 @@ is @arr[0;1], 42, 'Can bind with := to multi-dim array';
 dies-ok { @arr[0;1] = 100 }, 'Really bound an Int, so cannot assign';
 dies-ok { @arr[2;0] := 1 }, 'Bind out of bounds dies (1)';
 dies-ok { @arr[0;2] := 1 }, 'Bind out of bounds dies (2)';
+
+# vim: expandtab shiftwidth=4

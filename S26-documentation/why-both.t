@@ -312,3 +312,5 @@ my $block = {;
 test-both($block, 'this is', 'a block');
 
 is $=pod.elems, $pod_index;
+
+# vim: expandtab shiftwidth=4

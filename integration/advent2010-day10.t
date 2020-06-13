@@ -27,4 +27,4 @@ my @rakudo-people = <scott patrick carl moritz jonathan jerry stephen>;
 @rakudo-people ==> grep /at/ ==> map { .tc } ==> my @who-it's-at;
 is ~@who-it's-at, 'Patrick Jonathan', 'right feed';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -33,4 +33,4 @@ ok (my % = baz => "luhrman"), 'initialized bare sigil hash %';
 lives-ok { sub f { f(|$) } },
     'no misleading warning about P5 special var \'$)\'';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

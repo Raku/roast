@@ -24,3 +24,5 @@ isa-ok .tmpdir, IO::Path, "{.^name}.tmpdir returns IO::Path"
     is-path $*TMPDIR, $before,
         '`temp`ed $*TMPDIR got restored to previous value';
 }
+
+# vim: expandtab shiftwidth=4

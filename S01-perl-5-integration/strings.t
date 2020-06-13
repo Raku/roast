@@ -24,3 +24,5 @@ my &test3 := EVAL('sub {$_[0] eq "\x{105}\x{119}\x{f3}\x{15b}\x{107}\x{17c}"}',:
 ok(test1("Yet Another Perl Hacker"),"Passing simple strings to p5 land");
 ok(test2("Yet Ano\0ther P\0erl Hacker"),"Passing strings with null bytes to p5 land");
 ok(test3("ąęóśćż"),"Passing strings with unicode to p5 land");
+
+# vim: expandtab shiftwidth=4

@@ -17,3 +17,5 @@ is_run $x, :args['++FOO', '--bar', '++/FOO', '-e', 'say %*OPTS<FOO>'],
         status  => 0,
     },
     'delimited options end up in the right place';
+
+# vim: expandtab shiftwidth=4

@@ -326,4 +326,4 @@ throws-like 'sub svn28865( :$a, :@a ) {}', X::Signature::NameClash,
     is $s, [+](1..1000000), 'Hot looping making call with aliased named parameter works';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

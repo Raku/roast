@@ -198,4 +198,4 @@ subtest 'QuantHash.Capture' => {
     is-deeply %(:42a, :b(-72)).MixHash.Capture, %(:42a, :b(-72)).Capture, 'MixHash';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

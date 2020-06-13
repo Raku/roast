@@ -15,4 +15,4 @@ plan 1;
 my $sock = IO::Socket::INET.connect('google.com', 80);
 ok $sock.getpeername.defined, "IO::Socket::INet.getpeername works";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

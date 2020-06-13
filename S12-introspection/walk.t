@@ -195,4 +195,4 @@ subtest "With Roles" => {
 }
 
 done-testing;
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

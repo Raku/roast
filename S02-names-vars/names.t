@@ -192,4 +192,4 @@ subtest 'can use compile-time variables in names' => {
     ].new.^shortname, 'Baz[Bar[Foo[Int]],Baz[Foo[Int],Bar[Int]]]', 'properly short name Metamodel instances with nested colons, braces, and commas';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

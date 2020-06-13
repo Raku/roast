@@ -37,4 +37,4 @@ for &parse-names, Str.^lookup('parse-names'),
         'known name + unknown name';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

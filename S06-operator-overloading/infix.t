@@ -259,4 +259,4 @@ is infix:['Z~'](<a b>, <c d>), 'ac bd', 'can call autogen infix via compile-time
     is &infix:[$plus](3,4),   7, '&infix:[$foo] works';
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

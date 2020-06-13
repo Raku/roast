@@ -154,4 +154,4 @@ plan 21;
     is (gather foo(3)), "B 3 A 3 B 2 A 2 B 1 A 1", "repeat calls itself once always at each recursion level";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

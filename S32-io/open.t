@@ -245,4 +245,4 @@ throws-like ｢('a' x 975).IO.open｣, Exception,
     :message{not /:i  'Malformed UTF-8'/},
 '.open error does not incorrectly complain about malformed UTF-8';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

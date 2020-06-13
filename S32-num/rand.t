@@ -116,4 +116,4 @@ lives-ok { srand(1) }, 'srand(1) lives and parses';
     throws-like 'rand(3)', X::Obsolete;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

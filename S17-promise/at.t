@@ -29,3 +29,5 @@ plan 4;
 is_run ｢await Promise.at(now - 1000).then: {print 'pass'}｣,
     {:out<pass>, :err(''), :0status},
 '.at with negative value works and does not warn';
+
+# vim: expandtab shiftwidth=4

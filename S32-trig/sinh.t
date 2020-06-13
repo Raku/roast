@@ -196,4 +196,4 @@ for @sinhes -> $angle
 
 done-testing;
 
-# vim: ft=perl6 nomodifiable
+# vim: expandtab shiftwidth=4

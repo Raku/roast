@@ -20,3 +20,5 @@ subtest '.polymod with a lazy list does not lose divisors when list runs out', {
     is-deeply 12    .polymod(lazy 14, ),
                     (12,),               'last mod is zero';
 }
+
+# vim: expandtab shiftwidth=4

@@ -60,3 +60,5 @@ plan 10;
 
     LEAVE unlink $temp-file;
 }
+
+# vim: expandtab shiftwidth=4

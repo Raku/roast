@@ -28,3 +28,5 @@ is do { sort { .lc }, @words }, qw<a B c d>, 'unary sort - case insensitive';
 my @sorted-numerically = sort +*, @values;
 is @sorted-numerically, [2, 3, 5, 10], 'numeric sort';
 is do { sort -*, @values }, [10, 5, 3, 2], 'numeric sort - descending';
+
+# vim: expandtab shiftwidth=4

@@ -98,4 +98,4 @@ plan 13;
     is $rt109322, 'zzxx', 'no lexical weirdness from blocks inside re-entrant subs (2)';
 }
 
-# vim: ft=perl6 :
+# vim: expandtab shiftwidth=4

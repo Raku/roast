@@ -11,4 +11,4 @@ my $y = 'case';
 
 is $x, 'testing', "scalar modified inside Perl block";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

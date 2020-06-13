@@ -123,4 +123,4 @@ my $got_a_str = 0;  sub get_a_str  { $got_a_str++;  "Pugs" }
     dies-ok { Foo.new }, 'Attribute constraint checked at run-time';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

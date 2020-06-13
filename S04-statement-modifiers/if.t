@@ -108,4 +108,4 @@ plan 16;
     ok $called, 'List-op call to sub in a package in `if` statement modifier works';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

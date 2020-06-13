@@ -185,4 +185,4 @@ subtest 'attribute access from where clauses' => {
     is $a.a, 42, 'is the public attribute **NOT** initialized with .new';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

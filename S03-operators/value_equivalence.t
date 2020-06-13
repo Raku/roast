@@ -203,4 +203,4 @@ isa-ok  1|2 === 1, Junction,  '=== does autothread (2)';
     is-deeply infix:<===>(),      Bool::True, '    no arg === gives True';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

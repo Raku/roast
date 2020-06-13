@@ -275,4 +275,4 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
     is-deeply $i, 3, 'non-slippy-non-phaser map sink-all works';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

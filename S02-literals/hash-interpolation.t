@@ -52,4 +52,4 @@ plan 16;
     is "foo %h«$foo» bar", "foo 42 bar", '%h«$foo» interpolates correctly';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

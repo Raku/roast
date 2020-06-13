@@ -229,4 +229,4 @@ subtest 'does works with non-roles' => {
       "does a junction survive Junction ~ Junction";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

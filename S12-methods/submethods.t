@@ -127,4 +127,4 @@ Basic submethod tests. See L<S12/"Submethods">
     is SM || 42, SM, 'Bool submethod in class is used in boolificiation';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

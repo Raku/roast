@@ -58,4 +58,4 @@ plan 7;
     pass '"/".IO.mkdir does not segfault';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -70,4 +70,4 @@ ok((MyPack::val_v), "default sub called in package namespace");
     foo();
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

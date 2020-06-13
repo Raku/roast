@@ -58,4 +58,4 @@ plan 13;
     dies-ok { EVAL 'f(1)' }, 'type constraint is still Bool';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

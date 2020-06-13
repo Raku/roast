@@ -116,4 +116,4 @@ plan 22;
         'can call subroutine which starts with infix x';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

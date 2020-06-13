@@ -145,3 +145,5 @@ subtest 'Stringification of Complex handles signed zeros' => {
     is-deeply (           -0e0).abs, 0e0, 'abs(-0e0) == 0e0 when using literals [method]';
     is-deeply (my num $ = -0e0).abs, 0e0, 'abs(-0e0) == 0e0 when using native nums [method]';
 }
+
+# vim: expandtab shiftwidth=4

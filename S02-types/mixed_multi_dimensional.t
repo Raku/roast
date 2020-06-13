@@ -201,4 +201,4 @@ Some deeper tests were already added.
     is(@array[1]<two>[0]<f><other>, 5, "more keys at level 4");
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

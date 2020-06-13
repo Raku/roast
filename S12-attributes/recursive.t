@@ -91,4 +91,4 @@ Test attributes with recursively typed attributes
     isa-ok $z2.a[0], Z;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

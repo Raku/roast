@@ -50,4 +50,4 @@ is('fooäàAÁâåbar' ~~ m:m:i/<[a..b]>+/, 'äàAÁâåba', 'range in character
         is-deeply ('word' ~ $_) ~~ m:i:m/$var/, False, 'RT128875 :i:m combined matches whole string when a single character match is found';
     }
 }
-# vim: syn=perl6 sw=4 ts=4 expandtab
+# vim: expandtab shiftwidth=4

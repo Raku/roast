@@ -17,4 +17,4 @@ is(1 + e,   $e+1, "1+e, as a value");
 is(e + 1,   $e+1, "e+1, as a value");
 is(1 + e +0, $e+1, "1 + e +0, as a value");
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

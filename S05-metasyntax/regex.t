@@ -289,4 +289,4 @@ is_run ｢/a/; print "pass"｣, {:out<pass>, :err(''), :0status},
 # https://github.com/rakudo/rakudo/issues/2901
 is 'a' ~~ / a & a /, 'a', 'Unescaped & works as conjunction';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

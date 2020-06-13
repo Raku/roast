@@ -204,4 +204,4 @@ is-deeply Buf.new(1 xx 2)».join, ("1", "1"),
 is-deeply Buf.new((my int $i = 0x03) +& 0x6), Buf.new(2),
     'can use native int operations to create a Buf with';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -451,4 +451,4 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[$(7,8,9)]:exists, False, 'container respected in array :delete';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -88,4 +88,4 @@ plan 6;
         message => 'Null check failed for $cookies';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

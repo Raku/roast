@@ -41,4 +41,4 @@ Basic tests for the hash() built-in
     is ?hash(), Bool::False, "hash() is false";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

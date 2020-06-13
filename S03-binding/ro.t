@@ -46,4 +46,4 @@ plan 11;
         'variable trait "is readonly" is no longer valid (2)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

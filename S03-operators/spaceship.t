@@ -30,4 +30,4 @@ is(%ball{12} <=> %ball{11}, Order::Less, 'When spaceship terms are non-integral 
 throws-like ｢say ’a‘ <=> ’b‘｣, X::Str::Numeric,
     '<=> with non-numerics throws correct exception';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

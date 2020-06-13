@@ -73,4 +73,4 @@ nok "(fo)o" ~~ /^ \( ~ \) foo $/, 'Only take single atom after goal (2)';
 throws-like '/ ‘[’ ~? ‘]’/', X::Syntax::Regex::SolitaryQuantifier,
     'Correct error when quantifier placed after ~ metachar';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

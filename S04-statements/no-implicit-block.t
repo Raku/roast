@@ -63,4 +63,4 @@ plan 12;
     is $y, 5, '$y assigned in loop\'s body';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

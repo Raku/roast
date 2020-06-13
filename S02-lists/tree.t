@@ -46,3 +46,5 @@ is (1, ((2, 3),  (4, 5))).tree(*.join('-'), *.join('+'), *.join('|')),
         42;
     }]), 42, '.tree([&first]) returns result of first(self)';
 }
+
+# vim: expandtab shiftwidth=4

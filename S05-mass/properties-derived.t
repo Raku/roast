@@ -368,4 +368,4 @@ ok("\c[KANNADA SIGN ANUSVARA]\c[KHMER VOWEL INHERENT AQ]\c[ELECTRIC LIGHT BULB]"
 # Grapheme_Cluster_Break=V
 # Grapheme_Cluster_Break=XX
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

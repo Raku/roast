@@ -317,4 +317,4 @@ subtest '.norm returns reduced FatRat' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

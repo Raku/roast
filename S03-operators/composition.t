@@ -81,4 +81,4 @@ subtest 'identify function does not explode/handle Failures' => {
     $z1.so; $z2.so;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

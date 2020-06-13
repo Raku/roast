@@ -66,4 +66,4 @@ isa-ok $*VM.version, Version;
 #?rakudo todo 'no VM.signature yet RT #124624'
 isa-ok $*VM.signature, Blob;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

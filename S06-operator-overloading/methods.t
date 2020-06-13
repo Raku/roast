@@ -34,3 +34,5 @@ method postcircumfix:<{ }>($table) {
 1;
 }
 ], 'custom postcircumfix{ } with weird whitespacing does not require ;';
+
+# vim: expandtab shiftwidth=4

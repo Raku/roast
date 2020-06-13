@@ -115,4 +115,4 @@ is ('1a', '1b' ... '1e').Str, '1a 1b 1c 1d 1e', 'sequence with strings that star
     is ('➓➓' ... '❶❶'), (('➓' ... '❶') X~ ('➓' ... '❶')), 'can juggle unicode balls upside down';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

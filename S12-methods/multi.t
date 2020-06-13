@@ -199,4 +199,4 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     is B.new.foo("OH HAI"), 'general', 'multi submethod is not inherited';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

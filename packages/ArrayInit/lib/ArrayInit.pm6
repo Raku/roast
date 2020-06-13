@@ -8,3 +8,5 @@ sub array_init() is export {
     push @array, 'just one element';
     return ~@array;
 }
+
+# vim: expandtab shiftwidth=4

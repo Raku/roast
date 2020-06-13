@@ -224,4 +224,4 @@ my @tests = (
     is "Ħ".raku.chars, 3, 'non-combining start does not need escaping';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

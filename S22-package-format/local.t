@@ -78,3 +78,5 @@ END {
         try rmdir $cmpdir;
     }
 }
+
+# vim: expandtab shiftwidth=4

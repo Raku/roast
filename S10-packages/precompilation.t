@@ -320,3 +320,5 @@ with make-temp-dir() -> $dir {
             { :err(''), :out('0,1,2'), :status => 0 },
             'closure is preserved after deserialzation';
 }
+
+# vim: expandtab shiftwidth=4

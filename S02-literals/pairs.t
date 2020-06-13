@@ -189,4 +189,4 @@ is-perl-idempotent((:a(Bool)));
 # https://github.com/Raku/old-issue-tracker/issues/4836
 is-perl-idempotent(((Nil) => 42));
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

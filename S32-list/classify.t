@@ -136,4 +136,4 @@ subtest 'classify works with Junctions' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

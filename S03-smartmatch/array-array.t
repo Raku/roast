@@ -110,4 +110,4 @@ subtest '~~ with lazy iterables never throws' => {
     is-deeply @list.Seq.lazy ~~ @list.Seq.lazy, False, 'both Seqs lazy';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

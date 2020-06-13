@@ -41,3 +41,5 @@ is $tracker, "Parent.TWEAK\nChild.TWEAK\n", "Order of initilization";
     }
     is A.new.z, 42, 'did the private attribute get assigned';
 }
+
+# vim: expandtab shiftwidth=4

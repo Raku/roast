@@ -79,4 +79,4 @@ my $pi = 312689/99532;
     is-approx(4.Num.unpolar($pi),       -4,    "4.Num.unpolar(pi)   == -4");
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

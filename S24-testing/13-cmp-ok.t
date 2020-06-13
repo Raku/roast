@@ -15,3 +15,5 @@ is_run ｢use Test; cmp-ok 'foo', '~~', class {
 'cmp-ok makes $expected more presentable than just its .Str';
 
 cmp-ok Mu, '=:=', Mu, 'can use cmp-ok with `=:=` operator';
+
+# vim: expandtab shiftwidth=4

@@ -190,4 +190,4 @@ plan 39;
     is $t(), 'a', '$OUTER::_ can access a $_';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

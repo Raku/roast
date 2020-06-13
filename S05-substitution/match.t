@@ -48,4 +48,4 @@ is $m[0], 'oo',             'match object indexes as an array';
         (for 1..10 { 'ﬆ' x $_ ~ 'Z' }), 'can .subst: /:i T/, "Z"';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

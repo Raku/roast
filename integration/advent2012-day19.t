@@ -71,3 +71,5 @@ nok $resistance ~~ 4.7kΩ ± 5%, 'resistance is futile';
 constant φ = (1 + sqrt(5)) / 2;
 
 is φ, (1 + sqrt(5)) / 2, 'read-only term';
+
+# vim: expandtab shiftwidth=4

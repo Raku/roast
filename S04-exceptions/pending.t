@@ -83,4 +83,4 @@ sub fail_it { fail $^a }
     ok $win.handled, '.handled method is true for all Mus';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

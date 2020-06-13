@@ -147,3 +147,5 @@ subtest '.kept and .broken constructor methods' => {
     isa-ok $bpv.cause, X::AdHoc, "Promises broken with a value have an X::AdHoc as the cause (via .result)";
     ok $bpv.cause.payload eqv "glass", "Promises broken without a value have the value as exception payload (via .result)";
 }
+
+# vim: expandtab shiftwidth=4

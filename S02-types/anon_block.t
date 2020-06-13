@@ -152,4 +152,4 @@ isnt((sub { -> { 3 } }).(), 3, 'as are pointies');
     
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

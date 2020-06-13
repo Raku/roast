@@ -202,4 +202,4 @@ class PairTest {
     dies-ok { $a.d() }, '... but non existing methods still die';
 }
 
-# vim: syn=perl6
+# vim: expandtab shiftwidth=4

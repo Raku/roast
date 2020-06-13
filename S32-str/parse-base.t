@@ -76,4 +76,4 @@ for &parse-base, Str.^lookup('parse-base') -> &pb {
     'invalid char in first position of fractional part, base 9' ~ $t;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

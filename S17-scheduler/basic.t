@@ -151,3 +151,5 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
     dies-ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :stop({...})) },
       "$name cannot combine :every, :times and :stop";
 }
+
+# vim: expandtab shiftwidth=4

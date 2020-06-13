@@ -46,4 +46,4 @@ my $myarray = [
 
 is $myarray[0], 4, "anon array def parses when pod block is within it";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

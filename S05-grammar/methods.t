@@ -41,3 +41,5 @@ isa-ok WithAttrib.new.sep, Str, 'empty attribute intilized to Str';
     ok 'doo' ~~ &D::doo,        'our token as rhs of smartmatch';
     ok 'doo' ~~ / <&D::doo> /, 'our token in regex assertion';
 }
+
+# vim: expandtab shiftwidth=4

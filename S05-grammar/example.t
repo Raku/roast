@@ -73,4 +73,4 @@ is($content ~~ m/<schedule>/, $content, 'match rule');
         'lookbehind that should not match does not match';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

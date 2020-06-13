@@ -255,4 +255,4 @@ is-deeply -∞   =~=    ∞, Bool::False, '-∞ =~=  ∞ gives False';
     is-deeply infix:<after>(),    Bool::True, '    no arg `after`  gives True';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

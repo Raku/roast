@@ -161,3 +161,5 @@ is $r.contents[5].contents[0].contents, 'and this is!';
 
 $r = $=pod[6];
 isa-ok $r, Pod::Block::Code;
+
+# vim: expandtab shiftwidth=4

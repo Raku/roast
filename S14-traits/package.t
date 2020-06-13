@@ -40,4 +40,4 @@ role Slither is described { }
 is DamBuilding.HOW.description, 'dam good!',            'named trait handler applied other role to role set with argument';
 is Slither.HOW.description,     'missing description!', 'named trait handler applied other role to role without argument';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

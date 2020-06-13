@@ -128,4 +128,4 @@ for @inttypes -> $type {
 # https://github.com/Raku/old-issue-tracker/issues/6332
 is-eqv byte.Range.int-bounds, (0, 255), "byte.Range works";
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

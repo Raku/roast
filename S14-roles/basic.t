@@ -213,4 +213,4 @@ lives-ok {0 but True}, '0 but True has applicable candidate';
     is $obj.r.number, 30, ‘deeper attribute value was set correctly’;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

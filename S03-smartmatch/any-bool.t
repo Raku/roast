@@ -20,4 +20,4 @@ plan 8;
     is-deeply  'a' ~~ .not, False,          'boolean truth';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

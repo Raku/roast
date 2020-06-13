@@ -313,4 +313,4 @@ is-deeply -> *@a { @a.is-lazy.say }(1…∞), True,
     -> *%z { is-deeply %z, {}, 'no crashes with slurpies' }(|%h)
 }();
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

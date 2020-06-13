@@ -114,4 +114,4 @@ is $d.name, "name1", ".name works correctly";
         'Parametric role used a second time uses correct default value';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

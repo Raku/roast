@@ -199,4 +199,4 @@ group-of 3 => 'smiley constraints default to type object without smiley' => {
 lives-ok { for ^1000 { my $z = 42; start { $z.abs } }; sleep .3 },
     'no crashes when accessing outer lexicals';
 
-# vim: expandtab shiftwidth=4 ft=perl6
+# vim: expandtab shiftwidth=4

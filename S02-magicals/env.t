@@ -113,4 +113,4 @@ throws-like { EVAL "%ENV" },
         'call run($command) after setting non-strings into %*ENV does not die';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

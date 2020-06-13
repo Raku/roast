@@ -112,4 +112,4 @@ subtest '&combinations with Iterable first argument match calls with method form
     is-deeply combinations(()),           ().combinations, 'sub with (3..4)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

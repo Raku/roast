@@ -27,3 +27,5 @@ plan 4;
     is f('a' => 'x'), 'Str x', 'typed Pair unpackaing (Str)';
 
 }
+
+# vim: expandtab shiftwidth=4

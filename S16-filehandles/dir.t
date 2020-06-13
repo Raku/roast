@@ -154,4 +154,4 @@ ok($dir_s.close, 'close using $dir.close format');
 
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

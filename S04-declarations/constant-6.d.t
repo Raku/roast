@@ -698,4 +698,4 @@ subtest 'our | typed | %-sigilled' => {
         X::ParametricConstant, 'parametarized type with `::` in name';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -96,4 +96,4 @@ eval-lives-ok q':(::T $x)', "No error on type capture";
 
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

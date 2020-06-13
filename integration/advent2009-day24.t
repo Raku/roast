@@ -31,3 +31,5 @@ ok MyNewGrammar.parse('$j = 1; for ($i = 0; $i > 10; $i++) { $j *= $i }'), 'deri
 ok MyNewGrammar.parse('$i = 10; $j = 1; repeat $j *= $i-- until $i == 0'), 'derived grammar is extended';
 nok BaseGrammar.parse('$i = 10; $j = 1; repeat $j *= $i-- until $i == 0'), 'base grammar is not extended';
 
+
+# vim: expandtab shiftwidth=4

@@ -72,3 +72,5 @@ is($count-s, 2, "accessor and mutator by sub were called");
     is($mv.varies-m, 14, "attribute with overridden mutator by method");
     is($count-m, 2, "accessor and mutator by method were called");
 }
+
+# vim: expandtab shiftwidth=4

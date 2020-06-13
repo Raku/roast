@@ -102,4 +102,4 @@ plan 21;
     is @a.min(), 'b', 'min on list with undefined el ignores it';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

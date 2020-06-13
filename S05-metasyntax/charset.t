@@ -142,4 +142,4 @@ is 'Ä' ~~ /:ignoremark :ignorecase (<[a..f]>|x)/, 'Ä',
 # https://github.com/Raku/old-issue-tracker/issues/5341
 ok "a" ~~ m:g:ignoremark/<[á]>/, ':g, :ignoremark, and cclass interaction ok';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

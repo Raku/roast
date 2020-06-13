@@ -18,4 +18,4 @@ is %bar.VAR.^name, 'Hash', 'exported Hash';
 is $bar.VAR.^name, 'Scalar', 'exported Scalar';
 is &bar.VAR.^name, 'Sub', 'exported Sub';
 
-# vim: ft=perl6 sw=4 expandtabs
+# vim: expandtab shiftwidth=4

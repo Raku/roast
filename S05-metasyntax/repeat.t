@@ -113,4 +113,4 @@ nok '1ab2ab3c' ~~ /^ \d+ % abc $/, '% only takes single atom as separator';
         'adequate error message when quantifier follows non-match construct (2)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -84,4 +84,4 @@ plan 24;
         <SIGN>? <MANTISSA> <EXPONENT>?
     }, ":my terminates upon }\\n"
 }
-# vim: ft=perl6 sw=4 ts=4 expandtab
+# vim: expandtab shiftwidth=4

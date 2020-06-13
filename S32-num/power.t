@@ -154,4 +154,4 @@ is-approx(27 ** -⅔, ⅑, "27 ** -⅔ == ⅑");
   }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

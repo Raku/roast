@@ -96,3 +96,5 @@ plan 10;
 
     is-deeply @dups, ["a♥", "j♥"], 'duplicates detected in grammar';
 }
+
+# vim: expandtab shiftwidth=4

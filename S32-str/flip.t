@@ -41,4 +41,4 @@ is flip(123), '321', 'flip() on non-strings';
 }
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

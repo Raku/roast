@@ -273,3 +273,5 @@ subtest 'Sub with slurpy compiles and yields correct results with .assuming' => 
     is-deeply &s_lol($a), ([(1, 2, (3, 4)),], False), 'Slurpy_lol (**@)';
     is-deeply &s_one($a), ([ 1, 2, (3, 4)  ], False), 'Slurpy_onearg (+@)';
 }
+
+# vim: expandtab shiftwidth=4

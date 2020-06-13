@@ -148,4 +148,4 @@ is ~LTM.subparse('aaa', :rule('block')),   'aa',     'However, code blocks do te
     is ~G.subparse("-my_id", :rule<term2>), '-my_id', '<ident> alias';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

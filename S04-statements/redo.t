@@ -127,4 +127,4 @@ plan 12;
     is $out, 'foobarfoobar', 'redoing outer for loop';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

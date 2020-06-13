@@ -83,4 +83,4 @@ my $s = 'str';
     dies-ok { q/{ use v5; }/.EVAL }, 'or any scope for that matter';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

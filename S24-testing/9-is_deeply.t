@@ -44,3 +44,5 @@ subtest 'can test Seq type objects' => {
     is_run ｢use Test; is-deeply 42, Seq｣,
         {:out(*.contains: 'not ok'), :status(1)}, '42, Seq';
 }
+
+# vim: expandtab shiftwidth=4

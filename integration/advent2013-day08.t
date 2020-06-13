@@ -66,3 +66,5 @@ is $distance, 5;
     my $n = 1;
     is($_, $n++)  for @$vec;
 }
+
+# vim: expandtab shiftwidth=4

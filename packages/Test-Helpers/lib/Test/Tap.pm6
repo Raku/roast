@@ -165,4 +165,4 @@ checking it against the desired result.  Default is no sorting.
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

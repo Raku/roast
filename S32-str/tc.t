@@ -19,4 +19,4 @@ is 'aBcD'.tc,         'ABcD',        'tc only modifies first character';
 #?rakudo.jvm todo 'NFC/NFG not supported. JVM stores strings in UTF-16 format, but otherwise correct casechange RT#124500'
 is "\x1044E\x10427".tc, "\x10426\x10427", 'tc works on codepoints greater than 0xffff';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

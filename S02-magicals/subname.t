@@ -25,4 +25,4 @@ throws-like { EVAL 'my $baz = try { &?ROUTINE.name };' },
   X::Undeclared::Symbols,
   "&?ROUTINE not available outside of a routine";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

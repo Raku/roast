@@ -71,4 +71,4 @@ throws-like  { EVAL 'my @rt80330; [+]@rt80330' },
       'colonpair is not allowed after dot after digit in arglist';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

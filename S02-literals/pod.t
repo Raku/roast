@@ -63,4 +63,4 @@ is-deeply $=pod.grep(*.name eq 'SEE-ALSO').head.contents.head.contents.head,
     'custom named paras with `-` in identifiers works';
 =SEE-ALSO foo132339
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

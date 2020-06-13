@@ -27,4 +27,4 @@ my $executed = 0;
 ok !('a' ~~ 'b' S& { $executed = 1; True }), 'and semantics';
 ok !$executed,                            'short-circuit';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

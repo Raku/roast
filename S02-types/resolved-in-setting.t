@@ -22,3 +22,5 @@ is (sub ($x) { $x })(42), 42, 'Can declare sub even with code types shadowed';
 is class C { method m($x) { $x } }.m(42), 42, 'Can declare method even with code types shadowed';
 # https://github.com/Raku/old-issue-tracker/issues/4786
 is 'abc' ~~ /\w/, 'a', 'Can use regex even with code types shadowed';
+
+# vim: expandtab shiftwidth=4

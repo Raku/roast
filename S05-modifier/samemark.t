@@ -40,4 +40,4 @@ Testing the C<:mm> or C<:samemark> modifier - as always, need more tests
 }
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

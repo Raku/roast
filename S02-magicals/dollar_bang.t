@@ -68,4 +68,4 @@ try {
     ok (! $!), '$! as boolean works (false)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

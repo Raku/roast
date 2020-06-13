@@ -267,4 +267,4 @@ is ([max] 5.4,10.7,-15.2,20.8), 20.8, 'reduce max numeric';
         '.max on <>-style list finds the numerically largest number';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

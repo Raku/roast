@@ -261,4 +261,4 @@ is-eqv <a c b>.sort(&lc), <a b c>.Seq, 'no crashes when using &lc in .sort';
       'is sorting a 2 elem list with a mapper stable?';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

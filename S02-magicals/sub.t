@@ -84,4 +84,4 @@ is($result3, 6, 'the &?ROUTINE magical works correctly in overloaded operators' 
     is f()(), 'g', 'Inner blocks are transparent to &?ROUTINE (RT#130761)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

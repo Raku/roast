@@ -292,4 +292,4 @@ subtest 'capture markers work correctly' => {
     is-deeply ~$r2<ber>, 'EO',    '<ber> (grammar 2)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

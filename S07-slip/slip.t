@@ -57,3 +57,5 @@ is (1, slip flat (2,3)).gist, '(1 2 3)', "slip flat listops right";
     @a.push(42);
     is $s, (^10).Slip, 'does the Slip keep the original state';
 }
+
+# vim: expandtab shiftwidth=4

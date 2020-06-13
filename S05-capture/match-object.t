@@ -134,3 +134,5 @@ subtest '$/ is set when matching in a loop' => {
 }
 
 }
+
+# vim: expandtab shiftwidth=4

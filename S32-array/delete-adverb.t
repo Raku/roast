@@ -381,4 +381,4 @@ subtest ':delete on lazy Arrays' => {
     ok @a[2] == 99, 'deleted element replaced with default value';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -65,3 +65,5 @@ subtest {
 }
 
 # TODO add test with "\c[woman facepalming]", "\c[man facepalming]"
+
+# vim: expandtab shiftwidth=4

@@ -60,4 +60,4 @@ plan 10;
 
 # (currently this dies with "Can't modify constant item: VInt 2")
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

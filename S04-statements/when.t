@@ -94,4 +94,4 @@ lives-ok { while $++ < 2 { when 'hi' { } } }, '`when` in a loop lives';
     is $i, 5, 'Successful when does not terminate a loop prematurely';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

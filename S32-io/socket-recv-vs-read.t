@@ -80,4 +80,4 @@ is $p.result[0].decode('ascii'), 'first thinganother t',
 is $p.result[1].decode('ascii'), 'hing',
     'read stops blocking when server closes connection';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

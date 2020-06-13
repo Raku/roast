@@ -186,4 +186,4 @@ throws-like { "foo.txt".IO.extension: :parts('a'..'z') }, Exception,
 throws-like { "foo.txt".IO.extension: :parts(5..NaN) }, Exception,
   'using Range with NaN end point as parts throws';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -87,4 +87,4 @@ is IO::Path::Cygwin.new("foo/()").succ, "foo/()", "pred only effects basename";
 isnt IO::Path::Cygwin.new('-a').absolute, '',
     '.absolute on paths starting with `-` does not produce empty string';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

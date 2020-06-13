@@ -229,4 +229,4 @@ subtest 'FIRST+LAST loops as last statement in subs work and do not crash' => {
         is-deeply ($a, $b, $c), (1, 1, 100), 'wanted loop';
     }
 }
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -55,4 +55,4 @@ my Int @b = 1,2;
 lives-ok({ @a = @b }, 'assignment worked as expected');
 is(@a[0], 1,          'assignment worked as expected');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

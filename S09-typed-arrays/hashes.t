@@ -136,4 +136,4 @@ subtest 'self-referential top-level hash assignment' => {
     dies-ok { %h<a> := "b" }, 'typecheck on binding';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

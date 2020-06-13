@@ -183,4 +183,4 @@ throws-like 'my %h = a => 1, b => 2; %h<a b> := (4, 5)', X::Bind::Slice,
     'Cannot bind to hash slices';
 is 1,1, 'dummy';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

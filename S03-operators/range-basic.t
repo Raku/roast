@@ -174,4 +174,4 @@ nok 'd' ~~ *..'c',      "not 'd' ~~ *..'c'";
 ok (1 .. *).is-lazy, "1 .. * is lazy";
 ok !(1 .. 2).is-lazy, "1 .. 2 is not lazy";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

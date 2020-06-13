@@ -194,4 +194,4 @@ plan 56;
     dies-ok { my @a; prepend @a, a => 52 }, 'no named on prepend()';
 }
 
-# vim: syn=perl6
+# vim: expandtab shiftwidth=4

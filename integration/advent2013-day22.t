@@ -23,3 +23,5 @@ ok 'a' !~~ /b/, '!~~';
 ok 3 !< 2, '!<';
 ok 'b' !before 'a', '!before';
 
+
+# vim: expandtab shiftwidth=4

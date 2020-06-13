@@ -108,4 +108,4 @@ subtest ':nth accepts Junctions' => {
     ok $/ eq 'c', 'Junction has second of the alternatives';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

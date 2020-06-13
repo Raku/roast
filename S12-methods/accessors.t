@@ -68,3 +68,5 @@ is $a.test-hash-a,   2, '%.a contextualizes as hash';
     is $o.x, 42, '.accessor returns that of the child';
 
 }
+
+# vim: expandtab shiftwidth=4

@@ -48,4 +48,4 @@ subtest '&*chdir to non-existent directory' => {
     is-path sys-cwd(),         $*HOME,   '&*chdir updates process dir [2]';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

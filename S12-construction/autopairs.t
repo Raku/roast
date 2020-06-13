@@ -18,4 +18,4 @@ plan 4;
             'role instantiation with autopair, spaces');
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

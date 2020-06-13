@@ -83,4 +83,4 @@ is(Grammar.WHAT.gist,"(Grammar)", "Grammar.WHAT.gist = Grammar()");
     dies-ok { @a[0] = 42 }, 'does it type check ok';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

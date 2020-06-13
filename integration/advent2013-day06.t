@@ -55,3 +55,5 @@ class DateSpec {
 my $spec = DateSpec.new('3rd Tue + 2');
 
 is $spec.next(Date.new(2013, 12, 25)), '2014-01-23', 'Recurring date spec';
+
+# vim: expandtab shiftwidth=4

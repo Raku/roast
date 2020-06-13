@@ -571,4 +571,4 @@ ok("\x[BCD0]"  ~~ m/^<-:Yi>$/, q{Match unrelated inverted <Yi>} );
 ok("\x[BCD0]\c[YI SYLLABLE IT]" ~~ m/<:Yi>/, q{Match unanchored <Yi>} );
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

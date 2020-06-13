@@ -2007,3 +2007,5 @@ ok Uni.new(0xBA2A).NFD.list ~~ (0x1106, 0x1164, 0x11B5,), 'BA2A -> 1106 1164 11B
 ok Uni.new(0xBA2B).NFD.list ~~ (0x1106, 0x1164, 0x11B6,), 'BA2B -> 1106 1164 11B6';
 ok Uni.new(0xBA2C).NFD.list ~~ (0x1106, 0x1164, 0x11B7,), 'BA2C -> 1106 1164 11B7';
 ok Uni.new(0xBA2D).NFD.list ~~ (0x1106, 0x1164, 0x11B8,), 'BA2D -> 1106 1164 11B8';
+
+# vim: expandtab shiftwidth=4

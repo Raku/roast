@@ -63,3 +63,5 @@ throws-like { Lock::Async.new.unlock },
     is $acquire-after.status, Kept, 'Locking the now-free lock again works';
     lives-ok { $lock.unlock() }, 'And can unlock it again';
 }
+
+# vim: expandtab shiftwidth=4

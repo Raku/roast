@@ -129,4 +129,4 @@ is-deeply quietly { Bool.Str }, '', 'Bool:U stringifies to empty string';
 # https://irclog.perlgeek.de/perl6-dev/2017-07-10#i_14852407
 is-deeply (((my int $ = 0) < 1) || 3), True, 'construct returns Bool, not Int';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -29,4 +29,4 @@ subtest '&permutations with Iterable first argument match calls with method form
     is-deeply permutations($_).sort, .permutations.sort, .raku for @i;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

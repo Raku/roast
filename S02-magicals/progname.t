@@ -26,4 +26,4 @@ lives-ok { my $*PROGRAM-NAME = "coldfusion" }, '$*PROGRAM-NAME is assignable';
 }
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -131,4 +131,4 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
 is-deeply (<a b c>, *.reverse ... *)[5], <c b a>.Seq,
     '… op does not prematurely cause consumtion of Seqs';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

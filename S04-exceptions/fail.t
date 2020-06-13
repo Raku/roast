@@ -192,4 +192,4 @@ throws-like {
 }, Exception, message => /important/,
     'assigning Failure to typed variable that cannot hold it explodes it';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

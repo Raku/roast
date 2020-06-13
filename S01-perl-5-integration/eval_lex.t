@@ -51,4 +51,4 @@ subtest 'EVAL/EVALFILE evals Buf like perl would execute source file' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

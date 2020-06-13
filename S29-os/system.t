@@ -214,4 +214,4 @@ subtest 'Proc.pid is set correctly' => {
     nok $proc, 'Exit with a segfault makes the Proc false';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

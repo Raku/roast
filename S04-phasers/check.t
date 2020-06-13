@@ -34,4 +34,4 @@ plan 5;
     is $str, 'C', 'our rvalue CHECK {...} block was executed exactly once';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

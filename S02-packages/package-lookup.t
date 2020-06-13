@@ -27,3 +27,5 @@ lives-ok { my $A::y = 6; $A::y ~~ 6 or die },
     'can declare and access variable in a class package through its long name from outside class';
 lives-ok { my $B::x = 7; $B::x ~~ 7 or die },
     'can declare and access variable through its long name without declaring package';
+
+# vim: expandtab shiftwidth=4

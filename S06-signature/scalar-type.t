@@ -28,4 +28,4 @@ plan 8;
   is( foo(make_hash()), ::Hash, "2-elem hash arg, sub-returned, invoked inline" );
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

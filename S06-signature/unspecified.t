@@ -51,4 +51,4 @@ is both(), '',
     is $tender, 'sanity', 'The variable passed is unchanged';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

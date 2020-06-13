@@ -1,4 +1,4 @@
-﻿use v6;
+use v6;
 use Test;
 
 my @num = num, num32;
@@ -307,3 +307,5 @@ for @num -> $T {
     my num @b = @a;
     is-deeply @b, (my num @ = 0e0,1e0), 'did we survive the hole';
 }
+
+# vim: expandtab shiftwidth=4

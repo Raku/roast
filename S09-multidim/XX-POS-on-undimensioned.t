@@ -83,3 +83,5 @@ nok @a[1][1][0]:exists, 'DELETE-POS with many indices digs into nested arrays';
 @a.BIND-POS(0,0,0,42);
 is @a.AT-POS(0,0,0), 42, 'BIND-POS with many indices digs into nested arrays';
 dies-ok { @a.ASSIGN-POS(0,0,0,69) }, 'BIND-POS with many indices really binds';
+
+# vim: expandtab shiftwidth=4

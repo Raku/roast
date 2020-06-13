@@ -61,4 +61,4 @@ isa-ok $*DISTRO.version, Version;
 isa-ok $*DISTRO.signature, Blob;
 isa-ok $*DISTRO.is-win, Bool;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

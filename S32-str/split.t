@@ -548,4 +548,4 @@ subtest 'split skip-empty skips all empty chunks' => {
     for @tests;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

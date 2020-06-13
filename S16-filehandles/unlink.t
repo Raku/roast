@@ -20,4 +20,4 @@ my $fn = "unlink-test-file" ~ nonce;
 }
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

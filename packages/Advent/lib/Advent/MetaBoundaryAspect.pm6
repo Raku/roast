@@ -31,3 +31,5 @@ my class ClassWithAspectsHOW
 }
 my module EXPORTHOW { }
 EXPORTHOW.WHO.<class> = ClassWithAspectsHOW;
+
+# vim: expandtab sw=4

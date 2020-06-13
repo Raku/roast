@@ -96,3 +96,5 @@ throws-like {$untrusty.try-priv},
   X::Method::Private::Permission,
   'inheritance private method, (untrusting)';
 
+
+# vim: expandtab shiftwidth=4

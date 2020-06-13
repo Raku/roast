@@ -72,3 +72,5 @@ subtest 'dynamics accessible from .then' => {
     is-deeply %*FOO, {:42prom, :72then}, '%*FOO';
     is-deeply @code, [<prom then>],      '&*FOO';
 }
+
+# vim: expandtab shiftwidth=4

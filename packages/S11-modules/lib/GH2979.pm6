@@ -15,3 +15,5 @@ multi EXPORT {
         '&bar' => &b,
     )
 }
+
+# vim: expandtab sw=4

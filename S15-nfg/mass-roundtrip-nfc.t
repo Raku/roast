@@ -509,3 +509,5 @@ ok Uni.new(0xFAA9).Str.NFC.list ~~ (0x774A,), '0xFAA9 -> Str -> 0x774A Normaliza
 ok Uni.new(0xFAAA).Str.NFC.list ~~ (0x7740,), '0xFAAA -> Str -> 0x7740 NormalizationTest.txt line no 14002';
 ok Uni.new(0xFAAB).Str.NFC.list ~~ (0x78CC,), '0xFAAB -> Str -> 0x78CC NormalizationTest.txt line no 14003';
 
+
+# vim: expandtab shiftwidth=4

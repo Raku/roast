@@ -64,3 +64,5 @@ class Point {
 my $a = Point.new(x => 7, y => 9);
 is-deeply ([3, 5] ~~ $a), Bool::False, 'accepts';
 is-deeply ((7, 9) ~~ $a), Bool::True, 'accepts';
+
+# vim: expandtab shiftwidth=4

@@ -91,4 +91,4 @@ sub remove_file ($file) {
 ok(try { "nonesuch".IO ~~ :!e }, "~~:!e syntax works");
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

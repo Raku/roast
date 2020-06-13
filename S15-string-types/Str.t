@@ -12,3 +12,5 @@ is qq:nfg/ẛ̣/.WHAT, Str, ":nfg adverb on quoteforms results in Str.";
 #?rakudo.jvm todo "NFG on JVM"
 is "ẛ̣".chars, 1,  "Str.chars returns number of graphemes.";
 is "ẛ̣".ord, 0x1E9B, "Str.ord returns first NFC codepoint for NFG grapheme";
+
+# vim: expandtab shiftwidth=4

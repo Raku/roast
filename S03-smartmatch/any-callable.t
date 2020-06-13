@@ -27,4 +27,4 @@ subtest 'no glitches with Routines not doing Callable role' => {
     does-ok $_, Callable, .name for @routines;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

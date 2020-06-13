@@ -71,4 +71,4 @@ Testing named capture variables nested inside each other. This doesn't appear to
     is ~a.parse('a b z')<x>, 'a', 'can capture inside a || alternation even if previous capture was quantified (RT #107746)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

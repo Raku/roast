@@ -87,3 +87,5 @@ my $var;
  # no explicit reference taking
 set_five $var;
 is $var, 5,'reference taking';
+
+# vim: expandtab shiftwidth=4

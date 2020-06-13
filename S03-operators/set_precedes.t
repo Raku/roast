@@ -75,4 +75,4 @@ my $mh = MixHash.new-from-pairs("blood" => 1.1, "love" => 1.3);
     ok $mh (>+) $mh, "Our MixHash is a msuperset of itself (ASCII)";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

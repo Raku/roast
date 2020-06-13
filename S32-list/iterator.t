@@ -50,3 +50,5 @@ group-of 6 => 'Mu.iterator' => {
 }
 
 #vim: ft=perl6
+
+# vim: expandtab shiftwidth=4

@@ -598,4 +598,4 @@ say 50;｣, X::Comp::FailGoal, line => 3, message => /«'line 1'»/;
         };
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

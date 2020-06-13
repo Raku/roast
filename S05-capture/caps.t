@@ -91,4 +91,4 @@ is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on %% separator';
         '.caps respects order of matching even with zero-width delimeters';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

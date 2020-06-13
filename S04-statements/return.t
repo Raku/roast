@@ -107,4 +107,4 @@ throws-like ｢return｣, X::ControlFlow::Return, :out-of-dynamic-scope{.not},
 
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

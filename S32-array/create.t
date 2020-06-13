@@ -75,4 +75,4 @@ eval-lives-ok ｢
     is-deeply Array.clone, Array, 'Array:U clone gives an Array:U';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

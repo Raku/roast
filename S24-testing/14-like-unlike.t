@@ -14,3 +14,5 @@ like class { method Str { 'foo' } }, /foo/,
 unlike 42, /43/, '`unlike` can accept non-Str objects (Int)';
 unlike class { method Str { 'foo' } }, /bar/,
     '`unlike` can accept non-Str objects (custom)';
+
+# vim: expandtab shiftwidth=4

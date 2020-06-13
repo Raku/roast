@@ -42,3 +42,5 @@ is $dw.gist,'1963-11-23T17:15:00-01:45', 'date negative offset';
 my $jfk = Date.new("1963-11-22");
 $jfk++;
 is $jfk.gist, '1963-11-23', 'date increment';
+
+# vim: expandtab shiftwidth=4

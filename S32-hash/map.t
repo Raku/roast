@@ -114,4 +114,4 @@ subtest 'Map.gist shows only the first sorted 100 els' => {
     dies-ok { %m<c> = 666 }, 'cannot assign to non-existing key';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -9,4 +9,4 @@ plan 1;
         '.WHAT on $*GROUP after using $*GROUP values lives';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -166,4 +166,4 @@ is @methods[0].name, 'bar', 'methods call found public method in subclass (with 
     is Foo.^methods[0,1,2].join(","), "bar,baz,antler", "order of ^methods consistent";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

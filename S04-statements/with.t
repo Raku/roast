@@ -304,4 +304,4 @@ subtest '`else` and kin with `without` errors out' => {
         keyword => 'orwith', 'using `orwith`';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

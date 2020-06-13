@@ -138,4 +138,4 @@ with 'blah blah :v42 blah' ~~ /':v'(\d+)/ -> (Int() $version is copy) {
         'An `is copy` in a sub-signature produces a writable variable';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

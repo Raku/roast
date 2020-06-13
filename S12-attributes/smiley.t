@@ -132,4 +132,4 @@ throws-like 'use attributes :foo',
   name => 'foo',
   'does use attributes :foo fail';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

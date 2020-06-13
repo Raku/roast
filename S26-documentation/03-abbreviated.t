@@ -127,3 +127,5 @@ isa-ok $r, Pod::Block;
 isa-ok $r, Pod::Heading;
 is $r.level, '3';
 is $r.contents[0].contents, 'Heading level 3';
+
+# vim: expandtab shiftwidth=4

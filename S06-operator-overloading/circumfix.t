@@ -51,3 +51,5 @@ plan 16;
         X::Syntax::AddCategorical::TooManyParts, 
         'constants containing too many parts throw correctly';
 }
+
+# vim: expandtab shiftwidth=4

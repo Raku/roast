@@ -125,4 +125,4 @@ is "{($_ * $_ if $_ % 2 for 0..10)}", '1 9 25 49 81', '{(...)} list comprehensio
     ok $y eq "foo42bar", "RT #76608 variable interpolation inside string";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

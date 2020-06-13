@@ -27,3 +27,5 @@ ok rmdir("$root"), "Can remove $root now";
 nok $root.IO ~~ :e, "$root no longer exists";
 
 
+
+# vim: expandtab shiftwidth=4

@@ -69,4 +69,4 @@ throws-like 'my $a; my $block = { $a = 42; $^a * 2 }', X::Placeholder::NonPlaceh
     :placeholder<$^a>,
     ;
 
-# vim: syn=perl6
+# vim: expandtab shiftwidth=4

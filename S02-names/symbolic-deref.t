@@ -173,4 +173,4 @@ throws-like { EVAL ' ::().Str ' },
     'name with trailing :: not same as sans',
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

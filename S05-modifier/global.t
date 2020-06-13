@@ -40,4 +40,4 @@ Testing the C<:global> regex modifier - more tests are always welcome
         'm:g/.../ with an embedded {} produces correct results';
 }
 
-# vim: syn=perl6 sw=4 ts=4 expandtab
+# vim: expandtab shiftwidth=4

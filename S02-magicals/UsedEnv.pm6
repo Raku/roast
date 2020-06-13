@@ -5,3 +5,5 @@ module UsedEnv {
     ok (%*ENV<PATH>:exists or %*ENV<HOMEPATH>:exists), "env exists in use (RT #78258)";
 }
 
+
+# vim: expandtab sw=4

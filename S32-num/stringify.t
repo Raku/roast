@@ -94,4 +94,4 @@ subtest 'no precision loss in stringification of Nums' => {
 
 # TODO: FatRat, Num (once better specced), Int (maybe, but hard to mess up)
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

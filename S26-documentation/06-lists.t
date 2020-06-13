@@ -103,3 +103,5 @@ ok $r.contents[1].contents[1].contents
 ok $r.contents[2].contents[1].contents
    ~~ /:s In deciding .+ annelids for breakfast/;
 is $r.contents[3].contents, "As you can see, folk wisdom is often of dubious value.";
+
+# vim: expandtab shiftwidth=4

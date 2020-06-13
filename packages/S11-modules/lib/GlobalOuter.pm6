@@ -4,3 +4,5 @@ class GlobalOuter {
       return ::('GlobalInner') !~~ Failure;
    }
 }
+
+# vim: expandtab sw=4

@@ -188,4 +188,4 @@ plan 16;
     is $str, '0', 'last in a NEXT in a loop terminates the loop';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

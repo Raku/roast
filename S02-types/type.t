@@ -181,4 +181,4 @@ throws-like q[my num $n; $n = <42+0i>], X::Syntax::Number::LiteralType, 'num doe
     ok Array ~~ Positional, 'Array does Positional too';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

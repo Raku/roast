@@ -23,4 +23,4 @@ plan 4;
   is $in_macro_clos,      1, "macro closure was executed during runtime";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

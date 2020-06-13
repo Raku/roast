@@ -169,3 +169,5 @@ subtest 'STOREing/splicing lazy Seq values throws' => {
         throws-like $splice-stmt, X::Cannot::Lazy, "splice $msg";
     }
 }
+
+# vim: expandtab shiftwidth=4

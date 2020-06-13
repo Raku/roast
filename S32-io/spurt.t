@@ -266,4 +266,4 @@ subtest 'IO::Handle spurt' => { # 2017 IO Grant; IO::Handle.spurt
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

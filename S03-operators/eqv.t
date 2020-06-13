@@ -257,4 +257,4 @@ subtest 'Throws/lives in lazy cases' => {
     lives-ok    { (1…∞).Array eqv (1…3).Array }, 'Arrays, only one lazy';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -173,4 +173,4 @@ subtest '.pick on object Hashes' => {
         (:42foo, (True) => False, 42e0 => ½).sort, 'many Pairs';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

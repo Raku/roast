@@ -134,3 +134,5 @@ plan 14;
     is rt115500v2(), 66,
         'addition of two quasis with arithmetical expressions works (2)';
 }
+
+# vim: expandtab shiftwidth=4

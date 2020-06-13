@@ -142,4 +142,4 @@ throws-like 'loop { say "# RT63760"; last } while 1', X::Syntax::Confused,
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

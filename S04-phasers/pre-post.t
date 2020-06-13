@@ -189,4 +189,4 @@ throws-like '$pt.test(1)',
     dies-ok  { blockless 14 }, 'blockless PRE/POST (-, 2)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

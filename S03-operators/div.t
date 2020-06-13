@@ -18,3 +18,5 @@ fails-like ｢1e0 / (0/1)｣, X::Numeric::DivideByZero, "1e0 / (0/1) softfails";
     my int $rt112678 = -8;
     is-deeply $rt112678 div 3, -3, 'div works with negative native';
 }
+
+# vim: expandtab shiftwidth=4

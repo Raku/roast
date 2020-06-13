@@ -30,4 +30,4 @@ for 0 .. (@results-1) -> $i {
 }
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

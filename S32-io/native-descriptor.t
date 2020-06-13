@@ -13,3 +13,5 @@ given open($path, :w) {
     .close;
     unlink $path;
 }
+
+# vim: expandtab shiftwidth=4

@@ -53,4 +53,4 @@ ok (now.Instant ~~ Instant:D), "Instant.Instant (defined)";
 
 # See S32-temporal/DateTime-Instant-Duration.t for more.
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

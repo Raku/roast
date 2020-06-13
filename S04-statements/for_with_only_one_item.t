@@ -106,4 +106,4 @@ plan 12;
   is $count, 1, 'for $capture {...} executes the loop body only once';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

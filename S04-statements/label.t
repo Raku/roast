@@ -127,3 +127,5 @@ throws-like { EVAL q[label1: say "OH HAI"; label1: say "OH NOES"] }, X::Redeclar
     L7: Seq.from-loop( { loop { @res.push: "Loop"; last L7 } }, :label(L7));
     is-deeply @res, ["Loop"], 'nested loop with labeled last (4)';
 }
+
+# vim: expandtab shiftwidth=4

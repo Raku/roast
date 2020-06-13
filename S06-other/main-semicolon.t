@@ -46,4 +46,4 @@ is &?ROUTINE.name, "MAIN", "...and we're actually in MAIN now";
       {:out<pass>, :err(''), :0status}, 'can have where in unit sub MAIN(...);';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

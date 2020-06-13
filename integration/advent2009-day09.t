@@ -88,3 +88,5 @@ is <734043054508967647390469416144647854399310>.comb(/.**7/).join('|') , '734043
 
 #test done, below is the day's one-liner (in case you wish to enable it :) )
 #.fmt("%b").trans("01" => " #").say for <734043054508967647390469416144647854399310>.comb(/.**7/)
+
+# vim: expandtab shiftwidth=4

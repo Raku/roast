@@ -34,3 +34,5 @@ sub is_fudged_ok($$$$) {
     my $contents_exp  = do { local( @ARGV, $/ ) = $out; <> };
     is $contents_got, $contents_exp, $desc;
 }
+
+# vim: expandtab shiftwidth=4

@@ -35,3 +35,5 @@ subtest 'optimization coverage' => {
     test-iter-opt $s.ords.iterator, @ords, 'has chars';
     test-iter-opt "".ords.iterator, (),    'no  chars';
 }
+
+# vim: expandtab shiftwidth=4

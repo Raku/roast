@@ -507,3 +507,5 @@ ok Uni.new(0x0F79).NFKD.list ~~ (0x0FB3, 0x0F71, 0x0F80,), '0F79 -> 0FB3 0F71 0F
 ok Uni.new(0x0F81).NFKD.list ~~ (0x0F71, 0x0F80,), '0F81 -> 0F71 0F80';
 ok Uni.new(0x0F93).NFKD.list ~~ (0x0F92, 0x0FB7,), '0F93 -> 0F92 0FB7';
 ok Uni.new(0x0F9D).NFKD.list ~~ (0x0F9C, 0x0FB7,), '0F9D -> 0F9C 0FB7';
+
+# vim: expandtab shiftwidth=4

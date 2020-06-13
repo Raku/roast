@@ -284,4 +284,4 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     is-deeply $x, 9, '&await awaits in sink context, with nested iterables';
 }
 
-# vim: ft=perl6 sw=4 ts=4 sts=4 expandtab
+# vim: expandtab shiftwidth=4

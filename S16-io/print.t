@@ -130,4 +130,4 @@ is_run 'my $a = (\'o\', \'k\', \'k\'); $*OUT.print: $a', { out => "o k k" },
   }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

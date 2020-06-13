@@ -8,3 +8,5 @@ class RT83354_B {
         RT83354_B.new(:b($x.b + $y.b));
     }
 }
+
+# vim: expandtab sw=4

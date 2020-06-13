@@ -297,3 +297,5 @@ is @unsorted.sort, "", "Can we sort 0-element $t array";
     my str @b = @a;
     is-deeply @b, (my str @ = "","b"), 'did we survive the hole';
 }
+
+# vim: expandtab shiftwidth=4

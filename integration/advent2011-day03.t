@@ -23,3 +23,5 @@ is capture-out({$*OUT.write($buf)}), ["møþ"], "buffer write";
 my $str = $buf.decode('UTF-8');
 is $str, "møþ\n", "buffer decode";
 
+
+# vim: expandtab shiftwidth=4

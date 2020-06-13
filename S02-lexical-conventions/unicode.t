@@ -139,4 +139,4 @@ lives-ok { EVAL "q\x201a test \x2019" },
 lives-ok { EVAL "q\x2018 \x201a test \x2019" },
   "Alternative open-brakets treat their other alternates as non-special";
 
-# vim: ft=perl6 fileencoding=utf-8
+# vim: expandtab shiftwidth=4

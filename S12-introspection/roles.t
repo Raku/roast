@@ -62,4 +62,4 @@ Tests for .^roles from L<S12/Introspection>.
         'punned class shows immediate role only with :!transitive';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

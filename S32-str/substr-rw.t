@@ -157,4 +157,4 @@ plan 40;
     is $s, '...a', '.substr-rw on a string constructed with `x` operator';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

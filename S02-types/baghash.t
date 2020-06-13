@@ -750,4 +750,4 @@ is-deeply (1,2,3).BagHash.ACCEPTS(().BagHash), False, 'can we smartmatch empty';
     dies-ok { my %bh is BagHash[Int] = <a b c> }, 'must have Ints on creation';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

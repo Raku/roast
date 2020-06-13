@@ -48,4 +48,4 @@ ok 'abcdef' !~~ ms/c d/, 'ms// works, implies :s (-)';
     ok ?NonSpacey.parse("foo"),  "Semantics of sigspace after ^";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

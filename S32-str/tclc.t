@@ -12,3 +12,5 @@ is tclc('ǉenčariti'),   'ǈenčariti',    'lj => Lj (in one character)';
 is 'Ångstrom'.tclc,     'Ångstrom',     'Å remains Å';
 is "\x1044E TEST".tclc, "\x10426 test", 'tclc works on codepoints greater than 0xffff';
 
+
+# vim: expandtab shiftwidth=4

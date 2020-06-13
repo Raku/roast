@@ -171,4 +171,4 @@ throws-like 'use variables :foo',
     X::TypeCheck::Assignment,'Int:D %x = foo => Nil; throws a typecheck';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

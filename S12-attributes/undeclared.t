@@ -50,4 +50,4 @@ throws-like ' class T { method t { $!t := 1 }}; ::T.new.t; ',
         message => q[You cannot declare attribute '$.x' here; maybe you'd like a class or a role?];
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -86,4 +86,4 @@ is $str, 'io', 'INIT {} always runs before the mainline code runs';
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -45,4 +45,4 @@ isa-ok($obj, Foo, 'The object was constructed of the right type');
   }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

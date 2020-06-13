@@ -234,3 +234,5 @@ my $limit = 8;
 
 is-deeply [for ($start+1) .. ($limit-1) -> $i {$i}], [4, 5, 6, 7], 'for ($start+1) .. ($limit-1) -> $i {...}';
 is-deeply [for $start ^..^ $limit -> $i {$i}], [4, 5, 6, 7], 'for $start ^..^ $limit -> $i {...}';
+
+# vim: expandtab shiftwidth=4

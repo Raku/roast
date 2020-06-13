@@ -186,4 +186,4 @@ subtest 'lazy array comparisons' => {
     is-deeply [lazy 1, 3, 1]  cmp [lazy 1, 2, 3], More, 'More; differ at pos 1; ignore later elems';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

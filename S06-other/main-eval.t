@@ -21,4 +21,4 @@ ok $eval_worked, 'EVAL code executed';
 # https://github.com/Raku/old-issue-tracker/issues/3947
 is $main_invoked, 0, 'sub MAIN is not called in EVAL()';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

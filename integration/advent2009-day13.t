@@ -31,3 +31,5 @@ ok (any(@a) == $in), 'any(@list) == $var';
 ok (all(@a) > 0), 'all(@list) > 0';
 ok (all(@a) == any(@b)), 'all(@a) == any(@b)';
 nok (all(@c) == any(@b)), 'all(@a) == any(@b)';
+
+# vim: expandtab shiftwidth=4

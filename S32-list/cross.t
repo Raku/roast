@@ -14,4 +14,4 @@ is-deeply cross(<a b>, <1 2>, with => &[~]), <a1 a2 b1 b2>, "cross with operator
 # https://github.com/Raku/old-issue-tracker/issues/4698
 eval-lives-ok 'multi sub cross() { }', "multi sub cross shouldn't SEGV";
 
-# vim: expandtab shiftwidth=4 ft=perl6
+# vim: expandtab shiftwidth=4

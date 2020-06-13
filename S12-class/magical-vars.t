@@ -134,4 +134,4 @@ class SimpleClass does Bar {}
   is EVAL('evo.new.bar'), "evo", 'self is not overridden inside an EVAL' ;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

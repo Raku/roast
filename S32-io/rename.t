@@ -78,4 +78,4 @@ nok $non-existent-file.IO.e, "sanity check 2";
 ok unlink($existing-file1), 'clean-up 3';
 ok unlink($existing-file2), 'clean-up 4';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

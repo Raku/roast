@@ -473,4 +473,4 @@ subtest 'Clone of Pair does not share .WHICH' => {
     is ('$foo' => 42).raku, Q/"\$foo" => 42/, "did we not do parens?";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

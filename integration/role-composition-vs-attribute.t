@@ -83,4 +83,4 @@ plan 10;
     CODE
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

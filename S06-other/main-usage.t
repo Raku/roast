@@ -240,4 +240,4 @@ subtest '$*USAGE tests' => {
     'trying to assign to $*USAGE inside sub MAIN throws';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

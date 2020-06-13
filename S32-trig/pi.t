@@ -16,4 +16,4 @@ is-approx(pi, $PI, "pi (using constant)");
 is-approx(pi, atan(1)*4, "pi checked by atan(1)*4");
 is-approx(pi + 3, $PI + 3, "'pi + 3' = PI +3");
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -53,4 +53,4 @@ is-deeply(RT117117::Backend::.keys.sort, ('AST', 'GNUC'), 'All nested modules av
     ok MyFu ~~ RoleB, 'Composition worked';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

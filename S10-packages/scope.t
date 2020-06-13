@@ -87,4 +87,4 @@ ok($pkg !=== ::('PackageTest::My::Package'), 'not the same as global type object
   is($Test2::scalar, 42, 'temporization of external package variables');
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

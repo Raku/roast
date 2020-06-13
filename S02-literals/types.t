@@ -37,3 +37,5 @@ throws-like { EVAL q[caffeine(EVAL('sub caffeine($a){~$a}'))] },
 
 # vim: ft=perl6
 
+
+# vim: expandtab shiftwidth=4

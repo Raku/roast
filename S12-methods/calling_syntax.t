@@ -49,4 +49,4 @@ is($x.'identity'('qwerty'), 'qwerty', 'indirect method call using quotes, with p
 is-deeply my class RT131478 { method Str { $.^name } }.Str, 'RT131478',
     '`$.` syntax shorthand works with meta-methods';
 
-# vim: syn=perl6
+# vim: expandtab shiftwidth=4

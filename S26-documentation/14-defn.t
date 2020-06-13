@@ -88,3 +88,5 @@ isa-ok $o.contents[0], 'Pod::Block::Para';
 is $o.contents[0].contents[0], 'def 6 line 1';
 isa-ok $o.contents[1], 'Pod::Block::Para';
 is $o.contents[1].contents[0], 'def 6 line 2 after blank line';
+
+# vim: expandtab shiftwidth=4

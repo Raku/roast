@@ -113,3 +113,5 @@ sub fudge_and_run_ok {
         );
     }
 }
+
+# vim: expandtab shiftwidth=4

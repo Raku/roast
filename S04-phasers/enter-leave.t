@@ -306,4 +306,4 @@ plan 33;
     is $entered, 1, 'Did ENTER only run once';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

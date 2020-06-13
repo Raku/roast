@@ -90,4 +90,4 @@ throws-like '::No::Such::Grammar.parse()', Exception, '.parse on missing grammar
     is G.parse(‘abc’), 'abc', 'A regex TOP will be backtracked into to get a long enough match';
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

@@ -32,4 +32,4 @@ subtest '&signal', {
     }
 };
 
-# vim: ft=perl6 sw=4 ts=4 sts=4 expandtab
+# vim: expandtab shiftwidth=4

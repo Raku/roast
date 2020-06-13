@@ -185,4 +185,4 @@ subtest '[R~]=' => {
     is-deeply $a,             "foobar", 'assign to :D, result';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

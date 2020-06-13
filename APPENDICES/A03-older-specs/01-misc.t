@@ -471,3 +471,5 @@ group-of 12 => '$CALLER::_' => {
         }
     }
 }
+
+# vim: expandtab sw=4

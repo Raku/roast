@@ -242,4 +242,4 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
     }
 }
 
-# vim: syn=perl6
+# vim: expandtab shiftwidth=4

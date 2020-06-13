@@ -77,4 +77,4 @@ is-deeply (4,5,6).head(-999999999999999999999999999), (),
     }, 'Rat is coerced to Int when used as index';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

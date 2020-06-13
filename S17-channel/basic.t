@@ -106,3 +106,5 @@ plan 28;
     throws-like { Channel.elems     }, Exception, 'Channel:U.elems fails';
     throws-like { Channel.new.elems }, Exception, 'Channel:D.elems fails';
 }
+
+# vim: expandtab shiftwidth=4

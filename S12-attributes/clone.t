@@ -170,4 +170,4 @@ subtest 'Array/Hash cloning does not lose the descriptor' => {
     is-deeply @ac[0, 1], (Nil, Nil), 'Array';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

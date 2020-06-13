@@ -34,3 +34,5 @@ plan 10;
     is •, 1, "&term:<•> evaluated each time";
 }
 
+
+# vim: expandtab shiftwidth=4

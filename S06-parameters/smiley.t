@@ -81,4 +81,4 @@ is Proc::Async:U.gist, '(Async:U)', '.gist on :U smileys uses shortname';
 is Int:D        .gist, '(Int:D)',   '.gist on :D smileys';
 is Proc::Async:D.gist, '(Async:D)', '.gist on :D smileys uses shortname';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

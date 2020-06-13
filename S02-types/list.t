@@ -201,4 +201,4 @@ subtest 'List.new does not create unwanted containers' => {
     throws-like { $l[2] := 10 }, X::Bind, 'Cannot bind at pos of immutable List, Scalar at pos';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

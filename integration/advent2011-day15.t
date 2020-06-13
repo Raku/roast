@@ -50,3 +50,5 @@ nok $! ~~ X::Comp, "runtime error doesn't X::Comp";
 
 
 
+
+# vim: expandtab shiftwidth=4

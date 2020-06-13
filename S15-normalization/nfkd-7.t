@@ -2007,3 +2007,5 @@ ok Uni.new(0x1D794).NFKD.list ~~ (0x0395,), '1D794 -> 0395';
 ok Uni.new(0x1D795).NFKD.list ~~ (0x0396,), '1D795 -> 0396';
 ok Uni.new(0x1D796).NFKD.list ~~ (0x0397,), '1D796 -> 0397';
 ok Uni.new(0x1D797).NFKD.list ~~ (0x0398,), '1D797 -> 0398';
+
+# vim: expandtab shiftwidth=4

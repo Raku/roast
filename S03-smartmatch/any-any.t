@@ -26,4 +26,4 @@ plan 8;
     'defg' !~~ ($x = $_);
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

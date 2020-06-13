@@ -377,4 +377,4 @@ subtest 'infix:<~> works with Blob' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

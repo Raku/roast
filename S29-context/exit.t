@@ -19,4 +19,4 @@ is_run 'say 3; try { exit 5 }; say 5',
     { out => "3\n", err => "", status => 5 },
     'try-block does not catch exit exceptions';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

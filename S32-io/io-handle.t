@@ -329,4 +329,4 @@ subtest '.EOF/.WRITE methods' => {
         '.eof after "slurp" of rest of data with .read call';
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

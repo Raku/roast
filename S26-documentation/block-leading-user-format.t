@@ -76,3 +76,5 @@ for %h.keys -> $s {
         :compiler-args['--doc'];
     }
 }
+
+# vim: expandtab shiftwidth=4

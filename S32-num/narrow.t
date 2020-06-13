@@ -30,3 +30,5 @@ is exp(i * pi).narrow.WHAT, Int, ".narrow on Complex approximates to Int";
 is exp(i * pi).narrow, -1, ".narrow on approximate Complex produces correct integer";
 is ((.1e0 + .2e0) * 10).narrow.WHAT, Int, ".narrow on Num approximates to Int";
 is ((.1e0 + .2e0) * 10).narrow, 3, ".narrow on approximate Num produces correct integer";
+
+# vim: expandtab shiftwidth=4

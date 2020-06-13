@@ -88,4 +88,4 @@ plan 31;
     is %hash<ref><ref><val>, 42, "access to infinite HoHoHoH... (2)";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

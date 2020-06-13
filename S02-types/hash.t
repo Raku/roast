@@ -351,4 +351,4 @@ eval-lives-ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
     cmp-ok %m.cache, 'eqv', (:42foo,), 'Map.cache  returns a List';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

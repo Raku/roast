@@ -2007,3 +2007,5 @@ ok Uni.new(0xD19A).NFKC.list ~~ (0xD19A,), 'D19A -> D19A';
 ok Uni.new(0xD19B).NFKC.list ~~ (0xD19B,), 'D19B -> D19B';
 ok Uni.new(0xD19C).NFKC.list ~~ (0xD19C,), 'D19C -> D19C';
 ok Uni.new(0xD19D).NFKC.list ~~ (0xD19D,), 'D19D -> D19D';
+
+# vim: expandtab shiftwidth=4

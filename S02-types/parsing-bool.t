@@ -13,4 +13,4 @@ is (try { Bool::False or 42 }), 42, "Bool::False as LHS";
 is (try { 42 or False }), 42, "False as RHS";
 is (try { False or 42 }), 42, "False as LHS";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

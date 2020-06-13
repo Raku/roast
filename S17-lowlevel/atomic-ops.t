@@ -87,3 +87,5 @@ for 1..4 -> $attempt {
     } xx 4;
     is ⚛$i, 100000 + 4 * 4 * 20000, "Atomic add of lexical works ($attempt)"; 
 }
+
+# vim: expandtab shiftwidth=4

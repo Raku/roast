@@ -107,3 +107,5 @@ throws-like "say :36<utf㉜>", X::Syntax::Malformed, "No numerals are not allowe
 # https://github.com/Raku/old-issue-tracker/issues/5226
 throws-like { "௰".Int }, X::Str::Numeric,
     'converting string with "No" characters to numeric is not supported';
+
+# vim: expandtab shiftwidth=4

@@ -48,4 +48,4 @@ subtest 'Setty.maxpairs/.minpairs' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

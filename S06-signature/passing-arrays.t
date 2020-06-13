@@ -65,4 +65,4 @@ plan 11;
     lives-ok { @x = 5, 6 }, '... and that did not make the caller Array ro';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

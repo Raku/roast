@@ -47,4 +47,4 @@ plan 10;
     "assigning to a lazily computed value does not work";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

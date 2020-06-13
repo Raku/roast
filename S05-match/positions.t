@@ -46,4 +46,4 @@ subtest '$/ is constructed in all blocks inside regexes' => {
     is-deeply @res, [0, 3, 6], 'blocks returned correct $/.to values';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

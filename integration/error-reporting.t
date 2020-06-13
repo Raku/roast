@@ -262,4 +262,4 @@ subtest 'Backtrace.gist' => { # https://github.com/rakudo/rakudo/issues/1521
         'backtrace with one frame uses singular "frame" in .gist';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

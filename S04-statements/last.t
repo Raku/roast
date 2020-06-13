@@ -103,4 +103,4 @@ plan 9;
         'can use last in code block in regex in loop';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

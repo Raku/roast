@@ -347,4 +347,4 @@ subtest '`use lib` accepts IO::Path objects' => {
         {:out(''), :err(''), :0status}, 'a mixed list of IO::Path and Str';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

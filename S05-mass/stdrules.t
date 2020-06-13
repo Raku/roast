@@ -330,4 +330,4 @@ ok 'abb' ~~ /<?same>/, '<?same> searches until it matches';
     cmp-ok '',    '!~~', /<-[]>/,   '<-[]> (negative char class) fails like <!> (empty str)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

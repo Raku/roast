@@ -14,4 +14,4 @@ throws-like 'my $x; ($x = "hi").HOW = Block;', X::Assignment::RO,
     lives-ok { RT76928() }, 'Can call .HOW on an optional sub parameter';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

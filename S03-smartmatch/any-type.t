@@ -50,4 +50,4 @@ subtest "GH 3383" => {
     ok Array[Str:D] ~~ Positional[Str:D], "Array[Str:D] ~~ Positional[Str:D]";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

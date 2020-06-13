@@ -41,4 +41,4 @@ I/O Redirection to scalar tests
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

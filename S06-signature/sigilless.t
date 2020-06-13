@@ -42,3 +42,5 @@ plan 10;
     is pass-on({ $:l~ $:w }, :w<6>, :l<p>), 'p6', 'named arguments';
 
 }
+
+# vim: expandtab shiftwidth=4

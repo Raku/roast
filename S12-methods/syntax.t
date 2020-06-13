@@ -61,4 +61,4 @@ is (1..8).grep({ $_ % 2 }).map({ $_ - 1 }).join('|'), '0|2|4|6',
 }
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

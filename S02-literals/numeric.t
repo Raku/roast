@@ -151,4 +151,4 @@ subtest '#2094 prefix as post fix works on number literals' => {
   }
 }
 
-# vim: ft=perl6 sw=4 ts=4 expandtab
+# vim: expandtab shiftwidth=4

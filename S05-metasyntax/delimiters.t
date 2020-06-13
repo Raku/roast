@@ -17,3 +17,5 @@ for @delims -> $d {
     todo "$d not yet supported" if %todo{$d};
     ok $ok && !$nok && $is, "$d as delimiter in match and substitution";
 }
+
+# vim: expandtab shiftwidth=4

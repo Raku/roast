@@ -156,3 +156,5 @@ sub process-line (Str:D $line, @fail, :@only!) {
         is-deeply $list<string>.substr($elem, 1).ords.flat.Array, $expected, "Line $line-no: grapheme [$elem] has correct codepoints" or @fail.push($line-no);
     }
 }
+
+# vim: expandtab shiftwidth=4

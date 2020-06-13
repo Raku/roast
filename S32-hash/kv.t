@@ -130,4 +130,4 @@ for %hash.kv -> $key, $value {
 }
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

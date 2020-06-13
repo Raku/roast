@@ -89,4 +89,4 @@ ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
         '−∞² follows mathematical order of operations (U+2212 minus)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -10,3 +10,5 @@ plan 1;
     is_run q[say $\\], { :1status, err => /'Confused'/ },
         'spurious backslash at end of file error must ask for semicolon';
 }
+
+# vim: expandtab shiftwidth=4

@@ -426,4 +426,4 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is %h.elems, 0, 'container respected in hash :delete';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

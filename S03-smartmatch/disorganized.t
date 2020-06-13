@@ -143,4 +143,4 @@ ok ("foo" ~~ *) ~~ WhateverCode, 'thing ~~ * autoprimes';
 ok ("foo" ~~ *.chars == 3) ~~ Bool, 'thing ~~ WhateverCode is a boolean';
 ok ?(* ~~ "foo")('foo'), '* ~~ "foo" is WhateverCode';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

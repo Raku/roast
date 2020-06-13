@@ -162,4 +162,4 @@ subtest '&slurp(IO::Handle)' => {
       'does .IO.slurp() with :bin return a Buf-like thing';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

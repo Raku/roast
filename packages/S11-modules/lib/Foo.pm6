@@ -10,3 +10,5 @@ sub qux is export(:others)           { 'Foo::qux' }  #  :ALL, :others
 multi waz() is export                { 'Foo::waz' }  #  :ALL, :DEFAULT (implicit export)
 multi gaz() is export(:others)       { 'Foo::gaz1' } #  :ALL, :others
 multi gaz($x) is export(:others)     { 'Foo::gaz2' } #  :ALL, :others
+
+# vim: expandtab sw=4

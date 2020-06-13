@@ -168,4 +168,4 @@ lives-ok
     },
     'No optimization-induced crash of samewith';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

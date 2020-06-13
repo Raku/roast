@@ -231,4 +231,4 @@ unlink "empty_file";
     filetest $f, 'rwx', False,  0o000;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -130,4 +130,4 @@ class Bar is Foo {
     is (1,2,3)».&( * + 42 ), [43, 44, 45], '&( ) after dotty parallel dispatch';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

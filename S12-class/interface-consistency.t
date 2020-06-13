@@ -63,4 +63,4 @@ lives-ok { EVAL('class C { method foo(*%_, *@_) { } }; C.new.foo') },
         'interface consistency rules apply to Grammar.parse';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

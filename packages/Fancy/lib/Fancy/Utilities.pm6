@@ -20,3 +20,5 @@ module Fancy::Utilities {
  multi sub greet(Str $who) { return "Good morning, $who!" }
  multi sub greet() { return "Hi!" }
 }
+
+# vim: expandtab sw=4

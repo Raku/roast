@@ -162,4 +162,4 @@ subtest 'Any:U.skip works with Callable' => {
     is-deeply Any.skip(*-99999), (Any,).Seq, '*-99999';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

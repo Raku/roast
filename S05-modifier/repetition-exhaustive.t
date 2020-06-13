@@ -28,4 +28,4 @@ ok($str  ~~ m:ex:x(3)/<rx>/, "Simple combination of :x(3) and :exhaustive");
 ok($str !~~ m:ex:x(4)/<rx>/, "Simple combination of :x(4) and :exhaustive");
 
 
-# vim: syn=perl6 sw=4 ts=4 expandtab
+# vim: expandtab shiftwidth=4

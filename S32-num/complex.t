@@ -291,4 +291,4 @@ subtest 'distinct Complex literals do not compare the same' => {
         '.raku roundtrips the Complex correctly';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

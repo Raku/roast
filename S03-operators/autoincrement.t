@@ -269,4 +269,4 @@ throws-like 'my $a; $a++ ++;', Exception, 'parse error for "$a++ ++"';
     is $x, False, "True postdecrement sets False";
 };
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

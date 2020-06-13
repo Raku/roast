@@ -269,4 +269,4 @@ group-of 2 => 'ZEN slices do not cache Seqs' => {
     }, 'elems call caches Seq';
 }
 
-# vim: expandtab shiftwidth=4 ft=perl6
+# vim: expandtab shiftwidth=4

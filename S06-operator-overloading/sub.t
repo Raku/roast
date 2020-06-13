@@ -189,4 +189,4 @@ Testing operator overloading subroutines
         'can use colon-name extended sub name';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

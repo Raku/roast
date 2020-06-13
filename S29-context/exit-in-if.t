@@ -17,4 +17,4 @@ if 1 {
 
 ok 0, "exit() in if didn't work";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

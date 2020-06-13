@@ -253,4 +253,4 @@ subtest 'numeric context' => {
     is ((cache seq)».abs, (cache seq)».abs).gist, '((1 2 4 8 16) (1 2 4 8 16))', "cache listop does cache";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

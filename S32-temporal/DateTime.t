@@ -947,3 +947,5 @@ lives-ok { DateTime.new(2020,3,10,11,38,.000001).Str },
     is-deeply DateTime($then-str), DateTime.new($then-str),
       'does DateTime(then-str) work';
 }
+
+# vim: expandtab shiftwidth=4

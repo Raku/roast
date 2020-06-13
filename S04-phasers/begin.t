@@ -87,3 +87,5 @@ plan 13;
     lives-ok { my @a; BEGIN { @a = 1 }; +@a },
         'Assigment in BEGIN to list declared outside BEGIN lives';
 }
+
+# vim: expandtab shiftwidth=4

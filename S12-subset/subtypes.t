@@ -482,4 +482,4 @@ subtest 'postconstraints on variables in my (...)' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

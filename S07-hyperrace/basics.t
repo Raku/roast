@@ -212,3 +212,5 @@ is-deeply ^1000 .hyper.map(*+1).Array, [^1000 + 1], '.hyper preserves order';
         },
         'die in a hyper nested in a hyper propagates exception';
 }
+
+# vim: expandtab shiftwidth=4

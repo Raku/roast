@@ -630,4 +630,4 @@ is_run q|BEGIN { UNIT; Nil }|, { :0status, :out(''), :err('') },
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

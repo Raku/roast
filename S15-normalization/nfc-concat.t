@@ -3846,3 +3846,5 @@ ok all(((Uni.new(@list[0..($_ - 1)]) ~ Uni.new(@list[$_..*])).NFC.list ~~ @resul
 ok all(((Uni.new(@list[0..($_ - 1)]) ~ Uni.new(@list[$_..*])).NFC.list ~~ @result for 1..(@list-1))), '0x115B8, 0x0334, 0x115AF -> 0x115B8, 0x0334, 0x115AF CONCAT';
 @list = 0x115B9, 0x0334, 0x115AF; @result = 0x115B9, 0x0334, 0x115AF; 
 ok all(((Uni.new(@list[0..($_ - 1)]) ~ Uni.new(@list[$_..*])).NFC.list ~~ @result for 1..(@list-1))), '0x115B9, 0x0334, 0x115AF -> 0x115B9, 0x0334, 0x115AF CONCAT';
+
+# vim: expandtab shiftwidth=4

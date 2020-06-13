@@ -211,4 +211,4 @@ subtest 'can handle − (U+2212) minus as regular minus' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

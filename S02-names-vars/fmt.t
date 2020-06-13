@@ -90,4 +90,4 @@ is (1..3).fmt,              '1 2 3',    'Range.fmt with defaults';
     is {1=>"a"}.fmt(), "1\ta", 'hash .fmt without $fmt';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

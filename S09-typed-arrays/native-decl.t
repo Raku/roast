@@ -45,3 +45,5 @@ plan 14;
     is @strs.elems, 4, 'array[str].push';
     is @strs.join('|'), 'a|b|c|x', 'array[str].join';
 }
+
+# vim: expandtab shiftwidth=4

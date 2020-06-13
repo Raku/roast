@@ -28,4 +28,4 @@ is "\c[BELL]", "🔔", '\c[BELL] returns 🔔, BELL symbol not the control chara
 
 #?rakudo.jvm skip "rakudo.jvm does not yet support Emoji Sequences"
 is "\c[woman gesturing OK]".ords, (0x1F646, 0x200D, 0x2640, 0xFE0F), "\\c[woman gesturing OK] works. Emoji ZWJ sequences";
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

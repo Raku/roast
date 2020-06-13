@@ -49,4 +49,4 @@ is tester2({ 'block' }), 1, 'Can pass a block to a &parameter';
     ok !$tracker.defined, 'the inner &foo is undefined (scoping)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

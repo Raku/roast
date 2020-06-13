@@ -108,4 +108,4 @@ is($a, 3, '$a has changed'); # XXX is that right?
     is $PiClass::pi, 3, 'declaring/initializing our-scoped var in class';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

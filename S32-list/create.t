@@ -25,3 +25,5 @@ is(+$list_obj, 3, 'Finding the length functions properly.');
 
 # vim: ft=perl6
 
+
+# vim: expandtab shiftwidth=4

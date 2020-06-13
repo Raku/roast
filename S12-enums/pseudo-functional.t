@@ -30,4 +30,4 @@ nok $x.Wed,       '! day(Tue).does(Wed)';
 nok 8.does(day),  '8 is not a day';
 nok 8 ~~ day,     '8 does not match day';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

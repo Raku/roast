@@ -47,4 +47,4 @@ multi sub multi_get_multidim_arglist(Int $a) { $a }
     is  @AoA[0], "a b c", "multi sub with multidim arglist binding for only one array (2)";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

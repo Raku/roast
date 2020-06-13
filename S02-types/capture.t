@@ -374,4 +374,4 @@ lives-ok {
     [].Capture.<foo>:exists
 }, 'can call EXISTS-KEY on captures w/o a concrete %!hash';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

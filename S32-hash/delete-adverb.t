@@ -259,4 +259,4 @@ sub gen_hash {
     is %h, {a => "b"}, "can use :delete'd value to re-create key";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

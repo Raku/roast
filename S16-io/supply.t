@@ -39,4 +39,4 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 # cleanup
 unlink $filename;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

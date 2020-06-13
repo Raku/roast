@@ -127,4 +127,4 @@ is-deeply Seq.new(class :: does Iterator {
         IterationEnd
     } }.new), <a b c>.Seq, '.tail(Callable) does not violate Iterator protocol';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

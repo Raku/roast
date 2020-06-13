@@ -99,4 +99,4 @@ is(0+$p5array.fetch(0), 3, 'store result');
 
 # TODO: pop, shift, unshift, splice, delete
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

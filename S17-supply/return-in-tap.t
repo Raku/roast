@@ -31,3 +31,5 @@ for ^1000 {
 }
 
 is $caught, 1000, 'return in a Supply quit handler works fine';
+
+# vim: expandtab shiftwidth=4

@@ -41,4 +41,4 @@ throws-like 'my role R { our method foo() { } }', X::Declaration::OurScopeInRole
 # https://github.com/Raku/old-issue-tracker/issues/1926
 throws-like 'my role R { our $bar }', X::Declaration::OurScopeInRole, declaration => 'variable';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

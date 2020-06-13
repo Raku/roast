@@ -715,4 +715,4 @@ throws-like q[class RT74274 { has $!a }; my $a = RT74274.new(a => 42);
     nok A.^lookup('y').rw, 'readonly accessor method not marked rw';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

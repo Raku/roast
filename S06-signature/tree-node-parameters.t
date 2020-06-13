@@ -85,4 +85,4 @@ plan 20;
    is($d, $point_a, 'unpacked TwoPoint object (4)');
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

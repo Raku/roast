@@ -59,4 +59,4 @@ nok $child.report.defined,
         'rt 61500';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

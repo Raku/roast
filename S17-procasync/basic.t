@@ -178,4 +178,4 @@ subtest '.new accepts command + args via a single Iterable arg' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

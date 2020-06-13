@@ -108,4 +108,4 @@ eval-lives-ok q[
 eval-lives-ok 'class A { class B {} }; use MONKEY; augment class A { augment class B { } }',
     'Augmenting a nested package lives';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

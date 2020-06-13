@@ -73,3 +73,5 @@ my $dsl-y = nim {
 };
 
 is-deeply $dsl-y, $svg-serialize-input ;
+
+# vim: expandtab shiftwidth=4

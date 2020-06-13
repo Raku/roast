@@ -263,4 +263,4 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is want-array("abc".comb), 3, 'Can pass a Seq to an @-sigil arg in a multi';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

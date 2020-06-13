@@ -272,3 +272,5 @@ END
     is   no-r(@q6[0]), "line one\n\tline two\n",      'trim 9 leading spaces, leave leading tab in line two';
     isnt no-r(@q6[0]), "line one\n       line two\n", 'should not contain 7 leading spaces in line two';
 }
+
+# vim: expandtab shiftwidth=4

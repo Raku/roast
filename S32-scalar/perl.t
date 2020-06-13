@@ -32,3 +32,5 @@ plan 7;
 is-perl-idempotent 2/6, :eqv, 'Rat.raku is idempotent';
 
 #vim: ft=perl6
+
+# vim: expandtab shiftwidth=4

@@ -81,4 +81,4 @@ is("\c65,66,67", 'A,66,67', '\clist not valid');
     is "\0fff", chr(0) ~ 'fff', 'next char of \0 is `f`';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -48,4 +48,4 @@ plan 13;
     is x(1), 2, 'non-rw literal does not reach is rw candidate';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

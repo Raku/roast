@@ -138,4 +138,4 @@ is 'ﬁ' ~~ /:i fi /, "ﬁ", "ignorecase with ligature haystack returns ligature
 # https://github.com/Raku/old-issue-tracker/issues/6577
 #?rakudo.moar 1 todo "ignorecase returns too many graphemes for expanding foldcase graphemes. RT132232"
 is '_ﬁ_' ~~ /:i fi /, "ﬁ", "ignorecase with ligature haystack matches only ligature needle";
-# vim: syn=perl6 sw=4 ts=4 expandtab
+# vim: expandtab shiftwidth=4

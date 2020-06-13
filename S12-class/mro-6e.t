@@ -123,3 +123,5 @@ subtest "Rolified MRO", {
 }
 
 done-testing;
+
+# vim: expandtab shiftwidth=4

@@ -115,4 +115,4 @@ throws-like '::No::Such::Grammar.parse()', Exception, '.parse on missing grammar
     is ~$ex.post, "<EOL>", "post is <EOL>";
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

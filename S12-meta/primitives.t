@@ -108,3 +108,5 @@ plan 20;
         'Can rebless to a target mixin type';
     is $obj.HOW.name, 'to', 'Object has expected type after rebless';
 }
+
+# vim: expandtab shiftwidth=4

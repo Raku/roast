@@ -101,4 +101,4 @@ subtest 'tr/// with literal \\' => { plan 2;
     is-deeply $_, 'ab', '$_ has updated value';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

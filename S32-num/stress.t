@@ -46,4 +46,4 @@ subtest 'parsed literals match &val and Str.Num' =>  {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

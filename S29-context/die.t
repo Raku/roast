@@ -81,4 +81,4 @@ is_run( 'use Test; pass; die "uh-oh"',
         },
         'die() in combination with Test.pm6 exists non-zero-ish' );
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

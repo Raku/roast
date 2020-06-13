@@ -132,4 +132,4 @@ ok !defined(%a{"b"}),       "defined on a hash with parens (2)";
 ok defined('a' => 5) ~~ Bool, 'defined is a listop, not a prefix op';
 ok &defined, '&defined is available';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

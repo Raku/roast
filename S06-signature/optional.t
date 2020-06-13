@@ -154,4 +154,4 @@ throws-like 'sub opt($a = 1, $b) { }', X::Parameter::WrongOrder,
         'Catch impossible default types at compile time (multi)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

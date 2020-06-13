@@ -26,3 +26,5 @@ is 'BᾈR'.fc.chars, 4, 'ᾈ -> ἀι = 1 extra char';
 # the first two to maintain NFG.
 is 'oῷ!'.fc, 'oῶι!', 'ῷ foldcases to ῶι';
 is 'oῷ!'.fc.chars, 4, 'ῷ -> ῶι = 1 extra char';
+
+# vim: expandtab shiftwidth=4

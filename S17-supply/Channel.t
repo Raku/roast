@@ -51,4 +51,4 @@ is $done, $times, 'did we receive all?';
     is $p.cause.message, 'le supply quit', 'Correct message';
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

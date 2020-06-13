@@ -38,3 +38,5 @@ plan 10;
 }
 
 throws-like { Promise.anyof(42) }, X::Promise::Combinator;
+
+# vim: expandtab shiftwidth=4

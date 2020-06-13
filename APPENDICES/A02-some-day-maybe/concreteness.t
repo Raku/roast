@@ -11,3 +11,5 @@ use Test;
 plan 1;
 
 throws-like ｢Supply.skip｣, X::Parameter::InvalidConcreteness, 'Supply:U.skip';
+
+# vim: expandtab sw=4

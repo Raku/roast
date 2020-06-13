@@ -62,3 +62,5 @@ plan 6;
     }
     ok $saw-another-thread, 'A hyper for loop runs the body over threads';
 }
+
+# vim: expandtab shiftwidth=4

@@ -85,4 +85,4 @@ throws-like q{ 'abc' ~~ m/ (<Another.sea>) /  }, Exception, '<Another.sea>';
             'match against No::Such::Rule dies';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

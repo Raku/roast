@@ -53,4 +53,4 @@ nok $var_at_enter.defined, 'ENTER {...} at runtime, but before the mainline body
 
 $eof_var = 29;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -210,4 +210,4 @@ plan 35;
     is (1,2, with 3), "1 2", "with is a terminator even after comma";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

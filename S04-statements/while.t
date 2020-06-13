@@ -166,4 +166,4 @@ lives-ok { EVAL 'while 0 { my $_ }' }, 'Can declare $_ in a loop body';
         'can return Ints from loop at end of immediate block';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -63,4 +63,4 @@ class Qux {method g {'called Qux.g'}}
 throws-like 'class ClosedAlpha is closed {}', Exception, '"is closed" is unimplemented');
 throws-like 'class ClosedBeta  is final  {}', Exception, '"is final"  is unimplemented');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

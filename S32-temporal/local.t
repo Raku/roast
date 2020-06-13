@@ -98,4 +98,4 @@ $dt = ds('1998-12-31T23:59:60Z').local;
 #?rakudo todo ""
 is ~$dt, '1998-12-31T18:59:60-05:00', 'DateTime.local (from UTC, with leap second)';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

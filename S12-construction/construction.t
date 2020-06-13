@@ -133,4 +133,4 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
     lives-ok { A.new }, 'can we create with a custom "bless" method';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

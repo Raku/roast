@@ -26,3 +26,5 @@ for <c d e.PREVIEW> -> $from-rev {
         }
     }
 }
+
+# vim: expandtab shiftwidth=4

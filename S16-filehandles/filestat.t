@@ -84,4 +84,4 @@ sub remove_file ($file) {
     ok($file.IO ~~ :!e, "Test file $file was successfully removed");
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

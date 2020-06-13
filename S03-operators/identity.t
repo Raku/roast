@@ -142,4 +142,4 @@ class TestObj { has $!a }
       '$a =:= $a || $a.WHAT =:= $a.WHAT returns True not an Int';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

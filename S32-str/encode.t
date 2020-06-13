@@ -115,4 +115,4 @@ is Buf.new([255, 254, 72, 0, 101, 0]).decode("utf-16"), 'He', 'utf-16 BOM handle
     lives-ok { "bark bark bark".encode.decode("utf16be") }, 'Can decode utf-8 buffer as if it were utf16be';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

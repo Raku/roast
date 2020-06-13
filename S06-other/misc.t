@@ -71,4 +71,4 @@ dies-ok { EVAL('a(3)') }, "this should die, no arguments defined";
         'where clause with three *s and three expressions';
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

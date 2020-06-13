@@ -51,4 +51,4 @@ is foo_r(1), 6, "Testing the value for placeholder(Runtime binding)";
 }
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

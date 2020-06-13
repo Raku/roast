@@ -17,3 +17,5 @@ sub run_test (@values, @keys, $encoding) {
     test_encode @values, @keys, $encoding;
     is-deeply Buf.new(@keys).decode($encoding), @values.chrs, "Test decoding from $encoding to Unicode";
 }
+
+# vim: expandtab shiftwidth=4

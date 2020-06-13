@@ -63,4 +63,4 @@ plan 10;
     is $res, 2, 'Correct handling of $_ in block to left of statement modifer unless';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

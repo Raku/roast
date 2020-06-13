@@ -206,3 +206,5 @@ sub sayo($o, :$defn) {
          #isa-ok $o.contents[0], 'Str', 'foo info';
     }
 }
+
+# vim: expandtab shiftwidth=4

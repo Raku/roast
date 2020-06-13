@@ -54,4 +54,4 @@ plan 3*@tests;
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

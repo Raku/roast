@@ -19,4 +19,4 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     isa-ok Supply.from-list(42..50) .list, List, "Supply.list should return a List";
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

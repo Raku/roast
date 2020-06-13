@@ -74,4 +74,4 @@ subtest 'open(:bin) handle' => {
 # the .tell value by some bytes, due to previously printed content
 cmp-ok $*OUT.tell, '!=', 0, '.tell gave us some non-zero value';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

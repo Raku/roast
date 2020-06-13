@@ -258,7 +258,7 @@ is 0xFFFF.uniprop('Line_Break'), 'XX', "uniprop('Line_Break') returns XX for non
 is 'Ö'.uniprop('Decomposition_Type'), 'Canonical', 'uniprop for Decomposition_Type returns Canonical for Canonical value codes';
 #?rakudo.moar 3 todo "MoarVM returns N/M/Y instead of their full names"
 is 'ᆨ'.uniprop('NFC_Quick_Check'), 'Maybe', 'uniprop for NFC_Quick_Check returns Maybe for ‘Maybe’ value codes';
-is '都'.uniprop('NFC_Quick_Check'), 'Yes', 'uniprop for NFC_Quick_Check returns Yes for ‘Yes’ value codes';
+is '都'.uniprop('NFC_Quick_Check'), 'Yes', 'uniprop for NFC_Quick_Check returns Yes for ‘Yes’ value codes';
 is 0x0374.uniprop('NFC_Quick_Check'), 'No', 'uniprop for NFC_Quick_Check returns No for ‘No’ value codes';
 #?rakudo.moar 6 todo "NFD_Quick_Check NFKC_Quick_Check NFKD_Quick_Check NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/467
@@ -357,4 +357,4 @@ subtest 'reserved characters in source code do not cause segfaults', {
     }
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

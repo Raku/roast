@@ -40,4 +40,4 @@ plan 5;
     eval-lives-ok '1,2, until $++', "until is a terminator even after comma";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -85,4 +85,4 @@ is_run ｢
     is $warnings, 0, 'should not have warned';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -338,4 +338,4 @@ subtest 'Ranges can have an offset applied' => {
     is-deeply [0.0, 1.0], @a, 'dividing a ^ range by an integer literal offset';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

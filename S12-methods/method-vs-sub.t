@@ -35,4 +35,4 @@ is foo($obj),   'sub', 'adding trailing comma should call the "sub"';
     is $n, 5, 'RT #92192';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

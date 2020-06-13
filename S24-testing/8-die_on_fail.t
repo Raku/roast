@@ -47,4 +47,4 @@ is_run $Die-On ~ 'use Test; plan 2; subtest "bar", { ok 0 }; ok 1', {
     :255status,
 }, 'PERL6_TEST_DIE_ON_FAIL exits even when failures are inside subtests';
 
-# vim: expandtab shiftwidth=4 ft=perl6
+# vim: expandtab shiftwidth=4

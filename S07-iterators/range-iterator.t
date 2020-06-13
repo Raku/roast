@@ -190,3 +190,5 @@ subtest 'Iterator.skip-at-least-pull-one' => {
     ok $r.skip-at-least-pull-one(10) =:= IterationEnd,
         'when not enough values to skip, returns IterationEnd';
 }
+
+# vim: expandtab shiftwidth=4

@@ -99,4 +99,4 @@ plan 49;
     is 'a' ~ $int, 'a', 'infix:<~> uses coercion to Stringy (Int)';
 } #12
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -123,4 +123,4 @@ subtest 'no ghost elements after pop/shift' => {
     is-deeply @a, ['a', 'b', Any, 42], ':delete';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

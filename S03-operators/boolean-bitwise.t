@@ -76,3 +76,5 @@ plan 45;
 
 ok (?^5) === False, 'prefix ?^ (+)';
 ok (?^0) === True,  'prefix ?^ (-)';
+
+# vim: expandtab shiftwidth=4

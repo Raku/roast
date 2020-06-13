@@ -13,4 +13,4 @@ my $proc = run $*EXECUTABLE, '-I', $lib-path, '-e',
 #?rakudo.jvm todo 'Missing serialize function for REPR ContextRef'
 is($proc.err.slurp, '', "compilation errors");
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

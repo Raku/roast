@@ -80,4 +80,4 @@ plan 12;
     is (1,2, given 3), "1 2", "given is a terminator even after comma";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

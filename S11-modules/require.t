@@ -204,4 +204,4 @@ eval-lives-ok q|BEGIN require Fancy::Utilities <&allgreet>;|,'require can import
     ok $question.VAR ~~ Scalar, "the variable is containerized";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

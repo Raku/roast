@@ -306,4 +306,4 @@ throws-like 'my $lizmat = 42; ++$lizmat++',
     is (1 + 2 § 3), 1, 'exported multi has correct precedence';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

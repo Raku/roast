@@ -35,4 +35,4 @@ is-primed-call(&rt126332, \(2), ['12b'], 1);
 is-primed-call(&rt126332, \(2,3), ['123c'], 1);
 throws-like({EVAL '&rt126332.assuming(1)(2,3,4)'; CATCH { }}, X::Multi::NoMatch);
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

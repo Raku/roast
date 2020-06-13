@@ -21,7 +21,7 @@ my $ẛ̣ = 42; # LATIN SMALL LETTER LONG S WITH DOT ABOVE + COMBINING DOT BELOW
 # this reference is spelled in source as LATIN SMALL LETTER LONG S + COMBINING
 # DOT ABOVE + COMBINING DOT BELOW
 #?rakudo.jvm skip 'fails due to above failure'
-is $ẛ̣, 42, "Identifiers are normalized";
+is $ẛ̣, 42, "Identifiers are normalized";
 
 # XXX it would be nice to test for NFG normalization, but since .name returns a
 # Str (which is in NFG), there's no way you can test through that. Test left
@@ -37,3 +37,5 @@ my $fi = False;
 
 is $fi, False, "Identifiers are not put through compatability decomposition";
 is $ﬁ, True, "Identifiers are not put through compatability decomposition";
+
+# vim: expandtab shiftwidth=4

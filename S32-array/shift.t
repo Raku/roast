@@ -97,4 +97,4 @@ plan 33;
     is @a.elems, 1, "and it actually shifted the array";
 }
 
-# vim: syn=perl6
+# vim: expandtab shiftwidth=4

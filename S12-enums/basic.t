@@ -268,4 +268,4 @@ is-deeply do { my enum Foos (a => <42>); a.Str }, 'a',
                   'Coercing an enum from a coercion of an enum from an int works';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

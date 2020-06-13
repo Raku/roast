@@ -343,4 +343,4 @@ subtest 'Array.splice can splice beyond end of Array' => {
     is-deeply @a3,               [],        'result (empty)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

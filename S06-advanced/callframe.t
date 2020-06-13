@@ -98,4 +98,4 @@ lives-ok
     is $seen, 300, 'did we get the right callframe each time?';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

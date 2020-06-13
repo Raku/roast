@@ -287,4 +287,4 @@ for @bufs -> \buffer, $name {
     }
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

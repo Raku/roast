@@ -12,4 +12,4 @@ for 1..12 -> $x {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

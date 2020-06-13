@@ -38,4 +38,4 @@ with $tmpfile.IO {
 
 END { unlink $tmpfile }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

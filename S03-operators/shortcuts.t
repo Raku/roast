@@ -16,3 +16,5 @@ ok  $o.{'thanks'} eq 'thanks', '%.{}';
 ok  $o{'fish'} eq 'fish', '%.{} again';
 ok  $o.('gnole') eq 'karma gnole', '@.()';
 ok  $o('gnole') eq 'karma gnole', '@.() again';
+
+# vim: expandtab shiftwidth=4

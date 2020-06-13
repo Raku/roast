@@ -193,4 +193,4 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
     nok r ~~ PR00[Str], "Curryied role only matches its own consumed roles";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

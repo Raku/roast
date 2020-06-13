@@ -375,4 +375,4 @@ UDP. Concurrent connections (needs threads).
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

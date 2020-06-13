@@ -80,4 +80,4 @@ isa-ok($pair, Pair, 'it is a Pair type');
     isa-ok($rule, Regex, 'it is a Regex type');
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

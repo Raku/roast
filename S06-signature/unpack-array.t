@@ -57,4 +57,4 @@ for [1,2],[3,4] -> $a [$x, $y] {
     isa-ok $a.VAR, Scalar, "[...] doesn't lose containerization";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

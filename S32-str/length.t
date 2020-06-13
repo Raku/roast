@@ -59,4 +59,4 @@ is "\x[E0100]".codes,  1, '.codes on a >0xFFFF char'; # \c[VARIATION SELECTOR-17
 # test graphemes without a precomposed character in Unicode 5
 is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE, COMBINING DOT BELOW]".codes, 2, '.codes on grapheme without precomposite';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

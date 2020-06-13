@@ -32,4 +32,4 @@ is(not False, True,             "'False' is not 'True'");
 isa-ok(not False, Bool,         "'not False' is a Bool");
 is(not False, Bool::True,       "'False' is not 'Bool::True'");
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

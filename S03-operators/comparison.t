@@ -127,4 +127,4 @@ is-deeply "\c[BOY, ZWJ, ZWJ]"  cmp "\c[BOY, ZWJ]", Order::More, "Synthetic codep
     lives-ok { $a >= 5 }, '$a => 5 lives okay';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

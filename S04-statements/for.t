@@ -789,4 +789,4 @@ is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
     is-deeply @b, Array[Int].new(9, 9, 9, 9, 9, 9), ‘holes were changed correctly (for @a[*])’;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

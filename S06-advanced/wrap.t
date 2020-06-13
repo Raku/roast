@@ -438,4 +438,4 @@ try {
     is-deeply @order, ['wrapper', 'C2', 'C1'], "methods are in order with the first method wrapped";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

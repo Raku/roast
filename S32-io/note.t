@@ -63,4 +63,4 @@ is_run( 'try { note "with try" }',
         },
         'try { } block does not prevent note() from outputting something' );
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

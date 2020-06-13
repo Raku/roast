@@ -26,4 +26,4 @@ module A {
        'EVAL inside a module looks up subs in the right namespace';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

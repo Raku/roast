@@ -151,4 +151,4 @@ my $pi = 312689/99532;
     ok(has_approx(-$quartic\i, @l), '-(8.5 ** 1/4)i is a quartic root of 8.5');
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

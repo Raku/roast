@@ -33,3 +33,5 @@ group-of 11 => "No races in Supplier::Preserving" => {
     $closings.close;
     is $closings.list.join, 'xxxxxxxxxx', 'Close called as expected';
 }
+
+# vim: expandtab shiftwidth=4

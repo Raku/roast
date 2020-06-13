@@ -74,3 +74,5 @@ subtest 'Str arg' => {
     }
     check-test-fail { fails-like ｢ 42 ｣, 'non-Failure return' }
 }
+
+# vim: expandtab shiftwidth=4

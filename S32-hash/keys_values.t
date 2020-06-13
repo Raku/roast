@@ -59,3 +59,5 @@ is($pair.values.elems,  1,  'we have one value');
     is ((Mu) => Mu).values.raku, (Mu,).Seq.raku,
         ".values on pair with Mu in key and value";
 }
+
+# vim: expandtab shiftwidth=4

@@ -42,4 +42,4 @@ plan 8;
     is-deeply infix:<eqv>(42),    Bool::True, 'single-arg eqv returns True (2)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

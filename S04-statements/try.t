@@ -188,4 +188,4 @@ lives-ok { try { +'foo'; CATCH { default { } } } }, 'Failure does not escape try
 lives-ok { try ... }, '... failure does not escape try (statement form)';
 lives-ok { try { ... } }, '... failure does not escape try (block form)';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

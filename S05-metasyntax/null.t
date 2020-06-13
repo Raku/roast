@@ -22,4 +22,4 @@ ok("a" ~~ m/<?>/, 'Simple null A');
 
 ok("ab" ~~ m{a<?>b}, 'Compound null AB');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

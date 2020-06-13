@@ -62,4 +62,4 @@ plan 12;
 eval-dies-ok 'my Int @a = 1..Inf; @a[*-1]',
      'Attempting to view last element of Int Array with Inf in it dies';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

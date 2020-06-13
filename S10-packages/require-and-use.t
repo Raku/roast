@@ -24,4 +24,4 @@ subtest 'circular dependencies are detected and reported' => {
 throws-like ｢use lib ‘’｣, X::LibEmpty,
     'use lib with empty string throws a useful error';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

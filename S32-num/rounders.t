@@ -313,4 +313,4 @@ group-of 64 => "type of .round's return value" => {
 }
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

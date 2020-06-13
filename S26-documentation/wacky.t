@@ -157,3 +157,5 @@ for @pod_headers -> $chunk {
 
     ok $ok, "=$chunk";
 }
+
+# vim: expandtab shiftwidth=4

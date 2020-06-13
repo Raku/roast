@@ -72,4 +72,4 @@ subtest '.dir with relative paths sets right CWD' => {
         'right .dir with relative path';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

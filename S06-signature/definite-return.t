@@ -148,3 +148,5 @@ constant indiana-pi = 3;
 # use of CALLER::/OUTER:: as return value (FROGGS' example)
 # Should sub return-two(--> 2) { 3 } emit an error/warning?
 # traits - how to distinguish a trait on the return value vs on the sub?
+
+# vim: expandtab shiftwidth=4

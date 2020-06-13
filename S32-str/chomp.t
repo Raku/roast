@@ -180,4 +180,4 @@ Basic tests for the chomp() builtin working on an array of strings
 =end pod
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

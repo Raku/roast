@@ -356,4 +356,4 @@ subtest 'no hangs in bad digits in rad numbers / in .substr' => {
     is 'abcd'.substr(2e0), 'cd', '.substr with Num arg does not hang';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

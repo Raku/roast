@@ -44,4 +44,4 @@ plan 23;
     ok :() ~~ :(), 'Can smartmatch against empty signature (True)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

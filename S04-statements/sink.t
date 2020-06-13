@@ -103,3 +103,5 @@ subtest 'sub calls in last statement of sunk `for` get sunk' => {
 # https://github.com/rakudo/rakudo/issues/1693
 is_run ｢unit package A; our sub need() {}; for <s> { A::need }; print 'pass'｣,
     { :out<pass>, :err(''), :0status}, 'no crash in for ... { Package::foo }';
+
+# vim: expandtab shiftwidth=4

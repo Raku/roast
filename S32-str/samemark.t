@@ -24,4 +24,4 @@ is('zoö'.samemark('ŏô'), 'z̆ôô', 'samemark with longer source string');
     is "foo".samemark(""), "foo", 'samemark "": nothing to be done';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -47,3 +47,5 @@ plan 17;
     'o' ~~ /<:!Upper>*/;
     is ~$/, 'o', 'Can match negated quantified character class';
 }
+
+# vim: expandtab shiftwidth=4

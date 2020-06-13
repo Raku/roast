@@ -97,4 +97,4 @@ plan 15;
     is-deeply %h, %c, '`let` keeps Nils around in Hashes when they exist';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

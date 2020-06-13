@@ -84,4 +84,4 @@ isa-ok $*KERNEL.bits, Int;
 is_run ｢print $*KERNEL.signal: 'SIGHUP';｣, {out => /^\d+$/},
     '.signal: Str:D works with un-initialized $*KERNEL.signals';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -47,3 +47,5 @@ quietly is $SPEC.canonpath( Any , :parent ), '',
 
 is-deeply IO::Spec::QNX.is-absolute("/\x[308]"), True,
     'combiners on "/" do not interfere with absolute path detection';
+
+# vim: expandtab shiftwidth=4

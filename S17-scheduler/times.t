@@ -26,3 +26,5 @@ $name = $*SCHEDULER.^name;
     is $tracker, 10, "Cue on $name with :times(10)";
     LEAVE .cancel with $c;
 }
+
+# vim: expandtab shiftwidth=4

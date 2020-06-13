@@ -105,3 +105,5 @@ sub say(*@a) { $said = @a>>.gist.join }   # don't care about the new line
     is $said, q/Hello world
 /;
 }
+
+# vim: expandtab shiftwidth=4

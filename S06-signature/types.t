@@ -149,4 +149,4 @@ group-of 10 => 'numeric literals as type constraints' => {
         '`Bool` type constraint does not warn';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

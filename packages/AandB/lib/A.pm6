@@ -4,3 +4,5 @@ use B;
 class A {
     has B $.x;
 }
+
+# vim: expandtab shiftwidth=4

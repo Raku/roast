@@ -120,4 +120,4 @@ is(countdown_mod_named(5).flat.join,     "543210", "recursive count down: named 
 is(  countup_mod_unnamed(5).flat.join,   "012345", "recursive count up: unnamed param, modified value");
 is(countdown_mod_unnamed(5).flat.join,   "543210", "recursive count down: unnamed param, modified value");
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

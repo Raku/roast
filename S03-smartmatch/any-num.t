@@ -43,4 +43,4 @@ subtest 'Str ~~ Num' => {
 # https://github.com/Raku/old-issue-tracker/issues/4876
 ok num64 ~~ Num, 'can smartmatch num64 against Num';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -194,3 +194,5 @@ else {
 
 is-deeply IO::Spec::Cygwin.is-absolute("/\x[308]"), True,
     'combiners on "/" do not interfere with absolute path detection';
+
+# vim: expandtab shiftwidth=4

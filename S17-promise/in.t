@@ -28,3 +28,5 @@ subtest 'Promise.in with negative value works' => {
     plan 1;
     await Promise.in(-rand).then: { pass ".then'ed code ran" }
 }
+
+# vim: expandtab shiftwidth=4

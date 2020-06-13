@@ -61,4 +61,4 @@ throws-like 'Str.chop(10)', Exception;
             9_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

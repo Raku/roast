@@ -34,4 +34,4 @@ BEGIN { $hist ~= 'b ' }
 
 is $hist, 'B b c C I i ', 'running order of multiple phasers';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

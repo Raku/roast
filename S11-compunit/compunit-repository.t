@@ -18,4 +18,4 @@ eval-lives-ok '
 
 ok $*REPO ~~ CompUnit::Repository;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

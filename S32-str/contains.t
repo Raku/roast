@@ -98,4 +98,4 @@ for
 
 done-testing;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

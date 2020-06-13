@@ -753,4 +753,4 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
         'Reduce meta-operator respects chain associativity';
 }
 
-# vim: ft=perl6 et
+# vim: expandtab shiftwidth=4

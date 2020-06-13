@@ -75,4 +75,4 @@ throws-like { 2._e23 },
   X::Method::NotFound,
   "2._23  parses as method call";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

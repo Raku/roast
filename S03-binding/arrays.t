@@ -233,4 +233,4 @@ throws-like { sub foo { fail }; my @a := foo },
     X::TypeCheck::Binding, :got(Failure),
 'binding Failure to Array throws useful error';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

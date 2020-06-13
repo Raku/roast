@@ -39,3 +39,5 @@ my @cgj-first-combiner = (
 for @cgj-first-combiner -> $test-str {
     is $test-str.chars, 1, "Correct value of .chars for '$test-str' (combining characters, including CGJ)";
 }
+
+# vim: expandtab shiftwidth=4

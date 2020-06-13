@@ -42,4 +42,4 @@ is_run( 'my %h= flat <a b c> Z 1,2,3; for %h.sort(*.key) { .say }',
         },
         'for %h { .say } (RT #74822)' );
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

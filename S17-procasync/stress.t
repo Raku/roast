@@ -115,4 +115,4 @@ else {
   ｣, {:out<pass>, :err(''), :0status}, 'No memory corruption when starting many Proc::Async instances';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

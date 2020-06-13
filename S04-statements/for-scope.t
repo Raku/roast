@@ -58,4 +58,4 @@ for 1, 2 -> $_ {
     is @a.join(','), '1,2,3', 'and the array get the right values';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

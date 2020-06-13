@@ -190,4 +190,4 @@ dies-ok {
   is %hash<key><innerkey>, 17, "autovivification of hashes works via multidim syntax";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

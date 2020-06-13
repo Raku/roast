@@ -96,4 +96,4 @@ subtest '.eof on empty files' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

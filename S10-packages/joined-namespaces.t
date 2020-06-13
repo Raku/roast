@@ -15,3 +15,5 @@ eval-lives-ok 'my class A::B { ... }; A::B.new(); class A::B { };',
 class Outer::Inner { };
 dies-ok { EVAL 'Outer.foo' },
     'can sensibly die when calling method on package';
+
+# vim: expandtab shiftwidth=4

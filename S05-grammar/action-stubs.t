@@ -196,4 +196,4 @@ subtest 'using <sym> in places without :sym throws useful message' => {
         message => /"<sym>"/, 'token';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -156,4 +156,4 @@ throws-like 'my $x := { a => 1 }; "a" ~~ m/$x/', X::Syntax::Reserved, 'cannot in
         'Cannot interpolate attribute in a closure in a regex';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

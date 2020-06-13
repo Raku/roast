@@ -485,4 +485,4 @@ subtest 'no guts spillage when going too high up scope in pseudopackages' => {
             "CORE symbols are available at compile-time in BEGIN inside EVAL";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

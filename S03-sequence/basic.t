@@ -280,4 +280,4 @@ is (1 …^ 10), 1..^10, 'Unicode ellipsis works excluding final value';
     ok !('a' ... 'z').is-lazy, "Final 'z' is not lazy";
     ok !({rand} ... * > .5).is-lazy, "Final condition is not lazy";
 }
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

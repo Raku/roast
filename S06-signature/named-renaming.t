@@ -34,3 +34,5 @@ plan 11;
     is rt123956( th => 5 ), 5,
         'whitespaces allowed between named parameter and parentheses in signature';
 }
+
+# vim: expandtab shiftwidth=4

@@ -205,4 +205,4 @@ sub gen_array { (1..10).list }
     is @a[my int $=0]:!v, 42, ':!v non-existing';
     is @a.elems, 0,  'should not vivify';
 } #86
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

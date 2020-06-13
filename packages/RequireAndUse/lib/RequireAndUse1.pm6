@@ -9,3 +9,5 @@ module RequireAndUse1 {
 }
 
 42;
+
+# vim: expandtab sw=4

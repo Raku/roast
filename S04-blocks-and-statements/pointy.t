@@ -134,4 +134,4 @@ lives-ok {my $x = -> {}; my $y = $x(); },
     throws-like '(-> --> Int { |(1,2,3) })()', X::TypeCheck::Return;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

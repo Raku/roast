@@ -313,4 +313,4 @@ class {
 cmp-ok { $_ }.signature.params[0].raku, &[~~], / 'OUTER::<$_>' /,
   'OUTER defaults have the correct .raku';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

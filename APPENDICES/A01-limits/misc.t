@@ -74,4 +74,4 @@ group-of 8 => 'role multi tiebreaking (TEST USES UNSUPPORTED FEATURES)' => {
         "Multis from different roles declaration order tiebreaker (TEST USES UNSUPPORTED FEATURES)";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -96,3 +96,5 @@ for 1..4 -> $attempt {
     is @values[1;1], 4 * [+](1..10000),
         "CAS on integer 2-dim array with competing threads works ($attempt)";
 }
+
+# vim: expandtab shiftwidth=4

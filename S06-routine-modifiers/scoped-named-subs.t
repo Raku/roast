@@ -64,4 +64,4 @@ throws-like 'my Num List sub f () { ("A",) }; f()',
 eval-lives-ok Q/sub foo { }; anon sub foo() { }/,
     'anon sub produces no redeclaration error';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

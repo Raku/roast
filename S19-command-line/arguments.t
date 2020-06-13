@@ -63,4 +63,4 @@ is_run(Str, :args['--nosucharg=foo', 'foo.p6'],
     { out => '' },
     'Unknown options do not spit warnings to stdout');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

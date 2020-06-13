@@ -14,3 +14,5 @@ is_run 'BEGIN { BEGIN { q{S11modulesRakuLibTest.pm6}.IO.spurt(q{package { say q{
 }, 'RT 130883 is fixed';
 
 unlink "S11modulesRakuLibTest.pm6";
+
+# vim: expandtab shiftwidth=4

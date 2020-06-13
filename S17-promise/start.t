@@ -300,3 +300,5 @@ lives-ok {
     nok $wrong, 'Sunk but successful `start` does not trigger uncaught exception handler';
     $*SCHEDULER.uncaught_handler = Nil;
 }
+
+# vim: expandtab shiftwidth=4

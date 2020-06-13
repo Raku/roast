@@ -4,3 +4,5 @@ use v6.c;
 sub pseudo-stash is export {
     MY::
 }
+
+# vim: expandtab sw=4

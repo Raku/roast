@@ -87,4 +87,4 @@ plan 24;
     ok  $h, 'hash in bool context - hash as a whole';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

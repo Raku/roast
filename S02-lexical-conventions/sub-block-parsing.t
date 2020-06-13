@@ -80,4 +80,4 @@ throws-like { EVAL q[
     is to_check_after('B'), "fb called.", 'fb called in sub/hash syntax is ok';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -153,4 +153,4 @@ line 4
     int-return;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

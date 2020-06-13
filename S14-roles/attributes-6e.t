@@ -36,4 +36,4 @@ is-deeply C.new(:foo(-42)).+attr-val, ('C:-42', 'R3:-42', 'R1:-42', 'R2:-42', 'R
 
 
 
-# vim: syn=perl6
+# vim: expandtab shiftwidth=4

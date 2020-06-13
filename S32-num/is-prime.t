@@ -80,4 +80,4 @@ subtest 'Complex.is-prime with Complex that cannot be Real throw' => {
 
 is-deeply is-prime(-2), False, 'negative numbers are *not* prime';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

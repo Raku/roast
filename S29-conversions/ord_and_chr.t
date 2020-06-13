@@ -180,3 +180,5 @@ subtest 'chr with large codepoints throws useful error' => {
 }
 
 #vim: ft=perl6
+
+# vim: expandtab shiftwidth=4

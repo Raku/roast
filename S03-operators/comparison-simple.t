@@ -38,4 +38,4 @@ is(1 cmp 2,     Order::Less, '1 cmp 2 is increase');
 is(2 cmp 1,     Order::More, '2 cmp 1 is decrease');
 is('a' cmp 1,   Order::More, '"a" cmp 1 is decrease'); # unspecced but P5 behavior
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

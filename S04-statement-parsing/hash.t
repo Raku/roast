@@ -21,4 +21,4 @@ is hash(a => 1).values, 1, 'hash() with autoquoted pair (values)';
         "q => doesn't trigger quoting construct";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

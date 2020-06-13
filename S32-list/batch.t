@@ -12,3 +12,5 @@ is-eqv ^10 .batch(1),
 
 throws-like { ^10 .batch(0) }, X::OutOfRange, got => 0,
     'does 0 as batch-size throw';
+
+# vim: expandtab shiftwidth=4

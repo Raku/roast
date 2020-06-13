@@ -68,4 +68,4 @@ ok (my num $ = NaN) === (my num $ = NaN), "NaN value identity (native num)";
         'NaN eqv NaN when using native nums';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

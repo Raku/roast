@@ -125,3 +125,5 @@ plan 69;
     dies-ok { @arr.DELETE-POS(1, 1) }, 'Cannot delete from a native num array';
     dies-ok { @arr.BIND-POS(1, 0, 'x') }, 'Cannot bind to a native num array';
 }
+
+# vim: expandtab shiftwidth=4

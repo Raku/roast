@@ -86,4 +86,4 @@ is_run(
     :compiler-args['-n -e "NEXT .say"'],
 );
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -45,3 +45,5 @@ isa-ok $r, Pod::Block;
 is $r.contents.elems, 1;
 is norm_crlf($r.contents[0]), "foo foo\n=begin invalid pod\n"
                 ~ "=as many invalid pod as we want\n===yay!\n";
+
+# vim: expandtab shiftwidth=4

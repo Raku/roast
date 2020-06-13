@@ -79,4 +79,4 @@ plan 18;
     is-deeply R.ACCEPTS(RT), False, 'enum member does not ACCEPTS the enum type object';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

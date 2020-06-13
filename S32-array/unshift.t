@@ -199,4 +199,4 @@ plan 76;
         "cannot unshift strings onto in Int array";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -192,4 +192,4 @@ for @cosines -> $angle
 
 done-testing;
 
-# vim: ft=perl6 nomodifiable
+# vim: expandtab shiftwidth=4

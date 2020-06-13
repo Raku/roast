@@ -156,4 +156,4 @@ ok(%bases.keys == 3, 'No other bases');
 is("$1", "aca", 'Trailing aca');
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

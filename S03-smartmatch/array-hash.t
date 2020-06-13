@@ -18,4 +18,4 @@ plan 6;
 
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

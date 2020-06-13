@@ -29,3 +29,5 @@ is-deeply %h, {foo => [1, 2]}, 'hash element push';
 is-deeply %h, {foo => [1, 2, 3]}, 'hash element push';
 
 is-deeply flip(<a b c>.list), "c b a", 'flip coercement (list)';
+
+# vim: expandtab shiftwidth=4

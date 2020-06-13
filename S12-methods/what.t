@@ -115,4 +115,4 @@ ok 1.1 == 11/10, 'decimal == the equivalent rational';
     ok RT112364::.WHAT ~~ Stash, 'RT #112364';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

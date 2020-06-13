@@ -38,4 +38,4 @@ my $val2;
 lives-ok { $val2 = $foo.call_bar_indirectly() }, '... this should work';
 is($val2, 'Baz', '... this should be "Baz"');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

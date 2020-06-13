@@ -1132,4 +1132,4 @@ lives-ok {
     is-deeply @t2482, [<1 1>.Seq, <2 2>.Seq], 'Hyper on slip values is correct';
 }, 'Values created with a hyperoperator can be wrapped in a slip';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -220,4 +220,4 @@ subtest 'comb(Regex) returns Seq' => {
         'sub (Cool) with limit';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

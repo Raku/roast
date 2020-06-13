@@ -28,4 +28,4 @@ is(~$m<fred>[0], "foo23",       "Submatch 1 correct");
 is(~$m<fred>[1], "bar bozboz ", "Submatch 2 correct");
 is(~$m<fred>[2], "foo42",       "Submatch 3 correct");
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

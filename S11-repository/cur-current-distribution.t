@@ -107,3 +107,5 @@ subtest "CompUnit::Repository::Installation" => {
 
 
 done-testing;
+
+# vim: expandtab shiftwidth=4

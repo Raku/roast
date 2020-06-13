@@ -124,3 +124,5 @@ my $be_bom = Buf[uint8].new(0xFE, 0xFF);
         is-deeply $buf, $be_bom, "utf16: BOM is written correctly with append, and written only once";
     }
 }
+
+# vim: expandtab shiftwidth=4

@@ -52,3 +52,5 @@ plan 6;
 
     lives-ok { $outer.new(inner => $inner.new) }, 'Runtime created classes can be used as attributes';
 }
+
+# vim: expandtab shiftwidth=4

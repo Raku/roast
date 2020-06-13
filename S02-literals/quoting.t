@@ -763,4 +763,4 @@ subtest ':b and variable combinations' => {
       '$foo@foo[]%foo<>&uc("z"){uc "z"}', 'all together';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

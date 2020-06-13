@@ -8,3 +8,5 @@ class Example2::S does Example2::D does Example2::P {
         "" # removing this fixes the problem
     }
 }
+
+# vim: expandtab sw=4

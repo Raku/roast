@@ -244,4 +244,4 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
     is $i, 3, 'self does not enforce an item context';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

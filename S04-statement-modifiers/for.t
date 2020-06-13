@@ -174,4 +174,4 @@ is ((sub r { "OH HAI" })() for 5), "OH HAI", 'Anon sub in statement modifier for
     is $i, 2, 'for statement modifier sinks its content';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

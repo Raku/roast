@@ -80,4 +80,4 @@ is-deeply "a\nb\nc".lines(2000), ('a', 'b', 'c'),
       'does explicit !chomp not chomp';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

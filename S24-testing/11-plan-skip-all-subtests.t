@@ -34,4 +34,4 @@ subtest "level-one subtest with level-two subtest with skip-all" => {
     ok 1, "skip-all inside subtests does not skip outside tests";
 }
 
-# vim: expandtab shiftwidth=4 ft=perl6
+# vim: expandtab shiftwidth=4

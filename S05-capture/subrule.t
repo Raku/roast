@@ -116,4 +116,4 @@ is(~$/<caprep>[0], "abcabcabcabc", 'Caprep abc one captured');
     is $m<digit>, '5', 'correct capture for quantified <digit>';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

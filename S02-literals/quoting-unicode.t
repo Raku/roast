@@ -168,4 +168,4 @@ plan 101;
         'Literals directly bookend multiple interpolated, no nested Lists';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

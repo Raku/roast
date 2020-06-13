@@ -37,3 +37,5 @@ plan 13;
     is @rolls.grep(Int).elems, 40, 'all the rolls are Ints';
     is @rolls.grep(1..6).elems, 40, 'all the rolls are in the Range 1..6';
 }
+
+# vim: expandtab shiftwidth=4

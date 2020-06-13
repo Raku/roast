@@ -64,4 +64,4 @@ is < foo
 isa-ok < >, List, '< > (only whitespace) is empty List';
 is < >.elems, 0, ".. and it's really empty";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

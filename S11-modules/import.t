@@ -105,4 +105,4 @@ plan 17;
         supported => ['our'];
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

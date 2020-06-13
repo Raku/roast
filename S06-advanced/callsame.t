@@ -26,4 +26,4 @@ plan 3;
     CATCH { default { isa-ok $_, X::NoDispatcher, $desc } }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

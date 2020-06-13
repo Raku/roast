@@ -66,4 +66,4 @@ is_run ｢use RT126302; say "RT126302-OK"｣,
     # the genned warnings doesn't reference any guts
   }, 'packages with private `is rw` attrs compile successfully';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

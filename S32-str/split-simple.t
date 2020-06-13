@@ -120,4 +120,4 @@ subtest 'split with NaN limit throws (RT #128034)', {
     dies-ok { split @(1, 2, 3), 'o', NaN }, X::TypeCheck;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

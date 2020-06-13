@@ -44,3 +44,5 @@ my $tmpfile = "temp-test" ~ nonce();
 }
 
 unlink $tmpfile;
+
+# vim: expandtab shiftwidth=4

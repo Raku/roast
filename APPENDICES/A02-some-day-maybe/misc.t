@@ -52,4 +52,4 @@ group-of 4 => '.pick/.grab/.kxxv with undecided semantics' => {
 
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -37,3 +37,5 @@ is-deeply infix:<notandthen>([Int, 42]), (Int notandthen 42),
     Foo andthen .&meow;
     is-deeply $calls, 1, 'notandthen does not call .defined on last arg (2)';
 }
+
+# vim: expandtab shiftwidth=4

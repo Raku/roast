@@ -197,4 +197,4 @@ my %h = %(:a);
 is-deeply zip(%h<>:v.map: *.flat), ((True,),),
   'is a 1-element list handled correctly with zip';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

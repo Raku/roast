@@ -283,4 +283,4 @@ my %h = %(:a);
 is-deeply cross(%h<>:v.map: *.flat), ((True,),),
   'is a 1-element list handled correctly with cross';
 
-# vim: ft=perl6 et
+# vim: expandtab shiftwidth=4
