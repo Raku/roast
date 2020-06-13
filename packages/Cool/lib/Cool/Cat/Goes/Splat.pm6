@@ -2,4 +2,4 @@ class Cool::Cat::Goes::Splat {
     method meow { 'splat' }
 }
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

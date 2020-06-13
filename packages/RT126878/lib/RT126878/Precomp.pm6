@@ -1,3 +1,3 @@
 need RT126878::NoPrecomp;
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

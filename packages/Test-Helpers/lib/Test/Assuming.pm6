@@ -102,4 +102,4 @@ sub is-primed-call (Block $b, \call, @expect, Capture |cap) is export {
     }
 }
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

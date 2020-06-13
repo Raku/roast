@@ -14,4 +14,4 @@ sub array_str_u ($data) is export { $data ~~ Array[Str:U]; };
 sub hash_str_u ($data) is export { $data ~~ Hash[Str:U]; };
 sub hash_hash_str_u ($data) is export { $data ~~ Hash[Hash[Str:U]]; };
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

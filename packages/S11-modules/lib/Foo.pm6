@@ -11,4 +11,4 @@ multi waz() is export                { 'Foo::waz' }  #  :ALL, :DEFAULT (implicit
 multi gaz() is export(:others)       { 'Foo::gaz1' } #  :ALL, :others
 multi gaz($x) is export(:others)     { 'Foo::gaz2' } #  :ALL, :others
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

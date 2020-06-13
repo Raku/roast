@@ -21,4 +21,4 @@ module Fancy::Utilities {
  multi sub greet() { return "Hi!" }
 }
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

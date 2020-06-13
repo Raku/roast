@@ -8,4 +8,4 @@ class D does A::B::B { };
 
 
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

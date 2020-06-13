@@ -9,4 +9,4 @@ class RT83354_B {
     }
 }
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

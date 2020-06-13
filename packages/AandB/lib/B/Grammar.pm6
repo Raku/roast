@@ -3,4 +3,4 @@ grammar B::Grammar {
     token TOP { 'B' };
 }
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

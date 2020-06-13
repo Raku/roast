@@ -21,4 +21,4 @@ sub client-package is export {
     CLIENT::LEXICAL::<$?PACKAGE>
 }
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

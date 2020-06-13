@@ -1,4 +1,4 @@
 use v6;
 class RT76606::a { };
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

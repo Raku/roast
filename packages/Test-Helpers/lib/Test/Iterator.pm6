@@ -94,4 +94,4 @@ sub iterator-ok(&iterator, $desc, *@expected) is export {
 
 #vim: ft=perl6
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

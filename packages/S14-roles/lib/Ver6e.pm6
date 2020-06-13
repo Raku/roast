@@ -7,4 +7,4 @@ class Cv6e is export { }
 
 enum Enum-v6e is export <ea eb ec>;
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

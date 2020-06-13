@@ -33,4 +33,4 @@ sub reset-timing is export { %timing = () }
 my module EXPORTHOW { }
 EXPORTHOW.WHO.<grammar> = ProfiledGrammarHOW;
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

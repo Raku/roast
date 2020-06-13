@@ -1,3 +1,3 @@
 sub bar is export { 'NoModule::bar' }
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

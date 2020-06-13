@@ -4,4 +4,4 @@ use Example2::K;
 class Example2::C {
 }
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

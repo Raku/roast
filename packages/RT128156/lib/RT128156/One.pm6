@@ -1,4 +1,4 @@
 class RT128156::One {};
 need RT128156::Two;
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

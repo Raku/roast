@@ -6,4 +6,4 @@ our %foo is export;
 our $foo is export;
 sub foo is export { }
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

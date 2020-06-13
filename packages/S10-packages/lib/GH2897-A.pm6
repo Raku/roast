@@ -6,4 +6,4 @@ sub gen-counter is export {
     sub counter { $foo++ }
 }
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

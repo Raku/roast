@@ -1,4 +1,4 @@
 use v6;
 use Example2::C;
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

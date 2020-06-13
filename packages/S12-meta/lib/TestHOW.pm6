@@ -5,4 +5,4 @@ class TestHOW is Metamodel::ClassHOW {
 my package EXPORTHOW {}
   EXPORTHOW::<class> = TestHOW;
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

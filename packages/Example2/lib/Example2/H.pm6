@@ -9,4 +9,4 @@ class Example2::H does Example2::D does Example2::P {
     }
 }
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

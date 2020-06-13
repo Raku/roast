@@ -7,4 +7,4 @@ sub foo(Str $a) is export {
 multi sub bar(Str $a) is export {
 }
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

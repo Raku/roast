@@ -5,4 +5,4 @@ use Example2::P;
 class Example2::F does Example2::P {
 }
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

@@ -363,4 +363,4 @@ group-of 15 => 'tests that use unspecced $?BITS to make decisions' => {
     }
 }
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

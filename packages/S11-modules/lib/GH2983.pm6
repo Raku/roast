@@ -3,4 +3,4 @@ class C-GH2983 is export { }
 our constant C2983 is export = 42;
 our $question is export = "The Ultimate Question of Life, the Universe, and Everything";
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

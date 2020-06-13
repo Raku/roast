@@ -31,4 +31,4 @@ is-eqv-fails ｢is-eqv (1,), (1, 2, 3), 'meows'        ｣, 'List:D, different L
 is-eqv-fails ｢is-eqv (1,), 1, 'meows'                ｣, 'List:D, Int:D';
 
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

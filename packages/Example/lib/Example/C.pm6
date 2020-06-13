@@ -7,4 +7,4 @@ package Example::C {
     sub f () is cached is export { }
 }
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

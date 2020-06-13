@@ -1,4 +1,4 @@
 class GlobalInner {
 }
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4

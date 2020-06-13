@@ -1,4 +1,4 @@
 need RT128156::Needed;
 class Top2 {};
 
-# vim: expandtab sw=4
+# vim: expandtab shiftwidth=4
