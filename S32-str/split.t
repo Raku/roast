@@ -5,7 +5,7 @@ use Test::Util;
 
 # L<S32-setting-library/Str"=item split">
 
-plan 62;
+plan 65;
 
 # Legend:
 # r   result
@@ -546,6 +546,14 @@ subtest 'split skip-empty skips all empty chunks' => {
     cmp-ok .key.split(.value, :skip-empty), '==', 0,
         "{.key}.split({.value.raku}, :skip-empty)"
     for @tests;
+}
+
+# https://github.com/rakudo/rakudo/issues/3758
+{
+    my ($a,$b,@c) = "aa bb".split(/\s+/);
+    is $a, "aa", 'did we get aa';
+    is $b, "bb", 'did we get bb';
+    is-deeply @c, [], 'did the array stay empty';
 }
 
 # vim: expandtab shiftwidth=4
