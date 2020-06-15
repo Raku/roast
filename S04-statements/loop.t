@@ -127,8 +127,7 @@ throws-like 'loop { say "# RT63760"; last } while 1', X::Syntax::Confused,
         ~ $mod ~ ｢; say "Test:fail" }｣
     }
     for ｢without Any｣, ｢with 42｣ -> $mod {
-        #?rakudo.jvm todo 'RT #130354'
-
+        #?rakudo.jvm skip 'needs investigation'
         doesn't-hang(
             code-with($mod),
             "`last` aborts loop when using `$mod`",
