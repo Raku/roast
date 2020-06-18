@@ -519,8 +519,7 @@ subtest '.split works on Cool same as it works on Str' => {
     plan 11;
 
     my $m = Match.new(
-        ast => Any,    list => (), hash => Map.new(()),
-        orig => "123", to => 2,    from => 1,
+        ast => Any, orig => "123", to => 2, from => 1,
     );
 
     is-eqv 123.split('2', :v),  ('1', '2',      '3').Seq, ':v; Cool';
