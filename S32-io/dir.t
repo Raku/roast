@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 16;
+plan 17;
 
 # L<S32::IO/Functions/"=item dir">
 
@@ -70,6 +70,11 @@ subtest '.dir with relative paths sets right CWD' => {
     is $dir.add('meow').dir.head.slurp, 'pass', 'right .dir with .add-ed path';
     is IO::Path.new('meow', :CWD($dir.absolute)).dir.head.slurp, 'pass',
         'right .dir with relative path';
+}
+
+{
+    ok dir("/")[0].starts-with("/"),
+      "make sure dir / produces absolute paths";
 }
 
 # vim: expandtab shiftwidth=4
