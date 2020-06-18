@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 17;
+plan 18;
 
 # L<S32::IO/Functions/"=item dir">
 
@@ -75,6 +75,18 @@ subtest '.dir with relative paths sets right CWD' => {
 {
     ok dir("/")[0].starts-with("/"),
       "make sure dir / produces absolute paths";
+}
+
+subtest "checky dirty dir specifications" => {
+    for (
+        "///", "/",
+        "./.", ".",
+        # add more here if you feel the need
+    ) -> $dirty, $clean {
+        is-deeply dir($dirty), dir($clean),
+          "does dir '$dirty' produce the same as dir '$clean'";
+    }
+    done-testing;
 }
 
 # vim: expandtab shiftwidth=4
