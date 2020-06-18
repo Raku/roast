@@ -89,7 +89,7 @@ is $action.calls, 'ab', '... and in the right order';
         method value($/) { make 1..$/};
         method TOP($/)   { make 1 + $/<value>};
     }
-    my $match = Math.parse('234', :actions(Actions.new));
+    my $match = Math.parse('234', :actions(Actions));
     ok $match,  'can parse with action stubs that make() regexes';
     is $match.ast, 235, 'got the right .ast';
 
@@ -110,7 +110,7 @@ is $action.calls, 'ab', '... and in the right order';
         }
     }
 
-    is ActionsTestGrammar.parse("ab\ncd", :actions(TestActions.new)).ast, 123,
+    is ActionsTestGrammar.parse("ab\ncd", :actions(TestActions)).ast, 123,
         'Can call Str.subst in an action method without any trouble';
     # https://github.com/Raku/old-issue-tracker/issues/2231
     isa-ok ActionsTestGrammar.parse('a', :actions(
@@ -130,7 +130,7 @@ is $action.calls, 'ab', '... and in the right order';
     };
 
     my $x = Grammar::Trivial.parse: 'a',
-        actions => Grammar::Trivial::A.new;
+        actions => Grammar::Trivial::A;
     ok $x, 'Trivial grammar parsed';
     is $x.ast[0], 1, 'make(List) (1)';
     is $x.ast[1], 2, 'make(List) (2)';

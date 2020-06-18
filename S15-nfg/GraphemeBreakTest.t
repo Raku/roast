@@ -120,9 +120,9 @@ sub process-line (Str:D $line, @fail, :@only!) {
     return if $line.starts-with('#');
     my Bool:D $fudge-b = %fudged-tests{$line-no}:exists ?? True !! False;
     note 'LINE: [' ~ $line ~ ']' if $DEBUG;
-    my $list = GraphemeBreakTest.new.parse(
+    my $list = GraphemeBreakTest.parse(
         $line,
-        actions => parser.new
+        actions => parser
     ).made;
     die "line $line-no undefined parse" if $list.defined.not;
     if $fudge-b {

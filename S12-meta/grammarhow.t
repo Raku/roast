@@ -25,6 +25,6 @@ class Foo::Actions {
     }
 }
 
-lives-ok { Foo.new.parse('', :actions(Foo::Actions.new)) }
+lives-ok { Foo.parse('', :actions(Foo::Actions)) }
 
 # vim: expandtab shiftwidth=4

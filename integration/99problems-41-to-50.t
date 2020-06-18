@@ -165,8 +165,8 @@ plan 13;
 
     }
  
-    my $parser = LogicalExpr.new;
-    my $actions = LogicalExpr::Actions.new;
+    my $parser = LogicalExpr;
+    my $actions = LogicalExpr::Actions;
 
     is-deeply $parser.truth-table('table(A,B,and(A,or(A,B))).',$actions),
     ['true true true',
@@ -237,8 +237,8 @@ plan 13;
         method term:sym<paren>($/) { make $<term>.ast }
     }
 
-    my $parser = LogicalExpr::Infix.new;
-    my $actions = LogicalExpr::Infix::Actions.new;
+    my $parser = LogicalExpr::Infix;
+    my $actions = LogicalExpr::Infix::Actions;
 
     is-deeply $parser.truth-table('table(A,B, A and (A or not B)).',$actions),
     ['true true true',
@@ -269,8 +269,8 @@ plan 13;
     # fail fail fail true
 
     # w'eve already done the heavy lifting
-    my $parser = LogicalExpr::Infix.new;
-    my $actions = LogicalExpr::Infix::Actions.new;
+    my $parser = LogicalExpr::Infix;
+    my $actions = LogicalExpr::Infix::Actions;
 
     is-deeply $parser.truth-table('table(A,B,C, A and (B or C) equ A and B or A and C).',$actions),
     ['true true true true',

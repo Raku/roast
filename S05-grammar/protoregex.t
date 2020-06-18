@@ -38,7 +38,7 @@ class SomeActions {
     }
 }
 
-ok ($match = Alts.subparse('argl', :actions(SomeActions.new))),
+ok ($match = Alts.subparse('argl', :actions(SomeActions))),
     'can parse with action methods';
 is $match<alt>.ast, 'bazbaz', 'action method got called, make() worked';
 
