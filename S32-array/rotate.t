@@ -1,7 +1,7 @@
 use v6.c;
 use Test;
 
-plan 29;
+plan 28;
 
 # L<S32::Containers/Array/rotate>
 
@@ -9,7 +9,6 @@ plan 29;
     my @a = <a b c d e>;
     is ~@a.rotate, 'b c d e a', 'Array.rotate defaults to +1';
     is ~@a, 'a b c d e', 'original array unmodified';
-    ok @a.rotate ~~ Positional, 'Array.rotate returns a Positional';
 
     is ~@a.rotate(2), 'c d e a b', '.rotate(2)';
     is ~@a, 'a b c d e', 'original array still unmodified';
