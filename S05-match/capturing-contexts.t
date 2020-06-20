@@ -43,12 +43,12 @@ plan 64;
 # https://github.com/Raku/old-issue-tracker/issues/640
 {
   use MONKEY-TYPING;
-  augment class Match { method keys () {return %(self).keys }; };
+  augment class Match { method beys () {return %(self).keys }; };
   my rule a {H};
   "Hello" ~~ /<a=&a>/;
-  is $/.keys, 'a', 'get rule result';
+  is $/.beys, 'a', 'get rule result';
   my $x = $/;
-  is $x.keys, 'a', 'match copy should be same as match';
+  is $x.beys, 'a', 'match copy should be same as match';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/932
