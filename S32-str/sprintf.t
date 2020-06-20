@@ -2,7 +2,7 @@ use v6.c;
 
 use Test;
 
-plan 157;
+plan 155;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -236,21 +236,6 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
     is sprintf('%f', -Inf),  "-Inf",   '-Inf properly handled %f';
     is sprintf('%g', -Inf),  "-Inf",   '-Inf properly handled %g';
     is sprintf('%G', -Inf),  "-Inf",   '-Inf properly handled %G';
-}
-
-# RT #106594, #62316, #74610
-#?niecza skip 'dubious test - should be testing exception type, not string. Niecza does respond with an appropriate, but differently worded string'
-{
-    try sprintf("%d-%s", 42);
-    is $!, 'Your printf-style directives specify 2 arguments, but 1 argument was supplied', 'RT #106594, #62316, #74610';
-}
-
-# RT #122907
-# TODO: write a better test once there is a typed exception
-{
-    throws-like { sprintf "%d" }, Exception,
-        message => 'Your printf-style directives specify 1 argument, but no argument was supplied',
-        "adequate error when sprintf %d directive doesn't find a corresponding argument";
 }
 
 # found by japhb
