@@ -125,3 +125,5 @@ group-of 12 => 'rel tol is correctly calculated' => {
     is-approx 10, 1, :rel-tol<.9>;
     check-fail { is-approx -10 - 1e-10, -1, :rel-tol<.9> };
 }
+
+# vim: expandtab shiftwidth=4

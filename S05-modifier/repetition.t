@@ -26,4 +26,4 @@ nok('ab'  ~~ m:x(2)/ab/, ':2x (repetition) modifier (-)');
     is 'abacad'.match(rx/a./, :x(2..5)).join('|'), 'ab|ac|ad', ':x(Range) (takes as much as it can)';
 }
 
-# vim: syn=perl6 sw=4 ts=4 expandtab
+# vim: expandtab shiftwidth=4

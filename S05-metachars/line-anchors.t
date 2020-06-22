@@ -56,4 +56,4 @@ ok(   $str ~~ m/^abc$$\n^^d.*f$$\n^^ghi$/, 'All dot' );
 #?rakudo.jvm todo 'NFG'
 nok "a\r\n" ~~ /^^\s*$$/, 'No accidental match of ^^\s$$ between \r and \n';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

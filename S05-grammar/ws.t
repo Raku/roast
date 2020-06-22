@@ -22,7 +22,7 @@ nok $<T1::r2><ws>.defined,   'explicit <.ws> did not capture';
 ok 'axb' ~~ m/^<T1::r3>$/, 'explicit  <ws> is overridden';
 is $<T1::r3><ws>, 'x',     'explicit  <ws> did capture';
 
-# RT #64094
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     ok '' ~~ / <ws>  /, 'match <ws>  against empty string';
     ok '' ~~ / <ws>? /, 'match <ws>? against empty string';
@@ -31,4 +31,4 @@ is $<T1::r3><ws>, 'x',     'explicit  <ws> did capture';
     ok '' ~~ / <ws>* /, 'match <ws>* against empty string';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

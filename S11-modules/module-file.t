@@ -11,4 +11,4 @@ is($?MODULE.^name,  'Foo::Bar', '$?MODULE for "module Foo::Bar;"');
 is(::?PACKAGE.^name, 'Foo::Bar', '::?PACKAGE for "module Foo::Bar;"');
 is(::?MODULE.^name,  'Foo::Bar', '::?MODULE for "module Foo::Bar;"');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

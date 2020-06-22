@@ -51,7 +51,7 @@ is $a.test-hash-a,   2, '%.a contextualizes as hash';
     is $o.x, 5, 'attribute has new value after assignment with qualified method name';
 }
 
-# RT #78678
+# https://github.com/Raku/old-issue-tracker/issues/2237
 {
     class Parent {
         has $.x is rw;
@@ -68,3 +68,5 @@ is $a.test-hash-a,   2, '%.a contextualizes as hash';
     is $o.x, 42, '.accessor returns that of the child';
 
 }
+
+# vim: expandtab shiftwidth=4

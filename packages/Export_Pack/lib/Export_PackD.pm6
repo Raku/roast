@@ -5,3 +5,5 @@ module Export_PackD {
     'moose!'
   }
 }
+
+# vim: expandtab shiftwidth=4

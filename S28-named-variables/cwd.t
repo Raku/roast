@@ -20,4 +20,4 @@ if "$*CWD/t".IO ~~ :e {
 ok( $subfolder_exists, 'we have a "t" subfolder');
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

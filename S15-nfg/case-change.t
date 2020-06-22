@@ -108,3 +108,5 @@ plan 72;
         is-deeply $upper.lc, $lower, "Prepend + Á + Extend casechange is correct: .lc: (Prepend x $_ ~ 'á' ~ Extend x {9 - $_}).lc";
     }
 }
+
+# vim: expandtab shiftwidth=4

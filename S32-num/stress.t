@@ -3,7 +3,8 @@ use Test;
 
 plan 2;
 
-# RT#128817
+# https://github.com/Raku/old-issue-tracker/issues/5518
+
 # https://github.com/rakudo/rakudo/issues/1651
 subtest 'No drift when roundtripping Num -> perl -> Num -> perl' => {
     # In this test, it's fine if the original .Str gives the string that
@@ -29,7 +30,8 @@ subtest 'No drift when roundtripping Num -> perl -> Num -> perl' => {
     }
 }
 
-# RT#128914
+# https://github.com/Raku/old-issue-tracker/issues/5565
+
 subtest 'parsed literals match &val and Str.Num' =>  {
     plan 2*my $rounds = 100;
     sub gen-num {
@@ -44,4 +46,4 @@ subtest 'parsed literals match &val and Str.Num' =>  {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

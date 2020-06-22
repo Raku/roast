@@ -9,3 +9,5 @@ is-deeply [gather for 1..20 { .take if $_ == 9  ff^ $_ == 13; }], [9, 10, 11, 12
 is-deeply [gather for 1..20 { .take if $_ == 9 ^ff  $_ == 13; }], [10, 11, 12, 13];
 is-deeply [gather for 1..20 { .take if $_ == 9 ^ff^ $_ == 13; }], [10, 11, 12];
 is-deeply [gather for 1..20 { .take if $_ == 15 ff *; }], [15, 16, 17, 18, 19, 20];
+
+# vim: expandtab shiftwidth=4

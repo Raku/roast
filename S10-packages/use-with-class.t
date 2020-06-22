@@ -38,7 +38,7 @@ ok Stupid::Class.new(), 'can instantiate object of "imported" class';
 }
 
 # class loading inside a method
-# RT #73886
+# https://github.com/Raku/old-issue-tracker/issues/1639
 {
     class MethodLoadingTest {
         method doit {
@@ -50,14 +50,14 @@ ok Stupid::Class.new(), 'can instantiate object of "imported" class';
 
 }
 
-# RT #73910
+# https://github.com/Raku/old-issue-tracker/issues/1642
 {
     use Foo;
     lives-ok { class Bar { } }, 'declaring a class after use-ing a module (RT #73910)'
 }
 
 #?rakudo.js.browser skip "runtime time use doesn't work in the browser"
-# RT #126302
+# https://github.com/Raku/old-issue-tracker/issues/4635
 is_run ｢use RT126302; say "RT126302-OK"｣,
   :compiler-args['-I', $?FILE.IO.parent(2).add("packages/RT126302/lib").absolute], {
     :out(/'RT126302-OK'/),
@@ -66,4 +66,4 @@ is_run ｢use RT126302; say "RT126302-OK"｣,
     # the genned warnings doesn't reference any guts
   }, 'packages with private `is rw` attrs compile successfully';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

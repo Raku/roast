@@ -20,7 +20,7 @@ ok 'fooabcdef' ~~ / . <other=&abc> . /, '<other=&abc> captures lexical regex';
 is ~$/, 'oabcd', 'correctly matched string';
 is $<other>, 'abc', 'correctly captured to $<other>';
 
-# RT #77152
+# https://github.com/Raku/old-issue-tracker/issues/2055
 {
     my regex foo($s) { $s };
 
@@ -30,3 +30,5 @@ is $<other>, 'abc', 'correctly captured to $<other>';
     ok 'c' ~~ / <&foo: 'c'> /, '<&foo: ...> parses and passes args correctly (1)';
     nok 'c' ~~ / <&foo: 'd'> /, '<&foo: ...> parses and passes args correctly (2)';
 }
+
+# vim: expandtab shiftwidth=4

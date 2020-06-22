@@ -42,3 +42,5 @@ is-deeply infix:<andthen>([42, 70]), (42 andthen 70),
     Foo andthen .&meow;
     is-deeply $calls, 1, 'andthen does not call .defined on last arg (2)';
 }
+
+# vim: expandtab shiftwidth=4

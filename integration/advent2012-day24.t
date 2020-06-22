@@ -56,3 +56,5 @@ is $cal, q:to"END-CAL".subst("\r\n", "\n", :g), 'calendar';
     23 24 25 26 27 28 29 
     30 31 
     END-CAL
+
+# vim: expandtab shiftwidth=4

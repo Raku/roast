@@ -8,3 +8,5 @@ use v6;
 unit module RequireAndUse3;
 
 23;
+
+# vim: expandtab shiftwidth=4

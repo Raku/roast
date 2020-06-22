@@ -13,4 +13,4 @@ is(3   cmp   3, Order::Same, '3 cmp 3 is 0');
 is(2   cmp   3, Order::Less, '2 cmp 3 is -1');
 is(3   cmp   4, Order::Less, '3 cmp 4 is -1');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

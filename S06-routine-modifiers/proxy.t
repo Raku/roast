@@ -134,4 +134,4 @@ subtest 'creating and using a subclass of Proxy' => {
     is-deeply $a.VAR.history, [], 'did the reset work';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

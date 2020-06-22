@@ -81,4 +81,4 @@ subtest '`eqv` on containerized Version objects' => {
 is_run ｢use v6c; print "OK";｣, {:out('OK'), :err(''), :0status},
     'can use `v6c` version literal (no dot) when specifying Raku version';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -63,18 +63,18 @@ plan 13;
 
 }
 
-# RT #115502
+# https://github.com/Raku/old-issue-tracker/issues/2950
 {
     is (BEGIN { try 42; } ), 42, 'Can use try at BEGIN time';
 }
 
-# RT #119749
+# https://github.com/Raku/old-issue-tracker/issues/3230
 {
     lives-ok { enum A (a=>3); BEGIN for A.enums { } },
         'no Null PMC access when looping over SomeEnum.enums in blockless BEGIN';
 }
 
-# RT #123776
+# https://github.com/Raku/old-issue-tracker/issues/3676
 #?rakudo todo 'RT#123776'
 {
     my $bound;
@@ -82,8 +82,10 @@ plan 13;
     is $bound, 'foo', "Value bound to variable in BEGIN persists";
 }
 
-# RT #123777
+# https://github.com/Raku/old-issue-tracker/issues/3677
 {
     lives-ok { my @a; BEGIN { @a = 1 }; +@a },
         'Assigment in BEGIN to list declared outside BEGIN lives';
 }
+
+# vim: expandtab shiftwidth=4

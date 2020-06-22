@@ -43,3 +43,5 @@ augment class PieceOfString {
 }
 
 is ~$d, '------', 'Str override';
+
+# vim: expandtab shiftwidth=4

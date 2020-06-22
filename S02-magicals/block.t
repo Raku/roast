@@ -35,4 +35,4 @@ is($result, 6, 'the &?BLOCK magical worked');
     is @collected.join(''), 'aaaa', 'Correct closure semantics with &?BLOCK';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

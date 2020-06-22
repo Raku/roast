@@ -440,7 +440,7 @@ for $@n, Any, $@s, Str -> @a, $T {
 
 }
 
-# RT #126507
+# https://github.com/Raku/old-issue-tracker/issues/4697
 {
     my @a;
     @a[$(7,8,9)] = 101;
@@ -451,4 +451,4 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[$(7,8,9)]:exists, False, 'container respected in array :delete';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

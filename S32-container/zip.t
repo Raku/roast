@@ -69,4 +69,4 @@ is zip(1,2; 1,3; 1,4):with(&infix:</>), '1 ' ~ 1/6, 'zip:with works on left asso
 is zip(1,2; 1,3; 1,4):with(&infix:<**>), '1 2417851639229258349412352', 'zip:with works on right associative';
 is zip(1,2; 1,2; 1,2):with(&infix:<eqv>), 'True True', 'zip:with works on chain associative';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

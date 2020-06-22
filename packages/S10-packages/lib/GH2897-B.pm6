@@ -7,3 +7,5 @@ our &my-counter is export;
 BEGIN {
     &my-counter = gen-counter;
 }
+
+# vim: expandtab shiftwidth=4

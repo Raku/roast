@@ -20,4 +20,4 @@ is_run 'use Test; ok 1, "test runs"; bail-out "some reason";',
 is_run 'use Test; bail-out', { :err(''), :out("Bail out!\n"), :255status },
     'immediate bail out does not crash';
 
-# vim: expandtab shiftwidth=4 ft=perl6
+# vim: expandtab shiftwidth=4

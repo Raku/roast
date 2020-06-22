@@ -14,3 +14,5 @@ ok EVAL('&::($setting)::not(False)'), '::("' ~ $setting ~ '::") finds eval conte
 my $f = EVAL('-> $fn { $fn(); }');
 ok $f({ &CALLER::SETTING::OUTER::OUTER::OUTER::OUTER::not(False) }), 'CALLER::SETTING::OUTER::OUTER::OUTER::OUTER:: works';
 ok $f({ &CALLER::($setting)::not(False) }), 'CALLER::' ~ $setting ~ ':: works (ind)';
+
+# vim: expandtab shiftwidth=4

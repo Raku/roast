@@ -50,11 +50,11 @@ throws-like "42 if 23\nis 50; 1", X::Syntax::Confused,
 # not sure this belong here, suggestions for better places are welcome
 throws-like '(1) { $foo = 2 }', Exception, 'parens do not eat spaces after them';
 
-# RT #79964
+# https://github.com/Raku/old-issue-tracker/issues/2280
 eval-lives-ok q:b"my &f;\nsub g() { }\n&f;", 'implicit terminator before & sigil';
 
 # not sure this belong here, suggestions for better places are welcome
-# RT #115842
+# https://github.com/Raku/old-issue-tracker/issues/2980
 {
     eval-lives-ok 'my @ := 0,', 'trailing comma allowed (1)';
     eval-lives-ok 'my @ := 0, ;', 'trailing comma allowed (2)';
@@ -63,4 +63,4 @@ eval-lives-ok q:b"my &f;\nsub g() { }\n&f;", 'implicit terminator before & sigil
     eval-lives-ok '0,', 'trailing comma allowed (5)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

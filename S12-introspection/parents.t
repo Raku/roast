@@ -121,4 +121,4 @@ is +@parents, 0, 'Mu has no parents (:local)';
 @parents = Mu.^parents(:tree);
 is +@parents, 0, 'Mu has no parents (:tree)';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

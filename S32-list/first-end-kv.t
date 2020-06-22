@@ -67,3 +67,5 @@ is-deeply (first 'c'|'b', <a b c b a>, :end, :kv), (3, 'b'),
 is-deeply @list.first(Int, :end, :!kv), 10, 'is :!kv the same as no attribute';
 
 #vim: ft=perl6
+
+# vim: expandtab shiftwidth=4

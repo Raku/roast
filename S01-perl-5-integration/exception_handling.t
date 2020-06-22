@@ -38,4 +38,4 @@ lives-ok( {
     $err.payload.test;
 }, "Accessing Perl method doesn't die");
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

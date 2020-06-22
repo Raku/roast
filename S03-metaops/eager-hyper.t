@@ -40,4 +40,4 @@ plan 8;
     is($counter, 5, 'iterator was hyper and calculated all the values');
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

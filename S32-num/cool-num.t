@@ -95,4 +95,4 @@ is-approx i.cis,      <0.367879441171442+0i>,                   'i.cis';
 
 is-approx "17".unpolar("42"), 17.unpolar(42), '"17".unpolar("42") == 17.unpolar(42)';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -36,3 +36,5 @@ is-deeply [$escaped.lines], [
     '&lt;/html&gt;'
 ], 'html escaping';
 
+
+# vim: expandtab shiftwidth=4

@@ -69,4 +69,4 @@ plan 20;
     is (1.map: { .sqrt => .sqrt }), (1 => 1), 'hash like block with implicit parameter'
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

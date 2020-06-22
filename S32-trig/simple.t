@@ -21,3 +21,5 @@ is-approx cos($rn2), 0.8218645683e0, 'cos(random number 2)';
 
 is-approx tan($rn1), -6.0649708e0, 'tan(random number 1)';
 is-approx tan($rn2), 6.9315912e-1, 'tan(random number 2)';
+
+# vim: expandtab shiftwidth=4

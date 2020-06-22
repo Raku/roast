@@ -40,4 +40,4 @@ if $*DISTRO.is-win {
     }, 'can close TCP UNIX socket servers';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

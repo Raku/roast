@@ -173,4 +173,4 @@ group-of 15 => 'BUILD with a native typed attribute' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

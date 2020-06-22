@@ -39,3 +39,5 @@ my $formal-letter = "Dear Raku,
 
 @p = FormalLetter.parse($formal-letter, :rule<text>);
 is ~@p, $formal-letter, 'formal letter parse';
+
+# vim: expandtab shiftwidth=4

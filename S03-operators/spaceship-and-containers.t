@@ -15,4 +15,4 @@ ok(@a[0] < @a[1], 'comparing array values');
 ok(@a[0] <= @a[1], 'comparing array values');
 is(@a[0] <=> @a[1], Order::Less, 'comparing array values');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

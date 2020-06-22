@@ -801,4 +801,4 @@ lives-ok {
     is-deeply @outputs, [1, -1, 2, -2, 3, -3, "last 4", -4, -5, "last -6", "inputs finished"], "calling 'last' stopped two whenevers, and LAST blocks were called";
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

@@ -47,3 +47,5 @@ for (* == 42), -> $ { } -> &callable {
     is &callable.cando( \(666) ).elems,    1, 'Whatevercode with \(666)';
     is &callable.cando( \(666,42) ).elems, 0, 'Whatevercode with \(666,42)';
 }
+
+# vim: expandtab shiftwidth=4

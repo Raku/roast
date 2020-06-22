@@ -96,4 +96,4 @@ eval-lives-ok( 'produce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper
     is ("1", "2", "+").produce(&a).gist, '(1 [1 2] 3)', 'produce and multi subs';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

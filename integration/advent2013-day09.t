@@ -97,3 +97,5 @@ Pair.^add_fallback(
     );
 
 is $lisp-list.caddr, 3, 'Pair.^add_fallback';
+
+# vim: expandtab shiftwidth=4

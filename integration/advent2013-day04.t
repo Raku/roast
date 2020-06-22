@@ -46,3 +46,5 @@ EOF
 is qq:to/EOF/.chop, '21 dollars and 18 cents.', 'heredocs with qq interpolate';
 $dlrs dollars and {$cnts} cents.
 EOF
+
+# vim: expandtab shiftwidth=4

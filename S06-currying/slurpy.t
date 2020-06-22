@@ -45,3 +45,5 @@ is-primed-call(&capcapn, \("b"), ['aa bb ca db eE fE'], :e<E>, 'a');
 is-primed-call(&capcapn, \("b"), ['aa bb ca db eE fE'], 'a', *, :e<E>);
 is-primed-call(&capcapn, \("b"), ['aa bb ca db eE fE'], :e<E>, 'a', *);
 is-primed-call(&capcapn, \("b"), ['aa bb ca db eE fE'], 'a', :e<E>, *);
+
+# vim: expandtab shiftwidth=4

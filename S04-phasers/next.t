@@ -63,7 +63,7 @@ plan 16;
     is $str, '123', "die didn't trigger NEXT \{}";
 }
 
-#RT #124951
+# https://github.com/Raku/old-issue-tracker/issues/4106
 {
     my $str = '';
     try {
@@ -101,6 +101,7 @@ plan 16;
 
 # L<S04/Phasers/NEXT "before any LEAVE">
 
+# https://github.com/Raku/old-issue-tracker/issues/4107
 #?rakudo todo 'NEXT/LEAVE ordering RT #124952'
 {
     my $str = '';
@@ -112,6 +113,7 @@ plan 16;
 }
 
 # reversed order
+# https://github.com/Raku/old-issue-tracker/issues/4107
 #?rakudo todo 'NEXT/LEAVE ordering RT #124952'
 {
     my $str = '';
@@ -156,7 +158,7 @@ plan 16;
     is($str, '01234', 'NEXT {} works in for loop');
 }
 
-# RT #123731
+# https://github.com/Raku/old-issue-tracker/issues/3667
 {
     my $str = '';
     for ^5 {
@@ -186,4 +188,4 @@ plan 16;
     is $str, '0', 'last in a NEXT in a loop terminates the loop';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

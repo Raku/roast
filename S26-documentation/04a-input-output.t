@@ -57,3 +57,5 @@ for $p1, $p2, $p3, $p4, $p5, $p6 -> $POD {
         status => 1,
     }, 'expected fail of basic --doc check';
 }
+
+# vim: expandtab shiftwidth=4

@@ -45,8 +45,8 @@ is($x.'identity'('qwerty'), 'qwerty', 'indirect method call using quotes, with p
     is($x."$name"('asdf'), 'asdf', 'indirect method call, with parameter');
 }
 
-# RT #131478
+# https://github.com/Raku/old-issue-tracker/issues/6303
 is-deeply my class RT131478 { method Str { $.^name } }.Str, 'RT131478',
     '`$.` syntax shorthand works with meta-methods';
 
-# vim: syn=perl6
+# vim: expandtab shiftwidth=4

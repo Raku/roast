@@ -38,3 +38,5 @@ is bar(1,2,3), "1+2+3", "multi dispatch on slurpy packed with two required eleme
     is a(@t), '11 2', 'Multi-dispatch descends into sub signatures (2)';
 
 }
+
+# vim: expandtab shiftwidth=4

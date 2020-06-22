@@ -104,7 +104,7 @@ throws-like q['3e4d5'.Int], X::Str::Numeric,
 # Special values
 is((1.9e3).Int, 1900, "int 1.9e3 is 1900");
 
-# RT #65132
+# https://github.com/Raku/old-issue-tracker/issues/949
 throws-like 'int 3.14', X::Syntax::Confused,
     'dies: int 3.14 (prefix:int is gone)';
 
@@ -198,7 +198,8 @@ subtest 'Int.new' => { # coverage; 2016-10-05
 
     is-deeply Int.new, 0, 'no args default to 0';
 
-    # RT#132128
+    # https://github.com/Raku/old-issue-tracker/issues/6539
+    
     subtest '.new of subclass of Int' => {
         plan 3*
         my @tests = no-arg => \(),              Int => \( 42 ),
@@ -614,4 +615,4 @@ subtest 'no funny business with Ints that are not representable in double' => {
     dies-ok { Int.new(Int) }, 'does Int.new(Int) die?';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -230,4 +230,4 @@ is $outerVal, 22, 'Single paragraph Pod, multiple lines parses to whitespace in 
 
 }} }, 'Single paragraph Pod, multiple lines eval throws no error';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

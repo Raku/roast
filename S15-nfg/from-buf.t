@@ -36,3 +36,5 @@ is "D\c[COMBINING DOT ABOVE]\c[COMBINING DOT BELOW]D".encode('utf-8').decode.cha
     'UTF-8 encoding with synthetic followed by non-synthetic works OK';
 is "D\c[COMBINING DOT ABOVE]\c[COMBINING DOT BELOW]D".encode('utf-16').decode.chars, 2,
     'UTF-16 encoding with synthetic followed by non-synthetic works OK';
+
+# vim: expandtab shiftwidth=4

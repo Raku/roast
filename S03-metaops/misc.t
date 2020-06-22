@@ -67,3 +67,5 @@ subtest 'cover metaop call simplification optimization' => {
         throws-like '42.abs += 42', X::Assignment::RO, '(5)';
     }
 }
+
+# vim: expandtab shiftwidth=4

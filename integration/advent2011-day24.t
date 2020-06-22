@@ -64,3 +64,5 @@ my $gift = Present.new(:item("sock"));
 is $gift.look, "It's wrapped.", "It's wrapped.";
 open($gift);
 is $gift.look, 'A sock!', 'A sock!';
+
+# vim: expandtab shiftwidth=4

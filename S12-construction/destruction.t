@@ -53,4 +53,4 @@ is(  @destructor_order[0], 'Child',  'Child DESTROY should fire first'          
 #?rakudo.jvm todo "expected: 'Parent', got: (Any)"
 is(  @destructor_order[1], 'Parent', '... then parent'                                   );
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

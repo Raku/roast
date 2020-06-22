@@ -5,4 +5,4 @@ module A::A {
     use A::B;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

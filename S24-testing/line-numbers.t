@@ -53,3 +53,5 @@ execute-test(:function("ok"), :line(9));
 
 #?DOES 1
 execute-test(:function("throws-like"), :line(9));
+
+# vim: expandtab shiftwidth=4

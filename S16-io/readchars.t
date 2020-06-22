@@ -16,7 +16,7 @@ plan 4;
 
 dies-ok { open(make-temp-dir).readchars }, 'readchars on a directory fails';
 
-# RT #131383
+# https://github.com/Raku/old-issue-tracker/issues/6281
 with make-temp-file.IO {
     .spurt: "a♥c";
     with .open {
@@ -33,4 +33,4 @@ with make-temp-file.IO {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

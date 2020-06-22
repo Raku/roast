@@ -39,3 +39,5 @@ is_run $main, {out => q:to"END-TEST-OUT".subst("\r\n", "\n", :g), err => ''}, :a
     ok 1 - basic deduplication
     ok 2 - case insensitivity
     END-TEST-OUT
+
+# vim: expandtab shiftwidth=4

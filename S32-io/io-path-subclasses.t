@@ -22,4 +22,4 @@ plan 9;
 isnt IO::Path::QNX.new("-a").absolute, '',
     '.absolute on paths starting with `-` does not produce empty string (QNX)';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

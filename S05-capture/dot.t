@@ -59,7 +59,7 @@ ok("bookkeeper" ~~ m/(((\w)$0)+)/, 'Backreference');
 is(~$0, 'ookkee', 'Captured');
 is(~$0[0], ~['oo', 'kk', 'ee'], 'Captured');
 
-# RT #88340
+# https://github.com/Raku/old-issue-tracker/issues/2404
 is('aaaaa' ~~ /(\w)+$0/, 'aaaa', 'Correct semantics of contiguous captures in backref');
 is($0.join(''), 'aa', 'Backtracking and backref interaction resulted in correct capture');
 
@@ -67,11 +67,13 @@ is($0.join(''), 'aa', 'Backtracking and backref interaction resulted in correct 
 
 my regex single { o | k | e };
 
+# https://github.com/Raku/old-issue-tracker/issues/4143
 #?rakudo 3 todo 'dubious test RT #125004'
 ok("bookkeeper" ~~ m/<single> ($<single>)/, 'Named backref');
 is(~$/<single>, 'o', 'Named capture');
 is(~$0, 'o', 'Backref capture');
 
+# https://github.com/Raku/old-issue-tracker/issues/4144
 #?rakudo 3 todo 'dubious test RT #125005'
 ok("bookkeeper" ~~ m/(<.&single>) ($0)/, 'Positional backref');
 is(~$0, 'o', 'Named capture');
@@ -112,9 +114,9 @@ is(~$/, "john", 'Metaname match is john');
 ok(~$/ ne "jean", "Metaname match isn't jean");
 is(~$/<name>, "john", 'Metaname is john');
 
-# RT #77570
+# https://github.com/Raku/old-issue-tracker/issues/2118
 {
     eval-lives-ok('$' ~ 1 x 1000000, 'Can refer to very high numbered capture variable without exploding');
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

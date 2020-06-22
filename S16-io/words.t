@@ -196,4 +196,4 @@ group-of 5 => "\$limit arg (IO::Path method)" => {
         'words() without args uses $*ARGFILES';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

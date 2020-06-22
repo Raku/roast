@@ -54,4 +54,4 @@ my $orig = 'hello';
 is $orig.trans(/(l)/ => { $_[0].ord }), 'he108108o', 'capturing regex + closure with .ord on $_';
 is $orig, 'hello', 'original string unchanged';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

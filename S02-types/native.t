@@ -400,4 +400,4 @@ subtest 'meta-assign op with native nums' => {
     throws-like { @a[$i-1] }, X::OutOfRange, 'do we check for negative indices';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

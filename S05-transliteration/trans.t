@@ -282,4 +282,4 @@ is_run ｢print '@x'.trans: (/\@/ => '-',), :c｣, {
     :out('@-'), :err(''),
 }, '.trans with complement regex pair does not produce spurious warnings';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

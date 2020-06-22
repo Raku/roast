@@ -43,4 +43,4 @@ is $o.l2,       4,      '... and the value was reset';
 is $o.b,        4,      '... also on the attribute';
 is $b,          9,      'but the temp assignment had worked';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

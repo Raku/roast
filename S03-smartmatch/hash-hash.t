@@ -35,4 +35,4 @@ my %hash5 = ( "oink" => "da",   "zork" => Mu);      # Mu values cannot be equiva
     ok  eval_elsewhere('(%hash1 !~~ %hash5)'), 'Hash !~~ Hash, eval_elsewhere 5';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

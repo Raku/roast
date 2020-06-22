@@ -17,4 +17,4 @@ my %ret;
 %ret = flat map { $_, uc $_ }, $text.comb;
 is ~%ret.sort, "a\tA b\tB c\tC", "map called with function return values works";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

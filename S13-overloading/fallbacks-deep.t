@@ -20,4 +20,4 @@ is($base + $exp, 32, 'defining infix:<+> works');
 $base += $exp;
 is($base, 32, 'is deep generates infix:<+=> on infix:<+>');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

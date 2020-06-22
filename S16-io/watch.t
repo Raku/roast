@@ -54,3 +54,5 @@ plan 1;
         $watch-file.IO.unlink;
     }
 }
+
+# vim: expandtab shiftwidth=4

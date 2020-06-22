@@ -262,4 +262,4 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
         'can construct Rat (or similar) with big denominator';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

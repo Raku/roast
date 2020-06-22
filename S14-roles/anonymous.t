@@ -39,4 +39,4 @@ plan 13;
   is $a.cool, "hi", "role generating function gave us an attribute";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

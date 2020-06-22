@@ -16,6 +16,7 @@ throws-like { EVAL 'use InvalidDirective;' },
     is Act.^tryit(), 'pony', 'Can supersede meta-type for class';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4797
 #?rakudo skip 'RT #126759'
 {
     use Supersede1;
@@ -41,6 +42,7 @@ throws-like { EVAL 'use Supersede1;
     ok Home ~~ Controller, 'Type declared with new controller declarator got Controller role added';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4797
 #?rakudo skip 'RT #126759'
 {
     use Declare;
@@ -79,3 +81,5 @@ subtest 'export of SUPERSEDE::class' => {
     }
 }
 
+
+# vim: expandtab shiftwidth=4

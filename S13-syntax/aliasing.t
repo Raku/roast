@@ -30,4 +30,4 @@ class Baz {
   is $ret, 42, "the aliased method returned the right thing";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

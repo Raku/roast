@@ -28,4 +28,4 @@ is EVAL('~(< foo bar >)'), "foo bar", "~(<...>) is parsed correctly";
 is EVAL('+(< foo bar >)'),         2, "+(<...>) is parsed correctly";
 ok EVAL('?(< foo bar >)'),            "?(<...>) is parsed correctly";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

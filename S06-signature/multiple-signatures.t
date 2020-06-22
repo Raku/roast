@@ -58,4 +58,4 @@ plan 11;
 throws-like q[ only sub y (Int $x, Str $y) | (Str $x, Int $y) ], Exception,
     'and "only" sub can not have multiple signatures';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

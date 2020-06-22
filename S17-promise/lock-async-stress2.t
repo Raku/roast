@@ -17,3 +17,5 @@ plan 1;
     is $target, $n-threads * [+](^$n),
         'Lock::Async provides mutual exclusion when doing +=';
 }
+
+# vim: expandtab shiftwidth=4

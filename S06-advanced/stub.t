@@ -47,4 +47,4 @@ lives-ok { sub {...} }, 'not execued stub code is fine';
 dies-ok { (sub {...}).() ~ '' }, 'execued stub code goes BOOM when used';
 dies-ok { use fatal; (sub { ... }).() }, 'exeucted stub code goes BOOM under fatal';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

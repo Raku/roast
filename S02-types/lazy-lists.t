@@ -179,4 +179,4 @@ sub make-lazy-list($num) { gather { take $_ for 0..^$num; $was-lazy = 0 }.lazy }
     is @wat[^5], "2 3 4 10 11", 'did the array get flattened';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

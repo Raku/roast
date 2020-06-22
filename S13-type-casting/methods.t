@@ -15,7 +15,7 @@ my $o = CoercionTest.new();
 is ~$o, 'foo', 'method Stringy takes care of correct stringification';
 ok +$o == 1.2, 'method Numeric takes care of correct numification';
 
-# RT #69378
+# https://github.com/Raku/old-issue-tracker/issues/1319
 {
     class RT69378 {
         has $.x = 'working';
@@ -30,7 +30,6 @@ ok +$o == 1.2, 'method Numeric takes care of correct numification';
     is RT69378str.new.a, 'RT #69378', 'call to RT69378str.new properly initializes $.a';
     is RT69378str.new.Str, 'RT #69378', 'call to .Str works on "class is Str"';
     is Str(RT69378str.new), 'RT #69378', 'Str(...) coercion syntax calls our .Str too';
-    # RT #72834
     ok Int() == 0, 'Int()';
 }
 
@@ -49,4 +48,4 @@ is "hello".Str, "hello", ".Str can be called on Str";
     isa-ok DerivedFromStr.new.Str, Str, 'DerivedFromStr.new.Str isa Str';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -48,7 +48,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     dies-ok { $foo.() }, "invocation of a parameterized block expecting a param without a param dies";
 }
 
-# RT #63974
+# https://github.com/Raku/old-issue-tracker/issues/798
 {
     my $topic = 'topic unchanged';
     my @topic_array = <topic array unchanged>;
@@ -114,4 +114,4 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     is($inc2(), 1, "closures: inc2 == 1");
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

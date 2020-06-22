@@ -66,3 +66,5 @@ sub gen-test($f) {
 }
 
 END { unlink $f }
+
+# vim: expandtab shiftwidth=4

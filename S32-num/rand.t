@@ -109,11 +109,11 @@ lives-ok { srand(1) }, 'srand(1) lives and parses';
     ok %h<3> + %h<4> > 300, "Distribution is not very uneven";
 }
 
-# RT #113968
+# https://github.com/Raku/old-issue-tracker/issues/2813
 #?DOES 4
 {
     throws-like 'rand()', X::Obsolete;
     throws-like 'rand(3)', X::Obsolete;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

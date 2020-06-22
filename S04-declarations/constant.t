@@ -388,4 +388,4 @@ throws-like q[constant Mouse = Rat; constant Mouse = Rat], X::Redeclaration,
     is $filenameW ~~ $sepreg, ｢\｣, 'Regex stored in constant with sigil works properly';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

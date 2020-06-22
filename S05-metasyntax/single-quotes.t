@@ -65,4 +65,4 @@ ok 'abab' ~~ m/｢ab｣ **2/, "Single quotes group";
 ok("ab/cd" ~~ m/ab ｢/｣ c d/, 'ab/cd');
 is("ab/cd" ~~ m/[\w+] +% ｢/｣/, 'ab/cd', "Can use after %");
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

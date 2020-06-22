@@ -17,3 +17,5 @@ lives-ok( {
     }
 }, 'lexicals are bound the way they should, instead of horribly wrong');
 
+
+# vim: expandtab shiftwidth=4

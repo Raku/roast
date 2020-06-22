@@ -62,4 +62,4 @@ ok(unlink($filename), 'file has been removed');
     ok(unlink($filename), 'file has been removed');
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

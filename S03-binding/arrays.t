@@ -221,16 +221,16 @@ plan 48;
   is ~@array,    "a B c", 'binding @array := $arrayref works (3)';
 }
 
-# RT #61566
+# https://github.com/Raku/old-issue-tracker/issues/513
 {
     throws-like 'my @rt61566 := 1',
         X::TypeCheck::Binding,
         'can only bind Positional stuff to @a';
 }
 
-# RT #118397
+# https://github.com/Raku/old-issue-tracker/issues/3161
 throws-like { sub foo { fail }; my @a := foo },
     X::TypeCheck::Binding, :got(Failure),
 'binding Failure to Array throws useful error';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

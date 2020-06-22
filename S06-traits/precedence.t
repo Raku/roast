@@ -112,4 +112,4 @@ do {
     dies-ok( { EVAL '4 !' },  "Whitespace not allowed before user-defined postfix");
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

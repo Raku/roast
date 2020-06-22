@@ -11,4 +11,4 @@ plan 4;
     ok !(/foo/ ~~ %h),      'Regex ~~ Hash (-,value)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

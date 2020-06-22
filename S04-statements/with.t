@@ -116,6 +116,7 @@ for
 
 ## had to factor this out of the above for loop, in order to fudge for JVM
 ## TODO re-integrate test in above for loop once it passes on JVM
+# https://github.com/Raku/old-issue-tracker/issues/6070
 #?rakudo.jvm todo '$foo is not "$()", but Failure; RT #130775'
 for oops,Slip -> $with, $expected {
     my $foo is default(Nil) = do with $with {
@@ -142,6 +143,7 @@ for
 
 ## had to factor this out of the above for loop, in order to fudge for JVM
 ## TODO re-integrate test in above for loop once it passes on JVM
+# https://github.com/Raku/old-issue-tracker/issues/6070
 #?rakudo.jvm todo '$foo is not "$()", but Failure; RT #130775'
 for oops,Slip -> $with, $expected {
     my $foo is default(Nil) = do with $with -> $pos {
@@ -169,6 +171,7 @@ for
 
 ## had to factor this out of the above for loop, in order to fudge for JVM
 ## TODO re-integrate test in above for loop once it passes on JVM
+# https://github.com/Raku/old-issue-tracker/issues/6070
 #?rakudo.jvm todo '$foo is not a Failure, but "$()"; RT #130775'
 for oops,Failure -> $without, $expected {
     my $foo is default(Nil) = do
@@ -197,6 +200,7 @@ for
 
 ## had to factor this out of the above for loop, in order to fudge for JVM
 ## TODO re-integrate test in above for loop once it passes on JVM
+# https://github.com/Raku/old-issue-tracker/issues/6070
 #?rakudo.jvm todo '$foo is not a Failure, but "$()"; RT #130775'
 for oops,Failure -> $without, $expected {
     my $foo is default(Nil) = do
@@ -266,6 +270,7 @@ for
 
 ## had to factor this out of the above for loop, in order to fudge for JVM
 ## TODO re-integrate test in above for loop once it passes on JVM
+# https://github.com/Raku/old-issue-tracker/issues/6070
 #?rakudo.jvm skip 'Failure from oops is thrown; RT #130775'
 {
     for
@@ -288,7 +293,7 @@ for
     }
 }
 
-# RT #130279
+# https://github.com/Raku/old-issue-tracker/issues/5863
 subtest '`else` and kin with `without` errors out' => {
     plan 3;
     throws-like 'without 1 {} else     {}', X::Syntax::WithoutElse,
@@ -299,4 +304,4 @@ subtest '`else` and kin with `without` errors out' => {
         keyword => 'orwith', 'using `orwith`';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

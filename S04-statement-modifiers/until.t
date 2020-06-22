@@ -35,9 +35,9 @@ plan 5;
     is($a, 2, "post until");
 }
 
-# RT #79174
+# https://github.com/Raku/old-issue-tracker/issues/2257
 {
     eval-lives-ok '1,2, until $++', "until is a terminator even after comma";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

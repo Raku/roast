@@ -90,4 +90,4 @@ for @$=pod[5, 6] {
 $r = $=pod[7];
 is $r.contents[0].contents[0].contents[1].contents[0], 'foo','FC inside balanced <>';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

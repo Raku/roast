@@ -35,3 +35,5 @@ my
 ";
 
 is($output.subst("\r\n", "\n", :g), $expected.subst("\r\n", "\n", :g), "Greatest element of a list");
+
+# vim: expandtab shiftwidth=4

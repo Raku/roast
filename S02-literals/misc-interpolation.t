@@ -42,7 +42,7 @@ is("$number {my $number=2} $number", '1 2 1', 'original number still available a
 # L<S02/Names and Variables/form of each subscript>
 is("&func. () is where I live", '&func. () is where I live', '"&func. ()" should not interpolate');
 
-# RT #116166
+# https://github.com/Raku/old-issue-tracker/issues/3002
 is("$world.", 'World.', '"$world." should not interpolate');
 is("$world!", 'World!', '"$world!" should not interpolate');
 
@@ -107,7 +107,7 @@ is("x  \c[65,66,67]]  x",    "x  ABC]  x", "\\c[] should not eat following ]s");
       '... but whitespace is not allowed';
 }
 
-# RT # 104594
+# https://github.com/Raku/old-issue-tracker/issues/2593
 # rakudo had some trouble with lexicals from inside interpolated blocks
 {
     sub t($p) { t $p-1 if $p-1 > 0; return "{$p}" };
@@ -118,11 +118,11 @@ is("x  \c[65,66,67]]  x",    "x  ABC]  x", "\\c[] should not eat following ]s");
 is "$($_ * $_ if $_ % 2 for 0..10)", '1 9 25 49 81', '$(...) list comprehension';
 is "{($_ * $_ if $_ % 2 for 0..10)}", '1 9 25 49 81', '{(...)} list comprehension';
 
-# RT #76608
+# https://github.com/Raku/old-issue-tracker/issues/1953
 {
     my $y = "foo$(my $x = 42)bar";
     ok $x eq 42, "RT #76608 simple assignment";
     ok $y eq "foo42bar", "RT #76608 variable interpolation inside string";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

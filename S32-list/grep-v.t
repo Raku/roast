@@ -74,4 +74,4 @@ is @list.grep( { ($_ % 2) }, :v ), [1,3,5,7,9],
     throws-like { (^10).grep(Int, :!v) }, Exception;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

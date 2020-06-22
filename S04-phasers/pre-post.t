@@ -152,6 +152,7 @@ throws-like '$pt.test(1)',
     ok $str ~~ /foo/, 'POST runs on exception, with correct $!';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4113
 #?rakudo todo 'POST and exceptions RT #124961'
 {
     my $str;
@@ -163,9 +164,10 @@ throws-like '$pt.test(1)',
     is $str, 'ayeno', 'POST has undefined $! on no exception';
 }
 
-#?rakudo.moar todo "POST and exceptions RT #124961"
-#?rakudo.js todo "POST and exceptions RT #124961"
-#?rakudo.jvm skip "POST and exceptions RT #124961"
+# https://github.com/Raku/old-issue-tracker/issues/4113
+#?rakudo.moar todo "POST and exceptions"
+#?rakudo.js todo "POST and exceptions"
+#?rakudo.jvm skip "POST and exceptions"
 {
     try {
         POST { 0 }
@@ -187,4 +189,4 @@ throws-like '$pt.test(1)',
     dies-ok  { blockless 14 }, 'blockless PRE/POST (-, 2)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

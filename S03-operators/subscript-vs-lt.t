@@ -19,4 +19,4 @@ eval-lives-ok  "1 < 2" , "infix less-than (<) requires whitespace before.";
 throws-like "1< 2", Exception, "infix less-than (<) requires whitespace before, so this is a parse error.";
 throws-like "1<2", Exception, "infix less-than (<) requires whitespace before, so this is a parse error.";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

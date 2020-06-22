@@ -78,4 +78,4 @@ ok(@foo[0] == 0,   "Array Any == 0");
 
 # XXX: need tests for coercion string and numeric coercions
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

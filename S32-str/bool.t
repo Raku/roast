@@ -16,4 +16,4 @@ isa-ok 'hello'.Bool, Bool, "'hello'.Bool is Bool";
 ok '0'.Bool, "'0'.Bool is true";
 isa-ok '0'.Bool, Bool, "'0'.Bool is Bool";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

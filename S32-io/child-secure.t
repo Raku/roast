@@ -101,3 +101,5 @@ failuring-like { $parent.child('foo/../../bar', :secure) },
 failuring-like { $parent.child("../\x[308]", :secure) },
   X::IO::NotAChild,
   'resolved parent fails (given path is not a child, via combiners)';
+
+# vim: expandtab shiftwidth=4

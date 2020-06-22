@@ -35,4 +35,4 @@ my %h = %(:a);
 is-deeply roundrobin(%h<>:v.map: *.flat), ((True,),),
   'is a 1-element list handled correctly with roundrobin';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

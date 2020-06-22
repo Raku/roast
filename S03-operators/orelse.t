@@ -52,4 +52,4 @@ is-deeply infix:<orelse>([Int, 42]), (Int orelse 42),
     is-deeply $calls, 1, 'orelse does not call .defined on last arg (1)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

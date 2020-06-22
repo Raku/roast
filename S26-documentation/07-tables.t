@@ -136,4 +136,4 @@ is $r.caption, "foo";
 is $r.config<bar>, "0";
 is $r.config<baz>, "2.3";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

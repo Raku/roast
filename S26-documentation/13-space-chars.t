@@ -81,3 +81,5 @@ for @bchars -> $hexint {
 sub int2hexstr($int) {
     return sprintf("0x%04X", $int);
 }
+
+# vim: expandtab shiftwidth=4

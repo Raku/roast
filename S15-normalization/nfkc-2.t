@@ -2007,3 +2007,5 @@ ok Uni.new(0xBA2A).NFKC.list ~~ (0xBA2A,), 'BA2A -> BA2A';
 ok Uni.new(0xBA2B).NFKC.list ~~ (0xBA2B,), 'BA2B -> BA2B';
 ok Uni.new(0xBA2C).NFKC.list ~~ (0xBA2C,), 'BA2C -> BA2C';
 ok Uni.new(0xBA2D).NFKC.list ~~ (0xBA2D,), 'BA2D -> BA2D';
+
+# vim: expandtab shiftwidth=4

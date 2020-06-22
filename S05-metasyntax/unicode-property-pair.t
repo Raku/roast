@@ -20,3 +20,5 @@ is 'FooBar' ~~ /<:Name(/:s LATIN CAPITAL LETTER/)>+/, 'F',  'match character nam
 
 # Multiple of these terms may be combined with pluses and minuses:
 # XXX e.g. <+ :HexDigit - :Upper >
+
+# vim: expandtab shiftwidth=4

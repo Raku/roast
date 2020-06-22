@@ -121,4 +121,4 @@ is $same3, "aebebebc", 'all for blocks get $_';
     is $what, 'Array', 'will begin block gets var as topic';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

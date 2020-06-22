@@ -29,3 +29,5 @@ my ( $, $p1, $p2 ) = $method.signature.params;
 
 is ~$p1.WHY, 'Param One', "method.signature WHY param one";
 is ~$p2.WHY, 'Param Two', "method.signature WHY param two";
+
+# vim: expandtab shiftwidth=4

@@ -321,4 +321,4 @@ plan 110;
         'RT #120739 :kv on an whatever slice of an empty hash used in for loop';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

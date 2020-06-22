@@ -35,4 +35,4 @@ plan 12;
     throws-like '/\z/', X::Obsolete, '\\z is gone';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

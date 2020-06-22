@@ -12,4 +12,4 @@ plan 4;
      ok 'ab' ~~ .substr(0), 'method call with args 2';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

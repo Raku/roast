@@ -33,4 +33,4 @@ for <IN OUT ERR> -> $stream {
         with IO::Special.new: "<STD$stream>";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

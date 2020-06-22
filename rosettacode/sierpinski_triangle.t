@@ -53,3 +53,5 @@ my $expected = "               *
 
 $*OUT = $oldOUT;
 is($output.subst("\r\n", "\n", :g), $expected.subst("\r\n", "\n", :g), "Sierpinski Triangle");
+
+# vim: expandtab shiftwidth=4

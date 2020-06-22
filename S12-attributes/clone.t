@@ -36,6 +36,7 @@ lives-ok {
 }, '... getting attr from cloned value';
 is($val2, 42, '... cloned object has proper attr value');
 
+# https://github.com/Raku/old-issue-tracker/issues/660
 # Test to cover RT #62828, which exposed a bad interaction between while loops
 # and cloning.
 {
@@ -51,7 +52,7 @@ is($val2, 42, '... cloned object has proper attr value');
     }
 }
 
-# RT #88254
+# https://github.com/Raku/old-issue-tracker/issues/2403
 {
     my ($p, $q);
     $p = 'a' ~~ /$<foo>='a'/;
@@ -141,7 +142,7 @@ is($val2, 42, '... cloned object has proper attr value');
 
 lives-ok { Int.clone }, 'cloning a type object does not explode';
 
-# RT #125109
+# https://github.com/Raku/old-issue-tracker/issues/4197
 {
     my @a = 42;
     lives-ok { try { @a.clone } }, 'calling .clone on array does not die';
@@ -150,7 +151,7 @@ lives-ok { Int.clone }, 'cloning a type object does not explode';
     is @b, <42>, '.clone on array @a works as expected';
 }
 
-# RT #127704
+# https://github.com/Raku/old-issue-tracker/issues/5175
 {
     my %h1 = a => 1;
     my %h2 := %h1.clone;
@@ -169,4 +170,4 @@ subtest 'Array/Hash cloning does not lose the descriptor' => {
     is-deeply @ac[0, 1], (Nil, Nil), 'Array';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

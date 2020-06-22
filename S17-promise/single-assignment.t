@@ -49,3 +49,5 @@ my $exception = ::('X::Promise::Resolved');
     is $promise.status, Broken,
      'Keeping a vow does not change the status of an already Broken promise';
 }
+
+# vim: expandtab shiftwidth=4

@@ -50,4 +50,4 @@ cmp-ok $ref, '===', $ref[0], 'So [0] returns itself';
     lives-ok { $y = [0, 7] }, 'can assign arrayref to scalar that held an hashref';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

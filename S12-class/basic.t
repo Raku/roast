@@ -163,4 +163,4 @@ throws-like 'class RT124017_B:no_such_adverb {}', X::Syntax::Type::Adverb,
     eval-lives-ok 'class Adverbed:auth<random_auth>:ver<0.0.1> { }', 'can declare class with :auth and :ver adverbs';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

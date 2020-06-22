@@ -43,4 +43,4 @@ plan 10;
         '&say' ) =:= &say, '::("&foo") with a comment';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

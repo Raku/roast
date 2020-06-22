@@ -52,3 +52,5 @@ throws-like { fowl.new() },
     }
     dies-ok { DEF.new }, 'does the is required on private attributes work';
 }
+
+# vim: expandtab shiftwidth=4

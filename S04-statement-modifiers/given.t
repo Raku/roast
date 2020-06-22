@@ -26,7 +26,7 @@ plan 12;
     is($a, 'a', "post given");
 }
 
-# RT #121049
+# https://github.com/Raku/old-issue-tracker/issues/3317
 {
     my $a = '';
     for ^2 { my $b = $_ given 'a'; $a ~= $b; }
@@ -42,14 +42,14 @@ plan 12;
     is $i, 13, 'postfix given worked';
 }
 
-# RT #100746
+# https://github.com/Raku/old-issue-tracker/issues/2501
 {
     $_ = 'bogus';
     my @r = gather { take "{$_}" given 'cool' }
     is @r[0], 'cool', 'given modifies the $_ that is visible to the {} interpolator';
 }
 
-# RT #111704
+# https://github.com/Raku/old-issue-tracker/issues/2668
 {
     my $a = 'many ';
     try { $a ~= $_ } given 'pelmeni';
@@ -75,9 +75,9 @@ plan 12;
     is @a, (0, 0, 1, 1), 'given thunk does not mess up statement modifier closures';
 }
 
-# RT #79174
+# https://github.com/Raku/old-issue-tracker/issues/2257
 {
     is (1,2, given 3), "1 2", "given is a terminator even after comma";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

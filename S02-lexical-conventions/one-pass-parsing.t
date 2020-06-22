@@ -20,4 +20,4 @@ lives-ok { EVAL 'regex { <[ } > ]> }; 1' },
       "Using keyword if fails if not followed by whitespace";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

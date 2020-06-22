@@ -14,4 +14,4 @@ is($?LINE, 9, '$?LINE works');
 ok($?FILE ~~ rx/'S02-magicals'<[\/\\]>'file_line.t'/, '$?FILE works');
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

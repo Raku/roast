@@ -61,4 +61,4 @@ cmp-ok(p5_list_of_values(:context<void>), '===', Nil,
     "a p5 sub called in void context returns a Nil");
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

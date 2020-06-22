@@ -17,3 +17,5 @@ plan 1;
     is [+](@target), $n-threads * [+](^$n),
         'Lock provides mutual exclusion when pushing to array';
 }
+
+# vim: expandtab shiftwidth=4

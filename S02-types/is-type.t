@@ -62,3 +62,5 @@ for ^2 {
       inner => Str,
       'did we throw on multiple "is" types';
 }
+
+# vim: expandtab shiftwidth=4

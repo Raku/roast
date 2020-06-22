@@ -7,3 +7,5 @@ module Export_PackB {
     try { exported_foo() } == 42;
   }
 }
+
+# vim: expandtab shiftwidth=4

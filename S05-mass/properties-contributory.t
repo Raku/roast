@@ -67,3 +67,5 @@ ok(!( "\x[D246]"  ~~ m/^<:OtherUppercase>$/ ), q{Don't match unrelated <OtherUpp
 ok("\x[D246]"  ~~ m/^<:!OtherUppercase>$/, q{Match unrelated negated <OtherUppercase>} );
 ok("\x[D246]"  ~~ m/^<-:OtherUppercase>$/, q{Match unrelated inverted <OtherUppercase>} );
 ok("\x[D246]\c[ROMAN NUMERAL ONE]" ~~ m/<:OtherUppercase>/, q{Match unanchored <OtherUppercase>} );
+
+# vim: expandtab shiftwidth=4

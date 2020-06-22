@@ -13,4 +13,4 @@ throws-like ｢
     sub foo { whenever Promise.in(2) { say ‘hello’ } }; react foo
 ｣, X::Comp::WheneverOutOfScope, 'whenever not in lexical scope of react throws';
 
-# vim: expandtab shiftwidth=4 ft=perl6
+# vim: expandtab shiftwidth=4

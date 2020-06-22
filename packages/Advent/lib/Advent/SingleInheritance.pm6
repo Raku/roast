@@ -11,3 +11,5 @@ my class SingleInheritanceClassHOW
 }
 my module EXPORTHOW { }
 EXPORTHOW.WHO.<class> = SingleInheritanceClassHOW;
+
+# vim: expandtab shiftwidth=4

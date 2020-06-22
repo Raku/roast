@@ -23,3 +23,5 @@ my $c2 = counter(42);
 is $c2(), 42;
 is $c1(), 7;
 is $c2(), 43;
+
+# vim: expandtab shiftwidth=4

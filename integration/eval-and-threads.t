@@ -14,4 +14,4 @@ lives-ok {
     });
 }, 'Simple EVAL in a loop does not crash';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -5128,3 +5128,5 @@ is Uni.new(0x1F3F4, 0xE0067, 0xE0062, 0xE0065, 0xE006E, 0xE0067, 0xE007F).Str.ch
 is Uni.new(0x1F3F4, 0xE0067, 0xE0062, 0xE0073, 0xE0063, 0xE0074, 0xE007F).Str.chars, 1, "Codes: ⟅0x1F3F4, 0xE0067, 0xE0062, 0xE0073, 0xE0063, 0xE0074, 0xE007F⟆ 🏴󠁧󠁢󠁳󠁣󠁴󠁿 flag: Scotland";
 ## 1F3F4 E0067 E0062 E0077 E006C E0073 E007F  ; fully-qualified     # 🏴󠁧󠁢󠁷󠁬󠁳󠁿 flag: Wales # emoji-test.txt line #4108 Emoji version 12.0
 is Uni.new(0x1F3F4, 0xE0067, 0xE0062, 0xE0077, 0xE006C, 0xE0073, 0xE007F).Str.chars, 1, "Codes: ⟅0x1F3F4, 0xE0067, 0xE0062, 0xE0077, 0xE006C, 0xE0073, 0xE007F⟆ 🏴󠁧󠁢󠁷󠁬󠁳󠁿 flag: Wales";
+
+# vim: expandtab shiftwidth=4

@@ -110,4 +110,4 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 	is await($s.Promise), 'WHENEVER' xx 10, 'No hang when using zip-latest on two intervals';
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

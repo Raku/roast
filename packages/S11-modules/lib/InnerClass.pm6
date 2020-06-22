@@ -9,3 +9,5 @@ class InnerClassTwo {
     'test2';
   }
 }
+
+# vim: expandtab shiftwidth=4

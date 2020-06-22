@@ -296,4 +296,4 @@ subtest 'Junction arguments to `where` parameters' => {
     is xz(* <=> *), Order::Less, "subset with Code arity check in sub signature";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

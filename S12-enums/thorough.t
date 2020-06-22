@@ -64,6 +64,7 @@ sub test_stuff($x) {
   test_stuff($x);
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/823
 # used to be Rakudo regression, RT #64098
 {
     augment class Mu {
@@ -87,25 +88,25 @@ ok Bool::True.raku ~~/^ 'Bool::True'/, 'Bool::True.raku';
     is $foo, Negation::isnt, 'assignment from enum works';
 }
 
-# RT #66886
+# https://github.com/Raku/old-issue-tracker/issues/1091
 {
     enum RT66886 <b>;
     throws-like 'RT66886::c', Exception, 'accessing non-value of enum dies proper-like';
 }
 
-# RT #65658
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     enum RT65658 <Todo Bug Feature Ticket>;
     is RT65658(2), RT65658::Feature, 'can index enum by number';
     is RT65658((Todo + 3.2).Int), RT65658::Ticket, 'enum and math and index';
 }
 
-# RT #71196
+# https://github.com/Raku/old-issue-tracker/issues/1434
 {
     eval-lives-ok 'enum X is export <A B C>', 'marking enum export does not die';
 }
 
-# RT #101900
+# https://github.com/Raku/old-issue-tracker/issues/2526
 #?rakudo todo 'RT #101900'
 {
     throws-like 'enum rt_101900 < a b >; class A { }; note A but rt_101900::a',
@@ -113,7 +114,7 @@ ok Bool::True.raku ~~/^ 'Bool::True'/, 'Bool::True.raku';
         "Cannot mixin an enum into a class";
 }
 
-# RT #125445
+# https://github.com/Raku/old-issue-tracker/issues/4335
 {
     my enum Bar <A B C>;
     ok B.can("value"), '.can(...) on an enum';
@@ -130,4 +131,4 @@ ok Bool::True.raku ~~/^ 'Bool::True'/, 'Bool::True.raku';
     is AA.m, 44, "Can mix a private method into an enum value"
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

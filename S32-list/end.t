@@ -61,3 +61,5 @@ is  3.end, 0,  'Scalars look like wrapped in a single-item list';
         '... end() dies without an argument';
 }
 #vim: ft=perl6
+
+# vim: expandtab shiftwidth=4

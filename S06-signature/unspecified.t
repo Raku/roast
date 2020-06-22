@@ -16,6 +16,7 @@ dies-ok { EVAL('simple( :golf<hotel> )') },
 dies-ok { EVAL("simple( 'india' )") },
         'sub with no signature dies when given positional argument';
 
+# https://github.com/Raku/old-issue-tracker/issues/4350
 sub positional { @_[0] }
 is &positional.signature.raku, ':(*@_)',
    'signature is :(Mu *@_) when none is specified and @_ is used, RT #125486';
@@ -24,6 +25,7 @@ nok positional().defined, 'sub using positional param called with no params';
 dies-ok { positional( :victor<whiskey> ) },
    'sub using positional param called with named param';
 
+# https://github.com/Raku/old-issue-tracker/issues/4350
 sub named { %_<bravo> }
 is &named.signature.raku, ':(*%_)',
    'signature is :(Mu *%_) when none is specified and %_ is used, RT #125486';
@@ -31,6 +33,7 @@ is named( :bravo<charlie> ), 'charlie', 'can call sub with named param used';
 nok named().defined, 'named param sub is callable with no params';
 eval-dies-ok ｢named( 'zulu' )｣, 'named param sub dies with positional param';
 
+# https://github.com/Raku/old-issue-tracker/issues/4350
 sub both { @_[1] ~ %_<delta> }
 is &both.signature.raku, ':(*@_, *%_)',
    'signature is :(Mu *@_, Mu *%_) when none is specified and @_ and %_ are used, RT #125486';
@@ -39,7 +42,7 @@ is both( 'x', :delta<echo>, 'foxtrot' ), 'foxtrotecho',
 is both(), '',
    'sub using both named and position params works with no params';
 
-# RT #71112
+# https://github.com/Raku/old-issue-tracker/issues/1432
 {
     sub rt71112 { @_[0] = 'changed'; @_[0]  }
     my $tender = 'sanity';
@@ -48,4 +51,4 @@ is both(), '',
     is $tender, 'sanity', 'The variable passed is unchanged';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

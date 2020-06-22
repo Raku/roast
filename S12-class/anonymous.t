@@ -76,4 +76,4 @@ throws-like q[anon class C { }; C.WHAT; ], X::Undeclared::Symbols,
     ok (class {}) !=== (class {}), 'anonymous classes are distinct';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

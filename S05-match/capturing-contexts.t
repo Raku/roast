@@ -43,12 +43,12 @@ plan 64;
 # https://github.com/Raku/old-issue-tracker/issues/640
 {
   use MONKEY-TYPING;
-  augment class Match { method keys () {return %(self).keys }; };
+  augment class Match { method beys () {return %(self).keys }; };
   my rule a {H};
   "Hello" ~~ /<a=&a>/;
-  is $/.keys, 'a', 'get rule result';
+  is $/.beys, 'a', 'get rule result';
   my $x = $/;
-  is $x.keys, 'a', 'match copy should be same as match';
+  is $x.beys, 'a', 'match copy should be same as match';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/932
@@ -171,8 +171,9 @@ plan 64;
 # https://github.com/Raku/old-issue-tracker/issues/2352
 {
     'x' ~~ /(y)? (z)*/;
-    is $0.defined, False, 'quantifier ? matching 0 values returns Nil';
-    is $1.defined, True, 'quantifier * matching 0 values returns empty list';
+    is-deeply $0, Nil, 'quantifier ? matching 0 values returns Nil';
+    ok $1 ~~ Positional && $1.elems == 0,
+      'quantifier * matching 0 values returns empty list';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/4304
@@ -291,4 +292,4 @@ subtest 'capture markers work correctly' => {
     is-deeply ~$r2<ber>, 'EO',    '<ber> (grammar 2)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

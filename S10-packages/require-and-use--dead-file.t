@@ -49,4 +49,4 @@ is($loaded,   1, "&no doesn't load the module again");
 is($imported, 1, "&no calls &unimport");
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

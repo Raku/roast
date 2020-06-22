@@ -26,4 +26,4 @@ ok(%a ~~ / ^ 'b' /, q|%a ~~ / ^ 'b' /|);
 ok(%a ~~ / ^ 'a' /, q|%a ~~ / ^ 'a' /|);
 ok(%a ~~ / ^ 'a' $ /, q|%a ~~ / ^ 'a' $ /|);
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

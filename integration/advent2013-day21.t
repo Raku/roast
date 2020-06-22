@@ -141,3 +141,5 @@ is-deeply guess("World",37), True, 'optional';
     sub tst-ro($p is copy) {$p = 42;}
     is $a, 35, 'copy trait';
 }
+
+# vim: expandtab shiftwidth=4

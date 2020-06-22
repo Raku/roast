@@ -41,7 +41,7 @@ plan 20;
 
 throws-like '5!', X::Syntax::Confused, 'import of operators is lexical';
 
-# RT #126761
+# https://github.com/Raku/old-issue-tracker/issues/4798
 {
     my @results;
     module m {
@@ -54,4 +54,4 @@ throws-like '5!', X::Syntax::Confused, 'import of operators is lexical';
     is @results, "2 1 2 1", "precedence is exported/imported properly along with operators";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

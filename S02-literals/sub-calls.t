@@ -67,4 +67,4 @@ plan 20;
     # but we need tests, tests, tests! XXX
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

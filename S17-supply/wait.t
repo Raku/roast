@@ -40,4 +40,4 @@ dies-ok { Supply.wait }, 'can not be called as a class method';
     is-deeply @emitted, [1, 1, 2, 2], '.wait on tapped supply';
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

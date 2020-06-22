@@ -150,4 +150,4 @@ plan 40;
     is $result, 'BCB', 'smart-matching against a flip-flop works';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

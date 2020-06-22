@@ -29,3 +29,5 @@ for <utf-8 ascii latin-1 windows-1252> -> $encoding {
         .close;
     }
 }
+
+# vim: expandtab shiftwidth=4

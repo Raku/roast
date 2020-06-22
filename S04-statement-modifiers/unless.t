@@ -49,7 +49,7 @@ plan 10;
     is $a, 0, 'Statement-modifier unless runs block with placeholder';
 }
 
-# RT #79174
+# https://github.com/Raku/old-issue-tracker/issues/2257
 {
     is (1,2, unless 0), "1 2", "unless is a terminator even after comma";
 }
@@ -63,4 +63,4 @@ plan 10;
     is $res, 2, 'Correct handling of $_ in block to left of statement modifer unless';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

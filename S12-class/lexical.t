@@ -58,4 +58,4 @@ throws-like '{ my class B {}; B.new; }; B.new', X::Undeclared::Symbols,
         'can construct objects of inner class in outer constructor';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

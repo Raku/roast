@@ -144,7 +144,7 @@ $multiline = "Hello\n    World";
     is no-r(@q3[0]), "line one\nline two\n", "mixing tabs and spaces even more evil-ly";
 }
 
-# RT #117853
+# https://github.com/Raku/old-issue-tracker/issues/3121
 {
     constant TEXT = q :to 'END';
     Hello world
@@ -154,7 +154,7 @@ $multiline = "Hello\n    World";
     is no-r(TEXT), "Hello world\n:)\n", "Constant heredocs work";
 }
 
-# RT #117705
+# https://github.com/Raku/old-issue-tracker/issues/3110
 {
     my $eefee = q:to<END>;
 
@@ -181,7 +181,7 @@ END
 
 }
 
-# RT #120895
+# https://github.com/Raku/old-issue-tracker/issues/3299
 {
     #  Should also try this with varying $?TABSTOP when that gets implemented
 
@@ -214,6 +214,7 @@ END
         "Heredoc tab explosion makefile use case is usesul.";
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/6456
 #?rakudo skip 'RT #131927'
 {
     # Don't change the space in front of any of these, or you'll change the test!
@@ -271,3 +272,5 @@ END
     is   no-r(@q6[0]), "line one\n\tline two\n",      'trim 9 leading spaces, leave leading tab in line two';
     isnt no-r(@q6[0]), "line one\n       line two\n", 'should not contain 7 leading spaces in line two';
 }
+
+# vim: expandtab shiftwidth=4

@@ -325,4 +325,4 @@ test-trailing($block, 'this is a block');
 
 is $=pod.elems, $pod_index;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

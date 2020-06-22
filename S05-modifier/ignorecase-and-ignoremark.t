@@ -32,14 +32,14 @@ is('fooäàAÁâåbar' ~~ m:m:i/<-[A]>+/, 'foo',      'negated character class')
 
 is('fooäàAÁâåbar' ~~ m:m:i/<[a..b]>+/, 'äàAÁâåba', 'range in character class');
 
-# RT #126771
+# https://github.com/Raku/old-issue-tracker/issues/4803
 {
     $_ = "Bruce Gray";
     my $x = "Andrew Egeler";
     is m:i:m/$x/, Nil, "interpolation longer than topic doesn't blow up";
 }
 
-# RT #128875
+# https://github.com/Raku/old-issue-tracker/issues/5549
 {
     my @strings = "All hell is breaking loose", "Āll hell is breakinġ loose";
     for @strings {
@@ -50,4 +50,4 @@ is('fooäàAÁâåbar' ~~ m:m:i/<[a..b]>+/, 'äàAÁâåba', 'range in character
         is-deeply ('word' ~ $_) ~~ m:i:m/$var/, False, 'RT128875 :i:m combined matches whole string when a single character match is found';
     }
 }
-# vim: syn=perl6 sw=4 ts=4 expandtab
+# vim: expandtab shiftwidth=4

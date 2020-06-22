@@ -92,3 +92,5 @@ is_run ｢use Test; plan 1; todo 1;
         :err{.&output-has: :0noks, :0fails, :0todos},
         :out{.&output-has: :6noks, :6fails, :7todos}, :0status
     }, 'case eight';
+
+# vim: expandtab shiftwidth=4

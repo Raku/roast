@@ -136,3 +136,5 @@ throws-like { EVAL('-> int $x { $x = 42 }') },
     X::Assignment::RO::Comp,
     variable => '$x',
     'Assignment to pointy block native read-only arg caught at compile time';
+
+# vim: expandtab shiftwidth=4

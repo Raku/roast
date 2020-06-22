@@ -28,7 +28,7 @@ is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 }
 
 # GERMAN SHARP S ("ß") should uc() to "SS", per SpecialCasing.txt
-# RT #121377
+# https://github.com/Raku/old-issue-tracker/issues/3352
 is(uc("ß"), "SS", "uc() of non-ascii chars may result in two chars");
 
 {
@@ -67,4 +67,4 @@ is ~(0.lc),         ~0, '.lc on Int';
     is-deeply "\c[arabic number sign]a".uc, "\c[arabic number sign]A", "Uppercasing works even with prepend codepoints";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

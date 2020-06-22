@@ -58,4 +58,4 @@ is ([\,] <a b>, <c d>, <e f>)».join('|').join('-'), "a b-a b|c d-a b|c d|e f",
     is( $a{$_}, 42, "is key $_ 42?" ) for <a b c>;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

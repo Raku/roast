@@ -59,3 +59,5 @@ is unival('兆'), 1_0000_0000_0000, "'兆' has the value 1_0000_0000_0000";
 is unival("\x19DA"), 1, "NEW TAI LUE THAM DIGIT ONE has value 1";
 is unival("\c[AEGEAN NUMBER NINETY THOUSAND]"), 90000, "AEGEAN NUMBER NINETY THOUSAND has value 90000";
 is unival("\c[MATHEMATICAL MONOSPACE DIGIT FIVE]"), 5, "MATHEMATICAL MONOSPACE DIGIT FIVE has value 5";
+
+# vim: expandtab shiftwidth=4

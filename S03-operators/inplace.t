@@ -327,4 +327,4 @@ subtest 'constants' => {
     is-deeply foo7, Array[Numeric].new(1, 2, 3), 'parametarized type';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

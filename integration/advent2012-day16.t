@@ -27,3 +27,5 @@ is $x ** 2 + 3 * $x - 5, (($x ** 2) + (3 * $x)) - 5;
 is $x = $y = $z, 18;
 is $y, 18;
 
+
+# vim: expandtab shiftwidth=4

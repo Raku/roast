@@ -109,4 +109,4 @@ is(@a, @e, "list was reversed");
       'reverse also works on Lists';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

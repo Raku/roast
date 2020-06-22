@@ -74,12 +74,12 @@ plan 21;
     is foo(), 'OH HAI', 'can use &a as a named parameter';
 }
 
-# RT #125988
+# https://github.com/Raku/old-issue-tracker/issues/4511
 {
     throws-like 'sub f (Int &b:(--> Bool)) { }', X::Redeclaration, 'only one way of specifying sub-signature return type allowed';
 }
 
-# RT #123116
+# https://github.com/Raku/old-issue-tracker/issues/3575
 lives-ok {
     my class Dog {};
     sub foo(&block:(Dog --> Bool)) {
@@ -96,4 +96,4 @@ subtest 'can use signature unpacking with anonymous parameters' => {
     throws-like '-> &:(Int) {}({;})', X::TypeCheck::Binding::Parameter,
         'typcheck correctly fails with wrong arg';
 }
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

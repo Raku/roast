@@ -101,7 +101,7 @@ ok !$d.^does(InitialAttribBoth["type1", "name1"]),
 is $d.type, "type1", ".type works correctly";
 is $d.name, "name1", ".name works correctly";
 
-# RT #123511
+# https://github.com/Raku/old-issue-tracker/issues/3628
 {
     role A [ :$a = 1, :$b = $a * 2] {
         method foo { $a ~ "-" ~ $b }
@@ -114,4 +114,4 @@ is $d.name, "name1", ".name works correctly";
         'Parametric role used a second time uses correct default value';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

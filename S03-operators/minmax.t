@@ -132,4 +132,4 @@ This test min/max functions in their operator form. To see them tested in their 
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -35,3 +35,5 @@ eval-dies-ok $table1, "dies-ok, empty table";
 eval-dies-ok $table2, "dies-ok, empty table";
 eval-dies-ok $table3, "dies-ok, consecutive row separators";
 eval-dies-ok $table4, "dies-ok, mixed ws and vis col separators";
+
+# vim: expandtab shiftwidth=4

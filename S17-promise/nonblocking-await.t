@@ -214,7 +214,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
         'No error due to trying to do non-blocking await when lock held (lock/unlock)';
 }
 
-# RT #130692
+# https://github.com/Raku/old-issue-tracker/issues/6046
 #?rakudo.jvm skip 'UnwindException'
 {
     my $kill = Promise.new;
@@ -253,7 +253,7 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     ok [eq](@responses), 'Rest of responses also correct';
 }
 
-# RT #132091
+# https://github.com/Raku/old-issue-tracker/issues/6521
 {
     my @foo = do {
         await start { do for ^2 { my uint64 @ = 9, 9; }.Slip },
@@ -284,4 +284,4 @@ PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
     is-deeply $x, 9, '&await awaits in sink context, with nested iterables';
 }
 
-# vim: ft=perl6 sw=4 ts=4 sts=4 expandtab
+# vim: expandtab shiftwidth=4

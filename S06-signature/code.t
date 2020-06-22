@@ -30,14 +30,14 @@ dies-ok { EVAL 'tester2(not_returns_a_sub)' },
 
 is tester2({ 'block' }), 1, 'Can pass a block to a &parameter';
 
-# RT #68578
+# https://github.com/Raku/old-issue-tracker/issues/1231
 {
     sub rt68578( Callable &x ) {}   #OK not used
     dies-ok { rt68578({ 'block' }) },
             "Can't pass something that isn't typed as returning Callable";
 }
 
-# RT #67932
+# https://github.com/Raku/old-issue-tracker/issues/1174
 {
     my $tracker;
     sub foo(&foo = &foo) {
@@ -49,4 +49,4 @@ is tester2({ 'block' }), 1, 'Can pass a block to a &parameter';
     ok !$tracker.defined, 'the inner &foo is undefined (scoping)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

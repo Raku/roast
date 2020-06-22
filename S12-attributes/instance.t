@@ -315,7 +315,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $c.y, 2, '...and copies what we did not change.';
 }
 
-# RT #118559
+# https://github.com/Raku/old-issue-tracker/issues/3172
 {
     class RT118559 { has @.fields; };
     my $x1 = RT118559.new( fields => ['a','b'] );
@@ -324,7 +324,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $x2.fields.join('-'), 'c-d', 'cloned object has its own attributes';
 }
 
-# RT #120059
+# https://github.com/Raku/old-issue-tracker/issues/3243
 {
     class RT120059 { has Int @.ints };
     my RT120059 $one .= new( ints => [1, 2] );
@@ -333,6 +333,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $two.ints.join('-'), '3-4-5', 'cloned object has new attributes';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/542
 # tests for *-1 indexing on classes, RT #61766
 {
     class ArrayAttribTest {
@@ -350,7 +351,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $o.m1, 'b', '@.a[*-2] works';
     is $o.m2, 'c', '@.a[*-1] works';
 
-    # RT #75266
+    # https://github.com/Raku/old-issue-tracker/issues/1777
     is ArrayAttribTest.new(a => <x y z>).a[2.0], 'z',
         'Can index array attributes with non-integers';
 }
@@ -385,6 +386,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 }
 
 # test that whitespace characters after 'has (' are allowed.
+# https://github.com/Raku/old-issue-tracker/issues/566
 # This used to be a Rakudo bug (RT #61914)
 {
     class AttribWsTest {
@@ -397,6 +399,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $o.that, 4, '.. and a newline within the has() declarator';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/668
 # test typed attributes and === (was Rakudo RT#62902).
 {
     class TA1 { }
@@ -536,7 +539,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is C.new.s, 6, "Test class include another class which inherited from same role";
 }
 
-# RT #68370
+# https://github.com/Raku/old-issue-tracker/issues/1218
 {
     class RT68370 {
         has $!a;
@@ -547,6 +550,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
         'dies: trying to modify instance attribute when invocant is type object';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/910
 # Binding an attribute (was RT #64850)
 {
     class RT64850 {
@@ -558,6 +562,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $a.x, 42, 'binding to an attribute works';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4081
 #?rakudo skip 'dubious test - the initializer becomes a submethod here, implying a scope RT #124908'
 {
     class InitializationThunk {
@@ -568,7 +573,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is InitializationThunk.new.bar, 5, 'a lexical is not tied to a thunk';
 }
 
-# RT #69202
+# https://github.com/Raku/old-issue-tracker/issues/1289
 {
     class TestMethodAll {
         has $.a;
@@ -579,7 +584,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 }
 
 
-# RT #74186
+# https://github.com/Raku/old-issue-tracker/issues/1674
 {
     sub outer { 42 };
     class AttribLex {
@@ -591,7 +596,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is AttribLex.new.inner, 23, 'Can use lexicals in attribut initialization';
 }
 
-# RT #85502
+# https://github.com/Raku/old-issue-tracker/issues/2380
 {
     class AttribListAssign {
         has $.a;
@@ -608,7 +613,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 
 }
 
-# RT #68498
+# https://github.com/Raku/old-issue-tracker/issues/1223
 {
     class Foo { has $.bar = "baz"; submethod BUILD {} }
     is Foo.new.bar, 'baz',
@@ -616,16 +621,16 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 
 }
 
-# RT #108670
+# https://github.com/Raku/old-issue-tracker/issues/2616
 throws-like 'my class AccessorClash { has @.a; has &.a }', Exception,
     'cannot have two attributes with same accessor name';
-# RT #74274
+# https://github.com/Raku/old-issue-tracker/issues/1679
 throws-like q[class RT74274 { has $!a }; my $a = RT74274.new(a => 42);
     my $method = method { return $!a }; $a.$method()],
     Exception,
     'cannot sneak in access to private attribute through the backdoor';
 
-# RT #74636
+# https://github.com/Raku/old-issue-tracker/issues/1719
 {
     my class HasArray {
         has @.a;
@@ -643,7 +648,7 @@ throws-like q[class RT74274 { has $!a }; my $a = RT74274.new(a => 42);
     }
 }
 
-# RT #123757
+# https://github.com/Raku/old-issue-tracker/issues/3670
 {
     my class Foo { has @.bar }
     is Foo.new( bar => [1,2,3] ).bar.elems, 3,
@@ -652,7 +657,7 @@ throws-like q[class RT74274 { has $!a }; my $a = RT74274.new(a => 42);
         'initializing with $[...] is still one item';
 }
 
-# RT #110096
+# https://github.com/Raku/old-issue-tracker/issues/2644
 {
     class AttrInSub {
         sub f {
@@ -663,7 +668,7 @@ throws-like q[class RT74274 { has $!a }; my $a = RT74274.new(a => 42);
 
 }
 
-# RT #107232
+# https://github.com/Raku/old-issue-tracker/issues/2590
 {
     my class Shadowing {
         has $x;
@@ -676,7 +681,7 @@ throws-like q[class RT74274 { has $!a }; my $a = RT74274.new(a => 42);
 
 }
 
-# RT #122543
+# https://github.com/Raku/old-issue-tracker/issues/3482
 {
     my class RT122543 {
         has ($.x, $.y) is rw;
@@ -700,7 +705,7 @@ throws-like q[class RT74274 { has $!a }; my $a = RT74274.new(a => 42);
     ;
 }
 
-# RT #127665
+# https://github.com/Raku/old-issue-tracker/issues/5164
 {
     my class A {
         has $.x is rw;
@@ -710,4 +715,4 @@ throws-like q[class RT74274 { has $!a }; my $a = RT74274.new(a => 42);
     nok A.^lookup('y').rw, 'readonly accessor method not marked rw';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

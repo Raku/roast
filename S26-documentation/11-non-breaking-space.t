@@ -35,3 +35,5 @@ my $pod-char = @pod-chars[4];
 is $raw-char.ord.base(16), 'A0', 'non-breaking space as entered by the user';
 is $pod-char.ord.base(16), 'A0', "user's non-breaking whitespace is unchanged by pod processing";
 is $raw-char.ord.base(16), $pod-char.ord.base(16), "user's non-breaking white space is unchanged by pod processing";
+
+# vim: expandtab shiftwidth=4

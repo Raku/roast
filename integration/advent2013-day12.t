@@ -97,4 +97,4 @@ is-deeply %h<a b c>:delete:k, ('a', 'b'), ':delete:k adverbs';
     is-deeply @a[2,3,4]:exists, (True, False, True), '@a[2,3,4] (default)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

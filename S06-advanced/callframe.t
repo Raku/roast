@@ -44,11 +44,11 @@ f();
 is $x,  23, '$x successfully modified';
 is $y, 353, '$y not modified';
 
-# RT #77752
+# https://github.com/Raku/old-issue-tracker/issues/2150
 ok callframe.raku.starts-with("CallFrame."),   'CallFrame.raku works';
 ok callframe.gist.starts-with($*PROGRAM-NAME), 'CallFrame.gist works';
 
-# RT #127479
+# https://github.com/Raku/old-issue-tracker/issues/5117
 lives-ok { sub{callframe.raku}() }, '.raku on callframe in a sub does not crash';
 
 lives-ok {
@@ -98,4 +98,4 @@ lives-ok
     is $seen, 300, 'did we get the right callframe each time?';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

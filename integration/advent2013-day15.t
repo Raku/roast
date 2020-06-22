@@ -56,3 +56,5 @@ is (Inf > $googol).gist, 'True', 'Inf > $googol';
 my $max = -Inf;
 $max max= 5;          # (max= means "store only if greater")
 is-deeply $max, 5, 'max';             # 5
+
+# vim: expandtab shiftwidth=4

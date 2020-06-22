@@ -2007,3 +2007,5 @@ ok Uni.new(0xC9CA).NFKC.list ~~ (0xC9CA,), 'C9CA -> C9CA';
 ok Uni.new(0xC9CB).NFKC.list ~~ (0xC9CB,), 'C9CB -> C9CB';
 ok Uni.new(0xC9CC).NFKC.list ~~ (0xC9CC,), 'C9CC -> C9CC';
 ok Uni.new(0xC9CD).NFKC.list ~~ (0xC9CD,), 'C9CD -> C9CD';
+
+# vim: expandtab shiftwidth=4

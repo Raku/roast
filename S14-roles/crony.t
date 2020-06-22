@@ -33,4 +33,4 @@ $w.inner_role_var_2 = 'dog';
 is $w.inner_role_var_1, 3 , "integer attribute is set in inner role" ; 
 is $w.inner_role_var_2,'dog' , "string attribute is set in inner role" ;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

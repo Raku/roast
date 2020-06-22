@@ -161,3 +161,5 @@ isa-ok $r.contents[4], Pod::Block::Para;
 is $r.contents.elems, 5;
 
 eval-lives-ok "=begin pod\nSome documentation\n=end pod", "Pod files don't have to end in a newline";
+
+# vim: expandtab shiftwidth=4

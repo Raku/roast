@@ -20,4 +20,4 @@ is(Text::Wrap::wrap('foo', 'bar', 'baz'), 'foobaz', "import p5 module");
 is(wrap('foo', 'bar', 'baz'), 'foobaz', "import p5 module");
 ],"parse :from<Perl5> syntax");
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

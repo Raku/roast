@@ -117,7 +117,7 @@ plan 14;
     is funny_nil(), Nil, 'Nil from an empty block turns into no code';
 }
 
-# RT #115500
+# https://github.com/Raku/old-issue-tracker/issues/2949
 {
     macro rt115500v1() {
         my $q1 = quasi { 6 };
@@ -134,3 +134,5 @@ plan 14;
     is rt115500v2(), 66,
         'addition of two quasis with arithmetical expressions works (2)';
 }
+
+# vim: expandtab shiftwidth=4

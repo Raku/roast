@@ -157,7 +157,7 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
        'MD with generics at class composition times fails (wrong arity)';
 }
 
-# RT #77338
+# https://github.com/Raku/old-issue-tracker/issues/2081
 {
     lives-ok { role A[::T $?] {}; class B does A[] {} },
         'question mark for optional parameter is parsed correctly';
@@ -166,7 +166,7 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
         'cannot put question mark on a type constraint';
 }
 
-# RT #109880
+# https://github.com/Raku/old-issue-tracker/issues/2641
 {
     role Foo[::T] { has T @.a = T }; class Bar {};
     is( Foo[Bar].new.a[0], Bar, 'generic role with defaulted and typed attr' );
@@ -193,4 +193,4 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
     nok r ~~ PR00[Str], "Curryied role only matches its own consumed roles";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

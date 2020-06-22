@@ -39,4 +39,4 @@ is "{ CHECK { $hist ~= 'C' } }", "BC",
 is "{ BEGIN { $hist ~= 'B' } }", "B",
     'BEGIN {...} fired at compile-time, ASAP';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

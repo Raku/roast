@@ -46,4 +46,4 @@ plan 14;
     is 'ab' ~~ / :r [ab || a ]:! b /,  'ab', 'backtrack into [ || ]:! despite :r';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

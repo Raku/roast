@@ -47,7 +47,7 @@ is $nest(1), 'little', 'nested when in a sub works (1)';
 is $nest(2), 'four!', 'nested when in a sub works (2)';
 is $nest(3), 'huge', 'nested when in a sub works (3)';
 
-# RT #115384
+# https://github.com/Raku/old-issue-tracker/issues/2942
 {
     my $iters = 0;
     $iters++ for do given 1 { when True { { a => 1, b => 2 } } };
@@ -79,7 +79,8 @@ is $nest(3), 'huge', 'nested when in a sub works (3)';
     is $a, 42, 'default does not strip Scalar containers';
 }
 
-# RT#120498
+# https://github.com/Raku/old-issue-tracker/issues/3267
+
 lives-ok { while $++ < 2 { when 'hi' { } } }, '`when` in a loop lives';
 
 # https://github.com/rakudo/rakudo/issues/2644
@@ -93,4 +94,4 @@ lives-ok { while $++ < 2 { when 'hi' { } } }, '`when` in a loop lives';
     is $i, 5, 'Successful when does not terminate a loop prematurely';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

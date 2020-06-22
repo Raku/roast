@@ -24,3 +24,5 @@ plan 4;
     is-deeply $enc.encode-chars('foo£'), blob8.new(102,111,111,102),
         'ASCII encoder configured to use custom replacement works';
 }
+
+# vim: expandtab shiftwidth=4

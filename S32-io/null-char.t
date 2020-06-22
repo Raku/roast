@@ -22,4 +22,4 @@ plan 7*@nuls;
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

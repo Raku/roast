@@ -36,7 +36,7 @@ sub blat ($x, @a [$a, *@b]) {
 is blat( 1, [2,3,4] ), "2|3|4", 'unpack named array';
 is blat( 2, [2,3,4] ), "2-3-4", 'unpack named array with named pieces';
 
-# RT #75900
+# https://github.com/Raku/old-issue-tracker/issues/1859
 {
     my @my-array = 4,2,3,4;
 
@@ -57,4 +57,4 @@ for [1,2],[3,4] -> $a [$x, $y] {
     isa-ok $a.VAR, Scalar, "[...] doesn't lose containerization";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

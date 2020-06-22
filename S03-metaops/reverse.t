@@ -57,7 +57,7 @@ is 3 R/ 9 + 5, 8, 'R/ gets precedence of /';
 is 4 R- 5 R/ 10, -2, "Rop gets the precedence of op";
 is (9 R... 1, 3), (1, 3, 5, 7, 9), "Rop gets list_infix precedence correctly";
 
-# RT #93350
+# https://github.com/Raku/old-issue-tracker/issues/2415
 throws-like '("a" R~ "b") = 1', X::Assignment::RO, 'Cannot assign to return value of R~';
 
 {
@@ -65,14 +65,14 @@ throws-like '("a" R~ "b") = 1', X::Assignment::RO, 'Cannot assign to return valu
     is $x, 1, "R= works";
 }
 
-# RT #118793
+# https://github.com/Raku/old-issue-tracker/issues/3185
 {
     throws-like { EVAL q[my $x; 5 R:= $x] }, Exception,
         message => 'Cannot reverse the args of := because list assignment operators are too fiddly',
         'adequate error message on trying to metaop-reverse binding (:=)';
 }
 
-# RT #116649
+# https://github.com/Raku/old-issue-tracker/issues/3042
 {
     my $y = 5;
     is $y [R/]= 1, 1/5, '[R/]= works correctly (1)';
@@ -89,7 +89,7 @@ throws-like '("a" R~ "b") = 1', X::Assignment::RO, 'Cannot assign to return valu
     is $foo, "barfoo", '[Rop]= works correctly.';
 }
 
-# RT #118791
+# https://github.com/Raku/old-issue-tracker/issues/3184
 {
     my @a = 5 Rxx rand;
     ok !([==] @a), "Rxx thunks the RHS";
@@ -171,7 +171,7 @@ sub infix:<op> ($a,$b) { $a - $b }
 }
 is &infix:<Rop>(2,3), 1, "Meta reverse Rop autogen with user-overridden op stays local to block";
 
-# RT #128703
+# https://github.com/Raku/old-issue-tracker/issues/5473
 is-deeply (1 R, 2 R, 3 R, 4), (4, 3, 2, 1),
     'List associative operators and R interact OK';
 
@@ -185,4 +185,4 @@ subtest '[R~]=' => {
     is-deeply $a,             "foobar", 'assign to :D, result';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -33,4 +33,4 @@ is $second.b, 8, 'assignment to attributes in clone worked (2)';
 is $first.a, 1, 'assignment to clone left original copy unchanged (1)';
 is $first.b, 2, 'assignment to clone left original copy unchanged (2)';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

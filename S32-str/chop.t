@@ -54,11 +54,11 @@ throws-like 'Str.chop(10)', Exception;
 #   which can be defined by the filehandle that obtains the default string at
 #   the first place. To get destructive behaviour, use the .= form.
 
-# RT #125814
+# https://github.com/Raku/old-issue-tracker/issues/4474
 {
     is 'xx'.chop($_), '', ".chop with large values returns empty string [using $_]"
         for 999_999, 999_999_999, 999_999_999_999,
             9_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

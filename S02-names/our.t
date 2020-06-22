@@ -34,4 +34,4 @@ plan 10;
     is $rt69460, 2, 'class can modify our variable';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

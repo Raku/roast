@@ -75,3 +75,5 @@ plan 39;
     dies-ok { @a[1;2] = 1 }, 'Cannot assign to multi-dim native int array out of bounds (2)';
     dies-ok { @a[2;2] = 1 }, 'Cannot assign to multi-dim native int array out of bounds (3)';
 }
+
+# vim: expandtab shiftwidth=4

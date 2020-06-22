@@ -35,4 +35,4 @@ is $/.chunks.map({.value}).join('|'), 'ab| cd ef', 'right values of .chunks';
     is @a.join('|'), 'a|b|c', 'right values';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

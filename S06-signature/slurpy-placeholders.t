@@ -38,4 +38,4 @@ both(5, :b(6), 3, :a(4));
 }
 
 
-# vim: syn=perl6
+# vim: expandtab shiftwidth=4

@@ -27,9 +27,9 @@ multi sub slurpy(*@args)      { return 'b' };   #OK not used
 is slurpy(2), 'b', 'basic sanity with arity based dispatch and slurpies';
 is slurpy(),  'a', '"is default" trait wins against empty slurpy param';
 
-# RT #126108
+# https://github.com/Raku/old-issue-tracker/issues/4556
 throws-like 'my $a of Int is default("foo")', X::Parameter::Default::TypeCheck,
     expected => Int,
 'error message for default() type mismatch indicates correct expected type';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

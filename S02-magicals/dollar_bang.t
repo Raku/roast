@@ -42,7 +42,7 @@ try {
     die; # use the default argument
 }
 
-# RT #70011
+# https://github.com/Raku/old-issue-tracker/issues/1379
 {
     $! = Nil;
     try { die('goodbye'); }
@@ -68,4 +68,4 @@ try {
     ok (! $!), '$! as boolean works (false)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

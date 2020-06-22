@@ -12,4 +12,4 @@ plan 1;
     is S(Stash.new), 'Stash', 'Stash.new creates Stash, not a Hash';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

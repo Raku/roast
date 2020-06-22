@@ -480,4 +480,4 @@ subtest 'Callable mapper is executed only once per each item' => {
     $c = 0; MixHash.new.classify-list: {$c++};  is $c, 0, 'MixHash, no items';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

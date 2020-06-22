@@ -4,9 +4,9 @@ use Test;
 plan 1;
 
 {
-    # RT #128099
+    # https://github.com/Raku/old-issue-tracker/issues/5308
     lives-ok { $*GROUP.gist; $*GROUP.WHAT.gist; },
         '.WHAT on $*GROUP after using $*GROUP values lives';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

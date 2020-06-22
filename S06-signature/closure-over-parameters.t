@@ -26,4 +26,4 @@ is factorial(1), 1, "closing over params of outer subs (1)";
 is factorial(2), 2, "closing over params of outer subs (2)";
 is factorial(3), 6, "closing over params of outer subs (3)";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

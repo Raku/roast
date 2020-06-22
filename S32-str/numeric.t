@@ -17,6 +17,7 @@ sub f($str) {
 }
 
 check '',           Int,      0;
+# https://github.com/Raku/old-issue-tracker/issues/5419
 check ' ',          Int,      0; # RT128543
 check '   ',        Int,      0;
 check '123',        Int,    123;
@@ -154,16 +155,16 @@ f      '3+Infi';
 
 # TODO: Complex with radix
 
-# RT #100778
+# https://github.com/Raku/old-issue-tracker/issues/2505
 {
     is +Str.new, 0, 'RT #100778'
 }
 
-# RT #128542
+# https://github.com/Raku/old-issue-tracker/issues/5418
 throws-like Q|"34\x[308]5".Int|, X::Str::Numeric,
     '.Int on strings with numerics with combining characters throws';
 
-# RT #130450
+# https://github.com/Raku/old-issue-tracker/issues/5945
 {
     my $n;
     lives-ok { $n = 'a'.Int; 'notafailure' }, '"a".Int lives...';
@@ -210,4 +211,4 @@ subtest 'can handle − (U+2212) minus as regular minus' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

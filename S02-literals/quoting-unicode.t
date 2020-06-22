@@ -48,7 +48,7 @@ plan 101;
 {
     my @ps_pe = (
             '(' => ')', '[' => ']', '{' => '}', '༺' => '༻', '༼' => '༽',
-            '᚛' => '᚜', '⁅' => '⁆', '⁽' => '⁾', '₍' => '₎', '〈' => '〉',
+            '᚛' => '᚜', '⁅' => '⁆', '⁽' => '⁾', '₍' => '₎', '〈' => '〉',
             '❨' => '❩', '❪' => '❫', '❬' => '❭', '❮' => '❯', '❰' => '❱',
             '❲' => '❳', '❴' => '❵', '⟅' => '⟆', '⟦' => '⟧', '⟨' => '⟩',
             '⟪' => '⟫', '⦃' => '⦄', '⦅' => '⦆', '⦇' => '⦈', '⦉' => '⦊',
@@ -85,7 +85,7 @@ plan 101;
     is $var, 'b', 'q-style string with LEFT/RIGHT ANGLE BRACKET';
 }
 
-# RT #66498
+# https://github.com/Raku/old-issue-tracker/issues/1049
 {
     throws-like { EVAL "q\c[SNOWMAN].\c[COMET]" },
       X::Comp,
@@ -168,4 +168,4 @@ plan 101;
         'Literals directly bookend multiple interpolated, no nested Lists';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -19,7 +19,7 @@ isa-ok(3\i, Complex, '$n\i form creates a Complex number');
 is-approx((2i)i, -2, 'postfix:<i> works on an imaginary number');
 is-approx((2i + 3)i, -2 + 3i, 'postfix:<i> works on a Complex number');
 
-# RT #104660
+# https://github.com/Raku/old-issue-tracker/issues/2562
 throws-like '(2 + 3i) > (2 + 2i)', Exception, '> comparison of complex numbers dies';
 throws-like "(1 + 2i) < (2 + 4i)", Exception, 'Cannot arithmetically compare Complex numbers';
 
@@ -112,6 +112,7 @@ for @examples -> $z {
     is-approx 0 ** (2 + 0i), 0, "Real 0 ** Complex works";
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/1236
 # used to be RT #68848
 {
     is-approx exp(3.0 * log(1i)), -1.83697e-16-1i,
@@ -253,7 +254,7 @@ ok Num(exp i * π) == -1, 'Num(Complex) pays attention to $*TOLERANCE';
 
 }
 
-# RT #128785
+# https://github.com/Raku/old-issue-tracker/issues/5504
 subtest 'exponentiation with zero (n = 0+0i)' => {
     plan 3;
 
@@ -269,7 +270,8 @@ subtest 'exponentiation with zero (n = 0+0i)' => {
     is-deeply 0**n, 1+0i, '0**n';
 }
 
-# RT#128820
+# https://github.com/Raku/old-issue-tracker/issues/5521
+
 subtest 'distinct Complex literals do not compare the same' => {
     plan 3;
     my $l1 := <1180591620717411303424e0+1180591620717411303424e0i>;
@@ -277,14 +279,16 @@ subtest 'distinct Complex literals do not compare the same' => {
     cmp-ok $l1, &[!==], $l2, '==';
     cmp-ok $l1, &[!===], $l2, '===';
 
-    # RT#128819
+    # https://github.com/Raku/old-issue-tracker/issues/5520
+    
     cmp-ok $l1.WHICH, &[!===], $l2.WHICH, '=== of .WHICHes';
 }
 
-{ # RT#128817
+# https://github.com/Raku/old-issue-tracker/issues/5518
+{ 
     my $n := <1180591620717411303424.0e0+1180591620717409992704e0i>;
     cmp-ok $n, '==', $n.raku.EVAL,
         '.raku roundtrips the Complex correctly';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

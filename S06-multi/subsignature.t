@@ -425,4 +425,4 @@ is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
     is(rt68528(:a, :b), "first", "first defined wins the tie");
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

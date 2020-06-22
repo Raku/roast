@@ -133,3 +133,5 @@ my $name = $*SCHEDULER.^name;
     $c2.cancel if $c2.defined;
     $c3.cancel if $c3.defined;
 }
+
+# vim: expandtab shiftwidth=4

@@ -395,4 +395,4 @@ sub count($tree) {
     skip "Test(s) not yet written: (**) Tree construction from a node string", 1;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

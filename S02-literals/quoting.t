@@ -342,6 +342,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is($hi, "hi", 'q<<hi>> is "hi"');
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/1092
 is( q<< <<woot>> >>, ' <<woot>> ', 'nested <<ASCII>> quotes (RT #66888)' );
 
 # L<S02/Adverbs on quotes/"for user-defined quotes">
@@ -526,36 +527,36 @@ Hello, World
     is qqx/echo $var/.chomp,  "world", 'qqx';
     is  Qx[echo '\\\\'] cmp qx[echo '\\\\\\\\'], Same, 'Qx treats backslash literally, qx treats \\ as one backslash';
 
-    # RT #78874
+    # https://github.com/Raku/old-issue-tracker/issues/2246
     is qx/echo world/.trans('wd' => 'WD').chomp, "WorlD", "qx doesn't return a Parrot string";
 }
 
 #?rakudo.js.browser skip "can't run shell commands in browser"
-# RT #120529
+# https://github.com/Raku/old-issue-tracker/issues/3276
 {
     %*ENV<ENV_P6_SPECTEST_120529>='foo';
     my $check = $*DISTRO.is-win ?? qx/set/ !! qx/env/;
     ok $check ~~ /ENV_P6_SPECTEST_120529/, 'qx passes environmental variables';
 }
 
-# RT #75320
+# https://github.com/Raku/old-issue-tracker/issues/1784
 {
     is "$foo >>", "FOO >>", 'quoting and >> (RT #75320, 1)';
     is "$foo>>",  "FOO>>",  'quoting and >> (RT #75320, 2)';
 }
 
-# RT #85506
+# https://github.com/Raku/old-issue-tracker/issues/2381
 {
     my $a = 42;
     is "$a [<file>]", '42 [<file>]', 'can handle [ after whitespace after var interpolation';
 }
 
-# RT #90124
+# https://github.com/Raku/old-issue-tracker/issues/2425
 throws-like { EVAL q["@a<"] },
   X::Comp,
   'unclosed quote after array variable is an error';
 
-# RT #114090
+# https://github.com/Raku/old-issue-tracker/issues/2824
 is "foo $( my $x = 3 + 4; "bar" ) baz", 'foo bar baz', 'declaration in interpolation';
 
 #115272
@@ -570,12 +571,13 @@ is <<<\>'n'>>.join('|'), '<>|n', 'ASCII quotes edge case';
     is $/, 'bc', 'rx/.../ literals match in void context';
 }
 
-# RT #75320
+# https://github.com/Raku/old-issue-tracker/issues/1784
 {
     my $x = 42;
     is "$x >> ", "42 >> ", '>> in interpolation is not shift operator';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/2365
 # (RT #83952 is wrong about \cI being an error)
 is "\cIa", "\ta", '\cI is a TAB';
 is "\c?a", "\x[7f]a", '\c? is a DEL';
@@ -589,14 +591,14 @@ is "\c@a", "\0a", '\c@ is a NUL';
     is q< \< >, " < ", "Escaped opener produces the opener unescaped";
 }
 
-# RT #125995
+# https://github.com/Raku/old-issue-tracker/issues/4512
 {
     sub a(**@a) { @a.elems }
     my $res = a << a b >>;
     is $res, 1, '<< a b >> does not accidentally flatten into arg list';
 }
 
-# RT #120788
+# https://github.com/Raku/old-issue-tracker/issues/3292
 is q :heredoc :c "EOF", "2+3=5\n", ':c applied after :heredoc has effect';
     2+3={2+3}
     EOF
@@ -605,7 +607,7 @@ is q :heredoc :w "EOF", <omg wtf bbq amazing cat>, ':w applied after :heredoc ha
     amazing cat
     EOF
 
-# RT #125543
+# https://github.com/Raku/old-issue-tracker/issues/4378
 {
     my $warned = 0;
     EVAL Q:to/CODE_END/;
@@ -637,12 +639,12 @@ is q :heredoc :w "EOF", <omg wtf bbq amazing cat>, ':w applied after :heredoc ha
     nok $warned, '\r\n in a heredoc does not factor dedenting';
 }
 
-# RT #120895
+# https://github.com/Raku/old-issue-tracker/issues/3299
 ok qq:to/EOF/ ~~ /\t/, '\t in heredoc does not turn into spaces';
     \thello
     EOF
 
-# RT #123808
+# https://github.com/Raku/old-issue-tracker/issues/3681
 {
     my $a = 42;
     for (<<$a b c>>, qqww{$a b c}, qqw{$a b c}).kv -> $i, $_ {
@@ -650,7 +652,7 @@ ok qq:to/EOF/ ~~ /\t/, '\t in heredoc does not turn into spaces';
     }
 }
 
-# RT #128304
+# https://github.com/Raku/old-issue-tracker/issues/5353
 {
     is-deeply qww<a a ‘b b’ ‚b b’ ’b b‘ ’b b‘ ’b b’ ‚b b‘ ‚b b’ “b b” „b b”
             ”b b“ ”b b“ ”b b” „b b“ „b b” ｢b b｣ ｢b b｣>,
@@ -725,7 +727,7 @@ subtest ':b' => {
         'escaping an unknown \w char throws';
 }
 
-# RT #127226
+# https://github.com/Raku/old-issue-tracker/issues/5031
 subtest ':b and variable combinations' => {
     plan 22;
     my $foo = 42;
@@ -761,4 +763,4 @@ subtest ':b and variable combinations' => {
       '$foo@foo[]%foo<>&uc("z"){uc "z"}', 'all together';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

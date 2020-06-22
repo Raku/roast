@@ -83,4 +83,4 @@ plan 11;
         "Assignment on Hash to * slices do nothing on empty, unshaped arrays";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

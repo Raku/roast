@@ -153,4 +153,4 @@ is ((1,2,3),(1,3),(1,3)).repeated(:with({$^a eqv $^b})), "1 3", ".repeated doesn
 
 =finish
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

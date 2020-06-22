@@ -25,6 +25,7 @@ is( 'Hello World !'.flip.flip, 'Hello World !',
 # flip with unicode :
 is( 'ä€»«'.flip,   '«»€ä', "some unicode characters" );
 
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo.jvm 2 todo 'NFG on JVM RT #124682'
 is( "a\c[COMBINING DIAERESIS]b".flip, 'bä', "grapheme precomposed" );
 is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".flip,
@@ -40,4 +41,4 @@ is flip(123), '321', 'flip() on non-strings';
 }
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

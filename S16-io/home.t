@@ -54,3 +54,5 @@ is_run ｢
     is-path $*HOME, $before,
         '`temp`ed $*HOME got restored to previous value';
 }
+
+# vim: expandtab shiftwidth=4

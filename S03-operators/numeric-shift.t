@@ -33,4 +33,4 @@ is (2 * $t) + ($t +> 2), 22;
 # https://github.com/Raku/old-issue-tracker/issues/4881
 is -123 +> 32, -1, "too large right shift for Int should be -1";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

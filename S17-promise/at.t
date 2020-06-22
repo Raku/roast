@@ -5,7 +5,7 @@ use Test::Util;
 
 plan 4;
 
-# RT #123520
+# https://github.com/Raku/old-issue-tracker/issues/3631
 # This test comes first in the file so it's the first to start any threads;
 # this means we can test the actual bug in the ticket.
 {
@@ -29,3 +29,5 @@ plan 4;
 is_run ｢await Promise.at(now - 1000).then: {print 'pass'}｣,
     {:out<pass>, :err(''), :0status},
 '.at with negative value works and does not warn';
+
+# vim: expandtab shiftwidth=4

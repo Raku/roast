@@ -121,3 +121,5 @@ is run-harness($bench8, 'kaz'), $expected-output, 'kaz';
 for %results.pairs.sort(*.value) -> (:key($script), :value($time)) {
     diag "$script: $time seconds";
 }
+
+# vim: expandtab shiftwidth=4

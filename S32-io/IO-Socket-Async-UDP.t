@@ -44,3 +44,5 @@ my $rec-prom;
     is $rec-prom.result, "Unhelpful Dataloss Protocol", "Sent/received data with UDP (write)";
     $sock.close;
 }
+
+# vim: expandtab shiftwidth=4

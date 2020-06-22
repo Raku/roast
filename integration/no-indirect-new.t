@@ -19,4 +19,4 @@ plan 2;
       'what looks like a constructor call is really a coersion to A, and should therefore be disallowed';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

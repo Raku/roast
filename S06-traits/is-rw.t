@@ -16,7 +16,8 @@ plan 8;
   is $bar,      23, "basic sanity";
   is foo($bar), 19, "calling a sub with an is rw param";
   is $bar,      42, "sub changed our variable";
-  # RT #74830
+  # https://github.com/Raku/old-issue-tracker/issues/2593
+  
   dies-ok { EVAL('foo(28)') }, 'is rw requires a variable';
 }
 
@@ -43,7 +44,7 @@ plan 8;
 
 # for ... -> ... is rw {...} already tested for in t/statements/for.t.
 
-# RT #131673
+# https://github.com/Raku/old-issue-tracker/issues/6366
 throws-like { sub ($ is rw) {}(42) }, X::Parameter::RW;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

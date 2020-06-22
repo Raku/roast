@@ -52,4 +52,4 @@ Basic C<pairs> tests, see S32.
     is @array[1], 123, 'aliases returned by @array.pairs should be rw (2)';
 }
 
-# vim: filetype=perl6
+# vim: expandtab shiftwidth=4

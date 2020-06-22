@@ -18,13 +18,13 @@ plan 18;
     is +EnumGrammar::G::b, 1, 'enum element in grammar has the right value';
 }
 
-# RT #66648
+# https://github.com/Raku/old-issue-tracker/issues/1070
 {
     enum RT66648 <a b c>;
     dies-ok { RT66648.c }, 'die attempting to access enum item as method';
 }
 
-# RT #70894
+# https://github.com/Raku/old-issue-tracker/issues/1418
 
 {
     enum SomeEnum <a b c>;
@@ -33,6 +33,7 @@ plan 18;
 }
 
 # L<S12/Miscellaneous Rules>
+# https://github.com/Raku/old-issue-tracker/issues/744
 # see also: RT #63650
 {
     enum Maybe <OK FAIL>;
@@ -42,18 +43,19 @@ plan 18;
     is OK(),  'sub OK', 'but () is still a function call';
     is FAIL,  'FAIL',   'non-conflicting enum key';
     is +FAIL, 1,        'non-conflicting enum key (numeric)';
-    # RT #112202
+    # https://github.com/Raku/old-issue-tracker/issues/2694
     lives-ok { OK.^methods }, 'can call .^methods on an enum';
 }
 
-# anonymous Enum in our context, # RT #122514
+# https://github.com/Raku/old-issue-tracker/issues/3481
+# anonymous Enum in our context, 
 {
     enum :: <un>;
     is +un, 0, 'is un the right value';
     is ~un, 'un', 'is un the right string';
 }
 
-#RT # 123114
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     module RT123114 {
         enum A is export <B C>;
@@ -70,10 +72,11 @@ plan 18;
     is (+A,+B,+C), (0,1,2), "and they get the right values";
 }
 
-# RT#129160
+# https://github.com/Raku/old-issue-tracker/issues/5631
+
 {
     my enum RT<R T>;
     is-deeply R.ACCEPTS(RT), False, 'enum member does not ACCEPTS the enum type object';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -36,4 +36,4 @@ my $filename = 'tempfile_rebindstdhandles' ~ nonce();
     unlink($filename);
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

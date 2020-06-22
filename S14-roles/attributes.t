@@ -111,4 +111,4 @@ subtest "Class prioritization" => {
     is $inst.r1, e, "a method from class overrides role's attribute accessor";
 }
 
-# vim: syn=perl6
+# vim: expandtab shiftwidth=4

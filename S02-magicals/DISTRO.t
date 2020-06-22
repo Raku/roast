@@ -15,6 +15,7 @@ get a list of osnames that have actually passed tests.
 =end kwid
 
 # $?DISTRO.name is the OS we were compiled in.
+# https://github.com/Raku/old-issue-tracker/issues/3918
 #?rakudo skip 'unimpl $?DISTRO RT #124624'
 {
     ok $?DISTRO.name,      "We were compiled in '{$?DISTRO.name}'";
@@ -41,6 +42,7 @@ get a list of osnames that have actually passed tests.
 ok $*DISTRO.name,      "We are running under '{$*DISTRO.name}'";
 ok $*DISTRO.auth,      "Authority is '{$*DISTRO.auth}'";
 ok $*DISTRO.version,   "Version is '{$*DISTRO.version}'";
+# https://github.com/Raku/old-issue-tracker/issues/3918
 #?rakudo todo 'no Distro.signature yet RT #124624'
 ok $*DISTRO.signature, "Signature is '{$*DISTRO.signature}'";
 ok $*DISTRO.desc,      "Description is '{$*DISTRO.desc}'";
@@ -54,8 +56,9 @@ ok $*DISTRO.Str  ~~ m/\w/, 'We can do a $*DISTRO.Str';
 ok $*DISTRO.name, 'Non-empty $*DISTRO.name';
 
 isa-ok $*DISTRO.version, Version;
+# https://github.com/Raku/old-issue-tracker/issues/3918
 #?rakudo todo 'no Distro.signature yet RT #124624'
 isa-ok $*DISTRO.signature, Blob;
 isa-ok $*DISTRO.is-win, Bool;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

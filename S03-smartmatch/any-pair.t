@@ -30,4 +30,4 @@ plan 10;
     dies-ok {$o ~~ :e(5)},      '$obj ~~ Pair, nonexistent, dies (2)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

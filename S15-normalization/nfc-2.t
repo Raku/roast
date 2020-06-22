@@ -2007,3 +2007,5 @@ ok Uni.new(0xBA2A).NFC.list ~~ (0xBA2A,), 'BA2A -> BA2A';
 ok Uni.new(0xBA2B).NFC.list ~~ (0xBA2B,), 'BA2B -> BA2B';
 ok Uni.new(0xBA2C).NFC.list ~~ (0xBA2C,), 'BA2C -> BA2C';
 ok Uni.new(0xBA2D).NFC.list ~~ (0xBA2D,), 'BA2D -> BA2D';
+
+# vim: expandtab shiftwidth=4

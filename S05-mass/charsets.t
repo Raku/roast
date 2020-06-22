@@ -42,8 +42,10 @@ plan 17;
 
 }
 
-# RT #121365
+# https://github.com/Raku/old-issue-tracker/issues/3351
 {
     'o' ~~ /<:!Upper>*/;
     is ~$/, 'o', 'Can match negated quantified character class';
 }
+
+# vim: expandtab shiftwidth=4

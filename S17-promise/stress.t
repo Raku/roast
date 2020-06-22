@@ -3,7 +3,7 @@ use Test;
 
 plan 1;
 
-# RT #123883
+# https://github.com/Raku/old-issue-tracker/issues/3690
 is ([+] await do for ^8 {
     start {
         my $i;
@@ -11,3 +11,5 @@ is ([+] await do for ^8 {
         $i
     }
  }), 8_000_000, 'Large number of iterations in threads work fine';
+
+# vim: expandtab shiftwidth=4

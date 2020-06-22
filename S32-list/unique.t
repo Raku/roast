@@ -159,4 +159,4 @@ is ((1,2,3),(1,2),(1,2)).unique(:with({$^a eqv $^b})), "1 2 3 1 2", ".unique doe
 # https://github.com/Raku/old-issue-tracker/issues/6095
 eval-lives-ok ｢Scalar.unique｣, 'no SEGV with Scalar.unique';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

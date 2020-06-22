@@ -21,7 +21,7 @@ grammar Grammar::With::Signatures {
 ok(Grammar::With::Signatures.parse("barfoo"), 'barfoo matches');
 ok(Grammar::With::Signatures.parse("foobar"), 'foobar doesnt match');
 
-# RT #113544
+# https://github.com/Raku/old-issue-tracker/issues/2783
 {
     grammar AllTheArgKinds {
         token TOP {
@@ -58,4 +58,4 @@ ok(Grammar::With::Signatures.parse("foobar"), 'foobar doesnt match');
     ok AllTheArgKinds.parse('abc'), 'Grammar with various subrule arg passings parsed';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

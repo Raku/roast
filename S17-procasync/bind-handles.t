@@ -139,3 +139,5 @@ plan 17;
         }
     }
 }
+
+# vim: expandtab shiftwidth=4

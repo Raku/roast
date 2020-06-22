@@ -99,7 +99,7 @@ for @list -> $letter {
     lives-ok { for @mutable_array { $_++ } }, 'default topic is rw by default';
 }
 
-# RT #113904
+# https://github.com/Raku/old-issue-tracker/issues/2804
 {
     $_ = 1;
     my $tracker = '';
@@ -112,6 +112,7 @@ for @list -> $letter {
     is $tracker, '1 : 1|* : 2',
         'Two iterations of a loop share the same $_ if it is not a formal parameter';
 
+    # https://github.com/Raku/old-issue-tracker/issues/2804
     ## also from RT #113904
     lives-ok { $_ = 42; for 1 -> $p { if 1 { "$_" } } },
         'no Null PMC access error when outer $_ is used in block of for loop';
@@ -131,4 +132,4 @@ for @list -> $letter {
      is $_, 1, 'outer $_ is unchanged'
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

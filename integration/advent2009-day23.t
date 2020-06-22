@@ -141,3 +141,5 @@ XX.XXXX.XX..X...XXX
      #########
       #######
        #####
+
+# vim: expandtab shiftwidth=4

@@ -12,3 +12,5 @@ is &infix:<cmp>(3, 4), Order::Less, 'Can refer to &infix:<cmp>';
 
 ok ~&infix:<+> ~~ /infix/, 'String value of &infix:<+> contains "infix"';
 ok ~&infix:<+> ~~ /\+/, 'String value of &infix:<+> contains "+"';
+
+# vim: expandtab shiftwidth=4

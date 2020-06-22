@@ -142,3 +142,5 @@ subtest "DESTROY" => {
 }
 
 done-testing;
+
+# vim: expandtab shiftwidth=4

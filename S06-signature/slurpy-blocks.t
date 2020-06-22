@@ -24,4 +24,4 @@ is(bar():{ 0 }, 0, '*&block - 2');
 is(foo():{ "foo" }, bar():{ "foo" }, 'Code *$block == *&block - 1');
 is(foo():{ 0 }, bar():{ 0 }, 'Code *$block == *&block - 2');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

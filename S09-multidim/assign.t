@@ -123,4 +123,4 @@ lives-ok { my @x[2;2] = (0, 1), (2, 3); my int @nx[2;2] = @x },
     is @b[1;1], 'd', 'Assignment to typed 2-dim array works (4)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

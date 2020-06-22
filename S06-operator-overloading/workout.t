@@ -254,4 +254,4 @@ is_approx_array(((3/2) <<*<< @vectors) >>T-<< @vectors , @vectors >>/>> 2,
 is_approx_array(((3/2) <<*<< @vectors) »T-« @vectors , @vectors >>/>> 2,
                 "Hyper: 3/2 v - v equals v / 2");
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

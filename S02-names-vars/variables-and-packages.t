@@ -182,7 +182,7 @@ plan 39;
 }
 
 {
-    # RT #74076
+    # https://github.com/Raku/old-issue-tracker/issues/1665
     my $t;
     for 'a' {
         $t = sub { $OUTER::_ };
@@ -190,4 +190,4 @@ plan 39;
     is $t(), 'a', '$OUTER::_ can access a $_';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

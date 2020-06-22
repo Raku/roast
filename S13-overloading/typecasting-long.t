@@ -126,4 +126,4 @@ plan 32;
     is $x(2, 1), 'c', 'example works';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

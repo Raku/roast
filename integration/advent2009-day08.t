@@ -36,3 +36,5 @@ my Int $rotate = 10;
 
 is rotate($mess,$rotate), 'Zobv6 Knfoxd Mkvoxnkb', "Caesar Cipher using .comb and .map";
 is rotate($mess), 'Shuo6 Dgyhqw Fdohqgdu', 'Caesar Cipher using parameter defaults';
+
+# vim: expandtab shiftwidth=4

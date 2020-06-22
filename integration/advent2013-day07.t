@@ -13,3 +13,5 @@ is <a b c> ⊆ <a b d>, False,                 'a b c   ⊆ a b d';
 is <a b c> === <a b c>, False, 'a b c === a b c';
 is <a b c> eqv <a b c>, True, 'a b c eqv a b c';
 is set(<a b c>).WHICH, set(<c b a>).WHICH, 'make sure .WHICH is consistent';
+
+# vim: expandtab shiftwidth=4

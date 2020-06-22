@@ -109,7 +109,7 @@ plan 12;
 }
 
 {
-    # RT #72442
+    # https://github.com/Raku/old-issue-tracker/issues/1483
     throws-like '{redo}', X::ControlFlow, 'redo without loop construct dies';
 }
 
@@ -127,4 +127,4 @@ plan 12;
     is $out, 'foobarfoobar', 'redoing outer for loop';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

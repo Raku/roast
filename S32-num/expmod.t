@@ -22,7 +22,7 @@ is 2988348162058574136915891421498819466320163312926952423791023078876139.expmod
         10 ** 40),
    1527229998585248450016808958343740453059, "Rosettacode example is correct";
 
-# RT #130713
+# https://github.com/Raku/old-issue-tracker/issues/6053
 {
   subtest '.expmod with negative powers does not hang' => {
     plan 5;
@@ -34,3 +34,5 @@ is 2988348162058574136915891421498819466320163312926952423791023078876139.expmod
     dies-ok { 42.expmod(-1,7)   }, '42,  -1,  7';
   }
 }
+
+# vim: expandtab shiftwidth=4

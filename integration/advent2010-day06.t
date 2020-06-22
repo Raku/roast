@@ -38,3 +38,5 @@ is-deeply @scores, [3, 4, 5, 4, 5, 6, 5, 6, 7, 4,
 		    5, 6, 5, 6, 7, 6, 7, 8, 5, 6,
 		    7, 6, 7, 8, 7, 8, 9], 'dice totals';
 
+
+# vim: expandtab shiftwidth=4

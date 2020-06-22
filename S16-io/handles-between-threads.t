@@ -26,7 +26,7 @@ is_run('await start { say $*IN.get.uc for ^3 }',
        },
        'reading from $*IN from another thread works (file)');
 
-# RT #124005
+# https://github.com/Raku/old-issue-tracker/issues/3719
 {
     my $temp-file = 'handle-between-threads-' ~ $*PID;
     spurt $temp-file, "foo";
@@ -40,3 +40,5 @@ is_run('await start { say $*IN.get.uc for ^3 }',
     is $proc.out.get, "FOO", 'reading from $*IN from another thread works (pipe)';
     so $proc.out.close;
 }
+
+# vim: expandtab shiftwidth=4

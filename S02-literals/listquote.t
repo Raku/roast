@@ -9,6 +9,7 @@ plan 24;
 my $s = join 'a', <x y z>;
 is($s, "xayaz", 'list context <list>');
 
+# https://github.com/Raku/old-issue-tracker/issues/3874
 #?rakudo todo 'meta operators RT #124558'
 {
 my $s = join |<< <a x y z>;
@@ -93,10 +94,10 @@ throws-like { EVAL '<STDIN>' },
 # probably doesn't really belong here, but I don't know where else to put it
 # :(    --moritz
 
-# RT #76452
+# https://github.com/Raku/old-issue-tracker/issues/1927
 {
     sub f($x) { $x[0] };
     is f(my @x = (1, 2, 3)), 1, 'function call with assignment to list';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

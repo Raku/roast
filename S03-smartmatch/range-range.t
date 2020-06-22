@@ -87,4 +87,4 @@ subtest 'smartmatch numeric range against string range [numeric strings]' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

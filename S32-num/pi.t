@@ -33,4 +33,4 @@ throws-like "3 + tau()", X::Undeclared, "tau() is not a sub";
 
 is-approx(τ, 2*$PI, "unicode τ as a bareword");
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

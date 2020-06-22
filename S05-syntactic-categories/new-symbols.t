@@ -6,6 +6,7 @@ plan 8;
 
 # L<S05/Syntactic categories/>
 
+# https://github.com/Raku/old-issue-tracker/issues/4579
 #?rakudo skip "RT #126142 - NYI"
 {
     augment slang Regex {
@@ -17,9 +18,11 @@ plan 8;
     ok 'YY'  ~~ /^\Y$/, 'can use that rule (positive)';
     ok 'yX' !~~ /^\Y$/, 'can use that rule (negative)';
 }
+# https://github.com/Raku/old-issue-tracker/issues/4579
 #?rakudo skip "RT #126142 - NYI"
 throws-like '/\Y/', Exception, 'backslash rules are lexically scoped';
 
+# https://github.com/Raku/old-issue-tracker/issues/4579
 #?rakudo skip "RT #126142 - NYI"
 {
     # nothing in the spec says that backslash rules need to be one char
@@ -33,4 +36,4 @@ throws-like '/\Y/', Exception, 'backslash rules are lexically scoped';
     ok 'Haxe' ~~ m/^\moepe$/, '... with correct end of escape sequence';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -35,3 +35,5 @@ class Example is LoggingAspect {
 is Example.double(3), 6, 'aop';
 is Example.square(3), 9, 'aop';
 
+
+# vim: expandtab shiftwidth=4

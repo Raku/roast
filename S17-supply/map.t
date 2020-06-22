@@ -21,4 +21,4 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
       ["2 1", "5 4 3"], "Same if we get lists";
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

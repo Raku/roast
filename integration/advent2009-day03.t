@@ -40,3 +40,5 @@ is identify(42, "This rules!"), 'You have an integer 42, and a string "This rule
 is identify("This rules!", 42), 'You have a string "This rules!", and an integer 42.' , "MMD with Int and Str";
 is identify("This rules!", "I agree!"), "You have two strings \"This rules!\" and \"I agree!\".", 'Str, Str';
 is identify(42, 24), "You have two integers 42 and 24.";
+
+# vim: expandtab shiftwidth=4

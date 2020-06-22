@@ -449,7 +449,7 @@ my $str = 'a' x 7;
         'sequential alternation first branch involved in longest alternative (2)';
     is ~('food' ~~ / 'foo' | ('food' <!> || 'doof')/), 'foo',
         'sequential alternation first branch failure after LTM tries next best option';
-    # related RT #130562
+    # related https://github.com/Raku/old-issue-tracker/issues/6003
     is ~('food' ~~ / 'foo' | ['doof' || 'food']/), 'foo',
         'sequential alternation branches after first not involved in LTM';
 }
@@ -489,4 +489,4 @@ is "abcde" ~~ / ab <![e]> cde | ab.. /, "abcde", 'negative lookahead does LTM pr
     is 'ab' ~~ / :r [ab | a ]:! b /,  'ab', 'backtrack into [ | ]:! despite :r';
 }
 
-# vim: ft=perl6 et
+# vim: expandtab shiftwidth=4

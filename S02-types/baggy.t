@@ -73,4 +73,4 @@ subtest 'creating setty/baggy types with lazy iterables throws' => {
     throws-like $_, X::Cannot::Lazy, "$_ throws" for @tests;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

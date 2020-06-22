@@ -20,10 +20,10 @@ is_run q{my $a = [1, 2, 3]; print  $a},
         status  => 0,
     }, 'Can print array ref';
 
-# RT #80186
+# https://github.com/Raku/old-issue-tracker/issues/2284
 is_run q{IO.say},
     {
         out => "(IO)\n";
     }, 'Can do IO.say';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

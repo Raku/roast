@@ -13,3 +13,5 @@ is_run Str,  :args['--help'],
     },
     '--help tells us something, and returns 0';
 
+
+# vim: expandtab shiftwidth=4

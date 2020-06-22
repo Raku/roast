@@ -28,4 +28,4 @@ is_run :compiler-args['--doc'], $POD2 , {
         out => rx/'alive'/, err => '',
     }, 'basic --doc with DOC INIT block';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

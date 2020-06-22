@@ -56,7 +56,8 @@ is $action.calls, 'ab', '... and in the right order';
         method b($/) {
             # the given/when is pretty pointless, but rakudo
             # used to segfault on it, so test it here
-            # RT #64208
+            # https://github.com/Raku/old-issue-tracker/issues/838
+            
             given 2 {
                 when * {
                     make $/ x 3;
@@ -77,6 +78,7 @@ is $action.calls, 'ab', '... and in the right order';
     is $match.ast.[1], 'bbb',  'make $/ x 3 worked';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/826
 # used to be a Rakudo regression, RT #64104
 {
     grammar Math {
@@ -87,12 +89,13 @@ is $action.calls, 'ab', '... and in the right order';
         method value($/) { make 1..$/};
         method TOP($/)   { make 1 + $/<value>};
     }
-    my $match = Math.parse('234', :actions(Actions.new));
+    my $match = Math.parse('234', :actions(Actions));
     ok $match,  'can parse with action stubs that make() regexes';
     is $match.ast, 235, 'got the right .ast';
 
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/1454
 # another former rakudo regression, RT #71514
 {
     grammar ActionsTestGrammar {
@@ -107,9 +110,9 @@ is $action.calls, 'ab', '... and in the right order';
         }
     }
 
-    is ActionsTestGrammar.parse("ab\ncd", :actions(TestActions.new)).ast, 123,
+    is ActionsTestGrammar.parse("ab\ncd", :actions(TestActions)).ast, 123,
         'Can call Str.subst in an action method without any trouble';
-    # RT #78510
+    # https://github.com/Raku/old-issue-tracker/issues/2231
     isa-ok ActionsTestGrammar.parse('a', :actions(
         class { method TOP($/) { make { a => 1 } } }
     )).ast, Hash, 'Can make() a Hash';
@@ -127,7 +130,7 @@ is $action.calls, 'ab', '... and in the right order';
     };
 
     my $x = Grammar::Trivial.parse: 'a',
-        actions => Grammar::Trivial::A.new;
+        actions => Grammar::Trivial::A;
     ok $x, 'Trivial grammar parsed';
     is $x.ast[0], 1, 'make(List) (1)';
     is $x.ast[1], 2, 'make(List) (2)';
@@ -193,4 +196,4 @@ subtest 'using <sym> in places without :sym throws useful message' => {
         message => /"<sym>"/, 'token';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

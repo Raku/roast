@@ -71,7 +71,7 @@ Test attributes with recursively typed attributes
     isa-ok $d.attr, C, '::?CLASS is lexical, not virtual';
 }
 
-# RT #67236
+# https://github.com/Raku/old-issue-tracker/issues/1119
 {
     class Z {
         has Z @.a is rw;
@@ -91,4 +91,4 @@ Test attributes with recursively typed attributes
     isa-ok $z2.a[0], Z;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

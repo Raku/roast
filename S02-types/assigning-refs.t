@@ -151,4 +151,4 @@ plan 18;
   is +%hash, 1, '%hash<a> = $hashref does not flatten the hashref';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

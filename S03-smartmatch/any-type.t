@@ -16,7 +16,7 @@ subtest "Basics" => {
     ok !(Chihuahua ~~ Cat), "chihuahua is not a cat";
 }
 
-# RT #71462
+# https://github.com/Raku/old-issue-tracker/issues/1449
 subtest "RT 71462" => {
     plan 10;
     is 'RT71462' ~~ Str,      True,  '~~ Str returns a Bool (1)';
@@ -31,7 +31,7 @@ subtest "RT 71462" => {
     is 5         ~~ Callable, False, '~~ Callable returns a Bool (2)';
 }
 
-# RT #76610
+# https://github.com/Raku/old-issue-tracker/issues/1956
 subtest "RT 76610" => {
     plan 2;
     module M { };
@@ -50,4 +50,4 @@ subtest "GH 3383" => {
     ok Array[Str:D] ~~ Positional[Str:D], "Array[Str:D] ~~ Positional[Str:D]";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

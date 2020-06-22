@@ -67,4 +67,4 @@ is_run ｢
         "\nok 2 - # SKIP 1\n"/) },
 'skip() escapes `#` but not the `#` of SKIP marker itself';
 
-# vim: expandtab shiftwidth=4 ft=perl6
+# vim: expandtab shiftwidth=4

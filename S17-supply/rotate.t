@@ -17,4 +17,4 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     tap-ok Supply.from-list(1..5).rotate(0), [1,2,3,4,5], "we can rotate(0)";
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

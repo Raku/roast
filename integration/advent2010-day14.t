@@ -85,3 +85,5 @@ my $result;
 @out = capture-said {$result = $logged_A.foo};
 is $result, 'OH HAI';
 is-deeply @out, ['.foo was called'], 'nextsame mixin';
+
+# vim: expandtab shiftwidth=4

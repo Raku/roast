@@ -49,3 +49,5 @@ sub time-consuming-computation() {42}
 
 my $output = capture-said {LOG "The answer is { time-consuming-computation() }";}
 is $output.chomp, 'The answer is 42', 'LOG macro';
+
+# vim: expandtab shiftwidth=4

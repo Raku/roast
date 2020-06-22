@@ -302,4 +302,4 @@ subtest 'xor warns when used with bad precedence' => {
         '4-arg, with all but last args wanted';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

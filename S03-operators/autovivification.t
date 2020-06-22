@@ -137,4 +137,4 @@ plan 23;
     is $after,$before,"Array elements are not auto-vivified by smartmatch";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

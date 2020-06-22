@@ -38,4 +38,4 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     is $seen2, [3,4,5,6], 'did we not get the fourth emit (2)';
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

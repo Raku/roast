@@ -300,4 +300,4 @@ $r = $=pod[$p++];
 isa-ok $r.config<foo>, Int, '1foo: foo => 1';
 is $r.config<foo>, 1, 'foo => 1';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

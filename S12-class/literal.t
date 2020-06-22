@@ -19,4 +19,4 @@ ok ($test1 = ::Foo) ~~ Foo, "::Foo is a valid class literal";
 my $x = EVAL 'Foo';
 ok($x ===  ::Foo, "Foo is now a valid class literal");
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

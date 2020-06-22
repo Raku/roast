@@ -204,4 +204,4 @@ throws-like q[
 	      '.= able to initialize attributes with types that has `::` in name';
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

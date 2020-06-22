@@ -32,3 +32,5 @@ lives-ok {
     a.DEFINITE;
     a = 10;
 }, "DEFINITE doesn't destroy containers";
+
+# vim: expandtab shiftwidth=4

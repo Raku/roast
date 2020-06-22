@@ -97,7 +97,7 @@ plan 12;
   is $a, 43, "for on a_single_var -> is rw";
 }
 
-# RT #73400
+# https://github.com/Raku/old-issue-tracker/issues/1590
 {
   my $capture = \[1,2,3];
   my $count = 0;
@@ -106,4 +106,4 @@ plan 12;
   is $count, 1, 'for $capture {...} executes the loop body only once';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

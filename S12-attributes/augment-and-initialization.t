@@ -50,4 +50,4 @@ diag('Test for class attribute initialization');
 		"Testing value for private attribue which is initialized by constructor.";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

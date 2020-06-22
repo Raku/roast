@@ -87,3 +87,5 @@ subtest "Constructors in mixins" => {
 };
 
 done-testing;
+
+# vim: expandtab shiftwidth=4

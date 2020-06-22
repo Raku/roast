@@ -3,3 +3,5 @@ my package EXPORTHOW {
         method tryit($) { 'pony' }
     }
 }
+
+# vim: expandtab shiftwidth=4

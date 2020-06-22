@@ -17,3 +17,5 @@ class MainLoadsNestedFirst {
     method bar(MainLoadsNestedFirst $b) {
     }
 }
+
+# vim: expandtab shiftwidth=4

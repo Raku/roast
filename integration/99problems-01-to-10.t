@@ -242,4 +242,4 @@ plan 22;
         'We should be able to run-length encode lists';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -88,4 +88,4 @@ subtest 'moving when target and source are same file' => {
     is-deeply $file.slurp, 'foo', 'file contents are untouched';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

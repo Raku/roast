@@ -103,3 +103,5 @@ for $@a, Any, $@ai, Int -> \a, \T {
     $s[1] = "c";
     is $s, "acd", 'Could we change the "element" without creating ASSIGN-POS?';
 }
+
+# vim: expandtab shiftwidth=4

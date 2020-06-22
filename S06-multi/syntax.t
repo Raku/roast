@@ -176,4 +176,4 @@ is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
     is foo(10), "second", "where-blocked multi has higher priority than non-where-blocked multi";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

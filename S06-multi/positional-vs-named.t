@@ -112,4 +112,4 @@ is( wind('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
     ok $m3, "Correctly reached third multi";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

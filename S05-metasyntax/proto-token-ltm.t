@@ -33,3 +33,5 @@ is ~LTM2.subparse('ahahahahahahahaha'), 'ahahahahahahahaha', 'LTM ahaahahaha+ % 
 isnt LTM2.subparse('ahahahahah'), 'ahahahaha', 'LTM ahahahahaha+ % h~failed correctly';
 is ~LTM2.subparse('iiiiii'), 'iiiiii', 'LTM i**5..6 worked';
 is ~LTM2.subparse('jjjjjjjjjj'), 'jjjjjjjjjj', 'LTM j**7..* worked';
+
+# vim: expandtab shiftwidth=4

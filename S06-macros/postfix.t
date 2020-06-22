@@ -14,4 +14,4 @@ macro postfix:<!> (Int $n) {
 
 is 3!, 6, "macro postfix:<!> works";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

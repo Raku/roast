@@ -22,4 +22,4 @@ plan 6;
     is ?$value, False, 'True but False';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

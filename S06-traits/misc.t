@@ -53,7 +53,7 @@ throws-like { mods_param_rw_enforces($[1,2]) },
 lives-ok  { mods_param_rw($foo) }, 'pass by "is rw" doesn\'t die';
 is($foo, 2, 'pass by reference works');
 
-# RT #129812
+# https://github.com/Raku/old-issue-tracker/issues/5728
 multi sub param_rw_ro ($x is rw) { "fee $x" }
 multi sub param_rw_ro ($x) { "foo $x" }
 $foo = "fie";
@@ -103,7 +103,7 @@ lives-ok { boom(42) }, "can modify a copy";
     ok "$!" ~~ /nonesuch/, 'error message mentions the name of the trait';
 }
 
-# RT #132710
+# https://github.com/Raku/old-issue-tracker/issues/6661
 is_run ｢
     sub foo1 is tighter(&[**]) is tighter(&[**])
              is looser(&[**])  is looser(&[**])
@@ -117,4 +117,4 @@ is_run ｢
     .lc.contains: <duplicate tighter looser equiv rw default readonly raw>.all
 }, :out<pass>}, 'duplicate traits warn';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -21,4 +21,4 @@ plan 4;
   is($rv2, Pair, "returned Pair object 2");
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

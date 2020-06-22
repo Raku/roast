@@ -16,3 +16,5 @@ for (10, 100, 1000, 10000) -> $n {
     is $nfc[* - 2], 0x1E0C, 'NFC buffer has correct second-to-last value';
     is $nfc[* - 1], 0x307, 'NFC buffer has correct last value';
 }
+
+# vim: expandtab shiftwidth=4

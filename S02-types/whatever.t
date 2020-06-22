@@ -514,4 +514,4 @@ subtest 'can .assuming with WhateverCode' => {
         '5-params with nested calls, 2 assumed';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

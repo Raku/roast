@@ -60,4 +60,4 @@ is $pair.value, 'value', "method on a named pair";
     is (1, 2, 3).twice.join('|'), "2|4|6", 'can extend class List';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

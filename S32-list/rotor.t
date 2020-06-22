@@ -93,4 +93,4 @@ is-eqv (1,2,3).rotor( 1 Xxx 1 ),
     ((1,), (2,), (3,)).Seq,
     '.rotor with a Seq as a specification source';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

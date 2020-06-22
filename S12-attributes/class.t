@@ -53,7 +53,7 @@ dies-ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
     is($y.x, 42, "class attributes shared by all instances");
 }
 
-# RT #122087
+# https://github.com/Raku/old-issue-tracker/issues/3412
 {
     class Woof {
         my $.x = 'yap';
@@ -62,7 +62,7 @@ dies-ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
     is($x.x, 'yap', "class attribute initialization works");
 }
 
-# RT #57336
+# https://github.com/Raku/old-issue-tracker/issues/193
 {
     # TODO: Test that the exceptions thrown here are the right ones
     #       and not the result of some other bug.
@@ -86,7 +86,7 @@ dies-ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
     ok $! ~~ Exception, "bad code: '$bad_code'";
 }
 
-# RT #114230
+# https://github.com/Raku/old-issue-tracker/issues/2835
 {
     class RT114230 {
         has &!x;
@@ -115,7 +115,7 @@ dies-ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
     is B.new.b, 2;
 }
 
-# RT #102478
+# https://github.com/Raku/old-issue-tracker/issues/2543
 {
     class RT102478_1 { BEGIN EVAL q[has $.x] };
     is RT102478_1.new(x => 3).x, 3,
@@ -127,7 +127,7 @@ dies-ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
         'cannot declare attribute inside of an EVAL in class';
 }
 
-# RT #125625
+# https://github.com/Raku/old-issue-tracker/issues/4407
 is_run(
     'our $.a',
     { err => -> $o { $o ~~ /:i useless/ && $o ~~ /:i accessor/ } },
@@ -139,7 +139,7 @@ is_run(
     'useless my $.a accessor method generation error contains useful enough hints'
 );
 
-# RT #130748
+# https://github.com/Raku/old-issue-tracker/issues/6062
 subtest 'attribute access from where clauses' => {
     plan 7;
     throws-like ｢my class RT130748a { has $.a; has $.b where $!a }｣,
@@ -185,4 +185,4 @@ subtest 'attribute access from where clauses' => {
     is $a.a, 42, 'is the public attribute **NOT** initialized with .new';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

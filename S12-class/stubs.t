@@ -58,4 +58,4 @@ subtest "all forms of yadas work to stub classes" => {
         { :out<42>, :err('') }, 'Can stub a class in a core namespace';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

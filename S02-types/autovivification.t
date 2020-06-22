@@ -126,4 +126,4 @@ sub bar ($baz is readonly) { }
 }
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

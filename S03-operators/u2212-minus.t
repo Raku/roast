@@ -111,3 +111,5 @@ plan 54;
     is-deeply −<42+2i>, -<42+2i>, 'prefix, Complex';
     is-deeply −Duration.new(42), -Duration.new(42), 'prefix, Duration';
 }
+
+# vim: expandtab shiftwidth=4

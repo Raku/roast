@@ -16,7 +16,8 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 
 {
 
-    #RT #125815
+    # https://github.com/Raku/old-issue-tracker/issues/4475
+    
     throws-like '$data.match(/fo+/, :nth(0))', Exception, message => rx/nth/;
     throws-like '$data.match(/fo+/, :nth(-1))', Exception, message => rx/nth/;
     throws-like '$data.match(/fo+/, :nth(-2))', Exception, message => rx/nth/;
@@ -93,7 +94,7 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
         'zero non-monotonic items throw';
 }
 
-# RT #77408
+# https://github.com/Raku/old-issue-tracker/issues/2091
 subtest ':nth accepts Junctions' => {
     plan 7;
     is-deeply "aa" ~~ m:nth(1|2)/a/, True,  'all nths exist (&any)';
@@ -107,4 +108,4 @@ subtest ':nth accepts Junctions' => {
     ok $/ eq 'c', 'Junction has second of the alternatives';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -81,3 +81,5 @@ for <put say> -> $meth {
     await $proc.start;
     is $got, 'Öl', 'stderr Supply decoded with encoding set in constructor';
 }
+
+# vim: expandtab shiftwidth=4

@@ -32,3 +32,5 @@ is cap({ note Int}), "(Int)\n", "note Class name is ok";
 my int $seen;
 note "" but role { method gist() { $seen = 1; "" } };
 is $seen, 1, 'did note() call .gist even when given a Str';
+
+# vim: expandtab shiftwidth=4

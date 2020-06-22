@@ -7,3 +7,5 @@ class D does A::B::B { };
 
 
 
+
+# vim: expandtab shiftwidth=4

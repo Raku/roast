@@ -164,7 +164,7 @@ sub functionB {
 #?rakudo todo 'temp and wrap'
 is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 
-# RT #70267
+# https://github.com/Raku/old-issue-tracker/issues/1390
 # call to nextsame with nowhere to go
 # - Can't use throws-like() here due to difference in what error you get
 # - depending on version of Test.pm6: https://github.com/rakudo/rakudo/pull/743
@@ -181,7 +181,7 @@ try {
     }
 }
 
-# RT #66658
+# https://github.com/Raku/old-issue-tracker/issues/1072
 {
     sub meet(  $person ) { return "meet $person"  }
     sub greet( $person ) { return "greet $person" }
@@ -212,7 +212,7 @@ try {
     is foo(), 1, 'could unwrap by calling .restore on the handle';
 }
 
-# RT #69312
+# https://github.com/Raku/old-issue-tracker/issues/1309
 {
     my @t = gather {
         sub triangle { take '=' x 3; }
@@ -228,7 +228,7 @@ try {
     is @t.join("\n"), "\n=\n==\n===\n==\n=\n", 'multiple wrappings in a loop';
 }
 
-# RT #77472
+# https://github.com/Raku/old-issue-tracker/issues/2104
 {
     multi multi-to-wrap($x) {
         $x * 2;
@@ -236,7 +236,8 @@ try {
     &multi-to-wrap.wrap({
         2 * callsame;
     });
-    #?rakudo.jvm todo "still returns 10, RT #77474"
+    # https://github.com/Raku/old-issue-tracker/issues/2105
+    #?rakudo.jvm todo "still returns 10,"
     is multi-to-wrap(5), 20, 'can wrap a multi';
 }
 
@@ -437,4 +438,4 @@ try {
     is-deeply @order, ['wrapper', 'C2', 'C1'], "methods are in order with the first method wrapped";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

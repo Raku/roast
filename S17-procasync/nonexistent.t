@@ -20,3 +20,5 @@ dies-ok { await $promise },
     'Promise for a process that does not exist is broken';
 
 does-ok $prog.ready.cause, X::OS, '.ready.cause';
+
+# vim: expandtab shiftwidth=4

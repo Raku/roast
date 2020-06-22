@@ -57,11 +57,11 @@ my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
 '), "b", "OGHAM SPACE MARK");
 
 is(try_eval('
-my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
+my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
 '), "b", "EN QUAD");
 
 is(try_eval('
-my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
+my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
 '), "b", "EM QUAD");
 
 is(try_eval('
@@ -140,8 +140,8 @@ is(try_eval('foo\ .lc'), 'a', 'long dot with SPACE');
 is(try_eval('foo\.lc'), 'a', 'long dot with NEXT LINE (NEL)');
 is(try_eval('foo\ .lc'), 'a', 'long dot with NO-BREAK SPACE');
 is(try_eval('foo\ .lc'), 'a', 'long dot with OGHAM SPACE MARK');
-is(try_eval('foo\ .lc'), 'a', 'long dot with EN QUAD');
-is(try_eval('foo\ .lc'), 'a', 'long dot with EM QUAD');
+is(try_eval('foo\ .lc'), 'a', 'long dot with EN QUAD');
+is(try_eval('foo\ .lc'), 'a', 'long dot with EM QUAD');
 is(try_eval('foo\ .lc'), 'a', 'long dot with EN SPACE');
 is(try_eval('foo\ .lc'), 'a', 'long dot with EM SPACE');
 is(try_eval('foo\ .lc'), 'a', 'long dot with THREE-PER-EM SPACE');
@@ -157,4 +157,4 @@ is(try_eval('foo\ .lc'), 'a', 'long dot with NARROW NO-BREAK SPACE');
 is(try_eval('foo\ .lc'), 'a', 'long dot with MEDIUM MATHEMATICAL SPACE');
 is(try_eval('foo\　.lc'), 'a', 'long dot with IDEOGRAPHIC SPACE');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

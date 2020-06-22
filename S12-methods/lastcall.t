@@ -51,4 +51,4 @@ class BarLastCallSame is Foo {
     is($o.show, 'barint,bar,ret1,ret2,', 'lastcall trimming does not affect stuff earlier in chain');
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

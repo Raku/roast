@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 3;
 
-# RT #88704
+# https://github.com/Raku/old-issue-tracker/issues/2408
 # A user-declared infix:<;> clashes with statement stopper ';' in Rakudo
 
 my $marker = 0;
@@ -19,3 +19,5 @@ is +@a, 1, '@a is array with 1 element';
 is @a[0], 1, 'first element of @a eq 1';
 is $marker, 0, 'overloaded infix ; hasn\'t been called';
 
+
+# vim: expandtab shiftwidth=4

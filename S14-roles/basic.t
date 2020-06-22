@@ -86,6 +86,7 @@ lives-ok { HasC.new.x = DoesC.new },
 dies-ok { HasC.new.x = Mu },    'typed attribute rejects things it should';
 dies-ok { HasC.new.x = 42 },    'typed attribute rejects things it should';
 
+# https://github.com/Raku/old-issue-tracker/issues/1028
 throws-like '0 but RT66178', X::Undeclared::Symbols, '"but" with non-existent role dies';
 
 {
@@ -98,7 +99,7 @@ throws-like '0 but RT66178', X::Undeclared::Symbols, '"but" with non-existent ro
        '... and the error message mentions the role';
 }
 
-# RT #67278
+# https://github.com/Raku/old-issue-tracker/issues/1123
 {
     class AClass { };
     dies-ok { EVAL 'class BClass does AClass { }; 1' },
@@ -107,18 +108,18 @@ throws-like '0 but RT66178', X::Undeclared::Symbols, '"but" with non-existent ro
     ok "$!" ~~ /AClass/, 'Error message mentions the offending non-role';
 }
 
-# RT #72840
+# https://github.com/Raku/old-issue-tracker/issues/1507
 {
     try EVAL 'class Boo does Boo { };';
     ok "$!" ~~ /Boo/, 'class does itself produces sensible error message';
 }
 
-# RT #120646
+# https://github.com/Raku/old-issue-tracker/issues/3284
 throws-like 'role RR { }; class RR { };', X::Redeclaration, symbol => 'RR';
 throws-like 'role RRR { }; class RRR does RRR { };', X::Redeclaration,
              symbol => 'RRR';
 
-# RT #69170
+# https://github.com/Raku/old-issue-tracker/issues/1280
 {
     role StrTest {
         method s { self.gist }
@@ -127,10 +128,10 @@ throws-like 'role RRR { }; class RRR does RRR { };', X::Redeclaration,
         'default role gistification contains role name';
 }
 
-# RT #72848
+# https://github.com/Raku/old-issue-tracker/issues/1511
 lives-ok {0 but True}, '0 but True has applicable candidate';
 
-# RT #67768
+# https://github.com/Raku/old-issue-tracker/issues/1153
 #?rakudo skip 'RT #67768'
 {
     eval-lives-ok 'role List { method foo { 67768 } }',
@@ -141,13 +142,13 @@ lives-ok {0 but True}, '0 but True has applicable candidate';
         'can call method from a role with a name already assigned to a class';
 }
 
-# RT #114380
+# https://github.com/Raku/old-issue-tracker/issues/2847
 {
     lives-ok { my role R { my $.r }; my class C does R {} },
         'Can have "my $.r" in a role (RT #114380)';
 }
 
-# RT #116226
+# https://github.com/Raku/old-issue-tracker/issues/3013
 {
     my role AccessesAttr {
         method meth() {
@@ -163,7 +164,7 @@ lives-ok {0 but True}, '0 but True has applicable candidate';
     is WithAttr.new.meth, 42, '$obj.Role::method() passes correct invocant';
 }
 
-# RT #120919
+# https://github.com/Raku/old-issue-tracker/issues/3304
 {
     my role A {
         method pub { self!priv };
@@ -173,20 +174,20 @@ lives-ok {0 but True}, '0 but True has applicable candidate';
     is C.new.pub, 42, 'private methods in roles bind "self" correctly';
 }
 
-# RT #120931
+# https://github.com/Raku/old-issue-tracker/issues/3308
 {
     lives-ok { role RT120931 { method foo {}; RT120931.foo } },
         'can call a role method from within the role block';
 }
 
-# RT #117041
+# https://github.com/Raku/old-issue-tracker/issues/3063
 {
     throws-like { EVAL q[role A::B { method foo(A::C $a) { } }] },
         X::Parameter::InvalidType,
         'undeclared type in signature in role results in X::Parameter::InvalidType';
 }
 
-# RT #123002
+# https://github.com/Raku/old-issue-tracker/issues/3559
 {
     lives-ok { sub rt123002 { EVAL 'role RT123002 { }' }; rt123002 },
         'can call a sub which runs EVAL on minimal role declaration';
@@ -198,7 +199,7 @@ lives-ok {0 but True}, '0 but True has applicable candidate';
     is R.^auth, 'ority', '.^auth on role works';
 }
 
-# RT #132097
+# https://github.com/Raku/old-issue-tracker/issues/6523
 {
     role Rule {
         has Int $.number;
@@ -212,4 +213,4 @@ lives-ok {0 but True}, '0 but True has applicable candidate';
     is $obj.r.number, 30, ‘deeper attribute value was set correctly’;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

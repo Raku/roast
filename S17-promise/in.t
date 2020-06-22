@@ -3,7 +3,7 @@ use Test;
 
 plan 4;
 
-# RT #123520
+# https://github.com/Raku/old-issue-tracker/issues/3631
 # This test comes first in the file so it's the first to start any threads;
 # this means we can test the actual bug in the ticket.
 {
@@ -28,3 +28,5 @@ subtest 'Promise.in with negative value works' => {
     plan 1;
     await Promise.in(-rand).then: { pass ".then'ed code ran" }
 }
+
+# vim: expandtab shiftwidth=4

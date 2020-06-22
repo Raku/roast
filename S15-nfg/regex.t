@@ -30,3 +30,5 @@ plan 13;
     ok $x ~~ /^<:Lu><:Ll>$/, 'Can use Unicode properties on grapheme';
     ok $x ~~ /^<:L>+$/, 'Can use Unicode properties on grapheme (quantified)';
 }
+
+# vim: expandtab shiftwidth=4

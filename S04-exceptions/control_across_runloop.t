@@ -17,4 +17,4 @@ plan 1;
     is $i, 1, 'control operator last can be used in an inferior context';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

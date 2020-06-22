@@ -41,4 +41,4 @@ for @schedulers -> $*SCHEDULER {
       'did the separate \\r \\n join into a single char';
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

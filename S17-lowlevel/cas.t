@@ -121,3 +121,5 @@ for 1..4 -> $attempt {
     is $total, 4 * [+](1..1000),
         "CAS on linked list with Scalar attribute head works ($attempt)";
 }
+
+# vim: expandtab shiftwidth=4

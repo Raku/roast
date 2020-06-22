@@ -13,3 +13,5 @@ is shell($cmd).exitcode, 42, 'exit(42) in executed REPL got run';
 
 # Note: implementations should implement their own, more comprehensive, REPL
 # tests. For example, Rakudo implementation includes them in its t/ test suite
+
+# vim: expandtab shiftwidth=4

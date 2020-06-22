@@ -26,4 +26,4 @@ plan 2;
     lives-ok { foo($Int) }, "passing ::Int to a sub works";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

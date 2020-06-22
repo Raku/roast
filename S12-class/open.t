@@ -74,4 +74,4 @@ throws-like 'use MONKEY-TYPING; class RT124017_B {}; augment class RT124017_B:au
   X::Syntax::Augment::Adverb,
   "can't pass :auth when augmenting class";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

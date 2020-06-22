@@ -155,4 +155,4 @@ subtest 'trim routines on Cool' => {
     is-deeply $p.trim-leading,    'foo ', '.trim-leading works with Cool instance';
     is-deeply $p.trim-trailing,  ' foo',  '.trim-trailing works with Cool instance';
 }
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

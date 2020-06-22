@@ -49,7 +49,7 @@ Testing named capture variables nested inside each other. This doesn't appear to
   is($/<number><notation>, 'roman', 'binding to alias as side-effect');
 }
 
-# RT #111286
+# https://github.com/Raku/old-issue-tracker/issues/2652
 {
     my grammar G {
         token TOP { <a>? $<b>='b' }
@@ -60,14 +60,15 @@ Testing named capture variables nested inside each other. This doesn't appear to
     is $<b>.elems, 0, '$<b> has no captures';
 }
 
-# RT #107746
+# https://github.com/Raku/old-issue-tracker/issues/2606
 {
     grammar a {
         token x { a };
         token y { z };
         rule TOP { [ <x> ]? [c || b <y>] }
     };
+    # https://github.com/Raku/old-issue-tracker/issues/2606
     is ~a.parse('a b z')<x>, 'a', 'can capture inside a || alternation even if previous capture was quantified (RT #107746)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

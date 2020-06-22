@@ -30,7 +30,7 @@ is_run 'my @array = <o k k>; $*OUT.print: @array', { out => "o k k" },
 is_run 'my $a = (\'o\', \'k\', \'k\'); $*OUT.print: $a', { out => "o k k" },
     '$*OUT.print: containerized Array';
 
-# RT #132549
+# https://github.com/Raku/old-issue-tracker/issues/6647
 #?rakudo.jvm skip 'atomicint NYI'
 #?DOES 1
 {
@@ -130,4 +130,4 @@ is_run 'my $a = (\'o\', \'k\', \'k\'); $*OUT.print: $a', { out => "o k k" },
   }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -19,3 +19,5 @@ is { Apples => 5, Oranges => 10 }.fmt('%s cost %d euros'),
     "Apples cost 5 euros\nOranges cost 10 euros"|"Oranges cost 10 euros\nApples cost 5 euros";
 is { huey => 1, dewey => 2, louie => 3 }.fmt('%s', ' -- ').split(' -- ').sort.join(' -- '),
     'dewey -- huey -- louie', 'Hash with two-arg fmt';
+
+# vim: expandtab shiftwidth=4

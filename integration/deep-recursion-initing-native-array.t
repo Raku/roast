@@ -23,4 +23,4 @@ sub init-array($r, $c, $val) {
   }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

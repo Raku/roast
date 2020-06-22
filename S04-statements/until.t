@@ -30,4 +30,4 @@ plan 4;
     is($i, 5, 'until (5 <= $i) {} works');
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

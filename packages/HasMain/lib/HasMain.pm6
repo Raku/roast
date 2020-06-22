@@ -4,3 +4,5 @@ module HasMain {
 }
 sub MAIN() { die 'MAIN' }
 
+
+# vim: expandtab shiftwidth=4

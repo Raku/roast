@@ -7,3 +7,5 @@ class B {
 }
 
 
+
+# vim: expandtab shiftwidth=4

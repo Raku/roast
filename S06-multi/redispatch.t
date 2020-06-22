@@ -78,3 +78,5 @@ plan 14;
     }
     is foo(5), 120, 'samewith works from inside a nested closure';
 }
+
+# vim: expandtab shiftwidth=4

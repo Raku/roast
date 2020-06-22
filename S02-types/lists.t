@@ -148,4 +148,4 @@ plan 29;
 # https://github.com/Raku/old-issue-tracker/issues/2695
 is 'foo'[2..*].elems, 0, 'can range-index a Str with infinite range';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

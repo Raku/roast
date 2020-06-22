@@ -252,11 +252,11 @@ sub gen_hash {
     is +%h, 0,                      "* should be deleted now";
 } #8
 
-# RT #74946
+# https://github.com/Raku/old-issue-tracker/issues/1750
 {
     my %h = a => "b";
     %h{"a"} = %h{"a"} :delete;
     is %h, {a => "b"}, "can use :delete'd value to re-create key";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -3,6 +3,7 @@ use Test;
 
 plan 2;
 
+# https://github.com/Raku/old-issue-tracker/issues/5454
 # The following two tests cover RT #128628, where code like this could hang
 # as well as give wrong results.
 
@@ -37,3 +38,5 @@ plan 2;
     await @p;
     is-deeply @r, [1 xx 4000], 'Semaphore protected array operations';
 }
+
+# vim: expandtab shiftwidth=4

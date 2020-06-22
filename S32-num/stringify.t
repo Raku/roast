@@ -78,8 +78,8 @@ is Rat.raku, 'Rat', 'Rat.raku';
 lives-ok { ~Rat }, '~Rat does not die';
 lives-ok { Rat.Str }, 'Rat.Str does not die';
 
-# RT #127184
-# RT #132330
+# https://github.com/Raku/old-issue-tracker/issues/5005
+# https://github.com/Raku/old-issue-tracker/issues/2593
 subtest 'no precision loss in stringification of Nums' => {
     plan 6;
     is pi,           '3.141592653589793', 'pi';
@@ -94,4 +94,4 @@ subtest 'no precision loss in stringification of Nums' => {
 
 # TODO: FatRat, Num (once better specced), Int (maybe, but hard to mess up)
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

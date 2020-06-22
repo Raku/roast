@@ -62,3 +62,5 @@ throws-like { EVAL 'my Int $a = "foo"' }, X::TypeCheck::Assignment;
     is-deeply $/.VAR.default, Nil, 'VAR introspection (default)';
     is-deeply $/.VAR.dynamic, True, 'VAR introspection (dynamic)';
 }
+
+# vim: expandtab shiftwidth=4

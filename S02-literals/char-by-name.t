@@ -20,10 +20,12 @@ is("\c[LF]", "\c10", '\c[LF] works');
 is "\c[LATIN CAPITAL LETTER A, LATIN CAPITAL LETTER B]", 'AB', 'two letters in \c[]';
 is "\c[LATIN CAPITAL LETTER A, COMBINING GRAVE ACCENT]", "\x[0041,0300]", 'letter and combining char in \c[]';
 
+# https://github.com/Raku/old-issue-tracker/issues/927
 ok "\c[LATIN SMALL LETTER A WITH DIAERESIS,COMBINING CEDILLA]" ~~ /\w/,
    'RT #64918 (some strings throw "Malformed UTF-8 string" errors';
-is "\c[BELL]", "🔔", '\c[BELL] returns 🔔, BELL symbol not the control character'; # RT #130542
+# https://github.com/Raku/old-issue-tracker/issues/5998
+is "\c[BELL]", "🔔", '\c[BELL] returns 🔔, BELL symbol not the control character'; 
 
 #?rakudo.jvm skip "rakudo.jvm does not yet support Emoji Sequences"
 is "\c[woman gesturing OK]".ords, (0x1F646, 0x200D, 0x2640, 0xFE0F), "\\c[woman gesturing OK] works. Emoji ZWJ sequences";
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

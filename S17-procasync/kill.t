@@ -77,4 +77,4 @@ subtest 'can rapid-kill our Proc::Async without hanging' => {
     pass 'did not hang';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

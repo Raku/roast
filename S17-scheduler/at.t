@@ -142,3 +142,5 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
         $*SCHEDULER.cue(-> { }, at => NaN);
     }, X::Scheduler::CueInNaNSeconds, "Passing :at as NaN to CurrentThreadScheduler.cue throws";
 }
+
+# vim: expandtab shiftwidth=4

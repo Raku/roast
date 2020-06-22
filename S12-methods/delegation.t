@@ -45,3 +45,5 @@ is        A.base(16),  'FF',     '... same with type object invocant';
 
     is Cc.new.foo, 42, 'role method calls works through role delegation independent of declaration order.';
 }
+
+# vim: expandtab shiftwidth=4

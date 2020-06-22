@@ -3,15 +3,15 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 179;
+plan 180;
 
-# RT #77270
+# https://github.com/Raku/old-issue-tracker/issues/2075
 throws-like 'sub foo(--> NoSuchType) { }; foo', X::Undeclared, what => { m/'Type'/ }, symbol => { m/'NoSuchType'/ };
 
 throws-like 'my class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foobar";
 
 {
-    # RT #69760
+    # https://github.com/Raku/old-issue-tracker/issues/1362
     my $code = q{class GrammarUserClass { method bar { PostDeclaredGrammar.parse('OH HAI'); } }; grammar PostDeclaredGrammar { rule TOP { .* } }; GrammarUserClass.bar;};
     throws-like $code, X::Undeclared::Symbols, post_types => { .{"PostDeclaredGrammar"} :exists };
 }
@@ -21,25 +21,25 @@ throws-like 'my class Foobar is Foobar', X::Inheritance::SelfInherit, name => "F
 }
 
 {
-    # RT #72958
+    # https://github.com/Raku/old-issue-tracker/issues/1528
     throws-like q{1/2.''()}, X::Method::NotFound, method => '', typename => 'Int';
 }
 
 {
-    # RT #78314
+    # https://github.com/Raku/old-issue-tracker/issues/2219
     throws-like q{role Bottle[::T] { method Str { "a bottle of {T}" } }; class Wine { ... }; say Bottle[Wine].new;}, X::Package::Stubbed;
 }
 
 throws-like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol => '$x';
 
-# RT #116547
+# https://github.com/Raku/old-issue-tracker/issues/3036
 {
     try EVAL('my ($abe, $ba, $abc); $abd');
     diag $!.message;
     ok $!.message ~~ /'Did you mean'/, "Doesn't explode";
 }
 
-# RT #76368
+# https://github.com/Raku/old-issue-tracker/issues/1909
 {
     throws-like q[ sub foo(Str) { }; foo 42; ], X::TypeCheck::Argument;
 
@@ -67,44 +67,44 @@ throws-like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
     }
 }
 
-# RT #78012
+# https://github.com/Raku/old-issue-tracker/issues/2185
 #?rakudo.jvm todo 'correct method, but result for .private is empty'
 throws-like 'my class A { method b { Q<b> } }; my $a = A.new; my $b = &A::b.assuming($a); $b();',
     X::Method::NotFound, method => { m/'assuming'/ }, private => { $_ === False };
 
-# RT #66776
+# https://github.com/Raku/old-issue-tracker/issues/1076
 throws-like 'for 1,2,3, { say 3 }', X::Comp::Group,
     sorrows => sub (@s) { @s[0] ~~ X::Syntax::BlockGobbled && @s[0].message ~~ /^Expression/ },
     panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ };
 
-# RT #66776
+# https://github.com/Raku/old-issue-tracker/issues/1076
 throws-like 'CATCH { when X::Y {} }', X::Comp::Group,
     sorrows => sub (@s) { @s[0] ~~ X::Syntax::BlockGobbled && @s[0].what ~~ /'X::Y'/ },
     panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ };
 
-# RT #75230
+# https://github.com/Raku/old-issue-tracker/issues/1770
 throws-like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused,
     reason => { m/'Missing semicolon'/ },
     pre => { m/'1 if 2'/ },
     post => { m/'3 { say 3 }'/ };
 
-# RT #125674
+# https://github.com/Raku/old-issue-tracker/issues/4431
 #?rakudo todo 'Wrong eject position'
 throws-like 'if True if { };', X::Syntax::Missing,
     what => 'block',
     pre => 'if True ',
     post => 'if { };';
 
-# RT #77522
+# https://github.com/Raku/old-issue-tracker/issues/2107
 throws-like '/\ X/', X::Syntax::Regex::Unspace,
     message => { m/'No unspace allowed in regex' .+ '(\' \')' .+ '\x20'/ }, char => { m/' '/ };
 
-# RT #77380
+# https://github.com/Raku/old-issue-tracker/issues/2087
 throws-like '/m ** 1..-1/', X::Comp::Group,
     panic => { .payload ~~ m!'Unable to parse regex; couldn\'t find final \'/\''! },
     sorrows => { .[0] => { $_ ~~ X::Syntax::Regex::MalformedRange } and .[1] => { $_ ~~ X::Syntax::Regex::UnrecognizedMetachar } };
 
-# RT #130528 Obey S05 explicit error syntax despite injection of stopper
+# https://github.com/Raku/old-issue-tracker/issues/2593
 throws-like 'multi sub postcircumfix:«⟨  ⟩»($foo, $a) { $a.say }; my $a; $a⟨5;', X::Comp::FailGoal,
    dba => "postcircumfix:sym<⟨ ⟩>",
    goal => "'⟩'";
@@ -120,22 +120,22 @@ throws-like '[1,2', X::Comp::FailGoal,
    dba => "array composer",
    goal => "']'";    # Normal literal-in-regex case.
 
-# RT #122502
+# https://github.com/Raku/old-issue-tracker/issues/3479
 throws-like '/m ** 1 ..2/', X::Syntax::Regex::SpacesInBareRange,
     pre => { m!'/m ** 1 ..'! },
     post => { m!'2/'! };
 
-# RT #115726
+# https://github.com/Raku/old-issue-tracker/issues/2971
 throws-like 'sub infix:<> (){}', X::Comp::Group,
     panic => { $_ ~~ X::Syntax::Extension::Null and .pre ~~ m/'sub infix:<>'/ and .post ~~ m/'()'/ },
     message => /'Null operator is not allowed'/,
     worries => { .[0].payload ~~ m/'Pair with <> really means an empty list, not null string'/ };
 
-# RT #122646
+# https://github.com/Raku/old-issue-tracker/issues/3493
 throws-like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
   'unknown operator should complain better';
 
-# RT #72816
+# https://github.com/Raku/old-issue-tracker/issues/1497
 throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 
 {
@@ -145,26 +145,26 @@ throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 }
 
 #?rakudo.js.browser skip "use at EVAL time not supported in the browser"
-# RT #113680
+# https://github.com/Raku/old-issue-tracker/issues/2791
 throws-like ｢use ThisDoesNotExistAtAll｣, X::CompUnit::UnsatisfiedDependency;
 
-# RT #116607
+# https://github.com/Raku/old-issue-tracker/issues/3039
 throws-like ｢my \foo｣, X::Syntax::Term::MissingInitializer,
    message => 'Term definition requires an initializer';
 
-# RT #88748
+# https://github.com/Raku/old-issue-tracker/issues/2410
 throws-like ｢given 42 { when SomeUndeclaredType { 1 }; default { 0 } }｣,
     X::Comp::Group, :message(/SomeUndeclaredType/),
 'adequate error message when undeclared type is used in "when" clause';
 
-# RT #118067
+# https://github.com/Raku/old-issue-tracker/issues/3142
 {
     my class A is Any { proto method new($) {*} };
     throws-like { A.new(now) }, X::Multi::NoMatch,
         'no NullPMC access error but exception X::Multi::NoMatch';
 }
 
-# RT #120831
+# https://github.com/Raku/old-issue-tracker/issues/3293
 {
     throws-like 'my Int a;', X::Syntax::Malformed,
         'adequate error message when declaring "my Int a;"',
@@ -174,44 +174,44 @@ throws-like ｢given 42 { when SomeUndeclaredType { 1 }; default { 0 } }｣,
         message => { m/"Malformed my (did you mean to declare a sigilless"/ };
 }
 
-# RT #114014
+# https://github.com/Raku/old-issue-tracker/issues/2820
 throws-like ｢ord.Cool｣, X::Obsolete,
     'adequate error message when calling bare "ord"';
 
-# RT #123584
+# https://github.com/Raku/old-issue-tracker/issues/3642
 is_run q[$; my $b;], { :0status, :err(/
       ^ "WARNINGS" \N* \n "Useless use of unnamed \$ variable in sink context"
 /)}, "unnamed var in sink context warns";
 
-# RT #127062
+# https://github.com/Raku/old-issue-tracker/issues/4951
 is_run 'my @a = -1, 2, -3; print [+] (.abs + .abs for @a)',
     { :0status, :out<12>, :err('')},
 'no warning about Useless use of "+" in sink context';
 
-# RT #128770
+# https://github.com/Raku/old-issue-tracker/issues/5476
 is_run q|print ($_ with 'foo')|, { :0status, :out<foo>, :err('') },
     'no warning about "Useless use" with say ($_ with "foo")';
 
-# RT #128766
+# https://github.com/Raku/old-issue-tracker/issues/5498
 is_run q|sub infix:<↑>($a, $b) is assoc<right> {$a ** $b};
          sub infix:<↑↑>($a, $b) is assoc<right> { [↑] $a xx $b };
          print 3↑↑3|,
     { :0status, :out<7625597484987>, :err('') },
 'no warning about "Useless use" with "onearg form of reduce"';
 
-# RT #114430
+# https://github.com/Raku/old-issue-tracker/issues/2853
 throws-like { ::('') }, X::NoSuchSymbol, 'fail sensibly for empty lookup';
 
-# RT #117859
+# https://github.com/Raku/old-issue-tracker/issues/3122
 throws-like 'class RT117859 { trusts Bar }', X::Undeclared,
     :symbol<Bar>, :what<Type>;
 
-# RT #93988
+# https://github.com/Raku/old-issue-tracker/issues/2448
 throws-like '5.', X::Comp::Group, sorrows => sub (@s) {
     @s[0] ~~ X::Syntax::Number::IllegalDecimal
 }
 
-# RT #81502
+# https://github.com/Raku/old-issue-tracker/issues/2312
 throws-like 'BEGIN { ohnoes() }; sub ohnoes() { }', X::Undeclared::Symbols;
 throws-like 'BEGIN { die "oh noes!" }', X::Comp::BeginTime,
     exception => sub ($e) { $e.message eq 'oh noes!' };
@@ -224,21 +224,21 @@ throws-like q:to/CODE/, X::Comp::BeginTime, exception => X::Multi::NoMatch;
     constant j = Polar.new( 0e0 );
 CODE
 
-# RT #123397
+# https://github.com/Raku/old-issue-tracker/issues/3600
 throws-like 'my package A {}; my A $a;', X::Syntax::Variable::BadType;
 throws-like 'my package A {}; sub foo(A $a) { }', X::Parameter::BadType;
 
-# RT #123627
+# https://github.com/Raku/old-issue-tracker/issues/3649
 throws-like 'use DoesNotMatter Undeclared;', X::Undeclared::Symbols;
 throws-like 'no DoesNotMatter Undeclared;', X::Undeclared::Symbols;
 
-# RT #73102
+# https://github.com/Raku/old-issue-tracker/issues/1538
 throws-like 'my Int (Str $x);', X::Syntax::Variable::ConflictingTypes, outer => Int, inner => Str;
 
 throws-like '$k', X::Undeclared, post => '$k', highexpect => &not,
     "X::Undeclared precedes the name and doesn't expect anything else";
 
-# RT #125427
+# https://github.com/Raku/old-issue-tracker/issues/4328
 throws-like 'multi sub prefix:<|> (\a) { a.flat }', X::Syntax::Extension::SpecialForm,
     category => 'prefix', opname => '|';
 throws-like 'multi sub infix:<=>(\a, \b) { }', X::Syntax::Extension::SpecialForm,
@@ -248,62 +248,62 @@ throws-like 'multi sub infix:<:=>(\a, \b) { }', X::Syntax::Extension::SpecialFor
 throws-like 'multi sub infix:<::=>(\a, \b) { }', X::Syntax::Extension::SpecialForm,
     category => 'infix', opname => '::=';
 
-# RT #125745
+# https://github.com/Raku/old-issue-tracker/issues/4453
 throws-like 'multi sub infix:<~~>(\a, \b) { }', X::Syntax::Extension::SpecialForm,
     category => 'infix', opname => '~~';
 
-# RT #125441
+# https://github.com/Raku/old-issue-tracker/issues/4334
 throws-like 'enum Error ( Metadata => -20); class Metadata { }', X::Redeclaration;
 
-# RT #125228
+# https://github.com/Raku/old-issue-tracker/issues/4257
 throws-like 'sub foo() is export(WTF) { }', X::Undeclared::Symbols;
 
-# RT #125259
+# https://github.com/Raku/old-issue-tracker/issues/4269
 throws-like 'sub x(array[Int]) { }', X::Comp::BeginTime;
 
-# RT #125120
+# https://github.com/Raku/old-issue-tracker/issues/4221
 throws-like 'enum X <A>; sub foo(A $a) { True', X::Syntax::Missing;
 
-# RT #108462
+# https://github.com/Raku/old-issue-tracker/issues/2613
 throws-like '{ our sub foo { say "OMG" } }; { our sub foo { say "WTF" } };', X::Redeclaration;
 throws-like 'my class C { my method foo { say "OMG" }; my method foo { say "WTF" } }', X::Redeclaration;
 throws-like 'my class C { our method foo { say "OMG" }; our method foo { say "WTF" } }', X::Redeclaration;
 throws-like 'my grammar G { my token foo { OMG }; my token foo { WTF } }', X::Redeclaration;
 throws-like 'my grammar G { our token foo { OMG }; our token foo { WTF } }', X::Redeclaration;
 
-# RT #125335
+# https://github.com/Raku/old-issue-tracker/issues/4296
 throws-like 'use fatal; +("\b" x 10)', X::Str::Numeric, source-indicator => /'\b'/;
 
-# RT #125574
+# https://github.com/Raku/old-issue-tracker/issues/4385
 throws-like 'my class A { ... }; my class A is repr("Uninstantiable") { }', X::TooLateForREPR;
 
-# RT #114274
+# https://github.com/Raku/old-issue-tracker/issues/2840
 throws-like 'gather { return  1}', X::ControlFlow::Return;
 
-# RT #123732
+# https://github.com/Raku/old-issue-tracker/issues/3668
 throws-like 'for ^5 { NEXT { return } }', X::ControlFlow::Return;
 throws-like 'for ^5 { return; }', X::ControlFlow::Return;
 throws-like 'return;', X::ControlFlow::Return;
 
-# RT #125595
+# https://github.com/Raku/old-issue-tracker/issues/4391
 throws-like 'loop (my $i = 0; $i <= 5; $i++;) { say $i }', X::Syntax::Malformed, what => /^'loop spec'/;
-# RT #127857
+# https://github.com/Raku/old-issue-tracker/issues/5220
 throws-like 'loop () { say $i }', X::Syntax::Malformed, what => /^'loop spec' .* 'semicolon'/;
 throws-like 'loop (my $i = 0, $i <= 5, $i++) { say $i }', X::Syntax::Malformed, what => /^'loop spec' .* 'got 1'/;
 throws-like 'loop (my $i = 0; $i <= 5, $i++) { say $i }', X::Syntax::Malformed, what => /^'loop spec' .* 'got 2'/;
 throws-like 'loop (my $i = 0; $i <= 5; $i++; $i++) { say $i }', X::Syntax::Malformed, what => /^'loop spec' .* 'got more'/;
 
-# RT #115398
+# https://github.com/Raku/old-issue-tracker/issues/2945
 throws-like 'my package P { }; P[Int]', X::NotParametric;
 throws-like 'my module M { }; M[Int]', X::NotParametric;
 throws-like 'my class C { }; C[Int]', X::NotParametric;
 
-# RT #115400
+# https://github.com/Raku/old-issue-tracker/issues/2946
 throws-like 'my package P { }; sub foo(P of Int) { }', X::NotParametric;
 throws-like 'my module M { }; sub foo(M of Int) { }', X::NotParametric;
 throws-like 'my class C { }; sub foo(C of Int)', X::NotParametric;
 
-# RT #125620
+# https://github.com/Raku/old-issue-tracker/issues/4405
 {
     my class CustomException is Exception {}
     try die CustomException.new;
@@ -325,13 +325,13 @@ for <fail die throw rethrow resume> -> $meth {
         routine            => $meth;
 }
 
-# RT #125642
+# https://github.com/Raku/old-issue-tracker/issues/4414
 throws-like 'sub foo() returns Bar { }', X::InvalidType, typename => 'Bar';
 throws-like 'my class C hides Baz { }', X::InvalidType, typename => 'Baz';
 throws-like 'my class C does InNoWayExist { }', X::InvalidType, typename => 'InNoWayExist';
 throws-like 'sub foo() returns !!!wtf??? { }', X::Syntax::Malformed, what => 'trait';
 
-# RT #125675
+# https://github.com/Raku/old-issue-tracker/issues/4432
 # R#2729
 throws-like '(1, 2, 3).map(True)',        X::Cannot::Map;
 throws-like '(1, 2, 3).map: 1,2,3',       X::Cannot::Map;
@@ -339,24 +339,24 @@ throws-like '(1, 2, 3).map: (1,2,3)',     X::Cannot::Map;
 throws-like '(1, 2, 3).map: * xx 2',      X::Cannot::Map;
 throws-like '(1, 2, 3).map: { a => 42 }', X::Cannot::Map;
 
-# RT #125504
+# https://github.com/Raku/old-issue-tracker/issues/4359
 my $notahash = "a";
 throws-like '$notahash<foo>', Exception, payload => rx:i/associative/, payload => rx/^^<-[\{\}]>+$$/;
 
-# RT #119763
+# https://github.com/Raku/old-issue-tracker/issues/3233
 throws-like 'my $x :a', X::Syntax::Adverb;
 
-# RT #117417
+# https://github.com/Raku/old-issue-tracker/issues/3092
 throws-like 'sub foo ($bar :D) { 1; }', X::Parameter::InvalidType;
 
-# RT #126091
+# https://github.com/Raku/old-issue-tracker/issues/4542
 {
     throws-like 'my Nil $a = 3', X::TypeCheck::Assignment, expected => Nil;
     throws-like 'sub aa (Nil $a) { }; my $b = 3; aa($b)',
         X::TypeCheck::Binding, expected => Nil;
 }
 
-# RT #126105
+# https://github.com/Raku/old-issue-tracker/issues/4554
 throws-like 'my Int $a is default(Nil)',
     X::Parameter::Default::TypeCheck, got => Nil;
 
@@ -407,13 +407,14 @@ throws-like 'my Int $a is default(Nil)',
     }}, "sink warning maintains used format of nums";
 }
 
-# RT #125769
+# https://github.com/Raku/old-issue-tracker/issues/4460
 {
     sub a {
 	if 1 { my $f = Failure.new("foo"); }
 	unless 0 { my $f = Failure.new("foo"); }
 	return 1;
     }
+    # https://github.com/Raku/old-issue-tracker/issues/4460
     #?rakudo.jvm skip 'failure assignment still blows up on JVM, RT #125769'
     is a(), 1, "failure assignment at end of if block doesn't blow up";
     sub b {
@@ -431,11 +432,11 @@ throws-like 'my Int $a is default(Nil)',
     is c(), 3, "failure binding at end of block doesn't blow up with or without modifier if";
 }
 
-# RT #126987
+# https://github.com/Raku/old-issue-tracker/issues/4902
 throws-like 'enum Animal (Cat, Dog)', X::Undeclared::Symbols;
 throws-like 'constant foo = bar', X::Undeclared::Symbols;
 
-# RT #126888 # RT #128755
+# https://github.com/Raku/old-issue-tracker/issues/2593
 throws-like '(1,2)[0] := 3', X::Bind;
 #?rakudo 2 todo 'wrong exception'
 throws-like '(List)[0]  := 1', X::Bind, "can't bind into an undefined list";
@@ -443,13 +444,13 @@ throws-like '(Int)[0]   := 1', X::Bind, "can't bind into an undefined Int";
 throws-like '10[0]      := 1', X::Bind, "can't bind into a defined Int";
 throws-like '"Hi"[0]    := 1', X::Bind, "can't bind into a defined Str";
 
-# RT #128581
+# https://github.com/Raku/old-issue-tracker/issues/5438
 throws-like Q/my Array[Numerix] $x;/, X::Undeclared::Symbols, gist => /Numerix/;
 
-# RT #129290
+# https://github.com/Raku/old-issue-tracker/issues/5677
 throws-like 'for 1, 2 { my $p = {};', X::Syntax::Missing, what => 'block';
 
-# RT #129306
+# https://github.com/Raku/old-issue-tracker/issues/5682
 #?rakudo.jvm todo 'dies with X::AdHoc -- __P6opaque__77@3dc2adf9 in sub-signature of parameter @array'
 throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
     X::TypeCheck::Binding, got => IntStr, expected => Positional;
@@ -489,7 +490,8 @@ throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
     }
 }
 
-{ # RT #129334
+# https://github.com/Raku/old-issue-tracker/issues/5689
+{ 
     my sub bar { X::AdHoc.new.throw }();
     CATCH { default {
         my $bt = .backtrace;
@@ -502,7 +504,7 @@ throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
     }}
 }
 
-# RT #129921
+# https://github.com/Raku/old-issue-tracker/issues/5761
 {
     my $warned;
     {
@@ -513,14 +515,14 @@ throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
     nok $warned, 'No warning when producing error for "my $!a"';
 }
 
-# RT #131492
+# https://github.com/Raku/old-issue-tracker/issues/6310
 {
     throws-like q| my \foo = Callable but role :: { } |,
         X::Method::NotFound, :message{.so},
 	'X::Method::NotFound does not die with "X::Method::NotFound exception produced no message"';
 }
 
-# RT #123926
+# https://github.com/Raku/old-issue-tracker/issues/3701
 {
     throws-like q|enum E <RT123926Foo Bar>; sub x(RT123926Floo) {}|,
         X::Parameter::InvalidType,
@@ -537,7 +539,7 @@ is_run ｢
 }), 'lexical worries pragma disables compiler warnings';
 
 
-# RT #127100
+# https://github.com/Raku/old-issue-tracker/issues/4968
 {
     sub test { throws-like $^code, X::Syntax::Malformed, :what(/return/) }
     test 'sub foo (--> Bool Int $x, Int $y) { True }';
@@ -550,13 +552,50 @@ is_run ｢
     test 'sub foo ($x; --> Bool; Int $y)';
 }
 
-# RT #125299
+# https://github.com/Raku/old-issue-tracker/issues/4284
 throws-like ｢my $x = "#={";
 say 42;｣, X::Comp::FailGoal, line => 2, message => /«'line 1'»/;
 
-# RT #130261
+# https://github.com/Raku/old-issue-tracker/issues/5858
 throws-like ｢say ‘hello';
 say 42;
 say 50;｣, X::Comp::FailGoal, line => 3, message => /«'line 1'»/;
 
-# vim: ft=perl6
+# https://github.com/rakudo/rakudo/issues/3751
+{
+    my $code = q:to/END/;
+        say 'first both';\
+        <<<<<<< HEAD
+        say 'your';
+        =======
+        say 'their';
+        >>>>>>> branch
+
+        say 'middle both';
+
+        <<<<<<< HEAD
+        say 'your';
+        =======
+        say 'their';
+        >>>>>>> branch
+
+        q:to/QUOTED/;
+        <<<<<<< HEAD
+        this is not 
+        =======
+        a vcs conflict
+        >>>>>>> branch
+        QUOTED
+        END
+    throws-like $code, X::Comp::Group,
+        sorrows => sub (@s) {
+            +@s == 1 && @s[0] ~~ X::Comp::AdHoc && @s[0].line == 2
+            && @s[0].payload eq 'Found a version control conflict marker'
+        },
+        panic => sub ($p) {
+            $p ~~ X::Comp::AdHoc && $p.line == 10
+            && $p.payload eq 'Found a version control conflict marker'
+        };
+}
+
+# vim: expandtab shiftwidth=4

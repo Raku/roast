@@ -113,4 +113,4 @@ diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
   }, "Supply.throttle(\$, \$second) should become done when the source supply become done";
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

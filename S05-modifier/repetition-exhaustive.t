@@ -20,6 +20,7 @@ my $str = "abbb";
 my regex rx { a b+ };
 
 ok($str  ~~ m:ex:x(2)/<rx>/, "Simple combination of :x(2) and :exhaustive");
+# https://github.com/Raku/old-issue-tracker/issues/4227
 #?rakudo todo 'exhaustive capture too greedy RT #125133'
 is(~$/[0],  "ab", 'First entry of prev. genenerated $/');
 is(~$/[1], "abb", 'Second entry of prev. genenerated $/');
@@ -27,4 +28,4 @@ ok($str  ~~ m:ex:x(3)/<rx>/, "Simple combination of :x(3) and :exhaustive");
 ok($str !~~ m:ex:x(4)/<rx>/, "Simple combination of :x(4) and :exhaustive");
 
 
-# vim: syn=perl6 sw=4 ts=4 expandtab
+# vim: expandtab shiftwidth=4

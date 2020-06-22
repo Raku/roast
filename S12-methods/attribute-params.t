@@ -34,14 +34,14 @@ is  $x.a.join('|'), '1|2', 'slurpy array param set correctly';
 is  $x.ssh(a=> 1, b => 2), 15, 'slurpy hash attributive paramed method returns the right thing';
 is  $x.h<b a>.join('|'), '2|1', 'slurpy hash param set correctly';
 
-# RT #125591
+# https://github.com/Raku/old-issue-tracker/issues/4390
 throws-like 'my class C { has $.x; submethod BUILD(:$.x) {} }',
     X::Syntax::VirtualCall, call => '$.x';
 
 throws-like 'sub optimal($.x) { }', X::Syntax::NoSelf, variable => '$.x';
 throws-like 'sub optimal($!x) { }', X::Syntax::NoSelf, variable => '$!x';
 
-# RT #129278
+# https://github.com/Raku/old-issue-tracker/issues/5674
 #?DOES 2
 {
     my class C {
@@ -87,4 +87,4 @@ throws-like 'sub optimal($!x) { }', X::Syntax::NoSelf, variable => '$!x';
     is C.new.bar("foo").foo, "foo", 'any Signature binds attributively to the next self in the outer chain';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -73,4 +73,4 @@ plan 16;
     ok !EVAL('my $end_val = END { 3 }'), "END {} can't be used as a rvalue";
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

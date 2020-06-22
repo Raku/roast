@@ -45,4 +45,4 @@ is $/.from, 0, 'from 0';
 is $/.to, 1, 'to 1';
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

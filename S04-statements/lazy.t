@@ -6,6 +6,7 @@ use Test;
 
 plan 10;
 
+# https://github.com/Raku/old-issue-tracker/issues/3885
 {
   my $was_in_lazy;
 
@@ -21,6 +22,7 @@ plan 10;
   is $was_in_lazy,   1, 'lazy block was not executed again';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/3885
 # dies-ok/lives-ok tests:
 {
   my $was_in_lazy;
@@ -30,6 +32,7 @@ plan 10;
   ok !$was_in_lazy,       "trying to reassign var bound to a lazy does not evaluate lazy block";
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/3885
 {
   my $was_in_lazy;
   my $lazy := lazy { $was_in_lazy++; 42 };
@@ -44,4 +47,4 @@ plan 10;
     "assigning to a lazily computed value does not work";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

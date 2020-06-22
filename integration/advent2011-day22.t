@@ -12,3 +12,5 @@ plan 2;
     sub infix:<mean>($a, $b) is tighter(&infix:<*>) { ($a + $b) / 2 };
     is (10 mean 4 * 5), 35, 'tighter precedence';
 }
+
+# vim: expandtab shiftwidth=4

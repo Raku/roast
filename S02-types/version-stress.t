@@ -94,3 +94,5 @@ while @sorted {
         is( $v2 cmp $v1, Order::More, "$v2 cmp $v1" );
     }
 }
+
+# vim: expandtab shiftwidth=4

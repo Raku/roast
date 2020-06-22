@@ -507,3 +507,5 @@ ok Uni.new(0x2159).NFKC.list ~~ (0x0031, 0x2044, 0x0036,), '2159 -> 0031 2044 00
 ok Uni.new(0x215A).NFKC.list ~~ (0x0035, 0x2044, 0x0036,), '215A -> 0035 2044 0036';
 ok Uni.new(0x215B).NFKC.list ~~ (0x0031, 0x2044, 0x0038,), '215B -> 0031 2044 0038';
 ok Uni.new(0x215C).NFKC.list ~~ (0x0033, 0x2044, 0x0038,), '215C -> 0033 2044 0038';
+
+# vim: expandtab shiftwidth=4

@@ -21,4 +21,4 @@ subtest 'smartmatch with HyperWhatever type object' => {
 }
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

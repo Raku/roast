@@ -414,7 +414,7 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
 }
 
-# RT #126507
+# https://github.com/Raku/old-issue-tracker/issues/4697
 {
     my %h{Any};
     my $key = $(1,2,3);
@@ -426,4 +426,4 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is %h.elems, 0, 'container respected in hash :delete';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

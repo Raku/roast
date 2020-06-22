@@ -5,3 +5,5 @@ sub gen-counter is export {
     my $foo = 0;
     sub counter { $foo++ }
 }
+
+# vim: expandtab shiftwidth=4

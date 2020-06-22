@@ -10,7 +10,7 @@ is my_first( 4, 5, 6), 4, '($x, $, $) works as a signature';
 is my_second(4, 5, 6), 5, '($, $x, $) works as a signature';
 is my_third( 4, 5, 6), 6, '($, $, $x) works as a signature';
 
-# RT #60408
+# https://github.com/Raku/old-issue-tracker/issues/398
 {
     sub rt60408 {
         return { @_.join };
@@ -30,7 +30,7 @@ is my_third( 4, 5, 6), 6, '($, $, $x) works as a signature';
 
 # using "special" variables as positional parameters
 {
-    # RT #77054
+    # https://github.com/Raku/old-issue-tracker/issues/2029
     sub dollar-underscore($x, $y, $_, $z) { "$x $y $_ $z"; }
     is dollar-underscore(1,2,3,4), '1 2 3 4', '$_ works as parameter name';
 
@@ -51,4 +51,4 @@ throws-like 'sub foo( \a, \a ) { }', X::Redeclaration,
 throws-like 'sub foo( ::T, ::T) { }', X::Redeclaration,
     'two sub params with the same type capture name';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

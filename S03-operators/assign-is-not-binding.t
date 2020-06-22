@@ -42,4 +42,4 @@ plan 9;
     is @list[0], 42, "Assignment to scalar didn't create a binding";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

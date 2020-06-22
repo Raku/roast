@@ -49,10 +49,10 @@ is (2, 10, * Z* 3, 4, 5, *).[^5],
        '121,212', '[Z+] with three lists';
 }
 
-# RT #75818
+# https://github.com/Raku/old-issue-tracker/issues/1842
 isa-ok (1 Z 2)[0], List, 'zip returns a list of lists';
 
-# RT #113800  - multiple Z operators work with list associative
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     my $l = (1,2,3 Z, 4,5,6 Z, 7,8,9);
     is $l.[0].elems, 3, 'Z, retains list associativity';
@@ -60,7 +60,7 @@ isa-ok (1 Z 2)[0], List, 'zip returns a list of lists';
     is $l.[2].elems, 3, 'Z, retains list associativity';
 }
 
-# RT #73948
+# https://github.com/Raku/old-issue-tracker/issues/1646
 is (1, 2 Z, 3, 4).flat.join('|'), '1|3|2|4', 'Z, flattens in list context';
 
 {
@@ -69,7 +69,7 @@ is (1, 2 Z, 3, 4).flat.join('|'), '1|3|2|4', 'Z, flattens in list context';
     is ~@a, '4 4 4', 'zip can modify containers on the left'
 }
 
-# RT #116036
+# https://github.com/Raku/old-issue-tracker/issues/2995
 {
     is (<a b> Z=> ([],)), (a => []), 'zip does not flatten itemized list';
 }
@@ -180,7 +180,7 @@ is-deeply &[Z+]((1,2,3),(1,2,3),(1,2,3)), (3, 6, 9), "Meta zip can autogen (3-ar
     ok $side-effect === Nil, "Zorelse topicalizes when needed";
 }
 
-# RT #126522
+# https://github.com/Raku/old-issue-tracker/issues/4705
 is ($(1, 2) Z <a b c>), (($(1, 2), 'a'),),
     'Z respects itemization of arguments (1)';
 is (<a b c> Z $(1, 2)), (('a', $(1, 2)),),
@@ -197,4 +197,4 @@ my %h = %(:a);
 is-deeply zip(%h<>:v.map: *.flat), ((True,),),
   'is a 1-element list handled correctly with zip';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

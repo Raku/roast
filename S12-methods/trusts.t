@@ -29,4 +29,4 @@ throws-like q[class ChildTrustee is Trustee { method x($t) { $t!Truster::get-x-p
     'trust relation does not extend to child classes of the trustee'
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

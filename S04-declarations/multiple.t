@@ -39,4 +39,4 @@ throws-like 'role RR { }; class RR { };', X::Redeclaration,
     :message{not .contains: 'multi'},
     "don't suggest multi-sub for non-sub redeclaration";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

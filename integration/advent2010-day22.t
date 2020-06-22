@@ -17,4 +17,4 @@ ok Rat.^methods(:local).grep({.name eq 'log'}).[0].signature.raku, 'log signatur
 # wrapper example omitted - see
 # https://github.com/Raku/old-issue-tracker/issues/3396
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

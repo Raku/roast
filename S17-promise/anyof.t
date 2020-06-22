@@ -31,10 +31,12 @@ plan 10;
     is $pany.status, Kept, "Other promise keeping doesn't affect status";
 }
 
-# RT #127101
+# https://github.com/Raku/old-issue-tracker/issues/4969
 {
      my $p = Promise.anyof(my @promises);
      is $p.status, Kept, 'an empty list should give a kept Promise';
 }
 
 throws-like { Promise.anyof(42) }, X::Promise::Combinator;
+
+# vim: expandtab shiftwidth=4

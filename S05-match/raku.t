@@ -38,4 +38,4 @@ lives-ok { $/.raku }, 'lives on quantified named captures';
     is-deeply EVAL($/.raku), $/, 'EVAL of Match.raku recreates Match';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

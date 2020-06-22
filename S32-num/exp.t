@@ -64,4 +64,4 @@ is-approx(exp(-1i*$pi, 2), 2 ** (-1i*$pi), 'exp(-i $pi, 2) == 2 ** (-1i*$pi)');
 	    is-approx(exp(1i * $arg) * exp(-1i * $arg), 1, 'exp(ix) * exp(-ix) == 1 No. ' ~ $_);
     }
 }
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

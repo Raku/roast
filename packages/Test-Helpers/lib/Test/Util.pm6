@@ -736,4 +736,4 @@ will return its C<$?FILE>, and a subroutine C<resources> which will return its C
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -4,3 +4,5 @@ module OverrideTest {
         tc($y);
     }
 }
+
+# vim: expandtab shiftwidth=4

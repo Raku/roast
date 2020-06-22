@@ -62,7 +62,7 @@ subtest '.STORE(HLL iterable) does not leave behind previous values' => {
     }
 }
 
-# RT #127756
+# https://github.com/Raku/old-issue-tracker/issues/5189
 subtest 'no rogue leftovers when resizing natives' => {
     plan 5;
     {
@@ -169,3 +169,5 @@ subtest 'STOREing/splicing lazy Seq values throws' => {
         throws-like $splice-stmt, X::Cannot::Lazy, "splice $msg";
     }
 }
+
+# vim: expandtab shiftwidth=4

@@ -14,3 +14,5 @@ is b($t), 'nay', 'boolification of role-typed container (false)';
 
 my Stringy $u = 'moin';
 is b($u), 'aye', 'boolification of role-typed container (true)';
+
+# vim: expandtab shiftwidth=4

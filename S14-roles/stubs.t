@@ -37,16 +37,18 @@ class ProvidesA { method a() { 5 } };
 lives-ok { EVAL 'class ChildA is ProvidesA does WithStub { }' },
         'stubbed method can come from parent class too';
 
+# https://github.com/Raku/old-issue-tracker/issues/2914
 lives-ok { EVAL 'class RT115212 does WithStub { has $.a }' }, 'stubbed method can come from accessor';
 
 class HasA { has $.a }
+# https://github.com/Raku/old-issue-tracker/issues/2914
 lives-ok { EVAL 'class RT115212Child is HasA does WithStub { }' }, 'stubbed method can come from accessor in parent class';
 
-# RT #119643
+# https://github.com/Raku/old-issue-tracker/issues/3227
 throws-like { EVAL 'my role F119643 { ... }; class C119643 does F119643 {}' },
     X::Role::Parametric::NoSuchCandidate;
 
-# RT #125606
+# https://github.com/Raku/old-issue-tracker/issues/4397
 {
     my role WithPrivate { method !foo { "p" } };
     my role WithPrivateStub { method !foo { ... } };
@@ -55,7 +57,7 @@ throws-like { EVAL 'my role F119643 { ... }; class C119643 does F119643 {}' },
     is ClassPrivate.new.bar(), 'p', 'RT #125606: Stub resolution works for private methods too';
 }
 
-# RT #125694
+# https://github.com/Raku/old-issue-tracker/issues/4443
 {
     my role A { method !foo(A:D:) { "success!" } };
     my role B { method !foo { ... }; method bar {self!foo } };
@@ -63,10 +65,12 @@ throws-like { EVAL 'my role F119643 { ... }; class C119643 does F119643 {}' },
     is C.new.bar(), "success!", 'private method call in role dispatches on type of target class';
 }
 
-# RT #126606
+# https://github.com/Raku/old-issue-tracker/issues/4741
 {
     my role R { method m() { ... } }
     for <gist raku DUMP item Str Bool defined so not WHICH WHERE Stringy Numeric Real> {
         lives-ok { R."$_"() }, ".$_ on role with requirement does not pun it and die";
     }
 }
+
+# vim: expandtab shiftwidth=4

@@ -440,4 +440,4 @@ subtest 'no funny business in assignment' => {
     is-deeply @res, [[1], [1, 42]], 'works fine when re-entrant';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

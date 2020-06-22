@@ -92,7 +92,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     is (~ [\**]  3, 2, 0),   "0 1 3",   "[\\**] (right assoc) works (2)";
 }
 
-# RT #76110
+# https://github.com/Raku/old-issue-tracker/issues/1877
 {
     is ~([\+] [\+] 1 xx 5), '1 3 6 10 15', 'two nested [\+]';
     is ([+] 0, [1, 2, 3, 4]), 4,  '[+] does not flatten []-arrays';
@@ -148,7 +148,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is (try {$list.value.value}), 3, "[=>] works (3)";
 }
 
-# RT #130906
+# https://github.com/Raku/old-issue-tracker/issues/6119
 is-deeply ([=>] (1, 2).Seq), (1 => 2), "[=>] works on Seq";
 
 {
@@ -167,7 +167,7 @@ lives-ok({my @foo = [1..3] >>+<< [1..3] >>+<< [1..3]},'Sanity Check');
 
 lives-ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
-# RT #122475
+# https://github.com/Raku/old-issue-tracker/issues/3475
 {
     my @a = $(1, 2, 3);
     my @b = [>>+<<] @a;
@@ -224,7 +224,7 @@ is( ([min]()),  Inf, '[min]() returns -Inf');
 is( ([max] Any, Any, 2), 2, '[max] Any, Any, 2 returns 2');
 is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
 
-# RT #65164 implement [^^]
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     is ([^^] 0, 42), 42, '[^^] works (one of two true)';
     is ([^^] 42, 0), 42, '[^^] works (one of two true)';
@@ -326,7 +326,7 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
        '[\xor]';
 }
 
-# RT #57976 implement orelse
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
 
     is (join ', ', [\//] Any, 0, 1),
@@ -338,7 +338,7 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
 
 }
 
-# RT #75234
+# https://github.com/Raku/old-issue-tracker/issues/1771
 # rakudo had a problem where once-used meta operators weren't installed
 # in a sufficiently global location, so using a meta operator in class once
 # makes it unusable further on
@@ -354,32 +354,33 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
     is ([~] 1, 2, 5), '125', '[~] works outside class';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/2327
 ok [+](1..10) + 0 == ([+] 1..10) + 0,
    'a listop with immediate () is a function call (RT #82210)';
-# RT #76758
+# https://github.com/Raku/old-issue-tracker/issues/1976
 ok [+](1, 2, 3) / 2 == 3, '[+] is a normal listop';
 
-# RT #80332
+# https://github.com/Raku/old-issue-tracker/issues/2288
 ok ([+]) == 0, 'argumentless [+] parses';
 
-# RT #99942
+# https://github.com/Raku/old-issue-tracker/issues/2483
 {
     sub rt99942 { [+] @_ };
     is rt99942(1, 42), 43, 'RT #99942'
 }
 
-# RT #67064
+# https://github.com/Raku/old-issue-tracker/issues/1110
 {
     is(([X~] <a b>, <a b>, <a b>), <aaa aab aba abb baa bab bba bbb>, 'reduce with X');
 }
 
-# RT #79116
+# https://github.com/Raku/old-issue-tracker/issues/2251
 {
     throws-like '[leg] <a b c>', X::Syntax::CannotMeta,
         'non-associative operator "[leg]" can not be used as reduction operator';
 }
 
-# RT #125289
+# https://github.com/Raku/old-issue-tracker/issues/4280
 {
     is [:a],  [a => True],  'does  [:a] parse ok and give the right value';
     is [:a,], [a => True],  'does [:a,] parse ok and give the right value';
@@ -676,7 +677,7 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
 
 }
 
-# RT #128757
+# https://github.com/Raku/old-issue-tracker/issues/5494
 {
     throws-like ｢[+] 'hello'｣, X::Str::Numeric, '[+] with single non-numeric argument errors';
     throws-like ｢[-] 'hello'｣, X::Str::Numeric, '[-] with single non-numeric argument errors';
@@ -684,7 +685,7 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     throws-like ｢[/] 'hello'｣, X::Str::Numeric, '[/] with single non-numeric argument errors';
 }
 
-# RT #128758
+# https://github.com/Raku/old-issue-tracker/issues/5495
 {
     my class CustomNumify {
         method Numeric() { 42 };
@@ -694,7 +695,7 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is-deeply (reduce &infix:<+>, "2"), 2, "functional form of reduce works with the plus operator";
 }
 
-# RT #131009
+# https://github.com/Raku/old-issue-tracker/issues/6155
 {
     cmp-ok [\X~](<a b c>),
         &infix:<eqv>,
@@ -752,4 +753,4 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
         'Reduce meta-operator respects chain associativity';
 }
 
-# vim: ft=perl6 et
+# vim: expandtab shiftwidth=4

@@ -35,4 +35,4 @@ is-deeply flat((1, 2, 3), 4..*)[^20], (1..*)[^20],
 is-deeply (1..*).flat.is-lazy, True, 'flat propagates .is-lazy (method form)';
 is-deeply flat(1..*).is-lazy,  True, 'flat propagates .is-lazy (subform)';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -170,3 +170,5 @@ for $%h, Any, $%hi, Int, $%hia, Int -> \h, \T {
     is $mh.ASSIGN-KEY("a",$a),  $a, "\$mh.ASSIGN-KEY";
     is $mh.AT-KEY("a"),         $a, "\$mh.EXISTS-KEY (after assignment)";
 }
+
+# vim: expandtab shiftwidth=4

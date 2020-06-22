@@ -174,4 +174,4 @@ ok !Nil.new.defined, 'Nil.new is not defined';
     ok $f.check(), 'Assignment to scalar after assigning Nil takes effect';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

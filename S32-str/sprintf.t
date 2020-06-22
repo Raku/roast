@@ -211,15 +211,19 @@ is sprintf('%s', -Inf),            -Inf,    'sprintf %s handles Inf';
 
 is sprintf('%d %1$x %1$o', 12),    '12 c 14',  'positional argument specifier $';
 
-# RT #117547
+# https://github.com/Raku/old-issue-tracker/issues/3099
 is sprintf('%10s', "☃" x 3), '       ☃☃☃', 'multi-byte characters are counted correctly for %Ns strings';
 
+# https://github.com/Raku/old-issue-tracker/issues/3174
 is sprintf("%x %x", 301281685344656640, 301281685344656669), '42e5e18b84c9d00 42e5e18b84c9d1d',   'RT #118601';
+# https://github.com/Raku/old-issue-tracker/issues/3151
 is sprintf("%d", 42**20),                                    '291733167875766667063796853374976', 'RT #118253';
+# https://github.com/Raku/old-issue-tracker/issues/3099
 is map({chars sprintf "[%18s]\n", "ಠ" x $_ }, 0..6),         [21, 21, 21, 21, 21, 21, 21],        'RT #117547';
+# https://github.com/Raku/old-issue-tracker/issues/2890
 is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01',                'RT #114760';
 
-# RT #116280
+# https://github.com/Raku/old-issue-tracker/issues/3019
 {
     is sprintf('%12.5f',  NaN), '         NaN', 'RT #116280';
     is sprintf('%12.5f',  Inf), '         Inf', 'RT #116280';
@@ -237,14 +241,14 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
     is sprintf('%G', -Inf),  "-Inf",   '-Inf properly handled %G';
 }
 
-# RT #129088  RT #130509
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     throws-like { sprintf 'D6.2', 'foo' }, X::Str::Sprintf::Directives::Count,
     :message('Your printf-style directives specify 0 arguments, but 1 argument was supplied.'),
     'Invalid formats do not spill internal details';
 }
 
-# RT #106594, #62316, #74610
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     throws-like { sprintf("%d-%s", 42) }, X::Str::Sprintf::Directives::Count,
     :message('Your printf-style directives specify 2 arguments, but 1 argument was supplied.'
@@ -262,7 +266,7 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
              ~ "\nAre you using an interpolated '\$'?"),
     "Warn of possible '\$' in format";
 }
-# RT #122907
+# https://github.com/Raku/old-issue-tracker/issues/3542
 #
 #   This test was removed since it is a duplicate of the test found in
 #   "rakudo/t/05-messages/02-errors.t", line 135.
@@ -278,7 +282,7 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
     is sprintf("%.3f", 1.969), "1.969", '%.3f of 1.969 should be 1.969';
 }
 
-# RT #120232
+# https://github.com/Raku/old-issue-tracker/issues/3248
 {
     is sprintf('%.50f', 1.115),
         '1.11500000000000000000000000000000000000000000000000',
@@ -295,13 +299,15 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
         'sprintf complains about unsupported directives';
 }
 
-{ # https://irclog.perlgeek.de/perl6/2016-11-28#i_13640361
+# https://irclog.perlgeek.de/perl6/2016-11-28#i_13640361
+{
     is_run ｢print sprintf 'pass'｣, {
         :out<pass>, :err(''), :0status
     }, 'sprintf($format) does not issue spurious warnings';
 }
 
-{ # https://irclog.perlgeek.de/perl6-dev/2017-01-22#i_13966753
+# https://irclog.perlgeek.de/perl6-dev/2017-01-22#i_13966753
+{
     is sprintf( '%.3d', [42]),   '042', '%.3d';
     is sprintf('%2.4d', [42]),  '0042', '%2.4d';
     is sprintf('%5.3d', [42]), '  042', '%5.3d';
@@ -315,13 +321,13 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
     is sprintf( '%.*d', [0,  0]),      '', '%.*d (number is zero)';
 }
 
-# RT #123979
+# https://github.com/Raku/old-issue-tracker/issues/3716
 {
     is sprintf('%064b', -100), '-' ~ ('0' x 56) ~ '1100100',
         '%064b format works with negatives';
 }
 
-# RT #132846
+# https://github.com/Raku/old-issue-tracker/issues/6672
 subtest 'sprintf with Numeric/Str type objects' => {
     plan 18*my @types := Num, Int, Rat, Complex, Str;
     sub qs (|c) { quietly sprintf |c }
@@ -354,4 +360,4 @@ subtest 'sprintf with Numeric/Str type objects' => {
 is sprintf("%.16e", sqrt 3.0e0), '1.7320508075688772e+00',
     'sprintf maintains sane precision when stringifying nums'
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

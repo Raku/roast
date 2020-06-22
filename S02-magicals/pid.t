@@ -22,4 +22,4 @@ is_run 'say $*PID',
 
 throws-like '$*PID = 42', X::Assignment::RO;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -54,4 +54,4 @@ dies-ok({ Act.rules }, 'my method not installed in methods table');
 is(Act::rocks(Act), 'the house', 'our method is installed in package');
 dies-ok({ Act.rocks }, 'our method not installed in methods table');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

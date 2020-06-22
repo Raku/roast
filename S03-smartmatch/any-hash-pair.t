@@ -14,4 +14,4 @@ plan 7;
     ok !(%a ~~ a => 'foo'),         '%hash ~~ Pair (key and val not paired)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -19,4 +19,4 @@ lives-ok {
 is(@test[0], "hi", "@test was changed");
 is($test,    "ho", '$test was changed');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

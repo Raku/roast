@@ -54,4 +54,4 @@ subtest 'no crashes with bigint args' => {
       23067200747291880127814827277075079921671259751791, '% op';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -23,4 +23,4 @@ sub t2(Int(Rat) $x) {
 t2(7/3);
 dies-ok { EVAL("t2('omg hedgehog!')") }, 'Type checks still enforced';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

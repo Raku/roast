@@ -43,4 +43,4 @@ my @names = ('zaphod', 'ford', 'arthur', 'slartibartfast');
 my $arrr = regex { ar };
 is(+(@names>>.match($arrr)), 2, 'matching with hyper-operator');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -105,4 +105,4 @@ is "fo+" ~~ /:i:m $var/, 'fo+', 'string with metachars matches literally (:i:m)'
     nok "fooo" ~~ $r, 'Interpolating Str type object on typed variable fails to match';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

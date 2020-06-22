@@ -14,3 +14,5 @@ react {
     for $c.list { }
 }
 pass "No hang when we close/drain a Channel that is subscribed to in the same react";
+
+# vim: expandtab shiftwidth=4

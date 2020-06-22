@@ -36,4 +36,4 @@ is $bob.dog_name, 'Fido', 'dog name can be accessed by delegation';
 is Dog.^methods(:local)[0,1].map({.name}).sort.join('|'),
     'bark|name', 'can introspect Dog';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

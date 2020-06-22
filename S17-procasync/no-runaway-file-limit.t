@@ -19,4 +19,4 @@ is_run ｢
     print 'pass'
 ｣, {:out<pass>, :err(''), :0status}, 'made it to the end';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -116,4 +116,4 @@ is(("b\nabb" ~~ rx:P5/abb\Z/ && $/.from), 2, 're_tests 1044/0 (1248)');
 is(("b\nabb" ~~ rx:P5/abb\z/ && $/.from), 2, 're_tests 1046/0 (1250)');
 is(("b\nabb" ~~ rx:P5/abb$/ && $/.from), 2, 're_tests 1048/0 (1252)');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

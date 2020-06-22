@@ -28,4 +28,4 @@ sub infix:<notthere>($a, $b) { $a + $b }
 
 sub circumfix:<answer[ ]> ("Life, the Universe, and Everything") is export(:DEFAULT) { 42 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

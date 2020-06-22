@@ -137,4 +137,4 @@ subtest 'fiddly meta error indicates what operator is used' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

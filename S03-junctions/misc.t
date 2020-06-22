@@ -566,4 +566,4 @@ subtest q<meta-assignment to a scalar doesn't cause freezing> => {
       'did any() on left concate with all() on right ok';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -19,4 +19,4 @@ plan 6;
         'pairup on odd numbered list size throws';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

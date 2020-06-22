@@ -131,3 +131,5 @@ ok $*THREAD.is-initial-thread, 'Are we running in initial thread? (2)';
     is +%seen.values.grep({ 1 <= $_ <= $threads }), $times,
       'are all values in range';
 }
+
+# vim: expandtab shiftwidth=4

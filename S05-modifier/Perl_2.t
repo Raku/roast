@@ -116,4 +116,4 @@ is(("abh" ~~ rx:P5/^a(bc+|b[eh])g|.h$/ && $/), "bh", 're_tests 309/0 (393)');
 is(("abh" ~~ rx:P5/^a(bc+|b[eh])g|.h$/ && $0), Nil, 're_tests 309/1 (394)');
 is(("effgz" ~~ rx:P5/(bc+d$|ef*g.|h?i(j|k))/ && $/), "effgz", 're_tests 311/0 (397)');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

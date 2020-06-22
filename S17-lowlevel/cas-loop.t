@@ -43,3 +43,5 @@ for 1..4 -> $attempt {
     is $total, 4 * [+](1..1000),
         "Block form of CAS on linked list with lexical head works ($attempt)";
 }
+
+# vim: expandtab shiftwidth=4

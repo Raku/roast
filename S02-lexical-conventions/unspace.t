@@ -366,4 +366,4 @@ is 'a'.parse-base\   \   (16), 10, 'unspace can recurse';
         'unspace combined with map and constants';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

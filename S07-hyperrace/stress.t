@@ -36,3 +36,5 @@ plan 10;
     my @hyper = (^1000).hyper.map({ slip('x' xx $_) }).map(*.item);
     is @hyper.elems, @seq.elems, 'Correct number of elements from hyper map with slip';
 }
+
+# vim: expandtab shiftwidth=4

@@ -2007,3 +2007,5 @@ ok Uni.new(0x1D794).NFC.list ~~ (0x1D794,), '1D794 -> 1D794';
 ok Uni.new(0x1D795).NFC.list ~~ (0x1D795,), '1D795 -> 1D795';
 ok Uni.new(0x1D796).NFC.list ~~ (0x1D796,), '1D796 -> 1D796';
 ok Uni.new(0x1D797).NFC.list ~~ (0x1D797,), '1D797 -> 1D797';
+
+# vim: expandtab shiftwidth=4

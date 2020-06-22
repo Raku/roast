@@ -241,3 +241,5 @@ while +@exp {
     my $elems = min(+@exp, 32);
     is @got.splice(0, $elems), @exp.splice(0, $elems), "Right shift is two's complement, {$i*32}..{$i++*32+$elems}";
 }
+
+# vim: expandtab shiftwidth=4

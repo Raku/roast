@@ -4,7 +4,7 @@ use lib $?FILE.IO.parent(2).add("packages/S12-meta/lib");
 
 plan 6;
 
-# RT #128516
+# https://github.com/Raku/old-issue-tracker/issues/5411
 {
     my class Foo {
         has $.a = Metamodel::ClassHOW.new_type(name => "Bar");
@@ -15,7 +15,7 @@ plan 6;
         'Storing a meta-object in an attribute then composing/gisting works out';
 }
 
-# RT #125135
+# https://github.com/Raku/old-issue-tracker/issues/4228
 {
     use TestHOW;
 
@@ -52,3 +52,5 @@ plan 6;
 
     lives-ok { $outer.new(inner => $inner.new) }, 'Runtime created classes can be used as attributes';
 }
+
+# vim: expandtab shiftwidth=4

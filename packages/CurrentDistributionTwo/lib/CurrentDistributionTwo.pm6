@@ -13,3 +13,5 @@ our sub dependency-resources {
     use CurrentDistributionOne;
     CurrentDistributionOne::resources;
 }
+
+# vim: expandtab shiftwidth=4

@@ -25,4 +25,4 @@ multi foo ($foo where { $_ eq "foo"}) { $foo }
 is foo("foo"), "foo", "when we have a single candidate with a constraint, it's enforced";
 dies-ok { foo("bar") }, "value that doesn't meet single constraint causes failed dispatch";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -48,4 +48,4 @@ plan 12;
     is $file2.IO.mode, '0777', 'changed mode of one file using mode of another';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

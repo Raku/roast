@@ -1,4 +1,4 @@
-﻿use v6;
+use v6;
 use Test;
 
 plan 170;
@@ -129,7 +129,7 @@ throws-like { @arr.shift }, X::Cannot::Empty,
 is @arr.push("a"), ("a",), "can push to $t array";
 is @arr.elems, 1, "push to $t array works (1)";
 is @arr[0], "a",  "push to $t array works (2)";
-# RT #125123
+# https://github.com/Raku/old-issue-tracker/issues/4223
 throws-like { @arr.push(42) }, X::TypeCheck,
   got => Int,
   "Cannot push non-str/Str to $t array";
@@ -168,7 +168,7 @@ is (@arr.unshift("z")), ("z","a","b","c","d","e"),
 is @arr.elems, 6, "unshift to $t array works (1)";
 is @arr[0], "z",  "unshift to $t array works (2)";
 is @arr[1], "a",  "unshift to $t array works (3)";
-# RT #125123
+# https://github.com/Raku/old-issue-tracker/issues/4223
 throws-like { @arr.unshift(42) }, Exception,
   "Cannot unshift non-str/Str to $t array";
 
@@ -297,3 +297,5 @@ is @unsorted.sort, "", "Can we sort 0-element $t array";
     my str @b = @a;
     is-deeply @b, (my str @ = "","b"), 'did we survive the hole';
 }
+
+# vim: expandtab shiftwidth=4

@@ -129,7 +129,8 @@ is (2 Z 3), @z, 'joining of single items';
 # comparison complains if either of its arguments is undefined
 {
     throws-like {Int < 0}, Exception;
-    #?rakudo todo "RT #93978"
+    # https://github.com/Raku/old-issue-tracker/issues/2445
+    #?rakudo todo ""
     throws-like {"cat" gt Str}, Exception;
 }
 
@@ -228,4 +229,4 @@ subtest 'does works with non-roles' => {
       "does a junction survive Junction ~ Junction";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

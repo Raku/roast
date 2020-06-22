@@ -434,4 +434,4 @@ subtest 'can compile-time bind to sigil-less variables' => {
     # is-deeply (d, e, f, g, h), (1, 2, 3, 4, 5),   'complexerastic';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

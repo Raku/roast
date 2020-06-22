@@ -222,4 +222,4 @@ subtest 'combination of bit ops in loop keeps giving good result' => {
     is-deeply $iterated, 27071659120799, '2000th iteration';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

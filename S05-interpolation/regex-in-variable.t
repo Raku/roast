@@ -43,16 +43,16 @@ ok(!('aaaaab' ~~ m/"$foo"/), 'Rulish scalar match 7');
 
 {
     no MONKEY-SEE-NO-EVAL;
-    # RT #61960
+    # https://github.com/Raku/old-issue-tracker/issues/576
     {
 	my $a = 'a';
 	ok 'a' ~~ / $a /, 'match with string as rx works';
     }
 
-    # RT #100232
+    # https://github.com/Raku/old-issue-tracker/issues/2488
     throws-like { my $x = '1} if say "pwnd"; #'; 'a' ~~ /<$x>/ }, X::SecurityPolicy, "particular garbage-in recognized as being garbage (see RT)";
 
-    # RT #131079
+    # https://github.com/Raku/old-issue-tracker/issues/6168
     my $rt131079 = '<::(say "ZOWNED")>';
     throws-like { 'a' ~~ /<$rt131079>/ }, X::SecurityPolicy, "dynamic lookups are restricted regex syntax";
     $rt131079 = '<IO::(say "ZOWNED")>';
@@ -143,7 +143,7 @@ throws-like 'my $x := { a => 1 }; "a" ~~ m/$x/', X::Syntax::Reserved, 'cannot in
           );
 }
 
-# RT #122253
+# https://github.com/Raku/old-issue-tracker/issues/3430
 {
     throws-like { EVAL 'my class InterpolationTest { has $!a; method m() { /$!a/ } }' },
         X::Attribute::Regex, :symbol<$!a>,
@@ -156,4 +156,4 @@ throws-like 'my $x := { a => 1 }; "a" ~~ m/$x/', X::Syntax::Reserved, 'cannot in
         'Cannot interpolate attribute in a closure in a regex';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

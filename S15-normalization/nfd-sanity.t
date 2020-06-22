@@ -507,3 +507,5 @@ ok Uni.new(0x1B0C).NFD.list ~~ (0x1B0B, 0x1B35,), '1B0C -> 1B0B 1B35';
 ok Uni.new(0x1B0E).NFD.list ~~ (0x1B0D, 0x1B35,), '1B0E -> 1B0D 1B35';
 ok Uni.new(0x1B12).NFD.list ~~ (0x1B11, 0x1B35,), '1B12 -> 1B11 1B35';
 ok Uni.new(0x1B3B).NFD.list ~~ (0x1B3A, 0x1B35,), '1B3B -> 1B3A 1B35';
+
+# vim: expandtab shiftwidth=4

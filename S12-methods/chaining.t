@@ -72,4 +72,4 @@ throws-like '$foo->num', X::Obsolete, 'Perl -> is dead (method call)';
     ok( $cons.key.key =:= $cons.key.key, 'chaining through Any return');
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

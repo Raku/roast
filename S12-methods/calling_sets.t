@@ -75,7 +75,7 @@ class E is D {
     multi method foo($x, $y, $z) { 'eAnyAnyAny' }   #OK not used
 }
 
-# RT #119193
+# https://github.com/Raku/old-issue-tracker/issues/3203
 {
     my $e = E.new();
 
@@ -158,4 +158,4 @@ is MMT2.new.?foo("lol"), 42, '.? when initial multi does not match will find nex
 
 throws-like '1.*WHAT', Exception, '.WHAT is a macro and cannoted be .*ed';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -17,7 +17,7 @@ use MONKEY-SEE-NO-EVAL;
 
 plan 58;
 
-# RT #126100
+# https://github.com/Raku/old-issue-tracker/issues/4548
 {
     is $required-Test.gist, '(Test)', "successful require PACKAGE returns PACKAGE";
     is (require "InnerModule.pm6"), "InnerModule.pm6",
@@ -39,13 +39,13 @@ lives-ok {
 
 my $name = 'InnerModule.pm6';
 
-# RT #125084
+# https://github.com/Raku/old-issue-tracker/issues/4208
 {
     require $name '&bar';
     is bar(),'Inner::bar','can load InnerModule from a variable at run time';
 }
 
-# RT #127233
+# https://github.com/Raku/old-issue-tracker/issues/5034
 {
     require NoModule <&bar>;
     my $result = bar();
@@ -59,7 +59,7 @@ my $name = 'InnerModule.pm6';
 }
 nok ::('&bar'), ｢&bar didn't leak to outer scope｣;
 
-#RT #118407
+# https://github.com/Raku/old-issue-tracker/issues/3162
 throws-like { require InnerModule:file($name) <quux> },
     X::Import::MissingSymbols,
 '&-less import of sub does not produce `Null PMC access` error';
@@ -117,7 +117,7 @@ lives-ok { chdir $?FILE.IO.parent(2).child('packages/FooBarBaz/lib'); require "F
          'can change directory and require a module';
 chdir $cwd;
 
-# RT #115626
+# https://github.com/Raku/old-issue-tracker/issues/2966
 lives-ok { try require "THIS_FILE_HOPEFULLY_NEVER_EXISTS.pm6"; },
          'requiring something non-existent does not make it segfault';
 
@@ -160,7 +160,7 @@ eval-lives-ok q|BEGIN require Fancy::Utilities <&allgreet>;|,'require can import
      }
 }
 
-# RT #131112
+# https://github.com/Raku/old-issue-tracker/issues/6179
 #?rakudo.jvm skip 'R#3158'
 {
     require ::('SetConst');
@@ -204,4 +204,4 @@ eval-lives-ok q|BEGIN require Fancy::Utilities <&allgreet>;|,'require can import
     ok $question.VAR ~~ Scalar, "the variable is containerized";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

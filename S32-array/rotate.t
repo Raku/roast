@@ -70,4 +70,4 @@ subtest '.rotate can be used on empty List' => {
     is-deeply ().Seq.cache.rotate(-1), ().Seq.cache, ‘Seq's cache (-1)’;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

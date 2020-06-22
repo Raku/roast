@@ -31,4 +31,4 @@ This test tests C<deepmap>.
 lives-ok { Array».gist; deepmap *.self, Array },
     'hypering or deepmapping an Iterable type object does not hang';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

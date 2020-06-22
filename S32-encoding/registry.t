@@ -72,3 +72,5 @@ throws-like { Encoding::Registry.find('utf-29') },
     is-deeply Encoding::Registry.register(NoAlternativeNamesEncoding), Nil,
         "Encodings with no alternative names method can be registered";
 }
+
+# vim: expandtab shiftwidth=4

@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 19;
+plan 21;
 
 # older: L<S16/"Unfiled"/"=item IO.slurp">
 # old: L<S32::IO/IO::FileNode/slurp>
@@ -154,4 +154,12 @@ subtest '&slurp(IO::Handle)' => {
   }
 }
 
-# vim: ft=perl6
+# https://github.com/rakudo/rakudo/issues/3566
+{
+    lives-ok { my Buf $b = slurp($?FILE,:bin) },
+      'does slurp() with :bin return a Buf-like thing';
+    lives-ok { my Buf $b = $?FILE.IO.slurp(:bin) },
+      'does .IO.slurp() with :bin return a Buf-like thing';
+}
+
+# vim: expandtab shiftwidth=4

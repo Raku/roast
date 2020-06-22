@@ -18,3 +18,5 @@ plan 6;
     is "\n".encode('ascii'), Buf.new(0xD, 0x0A), 'use newline :crlf influences \n';
     is Buf.new(0xD, 0x0A).decode('ascii'), "\n", 'use newline :crlf decodes to \n';
 }
+
+# vim: expandtab shiftwidth=4

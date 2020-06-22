@@ -92,7 +92,7 @@ plan 38;
     throws-like 'pop @push', X::Cannot::Lazy, 'cannot pop from a lazy list';
 } #1
 
-# RT #111720
+# https://github.com/Raku/old-issue-tracker/issues/2669
 {
     my @a = 1,2,3;
     my $rt111720 = Array.new(@a) => "x";
@@ -103,7 +103,7 @@ plan 38;
         'reading first key in sink context does not influence later code';
 }
 
-# RT #131245
+# https://github.com/Raku/old-issue-tracker/issues/6219
 subtest 'no ghost elements after pop/shift' => {
     plan 5;
 
@@ -123,4 +123,4 @@ subtest 'no ghost elements after pop/shift' => {
     is-deeply @a, ['a', 'b', Any, 42], ':delete';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

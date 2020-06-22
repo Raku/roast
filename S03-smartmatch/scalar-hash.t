@@ -10,4 +10,4 @@ plan 3;
     ok !('foo' ~~ %h),      'Cool ~~ Hash (-)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

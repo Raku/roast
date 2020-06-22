@@ -134,3 +134,5 @@ is-deeply $a (&) $b, {"a" => 1, "b" => 2}.Bag, '$a (&) $b';
 is-deeply $a (+) $b, {"a" => 4, "b" => 5, "c" => 1}.Bag, '$a (+) $b';
 
 is-deeply $a (.) $b, {"a" => 3, "b" => 6}.Bag, '$a (.) $b';
+
+# vim: expandtab shiftwidth=4

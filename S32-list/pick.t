@@ -188,4 +188,4 @@ subtest '.pick on object Hashes' => {
 }
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

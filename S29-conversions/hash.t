@@ -27,6 +27,7 @@ Basic tests for the hash() built-in
     is flat('a'..'c' Z 1..3).hash.<c>, 3, "hash() builds a sensible hash";
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/1983
 {
     lives-ok {(a => 1, b => 2).hash.raku}, 'hash() on list of pairs lives (RT #76826)';
 }
@@ -40,4 +41,4 @@ Basic tests for the hash() built-in
     is ?hash(), Bool::False, "hash() is false";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

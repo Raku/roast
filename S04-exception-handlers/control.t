@@ -110,4 +110,4 @@ is_run( 'sub mention-me() { take 1; }; mention-me',
     isa-ok @controls[0], CX::Whatever, 'Correct control exception type';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

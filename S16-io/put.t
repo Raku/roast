@@ -31,4 +31,4 @@ plan 1 + 2*@tests;
 
 throws-like 'put', Exception, 'bare &put throws (telling to use parens)';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

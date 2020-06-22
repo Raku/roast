@@ -46,7 +46,7 @@ plan 13;
     }
 }
 
-# RT #65498
+# https://github.com/Raku/old-issue-tracker/issues/981
 {
     sub a { 'outer' };
     {
@@ -63,12 +63,12 @@ plan 13;
     dies-ok { TestScope::f }, 'subs without scoping modifiers are not entered in the namespace';
 }
 
-# RT #57788
+# https://github.com/Raku/old-issue-tracker/issues/226
 {
     throws-like 'sub a { }; sub a { }', X::Redeclaration;
 }
 
-# RT #109322
+# https://github.com/Raku/old-issue-tracker/issues/2628
 {
     my $rt109322;
     sub foo ($a, $f) {
@@ -98,4 +98,4 @@ plan 13;
     is $rt109322, 'zzxx', 'no lexical weirdness from blocks inside re-entrant subs (2)';
 }
 
-# vim: ft=perl6 :
+# vim: expandtab shiftwidth=4

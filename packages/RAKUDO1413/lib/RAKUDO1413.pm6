@@ -969,3 +969,5 @@ XK_Arabic_farsi_yeh => 0x10006cc, #=  U+06CC ARABIC LETTER FARSI YEH
 XK_Arabic_yeh_baree => 0x10006d2, #=  U+06D2 ARABIC LETTER YEH BARREE
 XK_Arabic_heh_goal => 0x10006c1, #=  U+06C1 ARABIC LETTER HEH GOAL
 );
+
+# vim: expandtab shiftwidth=4

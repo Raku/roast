@@ -81,6 +81,7 @@ plan 33;
 }
 
 # normal closure:
+# https://github.com/Raku/old-issue-tracker/issues/4112
 #?rakudo skip 'leave NYI RT #124960'
 {
     is EVAL(q{
@@ -175,7 +176,7 @@ plan 33;
     is $str, '1', 'die aborts ENTER queue';
 }
 
-# RT #121530
+# https://github.com/Raku/old-issue-tracker/issues/3363
 {
     my $str;
     try {
@@ -187,7 +188,7 @@ plan 33;
     is $!.message, 'foo', 'single exception from LEAVE is rethrown after running LEAVEs';
 }
 
-# RT #113548
+# https://github.com/Raku/old-issue-tracker/issues/2785
 {
     my $a = 0;
     my $b = 0;
@@ -195,14 +196,14 @@ plan 33;
     ok($a == 1 && $b == 2, "LEAVE fires in a multi sub");
 }
 
-# RT #115998
+# https://github.com/Raku/old-issue-tracker/issues/2988
 {
     my $x = 0;
     for 1..10 { LEAVE { $x++ }; next }
     is $x, 10, "next triggers LEAVE";
 }
 
-# RT #116314
+# https://github.com/Raku/old-issue-tracker/issues/3022
 {
     my $str='';
     for 1..2 {
@@ -212,7 +213,7 @@ plan 33;
     is $str, 'foobar1foobar2', 'can run for loop in phaser in for loop';
 }
 
-# RT #118387
+# https://github.com/Raku/old-issue-tracker/issues/3160
 {
     is_run( q[sub foo { LEAVE { say 'OK' }; die 'foobar' }; foo()],
         {
@@ -222,7 +223,7 @@ plan 33;
         'LEAVE fires after die in sub' );
 }
 
-# RT #113950
+# https://github.com/Raku/old-issue-tracker/issues/2806
 {
     my $rt113950_last = "hello!";
     loop {
@@ -241,14 +242,14 @@ plan 33;
         '"next" triggers LEAVE phaser in "for" loop';
 }
 
-# RT #116102
+# https://github.com/Raku/old-issue-tracker/issues/2999
 {
     is ENTER { 42 }, 42, 'ENTER works as an r-value (mainline)';
     sub enter-test() { ENTER 'SANDMAN' }
     is enter-test(), 'SANDMAN', 'ENTER works as an r-value (sub)';
 }
 
-# RT #125480
+# https://github.com/Raku/old-issue-tracker/issues/4346
 {
     sub doit() {
         if True {
@@ -305,4 +306,4 @@ plan 33;
     is $entered, 1, 'Did ENTER only run once';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -119,6 +119,7 @@ nok '^'   ~~ /  <[ \[ .. \] ]>    /, '... does not match outside its range';
     dies-ok { 'a' ~~ / <+xdigit-digit> / }, "accidental kebabs disallowed";
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4454
 #?rakudo.jvm 2 todo 'ignorecase and character ranges RT #125753'
 dies-ok { EVAL '/<[Ḍ̇..\x2FFF]>/' }, 'Cannot use NFG synthetic as range endpoint';
 
@@ -141,4 +142,4 @@ is 'Ä' ~~ /:ignoremark :ignorecase (<[a..f]>|x)/, 'Ä',
 # https://github.com/Raku/old-issue-tracker/issues/5341
 ok "a" ~~ m:g:ignoremark/<[á]>/, ':g, :ignoremark, and cclass interaction ok';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

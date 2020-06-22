@@ -13,10 +13,10 @@ ok 1, "Before the =finish Block";
 is $=finish,q:to/TEXT/, 'can read the lines after =finish';
 flunk "=finish cannot work properly";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4
 TEXT
 
 =finish
 flunk "=finish cannot work properly";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

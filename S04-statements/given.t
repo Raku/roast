@@ -53,7 +53,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
     }
 
     ok($foo, "foo was found in nested when");
-    # RT #99912
+    # https://github.com/Raku/old-issue-tracker/issues/2481
     ok $match, 'regex in when-clause set match object';
 };
 
@@ -282,7 +282,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
     is $tracker, 2, 'statement-modifying when';
 }
 
-# RT #78234
+# https://github.com/Raku/old-issue-tracker/issues/2210
 eval-lives-ok 'given 3 { sub a() { } }', 'can define a sub inside a given';
 eval-lives-ok 'sub a() { } given 3',     'can define a sub inside a statement-modifying given';
 
@@ -294,4 +294,4 @@ eval-lives-ok 'sub a() { } given 3',     'can define a sub inside a statement-mo
     ok $capture-is-correct, 'matches in when correctly set $0';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

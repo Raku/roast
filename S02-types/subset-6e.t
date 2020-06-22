@@ -375,4 +375,4 @@ subtest 'Junction arguments to `where` parameters' => {
         "definite subset from 6.e doesn't allow init without a value even in 6.d code";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -21,4 +21,4 @@ my $f = foo;
 ok $f.exception.WHAT ~~ X::Insignificant, "fail pick up exception from $! by default";;
 is $f.exception.message, "ignorable", "fail picks up the right exception";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

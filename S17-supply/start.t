@@ -49,4 +49,4 @@ dies-ok { Supply.start({...}) }, 'can not be called as a class method';
     $master.done;
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

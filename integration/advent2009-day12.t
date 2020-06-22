@@ -34,3 +34,5 @@ plan 9;
     use Fancy::Utilities;
     is greet(), 'Hi!', "Multi subs are imported by default - is this to spec?";
 }
+
+# vim: expandtab shiftwidth=4

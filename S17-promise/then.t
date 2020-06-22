@@ -47,7 +47,7 @@ plan 15;
     is $p2.cause.message, "then died", "then Promise has correct cause";
 }
 
-# RT #131509
+# https://github.com/Raku/old-issue-tracker/issues/6325
 subtest 'dynamics accessible from .then' => {
     plan 4;
 
@@ -72,3 +72,5 @@ subtest 'dynamics accessible from .then' => {
     is-deeply %*FOO, {:42prom, :72then}, '%*FOO';
     is-deeply @code, [<prom then>],      '&*FOO';
 }
+
+# vim: expandtab shiftwidth=4

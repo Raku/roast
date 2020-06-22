@@ -13,4 +13,4 @@ is(bar(), 'Inner::bar', 're-exporting works using is export');
 is(baz(), 'Inner::baz', 're-exporting works using is export(:MANDATORY)');
 # is(qux(), 'Inner::qux', 're-exporting works using is export(:sometag)');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

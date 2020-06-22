@@ -18,4 +18,4 @@ is $x, 'testing', "scalar modified inside Perl block";
 
 is $y, 'casebook', "scalar modified inside Raku block inside Perl block";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -79,4 +79,4 @@ sub gen_hash {
   is( popul_hash_contents, "a:b,c:d", "populated hash stays same when read from (4)" );
 }
 
-# vim: syn=perl6
+# vim: expandtab shiftwidth=4

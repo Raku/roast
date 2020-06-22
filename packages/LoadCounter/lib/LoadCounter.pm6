@@ -12,4 +12,4 @@ sub unimport {
     $Main::imported--;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

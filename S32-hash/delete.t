@@ -34,7 +34,7 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
     throws-like '$a:delete', Exception, "Can't :delete a scalar";
 }
 
-# RT #68482
+# https://github.com/Raku/old-issue-tracker/issues/1222
 {
     my %rt68482 = 1 => 3;
     is (%rt68482<1>:delete).WHAT.gist, 3.WHAT.gist, 'delete.WHAT is the element';
@@ -50,4 +50,4 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
         ':delete of slice on Hash:U returns a list of Nils';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

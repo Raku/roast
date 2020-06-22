@@ -129,21 +129,22 @@ is (1, 2 ... 0).[lazy ^3], (), 'No more: limit value is on the wrong side';
 }
 
 
-# RT #75698
+# https://github.com/Raku/old-issue-tracker/issues/1830
 ok ?(one((-5 ... ^5).flat) == 0), '-5 ... ^5 produces just one zero';
 
-# RT #75316
+# https://github.com/Raku/old-issue-tracker/issues/1783
 throws-like { 1 ... () },
      X::Cannot::Empty,
+     # https://github.com/Raku/old-issue-tracker/issues/1830
      'RT #75698 - empty list on right side of sequence operator does not cause infinite loop (but throws exception)',
      action => /endpoint/,
      what   => /list/;
 
-# RT #73508
+# https://github.com/Raku/old-issue-tracker/issues/1605
 is (1,2,4...*)[10], 1024,
     'element from list generated using infinite sequence is accessible by index';
 
-# RT #72914
+# https://github.com/Raku/old-issue-tracker/issues/1520
 is (4 ... ^5).join(', '), '4, 3, 2, 1, 0, 1, 2, 3, 4',
     'geometric sequence started in one direction and continues in the other with exclusion';
 
@@ -151,7 +152,7 @@ lives-ok { (1 ... 5).raku }, 'Can take .raku of sequence';
 is EVAL((1 ... 5).raku).join(','), '1,2,3,4,5',
     'EVAL($sequence.raku) reproduces result list';
 
-# RT #98790
+# https://github.com/Raku/old-issue-tracker/issues/2466
 is ~((1 ... *) Z~ ('a' ... 'z')).[^5], "1a 2b 3c 4d 5e", "Zipping two sequence in parallel";
 
 {
@@ -209,11 +210,11 @@ is ~((1 ... *) Z~ ('a' ... 'z')).[^5], "1a 2b 3c 4d 5e", "Zipping two sequence i
     is @a.grep(Num).elems, 7, "... all of which are Nums";
 }
 
-# RT #74606
+# https://github.com/Raku/old-issue-tracker/issues/1712
 is (1, +* ... *).[^5].join('|'), (1 xx 5).join('|'),
     '1, +* works for sequence';
 
-# RT #75768, RT #98790
+# https://github.com/Raku/old-issue-tracker/issues/2593
 is ~(1...10)[2...4], '3 4 5', 'can index sequence with sequence';
 
 {
@@ -229,30 +230,30 @@ is (5,4,3, { $_ - 1 || last } ... *)[lazy ^10].join(', '), '5, 4, 3, 2, 1', "seq
 {
     is (1..* ... 5), (1, 2, 3, 4, 5), '1..* ... 5';
     my @fib = 0, 1, *+* ... *;
-    # RT #98790
+    # https://github.com/Raku/old-issue-tracker/issues/2466
     is (@fib ... 8), (0, 1, 1, 2 , 3, 5, 8), '@fib ... 8';
 }
 
-# RT #78324
+# https://github.com/Raku/old-issue-tracker/issues/2223
 {
     is (32,16,8 ...^ Rat), (32) , 'stop on a matching type (1)';
     is (32,{($_/2).narrow} ...^ Rat), (32,16,8,4,2,1) , 'stop on a matching type (2)';
 }
 
-# RT #75828
+# https://github.com/Raku/old-issue-tracker/issues/1845
 throws-like '1, 2, 3, ... 5', Exception, 'comma before sequence operator is caught';
 
-# RT #73268
+# https://github.com/Raku/old-issue-tracker/issues/1572
 is ~(1...^*).[^10], '1 2 3 4 5 6 7 8 9 10', 'RT #73268';
 
-# RT #76046
+# https://github.com/Raku/old-issue-tracker/issues/1871
 is (1, 1, &[+] ... *).[^10], '1 1 2 3 5 8 13 21 34 55', 'use &[+] on infix:<...> series';
 
 # see http://irclog.perlgeek.de/perl6/2012-05-30#i_5659147 ff.
 # previously rakudo said Not enough positional parameters passed; got 3 but expected 4
 is (|(1,1,2,4,8)[^4], *+*+*+* ... *)[4], 8, 'WhateverCode with arity > 3 gets enough arguments';
 
-#RT #75674
+# https://github.com/Raku/old-issue-tracker/issues/1825
 {
     is (4 ... ^5), <4 3 2 1 0 1 2 3 4>, "RT #75674";
     is (4 ... 0,1,2,3,4), <4 3 2 1 0 1 2 3 4>, "RT #75674";
@@ -279,4 +280,4 @@ is (1 …^ 10), 1..^10, 'Unicode ellipsis works excluding final value';
     ok !('a' ... 'z').is-lazy, "Final 'z' is not lazy";
     ok !({rand} ... * > .5).is-lazy, "Final condition is not lazy";
 }
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

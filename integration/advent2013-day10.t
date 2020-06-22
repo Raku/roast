@@ -168,3 +168,5 @@ sub root3($num, *%advs) {
 }
 
 root3(42, :!foo, :bar, :baz(True), :qux<blah>);
+
+# vim: expandtab shiftwidth=4

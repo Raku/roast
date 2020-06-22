@@ -8,3 +8,5 @@ plan 2;
     lives-ok { use isms <Perl5>; $a=~$a }, "does =~ survive?";
     is-deeply $a, "42", "did it actually do the assignment?";
 }
+
+# vim: expandtab shiftwidth=4

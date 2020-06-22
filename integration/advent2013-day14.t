@@ -213,3 +213,5 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
         return $p;
     }
 }
+
+# vim: expandtab shiftwidth=4

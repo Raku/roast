@@ -338,4 +338,4 @@ character classes), and those are referenced at the correct spot.
         'Interaction of quantifier, <(, )>, and action method ok';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

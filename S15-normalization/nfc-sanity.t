@@ -507,3 +507,5 @@ ok Uni.new(0xFA8C).NFC.list ~~ (0x6234,), 'FA8C -> 6234';
 ok Uni.new(0xFA8D).NFC.list ~~ (0x63C4,), 'FA8D -> 63C4';
 ok Uni.new(0xFA8E).NFC.list ~~ (0x641C,), 'FA8E -> 641C';
 ok Uni.new(0xFA8F).NFC.list ~~ (0x6452,), 'FA8F -> 6452';
+
+# vim: expandtab shiftwidth=4

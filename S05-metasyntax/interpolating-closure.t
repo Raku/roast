@@ -46,4 +46,4 @@ is '123' ~~ / :my $a=2; <{ '$' ~ 'a' }> /, '2', 'stage of variable in regex gene
 # which would either not parse as a regex or would include the 'rx' literally.
 is '123' ~~ / :my $a=rx[2]; <{ '$a' }> /, '2', 'stage of variable in regex generated from <{}> metasyntax (2)';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

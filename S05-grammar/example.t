@@ -62,7 +62,7 @@ is($content ~~ m/<title>/, '<title>Exactly</title>', 'match token');
 #?rakudo skip 'Method "speaker" not found for invocant of class "Cursor"'
 is($content ~~ m/<schedule>/, $content, 'match rule');
 
-# RT #81136
+# https://github.com/Raku/old-issue-tracker/issues/2303
 {
     grammar rt81136 {
         token a { a }
@@ -73,4 +73,4 @@ is($content ~~ m/<schedule>/, $content, 'match rule');
         'lookbehind that should not match does not match';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

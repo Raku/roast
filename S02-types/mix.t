@@ -563,4 +563,4 @@ is-deeply (1,2,3).Mix.ACCEPTS(().Mix), False, 'can we smartmatch empty';
     dies-ok { my %m is Mix[Int] = <a b c> }, 'must have Ints on creation';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -133,3 +133,5 @@ Which item is a color?
 
 Final score: 1
 END-OUT
+
+# vim: expandtab shiftwidth=4

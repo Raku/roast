@@ -100,4 +100,4 @@ The C<$desc> simply sets the description of the test which is output.
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

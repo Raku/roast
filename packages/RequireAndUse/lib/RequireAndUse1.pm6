@@ -9,3 +9,5 @@ module RequireAndUse1 {
 }
 
 42;
+
+# vim: expandtab shiftwidth=4

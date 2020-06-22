@@ -3,4 +3,4 @@ use RoleB;
 
 unit role RoleA;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

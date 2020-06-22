@@ -30,6 +30,7 @@ is "ab cD Ef".wordcase,      "Ab Cd Ef",       "works on ordinary string";
 # Non-ASCII chars:
 is wordcase("äöü abcä"), "Äöü Abcä", "wordcase() works on non-ASCII chars";#
 
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo.jvm 2 todo 'NFG on JVM RT #124741'
 is wordcase("a\c[COMBINING DIAERESIS]üö abcä"), "Äüö Abcä", 'wordcase on string with grapheme precomposed';
 is wordcase("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
@@ -49,4 +50,4 @@ is ~(0.wordcase), ~0, '.wordcase on Int';
 
 # TODO: add tests for wordcase arguments
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

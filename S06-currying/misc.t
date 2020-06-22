@@ -25,7 +25,7 @@ is-primed-call(sub (::T $a, T $b is copy, T :$c) { "a" ~ $a.raku ~ "b" ~ $b.raku
 # How or whether this should fail is less clear to me.  Currently LTA error.
 is-primed-sig(sub () { }, :(), *);
 
-# RT #123938
+# https://github.com/Raku/old-issue-tracker/issues/3705
 sub same'proto(::T, T $a, T $b) { $a.WHAT === $b.WHAT };
 my &infix:<same-in-Int> = &same'proto.assuming(Int);
 throws-like { 42 same-in-Int "42" }, X::TypeCheck::Binding,
@@ -36,3 +36,5 @@ throws-like { 42 same-in-Int "42" }, X::TypeCheck::Binding,
 sub abc123 (| ($a,$b,$c,$o,$t,$th)) { $a,$b,$c,$o,$t,$th; }
 #?rakudo.jvm skip 'NullPointerException'
 is-primed-call(&abc123, \(1,2,3), ['a','b','c',1,2,3], 'a','b','c');
+
+# vim: expandtab shiftwidth=4

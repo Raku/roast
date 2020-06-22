@@ -99,4 +99,4 @@ plan 28;
       ), 'multi-level categorize' );
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

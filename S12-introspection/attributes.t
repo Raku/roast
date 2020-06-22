@@ -135,4 +135,4 @@ is @attrs[0].name, '$!c', 'get correct attribute with introspection';
     ok $stored, 'did we actually call STORE now';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

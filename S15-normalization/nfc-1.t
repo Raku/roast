@@ -2007,3 +2007,5 @@ ok Uni.new(0xB25A).NFC.list ~~ (0xB25A,), 'B25A -> B25A';
 ok Uni.new(0xB25B).NFC.list ~~ (0xB25B,), 'B25B -> B25B';
 ok Uni.new(0xB25C).NFC.list ~~ (0xB25C,), 'B25C -> B25C';
 ok Uni.new(0xB25D).NFC.list ~~ (0xB25D,), 'B25D -> B25D';
+
+# vim: expandtab shiftwidth=4

@@ -21,8 +21,10 @@ throws-like { EVAL 'my F $x;' },
   'Unknown types in type constraints are an error';
 
 # integration tests - in Rakudo some class names from Parrot leaked through,
+# https://github.com/Raku/old-issue-tracker/issues/466
 # so you couldn't name a class 'Task' - RT #61128
 
+# https://github.com/Raku/old-issue-tracker/issues/466
 lives-ok { EVAL 'class Task { has $.a }; Task.new(a => 3 );' },
   'can call a class "Task" - RT #61128';
 
@@ -35,3 +37,5 @@ throws-like { EVAL q[caffeine(EVAL('sub caffeine($a){~$a}'))] },
 
 # vim: ft=perl6
 
+
+# vim: expandtab shiftwidth=4

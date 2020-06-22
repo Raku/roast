@@ -5,3 +5,5 @@ module Export_PackA {
     42;
   }
 }
+
+# vim: expandtab shiftwidth=4

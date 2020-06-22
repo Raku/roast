@@ -133,4 +133,4 @@ throws-like 'my $x = 0; ++++$x', X::Multi::NoMatch,
     is   $i, -1, 'prefix:<--> on Any:U makes it -1';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

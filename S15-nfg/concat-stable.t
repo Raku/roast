@@ -115,3 +115,5 @@ sub test-regional {
     }
 
 }
+
+# vim: expandtab shiftwidth=4

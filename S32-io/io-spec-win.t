@@ -355,3 +355,5 @@ subtest '.path' => {
     %*ENV<Path> = $path-in;
     is-deeply IO::Spec::Win32.path, $path-out, 'Path set to path';
 }
+
+# vim: expandtab shiftwidth=4

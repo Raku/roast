@@ -207,4 +207,4 @@ subtest 'squish with [eqv] and objects' => {
         'do we squish at all with :as?';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

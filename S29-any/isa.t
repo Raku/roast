@@ -72,4 +72,4 @@ class Thing::something {};
     nok A.new.isa(A),   'A punned role is not an isa of itself by type';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

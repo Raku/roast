@@ -477,3 +477,5 @@ for @tests -> \description, \seed, \endpoint, \result {
 }
 
 done-testing;
+
+# vim: expandtab shiftwidth=4

@@ -62,7 +62,7 @@ for @todo -> $t {
     is $_, 'Xyc', ':ii implies :i';
 }
 
-# RT #77406
+# https://github.com/Raku/old-issue-tracker/issues/2090
 {
     ok "a" ~~ m:i/:i A/,
         'duplicated before-regexp modifier ":i" allowed (1)';
@@ -72,4 +72,4 @@ for @todo -> $t {
         'duplicated before-regexp modifier ":i" allowed (3)';
 }
 
-# vim: syn=perl6 sw=4 ts=4 expandtab
+# vim: expandtab shiftwidth=4

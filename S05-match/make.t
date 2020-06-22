@@ -37,4 +37,4 @@ is $/.ast, 'bar', '$/.ast';
       'check that we did not regress';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -17,3 +17,5 @@ my $f = EVAL('-> $fn { $fn(); }');
 ok $f({ &CALLER::SETTING::not(False) }), 'CALLER::SETTING works';
 ok $f({ &CALLER::($setting)::not(False) }), 'CALLER::SETTING works (ind)';
 }
+
+# vim: expandtab shiftwidth=4

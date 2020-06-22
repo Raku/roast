@@ -220,4 +220,4 @@ is_run ｢use RAKUDO1413; print 'pass'｣,
 is-deeply ((1..10)[2.polymod($_ xx 1000).map($_ ** *) »%» *] with 1),
     2 xx 1001, "no SEGV in curries + with";
 
-# vim: expandtab shiftwidth=4 ft=perl6
+# vim: expandtab shiftwidth=4

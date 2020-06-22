@@ -47,13 +47,13 @@ is(~A::B.parse("42"), "42", ".parse works with namespaced grammars, match");
 # TODO: Check for a good error message, not just the absence of a bad one.
 throws-like '::No::Such::Grammar.parse()', Exception, '.parse on missing grammar dies';
 
-# RT #71062
+# https://github.com/Raku/old-issue-tracker/issues/1425
 {
     grammar Integer { rule TOP { x } };
     lives-ok { Integer.parse('x') }, 'can .parse grammar named "Integer"';
 }
 
-# RT #76884
+# https://github.com/Raku/old-issue-tracker/issues/1992
 {
     grammar grr {
         token TOP {
@@ -66,7 +66,7 @@ throws-like '::No::Such::Grammar.parse()', Exception, '.parse on missing grammar
     ok $match[0].raku, 'empty match is rakuable, not Null PMC access';
 }
 
-# RT #116597
+# https://github.com/Raku/old-issue-tracker/issues/3038
 {
     grammar RT116597 {
         token TOP() { <lit 'a'> };
@@ -76,7 +76,7 @@ throws-like '::No::Such::Grammar.parse()', Exception, '.parse on missing grammar
         'can use <rule "param"> form of rule invocation in grammar';
 }
 
-# RT #111768
+# https://github.com/Raku/old-issue-tracker/issues/2675
 {
     grammar RT111768 {
         token e {
@@ -87,7 +87,7 @@ throws-like '::No::Such::Grammar.parse()', Exception, '.parse on missing grammar
     is RT111768.parse("aaaa;", :rule<e>).ast, ';;;;a', "Recursive .ast calls work";
 }
 
-# RT #130081
+# https://github.com/Raku/old-issue-tracker/issues/5796
 {
     my grammar G { regex TOP { ‘a’ || ‘abc’ } };
     is G.parse(‘abc’), 'abc', 'A regex TOP will be backtracked into to get a long enough match';
@@ -115,4 +115,4 @@ throws-like '::No::Such::Grammar.parse()', Exception, '.parse on missing grammar
     is ~$ex.post, "<EOL>", "post is <EOL>";
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

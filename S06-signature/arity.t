@@ -115,6 +115,7 @@ is &o_two.count,    1, 'count on sub with optional and required named params';
         "additional my() vars don't influence .count calculation (2-3)";
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/760
 # used to be a bug in Rakudo, RT #63744
 {
     sub indirect-count(Code $c) { +$c.signature.params; }
@@ -134,11 +135,11 @@ dies-ok { EVAL("a_zero( 'hello', 'world' )") }, 'no matching sub signature';
     is &a.arity, 1, '&multi.arity';
 }
 
-# RT #111646
+# https://github.com/Raku/old-issue-tracker/issues/2664
 is (-> *@a { }).count, Inf, 'slurpy positional causes infinite count';  #OK not used
 is (-> *%a { }).count, 0,   'slurpy named causes no count change';      #OK not used
 
-# RT #78240
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     sub a ($a, $b, $c) { 42 }
     my &b = &a.assuming(1);
@@ -146,7 +147,7 @@ is (-> *%a { }).count, 0,   'slurpy named causes no count change';      #OK not 
     is &b.arity, 2, '.assuming(1) reduces arity by 1';
 }
 
-# RT #77744
+# https://github.com/Raku/old-issue-tracker/issues/2146
 {
     class A {
         our method f ($x: $y) { $y * 2 }
@@ -163,4 +164,4 @@ is (-> *%a { }).count, 0,   'slurpy named causes no count change';      #OK not 
     is h(3, 11), 14, 'correct number of required parameters for assuming-derived method (1)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

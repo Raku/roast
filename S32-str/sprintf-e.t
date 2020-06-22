@@ -196,4 +196,4 @@ for @info -> $format, @tests {
     }, "Tested '$format'";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -9,3 +9,5 @@ my package EXPORTHOW {
         }
     }
 }
+
+# vim: expandtab shiftwidth=4

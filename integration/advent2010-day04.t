@@ -43,3 +43,5 @@ plan 11;
        "Fibonacci bounded after the fact is correct";
     is @Fibonacci[30], 832040, 'And @Fibonacci is still unbounded';
 }
+
+# vim: expandtab shiftwidth=4

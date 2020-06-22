@@ -109,4 +109,4 @@ group-of 5 => 'bin pipes in Proc do not crash on open' => {
     is $result, "stderr out\nstdout out\n", 'merge with :out(Handle:D)';
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

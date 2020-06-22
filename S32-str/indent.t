@@ -192,3 +192,5 @@ group-of 6 => 'indent/dedent' => {
         ), '8';
     }
 }
+
+# vim: expandtab shiftwidth=4

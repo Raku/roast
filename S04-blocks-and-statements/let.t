@@ -49,6 +49,7 @@ plan 15;
     is($(let $a = 23; $a), 23, "let() changed the variable in a try block");
     die 57;
   };
+  # https://github.com/Raku/old-issue-tracker/issues/3369
   #?rakudo.jvm todo 'let restore on exception, RT #121647'
   is $a, 42, "let() restored the variable, the block was exited using an exception";
 }
@@ -72,7 +73,8 @@ plan 15;
     is $x, 5, 'fail() resets let variables';
 }
 
-{ # RT#127291
+# https://github.com/Raku/old-issue-tracker/issues/5057
+{ 
     my %h{Pair}; %h{a => 1} = 2;
     my %c{Pair}; %c{a => 1} = 2;
     {
@@ -95,4 +97,4 @@ plan 15;
     is-deeply %h, %c, '`let` keeps Nils around in Hashes when they exist';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

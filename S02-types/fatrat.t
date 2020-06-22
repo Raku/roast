@@ -10,4 +10,4 @@ plan 1;
   isa-ok( $fatty, FatRat);
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

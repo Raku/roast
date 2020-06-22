@@ -681,4 +681,4 @@ is-deeply (1,2,3).SetHash.ACCEPTS(().SetHash), False, 'can we smartmatch empty';
     dies-ok { my %sh is SetHash[Int] = <a b c> }, 'must have Ints on creation';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

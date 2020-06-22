@@ -30,7 +30,7 @@ is $m,    'foo',            'match object stringifies OK';
 is $m<x>, 'f',              'match object indexes as a hash';
 is $m[0], 'oo',             'match object indexes as an array';
 
-# RT #130953
+# https://github.com/Raku/old-issue-tracker/issues/6132
 {
     is-deeply (for 1..10 { 'ﬆ' x $_ ~ 'T' ~~ m:i/T/ })».Str,
         ('T' xx 10), 'can ~~ m:i/T/';
@@ -48,4 +48,4 @@ is $m[0], 'oo',             'match object indexes as an array';
         (for 1..10 { 'ﬆ' x $_ ~ 'Z' }), 'can .subst: /:i T/, "Z"';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

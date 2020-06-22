@@ -33,4 +33,4 @@ ok "$!" ~~ /'!~~'/, 'error for "!~" usage mentions "!~~"';
     is EVAL('"$x . b"'),  '2 . b',  '.  allowed in double quotes';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

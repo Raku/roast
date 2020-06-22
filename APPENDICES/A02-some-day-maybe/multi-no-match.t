@@ -72,4 +72,4 @@ throws-like { Int.new: <a b c>, 42, 'meow', 'wrong', 'args' },
 dies-ok { Date.new(Int, 1, 1) },
     'dies when its year is given as an Int type object';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

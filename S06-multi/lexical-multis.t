@@ -60,4 +60,4 @@ dies-ok { EVAL("waz('vtak')") }, '...but lexical multi no longer callable';
     dies-ok { multi foo() { }; multi foo($x) { }; +&foo }, 'die in numification of proto';   #OK not used
 }
 
-# vim: ft=perl6 :
+# vim: expandtab shiftwidth=4

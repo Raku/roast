@@ -28,4 +28,4 @@ subtest 'Pragma dynamic-scope with args' => {
     nok $h.VAR.dynamic, 'Works on variables declared in list form (2)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -5,7 +5,7 @@ use Test::Util;
 
 plan 3;
 
-# RT #129227
+# https://github.com/Raku/old-issue-tracker/issues/5649
 # We don't yet choose to set a maximum number of combiners, or a minimum that
 # Raku implementations must support. However, we should be sure that even if
 # a ridiculously huge number is given, it either works or throws a catchable
@@ -14,12 +14,12 @@ plan 3;
 lives-ok { try 7 ~ "\x[308]" x 150_000 },
     'No VM crash on enormous number of combiners';
 
-# RT #127973
+# https://github.com/Raku/old-issue-tracker/issues/5260
 #?rakudo.jvm todo 'repeat count (4294967295) cannot be greater than max allowed number of graphemes 2147483647'
 eval-lives-ok 'my str $a = "a" x 2**32-1', 'native strings can be as large as regular strings';
 
 
-# RT #127129 and RT #127024 and RT#127025
+# https://github.com/Raku/old-issue-tracker/issues/2593
 group-of 8 => 'role multi tiebreaking (TEST USES UNSUPPORTED FEATURES)' => {
     # NOTE: side-effects from `where` clauses are not supported on language level,
     # and so there's a large chance this test will not work on some implementations
@@ -74,4 +74,4 @@ group-of 8 => 'role multi tiebreaking (TEST USES UNSUPPORTED FEATURES)' => {
         "Multis from different roles declaration order tiebreaker (TEST USES UNSUPPORTED FEATURES)";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -86,6 +86,7 @@ ok (''.split('')).elems == 0, q{''.split('') returns empty list};
 ok (split('', '')).elems == 0, q{''.split('') returns empty list};
 
 # split with :v should return capture
+# https://github.com/Raku/old-issue-tracker/issues/4764
 # also RT #126679
 {
     my @split = 'abc def ghi'.split(/(\s+)/, :v);
@@ -94,6 +95,7 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
     ok @split[3] eq ' ', q{split captured multiple spaces};
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/4764
 # also RT #126679
 {
     my @split = split(/\d+/, 'a4b5', :v);
@@ -102,7 +104,7 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
        'split(:v) and trailing delimiter (values)';
 }
 
-# RT #112868
+# https://github.com/Raku/old-issue-tracker/issues/2759
 {
     my $rt112868 = 'splitting on empty';
     ok $rt112868.split('').elems > 0, q<.split('') does something>;
@@ -110,12 +112,12 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
        q<.split('') does the same thing as .split(/''/) (RT #112868)>;
 }
 
-# RT #128034
+# https://github.com/Raku/old-issue-tracker/issues/5278
 subtest 'split with NaN limit throws (RT #128034)', {
     plan 3;
-    throws-like { split 'o',        'o', NaN }, X::TypeCheck;
-    throws-like { split /o/,        'o', NaN }, X::TypeCheck;
-    throws-like { split @(1, 2, 3), 'o', NaN }, X::TypeCheck;
+    dies-ok { split 'o',        'o', NaN }, X::TypeCheck;
+    dies-ok { split /o/,        'o', NaN }, X::TypeCheck;
+    dies-ok { split @(1, 2, 3), 'o', NaN }, X::TypeCheck;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

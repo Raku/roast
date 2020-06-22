@@ -45,4 +45,4 @@ lives-ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 # https://github.com/Raku/old-issue-tracker/issues/4415
 throws-like '/00:11:22/', X::Syntax::Regex::UnrecognizedModifier, modifier => '11';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

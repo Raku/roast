@@ -7,3 +7,5 @@ sub baz is export(:MANDATORY) {'Inner::baz'}
 # sub qux is export(:sometag) {'Inner::qux'}
 sub quux is export { 'Inner::quux' }
 our sub oursub { 'Inner::oursub' }
+
+# vim: expandtab shiftwidth=4

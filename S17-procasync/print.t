@@ -59,3 +59,5 @@ is $stderr, "Oops!\n",                      'did we get STDERR';
 END {
     unlink $program;
 }
+
+# vim: expandtab shiftwidth=4

@@ -30,7 +30,7 @@ my $anon_block = { 1 };
 isa-ok($anon_block, Block);
 is($anon_block(), 1, '{} <anon block> works');
 
-# RT #64844
+# https://github.com/Raku/old-issue-tracker/issues/907
 {
     EVAL '$anon_block( 1 )';
     #?rakudo todo 'Parrot support for zero-arg subs?'
@@ -152,4 +152,4 @@ isnt((sub { -> { 3 } }).(), 3, 'as are pointies');
     
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

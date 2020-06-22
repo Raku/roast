@@ -115,14 +115,14 @@ is ($[1,2] X~ <a b>), '1 2a 1 2b', '$[] does not flatten';
 is (1,2 X (<a b> X "x")).flat.join, '1ax1bx2ax2bx',
     'Nested X works';
 
-# RT #77660
+# https://github.com/Raku/old-issue-tracker/issues/2136
 {
     my @a = 1,2,3;
     @a X*= 10;
     is ~@a, '10 20 30', 'cross can modify containers on the left';
 }
 
-# RT #112602
+# https://github.com/Raku/old-issue-tracker/issues/2724
 {
     is (1 X* 1..*)[^3], (1, 2, 3), 'cross handles lazy lists';
 }
@@ -133,7 +133,7 @@ is (1,2 X (<a b> X "x")).flat.join, '1ax1bx2ax2bx',
     is @foo, '1 1 1', "X= works";
 }
 
-# RT #120973
+# https://github.com/Raku/old-issue-tracker/issues/3311
 {
     my @rt120973 = <a b> X <1 2>.map({$_});
     is @rt120973, <a 1 a 2 b 1 b 2>,
@@ -234,7 +234,7 @@ is-deeply &[X+]((1,2,3),(4,5,6)), (5, 6, 7, 6, 7, 8, 7, 8, 9), "&[X+] can autoge
     ok $side-effect === Nil, "Xorelse topicalizes when needed";
 }
 
-# RT #126522
+# https://github.com/Raku/old-issue-tracker/issues/4705
 is ($(1, 2) X <a b c>), (($(1, 2), 'a'), ($(1, 2), 'b'), ($(1, 2), 'c')),
     'X respects itemization of arguments (1)';
 is (<a b c> X $(1, 2)), (('a', $(1, 2)), ('b', $(1, 2)), ('c', $(1, 2))),
@@ -244,7 +244,7 @@ is ($(1, 2) X~ <a b c>), ('1 2a', '1 2b', '1 2c'),
 is (<a b c> X~ $(1, 2)), ('a1 2', 'b1 2', 'c1 2'),
     'X meta-op respects itemization of arguments (2)';
 
-# RT #78188
+# https://github.com/Raku/old-issue-tracker/issues/2203
 {
     subtest '&infix: works with metaoperators regardless of combination', {
         plan 4;
@@ -255,21 +255,21 @@ is (<a b c> X~ $(1, 2)), ('a1 2', 'b1 2', 'c1 2'),
     }
 }
 
-# RT #127749
+# https://github.com/Raku/old-issue-tracker/issues/5186
 is (for ^2 { [+] (^5 X ^5) }), (50, 50), 'No bogus constant-folding of X';
 
-# RT #130566
+# https://github.com/Raku/old-issue-tracker/issues/6006
 is-deeply ([lazy 1..3] X 4..5)[^2], ((1, 4), (1, 5)),
     'X works with lazy LHS';
 
-# RT #131395
+# https://github.com/Raku/old-issue-tracker/issues/6289
 group-of 3 => 'cross with empty List on RHS does not crash' => {
     is-eqv ((1,2) X  ()), ().Seq, 'X';
     is-eqv ((1,2) X, ()), ().Seq, 'X,';
     is-eqv ((1,2) X+ ()), ().Seq, 'X+';
 }
 
-# RT #126563
+# https://github.com/Raku/old-issue-tracker/issues/4729
 {
     my @z = <1 2>;
     lives-ok { @z X* (@z  X* @z) },
@@ -283,4 +283,4 @@ my %h = %(:a);
 is-deeply cross(%h<>:v.map: *.flat), ((True,),),
   'is a 1-element list handled correctly with cross';
 
-# vim: ft=perl6 et
+# vim: expandtab shiftwidth=4

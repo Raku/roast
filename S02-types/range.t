@@ -461,4 +461,4 @@ subtest 'no floating point drifts in degenerate Ranges' => {
     is-deeply @a, ["1","2","3","4","5","6","7","8","9"], 'did we get strings';
 }
 
-# vim:set ft=perl6
+# vim: expandtab shiftwidth=4

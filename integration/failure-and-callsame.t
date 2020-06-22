@@ -33,3 +33,5 @@ for ^50 {
     }
     ok $grid.grid.join !~~ /BUG/, 'callsame + Failure glitch not observed';
 }
+
+# vim: expandtab shiftwidth=4

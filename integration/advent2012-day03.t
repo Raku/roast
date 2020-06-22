@@ -94,3 +94,5 @@ is-deeply @drawing, [q:to"END_LAYOUT_2".lines], 'resized layout';
 +-------------------------+
 | status bar (1 lines)    |
 END_LAYOUT_2
+
+# vim: expandtab shiftwidth=4

@@ -22,3 +22,5 @@ throws-like 'my Str enum D (a => 1)', Exception,
     my enum E ( a => 'x', 'b');
     is E::b.Str, 'y', 'Str enum correctly uses string-increment';
 }
+
+# vim: expandtab shiftwidth=4

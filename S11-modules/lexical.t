@@ -17,4 +17,4 @@ dies-ok {EVAL('foo()') }, 'sub is only imported into the inner lexical scope';
 }
 dies-ok {EVAL('my EmptyClass $bar')}, 'Package is only imported into the inner lexical scope';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

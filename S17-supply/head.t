@@ -46,4 +46,4 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     is $channel.list.join(', '), '42, 43, 44', 'does indeed fire';
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

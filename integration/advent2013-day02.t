@@ -38,3 +38,5 @@ is sniff($dog), 'definitely a real dog instance', 'multi with type object';
 
 is ((my @a = "Hip " x 2), @a.^name, "!").join, 'Hip Hip Array!', 'corniest one-liner';
 
+
+# vim: expandtab shiftwidth=4

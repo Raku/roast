@@ -71,3 +71,5 @@ subtest "use 'also is rw'" => {
     my role R4 does R3 { }
     test-R1 R4, "role doing role puning";
 }
+
+# vim: expandtab shiftwidth=4

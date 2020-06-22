@@ -70,7 +70,7 @@ nok foo().defined, 'contextual $*VAR is undefined';
     is f().keys, 'a', 'our %*a';
 }
 
-#RT #63226
+# https://github.com/Raku/old-issue-tracker/issues/697
 # Not every impl has an @*INC by default...
 my @*INC;
 @*INC.push('not_a_directory');
@@ -79,11 +79,11 @@ my @*INC;
     ok Foo::run().chars > 0;
 }
 
-# RT #74756
+# https://github.com/Raku/old-issue-tracker/issues/1731
 throws-like 'say $*a; my $*a;', X::Dynamic::Postdeclaration, symbol => '$*a';
 
-# RT #82790
+# https://github.com/Raku/old-issue-tracker/issues/2336
 throws-like 'my $*FOO::BAR = 2', X::Dynamic::Package, symbol => '$*FOO::BAR';
 throws-like 'say $*OH::BAZ::WAZ', X::Dynamic::Package, symbol => '$*OH::BAZ::WAZ';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

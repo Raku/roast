@@ -71,3 +71,5 @@ sub rm_rf(*@files) {
         }
     }
 }
+
+# vim: expandtab shiftwidth=4

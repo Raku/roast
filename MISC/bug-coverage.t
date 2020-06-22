@@ -400,4 +400,4 @@ group-of 2 => 'negative offset in JIT lables errors' => {
     'use of Hash[…:D, …:D] in a module does not explode';
 }
 
-# vim: expandtab shiftwidth=4 ft=perl6
+# vim: expandtab shiftwidth=4

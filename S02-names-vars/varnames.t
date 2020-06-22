@@ -69,4 +69,4 @@ is $today:foo«g h»:bar:baz«😂», 'Does this work?', "with () def, multiple 
 is $today:foo['g','h']:bar:baz['😂'], 'Does this work?', "with () def, multiple adverbs allowed on end, canonicalizing [ ]";
 is $today:foo('g','h'):bar:baz('😂'), 'Does this work?', "with () def, multiple adverbs allowed on end, canonicalizing [ ]";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

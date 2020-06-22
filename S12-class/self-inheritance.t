@@ -16,4 +16,4 @@ throws-like 'role RA does RA { }; 1', X::InvalidType, "Testing `role A does A`";
 throws-like 'class CA is CA { }; 1', X::Inheritance::SelfInherit, "Testing `class A is A`";
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

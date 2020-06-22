@@ -116,4 +116,4 @@ group-of 3 => '.seek on non-binary handle' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

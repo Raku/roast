@@ -104,7 +104,7 @@ for <first second> {
         'our once { ...; Mu } block was invoked exactly once';
 }
 
-# RT #114914
+# https://github.com/Raku/old-issue-tracker/issues/2899
 {
     my $run = False;
     my $i = 0;
@@ -117,4 +117,4 @@ for <first second> {
 throws-like ｢my \z := once 42; z = 100｣, X::Assignment::RO,
     '`once` does not containerize its values';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

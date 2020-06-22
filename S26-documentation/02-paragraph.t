@@ -124,4 +124,4 @@ is_run Q:to/♥♥♥/, :compiler-args['--doc=Text'],
     ♥♥♥
 {:err(''), :out("ababc\n"), :0status}, 'nested paras do not crash/warn';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

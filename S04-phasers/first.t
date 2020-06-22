@@ -54,7 +54,7 @@ plan 7;
     is $str, 'Here012', 'FIRST in while loop runs';
 }
 
-# RT #121147
+# https://github.com/Raku/old-issue-tracker/issues/3325
 {
     my $i=0;
     my $str = '';
@@ -74,4 +74,4 @@ plan 7;
     is $str, 'Here', 'last in FIRST in for loop works';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -30,4 +30,4 @@ is ('abc' ~~ /<?after ^>/).from,  0, '^ in <?after ...>';
 is ('abc' ~~ /<?after $$>/).from, 3, '$$ in <?after ...>';
 is ('abc' ~~ /<?after $>/).from,  3, '$ in <?after ...>';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -109,4 +109,4 @@ eval-lives-ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper 
         'Reduce method respects chain associativity';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

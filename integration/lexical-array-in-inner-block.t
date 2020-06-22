@@ -23,4 +23,4 @@ for 2..3 -> $n {
 
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

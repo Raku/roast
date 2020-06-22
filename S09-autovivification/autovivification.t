@@ -19,7 +19,7 @@ plan 44;
   is +%hash.keys, 1, 'Created one hash item';
 }
 
-# RT #61740
+# https://github.com/Raku/old-issue-tracker/issues/538
 {
   my %hash;
 
@@ -55,7 +55,7 @@ plan 44;
   is ~@array, "  1 2 3", "autovivification of an array element to an array by &push";
 }
 
-#RT #84000
+# https://github.com/Raku/old-issue-tracker/issues/2367
 {
   my %hash;
 
@@ -190,4 +190,4 @@ dies-ok {
   is %hash<key><innerkey>, 17, "autovivification of hashes works via multidim syntax";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -95,7 +95,7 @@ is $y.test,     42,         'method from other role was OK too';
        'can mix R4b into an Array, and access the attribute';
 }
 
-# RT #69654
+# https://github.com/Raku/old-issue-tracker/issues/1350
 {
     role ProvidesFoo { method foo { } }
     class NoFoo { };
@@ -103,26 +103,26 @@ is $y.test,     42,         'method from other role was OK too';
         'mixin with "does" lists method during introspection';
 }
 
-# RT #99986
+# https://github.com/Raku/old-issue-tracker/issues/2484
 {
     lives-ok { 3/2 but role { } }, 'can mix into a Rat';
 }
 
-# RT #77184
+# https://github.com/Raku/old-issue-tracker/issues/2064
 {
     throws-like { EVAL q[{ role A { my $!foo; }; role B { my $!foo; }; class C does A does B {} }] },
        X::Syntax::Variable::Twigil, twigil => '!', scope => 'my',
        'RT #77184'
 }
 
-# RT #100782
+# https://github.com/Raku/old-issue-tracker/issues/2494
 {
     my $a = 0 but True;
     is +$a, 0, 'RT #100782 1/2';
     is ?$a, Bool::True, 'RT #100782 2/2';
 }
 
-# RT #115390
+# https://github.com/Raku/old-issue-tracker/issues/2943
 {
     my $rt115390 = 0;
     for 1..1000 -> $i {
@@ -134,20 +134,20 @@ is $y.test,     42,         'method from other role was OK too';
         'no crash with mixin in loop when it is not the last statement in loop';
 }
 
-# RT #79866
+# https://github.com/Raku/old-issue-tracker/issues/2278
 {
     my $x = 42 but role { method CALL-ME($arg) { self * $arg[0] } };
     is $x(13), 546, 'can mix a &.() method into an Int';
 }
 
-# RT #79868
+# https://github.com/Raku/old-issue-tracker/issues/2279
 is (class { } but role { method answer() { 42 } }).answer, 42,
     'can mix a role into a type object';
 
-# RT #101022
+# https://github.com/Raku/old-issue-tracker/issues/2510
 lives-ok {(True but role {}).gist}, 'can mix into True';
 
-# RT #73990
+# https://github.com/Raku/old-issue-tracker/issues/1647
 {
     my $tracker = '';
     for 1..3 {
@@ -162,7 +162,7 @@ lives-ok {(True but role {}).gist}, 'can mix into True';
 
 }
 
-# RT #119371
+# https://github.com/Raku/old-issue-tracker/issues/3216
 {
     use experimental :macros;
     throws-like q[role popo { macro marco { $^a but popo }; marco popo; }],
@@ -171,20 +171,20 @@ lives-ok {(True but role {}).gist}, 'can mix into True';
         ;
 }
 
-# RT #114668
+# https://github.com/Raku/old-issue-tracker/issues/2875
 {
     my role B { method Str() { 'bar' } }
     ok ({ a => 42 } but B) ~~ B, 'Mix-in to item hash works (1)';
     is ({ a => 42 } but B).Str, 'bar', 'Mix-in to item hash works (2)'
 }
 
-# RT #122756
+# https://github.com/Raku/old-issue-tracker/issues/3516
 {
     my role B { }
     ok ([] but B) ~~ B, 'Mix-in to item array works';
 }
 
-# RT #124121
+# https://github.com/Raku/old-issue-tracker/issues/3745
 {
     my $x;
     lives-ok { $x = True but [1, 2] }, 'but with array literal on RHS works';
@@ -204,7 +204,7 @@ lives-ok {(True but role {}).gist}, 'can mix into True';
 throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /resolved/ },
     'True but (1, 1) gets Int conflict to resolve due to generating two Int methods';
 
-# RT #119925
+# https://github.com/Raku/old-issue-tracker/issues/3238
 {
     is (gather {} but role {})[0], Nil,
         'mixing roles into lazy lists does not fail (1)';
@@ -212,12 +212,12 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
         'mixing roles into lazy lists does not fail (2)';
 }
 
-# RT #122030
+# https://github.com/Raku/old-issue-tracker/issues/3407
 {
     ok (Any but role { }) !=== (Any but role { }), 'anonymous roles are distinct';
 }
 
-# RT #127660
+# https://github.com/Raku/old-issue-tracker/issues/5163
 {
     my $m = Any but role { method Bool { True } }
     is $m || 42, $m, 'method Bool in mixin is used';
@@ -225,7 +225,7 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
     is $sm || 42, $sm, 'submethod Bool in mixin is used';
 }
 
-# RT #127916
+# https://github.com/Raku/old-issue-tracker/issues/5242
 {
     role Foo::Bar { };
     is (5 but Foo::Bar).^name, 'Int+{Foo::Bar}',
@@ -243,7 +243,8 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
     is C.foo( :b(3) ), 13, 'multi-dispatch mixin sanity';
 }
 
-{ # RT #126099
+# https://github.com/Raku/old-issue-tracker/issues/4547
+{ 
     group-of 3 => 'can mixin Block with True' => {
         my $b = Block but True;
         lives-ok { $b.WHICH };
@@ -265,4 +266,4 @@ lives-ok {
     class { } but role { has $!foo is built(:bind) }
 }, 'can mix in roles that use the "is built" trait at runtime';
 
-# vim: syn=perl6
+# vim: expandtab shiftwidth=4

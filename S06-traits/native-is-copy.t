@@ -39,4 +39,4 @@ dies-ok { EVAL 'num-is-copy("borsch")' }, 'Cannot pass str to native num is copy
 dies-ok { EVAL 'str-is-copy(41)' }, 'Cannot pass int to native str is copy arg';
 dies-ok { EVAL 'str-is-copy(4.1e0)' }, 'Cannot pass num to native str is copy arg';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

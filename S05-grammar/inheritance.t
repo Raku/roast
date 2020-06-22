@@ -13,6 +13,7 @@ grammar Grammar::Foo {
     token so { 'so' };
 };
 
+# https://github.com/Raku/old-issue-tracker/issues/2083
 #?rakudo todo 'RT #77350'
 is( try { Grammar::Foo.parse( 'so', :rule<so> ) }, 'so',
   "don't let a Mu based action method fail the parse" );
@@ -82,4 +83,4 @@ is(Grammar.WHAT.gist,"(Grammar)", "Grammar.WHAT.gist = Grammar()");
     dies-ok { @a[0] = 42 }, 'does it type check ok';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

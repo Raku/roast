@@ -3,6 +3,7 @@ use Test;
 
 plan 10;
 
+# https://github.com/Raku/old-issue-tracker/issues/3725
 #?rakudo.jvm todo 'UTF-8 BOM stripping RT #124024'
 {
     my $starts_with_bom = Buf.new(0xEF, 0xBB, 0xBF, 0x70, 0x69, 0x76, 0x6F);
@@ -11,6 +12,7 @@ plan 10;
     is $decoded, 'pivo', 'got correct string with UTF-8 BOM stripped';
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/3725
 #?rakudo.jvm todo 'UTF-8 BOM stripping RT #124024'
 {
     my $only_bom = Buf.new(0xEF, 0xBB, 0xBF);
@@ -26,12 +28,14 @@ plan 10;
     }
 
     my $slurped = slurp($temp-file);
+    # https://github.com/Raku/old-issue-tracker/issues/3725
     #?rakudo.jvm 2 todo 'UTF-8 BOM stripping RT #124024'
     is $slurped.chars, 4, 'BOM stripped when reading from file';
     is $slurped, 'pivo', 'Got correct BOM-stripped string reading form file';
 
     my @lines = $temp-file.IO.lines;
     is @lines.elems, 1, 'lines sanity with BOM stripping';
+    # https://github.com/Raku/old-issue-tracker/issues/3725
     #?rakudo.jvm 2 todo 'UTF-8 BOM stripping RT #124024'
     is @lines[0].chars, 4, 'BOM stripped first line has correct chars';
     is @lines[0], 'pivo', 'BOM stripped first line is correct';
@@ -39,6 +43,7 @@ plan 10;
     LEAVE unlink $temp-file;
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/3725
 #?rakudo.jvm todo 'UTF-8 BOM stripping RT #124024'
 {
     my $temp-file = "bom-test-2-$*PID";
@@ -55,3 +60,5 @@ plan 10;
 
     LEAVE unlink $temp-file;
 }
+
+# vim: expandtab shiftwidth=4

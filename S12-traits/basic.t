@@ -44,4 +44,4 @@ is($b.is_cool,    42,  'our class "inherited" an attribute');
 throws-like ' %!P = 1; 1', Exception,
     'calling a trait outside of a class should be a syntax error';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

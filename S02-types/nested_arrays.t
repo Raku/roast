@@ -43,4 +43,4 @@ plan 10;
         'Failure object contains X::OutOfRange exception';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

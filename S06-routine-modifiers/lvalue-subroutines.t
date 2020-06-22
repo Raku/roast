@@ -105,4 +105,4 @@ is (proxyvar("PRE") = "BAR"), 'PREbar',
     'proxy lvalue subroutine STORE works and returns the correct value';
 is $realvar, 'BAR', 'variable was modified';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

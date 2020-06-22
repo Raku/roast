@@ -41,16 +41,17 @@ ok "hello"  ~~ m:ignorecase/Hello/,        "match with :ignorecase (direct)";
 ok('Δ' ~~ m:i/δ/, ':i with greek chars');
 
 # The German ß (&szlig;) maps to uppercase SS:
+# https://github.com/Raku/old-issue-tracker/issues/3352
 #?rakudo.jvm 2 todo 'ignorecase and SS/&szlig; RT #121377'
-# RT #121377'
+# https://github.com/Raku/old-issue-tracker/issues/2593
 ok('ß' ~~ m:i/SS/, "ß matches SS with :ignorecase");
 ok('SS' ~~ m:i/ß/, "SS matches ß with :ignorecase");
 
 
-#RT #76750
+# https://github.com/Raku/old-issue-tracker/issues/1975
 ok('a' ~~ m/:i 'A'/, ':i descends into quotes');
 
-# RT #76500
+# https://github.com/Raku/old-issue-tracker/issues/1936
 {
     my $matcher = 'aA';
     nok 'aa' ~~ /   $matcher/, 'interpolation: no match without :i';
@@ -62,26 +63,26 @@ ok 'a' ~~ /:i < A B > /, ':i and quote words';
 
 ok 'A4' ~~ /:i a[3|4|5] | b[3|4] /, 'alternation sanity';
 
-#RT #114362
+# https://github.com/Raku/old-issue-tracker/issues/2845
 {
     ok "BLAR" ~~ /:ignorecase [blar | blubb]/, ":ignorecase works with |";
     ok "BluBb" ~~ /:ignorecase [blar || blubb]/, ":ignorecase works with |";
 }
 
-# RT #114692
+# https://github.com/Raku/old-issue-tracker/issues/2854
 {
     try EVAL '"ABC" ~~ /:iabc/';
     ok $!, "need whitespace after modifier";
 }
 
-# RT #77410
+# https://github.com/Raku/old-issue-tracker/issues/2092
 {
     ok  "m" ~~ /:i <[M]>/, "ignore case of character classes";
     nok "m" ~~ /<[M]>/,    "ignore case of character classes";
     nok "n" ~~ /:i <[M]>/, "ignore case of character classes";
 }
 
-# RT #126793
+# https://github.com/Raku/old-issue-tracker/issues/4811
 {
 #?rakudo.jvm 1 todo "ligatures don't casefold on JVM"
 ok 'ﬆ' ~~ /:i st/, ":i haystack 'ﬆ' needle 'st'";
@@ -126,6 +127,7 @@ my $fi   = 'fi';
 my $fi_d = 'ﬁ';
 ok $fi   ~~ /:i $fi_d /, "ignorecase with ligature needle in variable matches";
 ok 'fi'   ~~ /:i $fi_d /, "ignorecase with ligature needle in variable matches (literal haystack)";
+# https://github.com/Raku/old-issue-tracker/issues/6577
 #?rakudo.moar 2 todo "ignorecase doesn't use foldcase semantics when the haystack is interpolated RT132233"
 #?rakudo.js 2 todo "ignorecase doesn't use foldcase semantics when the haystack is interpolated RT132233"
 ok $fi_d ~~ /:i $fi /, "ignorecase with ligature haystack in variable matches";
@@ -133,6 +135,7 @@ ok 'ﬁ' ~~ /:i $fi /, "ignorecase with ligature literal haystack matches";
 ok $fi_d ~~ /:i  fi /, "ignorecase with ligature haystack in variable matches";
 
 is 'ﬁ' ~~ /:i fi /, "ﬁ", "ignorecase with ligature haystack returns ligature match";
+# https://github.com/Raku/old-issue-tracker/issues/6577
 #?rakudo.moar 1 todo "ignorecase returns too many graphemes for expanding foldcase graphemes. RT132232"
 is '_ﬁ_' ~~ /:i fi /, "ﬁ", "ignorecase with ligature haystack matches only ligature needle";
-# vim: syn=perl6 sw=4 ts=4 expandtab
+# vim: expandtab shiftwidth=4

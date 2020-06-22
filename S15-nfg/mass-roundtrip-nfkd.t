@@ -96,3 +96,5 @@ ok Uni.new(0x1D1BE).Str.NFKD.list ~~ (0x1D1BA, 0x1D165, 0x1D16E,), '0x1D1BE -> S
 ok Uni.new(0x1D1BF).Str.NFKD.list ~~ (0x1D1B9, 0x1D165, 0x1D16F,), '0x1D1BF -> Str -> 0x1D1B9, 0x1D165, 0x1D16F NormalizationTest.txt line no 15152';
 ok Uni.new(0x1D1C0).Str.NFKD.list ~~ (0x1D1BA, 0x1D165, 0x1D16F,), '0x1D1C0 -> Str -> 0x1D1BA, 0x1D165, 0x1D16F NormalizationTest.txt line no 15153';
 
+
+# vim: expandtab shiftwidth=4

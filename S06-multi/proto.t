@@ -143,4 +143,4 @@ throws-like 'bar(41)', Exception, 'impossible dispatch failed (anon cap)';
 throws-like ｢my &x; sub x {}｣, X::Redeclaration,
     'my &x; sub x {} throws useful error';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

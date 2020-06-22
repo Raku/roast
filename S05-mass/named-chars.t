@@ -479,4 +479,4 @@ ok(!("\c[HANGUL JUNGSEONG O-E]" ~~ m/\c[HANGUL JUNGSEONG OE]/), 'nomatch named H
 
 # TODO: no-names (like <control>) , invalid names, deprecated names
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

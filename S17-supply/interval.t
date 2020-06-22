@@ -73,4 +73,4 @@ is_run(
     is-deeply @a, [0..5], "Timer with very short interval fires multiple times";
 }
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4

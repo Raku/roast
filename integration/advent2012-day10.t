@@ -108,3 +108,5 @@ like(Q:s{$*DISTRO.name\n&sin(3)}, /\w+ .*? '\n&sin(3)'/, 'Q:s(...)');
 like(Q:s:b{$*DISTRO.name\n&sin(3)}, /\w+ .*? \n '&sin(3)'/, 'Q:s:b(...)');
 
 like(Q:s:b:f{$*DISTRO.name\n&sin(3)}, /\w+ .*? \n '0.14112'\d+$/, 'Q:s:b:f(...)');
+
+# vim: expandtab shiftwidth=4

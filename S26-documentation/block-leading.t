@@ -333,4 +333,4 @@ eval-lives-ok q:to/CODE/, 'Can put multi-line Pod on a role with a required meth
     }
     CODE
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

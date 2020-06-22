@@ -42,4 +42,4 @@ precomp_loads_is 'BEGIN { EVAL "43" }', 43, "precompiled EVAL in BEGIN";
 loads_ok ['package Pod { class Ber {} }', 'Pod::Ber.new;'], 'a class in Pod namespace';
 precomp_loads_ok ['package IO { class Ber {} }', 'IO::Ber.new;'], 'a class in IO namespace (precompiled)';
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

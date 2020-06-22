@@ -228,7 +228,7 @@ subtest 'mistyped typenames in coercers give good error' => {
     # }
 }
 
-# RT #129799
+# https://github.com/Raku/old-issue-tracker/issues/5722
 {
     is-deeply Date.new("2016-10-03").IO, "2016-10-03".IO, '.IO on Date';
     is-deeply DateTime.new("2016-10-03T22:23:24Z").IO,
@@ -238,7 +238,7 @@ subtest 'mistyped typenames in coercers give good error' => {
     throws-like { DateTime.IO }, Exception, ".IO on DateTime:U throws";
 }
 
-# RT #128964
+# https://github.com/Raku/old-issue-tracker/issues/5582
 #?rakudo.jvm skip 'RT #128964 Type check failed for return value; expected Str(Any) but got Int (42)'
 #?DOES 1
 {
@@ -323,7 +323,8 @@ subtest 'mistyped typenames in coercers give good error' => {
 
 # in SAP due to https://github.com/rakudo/rakudo/issues/2367
 group-of 15 => 'tests that use unspecced $?BITS to make decisions' => {
-    # RT#125466 - bitwise shift consistency on int
+    # https://github.com/Raku/old-issue-tracker/issues/4341
+    # - bitwise shift consistency on int
     if $?BITS >= 64 {
       my int $int_min = -9223372036854775808; # int.Range.min for 64bit
       my int $int_max = 9223372036854775807;  # int.Range.max for 64bit
@@ -331,7 +332,8 @@ group-of 15 => 'tests that use unspecced $?BITS to make decisions' => {
       is($int_min +> 16, -140737488355328);
       is($int_min +> 32, -2147483648);
       is($int_min +> 63, -1);
-      #?rakudo 11 skip "Clarification needed RT#125466"
+      # https://github.com/Raku/old-issue-tracker/issues/4341
+      #?rakudo 11 skip "Clarification needed"
       is($int_min +> 64, -1);
       is($int_min +> -32, -39614081257132168796771975168);
       is($int_min +> -64, -170141183460469231731687303715884105728);
@@ -351,7 +353,8 @@ group-of 15 => 'tests that use unspecced $?BITS to make decisions' => {
         skip("this test doesn't make sense 32bit platforms", 14);
     }
 
-    if $?BITS >= 64 { # RT #130686
+    # https://github.com/Raku/old-issue-tracker/issues/6041
+    if $?BITS >= 64 { 
         is-deeply (my int $ = 10000000000000000) div 4, 2500000000000000,
             'large `int` values do not overflow prematurely';
     }
@@ -359,3 +362,5 @@ group-of 15 => 'tests that use unspecced $?BITS to make decisions' => {
         skip "this test doesn't make sense 32bit platforms";
     }
 }
+
+# vim: expandtab shiftwidth=4

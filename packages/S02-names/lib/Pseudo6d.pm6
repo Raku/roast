@@ -4,3 +4,5 @@ use v6.d;
 sub pseudo-stash is export {
     MY::
 }
+
+# vim: expandtab shiftwidth=4

@@ -25,4 +25,4 @@ unless (try { EVAL("1", :lang<Perl5>) }) {
     }, "CLASS:from<Perl5>.new";
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -56,6 +56,7 @@ sub foo (:$x = 3) { $x }
 
 is(foo(), 3, "not specifying named params that aren't mandatory works");
 
+# https://github.com/Raku/old-issue-tracker/issues/78
 # part of RT #53814
 dies-ok({foo(4)}, "using a named as a positional fails");
 
@@ -233,14 +234,14 @@ throws-like 'sub svn28865( :$a, :@a ) {}', X::Signature::NameClash,
         'call to sub with position params of same name and different type' );
 }
 
-# RT #68524
+# https://github.com/Raku/old-issue-tracker/issues/1225
 {
     sub rt68524( :$a! ) {}
     ok( &rt68524.signature.raku ~~ m/\!/,
         '.signature.raku with required parameter includes requirement' );
 }
 
-# RT #69516
+# https://github.com/Raku/old-issue-tracker/issues/1336
 {
     sub rt69516( :f($foo) ) { "You passed '$foo' as 'f'" }
     ok( &rt69516.signature.raku ~~ m/ ':f(' \s* '$foo' \s* ')' /,
@@ -260,7 +261,7 @@ throws-like 'sub svn28865( :$a, :@a ) {}', X::Signature::NameClash,
     ok $t ~~ /b.*c/, '$b was bound before $c';
 }
 
-# RT #67558
+# https://github.com/Raku/old-issue-tracker/issues/1140
 {
     throws-like q[sub a(:$x, :foo($x) = $x) { $x }], X::Redeclaration,
         'Cannot rename a parameter to an already existing positional';
@@ -296,7 +297,7 @@ throws-like 'sub svn28865( :$a, :@a ) {}', X::Signature::NameClash,
     is named_empty(|%h), 42, 'can call function with empty named argument';
 }
 
-# RT #77788
+# https://github.com/Raku/old-issue-tracker/issues/2157
 {
     sub rt77788 (*%p) { %p<a> };
     is rt77788(a => 'b', a => 'c'), 'c',
@@ -306,7 +307,7 @@ throws-like 'sub svn28865( :$a, :@a ) {}', X::Signature::NameClash,
         'can pass in several same-named arguments to sub, sigils other than "@" bind to last argument (2)';
 }
 
-# RT #113546
+# https://github.com/Raku/old-issue-tracker/issues/2784
 {
     sub np(:$assoc) { $assoc }
     sub snp(*%n) { %n<assoc> }
@@ -317,7 +318,7 @@ throws-like 'sub svn28865( :$a, :@a ) {}', X::Signature::NameClash,
     is snp(:assoc<left>, |{:assoc<list>}), 'list', 'rightmost named argument wins (4)';
 }
 
-# RT #131857
+# https://github.com/Raku/old-issue-tracker/issues/6432
 {
     sub foo(:color(:$colour)) { $colour + 1 };
     my $s;
@@ -325,4 +326,4 @@ throws-like 'sub svn28865( :$a, :@a ) {}', X::Signature::NameClash,
     is $s, [+](1..1000000), 'Hot looping making call with aliased named parameter works';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

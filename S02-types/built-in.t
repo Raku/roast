@@ -19,4 +19,4 @@ plan 1;
         'no segfault in ObjAt initalization when passing bogus named parameters';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

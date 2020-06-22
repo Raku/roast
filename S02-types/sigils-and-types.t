@@ -85,4 +85,4 @@ does-ok &pro, Callable, 'a proto does Callable';
     is &$x(), '42', 'can use &$x() for invoking';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

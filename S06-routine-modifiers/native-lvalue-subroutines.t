@@ -88,4 +88,4 @@ plan 18;
     is $s, 'korma', 'Really did not modify str';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

@@ -44,7 +44,7 @@ throws-like { await }, Exception, "a bare await should not work";
     is $p.result.join(', '), '1, 2, 3, 4', 'can returns a List from a start block';
 }
 
-# RT #122715
+# https://github.com/Raku/old-issue-tracker/issues/3505
 {
     my $p = start {
         (0..3).map: *+1;
@@ -65,13 +65,13 @@ throws-like { await }, Exception, "a bare await should not work";
         'can return a lazy split from a start block';
 }
 
-# RT #123702
+# https://github.com/Raku/old-issue-tracker/issues/3662
 {
     my @got = await do for 1..5 { start { buf8.new } };
     ok all(@got.map(* ~~ buf8)), 'buf8.new in many start blocks does not explode';
 }
 
-# RT #125346
+# https://github.com/Raku/old-issue-tracker/issues/4305
 {
     sub worker(Any $a, Int $b) {}
     my $deaths = 0;
@@ -90,7 +90,7 @@ throws-like { await }, Exception, "a bare await should not work";
     is $deaths, 200, 'Getting signature bind failure in Promise reliably breaks the Promise';
 }
 
-# RT #125161
+# https://github.com/Raku/old-issue-tracker/issues/4237
 {
     my @p = map { start { my @a = [ rand xx 1_000 ]; @a } }, ^10;
     for @p.kv -> $i, $_ {
@@ -99,7 +99,7 @@ throws-like { await }, Exception, "a bare await should not work";
     }
 }
 
-# RT #125196
+# https://github.com/Raku/old-issue-tracker/issues/4246
 {
     sub foo() {
         my $p = start { $*E + 1 }
@@ -109,7 +109,7 @@ throws-like { await }, Exception, "a bare await should not work";
     is foo(), 6, 'Code running in start can see dynamic variables of the start point';
 }
 
-# RT #123204: retrowing of exceptions from start:
+# https://github.com/Raku/old-issue-tracker/issues/2593
 
 dies-ok { await start { die 'oh noe' } }, 'await rethrows exceptions';
 dies-ok { await start { fail 'oh noe' } }, 'await rethrows failures';
@@ -135,7 +135,7 @@ dies-ok { await start { fail 'oh noe' } }, 'await rethrows failures';
     isnt await(start $!), $ex, 'Get a fresh $! inside of a start thunk';
 }
 
-# RT #127033
+# https://github.com/Raku/old-issue-tracker/issues/4933
 {
     sub t { $*d };
     my $*d = 1;
@@ -148,7 +148,7 @@ dies-ok { await start { fail 'oh noe' } }, 'await rethrows failures';
     is $*A,43,'dynamic variables modified inside start nested inside a block';
 }
 
-# RT #128833
+# https://github.com/Raku/old-issue-tracker/issues/5529
 {
     grammar G {
         token TOP { .+ { make ~$/ } }
@@ -167,7 +167,7 @@ dies-ok { await start { fail 'oh noe' } }, 'await rethrows failures';
     nok $warned, 'No spurious warnings when using closures in grammar rules';
 }
 
-# RT #125782
+# https://github.com/Raku/old-issue-tracker/issues/4464
 {
 	sub baz {
 		die 'uh-oh';
@@ -199,6 +199,7 @@ dies-ok { await start { fail 'oh noe' } }, 'await rethrows failures';
 	catcher();
 }
 
+# https://github.com/Raku/old-issue-tracker/issues/5714
 # Covers various SEGVs, including the one at the root of RT #129781.
 lives-ok {
     for ^1000 {
@@ -225,7 +226,7 @@ lives-ok {
 
 # Covers a SEGV in parallel grammars; it was in NFA caching, thus why we need
 # to EVAL the grammar so it is a fresh one with a fresh cache each time. Covers
-# RT #128833.
+# https://github.com/Raku/old-issue-tracker/issues/2593
 lives-ok {
     for ^100 {
         my \g = EVAL 'grammar { token TOP { <a> | <b> }; token a { \d | \s }; token b { a | b } }';
@@ -233,7 +234,7 @@ lives-ok {
     }
 }, 'No crash when doing parallel parsing of grammars on first time';
 
-# RT #131985
+# https://github.com/Raku/old-issue-tracker/issues/6477
 {
 	my $wrong = False;
 	await((1 .. 5).map: -> $tid {
@@ -299,3 +300,5 @@ lives-ok {
     nok $wrong, 'Sunk but successful `start` does not trigger uncaught exception handler';
     $*SCHEDULER.uncaught_handler = Nil;
 }
+
+# vim: expandtab shiftwidth=4

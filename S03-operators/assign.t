@@ -972,4 +972,4 @@ sub l () { 1, 2 };
     throws-like ｢my $b; $b %= 2｣, Exception, '%= with :U target throws';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

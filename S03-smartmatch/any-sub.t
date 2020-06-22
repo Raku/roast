@@ -19,4 +19,4 @@ plan 8;
     ok  (0 ~~ $sub),    '~~ sub call truth (-,2)';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

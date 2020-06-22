@@ -76,4 +76,4 @@ subtest '%*SUB-MAIN-OPTS<named-anywhere>', {
     '<named-anywhere> set to true allows named args anywhere';
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

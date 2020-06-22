@@ -97,4 +97,4 @@ my class H is Hash  {};
     ok $h<a>.WHAT === Int,        'H[Int,Str].new<a> default is Int';
 } #2
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

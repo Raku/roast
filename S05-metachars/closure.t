@@ -49,4 +49,4 @@ is($caught, "bc", 'Outer caught');
     is(~$0, "bc", 'One matched');
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

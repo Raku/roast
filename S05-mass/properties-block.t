@@ -1124,4 +1124,4 @@ ok("\c[PARALLEL WITH HORIZONTAL STROKE]\c[YI SYLLABLE IT]" ~~ m/<:InYiSyllables>
 
 
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

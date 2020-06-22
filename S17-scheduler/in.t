@@ -142,3 +142,5 @@ $name = $*SCHEDULER.^name;
         $*SCHEDULER.cue(-> { }, in => NaN);
     }, X::Scheduler::CueInNaNSeconds, "Passing :in as NaN to CurrentThreadScheduler.cue throws";
 }
+
+# vim: expandtab shiftwidth=4

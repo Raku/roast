@@ -116,4 +116,4 @@ is(("A((B" ~~ rx:P5/(?i)a\(*b/ && $/), "A((B", 're_tests 477/0 (591)');
 is(("A\\B" ~~ rx:P5/(?i)a\\b/ && $/), "A\\B", 're_tests 479/0 (593)');
 is(("A\\\\B" ~~ rx:P5/(?i)a\\*b/ && $/), "A\\\\B", 're_tests 479/0 (593)');
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4

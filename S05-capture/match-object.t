@@ -51,7 +51,7 @@ is $_ === $_, True, '=== of one and the same match object' with 'foo' ~~ /(.+)/;
 is ('hey' ~~ /(.+)/) eqv ('foo' ~~ /(.+)/), False, 'eqv of different match objects';
 is ('foo' ~~ /(.+)/) eqv ('foo' ~~ /(.+)/), True, 'eqv of different but similar match objects';
 
-# RT #76998, cmp. http://perl6advent.wordpress.com/2013/12/17/
+# https://github.com/Raku/old-issue-tracker/issues/2593
 {
     my $res = do { 'abc' ~~ /a $<foo>=[\w+]/; :$<foo> };
     ok $res ~~ Pair, ':$<foo> returns a pair';
@@ -59,13 +59,13 @@ is ('foo' ~~ /(.+)/) eqv ('foo' ~~ /(.+)/), True, 'eqv of different but similar 
     ok $res.value ~~ Match:D, 'the pairs value is a defined match object';
 }
 
-# RT #124998
+# https://github.com/Raku/old-issue-tracker/issues/4138
 my $c;
 ok 'abc' ~~ /.{ $c = $¢ }/,     'current match state';
 is $c.WHAT, Cursor.WHAT,        'got right type';
 ok defined($c.pos),             '.pos';
 
-# RT #77146
+# https://github.com/Raku/old-issue-tracker/issues/2054
 {
     my token RT77146_rx { 77146 };
 
@@ -91,9 +91,10 @@ subtest 'can smartmatch against regexes stored in variables' => {
     is-deeply $/.postmatch, '5', '.postmatch on non-Str';
 
     # non-str orig, NFD
-    # RT #130458
+    # https://github.com/Raku/old-issue-tracker/issues/5951
     #?rakudo.jvm skip 'Undeclared name: NFD, RT #130458'
     ok "7\x[308]".NFD ~~ /^ \d+ $/, 'sanity';
+    # https://github.com/Raku/old-issue-tracker/issues/5951
     #?rakudo.jvm skip 'Undeclared name: NFD, RT #130458'
     #?rakudo todo '$/.orig on NFD matches'
     isa-ok $/.orig, NFD, '.orig retains the type (NFD)';
@@ -133,3 +134,5 @@ subtest '$/ is set when matching in a loop' => {
 }
 
 }
+
+# vim: expandtab shiftwidth=4

@@ -246,4 +246,4 @@ sub combination($n, @xs) {
     is @expected,@sorted, "..or according to frequency of length of sublists" 
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4
