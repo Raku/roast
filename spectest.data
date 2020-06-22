@@ -274,6 +274,7 @@ S03-operators/scalar-assign.t
 S03-operators/set_addition.t
 S03-operators/set_difference.t
 S03-operators/set_elem.t
+S03-operators/set_equality.t
 S03-operators/set_intersection.t
 S03-operators/set_multiply.t
 S03-operators/set_precedes.t
