@@ -11,8 +11,8 @@ unless "a" ~~ rx:P5/a/ {
 subtest 'named captures' => { plan 7;
     sub test-cap (\c, \v, $desc) {
         subtest $desc => { plan 2;
-            isa-ok c, Capture, 'correct type';
-            is     c, v,       'correct value';
+            isa-ok c, Match, 'correct type';
+            is     c, v,     'correct value';
         }
     }
 
