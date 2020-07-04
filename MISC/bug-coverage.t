@@ -22,7 +22,7 @@ subtest '.count-only/.bool-only for iterated content' => {
 
     test-iter-opt     combinations(4,1).iterator, 4, '&combinations';
     test-iter-opt     permutations(2)  .iterator, 2, '&permutations';
-    test-iter-opt   4.combinations(1)  .iterator, 4, '.combinations';
+    test-iter-opt ^4 .combinations(1)  .iterator, 4, '.combinations';
     test-iter-opt ^2 .permutations.iterator,      2, '.permutations';
 
     test-iter-opt :42foo.iterator,     1, 'Pair.iterator';
