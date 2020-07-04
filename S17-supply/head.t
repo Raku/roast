@@ -3,9 +3,8 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Tap;
 
-plan 21;
+plan 20;
 
-dies-ok { Supply.head }, 'can not be called as a class method';
 dies-ok { Supply.new.head("foo") }, 'cannot have "foo" head';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
