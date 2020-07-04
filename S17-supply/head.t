@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Tap;
 
-plan 19;
+plan 21;
 
 dies-ok { Supply.head }, 'can not be called as a class method';
 dies-ok { Supply.new.head("foo") }, 'cannot have "foo" head';
@@ -21,7 +21,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           "head {c.raku.substr(1)}  works";
     }
 
-    tap-ok Supply.from-list(1..10).head(*-5), [6..10], "head minus five works";
+    tap-ok Supply.from-list(1..10).head(*-3), [1..7], "head minus three works";
+    tap-ok Supply.from-list(1..10).head(*-15), [], "head minus fifteen works";
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/4824
