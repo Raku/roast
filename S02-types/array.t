@@ -258,7 +258,7 @@ my @array2 = ("test", 1, Mu);
 
   throws-like '@arr[-2]',
     X::Obsolete,
-    message => /^ 'Unsupported use of a negative -2 subscript to index from the end;'/,
+    message => /^ 'Unsupported use of a negative -2 subscript to index from the end'/,
     "readonly accessing [-2] of normal array throws X::Obsolete and is fatal";
   #?niecza todo '@arr[-1] returns undef'
   throws-like { @arr[ $minus_one ] },

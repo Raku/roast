@@ -89,7 +89,7 @@ ok 'b' ~~ /<[. .. b]>/, 'weird char class matches at least its end point';
 {
 try { EVAL "/<[a-z]>/"; }
 # TODO Replace when the actual error message is changed.
-ok ~$! ~~ / 'Unsupported use of - as character range; in '/,
+ok ~$! ~~ / 'Unsupported use of - as character range'/,
     "STD error message for - as character range";
 }
 
