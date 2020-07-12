@@ -67,7 +67,9 @@ isa-ok $second, CompUnit;
 ok $compunit-src === $second, 'did we get the same CompUnit object';
 
 # a specific non-existing candidate
-throws-like { $curlf.need(CompUnit::DependencySpecification.new(:short-name<Shazbat>)) }, X::CompUnit::UnsatisfiedDependency;
+is-deeply try {
+    $curlf.need(CompUnit::DependencySpecification.new(:short-name<Shazbat>))
+}, Nil, "was a non-existing candidate not found";
 
 # always cleanup
 END {
