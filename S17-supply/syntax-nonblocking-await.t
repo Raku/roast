@@ -32,7 +32,6 @@ plan 9;
     is [+](($c.receive xx 100)), 200, 'start react { ... } is non-blocking';
 }
 
-#?rakudo.jvm skip 'Could not find symbol &Died'
 {
     sub death() {
         die "goodbye!"

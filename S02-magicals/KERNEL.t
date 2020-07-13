@@ -71,8 +71,6 @@ isa-ok $*KERNEL.bits, Int;
     isa-ok $hup, Int, 'did we get an Int back';
     ok defined($hup), 'was the Int defined';
     isnt $hup, 0, "no signal should come out as 0";
-    # https://github.com/Raku/old-issue-tracker/issues/3921
-    #?rakudo.jvm 2 skip "limited signal handling on jvm"
     is $*KERNEL.signal("SIGHUP"), $hup, "also ok as string?";
     is $*KERNEL.signal("HUP"),    $hup, "also ok as partial string?";
     is $*KERNEL.signal($hup),     $hup, "also ok as Int?";
@@ -80,7 +78,6 @@ isa-ok $*KERNEL.bits, Int;
 
 # https://github.com/rakudo/rakudo/commit/01d948d2d2
 #?rakudo.js.browser skip 'no signals in the browser'
-#?rakudo.jvm todo 'signal SIGHUP not supported'
 is_run ｢print $*KERNEL.signal: 'SIGHUP';｣, {out => /^\d+$/},
     '.signal: Str:D works with un-initialized $*KERNEL.signals';
 
