@@ -1,16 +1,25 @@
 use v6;
 
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use Test::Util;
 
-plan 21;
+plan 22;
 
 # https://github.com/rakudo/rakudo/issues/3634
+
+## canary test to notice that bug is fixed
+#?rakudo.jvm todo 'UnwindException'
+is_run q[gather for ^1 { take 42; last }],
+    { status => 0, err => '', out => ''},
+    'golfed code does not blow up';
 
 ## last in loop
 {
     my $res = gather loop { take 42; last };
     is-deeply $res, (42).Seq, 'gather/take with last in loop';
 
+    #?rakudo.jvm 3 skip 'UnwindException'
     $res = gather while 1 { take 42; last };
     is-deeply $res, (42).Seq, 'gather/take with last in while loop';
 
@@ -22,6 +31,7 @@ plan 21;
 }
 
 ## last in loop with eager
+#?rakudo.jvm skip 'UnwindException'
 {
     my $res = eager gather loop { take 42; last };
     is-deeply $res, (42).List, 'eager gather/take with last in loop';
@@ -37,6 +47,7 @@ plan 21;
 }
 
 ## next in loop
+#?rakudo.jvm skip 'UnwindException'
 {
     my $res = gather loop { state $count = 0; last if $count == 4; next if ++$count > 1; take $count };
     is-deeply $res, (1).Seq, 'gather/take with next in loop';
@@ -52,6 +63,7 @@ plan 21;
 }
 
 ## redo in loop
+#?rakudo.jvm skip 'UnwindException'
 {
     my $res = gather loop { state $count = 0; last if $count == 4; redo if ++$count < 2; take $count };
     is-deeply $res, (2, 3, 4).Seq, 'gather/take with redo in loop';
@@ -67,6 +79,7 @@ plan 21;
 }
 
 ## last in nested for loop
+#?rakudo.jvm skip 'UnwindException'
 {
     my $res = gather for ^3 {
         state $count_outer = 0;
@@ -81,6 +94,7 @@ plan 21;
 }
 
 ## next in nested for loop
+#?rakudo.jvm skip 'UnwindException'
 {
     my $res = gather for ^3 {
         state $count_outer = 0;
@@ -95,6 +109,7 @@ plan 21;
 }
 
 ## redo in nested for loop
+#?rakudo.jvm skip 'UnwindException'
 {
     my $res = gather for ^3 {
         state $count_outer = 0;
@@ -109,6 +124,7 @@ plan 21;
 }
 
 ## last in nested for loop with label
+#?rakudo.jvm skip 'UnwindException'
 {
     my $res = gather {
         LABEL_OUTER:
