@@ -1363,6 +1363,7 @@ integration/diamond.t
 integration/error-reporting.t  # slow
 integration/eval-and-threads.t  # slow
 integration/failure-and-callsame.t
+integration/gather-with-loops.t
 integration/lazy-bentley-generator.t
 integration/lexical-array-in-inner-block.t
 integration/lexicals-and-attributes.t
