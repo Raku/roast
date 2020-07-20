@@ -4,9 +4,8 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 8;
+plan 7;
 
-dies-ok { Supply.head }, 'can not be called as a class method';
 dies-ok { Supply.new.head("foo") }, 'cannot have "foo" head';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
