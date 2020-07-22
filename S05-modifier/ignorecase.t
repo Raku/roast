@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 100;
+plan 101;
 
 =begin description
 
@@ -47,6 +47,8 @@ ok('Δ' ~~ m:i/δ/, ':i with greek chars');
 ok('ß' ~~ m:i/SS/, "ß matches SS with :ignorecase");
 ok('SS' ~~ m:i/ß/, "SS matches ß with :ignorecase");
 
+# https://github.com/rakudo/rakudo/issues/3815
+ok('' ~~ m:i/''/, ':i can match empty string regex to the empty string');
 
 # https://github.com/Raku/old-issue-tracker/issues/1975
 ok('a' ~~ m/:i 'A'/, ':i descends into quotes');
