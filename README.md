@@ -99,7 +99,7 @@ fudge comments.
 The `fudgeall` program may be called to process all the needed fudging
 for a particular implementation:
 
-```perl6
+```
 $ fudgeall rakudo */*.t */*/*.t
 ```
 
