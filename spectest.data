@@ -3,8 +3,8 @@
 #
 # Empty lines and those beginning with a # are ignored
 #
-# Each file may have one or more markers following '#' sign at the end of
-# corresponding line. Currently the following markers are supported:
+# Each file may have one or more markers following a '#' at the end of the line.
+# Currently the following markers are supported:
 #
 #     long   - skip if quick test mode is on
 #     stress - run only if stress test mode is on
@@ -14,11 +14,11 @@
 # requests. Any kind of feedback is welcomed!
 #
 # For proposals affecting the Raku language itself please open a ticket in
-# https://github.com/Raku/problem-solving repository. The proposal could be
+# the https://github.com/Raku/problem-solving repository. The proposal could be
 # about things like new syntax, change of semantics of existing constructs, or
-# extending the existing functionality. Get better impression of the purpose of
-# the repository by browsing the documents it contains, and the issues it has,
-# both opened and closed.
+# extending the existing functionality. You can get a better impression of the
+# purpose of the repository by browsing the documents it contains, and the issues
+# it has, both opened and closed.
 
 APPENDICES/A01-limits/misc.t
 APPENDICES/A01-limits/overflow.t
