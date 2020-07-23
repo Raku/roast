@@ -1,24 +1,24 @@
-# This is a list of all spec tests that are expected to pass.
+# This is a list of all spec tests that are expected to pass. Each line in the
+# list is a path to a test file relative to the roast root directory.
 #
 # Empty lines and those beginning with a # are ignored
 #
-# We intend to include *all* tests from roast, even when we
-# skip most of the tests or the entire test file. To verify
-# we are running all tests, run:
+# Each file may have one or more markers following '#' sign at the end of
+# corresponding line. Currently the following markers are supported:
 #
-# perl tools/update-passing-test-data.pl
+#     long   - skip if quick test mode is on
+#     stress - run only if stress test mode is on
+#     moar   - run tests only for MoarVM backend (Rakudo specific)
 #
-# If a file appears in the output of the script, it is not run
-# by default. It may need to be fudged in order to run successfully.
-# Open an RT when necessary as part of the fudge process, using the
-# RT in the fudge message, and then add the test file to this file, sorted.
+# Please, visit https://github.com/Raku/roast to report bugs or submit pull
+# requests. Any kind of feedback is welcomed!
 #
-# Each file may have one or more markers that deselects the test:
-#     long   - run tests unless --quick
-#     stress - run tests only if --stress
-#     moar   - run tests only for MoarVM backend
-# See the "make quicktest" and "make stresstest" targets in
-# build/Makefile.in for examples of use.
+# For proposals affecting the Raku language itself please open a ticket in
+# https://github.com/Raku/problem-solving repository. The proposal could be
+# about things like new syntax, change of semantics of existing constructs, or
+# extending the existing functionality. Get better impression of the purpose of
+# the repository by browsing the documents it contains, and the issues it has,
+# both opened and closed.
 
 APPENDICES/A01-limits/misc.t
 APPENDICES/A01-limits/overflow.t
