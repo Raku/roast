@@ -12,21 +12,21 @@ submitting PRs to a project.
 
 There may be two different purposes to contribute to this project:
 
-1. Contributor wish to fix a error or add a test for existing functionality. The
-   latter often needed when a bug is discovered in a compiler and there is reson
+1. Contributors may wish to fix an error or add a test for existing functionality. The
+   latter is often needed when a bug is discovered in a compiler and there is reason
    to cover this bug with a test.
-2. Contributor wish to propose a change to the Raku language itself. This kind
-   of contribution should be started by submitting an issue in
+2. Contributors may wish to propose a change to the Raku language itself. This kind
+   of contribution should be started by submitting an issue in the
    [problem-solving](https://github.com/Raku/problem-solving) repository. The
-   issue must be opened using _Report a language problem_ template. If the
+   issue must be opened using the _Report a language problem_ template. If the
    proposed change is accepted then a test to cover the new behavior is to be
-   submitted into the roast.
+   submitted to roast.
 
-Note that in second case if the proposal is accepted but not implemented yet,
+Note that in the second case if the proposal is accepted but not implemented yet,
 the test must be fudged. See _Fudged tests_ below and
 [README](https://github.com/Raku/roast)) for more details. The preferable way is
-to use `todo` verb because in this case a tester would get notified when a
-fudged test passes due to a feauture being implemented or a bug fixed.
+to use the `todo` verb because in this case a tester would get notified when a
+fudged test passes due to a feature being implemented or a bug fixed.
 
 ## Submission Steps
 
@@ -173,7 +173,7 @@ have to be added to the spectest.data file via a PR.
 In general, tests for the specific wording of error messages should go into the
 implementation's test suite and not become part of the specification.
 
-- Rakudo implementation has specific directory in its suite for messages tests:
+- the Rakudo implementation has a specific directory in its suite for messages tests:
     https://github.com/rakudo/rakudo/tree/master/t/05-messages
 
 #### Exception types
