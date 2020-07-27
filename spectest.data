@@ -484,10 +484,9 @@ S05-transliteration/trans-TR-operator.t
 S05-transliteration/trans-tr-lowercase-operator.t
 S05-transliteration/trans.t
 S05-transliteration/with-closure.t
-S06-advanced/dispatching.t
 S06-advanced/callframe.t
 S06-advanced/callsame.t
-# TODO S06-advanced/dispatching.t
+S06-advanced/dispatching.t
 S06-advanced/lexical-subs.t
 S06-advanced/recurse.t
 S06-advanced/return.t
@@ -854,6 +853,7 @@ S16-io/supply.t
 S16-io/tmpdir.t
 S16-io/watch.t
 S16-io/words.t
+S16-unfiled/getpeername.t
 S16-unfiled/rebindstdhandles.t
 S17-channel/basic.t
 S17-channel/stress.t     # stress slow
