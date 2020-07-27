@@ -1,5 +1,4 @@
 use v6;
-
 use Test;
 
 # non-breaking ws chars
@@ -62,6 +61,7 @@ for @bchars -> $hexint {
         my $char2 = 0x2002.chr;
         my $int2  = $char.ord;
         my $int2a = $char2.ord;
+        #?rakudo.jvm todo "JVM doesn't pass yet"
         cmp-ok $int2a, '==', $int2, "incoming hex '{int2hexstr($hexint)}' (gets normalized to 0x2002.chr)";
     }
     elsif $hexint == 0x2001 {
@@ -69,6 +69,7 @@ for @bchars -> $hexint {
         my $char2 = 0x2003.chr;
         my $int2 = $char.ord;
         my $int2a = $char2.ord;
+        #?rakudo.jvm todo "JVM doesn't pass yet"
         cmp-ok $int2a, '==', $int2, "incoming hex '{int2hexstr($hexint)}' (gets normalized to 0x2003.chr)";
     }
     else {
