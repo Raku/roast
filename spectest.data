@@ -1218,6 +1218,7 @@ S32-str/rindex.t
 S32-str/samecase.t
 S32-str/samemark.t
 S32-str/shiftjis-encode-decode.t # moar
+S32-str/space-chars.t
 S32-str/split-simple.t
 S32-str/split.t
 S32-str/sprintf-b.t
