@@ -960,16 +960,17 @@ S19-command-line/help.t
 S19-command-line/repl.t
 S22-package-format/local.t
 S24-testing/0-compile.t
+S24-testing/2-force_todo.t
+S24-testing/3-output.t
+S24-testing/7-bail_out.t
+S24-testing/8-die_on_fail.t
+S24-testing/9-is_deeply.t
 S24-testing/10-is-approx.t
 S24-testing/11-plan-skip-all-subtests.t
 S24-testing/11-plan-skip-all.t            # stress
 S24-testing/12-subtest-todo.t
 S24-testing/13-cmp-ok.t
 S24-testing/14-like-unlike.t
-S24-testing/3-output.t
-S24-testing/7-bail_out.t
-S24-testing/8-die_on_fail.t
-S24-testing/9-is_deeply.t
 S24-testing/fails-like.t
 S24-testing/line-numbers.t
 S26-documentation/01-delimited.t
