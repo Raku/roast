@@ -934,6 +934,7 @@ S17-supply/reverse.t
 S17-supply/rotate.t
 S17-supply/rotor.t
 S17-supply/schedule-on.t
+S17-supply/Seq.t
 S17-supply/skip.t
 S17-supply/sort.t
 S17-supply/split.t
