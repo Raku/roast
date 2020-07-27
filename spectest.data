@@ -484,6 +484,7 @@ S05-transliteration/trans-TR-operator.t
 S05-transliteration/trans-tr-lowercase-operator.t
 S05-transliteration/trans.t
 S05-transliteration/with-closure.t
+S06-advanced/dispatching.t
 S06-advanced/callframe.t
 S06-advanced/callsame.t
 # TODO S06-advanced/dispatching.t
