@@ -42,6 +42,7 @@ sub make-temp-dir (Int $chmod? --> IO::Path:D) {
 }
 
 sub failuring-like (&test, $ex-type, $reason?, *%matcher) {
+    todo $_ with $*NOT-IMPL-TODO;
     subtest $reason => sub {
         plan 2;
         CATCH { default {
@@ -65,21 +66,25 @@ sub is-path ($got, $expected, $desc) {
     cmp-ok $got.resolve, '~~', $expected.resolve, $desc
 }
 
-failuring-like { $non-resolving-parent.child('../foo', :secure) },
-  X::IO::Resolve,
-  'non-resolving parent fails (given path is non-child)';
+{
+#?rakudo emit my $*NOT-IMPL-TODO = "IO::Path doesn't implement :secure yet";
 
-failuring-like { $non-resolving-parent.child('foo', :secure) },
-  X::IO::Resolve,
-  'non-resolving parent fails (given path is child)';
+    failuring-like { $non-resolving-parent.child('../foo', :secure) },
+      X::IO::Resolve,
+      'non-resolving parent fails (given path is non-child)';
 
-failuring-like { $parent.child('foo/bar', :secure) },
-  X::IO::Resolve,
-  'resolving parent fails (given path is a child, but not resolving)';
+    failuring-like { $non-resolving-parent.child('foo', :secure) },
+      X::IO::Resolve,
+      'non-resolving parent fails (given path is child)';
 
-failuring-like { $parent.child('../foo', :secure) },
-  X::IO::NotAChild,
-  'resolved parent fails (given path is not a child)';
+    failuring-like { $parent.child('foo/bar', :secure) },
+      X::IO::Resolve,
+      'resolving parent fails (given path is a child, but not resolving)';
+
+    failuring-like { $parent.child('../foo', :secure) },
+      X::IO::NotAChild,
+      'resolved parent fails (given path is not a child)';
+}
 
 is-path $parent.child('foo', :secure), $parent.child('foo'),
   'resolved parent with resolving, non-existent child';
@@ -94,12 +99,16 @@ is-path $parent.child('foo/bar', :secure), $parent.child('foo/bar'),
 is-path $parent.child('foo/../bar', :secure), $parent.child('bar'),
     'resolved parent with resolving, non-existent child, with ../';
 
-failuring-like { $parent.child('foo/../../bar', :secure) },
-  X::IO::NotAChild,
-  'resolved parent fails (given path is not a child, via child + ../)';
+{
+#?rakudo emit my $*NOT-IMPL-TODO = "IO::Path doesn't implement :secure yet";
 
-failuring-like { $parent.child("../\x[308]", :secure) },
-  X::IO::NotAChild,
-  'resolved parent fails (given path is not a child, via combiners)';
+    failuring-like { $parent.child('foo/../../bar', :secure) },
+      X::IO::NotAChild,
+      'resolved parent fails (given path is not a child, via child + ../)';
+
+    failuring-like { $parent.child("../\x[308]", :secure) },
+      X::IO::NotAChild,
+      'resolved parent fails (given path is not a child, via combiners)';
+}
 
 # vim: expandtab shiftwidth=4
