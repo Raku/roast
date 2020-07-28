@@ -74,7 +74,6 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
 
 # diamond composition
 # https://github.com/Raku/old-issue-tracker/issues/2593
-#?rakudo skip 'diamond composition RT #124749'
 {
     role DA { 
         method foo { "OH HAI" };

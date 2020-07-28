@@ -7,7 +7,7 @@ use lib $?FILE.IO.parent(2).add("packages/PackageTest/lib");
 # test that packages work.  Note that the correspondance between type
 # objects as obtained via the ::() syntax and packages is only hinted
 # at in L<S10/Packages/or use the sigil-like>
-plan 23;
+plan 24;
 
 # 4 different ways to be imported
 # L<S10/Packages/A bare>
@@ -80,11 +80,15 @@ ok($pkg !=== ::('PackageTest::My::Package'), 'not the same as global type object
 
 # Check temporization of variables in external packages
 {
-  {
-    ok(EVAL('temp $Test2::scalar; 1'), "parse for temp package vars");
-    $Test2::scalar++;
-  }
-  is($Test2::scalar, 42, 'temporization of external package variables');
+    # Use try because EVAL throws if parse fails.
+    ok(my $rval = try { EVAL('temp $Test2::scalar; ++$Test2::scalar') }, "parse for temp package vars");
+    with $rval {
+        is $rval, 43, "scope returns value of a modified temp scalar";
+    }
+    else {
+        skip "can't test for value because scope compile failed";
+    }
+    is($Test2::scalar, 42, 'temporization of external package variables');
 }
 
 # vim: expandtab shiftwidth=4

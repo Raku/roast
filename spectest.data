@@ -460,6 +460,7 @@ S05-modifier/Perl_6.t
 S05-modifier/Perl_7.t
 S05-modifier/Perl_8.t
 S05-modifier/Perl_9.t
+S05-modifier/exhaustive.t
 S05-modifier/continue.t
 S05-modifier/counted-match.t
 S05-modifier/counted.t
@@ -471,6 +472,7 @@ S05-modifier/ii.t
 S05-modifier/my.t
 S05-modifier/overlapping.t
 S05-modifier/pos.t
+S05-modifier/ratchet.t
 S05-modifier/repetition-exhaustive.t
 S05-modifier/repetition.t
 S05-modifier/samemark.t
@@ -486,7 +488,7 @@ S05-transliteration/trans.t
 S05-transliteration/with-closure.t
 S06-advanced/callframe.t
 S06-advanced/callsame.t
-# TODO S06-advanced/dispatching.t
+S06-advanced/dispatching.t
 S06-advanced/lexical-subs.t
 S06-advanced/recurse.t
 S06-advanced/return.t
@@ -603,9 +605,12 @@ S09-typed-arrays/native-num.t
 S09-typed-arrays/native-str.t
 S09-typed-arrays/native.t
 S10-packages/basic.t
+S10-packages/export.t
 S10-packages/joined-namespaces.t
+S10-packages/nested-use.t 
 S10-packages/precompilation.t # slow
 S10-packages/require-and-use.t
+S10-packages/scope.t
 S10-packages/use-with-class.t
 S11-compunit/compunit-dependencyspecification.t
 S11-compunit/compunit-repository.t
@@ -721,6 +726,7 @@ S12-subset/subtypes.t
 S13-overloading/metaoperators.t
 S13-overloading/operators.t
 S13-overloading/typecasting-long.t
+S13-syntax/aliasing.t
 S13-type-casting/methods.t
 S14-roles/anonymous.t
 S14-roles/attributes.t
@@ -853,6 +859,7 @@ S16-io/supply.t
 S16-io/tmpdir.t
 S16-io/watch.t
 S16-io/words.t
+S16-unfiled/getpeername.t
 S16-unfiled/rebindstdhandles.t
 S17-channel/basic.t
 S17-channel/stress.t     # stress slow
@@ -932,6 +939,7 @@ S17-supply/reverse.t
 S17-supply/rotate.t
 S17-supply/rotor.t
 S17-supply/schedule-on.t
+S17-supply/Seq.t
 S17-supply/skip.t
 S17-supply/sort.t
 S17-supply/split.t
@@ -945,6 +953,7 @@ S17-supply/tail.t
 S17-supply/throttle.t     # moar slow
 S17-supply/unique.t       # slow
 S17-supply/wait.t         # slow
+S17-supply/watch-path.t   # slow
 S17-supply/words.t
 S17-supply/zip-latest.t
 S17-supply/zip.t
@@ -958,16 +967,17 @@ S19-command-line/help.t
 S19-command-line/repl.t
 S22-package-format/local.t
 S24-testing/0-compile.t
+S24-testing/2-force_todo.t
+S24-testing/3-output.t
+S24-testing/7-bail_out.t
+S24-testing/8-die_on_fail.t
+S24-testing/9-is_deeply.t
 S24-testing/10-is-approx.t
 S24-testing/11-plan-skip-all-subtests.t
 S24-testing/11-plan-skip-all.t            # stress
 S24-testing/12-subtest-todo.t
 S24-testing/13-cmp-ok.t
 S24-testing/14-like-unlike.t
-S24-testing/3-output.t
-S24-testing/7-bail_out.t
-S24-testing/8-die_on_fail.t
-S24-testing/9-is_deeply.t
 S24-testing/fails-like.t
 S24-testing/line-numbers.t
 S26-documentation/01-delimited.t
@@ -1067,6 +1077,7 @@ S32-io/IO-Socket-INET-UNIX.t # moar
 S32-io/IO-Socket-INET.t
 S32-io/chdir-process.t    # moar
 S32-io/chdir.t
+S32-io/child-secure.t
 S32-io/copy.t
 S32-io/dir.t
 S32-io/file-tests.t
@@ -1152,6 +1163,7 @@ S32-list/seq.t
 S32-list/skip.t
 S32-list/sort.t
 S32-list/squish.t
+S32-list/toggle.t
 S32-list/tail.t
 S32-list/unique.t
 S32-num/abs.t
@@ -1217,6 +1229,7 @@ S32-str/rindex.t
 S32-str/samecase.t
 S32-str/samemark.t
 S32-str/shiftjis-encode-decode.t # moar
+S32-str/space-chars.t
 S32-str/split-simple.t
 S32-str/split.t
 S32-str/sprintf-b.t
