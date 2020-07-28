@@ -953,6 +953,7 @@ S17-supply/tail.t
 S17-supply/throttle.t     # moar slow
 S17-supply/unique.t       # slow
 S17-supply/wait.t         # slow
+S17-supply/watch-path.t   # slow
 S17-supply/words.t
 S17-supply/zip-latest.t
 S17-supply/zip.t

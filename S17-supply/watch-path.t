@@ -14,12 +14,19 @@ ok !$filename.IO.e, "make sure we don't have a file";
 given $*DISTRO.name {
     when "macosx" {
 #?rakudo.jvm 3 skip "file system events NYI?"
+#?DOES 1
+{
         subtest &macosx, "does watch-path work on Mac OS X";
+}
 
         unlink $filename; # in case we missed the cleanup
         ok !$filename.IO.e, "make sure we don't have a file (2)";
 
+#?rakudo.jvm 3 skip "file system events NYI?"
+#?DOES 1
+{
         subtest { macosx :io-path }, "does IO::Path.watch work on Mac OS X";
+}
     }
     default {
         skip "Only OSX tests available", 3;
