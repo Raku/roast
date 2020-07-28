@@ -607,7 +607,7 @@ S09-typed-arrays/native.t
 S10-packages/basic.t
 S10-packages/export.t
 S10-packages/joined-namespaces.t
-S10-packages/nested-use.t 
+S10-packages/nested-use.t
 S10-packages/precompilation.t # slow
 S10-packages/require-and-use.t
 S10-packages/scope.t
@@ -994,6 +994,8 @@ S26-documentation/07c-tables.t
 S26-documentation/08-formattingcodes.t
 S26-documentation/09-configuration.t
 S26-documentation/10-doc-cli.t
+S26-documentation/11-non-breaking-space.t
+S26-documentation/12-non-breaking-space.t
 S26-documentation/14-defn.t
 S26-documentation/15-numbered-alias.t
 S26-documentation/block-leading-user-format.t
