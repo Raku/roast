@@ -7,7 +7,7 @@ plan 5;
 # S05-mass/rx.t
 
 # backtracking
-regex aplus { a+ };
+my regex aplus { a+ };
 
 ok 'aaaa'  ~~ m/ ^ <aplus> a $ /, 'normal regexes backtrack into subrules';
 ok 'aaaa' !~~ m/ :ratchet ^ <aplus> a $ /, ' ... but not with :ratchet';
@@ -16,6 +16,7 @@ ok 'aaaa' !~~ m/ :ratchet ^ <aplus> a $ /, ' ... but not with :ratchet';
 # normal. See http://irclog.perlgeek.de/perl6/2009-10-12#i_1595951 for a
 # discussion
 
+#?rakudo todo "Dubios test. Does it have to be this way?"
 ok 'aaaa' !~~ m/ :ratchet ^ [ :!ratchet <aplus> ] a /,
    'if the failing atom is outside the :!ratchet group: no backtracking';
 ok 'aaaa'  ~~ m/ :ratchet ^ [ :!ratchet <aplus> a ]  /,

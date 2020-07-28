@@ -471,6 +471,7 @@ S05-modifier/ii.t
 S05-modifier/my.t
 S05-modifier/overlapping.t
 S05-modifier/pos.t
+S05-modifier/ratchet.t
 S05-modifier/repetition-exhaustive.t
 S05-modifier/repetition.t
 S05-modifier/samemark.t
