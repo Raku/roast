@@ -460,6 +460,7 @@ S05-modifier/Perl_6.t
 S05-modifier/Perl_7.t
 S05-modifier/Perl_8.t
 S05-modifier/Perl_9.t
+S05-modifier/exhaustive.t
 S05-modifier/continue.t
 S05-modifier/counted-match.t
 S05-modifier/counted.t
