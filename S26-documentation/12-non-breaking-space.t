@@ -83,3 +83,4 @@ is $r.contents.elems, $n, "table has $n elements (rows)";
     is $r.contents[$i][0], $res0, "row $row, col 1: '$c0' vs '$r0'";
     is $r.contents[$i][1], $res1, "row $row, col 2: '$c1' vs '$r1'";
 }
+# vim: expandtab shiftwidth=4
