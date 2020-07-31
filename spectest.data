@@ -415,6 +415,7 @@ S05-interpolation/regex-in-variable.t
 S05-mass/charsets.t
 S05-mass/named-chars.t
 S05-mass/properties-block.t
+S05-mass/properties-contributory.t
 S05-mass/properties-derived.t
 S05-mass/properties-general.t
 S05-mass/properties-script.t
