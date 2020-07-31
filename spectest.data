@@ -732,6 +732,7 @@ S13-syntax/aliasing.t
 S13-type-casting/methods.t
 S14-roles/anonymous.t
 S14-roles/attributes.t
+S14-roles/attributes-6e.t
 S14-roles/basic.t
 S14-roles/bool.t
 S14-roles/composition.t
