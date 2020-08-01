@@ -634,6 +634,7 @@ S11-modules/nested.t
 S11-modules/perl6lib.t
 S11-modules/require.t
 S11-modules/runtime.t
+S11-modules/versioning.t
 S11-repository/cur-candidates.t
 S11-repository/cur-current-distribution.t
 S11-repository/curli-install.t
