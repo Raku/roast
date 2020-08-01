@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 # L<S11/Exportation>
-use lib $?FILE.IO.parent.child("packages/Export_Pack/lib");
+use lib $?FILE.IO.parent(2).child("packages/Export_Pack/lib");
 
 plan 7;
 

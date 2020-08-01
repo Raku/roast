@@ -7,7 +7,7 @@ our $b;
 sub b { }
 
 multi EXPORT {
-    %(
+    Map.new(
         GH2979-Foo::EXPORT::ALL::,
         '@bar' => @b,
         '%bar' => %b,

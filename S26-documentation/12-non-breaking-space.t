@@ -3,28 +3,6 @@ use v6;
 use MONKEY-SEE-NO-EVAL;
 use Test;
 
-my $f = './.tmp-test-file2';
-#unlink $f if $f.IO.e;
-
-my $code = gen-test($f);
-
-say "See file '$f'";
-
-EVAL $code;
-#END { unlink $f }
-
-##### subroutines #####
-sub gen-test($f) {
-    my $fh = open $f, :w;
-    #LEAVE try close $fh;
-
-    $fh.print: q:to/HERE/;
-    use v6;
-
-    # two-column table with various whitespace chars
-    =begin table
-    HERE
-
     # non-breaking ws chars
     my @nbchars = [
         0x00A0, # NO-BREAK SPACE
@@ -61,117 +39,103 @@ sub gen-test($f) {
         0x3000, # IDEOGRAPHIC SPACE
     ];
 
+##### some subroutines for the EVALed file #####
+sub int2hexstr($int, :$plain) {
+    # given an int, convert it to a hex string
+    if !$plain {
+        return sprintf("0x%04X", $int);
+    }
+    else {
+        return sprintf("%X", $int);
+    }
+}
+
+sub show-space-chars($str) {
+    # given a string with space chars, return a version with the
+    # hex code shown for them and place a pipe separating all
+    # chars in the original string
+    my @c = $str.comb;
+    my $new-str = '';
+    for @c -> $c {
+        $new-str ~= '|' if $new-str;
+        if $c ~~ /\s/ {
+            my $int = $c.ord;
+            my $hex-str = int2hexstr($int);
+            $new-str ~= $hex-str;
+        }
+        else {
+            =begin comment
+            $new-str ~= $c;
+            =end comment
+            my $int = $c.ord;
+            my $hex-str = int2hexstr($int, :plain);
+            $new-str ~= $hex-str;
+        }
+    }
+    return $new-str;
+}
+
+##### subroutines #####
+sub gen-pod {
+    my $code = "";
+    # my $fh = open $f, :w;
+    #LEAVE try close $fh;
+
+    my $pod;
+
+    $code ~= q:to/HERE/;
+        # two-column table with various whitespace chars
+        =begin table
+        HERE
+
     # make one testing row per non-breaking space char
     for @nbchars -> $nbc {
         # first column
-        my $row = "Raku";
-        $row ~= $nbc.chr;
-        $row ~= "Language";
+        $code ~= "Raku";
+        $code ~= $nbc.chr;
+        $code ~= "Language";
         for @bchars -> $c {
-            $row ~= $c.chr;
+            $code ~= $c.chr;
         }
-        $row ~= "is the best!";
+        $code ~= "is the best!";
 
         # second column
-        $row ~= ' | ';
-        $row ~= "Raku ";
-        $row ~= $nbc.chr;
-        $row ~= " Language";
+        $code ~= ' | ';
+        $code ~= "Raku ";
+        $code ~= $nbc.chr;
+        $code ~= " Language";
         for @bchars -> $c {
-            $row ~= $c.chr;
+            $code ~= $c.chr;
         }
-        $row ~= "is the best!";
-
-        $fh.say: $row;
+        $code ~= "is the best!\n";
     }
-    $fh.say: "=end table";
-
-    $fh.say;
-
-    my $n = +@nbchars;
-    # the planned num of tests is 1 + $n
-    $fh.say: "plan 1 + $n * 2;";
-    $fh.say: "my \$n = $n;";
-    $fh.say: "my \$SPACE = ' ';";
-
-    $fh.print: q:to/HERE/;
-    my $r = $=pod[0];
-    is $r.contents.elems, $n, "table has $n elements (rows)";
-    HERE
-
-    # create separate sub-tests for each non-breaking space char
-    for 0..^$n -> $i {
-        $fh.say;
-        $fh.say: '{';
-        $fh.say: "my \$i = $i;";
-        $fh.say: "my \$row = $i + 1;";
-        $fh.say: "my \$nbspc = \"{@nbchars[$i].chr}\";";
-
-        $fh.print: q:to/HERE/;
-        my $res0 = "Raku{$nbspc}Language is the best!";
-        my $res1 = "Raku {$nbspc} Language is the best!";
-        # show cell chars separated by pipes
-        =begin comment
-        my $c0 = $r.contents[$i][0].comb.join('|');
-        my $r0 = $res0.comb.join('|');
-        my $c1 = $r.contents[$i][1].comb.join('|');
-        my $r1 = $res1.comb.join('|');
-        =end comment
-        my $c0 = show-space-chars($r.contents[$i][0]);
-        my $r0 = show-space-chars($res0);
-        my $c1 = show-space-chars($r.contents[$i][1]);
-        my $r1 = show-space-chars($res1);
-
-        is $r.contents[$i][0], $res0, "row $row, col 1: '$c0' vs '$r0'";
-        is $r.contents[$i][1], $res1, "row $row, col 2: '$c1' vs '$r1'";
-
-        HERE
-
-        $fh.say: '}';
-    }
-
-    $fh.print: q:to/HERE/;
-    ##### some subroutines for the EVALed file #####
-    sub int2hexstr($int, :$plain) {
-        # given an int, convert it to a hex string
-        if !$plain {
-            return sprintf("0x%04X", $int);
-        }
-        else {
-            return sprintf("%X", $int);
-        }
-    }
-
-    sub show-space-chars($str) {
-        # given a string with space chars, return a version with the
-        # hex code shown for them and place a pipe separating all
-        # chars in the original string
-        my @c = $str.comb;
-        my $new-str = '';
-        for @c -> $c {
-            $new-str ~= '|' if $new-str;
-            if $c ~~ /\s/ {
-                my $int = $c.ord;
-                my $hex-str = int2hexstr($int);
-                $new-str ~= $hex-str;
-            }
-            else {
-                =begin comment
-                $new-str ~= $c;
-                =end comment
-                my $int = $c.ord;
-                my $hex-str = int2hexstr($int, :plain);
-                $new-str ~= $hex-str;
-            }
-        }
-        return $new-str;
-    }
-    HERE
-
-
-    $fh.close;
-
-    return slurp $f;
+    $code ~= "=end table\n";
+    $code ~= "\$pod = \$=pod[0]";
+    EVAL $code;
+    $pod
 }
 
+my $pod = gen-pod;
+my $nbchar-count = +@nbchars;
+plan $nbchar-count + 1;
+is $pod.contents.elems, $nbchar-count, "table contains elems for all known non-breaking spaces";
+for 0..^$nbchar-count -> $i {
+    my $nbspc = @nbchars[$i].chr;
+    my $row = $i + 1;
+    subtest "Row $row, char 0x" ~ @nbchars[$i].base(16) => {
+        plan 4;
+        my $res0 = "Raku{$nbspc}Language is the best!";
+        my $res1 = "Raku {$nbspc} Language is the best!";
+        my $c0 = show-space-chars($pod.contents[$i][0]);
+        my $r0 = show-space-chars($res0);
+        my $c1 = show-space-chars($pod.contents[$i][1]);
+        my $r1 = show-space-chars($res1);
+        is $pod.contents[$i][0], $res0, "col 1: content matches";
+        is $c0, $r0, "col 1: all spaces match";
+        is $pod.contents[$i][1], $res1, "col 2: content matches";
+        is $c1, $r1, "col 2: all spaces match";
+    }
+}
+
+done-testing;
 # vim: expandtab shiftwidth=4
