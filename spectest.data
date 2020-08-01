@@ -349,6 +349,7 @@ S04-phasers/first.t
 S04-phasers/in-eval.t
 S04-phasers/in-loop.t
 S04-phasers/init.t
+S04-phasers/interpolate.t
 S04-phasers/keep-undo.t
 S04-phasers/multiple.t
 S04-phasers/next.t
