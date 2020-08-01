@@ -7,10 +7,12 @@ use Test;
 plan 10;
 
 # https://github.com/Raku/old-issue-tracker/issues/3885
+#?rakudo eval "lazy in not there yet"
 {
   my $was_in_lazy;
+  my $var;
 
-  my $var := lazy { $was_in_lazy++; 42 };
+  $var := lazy { $was_in_lazy++; 42 };
 
   #?rakudo todo 'lazy NYI, currently works like "do"; RT #124571'
   ok !$was_in_lazy,     'lazy block wasn\'t yet executed (1)';
@@ -24,6 +26,7 @@ plan 10;
 
 # https://github.com/Raku/old-issue-tracker/issues/3885
 # dies-ok/lives-ok tests:
+#?rakudo eval "lazy in not there yet"
 {
   my $was_in_lazy;
   my $lazy := lazy { $was_in_lazy++; 42 };
@@ -33,6 +36,7 @@ plan 10;
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/3885
+#?rakudo eval "lazy in not there yet"
 {
   my $was_in_lazy;
   my $lazy := lazy { $was_in_lazy++; 42 };
@@ -42,6 +46,7 @@ plan 10;
   ok !$was_in_lazy, "rebinding var bound to a lazy does not evaluate lazy block";
 }
 
+#?rakudo todo "lazy in not there yet"
 {
   throws-like '(lazy { 43 }) = 23 ', X::Assignment::RO,
     "assigning to a lazily computed value does not work";
