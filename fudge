@@ -72,7 +72,8 @@ Usage: $0 [options] [implname] testfilename [fudgedtestfilename]
         comment out num tests or blocks and call skip(num)
 
     #?implname [num] eval 'reason'
-        eval num tests or blocks and skip(num) on parsefail
+        eval num tests or blocks and flunk() with todo(reason,num) if parse 
+        fails
 
     #?implname [num] try 'reason'
         try num tests or blocks and fail on exception
@@ -203,6 +204,14 @@ else {
     print "$IN\n";  # pick the input file to run
 }
 
+sub wrap_eval {
+    my ($code, $ARGS, $numtests) = @_;
+    $code =~ s/(['\\])/\\$1/g;
+    return "todo($ARGS, $numtests);\n"
+           . "try { EVAL('$code') }"
+           . " // (flunk \"non-compiling test\" for ^$numtests);\n"
+}
+
 sub fudgeblock {
     while (<>) {
         if (/^\s*\#\?DOES[:\s] \s* (.*)/x) {
@@ -313,8 +322,9 @@ sub fudgeblock {
                 }
                 elsif ($FUDGE eq 'eval') {
                     chomp;
-                    s/(['\\])/\\$1/g;
-                    $_ = "try { EVAL('$_') } // skip($ARGS, $numtests);\n";
+                    $_ = wrap_eval($_, $ARGS, $numtests);
+                    #s/(['\\])/\\$1/g;
+                    #$_ = "try { EVAL('$_') } // skip($ARGS, $numtests);\n";
                 }
                 else {
                     warn "Don't know how to mark block for $FUDGE!\n";
@@ -356,8 +366,9 @@ sub fudgeblock {
                     $_ = "(try $_) // flunk($ARGS);\n";
                 }
                 elsif ($FUDGE eq 'eval') {
-                    s/(['\\])/\\$1/g;
-                    $_ = "EVAL('$_') // skip($ARGS, $numtests);\n";
+                    $_ = wrap_eval($_, $ARGS, $numtests);
+                    #s/(['\\])/\\$1/g;
+                    #$_ = "try { EVAL('$_') } // skip($ARGS, $numtests);\n";
                 }
                 else {
                     warn "Don't know how to mark statement for $FUDGE!\n";

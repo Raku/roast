@@ -4,6 +4,7 @@ use Test;
 use experimental :macros;
 
 # L<S06/Macros>
+# XXX This test is likely to be reconsidered after the release of RakuAST
 
 plan 8;
 

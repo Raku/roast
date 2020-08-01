@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 5;
 
 # [TODO] add tests for ENTER/LEAVE/KEEP/UNDO/PRE/POST/etc
 
@@ -21,22 +21,20 @@ plan 6;
 my $hist;
 
 END {
-    is $hist, 'BCISE', 'interpolated END {...} executed';
+    is $hist, 'BCIE', 'interpolated END {...} executed';
 }
 
-nok "{ END { $hist ~= 'E' } }".defined,
+# END phaser doesn't have a return value.
+nok "{ END { $hist ~= 'E' } // "" }",
     'END {...} not yet executed';
 
-is "{ START { $hist ~= 'S' } }", "BCIS",
-    'START {...} fired at run-time, entry time of the mainline code';
-
-is "{ INIT { $hist ~= 'I' } }", 'BCI',
+is "{ INIT { $hist ~= 'I'; $hist<> } }", 'BCI',
     'INIT {...} fired at the beginning of runtime';
 
-is "{ CHECK { $hist ~= 'C' } }", "BC",
+is "{ CHECK { $hist ~= 'C'; $hist<> } }", "BC",
     'CHECK {...} fired at compile-time, ALAP';
 
-is "{ BEGIN { $hist ~= 'B' } }", "B",
+is "{ BEGIN { $hist ~= 'B'; $hist<> } }", "B",
     'BEGIN {...} fired at compile-time, ASAP';
 
 # vim: expandtab shiftwidth=4
