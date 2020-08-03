@@ -27,11 +27,11 @@ my role R3 does R1 does R2 {
 
 class C does R3 {
     submethod attr-val {
-        $?CLASS.^name ~ ":" ~ $.foo
+        $?CLASS.^name ~ ":" ~ self.foo
     }
 }
 
-is-deeply C.new(:foo(-42)).+attr-val, ('C:-42', 'R3:-42', 'R1:-42', 'R2:-42', 'R0:-42'),
+is-deeply C.new(:foo(-42)).WALK('attr-val', :roles)().List, ('C:-42', 'R3:-42', 'R1:-42', 'R2:-42', 'R0:-42'),
             "same attribute is used across all roles";
 
 

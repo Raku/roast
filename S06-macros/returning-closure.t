@@ -4,6 +4,7 @@ use Test;
 use experimental :macros;
 
 #L<S06/"Macros">
+# XXX This test is likely to be reconsidered after the release of RakuAST
 
 plan 4;
 
@@ -14,7 +15,7 @@ plan 4;
   macro returns_a_closure {
     my $x = 42;
     $in_macro = 1;
-    return { $in_macro_clos++; 100 + $x + $z };
+    quasi { {{}}{ $in_macro_clos++; 100 + $x + $z } };
   }
 
   is $in_macro,           1, "macro was executed during compile time";

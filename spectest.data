@@ -294,6 +294,7 @@ S03-operators/value_equivalence.t
 S03-sequence/arity-2-or-more.t
 S03-sequence/arity0.t
 S03-sequence/basic.t
+S03-sequence/exhaustive.t
 S03-sequence/limit-arity-2-or-more.t
 S03-sequence/misc.t
 S03-sequence/nonnumeric.t
@@ -349,6 +350,7 @@ S04-phasers/first.t
 S04-phasers/in-eval.t
 S04-phasers/in-loop.t
 S04-phasers/init.t
+S04-phasers/interpolate.t
 S04-phasers/keep-undo.t
 S04-phasers/multiple.t
 S04-phasers/next.t
@@ -373,6 +375,8 @@ S04-statements/given.t
 S04-statements/if.t
 S04-statements/label.t
 S04-statements/last.t
+S04-statements/lazy.t
+S04-statements/leave.t
 S04-statements/loop.t
 S04-statements/map-and-sort-in-for.t
 S04-statements/next.t
@@ -415,6 +419,7 @@ S05-interpolation/regex-in-variable.t
 S05-mass/charsets.t
 S05-mass/named-chars.t
 S05-mass/properties-block.t
+S05-mass/properties-contributory.t
 S05-mass/properties-derived.t
 S05-mass/properties-general.t
 S05-mass/properties-script.t
@@ -616,6 +621,7 @@ S11-compunit/compunit-dependencyspecification.t
 S11-compunit/compunit-repository.t
 S11-compunit/rt126904.t
 S11-modules/export.t
+S11-modules/gh2979.t
 S11-modules/import-multi.t
 S11-modules/import-tag.t
 S11-modules/import.t
@@ -628,9 +634,11 @@ S11-modules/nested.t
 S11-modules/perl6lib.t
 S11-modules/require.t
 S11-modules/runtime.t
+S11-modules/versioning.t
 S11-repository/cur-candidates.t
 S11-repository/cur-current-distribution.t
 S11-repository/curli-install.t
+S12-attributes/augment-and-initialization.t
 S12-attributes/class.t
 S12-attributes/clone.t
 S12-attributes/defaults.t
@@ -730,6 +738,7 @@ S13-syntax/aliasing.t
 S13-type-casting/methods.t
 S14-roles/anonymous.t
 S14-roles/attributes.t
+S14-roles/attributes-6e.t
 S14-roles/basic.t
 S14-roles/bool.t
 S14-roles/composition.t
@@ -748,8 +757,10 @@ S14-roles/stubs.t
 S14-roles/submethods-6e.t
 S14-roles/submethods.t
 S14-roles/typecheck.t
+S14-roles/versioning.t
 S14-traits/attributes.t
 S14-traits/routines.t
+S14-traits/variables.t
 S15-literals/identifiers.t
 S15-literals/numbers.t
 S15-nfg/GraphemeBreakTest.t     # moar
@@ -994,6 +1005,7 @@ S26-documentation/07c-tables.t
 S26-documentation/08-formattingcodes.t
 S26-documentation/09-configuration.t
 S26-documentation/10-doc-cli.t
+S26-documentation/12-non-breaking-space.t
 S26-documentation/14-defn.t
 S26-documentation/15-numbered-alias.t
 S26-documentation/block-leading-user-format.t
