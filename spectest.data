@@ -759,6 +759,7 @@ S14-roles/submethods.t
 S14-roles/typecheck.t
 S14-roles/versioning.t
 S14-traits/attributes.t
+S14-traits/package.t
 S14-traits/routines.t
 S14-traits/variables.t
 S15-literals/identifiers.t
