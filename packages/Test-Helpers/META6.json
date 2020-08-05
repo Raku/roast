@@ -7,6 +7,7 @@
         "Test::Compile" : "lib/Test/Compile.pm6",
         "Test::Idempotence" : "lib/Test/Idempotence.pm6",
         "Test::Iterator" : "lib/Test/Iterator.pm6",
+        "Test::Misc" : "lib/Test/Misc.pm6",
         "Test::Tap" : "lib/Test/Tap.pm6",
         "Test::Util" : "lib/Test/Util.pm6"
     }
