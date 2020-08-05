@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-use lib $?FILE.IO.parent(2).add('packages/Test-Helpers/lib');
+use lib $?FILE.IO.parent(2).add('packages/Test-Helpers');
 use Test::Misc :int2hexstr, :show-space-chars;
 
 # Vars defined in the BEGIN block at the end of this file:
