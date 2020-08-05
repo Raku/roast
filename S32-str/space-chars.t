@@ -1,6 +1,9 @@
 use v6;
 use Test;
 
+use lib $?FILE.IO.parent(2).add('packages/Test-Helpers/lib');
+use Test::Misc :int2hexstr, :show-space-chars;
+
 # non-breaking ws chars
 my @nbchars = [
     0x00A0, # NO-BREAK SPACE
@@ -78,9 +81,4 @@ for @bchars -> $hexint {
         cmp-ok $hexint, '==', $int2, "incoming hex '{int2hexstr($hexint)}'";
     }
 }
-
-sub int2hexstr($int) {
-    return sprintf("0x%04X", $int);
-}
-
 # vim: expandtab shiftwidth=4
