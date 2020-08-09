@@ -1,4 +1,4 @@
-# http://rosettacode.org/wiki/Greatest_element_of_a_list#Perl_6
+# http://rosettacode.org/wiki/Greatest_element_of_a_list#Raku
 
 use v6;
 use Test;
