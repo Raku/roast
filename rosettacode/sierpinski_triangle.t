@@ -1,4 +1,4 @@
-# http://rosettacode.org/wiki/Sierpinski_triangle#Perl_6
+# http://rosettacode.org/wiki/Sierpinski_triangle#Raku
 
 use v6;
 use Test;
