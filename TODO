@@ -16,7 +16,7 @@ commit message:
 [TODO]: Added more tasks for S02.
 
 This way, people working on the test suite can easily spot these commits
-in #perl6.
+in #raku.
 
 OVERALL
 * Add smartlinks to tests without them
