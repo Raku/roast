@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 43;
+plan 44;
 
 =begin description
 
@@ -49,6 +49,9 @@ is('fooäàaáâåbar' ~~ m:m/<[ab]>+/, 'äàaáâåba', 'Ignoremark with charac
 is('fooäàaáâåbar' ~~ m:m/<-[a]>+/, 'foo',      'Ignoremark with negated character class');
 
 is('fooäàaáâåbar' ~~ m:m/<[a..b]>+/, 'äàaáâåba', 'Ignoremark with range in character class');
+
+# https://github.com/rakudo/rakudo/issues/3815
+ok('' ~~ m:m/''/, ':m can match empty string regex to the empty string');
 
 # https://github.com/Raku/old-issue-tracker/issues/3017
 {
