@@ -5,7 +5,7 @@ by synopsis (when applicable) or put them in the OVERALL section at the top
 if they apply to the test suite in general.
 
 NOTE that references to a t/ directory are for the t/ directory in the mu
-repository found here:  https://github.com/perl6/mu
+repository found here:  https://github.com/Raku/mu
 
 Please also read t/deprecated-syntax.pod for common mistakes in the test
 suite, and clear them when you update tests.
@@ -16,7 +16,7 @@ commit message:
 [TODO]: Added more tasks for S02.
 
 This way, people working on the test suite can easily spot these commits
-in #perl6.
+in #raku.
 
 OVERALL
 * Add smartlinks to tests without them
