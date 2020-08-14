@@ -7,8 +7,10 @@ plan 8;
 
 use lib $?FILE.IO.parent(2).add("packages/S11-modules/lib");
 
+#?rakudo.jvm emit # compile time error: Method 'name' not found for invocant of class 'Any'
 use GH2979;
 
+#?rakudo.jvm 8 skip 'fails due to above error'
 is @foo.VAR.^name, 'Array', 're-exported Array';
 is %foo.VAR.^name, 'Hash', 're-exported Hash';
 is $foo.VAR.^name, 'Scalar', 're-exported Scalar';
