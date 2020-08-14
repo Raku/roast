@@ -549,6 +549,7 @@ subtest q<meta-assignment to a scalar doesn't cause freezing> => {
     plan 3;
     my %junction_ops = :all<&>, :any<|>, :one<^>;
     for %junction_ops.pairs -> (:key($type), :value($op)) {
+        #?rakudo.jvm todo 'closing parenthesis from gist pops up on stderr for "&"'
         doesn't-hang 'my $j = 1; $j ' ~ $op ~ '= 2; print $j.gist',
                      "junction '$type' doesn't freeze after assign metaop",
                      :out("{$type}(1, 2)"),
