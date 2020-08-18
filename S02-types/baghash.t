@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 317;
+plan 332;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -300,6 +300,13 @@ sub showkv($x) {
     is $b.total, 3, '.pick should not change BagHash';
     is $b.elems, 2, '.pick should not change BagHash';
 
+    my $c = * / 2;
+    my $count = $c($b.total).Int;
+    @a = $b.pick: $c;
+    is +@a, $count, '.pick(Callable) returns the right number of items';
+    is $b.total, 3, '.pick should not change BagHash';
+    is $b.elems, 2, '.pick should not change BagHash';
+
     @a = $b.pick(-2.5);
     is +@a, 0, '.pick(<negative number>) does not return any items';
 
@@ -346,6 +353,20 @@ sub showkv($x) {
     is +@a, 0, '.pickpairs(<negative number>) does not return any items';
 }
 
+{
+    my $b = BagHash.new(<a a b b c c d d e e f f g g h h>);
+    my $c = * / 2;
+    my $elems = $b.elems;
+    my $total = $b.total;
+    my $count = $c($b.elems).Int;
+    my @a = $b.pickpairs: $c;
+    is +@a, $count, '.pickpairs(Callable) returns the right number of items';
+    is @a.grep( {.isa(Pair)} ).Num, $count, 'are they all Pairs';
+    is @a.grep( {.value == 2} ).Num, $count, 'and they all have an expected value';
+    is $b.total, $total, '.pickpairs should not change BagHash';
+    is $b.elems, $elems, '.pickpairs should not change BagHash';
+}
+
 # L<S32::Containers/BagHash/grab>
 
 {
@@ -370,6 +391,16 @@ sub showkv($x) {
     is @a.grep(* eq 'b').elems, 2, '.grab(*) (2)';
     is $b.total, 0, '.grab *should* change BagHash';
     is $b.elems, 0, '.grab *should* change BagHash';
+}
+
+{
+    my $b = BagHash.new("a", "a", "b", "b", "b");
+    my $c = * / 2;
+    my $total = $b.total;
+    my $count = $c($b.total).Int;
+    my @a = $b.grab: $c;
+    is +@a, $count, '.grab(Callable) returns the right number of items';
+    is $b.total, $total - $count, '.grab *should* change BagHash';
 }
 
 {
@@ -413,6 +444,19 @@ sub showkv($x) {
     isnt @a.map({.key}).join, "abcdefgh", 'SetHash.grabpairs(*) returns elements in a random order';
     is $b.total, 0, '.grabpairs *should* change BagHash';
     is $b.elems, 0, '.grabpairs *should* change BagHash';
+}
+
+{
+    my $b = BagHash.new(<a a b b c c d d e e f f g g h h>);
+    my $c = * / 2;
+    my $elems = $b.elems;
+    my $count = $c($b.elems).Int;
+    my @a = $b.grabpairs: $c;
+    is +@a, $count, '.grabpairs(Callable) returns the right number of items';
+    is @a.grep( {.isa(Pair)} ).Num, $count, 'are they all Pairs';
+    is @a.grep( {.value == 2} ).Num, $count, 'and they all have an expected value';
+    is $b.total, $($elems - $count) * 2, '.grabpairs *should* change BagHash';
+    is $b.elems, $elems - $count, '.grabpairs *should* change BagHash';
 }
 
 {
