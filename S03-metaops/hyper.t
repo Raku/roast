@@ -318,7 +318,7 @@ my @e;
         is 4i, Complex.new(0, 4), 'postfix:<i> still works';
         is 4\i, Complex.new(0, 4), 'postfix:<i> still works (2)';
         throws-like { 4.i }, X::Method::NotFound,
-            message => "No such method 'i' for invocant of type 'Int'",
+            message => *.starts-with("No such method 'i' for invocant of type 'Int'"),
             'dotted form of postfix:<i> fails';
         is (2,3)»i, (Complex.new(0, 2), Complex.new(0, 3)),
             'postfix:<i> works on list elements';
