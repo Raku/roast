@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 38;
+plan 45;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -259,6 +259,46 @@ is-eqv <a c b>.sort(&lc), <a b c>.Seq, 'no crashes when using &lc in .sort';
 {
     is-deeply sort( {1}, ^2), (0,1),
       'is sorting a 2 elem list with a mapper stable?';
+}
+
+#?rakudo todo 'awaiting https://github.com/rakudo/rakudo/pull/3849'
+{
+    throws-like { (1|2,3).sort }, X::Cannot::Junction,
+      junction => 'any(1, 2)',
+      for      => /sorting/,
+      'does 2-element list with Junction throw when sorting';
+    throws-like { (1|2,3,4).sort }, X::Cannot::Junction,
+      junction => 'any(1, 2)',
+      for      => /sorting/,
+      'does 3-element list with Junction throw when sorting';
+}
+
+# tests mentioned in / derived from https://github.com/rakudo/rakudo/pull/384
+{
+    is-deeply
+      (<42>, <123>, <00123>, <420>).sort,
+      (<42>, <00123>, <123>, <420>),
+      'do IntStrs sort correctly';
+
+    is-deeply
+      (<900e0>, <900e-0>, <90e1>, <9e2>).sort,
+      (<900e-0>, <900e0>, <90e1>, <9e2>),
+      'do NumStrs sort correctly';
+
+    is-deeply
+      (<42.0>, <1242.0>, <242.0>, <0042.0>).sort,
+      (<0042.0>, <42.0>, <242.0>, <1242.0>),
+      'do RatStrs sort correctly';
+
+    is-deeply
+      (<42i>, <42i1>, <0042i>, <42i66>).sort,
+      (<0042i>, <42i>, <42i1>, <42i66>),
+      'do ComplexStrs sort correctly';
+
+    is-deeply
+      (<42i0>, <42>, <42e0>, <42.0>).sort,
+      (<42>, <42.0>, <42e0>, <42i0>),
+      'do mixed allomorphs sort correctly';
 }
 
 # vim: expandtab shiftwidth=4
