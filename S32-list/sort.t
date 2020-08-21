@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 45;
+plan 46;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -299,6 +299,11 @@ is-eqv <a c b>.sort(&lc), <a b c>.Seq, 'no crashes when using &lc in .sort';
       (<42i0>, <42>, <42e0>, <42.0>).sort,
       (<42>, <42.0>, <42e0>, <42i0>),
       'do mixed allomorphs sort correctly';
+
+    is-deeply
+      (NaN, Inf, -Inf).sort,
+      (-Inf, Inf, NaN),
+      'does NaN sort correctly';
 }
 
 # vim: expandtab shiftwidth=4
