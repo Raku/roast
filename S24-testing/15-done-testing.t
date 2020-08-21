@@ -1,6 +1,8 @@
 #!/usr/bin/env raku
 use Test;
 
+# done-testing() to return True on passing, False for dubious or failing
+
 plan 3;
 
 my @program;
@@ -46,7 +48,7 @@ for 0,1,2  -> $i {
     my $text = qqx{ raku -e '@program[$i]' 2>&1 };
     %h<got> = ($text ~~ rx/ \w+ \s+ $ /).trim;
 
-    ok %h<got> eq %h<expected>, %h<description>;
+    is %h<got>, %h<expected>, %h<description>;
 }
 
 done-testing;
