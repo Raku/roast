@@ -6,6 +6,8 @@ use Test::Util;
 
 # done-testing() to return True on passing, False for dubious or failing
 
+# done-testing() to return True on passing, False for dubious or failing
+
 plan 3;
 
 my @program;
