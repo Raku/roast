@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 2;
+plan 3;
 
 =begin pod
 
@@ -148,7 +148,7 @@ subtest "Basics" => {
         is-deeply $x.WALK(:name<m>)().List, <E C D A B>, "got the list of return values with direct invocation for methods";
         is-deeply $x.WALK(:name<sm>)().List, <e c d a b>, "got the list of return values with direct invocation for submethods";
         is-deeply $x.WALK(:name<sm>).reverse.invoke.List, <b a d c e>, "got reversed list of return values";
-        is-deeply $x.WALK("mmix")(42, "the answer"), ['D::mmix(\(42, "the answer"))', 'B::mmix(\(42, "the answer"))'], "invocation with parameters on mix of methods and submethods";
+        is-deeply $x.WALK("mmix")(42, "the answer").List, ('D::mmix(\(42, "the answer"))', 'B::mmix(\(42, "the answer"))'), "invocation with parameters on mix of methods and submethods";
     }
 
     # Normally exceptions are rethrown except when quiet mode is set.
@@ -165,7 +165,7 @@ subtest "Basics" => {
     # This is required to make it possible to distinguish returns from different methods.
     {
         my $x = E.new;
-        is-deeply $x.WALK("few")(), [<a b c>, (1, 2, 3)], "slips are converted into lists";
+        isa-ok $x.WALK("few")()[1], Slip, "Slips are returned as-is";
     }
 }
 
@@ -192,6 +192,43 @@ subtest "With Roles" => {
     is-deeply @rv, ['C2', 'R2', 'C1', 'R1'], "WALKed over submethods in roles";
     @rv = $x.WALK("m", :roles)();
     is-deeply @rv, ['c2', 'c1'], "WALK doesn't use methods in roles";
+}
+
+subtest "Lazyness" => {
+    plan 3;
+    my class C1 {
+        has $.call-count is rw = 0;
+        has @.call-order;
+        method foo {
+            ++$.call-count;
+            @.call-order.push: ::?CLASS.^name;
+        }
+    }
+    my class C2 is C1 {
+        method foo {
+            ++$.call-count;
+            @.call-order.push: ::?CLASS.^name;
+        }
+    }
+    my class C3 is C2 {
+        method foo {
+            ++$.call-count;
+            @.call-order.push: ::?CLASS.^name;
+        }
+    }
+    my $obj = C3.new;
+    my @full-order = <C3 C2 C1>;
+    my $expect-count = 0;
+    my @expect-order;
+    for $obj.WALK("foo")() {
+        @expect-order.push: @full-order.shift;
+        ++$expect-count;
+        subtest "Step $expect-count" => {
+            plan 2;
+            is $obj.call-count, $expect-count, "counter equalts to the step number";
+            is-deeply $obj.call-order, @expect-order, "order of calls ";
+        }
+    }
 }
 
 done-testing;
