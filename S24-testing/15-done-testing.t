@@ -1,5 +1,4 @@
 #!/usr/bin/env raku
-use lib '/priv/rir/Repo/roast/packages/Test-Helpers/lib';
 use Test;
 use Test::Util;
 
@@ -7,7 +6,9 @@ use Test::Util;
 
 plan 3;
 
-my ( \DUBIOUS, \PASS, \FAIL ) = 255, 0, 1;
+constant PASS    = 0;
+constant FAIL    = 1;
+constant DUBIOUS = 255;
 
 my @program;
 
