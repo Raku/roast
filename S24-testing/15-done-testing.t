@@ -1,7 +1,6 @@
 #!/usr/bin/env raku
 
 use Test;
-use lib '/priv/rir/Repo/roast/packages/Test-Helpers/lib';
 use Test::Util;
 
 # done-testing() to return True on passing, False for dubious or failing
