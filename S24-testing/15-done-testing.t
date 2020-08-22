@@ -6,8 +6,6 @@ use Test::Util;
 
 # done-testing() to return True on passing, False for dubious or failing
 
-# done-testing() to return True on passing, False for dubious or failing
-
 plan 3;
 
 my @program;
@@ -46,6 +44,7 @@ END_PROG_2
 my @test =
     { expected => {
         out => sub { 'False' ~~ ( $^a ~~ rx/ \w+ \s+ $ / ).trim; },
+        #    err => sub { True },
         status => sub { True },
       },
       description => 'wrong count, all pass' },
