@@ -2,67 +2,61 @@ use v6;
 
 use Test;
 
-plan 60;
+# More tests planned then really is in this test for testing the trailing skips.
+plan 35;
 
 =begin kwid
 
 This file /exhaustively/ tests the Test module.
 
-I try every variant of each Test function here because we are using this
-module to test Raku itself, so I want to be sure that the error is not
-coming from within this module.
+Every variant of each Test function is tried here because we are using this module to test Raku itself, so we need to be
+sure that errors are not coming from within this module.
 
-We need to test that these functions produce 'not ok' at the right times,
-too.  Here, we do that by abusing :todo to mean "supposed to fail."  Thus,
-no ":todo" failure indicates a missing feature.
+We need to test that these functions produce 'not ok' at the right times, too. Here, we do that by abusing todo to mean
+"supposed to fail."  Thus, no "todo" failure indicates a missing feature.
 
-If there is a bug in the implementation, you will see a (non-TODO) failure
-or an unexpected success.
+If there is a bug in the implementation, you will see a (non-TODO) failure or an unexpected TODO passing.
 
 =end kwid
 
 ## ok
 
 ok(2 + 2 == 4, '2 and 2 make 4');
-ok(2 + 2 == 4, desc => '2 and 2 make 4');
-ok(2 + 2 == 4, :desc('2 and 2 make 4'));
 
-ok(2 + 2 == 5, desc => '2 and 2 doesnt make 5', todo => <bug>);
-ok(2 + 2 == 5, :desc('2 and 2 doesnt make 5'), :todo(1));
+todo "mitigate failing ok";
+ok(2 + 2 == 5, '2 and 2 doesnt make 5');
 
 ## is
 
 is(2 + 2, 4, '2 and 2 make 4');
-is(2 + 2, 4, desc => '2 and 2 make 4');
-is(2 + 2, 4, :desc('2 and 2 make 4'));
 
-is(2 + 2, 5, todo => 1, desc => '2 and 2 doesnt make 5');
-is(2 + 2, 5, :todo<feature>, :desc('2 and 2 doesnt make 5'));
+todo "mitigate failing is";
+is(2 + 2, 5, '2 and 2 doesnt make 5');
 
 ## isnt
 
 isnt(2 + 2, 5, '2 and 2 does not make 5');
-isnt(2 + 2, 5, desc => '2 and 2 does not make 5');
-isnt(2 + 2, 5, :desc('2 and 2 does not make 5'));
 
-isnt(2 + 2, 4, '2 and 2 does make 4', :todo(1));
-isnt(2 + 2, 4, desc => '2 and 2 does make 4', todo => 1);
-isnt(2 + 2, 4, :desc('2 and 2 does make 4'), todo => 1);
+todo "mitigate failing isnt";
+isnt(2 + 2, 4, '2 and 2 does make 4');
 
 ## is-deeply
 
 is-deeply([ 1..4 ], [ 1..4 ],
           "is-deeply (simple)");
 
-is-deeply({ a => "b", c => "d", nums => [<1 2 3 4 5 6>] },
+is-deeply({ a => "b", c => "d", nums => ['1'..'6'] },
           { nums => ['1'..'6'], <a b c d> },
           "is-deeply (more complex)");
 
+# This reverse-swap voodo is only to be on the safest side of things. Basically, makes no sense as keys are randomized
+# anyway. But if something goes wrong with Hash initialization this mangling would let us hope that keys are not the
+# same order in both hashes.
 my @a = "a" .. "z";
 my @b = @a.reverse;
-@b = @b.map(sub ($a, $b) { $b, $a });
-my %a = @a;
-my %b = @b;
+@b = @b.map(sub ($a, $b) { |($b, $a) });
+my %a = |@a;
+my %b = |@b;
 is-deeply(%a, %b, "is-deeply (test hash key ordering)");
 
 ## isa-ok
@@ -72,9 +66,9 @@ my @list = ( 1, 2, 3 );
 isa-ok(@list, 'List');
 isa-ok({ 'one' => 1 }, 'Hash');
 
-isa-ok(@list, 'Hash', 'this is a description', todo => 1);
-isa-ok(@list, 'Hash', desc => 'this is a description', :todo<bug>);
-isa-ok(@list, 'Array', :desc('this is a description'));
+todo "mitigate failing 2 isa-ok", 2;
+isa-ok(@list, 'Hash', '... testing first failing isa-ok');
+isa-ok(@list, Hash, '... testing second failing isa-ok');
 
 class Foo {};
 my $foo = Foo.new();
@@ -84,29 +78,23 @@ isa-ok(Foo.new(), 'Foo');
 ## like
 
 like("Hello World", rx:P5/\s/, '... testing like()');
-like("Hello World", rx:P5/\s/, desc => '... testing like()');
-like("Hello World", rx:P5/\s/, :desc('... testing like()'));
 
-like("HelloWorld", rx:P5/\s/, desc => '... testing like()', todo => 1);
-like("HelloWorld", rx:P5/\s/, :todo(1), :desc('... testing like()'));
+todo "mitigate failing like";
+like("HelloWorld", rx:P5/\s/, '... testing failing like()');
 
 ## unlike
 
 unlike("HelloWorld", rx:P5/\s/, '... testing unlike()');
-unlike("HelloWorld", rx:P5/\s/, desc => '... testing unlike()');
-unlike("HelloWorld", rx:P5/\s/, :desc('... testing unlike()'));
 
-unlike("Hello World", rx:P5/\s/, todo => 1, desc => '... testing unlike()');
-unlike("Hello World", rx:P5/\s/, :desc('... testing unlike()'), :todo(1));
+todo "mitigate failing unlike";
+unlike("Hello World", rx:P5/\s/, '... testing failing unlike()');
 
 ## cmp-ok
 
 cmp-ok('test', sub ($a, $b) { ?($a gt $b) }, 'me', '... testing gt on two strings');
-cmp-ok('test', sub ($a, $b) { ?($a gt $b) }, 'me', desc => '... testing gt on two strings');
-cmp-ok('test', sub ($a, $b) { ?($a gt $b) }, 'me', :desc('... testing gt on two strings'));
 
-cmp-ok('test', sub ($a, $b) { ?($a gt $b) }, 'you', :todo(1), desc => '... testing gt on two strings');
-cmp-ok('test', sub ($a, $b) { ?($a gt $b) }, 'you', :desc('... testing gt on two strings'), todo => 1);
+todo "mitigate failing cmp-ok";
+cmp-ok('test', sub ($a, $b) { ?($a gt $b) }, 'you', '... testing gt on two strings');
 
 ## use-ok
 
@@ -115,31 +103,22 @@ use-ok('use_ok_test');
 
 # Need to do a test loading a package that is not there,
 # and see that the load fails. Gracefully. :)
-use-ok('Non::Existent::Package', :todo(1));
+todo "mitigate failing use-ok";
+use-ok('Non::Existent::Package');
 
 ## dies-ok
 
 dies-ok -> { die "Testing dies-ok" }, '... it dies-ok';
-dies-ok -> { die "Testing dies-ok" }, desc => '... it dies-ok';
-dies-ok -> { die "Testing dies-ok" }, :desc('... it dies-ok');
 
-dies-ok -> { "Testing dies-ok" }, desc => '... it dies-ok', todo => 1;
-dies-ok -> { "Testing dies-ok" }, :desc('... it dies-ok'), :todo(1);
+todo "mitigate failing dies-ok";
+dies-ok -> { "Testing dies-ok" }, '... testing failing dies-ok';
 
 ## lives-ok
 
 lives-ok -> { "test" }, '... it lives-ok';
-lives-ok -> { "test" }, desc => '... it lives-ok';
-lives-ok -> { "test" }, :desc('... it lives-ok');
 
-lives-ok -> { die "test" }, desc => '... it lives-ok', todo => 1;
-lives-ok -> { die "test" }, :desc('... it lives-ok'), :todo(1);
-
-
-## throws_ok
-
-#throws_ok -> { die "Testing throws_ok" }, 'Testing throws_ok', '... it throws_ok with a Str';
-#throws_ok -> { die "Testing throws_ok" }, rx:P5:i/testing throws_ok/, '... it throws_ok with a Rule';
+todo "mitigate Failing lives-ok";
+lives-ok -> { die "test" }, '... testing failing lives-ok';
 
 ## diag
 
@@ -151,8 +130,8 @@ pass('This test passed');
 
 ## flunk
 
-flunk('This test failed', todo => 1);
-flunk('This test failed', :todo(1));
+todo "mitigate flunk";
+flunk('This test failed');
 
 ## skip
 
