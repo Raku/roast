@@ -1,5 +1,7 @@
 #!/usr/bin/env raku
+
 use Test;
+use Test::Util;
 
 # done-testing() to return True on passing, False for dubious or failing
 
@@ -39,16 +41,28 @@ END_PROG_1
 END_PROG_2
 
 my @test =
-    { expected => False, description => 'wrong count, all pass' },
-    { expected => True,  description => 'correct count, all pass' },
-    { expected => False, description => 'correct count, one fails' },;
+    { expected => {
+        out => sub { 'False' ~~ ( $^a ~~ rx/ \w+ \s+ $ / ).trim; },
+        #    err => sub { True },
+        status => sub { True },
+      },
+      description => 'wrong count, all pass' },
+    { expected => {
+        out => sub { ( $^a ~~ rx/ \w+ \s+ $ / ).trim eq 'True' ; },
+        status => sub { True },
+      },
+      description => 'correct count, all pass' },
+    { expected => {
+        out => sub { ( $^a ~~ rx/ \w+ \s+ $ / ).trim eq 'False' ; },
+        status => sub { True }
+        },
+      description => 'correct count, one fails' },
+;
 
 for 0,1,2  -> $i {
     my %h = @test[$i];
-    my $text = qqx{ raku -e '@program[$i]' 2>&1 };
-    %h<got> = ($text ~~ rx/ \w+ \s+ $ /).trim;
-
-    is %h<got>, %h<expected>, %h<description>;
+    is_run( @program[$i], %h<expected>, %h<description>);
 }
+exit 0;
 
 done-testing;
