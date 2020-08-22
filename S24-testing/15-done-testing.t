@@ -1,11 +1,13 @@
 #!/usr/bin/env raku
-
+use lib '/priv/rir/Repo/roast/packages/Test-Helpers/lib';
 use Test;
 use Test::Util;
 
 # done-testing() to return True on passing, False for dubious or failing
 
 plan 3;
+
+my ( \DUBIOUS, \PASS, \FAIL ) = 255, 0, 1;
 
 my @program;
 
@@ -40,30 +42,27 @@ END_PROG_1
     say $status = done-testing;
 END_PROG_2
 
+
 my @test =
-    { expected => {
-        out => sub { 'False' ~~ ( $^a ~~ rx/ \w+ \s+ $ / ).trim; },
-        #    err => sub { True },
-        status => sub { True },
-      },
-      description => 'wrong count, all pass' },
-    { expected => {
-        out => sub { ( $^a ~~ rx/ \w+ \s+ $ / ).trim eq 'True' ; },
-        status => sub { True },
-      },
-      description => 'correct count, all pass' },
-    { expected => {
-        out => sub { ( $^a ~~ rx/ \w+ \s+ $ / ).trim eq 'False' ; },
-        status => sub { True }
-        },
-      description => 'correct count, one fails' },
-;
+    {   description => 'wrong count, all pass',
+        expected => {
+            out => sub { 'False' eq ( $^a ~~ rx/ \w+ \s+ $ / ).trim; },
+            status => DUBIOUS, },
+    },
+    {   description => 'correct count, all pass',
+        expected => {
+            out => sub { 'True' eq ( $^a ~~ rx/ \w+ \s+ $ / ).trim; },
+            status => PASS, },
+    },
+    {   description => 'correct count, one fails',
+        expected => {
+            out => sub { 'False' ~~ ( $^a ~~ rx/ \w+ \s+ $ / ).trim; },
+            status => FAIL, },
+    };
 
 for 0,1,2  -> $i {
     my %h = @test[$i];
     is_run( @program[$i], %h<expected>, %h<description>);
 }
-exit 0;
 
 done-testing;
-
