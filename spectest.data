@@ -612,7 +612,7 @@ S09-typed-arrays/native.t
 S10-packages/basic.t
 S10-packages/export.t
 S10-packages/joined-namespaces.t
-S10-packages/nested-use.t 
+S10-packages/nested-use.t
 S10-packages/precompilation.t # slow
 S10-packages/require-and-use.t
 S10-packages/scope.t
@@ -978,6 +978,7 @@ S19-command-line/help.t
 S19-command-line/repl.t
 S22-package-format/local.t
 S24-testing/0-compile.t
+S24-testing/1-basic.t
 S24-testing/2-force_todo.t
 S24-testing/3-output.t
 S24-testing/7-bail_out.t
