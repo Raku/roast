@@ -43,7 +43,6 @@ END_PROG_2
 my @test =
     { expected => {
         out => sub { 'False' ~~ ( $^a ~~ rx/ \w+ \s+ $ / ).trim; },
-        #    err => sub { True },
         status => sub { True },
       },
       description => 'wrong count, all pass' },
@@ -66,4 +65,3 @@ for 0,1,2  -> $i {
 exit 0;
 
 done-testing;
-
