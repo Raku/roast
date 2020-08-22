@@ -43,7 +43,6 @@ END_PROG_1
     say $status = done-testing;
 END_PROG_2
 
-
 my @test =
     {   description => 'wrong count, all pass',
         expected => {
