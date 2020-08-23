@@ -13,45 +13,39 @@ constant DUBIOUS = 255;
 my @test =
     {   description => 'wrong count, all pass',
         expected => {
-            out => sub { 'False' eq ( $^a ~~ rx/ \w+ \s+ $ / ).trim; },
+            out => rx/ False \s+ $ / ,
             status => DUBIOUS, },
         program => Q{
             use Test;
-            my $status = True;
-
             plan 1;
             ok True, "Passes";
             ok True, "Passes extra test";
-            say $status = done-testing;
+            say done-testing;
         }
     },
     {   description => 'correct count, all pass',
         expected => {
-            out => sub { 'True' eq ( $^a ~~ rx/ \w+ \s+ $ / ).trim; },
+            out => rx/ True \s+ $ / ,
             status => PASS, },
         program => Q{
             use Test;
-            my $status = False;
-
             plan 2;
             ok True, "Passes";
             ok True, "Passes";
-            say $status = done-testing;
+            say done-testing;
         },
     },
     {   description => 'correct count, one fails',
         expected => {
-            out => sub { 'False' ~~ ( $^a ~~ rx/ \w+ \s+ $ / ).trim; },
+            out => rx/ False \s+ $ / ,
             status => FAIL, },
         program => Q{
             use Test;
-            my $status = True;
-
             plan 3;
             ok True, "Passes";
             ok True, "Passes";
             ok False, "Fails";
-            say $status = done-testing;
+            say done-testing;
         },
     };
 
