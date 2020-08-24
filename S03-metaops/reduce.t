@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 561;
+plan 581;
 
 =begin pod
 
@@ -662,19 +662,42 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is ([~x]),[ ~x ], "parses [~x] right";
 
     my $x = 42;
-    is ([-$x]),[ -$x ], "parses [-$x] right";
-    is ([+$x]),[ +$x ], "parses [+$x] right";
-    is ([^$x]),[ ^$x ], "parses [^$x] right";
-    is ([?$x]),[ ?$x ], "parses [?$x] right";
-    is ([~$x]),[ ~$x ], "parses [~$x] right";
+    is ([-$x]),[ -$x ], 'parses [-$x] right';
+    is ([+$x]),[ +$x ], 'parses [+$x] right';
+    is ([^$x]),[ ^$x ], 'parses [^$x] right';
+    is ([?$x]),[ ?$x ], 'parses [?$x] right';
+    is ([~$x]),[ ~$x ], 'parses [~$x] right';
 
-    my @x = 1,2,3;
-    is ([-@x]),[ -@x ], "parses [-@x] right";
-    is ([+@x]),[ +@x ], "parses [+@x] right";
-    is ([^@x]),[ ^@x ], "parses [^@x] right";
-    is ([?@x]),[ ?@x ], "parses [?@x] right";
-    is ([~@x]),[ ~@x ], "parses [~@x] right";
+    my @x = 1, 2, 3;
+    is ([-@x]),[ -@x ], "parses [[-@x]] right";
+    is ([+@x]),[ +@x ], "parses [[+@x]] right";
+    is ([^@x]),[ ^@x ], "parses [[^@x]] right";
+    is ([?@x]),[ ?@x ], "parses [[?@x]] right";
+    is ([~@x]),[ ~@x ], "parses [[~@x]] right";
 
+    is ([[-7]]),[ -7 ], "parses [[-7]] right";
+    is ([[+7]]),[ +7 ], "parses [[+7]] right";
+    is ([[^7]]),[ ^7 ], "parses [[^7]] right";
+    is ([[?7]]),[ ?7 ], "parses [[?7]] right";
+    is ([[~7]]),[ ~7 ], "parses [[~7]] right";
+
+    is ([[-x]]),[ -x ], "parses [[-x]] right";
+    is ([[+x]]),[ +x ], "parses [[+x]] right";
+    is ([[^x]]),[ ^x ], "parses [[^x]] right";
+    is ([[?x]]),[ ?x ], "parses [[?x]] right";
+    is ([[~x]]),[ ~x ], "parses [[~x]] right";
+
+    is ([[-$x]]),[ -$x ], 'parses [[-$x]] right';
+    is ([[+$x]]),[ +$x ], 'parses [[+$x]] right';
+    is ([[^$x]]),[ ^$x ], 'parses [[^$x]] right';
+    is ([[?$x]]),[ ?$x ], 'parses [[?$x]] right';
+    is ([[~$x]]),[ ~$x ], 'parses [[~$x]] right';
+
+    is ([[-@x]]),[ -@x ], "parses [[-@x]] right";
+    is ([[+@x]]),[ +@x ], "parses [[+@x]] right";
+    is ([[^@x]]),[ ^@x ], "parses [[^@x]] right";
+    is ([[?@x]]),[ ?@x ], "parses [[?@x]] right";
+    is ([[~@x]]),[ ~@x ], "parses [[~@x]] right";
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5494
