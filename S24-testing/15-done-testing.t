@@ -13,19 +13,21 @@ constant DUBIOUS = 255;
 my @test =
     {   description => 'wrong count, all pass',
         expected => {
-            out => rx/ False \s+ $ / ,
-            status => DUBIOUS, },
+            out => "1..1\nok 1 - Passes\n"
+                 ~ "ok 2 - Passes extra test\nFalse\n",
+            status => DUBIOUS, 
+        },
         program => Q{
             use Test;
             plan 1;
             ok True, "Passes";
             ok True, "Passes extra test";
             say done-testing;
-        }
+        },
     },
     {   description => 'correct count, all pass',
         expected => {
-            out => rx/ True \s+ $ / ,
+            out => "1..2\nok 1 - Passes\nok 2 - Passes\nTrue\n",
             status => PASS, },
         program => Q{
             use Test;
@@ -37,12 +39,11 @@ my @test =
     },
     {   description => 'correct count, one fails',
         expected => {
-            out => rx/ False \s+ $ / ,
+            out => "1..2\nok 1 - Passes\nnot ok 2 - Fails\nFalse\n",
             status => FAIL, },
         program => Q{
             use Test;
-            plan 3;
-            ok True, "Passes";
+            plan 2;
             ok True, "Passes";
             ok False, "Fails";
             say done-testing;
