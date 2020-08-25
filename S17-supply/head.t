@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Tap;
 
-plan 20;
+plan 21;
 
 dies-ok { Supply.new.head("foo") }, 'cannot have "foo" head';
 
@@ -44,6 +44,19 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     $channel.send(44);
     $channel.close;
     is $channel.list.join(', '), '42, 43, 44', 'does indeed fire';
+}
+
+# https://github.com/rakudo/rakudo/issues/3877
+{
+    my $s = Supplier.new;
+    my int $seen;
+    react {
+        whenever $s.Supply.head(1) {
+            ++$seen;
+        }
+        $s.emit(42) xx 2;
+    }
+    is $seen, 1, 'did we exit and receive only 1 value';
 }
 
 # vim: expandtab shiftwidth=4
