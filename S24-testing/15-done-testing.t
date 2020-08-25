@@ -1,5 +1,6 @@
-#!/usr/bin/env raku
+use v6;
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
 # done-testing() to return True on passing, False for dubious or failing
@@ -50,9 +51,8 @@ my @test =
         },
     };
 
-for @test  -> %h {
+for @test -> %h {
     is_run( %h<program>, %h<expected>, %h<description>);
 }
 
 done-testing;
-
