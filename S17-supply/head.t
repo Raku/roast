@@ -47,6 +47,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 }
 
 # https://github.com/rakudo/rakudo/issues/3877
+#?rakudo skip "awaiting merge of PR#3879"
 {
     my $s = Supplier.new;
     my int $seen;
@@ -54,7 +55,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         whenever $s.Supply.head(1) {
             ++$seen;
         }
-        $s.emit(42) xx 2;
+        $s.emit(42);
     }
     is $seen, 1, 'did we exit and receive only 1 value';
 }
