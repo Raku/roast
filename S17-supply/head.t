@@ -47,7 +47,6 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
 }
 
 # https://github.com/rakudo/rakudo/issues/3877
-#?rakudo skip "awaiting merge of PR#3879"
 {
     my $s = Supplier.new;
     my int $seen;
