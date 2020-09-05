@@ -122,7 +122,6 @@ is_run(
        { status => 0, err => -> $o { $o ~~ / ^ \d+ \n $ / }},
        'sorting method list does not segfault',
 );
-=finish
 
 # RT #123684
 is_run '{;}',
