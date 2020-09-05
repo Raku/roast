@@ -116,10 +116,11 @@ throws-like ｢Any .= ()｣, Exception, :message{.contains: 'Any'},
 
 # https://github.com/Raku/old-issue-tracker/issues/4309
 is_run(
-       '0.^methods(:all).sort',
-       { status => 0, err => -> $o {  $o.chars > 2 }},
+       'note 0.^methods(:all).sort.elems',
+       { status => 0, err => -> $o { $o ~~ / ^ \d+ \n $ / }},
        'sorting method list does not segfault',
 );
+=finish
 
 # https://github.com/Raku/old-issue-tracker/issues/3658
 is_run '{;}',
