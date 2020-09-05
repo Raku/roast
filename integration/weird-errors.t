@@ -120,7 +120,6 @@ is_run(
        { status => 0, err => -> $o { $o ~~ / ^ \d+ \n $ / }},
        'sorting method list does not segfault',
 );
-=finish
 
 # https://github.com/Raku/old-issue-tracker/issues/3658
 is_run '{;}',
