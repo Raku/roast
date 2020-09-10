@@ -19,9 +19,9 @@ throws-like ｢*+42:foo｣, X::Syntax::Adverb, :what{.so},
 subtest 'same exception with and without type smiley for failing coercion on var' => {
     plan 3;
     my \XTAD = X::TypeCheck::Attribute::Default;
-    throws-like ｢class { has Int() $.x = "42"}.new.x｣,           XTAD, 'no type smiley';
-    throws-like ｢class { has Int:D() $.x = "42"}.new.x｣,         XTAD, ':D (1)';
-    throws-like ｢class { has Int:D() $.x = "42"}.new(:x("43"))｣, XTAD, ':D (2)';
+    throws-like ｢class { has Int(Rat) $.x = "42"}.new.x｣,           XTAD, 'no type smiley';
+    throws-like ｢class { has Int:D(Rat) $.x = "42"}.new.x｣,         XTAD, ':D (1)';
+    throws-like ｢class { has Int:D(Rat) $.x = "42"}.new(:x("43"))｣, XTAD, ':D (2)';
 }
 
 subtest 'attempting to use defaults with slurpy parameters throws' => {
