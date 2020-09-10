@@ -48,8 +48,8 @@ class NastyChild is Parent { };
     sub f1(Str:D(Cool:D) $x) { $x }
     sub f2(Str(Cool:D)   $x) { $x; }
 
-    throws-like { EVAL 'f1(Cool)' }, X::TypeCheck::Binding::Parameter, message => /expected\sCool\:D/;
-    throws-like { EVAL 'f2(Cool)' }, X::TypeCheck::Binding::Parameter, message => /expected\sCool\:D/;
+    throws-like { EVAL 'f1(Cool)' }, X::TypeCheck::Binding::Parameter, message => /expected \s \S* Cool\:D/;
+    throws-like { EVAL 'f2(Cool)' }, X::TypeCheck::Binding::Parameter, message => /expected \s \S* Cool\:D/;
     isa-ok f1(23), Str, 'Definedness check + coercion (1)';
     isa-ok f2(23), Str, 'Definedness check + coercion (2)';
 
