@@ -156,7 +156,7 @@ nok (defined  \()[0]), '\()[0] is not defined';
 {
     sub f(|everything) { everything.raku };
     my %h = :a, :b, :!c;
-    ok f(%h) ~~ /'\(' \s* '{'/, 'Hashes not flattened into capture list';
+    ok f(%h) ~~ /'(' \s* '{'/, 'Hashes not flattened into capture list';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/4360
