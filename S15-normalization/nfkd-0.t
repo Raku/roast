@@ -1,7 +1,7 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
-# Generated from Unicode version 12.1.0.
+# Generated from Unicode version 13.0.0.
 
 use Test;
 
@@ -2007,5 +2007,3 @@ ok Uni.new(0x3293).NFKD.list ~~ (0x793E,), '3293 -> 793E';
 ok Uni.new(0x3294).NFKD.list ~~ (0x540D,), '3294 -> 540D';
 ok Uni.new(0x3295).NFKD.list ~~ (0x7279,), '3295 -> 7279';
 ok Uni.new(0x3296).NFKD.list ~~ (0x8CA1,), '3296 -> 8CA1';
-
-# vim: expandtab shiftwidth=4

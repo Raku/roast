@@ -1,7 +1,7 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
-# Generated from Unicode version 12.1.0.
+# Generated from Unicode version 13.0.0.
 
 use Test;
 
@@ -377,6 +377,7 @@ ok Uni.new(0xAB5C).NFKD.list ~~ (0xA727,), 'AB5C -> A727';
 ok Uni.new(0xAB5D).NFKD.list ~~ (0xAB37,), 'AB5D -> AB37';
 ok Uni.new(0xAB5E).NFKD.list ~~ (0x026B,), 'AB5E -> 026B';
 ok Uni.new(0xAB5F).NFKD.list ~~ (0xAB52,), 'AB5F -> AB52';
+ok Uni.new(0xAB69).NFKD.list ~~ (0x028D,), 'AB69 -> 028D';
 ok Uni.new(0xAC00).NFKD.list ~~ (0x1100, 0x1161,), 'AC00 -> 1100 1161';
 ok Uni.new(0xAC01).NFKD.list ~~ (0x1100, 0x1161, 0x11A8,), 'AC01 -> 1100 1161 11A8';
 ok Uni.new(0xAC02).NFKD.list ~~ (0x1100, 0x1161, 0x11A9,), 'AC02 -> 1100 1161 11A9';
@@ -2006,6 +2007,3 @@ ok Uni.new(0xB259).NFKD.list ~~ (0x1102, 0x1171, 0x11A8,), 'B259 -> 1102 1171 11
 ok Uni.new(0xB25A).NFKD.list ~~ (0x1102, 0x1171, 0x11A9,), 'B25A -> 1102 1171 11A9';
 ok Uni.new(0xB25B).NFKD.list ~~ (0x1102, 0x1171, 0x11AA,), 'B25B -> 1102 1171 11AA';
 ok Uni.new(0xB25C).NFKD.list ~~ (0x1102, 0x1171, 0x11AB,), 'B25C -> 1102 1171 11AB';
-ok Uni.new(0xB25D).NFKD.list ~~ (0x1102, 0x1171, 0x11AC,), 'B25D -> 1102 1171 11AC';
-
-# vim: expandtab shiftwidth=4

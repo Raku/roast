@@ -1,6 +1,6 @@
 ## WHEN UPDATING UNICODE VERSION ALSO UPDATE docs/unicode-generated-tests.asciidoc
 use v6;
-my IO::Path $repo-dir      = $?FILE.IO.parent(2).add("3rdparty/Unicode/11.0.0/ucd/auxiliary/GraphemeBreakTest.txt");
+my IO::Path $repo-dir      = $?FILE.IO.parent(2).add("3rdparty/Unicode/13.0.0/ucd/auxiliary/GraphemeBreakTest.txt");
 my IO::Path $rakudo-subdir = $?FILE.IO.parent(2);
 my IO::Path $rakudo-dir    = $rakudo-subdir.child($repo-dir);
 my Str:D    $location      = $rakudo-dir.e ?? $rakudo-dir.Str !! $repo-dir.Str;
@@ -46,16 +46,18 @@ values are either set to ALL or set to one or more of C,0,1,2,3,4..
 =end pod
 
 constant %fudged-tests = {
-    694 => ['ALL'],
-    695 => ['ALL'],
-    591 => ['ALL'],
+    #694 => ['ALL'],
+    624 => ['ALL'], #fails hard, commmented out in GraphemeBreakTest.txt
+    625 => ['ALL'], #fails hard, commmented out in GraphemeBreakTest.txt
 };
 constant @lines-with-normalization = (
-    441 => [0, ],
-    674 => [ 0, ],
-    678 => [ 0, ],
-    679 => [ 0, ],
-    686 => [ 0, ],
+    419 => [ 0, ],
+    604 => [ 0, ],
+    608 => [ 0, ],
+    616 => [ 0, ],
+    624 => [ 0, ], #fails hard, commmented out in GraphemeBreakTest.txt
+    625 => [ 0, ], #fails hard, commmented out in GraphemeBreakTest.txt
+    626 => [ 0, ],
 );
 sub MAIN (Str:D :$file = $location, Str :$only, Bool:D :$debug = False) {
     $DEBUG = $debug;
@@ -64,7 +66,7 @@ sub MAIN (Str:D :$file = $location, Str :$only, Bool:D :$debug = False) {
     die "Can't find file at ", $file.IO.absolute unless $file.IO.f;
     note "Reading file ", $file.IO.absolute;
     my @fail;
-    plan (1943);
+    plan (1706); #1943
     for $file.IO.lines -> $line {
         process-line $line, @fail, :@only;
     }

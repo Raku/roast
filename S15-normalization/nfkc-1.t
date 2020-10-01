@@ -1,7 +1,7 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
-# Generated from Unicode version 12.1.0.
+# Generated from Unicode version 13.0.0.
 
 use Test;
 
@@ -377,6 +377,7 @@ ok Uni.new(0xAB5C).NFKC.list ~~ (0xA727,), 'AB5C -> A727';
 ok Uni.new(0xAB5D).NFKC.list ~~ (0xAB37,), 'AB5D -> AB37';
 ok Uni.new(0xAB5E).NFKC.list ~~ (0x026B,), 'AB5E -> 026B';
 ok Uni.new(0xAB5F).NFKC.list ~~ (0xAB52,), 'AB5F -> AB52';
+ok Uni.new(0xAB69).NFKC.list ~~ (0x028D,), 'AB69 -> 028D';
 ok Uni.new(0xAC00).NFKC.list ~~ (0xAC00,), 'AC00 -> AC00';
 ok Uni.new(0xAC01).NFKC.list ~~ (0xAC01,), 'AC01 -> AC01';
 ok Uni.new(0xAC02).NFKC.list ~~ (0xAC02,), 'AC02 -> AC02';
@@ -2006,6 +2007,3 @@ ok Uni.new(0xB259).NFKC.list ~~ (0xB259,), 'B259 -> B259';
 ok Uni.new(0xB25A).NFKC.list ~~ (0xB25A,), 'B25A -> B25A';
 ok Uni.new(0xB25B).NFKC.list ~~ (0xB25B,), 'B25B -> B25B';
 ok Uni.new(0xB25C).NFKC.list ~~ (0xB25C,), 'B25C -> B25C';
-ok Uni.new(0xB25D).NFKC.list ~~ (0xB25D,), 'B25D -> B25D';
-
-# vim: expandtab shiftwidth=4

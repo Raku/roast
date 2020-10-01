@@ -1,12 +1,13 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
-# Generated from Unicode version 12.1.0.
+# Generated from Unicode version 13.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xC9CD).NFKD.list ~~ (0x110C, 0x1175, 0x11B4,), 'C9CD -> 110C 1175 11B4';
 ok Uni.new(0xC9CE).NFKD.list ~~ (0x110C, 0x1175, 0x11B5,), 'C9CE -> 110C 1175 11B5';
 ok Uni.new(0xC9CF).NFKD.list ~~ (0x110C, 0x1175, 0x11B6,), 'C9CF -> 110C 1175 11B6';
 ok Uni.new(0xC9D0).NFKD.list ~~ (0x110C, 0x1175, 0x11B7,), 'C9D0 -> 110C 1175 11B7';
@@ -2006,6 +2007,3 @@ ok Uni.new(0xD199).NFKD.list ~~ (0x1110, 0x1168, 0x11BC,), 'D199 -> 1110 1168 11
 ok Uni.new(0xD19A).NFKD.list ~~ (0x1110, 0x1168, 0x11BD,), 'D19A -> 1110 1168 11BD';
 ok Uni.new(0xD19B).NFKD.list ~~ (0x1110, 0x1168, 0x11BE,), 'D19B -> 1110 1168 11BE';
 ok Uni.new(0xD19C).NFKD.list ~~ (0x1110, 0x1168, 0x11BF,), 'D19C -> 1110 1168 11BF';
-ok Uni.new(0xD19D).NFKD.list ~~ (0x1110, 0x1168, 0x11C0,), 'D19D -> 1110 1168 11C0';
-
-# vim: expandtab shiftwidth=4

@@ -1,12 +1,13 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
-# Generated from Unicode version 12.1.0.
+# Generated from Unicode version 13.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xFAD7).NFC.list ~~ (0x27ED3,), 'FAD7 -> 27ED3';
 ok Uni.new(0xFAD8).NFC.list ~~ (0x9F43,), 'FAD8 -> 9F43';
 ok Uni.new(0xFAD9).NFC.list ~~ (0x9F8E,), 'FAD9 -> 9F8E';
 ok Uni.new(0xFB00).NFC.list ~~ (0xFB00,), 'FB00 -> FB00';
@@ -1100,6 +1101,7 @@ ok Uni.new(0x114BC).NFC.list ~~ (0x114BC,), '114BC -> 114BC';
 ok Uni.new(0x114BE).NFC.list ~~ (0x114BE,), '114BE -> 114BE';
 ok Uni.new(0x115BA).NFC.list ~~ (0x115BA,), '115BA -> 115BA';
 ok Uni.new(0x115BB).NFC.list ~~ (0x115BB,), '115BB -> 115BB';
+ok Uni.new(0x11938).NFC.list ~~ (0x11938,), '11938 -> 11938';
 ok Uni.new(0x1D15E).NFC.list ~~ (0x1D157, 0x1D165,), '1D15E -> 1D157 1D165';
 ok Uni.new(0x1D15F).NFC.list ~~ (0x1D158, 0x1D165,), '1D15F -> 1D158 1D165';
 ok Uni.new(0x1D160).NFC.list ~~ (0x1D158, 0x1D165, 0x1D16E,), '1D160 -> 1D158 1D165 1D16E';
@@ -2005,7 +2007,3 @@ ok Uni.new(0x1D792).NFC.list ~~ (0x1D792,), '1D792 -> 1D792';
 ok Uni.new(0x1D793).NFC.list ~~ (0x1D793,), '1D793 -> 1D793';
 ok Uni.new(0x1D794).NFC.list ~~ (0x1D794,), '1D794 -> 1D794';
 ok Uni.new(0x1D795).NFC.list ~~ (0x1D795,), '1D795 -> 1D795';
-ok Uni.new(0x1D796).NFC.list ~~ (0x1D796,), '1D796 -> 1D796';
-ok Uni.new(0x1D797).NFC.list ~~ (0x1D797,), '1D797 -> 1D797';
-
-# vim: expandtab shiftwidth=4

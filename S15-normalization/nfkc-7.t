@@ -1,12 +1,13 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
-# Generated from Unicode version 12.1.0.
+# Generated from Unicode version 13.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xFAD7).NFKC.list ~~ (0x27ED3,), 'FAD7 -> 27ED3';
 ok Uni.new(0xFAD8).NFKC.list ~~ (0x9F43,), 'FAD8 -> 9F43';
 ok Uni.new(0xFAD9).NFKC.list ~~ (0x9F8E,), 'FAD9 -> 9F8E';
 ok Uni.new(0xFB00).NFKC.list ~~ (0x0066, 0x0066,), 'FB00 -> 0066 0066';
@@ -1100,6 +1101,7 @@ ok Uni.new(0x114BC).NFKC.list ~~ (0x114BC,), '114BC -> 114BC';
 ok Uni.new(0x114BE).NFKC.list ~~ (0x114BE,), '114BE -> 114BE';
 ok Uni.new(0x115BA).NFKC.list ~~ (0x115BA,), '115BA -> 115BA';
 ok Uni.new(0x115BB).NFKC.list ~~ (0x115BB,), '115BB -> 115BB';
+ok Uni.new(0x11938).NFKC.list ~~ (0x11938,), '11938 -> 11938';
 ok Uni.new(0x1D15E).NFKC.list ~~ (0x1D157, 0x1D165,), '1D15E -> 1D157 1D165';
 ok Uni.new(0x1D15F).NFKC.list ~~ (0x1D158, 0x1D165,), '1D15F -> 1D158 1D165';
 ok Uni.new(0x1D160).NFKC.list ~~ (0x1D158, 0x1D165, 0x1D16E,), '1D160 -> 1D158 1D165 1D16E';
@@ -2005,7 +2007,3 @@ ok Uni.new(0x1D792).NFKC.list ~~ (0x0393,), '1D792 -> 0393';
 ok Uni.new(0x1D793).NFKC.list ~~ (0x0394,), '1D793 -> 0394';
 ok Uni.new(0x1D794).NFKC.list ~~ (0x0395,), '1D794 -> 0395';
 ok Uni.new(0x1D795).NFKC.list ~~ (0x0396,), '1D795 -> 0396';
-ok Uni.new(0x1D796).NFKC.list ~~ (0x0397,), '1D796 -> 0397';
-ok Uni.new(0x1D797).NFKC.list ~~ (0x0398,), '1D797 -> 0398';
-
-# vim: expandtab shiftwidth=4

@@ -1,7 +1,7 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
-# Generated from Unicode version 12.1.0.
+# Generated from Unicode version 13.0.0.
 
 use Test;
 
@@ -377,6 +377,7 @@ ok Uni.new(0xAB5C).NFC.list ~~ (0xAB5C,), 'AB5C -> AB5C';
 ok Uni.new(0xAB5D).NFC.list ~~ (0xAB5D,), 'AB5D -> AB5D';
 ok Uni.new(0xAB5E).NFC.list ~~ (0xAB5E,), 'AB5E -> AB5E';
 ok Uni.new(0xAB5F).NFC.list ~~ (0xAB5F,), 'AB5F -> AB5F';
+ok Uni.new(0xAB69).NFC.list ~~ (0xAB69,), 'AB69 -> AB69';
 ok Uni.new(0xAC00).NFC.list ~~ (0xAC00,), 'AC00 -> AC00';
 ok Uni.new(0xAC01).NFC.list ~~ (0xAC01,), 'AC01 -> AC01';
 ok Uni.new(0xAC02).NFC.list ~~ (0xAC02,), 'AC02 -> AC02';
@@ -2006,6 +2007,3 @@ ok Uni.new(0xB259).NFC.list ~~ (0xB259,), 'B259 -> B259';
 ok Uni.new(0xB25A).NFC.list ~~ (0xB25A,), 'B25A -> B25A';
 ok Uni.new(0xB25B).NFC.list ~~ (0xB25B,), 'B25B -> B25B';
 ok Uni.new(0xB25C).NFC.list ~~ (0xB25C,), 'B25C -> B25C';
-ok Uni.new(0xB25D).NFC.list ~~ (0xB25D,), 'B25D -> B25D';
-
-# vim: expandtab shiftwidth=4

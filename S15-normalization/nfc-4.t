@@ -1,12 +1,13 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
-# Generated from Unicode version 12.1.0.
+# Generated from Unicode version 13.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xC1FD).NFC.list ~~ (0xC1FD,), 'C1FD -> C1FD';
 ok Uni.new(0xC1FE).NFC.list ~~ (0xC1FE,), 'C1FE -> C1FE';
 ok Uni.new(0xC1FF).NFC.list ~~ (0xC1FF,), 'C1FF -> C1FF';
 ok Uni.new(0xC200).NFC.list ~~ (0xC200,), 'C200 -> C200';
@@ -2006,6 +2007,3 @@ ok Uni.new(0xC9C9).NFC.list ~~ (0xC9C9,), 'C9C9 -> C9C9';
 ok Uni.new(0xC9CA).NFC.list ~~ (0xC9CA,), 'C9CA -> C9CA';
 ok Uni.new(0xC9CB).NFC.list ~~ (0xC9CB,), 'C9CB -> C9CB';
 ok Uni.new(0xC9CC).NFC.list ~~ (0xC9CC,), 'C9CC -> C9CC';
-ok Uni.new(0xC9CD).NFC.list ~~ (0xC9CD,), 'C9CD -> C9CD';
-
-# vim: expandtab shiftwidth=4
