@@ -64,7 +64,8 @@ is Buf.new(0x81,0x8d,0x8f).decode('windows-1252'), '', 'cp1252 decode tole
 ok Buf ~~ Stringy, 'Buf does Stringy';
 ok Buf ~~ Positional, 'Buf does Positional';
 
-is 'abc'.encode('ascii').list.join(','), '97,98,99', 'Buf.list gives list of codepoints';
+is-deeply Buf.new('abc'.encode: 'ascii').list, (97,98,99),
+    'Buf.list gives a list of codepoints';
 
 {
     my $temp;
