@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 90;
+plan 91;
 
 =begin description
 
@@ -479,6 +479,92 @@ subtest 'postconstraints on variables in my (...)' => {
         throws-like ｢my (\b where "x", "foo") = "y", "foo"｣, XA,
             'sigilless where literal';
         throws-like ｢my (\b where "x", "foo") = "x", "bar"｣, XA, 'literal';
+    }
+}
+
+# https://github.com/Raku/roast/issues/650
+group-of 5 => '`&`- sigiled variable be used in where' => {
+    my $wanted;
+    sub pos-match { $wanted = $^got; True  }
+    sub neg-match { $wanted = $^got; False }
+
+    group-of 4 => 'subset' => {
+        $wanted = Nil;
+
+        my subset PosSubset where &pos-match;
+        my subset NegSubset where &pos-match;
+        ok 42 ~~ PosSubset, 'pos';
+        is-deeply $wanted, 42,   'pos arg';
+        nok  73 !~~ NegSubset, 'neg';
+        is-deeply $wanted, 73,   'neg arg';
+    }
+
+    group-of 4 => 'my' => {
+        $wanted = Nil;
+
+        my $pos where &pos-match = 42;
+        is-deeply $pos,    42, 'pos';
+        is-deeply $wanted, 42, 'pos arg';
+
+        throws-like { my $z where &neg-match = 73 },
+          X::TypeCheck::Assignment, 'neg';
+        is-deeply $wanted, 73, 'neg arg';
+    }
+
+    group-of 4 => 'sub signature, simple' => {
+        $wanted = Nil;
+
+        sub test-pos ($x where &pos-match) {
+            is-deeply $x, 42, "sub called with right arg value"
+        }
+        sub test-neg ($ where &neg-match) { flunk "sub should not be called" }
+
+        test-pos 42;
+        is-deeply $wanted, 42, 'pos arg';
+
+        throws-like { test-neg 73 }, X::TypeCheck, 'neg';
+        is-deeply $wanted, 73, 'neg arg';
+    }
+
+    group-of 7 => 'method signature, fancy' => {
+        $wanted = Nil;
+
+        my class Foo {
+            method test-pos ($, $x where &pos-match, *@) {
+                is-deeply $x, 42, "method called with right arg value"
+            }
+            method test-neg ($, $ where &neg-match, *@) {
+                flunk "method should not be called"
+            }
+            method test-wild (
+              *@ ($x where &pos-match, *@ ($, $, $, $y where &pos-match, *@))
+            ) {
+                is-deeply $x, 42, 'method called with right arg value in $x';
+                is-deeply $y, 52, 'method called with right arg value in $y'
+            }
+        }
+
+        Foo.test-pos: Nil, 42, ^100;
+        is-deeply $wanted, 42, 'pos arg';
+
+        throws-like { Foo.test-neg: Nil, 73, ^100 }, X::TypeCheck, 'neg';
+        is-deeply $wanted, 73, 'neg arg';
+
+        Foo.test-wild: 42, 99, 70, 10, 52, ^100;
+        # we do not spec in what order the `where` classes are called, so
+        # check for both $x or $y values
+        cmp-ok $wanted, '~~', 42|52, 'pos arg in wild method';
+    }
+
+    group-of 2 => 'detached signature object' => {
+        $wanted = Nil;
+
+        ok \(Nil, 42, 50, :73y)
+          ~~ :($, $x where &pos-match, *@, *% (:$y where &pos-match)),
+          'sig matches capture';
+        # we do not spec in what order the `where` classes are called, so
+        # check for both $x or $y values
+        cmp-ok $wanted, '~~', 42|73, 'pos arg';
     }
 }
 
