@@ -56,7 +56,7 @@ USAGE
 }
 
 # decide between local and PATH perl6
-my ($p6) = grep -x, map catfile('.', $_), qw/perl6  perl6-m  perl6-j/;
+my ($p6) = grep -x, map catfile('.', $_), qw/perl6  perl6-m  perl6-j  rakudo-m/;
 unless ($p6) {
     warn 'did not find local perl6 binary; switching to using system `perl6`';
     $p6 = 'perl6';
