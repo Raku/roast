@@ -1,8 +1,9 @@
 use v6;
 
 use Test;
+use Test::Util;
 
-plan 20;
+plan 21;
 
 # TODO, based on synopsis 4:
 #
@@ -229,4 +230,15 @@ subtest 'FIRST+LAST loops as last statement in subs work and do not crash' => {
         is-deeply ($a, $b, $c), (1, 1, 100), 'wanted loop';
     }
 }
+
+# https://github.com/rakudo/rakudo/issues/1900
+{
+    doesn't-warn {
+        loop {
+            FIRST 'Here';
+            last;
+        }
+    }, 'FIRST statement in loop does not warn';
+}
+
 # vim: expandtab shiftwidth=4
