@@ -5,7 +5,7 @@ use Test::Util;
 
 # Tests for IO::Handle.lock/.unlock methods
 my $SLEEP = 1 * (%*ENV<ROAST_TIMING_SCALE> || 1);
-plan 29;
+plan 30;
 
 #?DOES 1
 sub test-lock (
@@ -227,5 +227,24 @@ subtest 'IO::CatHandle' => {
     is-deeply $cat.unlock, Nil, '.unlock on exhausted cat handle';
 }
 
+# https://github.com/rakudo/rakudo/issues/3742
+subtest 'check leaking of file descriptors with lock/close' => {
+    my $p = $*CWD.child("foo1.txt").open(:w);
+    isa-ok $p, IO::Handle, 'did the first open work';
+
+    $p.lock; $p.unlock; $p.lock;
+    my $descriptor = $p.native-descriptor;
+    $p.close;
+
+    my $q = $*CWD.child("foo1.txt").open(:w);
+    isa-ok $p, IO::Handle, 'did the second open work';
+    is $q.native-descriptor, $descriptor, 'did we not leak';
+    $q.close;
+
+    LEAVE {
+        $*CWD.child("foo1.txt").unlink;
+        $*CWD.child("foo2.txt").unlink;
+    }
+}
 
 # vim: expandtab shiftwidth=4
