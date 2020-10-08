@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 180;
+plan 181;
 
 # https://github.com/Raku/old-issue-tracker/issues/2075
 throws-like 'sub foo(--> NoSuchType) { }; foo', X::Undeclared, what => { m/'Type'/ }, symbol => { m/'NoSuchType'/ };
@@ -345,6 +345,12 @@ throws-like '$notahash<foo>', Exception, payload => rx:i/associative/, payload =
 
 # https://github.com/Raku/old-issue-tracker/issues/3233
 throws-like 'my $x :a', X::Syntax::Adverb;
+
+# https://github.com/rakudo/rakudo/issues/3949
+throws-like { use MONKEY; EVAL 'infix:(&)' },
+  X::Syntax::Adverb,
+  what => ':(&)',
+  'did the faulty adverb throw the correct error';
 
 # https://github.com/Raku/old-issue-tracker/issues/3092
 throws-like 'sub foo ($bar :D) { 1; }', X::Parameter::InvalidType;
