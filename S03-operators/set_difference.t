@@ -202,7 +202,7 @@ my @quads =
   [<a>.Set,<a>.Set,<a>.Set,(a=>-2).Mix],       <a>.Mix,
 ;
 
-plan 2 * (1 + 3 * @types + @pairs/2 + @triplets/3 + @quads/2);
+plan 2 * (1 + 3 * @types + @pairs/2 + @triplets/3 + @quads/2) + 2;
 
 # difference
 for
@@ -238,6 +238,17 @@ for
         is-deeply op(|@params), $result,
           "[$name] @params>>.gist()";
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/3945
+{
+    is-deeply (1..3, 1..3 Z(-) 2..4, 1..4),
+      ((1,).Set, ().Set),
+      'did Z handle (-) correctly';
+
+    is-deeply (1..3, 1..3 Z∖ 2..4, 1..4),
+      ((1,).Set, ().Set),
+      'did Z handle ∖ correctly';
 }
 
 # vim: expandtab shiftwidth=4

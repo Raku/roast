@@ -140,12 +140,12 @@ my @quads =
   <a b c>,                                         <a b c>.Set,
 ;
 
-plan 2 * (1 + 3 * @types + 2 * @pairs/2 + @triplets/3 + 6 * @quads/2);
+plan 2 * (1 + 3 * @types + 2 * @pairs/2 + @triplets/3 + 6 * @quads/2) + 2;
 
 # union
 for
-  &infix:<∪>,       "∪",
-  &infix:<(|)>,   "(|)"
+  &infix:<(|)>,   "(|)",
+  &infix:<∪>,       "∪"
 -> &op, $name {
 
     is-deeply op(), set(), "does $name\() return set()";
@@ -183,6 +183,17 @@ for
               "[$name] @mixed>>.gist()";
         }
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/3945
+{
+    is-deeply (1..3, 1..3 Z(|) 2..4, 2..5),
+      ((1,2,3,4).Set, (1,2,3,4,5).Set),
+      'did Z handle (|) correctly';
+
+    is-deeply (1..3, 1..3 Z∪ 2..4, 2..5),
+      ((1,2,3,4).Set, (1,2,3,4,5).Set),
+      'did Z handle ∪ correctly';
 }
 
 # vim: expandtab shiftwidth=4
