@@ -83,10 +83,7 @@ for \(:w), \(:rw), \(:a) -> $open-args {
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/6374
-#?rakudo.jvm skip 'hangs'
-#?DOES 1
-{
-  run-with-tty ｢say prompt "FOO"｣, :in<bar>,
+run-with-tty ｢say prompt "FOO"｣, :in<bar>,
     # Here we use .ends-width because (currently) there's some sort of
     # bug with Proc or something where sent STDIN ends up on our STDOUT.
     # Extra "\n" after `meow` is 'cause run-as-tty sends extra new line,
@@ -95,6 +92,5 @@ for \(:w), \(:rw), \(:a) -> $open-args {
         diag "Got STDOUT: {.raku}";
         False;
     }}, 'prompt does not hang';
-}
 
 # vim: expandtab shiftwidth=4
