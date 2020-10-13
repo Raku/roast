@@ -202,7 +202,7 @@ my @quads =
   [<a>.Set,<a>.Set,<a>.Set,(a=>-2).Mix],       <a>.Mix,
 ;
 
-plan 2 * (1 + 3 * @types + @pairs/2 + @triplets/3 + @quads/2) + 2;
+plan 2 * (1 + 3 * @types + @pairs/2 + @triplets/3 + @quads/2) + 4;
 
 # difference
 for
@@ -244,11 +244,19 @@ for
 {
     is-deeply (1..3, 1..3 Z(-) 2..4, 1..4),
       ((1,).Set, ().Set),
-      'did Z handle (-) correctly';
+      'did Z handle (-) correctly (1)';
 
     is-deeply (1..3, 1..3 Z∖ 2..4, 1..4),
       ((1,).Set, ().Set),
-      'did Z handle ∖ correctly';
+      'did Z handle ∖ correctly (1)';
+
+    is-deeply (1..3, 1..3 Z(-) 2..4, 1..2 Z(-) 2..3,2..3),
+      ((1,).Set, ().Set),
+      'did Z handle (-) correctly (2)';
+
+    is-deeply (1..3, 1..3 Z∖ 2..4, 1..2 Z∖ 2..3,2..3),
+      ((1,).Set, ().Set),
+      'did Z handle ∖ correctly (2)';
 }
 
 # vim: expandtab shiftwidth=4

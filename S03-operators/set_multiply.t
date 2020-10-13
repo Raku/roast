@@ -185,7 +185,7 @@ my @quads =
   <a b c>,                                         bag()
 ;
 
-plan 2 * (1 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2) + 2;
+plan 2 * (1 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2) + 4;
 
 # multiplication
 for
@@ -234,11 +234,19 @@ for
 {
     is-deeply (1..3, 1..3 Z(.) 2..4, 1..4),
       ((2,3).Bag, (1,2,3).Bag),
-      'did Z handle (.) correctly';
+      'did Z handle (.) correctly (1)';
 
     is-deeply (1..3, 1..3 Z⊍ 2..4, 1..4),
       ((2,3).Bag, (1,2,3).Bag),
-      'did Z handle ⊍ correctly';
+      'did Z handle ⊍ correctly (1)';
+
+    is-deeply (1..3, 1..3 Z(.) 2..4, 1..4 Z(.) 2..3, 1..2),
+      ((2,3).Bag, (1,2).Bag),
+      'did Z handle (.) correctly (1)';
+
+    is-deeply (1..3, 1..3 Z⊍ 2..4, 1..4 Z⊍ 2..3, 1..2),
+      ((2,3).Bag, (1,2).Bag),
+      'did Z handle ⊍ correctly (1)';
 }
 
 # vim: expandtab shiftwidth=4
