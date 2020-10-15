@@ -28,7 +28,23 @@ my @three-whatever is default(Nil) =
     *,   *, "x", Nil,
 ;
 
-plan 8 * ( 2 * @three-single / 4 + 2 * @three-whatever / 4 );
+# tests taking 3 keys with multi at highest level, result always the same
+my @three-multi is default(Nil) =
+  "a", "b", <c d e>,
+    *, "b", <c d e>,
+  "a",   *, <c d e>,
+    *,   *, <c d e>,
+  "a", "b", *,
+    *, "b", *,
+  "a",   *, *,
+    *,   *, *,
+;
+
+plan 8 * (
+    2 * @three-single / 4
+  + 2 * @three-whatever / 4
+  + 2 * @three-multi / 3
+);
 
 for @three-single -> $a, $b, $c, $result {
     my $raku    := $result.raku;
@@ -179,6 +195,80 @@ for @three-whatever -> $a, $b, $c, $result {
           "\%hash\{$araku;$braku;$craku}:v{
               ":delete" if $delete
           } gives {$exists ?? "($raku,)" !! "()"}";
+    }
+}
+
+for @three-multi -> $a, $b, $c {
+    my $araku   := $a.raku;
+    my $braku   := $b.raku;
+    my $craku   := $c<>.raku;
+
+    # Note: because $c may contain a list as an item, we need to decont
+    # it before using it as an index, otherwise we will never get a match.
+    # So the use of $c<> here is an artefact of the test, not of the way
+    # indexing works on multi-level hashes.
+    set-up-hash;
+    for False, True -> $delete {
+        is-deeply (%hash{$a;$b;$c<>}:$delete).sort,
+          (42, 666, { f => 314 }),
+          "\%hash\{$araku;$braku;$craku}{
+              ":delete" if $delete
+          } gives (42, 666, \{ f => 314 })";
+
+        set-up-hash if $delete;
+        is-deeply %hash{$a;$b;$c<>}:exists:$delete,
+          (True,True,True),
+          "\%hash\{$araku;$braku;$craku}:exists{
+              ":delete" if $delete
+          } gives (True,True,True)";
+
+        set-up-hash if $delete;
+        is-deeply (%hash{$a;$b;$c<>}:exists:kv:$delete)
+          .map(-> \key, \value { Pair.new(key,value) })
+          .sort( *.key )
+          .map( { |(.key, .value) } ),
+          (("a","b","c"),True,("a","b","d"),True,("a","b","e"),True),
+          "\%hash\{$araku;$braku;$craku}:exists:kv{
+              ":delete" if $delete
+          } gives (('a','b','c'),True,('a','b','d'),True,('a','b','e'),True)";
+
+        set-up-hash if $delete;
+        is-deeply (%hash{$a;$b;$c<>}:exists:p:$delete).sort( *.key ),
+          (("a","b","c") => True,("a","b","d") => True,("a","b","e") => True),
+          "\%hash\{$araku;$braku;$craku}:exists:p{
+              ":delete" if $delete
+          } gives ('a','b','c') => True,('a','b','d') => True,('a','b','e') => True";
+
+        set-up-hash if $delete;
+        is-deeply (%hash{$a;$b;$c<>}:k:$delete).sort,
+          (("a","b","c"),("a","b","d"),("a","b","e")),
+          "\%hash\{$araku;$braku;$craku}:k{
+              ":delete" if $delete
+          } gives ('a','b','c'),('a','b','d'),('a','b','e')";
+
+        set-up-hash if $delete;
+        is-deeply (%hash{$a;$b;$c<>}:kv:$delete)
+          .map(-> \key, \value { Pair.new(key,value) })
+          .sort( *.key )
+          .map( { |(.key, .value) } ),
+          (("a","b","c"),42,("a","b","d"),666,("a","b","e"),{ f => 314 }),
+          "\%hash\{$araku;$braku;$craku}:kv{
+              ":delete" if $delete
+          } gives ('a','b','c'),42,('a','b','d'),666,('a','b','e'),\{ f => 314 }";
+
+        set-up-hash if $delete;
+        is-deeply (%hash{$a;$b;$c<>}:p:$delete).sort( *.key ),
+          (("a","b","c") => 42,("a","b","d") => 666,("a","b","e") => { f => 314 }),
+          "\%hash\{$araku;$braku;$craku}:p{
+              ":delete" if $delete
+          } gives ('a','b','c') => 42,('a','b','d') => 666,('a','b','e') => \{ f => 314 }";
+
+        set-up-hash if $delete;
+        is-deeply (%hash{$a;$b;$c<>}:v:$delete).sort,
+          (42, 666, { f => 314 }),
+          "\%hash\{$araku;$braku;$craku}:v{
+              ":delete" if $delete
+          } gives 42, 666, \{ f => 314 }";
     }
 }
 
