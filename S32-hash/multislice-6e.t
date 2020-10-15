@@ -42,7 +42,7 @@ for @three-single -> $a, $b, $c, $result {
     set-up-hash;
     for False, True -> $delete {
         is-deeply %hash{$a;$b;$c}:$delete,
-          $exists ?? $result !! Any,
+          !$exists && !$delete ?? Any !! $result,
           "\%hash\{$araku;$braku;$craku}{
               ":delete" if $delete
           } gives {$exists ?? $raku !! "Nil"}";
@@ -118,7 +118,7 @@ for @three-whatever -> $a, $b, $c, $result {
     set-up-hash;
     for False, True -> $delete {
         is-deeply %hash{$a;$b;$c}:$delete,
-          $exists ?? ($result,) !! (Nil,),
+          !$exists && !$delete ?? (Any,) !! ($result,),
           "\%hash\{$araku;$braku;$craku}{
               ":delete" if $delete
           } gives {
