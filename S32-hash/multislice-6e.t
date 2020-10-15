@@ -227,41 +227,41 @@ for @three-multi -> $a, $b, $c {
           .map(-> \key, \value { Pair.new(key,value) })
           .sort( *.key )
           .map( { |(.key, .value) } ),
-          (("a","b","c"),True,("a","b","d"),True,("a","b","e"),True),
+          (<a b c>,True,<a b d>,True,<a b e>,True),
           "\%hash\{$araku;$braku;$craku}:exists:kv{
               ":delete" if $delete
-          } gives (('a','b','c'),True,('a','b','d'),True,('a','b','e'),True)";
+          } gives <a b c>,True,<a b d>,True,<a b e>,True";
 
         set-up-hash if $delete;
         is-deeply (%hash{$a;$b;$c<>}:exists:p:$delete).sort( *.key ),
-          (("a","b","c") => True,("a","b","d") => True,("a","b","e") => True),
+          (<a b c> => True,<a b d> => True,<a b e> => True),
           "\%hash\{$araku;$braku;$craku}:exists:p{
               ":delete" if $delete
-          } gives ('a','b','c') => True,('a','b','d') => True,('a','b','e') => True";
+          } gives <a b c> => True,<a b d> => True,<a b e> => True";
 
         set-up-hash if $delete;
         is-deeply (%hash{$a;$b;$c<>}:k:$delete).sort,
-          (("a","b","c"),("a","b","d"),("a","b","e")),
+          (<a b c>,<a b d>,<a b e>),
           "\%hash\{$araku;$braku;$craku}:k{
               ":delete" if $delete
-          } gives ('a','b','c'),('a','b','d'),('a','b','e')";
+          } gives <a b c>,<a b d>,<a b e>";
 
         set-up-hash if $delete;
         is-deeply (%hash{$a;$b;$c<>}:kv:$delete)
           .map(-> \key, \value { Pair.new(key,value) })
           .sort( *.key )
           .map( { |(.key, .value) } ),
-          (("a","b","c"),42,("a","b","d"),666,("a","b","e"),{ f => 314 }),
+          (<a b c>,42,<a b d>,666,<a b e>,{ f => 314 }),
           "\%hash\{$araku;$braku;$craku}:kv{
               ":delete" if $delete
-          } gives ('a','b','c'),42,('a','b','d'),666,('a','b','e'),\{ f => 314 }";
+          } gives <a b c>,42,<a b d>,666,<a b e>,\{ f => 314 }";
 
         set-up-hash if $delete;
         is-deeply (%hash{$a;$b;$c<>}:p:$delete).sort( *.key ),
-          (("a","b","c") => 42,("a","b","d") => 666,("a","b","e") => { f => 314 }),
+          (<a b c> => 42,<a b d> => 666,<a b e> => { f => 314 }),
           "\%hash\{$araku;$braku;$craku}:p{
               ":delete" if $delete
-          } gives ('a','b','c') => 42,('a','b','d') => 666,('a','b','e') => \{ f => 314 }";
+          } gives <a b c> => 42,<a b d> => 666,<a b e> => \{ f => 314 }";
 
         set-up-hash if $delete;
         is-deeply (%hash{$a;$b;$c<>}:v:$delete).sort,
