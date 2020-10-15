@@ -1,7 +1,7 @@
 use v6.e.PREVIEW;
 use Test;
 
-plan 480;
+plan 496;
 
 # Testing hash multislices, aka %h{a;b;c} and associated adverbs
 
@@ -9,23 +9,50 @@ my %hash;
 sub set-up-hash(--> Nil) {
     %hash = a => { b => { c => 42, d => 666, e => { f => 314 } } };
 }
-sub leftover-ok($leftover) {
+sub leftover-ok($leftover --> Nil) {
     is-deeply %hash, $leftover,
       'is hash as expected after deletion of key?';
     set-up-hash;
 }
+sub assignable-ok(\target, \values, %result --> Nil) {
+    subtest "check assignability with 999" => {
+        is-deeply (target = values), values,
+          "could we assign {values.raku} and did we get {values.raku} back";
+        is-deeply %hash, %result,
+          "did we assign value at the right place";
+    }
+    set-up-hash;
+}
 
 # tests taking 3 keys with a single (non-)result and result after deletion
+set-up-hash;
 for
 
-  "a", "b", "c", 42,           %(a => { b => { d => 666, e => { f => 314 } } }),
-  "a", "b", "d", 666,          %(a => { b => { c =>  42, e => { f => 314 } } }),
-  "a", "b", "e", { f => 314 }, %(a => { b => { c =>  42, d => 666 } }),
-  "a", "b", "x", Nil,          %hash,
-  "a", "x", "e", Nil,          %hash,
-  "x", "b", "e", Nil,          %hash
+  "a", "b", "c", 42,
+    %(a => { b => { d => 666, e => { f => 314 } } }),
+    %(a => { b => { c => 999, d => 666, e => { f => 314 } } }),
 
--> $a, $b, $c, $result, $leftover {
+  "a", "b", "d", 666,
+    %(a => { b => { c => 42, e => { f => 314 } } }),
+    %(a => { b => { c => 42, d => 999, e => { f => 314 } } }),
+
+  "a", "b", "e", { f => 314 },
+    %(a => { b => { c => 42, d => 666 } }),
+    %(a => { b => { c => 42, d => 666, e => 999 } }),
+
+  "a", "b", "x", Nil,
+    %hash,
+    %(a => { b => { c => 42, d => 666, e => { f => 314 }, x => 999 } }),
+
+  "a", "x", "e", Nil,
+    %hash,
+    %(a => { b => { c => 42, d => 666, e => { f => 314 } }, x => { e => 999 } }),
+
+  "x", "b", "e", Nil,
+    %hash,
+    %(a => { b => { c => 42, d => 666, e => { f => 314 } } }, x => { b => { e => 999 } })
+
+-> $a, $b, $c, $result, $leftover, $assigned {
     my $raku    := $result.raku;
     my $araku   := $a.raku;
     my $braku   := $b.raku;
@@ -34,14 +61,15 @@ for
     my $abcraku := $abc.raku;
     my $exists  := defined($result);
 
-    set-up-hash;
     for False, True -> $delete {
         is-deeply %hash{$a;$b;$c}:$delete,
           !$exists && !$delete ?? Any !! $result,  # XXX
           "\%hash\{$araku;$braku;$craku}{
               ":delete" if $delete
           } gives {$exists ?? $raku !! "Nil"}";
-        leftover-ok($leftover) if $delete;
+        $delete
+          ?? leftover-ok($leftover)
+          !! assignable-ok(%hash{$a;$b;$c}, 999, $assigned);
 
         is-deeply %hash{$a;$b;$c}:exists:$delete,
           $exists,
@@ -105,14 +133,31 @@ for
 # tests taking 3 keys with a single (non-)result and one or more whatevers
 for
 
-    *, "b", "c", 42,           %(a => { b => { d => 666, e => { f => 314 } } }),
-  "a",   *, "d", 666,          %(a => { b => { c =>  42, e => { f => 314 } } }),
-    *,   *, "e", { f => 314 }, %(a => { b => { c =>  42, d => 666 } }),
-    *, "b", "x", Nil,          %hash,
-  "a",   *, "x", Nil,          %hash,
-    *,   *, "x", Nil,          %hash
+  *, "b", "c", 42,
+    %(a => { b => { d => 666, e => { f => 314 } } }),
+    %(a => { b => { c => 999, d => 666, e => { f => 314 } } }),
 
--> $a, $b, $c, $result, $leftover {
+  "a", *, "d", 666,
+    %(a => { b => { c =>  42, e => { f => 314 } } }),
+    %(a => { b => { c =>  42, d => 999, e => { f => 314 } } }),
+
+  *, *, "e", { f => 314 },
+    %(a => { b => { c =>  42, d => 666 } }),
+    %(a => { b => { c =>  42, d => 666, e => 999 } }),
+
+  *, "b", "x", Nil,
+    %hash,
+    %(a => { b => { c =>  42, d => 666, e => { f => 314 }, x => 999 } }),
+
+  "a", *, "x", Nil,
+    %hash,
+    %(a => { b => { c =>  42, d => 666, e => { f => 314 }, x => 999 } }),
+
+  *, *, "x", Nil,
+    %hash,
+    %(a => { b => { c =>  42, d => 666, e => { f => 314 }, x => 999 } })
+
+-> $a, $b, $c, $result, $leftover, $assigned {
     my $raku    := $result.raku;
     my $araku   := $a.raku;
     my $braku   := $b.raku;
@@ -121,7 +166,6 @@ for
     my $abcraku := $abc.raku;
     my $exists  := defined($result);
 
-    set-up-hash;
     for False, True -> $delete {
         is-deeply %hash{$a;$b;$c}:$delete,
           !$exists && !$delete ?? (Any,) !! ($result,),  # XXX
@@ -130,7 +174,9 @@ for
           } gives {
               $exists ?? "($raku,)" !! "(Nil,)"
           }";
-        leftover-ok($leftover) if $delete;
+        $delete
+          ?? leftover-ok($leftover)
+          !! assignable-ok(%hash{$a;$b;$c}[0], 999, $assigned);
 
         is-deeply %hash{$a;$b;$c}:exists:$delete,
           ($exists,),
@@ -202,23 +248,28 @@ for
     *,   *, *
 
 -> $a, $b, $c {
-    my $araku   := $a.raku;
-    my $braku   := $b.raku;
-    my $craku   := $c<>.raku;
+    my $araku    := $a.raku;
+    my $braku    := $b.raku;
+    my $craku    := $c<>.raku;
     my $leftover := %(a => %(b => { }));
+    my $assigned := %(a => { b => { c => 777, d => 888, e => 999 } });
 
     # Note: because $c may contain a list as an item, we need to decont
     # it before using it as an index, otherwise we will never get a match.
     # So the use of $c<> here is an artefact of the test, not of the way
     # indexing works on multi-level hashes.
-    set-up-hash;
     for False, True -> $delete {
         is-deeply (%hash{$a;$b;$c<>}:$delete).sort,
           (42, 666, { f => 314 }),
           "\%hash\{$araku;$braku;$craku}{
               ":delete" if $delete
           } gives (42, 666, \{ f => 314 })";
-        leftover-ok($leftover) if $delete;
+        if $delete {
+            leftover-ok($leftover);
+        }
+        elsif !($c ~~ Whatever) {  # * is not reproducible
+            assignable-ok(%hash{$a;$b;$c<>}, (777,888,999), $assigned);
+        }
 
         is-deeply %hash{$a;$b;$c<>}:exists:$delete,
           (True,True,True),
