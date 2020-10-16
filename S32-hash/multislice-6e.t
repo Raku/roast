@@ -1,7 +1,7 @@
 use v6.e.PREVIEW;
 use Test;
 
-plan 496;
+plan 487;
 
 # Testing hash multislices, aka %h{a;b;c} and associated adverbs
 
@@ -174,16 +174,16 @@ for
     my $exists  := defined($result);
 
     for False, True -> $delete {
-        is-deeply %hash{$a;$b;$c}:$delete,
+
+        # always non-deterministic
+        non-assignable-ok %hash{$a;$b;$c}:$delete,
           !$exists && !$delete ?? (Any,) !! ($result,),  # XXX
           "\%hash\{$araku;$braku;$craku}{
               ":delete" if $delete
           } gives {
               $exists ?? "($raku,)" !! "(Nil,)"
           }";
-        $delete
-          ?? leftover-ok($leftover)
-          !! assignable-ok(%hash{$a;$b;$c}[0], 999, $assigned);
+        leftover-ok($leftover) if $delete;
 
         non-assignable-ok %hash{$a;$b;$c}:exists:$delete,
           ($exists,),
@@ -260,21 +260,25 @@ for
     my $craku    := $c<>.raku;
     my $leftover := %(a => %(b => { }));
     my $assigned := %(a => { b => { c => 777, d => 888, e => 999 } });
+    my $deterministic := !($a | $b | $c ~~ Whatever);
 
     # Note: because $c may contain a list as an item, we need to decont
     # it before using it as an index, otherwise we will never get a match.
     # So the use of $c<> here is an artefact of the test, not of the way
     # indexing works on multi-level hashes.
     for False, True -> $delete {
-        is-deeply (%hash{$a;$b;$c<>}:$delete).sort,
+
+        ($deterministic && !$delete ?? &is-deeply !! &non-assignable-ok)(
+          (%hash{$a;$b;$c<>}:$delete).sort,
           (42, 666, { f => 314 }),
           "\%hash\{$araku;$braku;$craku}{
               ":delete" if $delete
-          } gives (42, 666, \{ f => 314 })";
+          } gives (42, 666, \{ f => 314 })"
+        );
         if $delete {
             leftover-ok($leftover);
         }
-        elsif !($c ~~ Whatever) {  # * is not reproducible
+        elsif $deterministic {
             assignable-ok(%hash{$a;$b;$c<>}, (777,888,999), $assigned);
         }
 
