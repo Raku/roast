@@ -1,7 +1,7 @@
 use v6.e.PREVIEW;
 use Test;
 
-plan 487;
+plan 527;
 
 # Testing hash multislices, aka %h{a;b;c} and associated adverbs
 
@@ -84,6 +84,13 @@ for
               ":delete" if $delete
           } gives $exists";
         leftover-ok($leftover) if $delete;
+
+        $delete
+          ?? dies-ok({ %hash{$a;$b;$c}:!exists = 999 },
+               "\%hash\{$araku;$braku;$craku}:!exists:delete dies ok")
+          !! non-assignable-ok( %hash{$a;$b;$c}:!exists,
+               !$exists,
+               "\%hash\{$araku;$braku;$craku}:!exists gives {!$exists}");
 
         non-assignable-ok %hash{$a;$b;$c}:exists:kv:$delete,
           $exists ?? ($abc,$exists) !! (),
@@ -192,6 +199,13 @@ for
           } gives ($exists,)";
         leftover-ok($leftover) if $delete;
 
+        $delete
+          ?? dies-ok({ %hash{$a;$b;$c}:!exists:delete = 999 },
+               "\%hash\{$araku;$braku;$craku}:!exists:delete dies ok")
+          !! non-assignable-ok( %hash{$a;$b;$c}:!exists,
+               (!$exists,),
+               "\%hash\{$araku;$braku;$craku}:!exists gives ({!$exists},)");
+
         non-assignable-ok %hash{$a;$b;$c}:exists:kv:$delete,
           $exists ?? ($abc,$exists) !! (),
           "\%hash\{$araku;$braku;$craku}:exists:kv{
@@ -288,6 +302,15 @@ for
               ":delete" if $delete
           } gives (True,True,True)";
         leftover-ok($leftover) if $delete;
+
+        $delete
+          ?? dies-ok({ %hash{$a;$b;$c<>}:!exists:delete },
+               "\%hash\{$araku;$braku;$craku}:!exists:delete dies ok")
+          !! non-assignable-ok( %hash{$a;$b;$c<>}:!exists,
+               (False,False,False),
+               "\%hash\{$araku;$braku;$craku}:!exists{
+                   ":delete" if $delete
+               } gives (False,False,False)");
 
         non-assignable-ok (%hash{$a;$b;$c<>}:exists:kv:$delete)
           .map(-> \key, \value { Pair.new(key,value) })
