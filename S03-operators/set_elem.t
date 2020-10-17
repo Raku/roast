@@ -83,7 +83,7 @@ my @notelem =
   "d" => "a".."c",
 ;
 
-plan 2 * (2 * @elem/2 + 2 * @notelem) + 1 * (2 * @elem/2 + 2 * @notelem);
+plan 2 * (2 * @elem/2 + 2 * @notelem + 4) + 1 * (2 * @elem/2 + 2 * @notelem + 4);
 
 # is an element of / contains
 for
@@ -109,6 +109,15 @@ for
               "$_.^name() NOT $rname marmoset";
         }
     }
+
+    throws-like { op(1,Failure.new) }, Exception,
+      "$name with a Failure:D on the RHS throws";
+    throws-like { op(Failure.new,^3) }, Exception,
+      "$name with a Failure:D on the LHS throws";
+    throws-like { rop(1,Failure.new) }, Exception,
+      "$rname with a Failure:D on the RHS throws";
+    throws-like { rop(Failure.new,^3) }, Exception,
+      "$rname with a Failure:D on the LHS throws";
 }
 
 # is not an element of / does not contain
@@ -136,6 +145,15 @@ for
               "$_.^name() NOT $rname marmoset";
         }
     }
+
+    throws-like { op(1,Failure.new) }, Exception,
+      "$name with a Failure:D on the RHS throws";
+    throws-like { op(Failure.new,^3) }, Exception,
+      "$name with a Failure:D on the LHS throws";
+    throws-like { rop(1,Failure.new) }, Exception,
+      "$rname with a Failure:D on the RHS throws";
+    throws-like { rop(Failure.new,^3) }, Exception,
+      "$rname with a Failure:D on the LHS throws";
 }
 
 

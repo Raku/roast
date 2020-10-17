@@ -347,7 +347,7 @@ my @nok =
   <a>.BagHash,             <a>.Mix,
 ;
 
-plan 2 * (2 * @identities + @ok + @nok) + 1 * (2 * @identities + @ok + @nok);
+plan 2 * (2 * @identities + @ok + @nok + 4) + 1 * (2 * @identities + @ok + @nok + 4);
 
 # is proper subset of / proper superset of
 for
@@ -379,6 +379,15 @@ for
         is-deeply rop($right,$left), False,
           "$left.^name() NOT $rname $right";
     }
+
+    throws-like { op(1,Failure.new) }, Exception,
+      "$name with a Failure:D on the RHS throws";
+    throws-like { op(Failure.new,^3) }, Exception,
+      "$name with a Failure:D on the LHS throws";
+    throws-like { rop(1,Failure.new) }, Exception,
+      "$rname with a Failure:D on the RHS throws";
+    throws-like { rop(Failure.new,^3) }, Exception,
+      "$rname with a Failure:D on the LHS throws";
 }
 
 # is not a proper subset of / is not a proper superset of
@@ -410,6 +419,15 @@ for
         is-deeply rop($right,$left), True,
           "$left.^name() NOT $rname $right";
     }
+
+    throws-like { op(1,Failure.new) }, Exception,
+      "$name with a Failure:D on the RHS throws";
+    throws-like { op(Failure.new,^3) }, Exception,
+      "$name with a Failure:D on the LHS throws";
+    throws-like { rop(1,Failure.new) }, Exception,
+      "$rname with a Failure:D on the RHS throws";
+    throws-like { rop(Failure.new,^3) }, Exception,
+      "$rname with a Failure:D on the LHS throws";
 }
 
 # vim: expandtab shiftwidth=4
