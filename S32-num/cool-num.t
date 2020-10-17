@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 45;
+plan 46;
 
 =begin pod
 
@@ -81,9 +81,9 @@ is-approx NotComplex.new.from-radians(Gradians), $magic.from-radians(Gradians),
 
 is-approx "17.25".floor, 17.25.floor, '"17.25".floor == 17.25.floor';
 is-approx "17.25".ceiling, 17.25.ceiling, '"17.25".ceiling == 17.25.ceiling';
-is-approx "17.25".round, 17.25.round, '"17.25".floar == 17.25.round';
-is-approx "17.25".round("0.1"), 17.25.round(0.1), '"17.25".floar("0.1") == 17.25.round(0.1)';
-is-approx "17.25".truncate, 17.25.truncate, '"17.25".floar == 17.25.truncate';
+is-approx "17.25".round, 17.25.round, '"17.25".round == 17.25.round';
+is-approx "17.25".round("0.1"), 17.25.round(0.1), '"17.25".round("0.1") == 17.25.round(0.1)';
+is-approx "17.25".truncate, 17.25.truncate, '"17.25".truncate == 17.25.truncate';
 
 is "17".sign, 1, '"17".sign == 1';
 is "-17".sign, -1, '"-17".sign == -1';
@@ -94,5 +94,46 @@ is-approx <4+2i>.cis, <-0.0884610445653817-0.102422080056674i>, '<4+2i>.cis';
 is-approx i.cis,      <0.367879441171442+0i>,                   'i.cis';
 
 is-approx "17".unpolar("42"), 17.unpolar(42), '"17".unpolar("42") == 17.unpolar(42)';
+
+subtest 'truncate() with Cools' => {
+    plan 15;
+    my @array = ["a", 1, "b", 2];
+    is-deeply truncate(@array), @array.elems, 'truncate(Array)';
+    is-deeply truncate(True), True, 'truncate(Bool::True)';
+    is-deeply truncate(False), False, 'truncate(Bool::False)';
+    # Complex tested in S32-num/complex.t
+    class Cooler is Cool {
+        method Numeric(--> 5) {}
+    }
+    is-deeply truncate(Cooler.new), 5, 'truncate(Cool)';
+    is-deeply truncate(Duration.new(4)), 4, 'truncate(Duration)';
+    my %map is Map = "a", 1, "b", 2;
+    is-deeply truncate(%map), %map.elems, 'truncate(Map)';
+    is-deeply truncate(FatRat.new(2**67, 2**66 + 1)), 1, 'truncate(FatRat)';
+    my %hash = "a", 1, "b", 2;
+    is-deeply truncate(%hash), %hash.elems, 'truncate(Hash)';
+    my $instant = now;
+    is-deeply truncate($instant), $instant.Int, 'truncate(Instant)';
+    # Int is tested in S32-num/int.t
+    my @list := "a", 1, "b", 2;
+    is-deeply truncate(@list), @list.elems, 'truncate(List)';
+    my $number = 123.45;
+    my $match = "abc $number def" ~~ /\d+/;
+    is-deeply truncate($match), truncate($number), 'truncate(Match)';
+    is-deeply truncate(200.3e-2), 2, 'truncate(Num)';
+    my $range = ^5;
+    is-deeply truncate($range), $range.elems, 'truncate(Range)';
+    my $seq = (1 ... 7);
+    is-deeply truncate($seq), $seq.elems, 'truncate(Seq)';
+    class Stasher is Stash {
+        class Counted { };
+        my class NotCounted { };
+        our sub counted { };
+        my sub notcounted { };
+        method notcountedeither { };
+    }
+    is-deeply truncate(Stasher::), Stasher::.elems, 'truncate(Stash)';
+    # Str is tested above
+}
 
 # vim: expandtab shiftwidth=4
