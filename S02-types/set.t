@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 237;
+plan 239;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -598,5 +598,11 @@ is-deeply (1,2,3).Set.ACCEPTS(().Set), False, 'can we smartmatch empty';
 
     dies-ok { my %s is Set[Int] = <a b c> }, 'must have Ints';
 }
+
+is-deeply Set.Setty, Set, 'multi method Setty(Set:U:) returns a Set type object';
+
+my @a = ["a", "b", "c"];
+my @b = [1, 2, 4]; 
+is-deeply BagHash.new.STORE(@a, @b), BagHash.new.STORE(@a Z=> @b), 'the two Set:D.STORE candidates create equivalent objects';
 
 # vim: expandtab shiftwidth=4
