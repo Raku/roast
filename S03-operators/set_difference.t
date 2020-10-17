@@ -202,7 +202,7 @@ my @quads =
   [<a>.Set,<a>.Set,<a>.Set,(a=>-2).Mix],       <a>.Mix,
 ;
 
-plan 2 * (1 + 3 * @types + @pairs/2 + @triplets/3 + @quads/2) + 4;
+plan 2 * (3 + 3 * @types + @pairs/2 + @triplets/3 + @quads/2) + 4;
 
 # difference
 for
@@ -238,6 +238,11 @@ for
         is-deeply op(|@params), $result,
           "[$name] @params>>.gist()";
     }
+
+    throws-like { op(1,Failure.new) }, Exception,
+      "$name with a Failure:D on the RHS throws";
+    throws-like { op(Failure.new,^3) }, Exception,
+      "$name with a Failure:D on the LHS throws";
 }
 
 # https://github.com/rakudo/rakudo/issues/3945

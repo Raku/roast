@@ -340,7 +340,7 @@ my @nok =
   <a>.BagHash,             <a a>.Mix,
 ;
 
-plan 2 * (@identities + @ok + @nok) + 1 * (@identities + @ok + @nok);
+plan 2 * (@identities + @ok + @nok + 2) + 1 * (@identities + @ok + @nok + 2);
 
 # is equal
 for &infix:<<(==)>>, "(==)", &infix:<≡>, "≡" -> &op, $name {
@@ -367,6 +367,11 @@ for &infix:<<(==)>>, "(==)", &infix:<≡>, "≡" -> &op, $name {
         is-deeply op($right,$left), False,
           "$left.^name() NOT $name $right";
     }
+
+    throws-like { op(1,Failure.new) }, Exception,
+      "$name with a Failure:D on the RHS throws";
+    throws-like { op(Failure.new,^3) }, Exception,
+      "$name with a Failure:D on the LHS throws";
 }
 
 # is not equal
@@ -394,6 +399,11 @@ for &infix:<≢>, "≢" -> &op, $name {
         is-deeply op($right,$left), True,
           "$left.^name() NOT $name $right";
     }
+
+    throws-like { op(1,Failure.new) }, Exception,
+      "$name with a Failure:D on the RHS throws";
+    throws-like { op(Failure.new,^3) }, Exception,
+      "$name with a Failure:D on the LHS throws";
 }
 
 # vim: ft=perl6

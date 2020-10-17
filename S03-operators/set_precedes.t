@@ -7,7 +7,20 @@ use Test;
 #   (>+)    succeeds (ASCII)
 #   ≽       succeeds
 
-plan 32;
+plan 32 + (2 * 4);
+
+for
+  &infix:<<(<+)>>, "(<+)",
+  &infix:<≼>,      "≼",
+  &infix:<<(>+)>>, "(>+)",
+  &infix:<≽>,      "≽"
+-> &op, $name {
+
+    throws-like { op(1,Failure.new) }, Exception,
+      "$name with a Failure:D on the RHS throws";
+    throws-like { op(Failure.new,^3) }, Exception,
+      "$name with a Failure:D on the LHS throws";
+}
 
 # "We're more of the love, blood, and rhetoric school. Well, we can do you blood
 # and love without the rhetoric, and we can do you blood and rhetoric without

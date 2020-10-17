@@ -185,7 +185,7 @@ my @quads =
   <a b c>,                                         bag()
 ;
 
-plan 2 * (1 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2) + 4;
+plan 2 * (3 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2) + 4;
 
 # multiplication
 for
@@ -228,6 +228,11 @@ for
               "[$name] @mixed>>.gist()";
         }
     }
+
+    throws-like { op(1,Failure.new) }, Exception,
+      "$name with a Failure:D on the RHS throws";
+    throws-like { op(Failure.new,^3) }, Exception,
+      "$name with a Failure:D on the LHS throws";
 }
 
 # https://github.com/rakudo/rakudo/issues/3945
