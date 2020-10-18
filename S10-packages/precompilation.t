@@ -135,6 +135,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 
 {
     my $internarray-lib-prefix = $lib-path.add('packages/InternArray/lib').absolute;
+    #?rakudo.jvm todo 'no 6model parametrics interning yet'
     is_run
       "use InternArrayA;
        use InternArrayB;
