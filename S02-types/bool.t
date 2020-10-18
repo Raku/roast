@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 63;
+plan 66;
 
 #L<S12/Built-in Enumerations/"Two built-in enumerations are">
 
@@ -128,5 +128,15 @@ is-deeply quietly { Bool.Str }, '', 'Bool:U stringifies to empty string';
 
 # https://irclog.perlgeek.de/perl6-dev/2017-07-10#i_14852407
 is-deeply (((my int $ = 0) < 1) || 3), True, 'construct returns Bool, not Int';
+
+# https://github.com/rakudo/rakudo/issues/2098
+# https://github.com/Raku/old-issue-tracker/issues/6682
+dies-ok { my %hash; !%hash<a>:exists; }, 'confusing prefix ! and :exists adverb dies with good error';
+
+my $r = 4;
+my $or = [or] $r;
+is-deeply $or, $r, 'infix `or` with one argument returns the argument';
+$or = [or];
+is-deeply $or, False, 'infix `or` with no argument is False';
 
 # vim: expandtab shiftwidth=4
