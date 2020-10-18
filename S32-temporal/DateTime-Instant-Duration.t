@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 64;
+plan 66;
 
 =begin pod
 
@@ -161,5 +161,24 @@ throws-like { $ = Duration.new: "meow" }, X::Str::Numeric,
 # https://github.com/Raku/old-issue-tracker/issues/5074
 does-ok Duration.new(Inf).tai, Rational, 'Duration.new(Inf) works';
 does-ok Duration.new(NaN).tai, Rational, 'Duration.new(NaN) works';
+
+subtest 'infix:<%>(Duration, Real)' => {
+    my @values = 0.5, 1, 1.5, 2, 3, 2**66;
+    plan +@values * 4 + 1;
+
+    for @values -> $value {
+        my $t = 100.rand.Int;
+        my $dp = Duration.new($t);
+        my $dn = Duration.new(-$t);
+        is-deeply $dp %  $value, Duration.new( $t %  $value),  "Duration.new($t)  %  $value";
+        is-deeply $dp % -$value, Duration.new( $t % -$value),  "Duration.new($t)  % -$value";
+        is-deeply $dn %  $value, Duration.new(-$t %  $value),  "Duration.new(-$t) %  $value";
+        is-deeply $dn % -$value, Duration.new(-$t % -$value),  "Duration.new(-$t) % -$value";
+    }
+
+    throws-like { Duration.new(1) % 0 }, X::Numeric::DivideByZero, 'Duration % 0 dies';
+}
+
+is-deeply Duration.new.tai, 0.0, 'Duration defaults to 0.0';
 
 # vim: expandtab shiftwidth=4
