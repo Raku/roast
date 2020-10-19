@@ -1,7 +1,7 @@
 use v6.e.PREVIEW;
 use Test;
 
-plan 527;
+plan 535;
 
 # Testing hash multislices, aka %h{a;b;c} and associated adverbs
 
@@ -360,6 +360,27 @@ for
           } gives 42, 666, \{ f => 314 }";
         leftover-ok($leftover) if $delete;
     }
+}
+
+# make sure recursion works
+{
+    my %hash;
+    is-deeply (%hash{<a b>;"c"} = 42,666), (42,666),
+      'did assignment to non-existing hashes return the assigned values';
+    is-deeply %hash, { a => { c => 42 }, b => { c => 666 } },
+      'did initialization work';
+    is-deeply (%hash{<a b>;"c"} = 777, 888), (777,888),
+      'did assignment return the assigned values';
+    is-deeply %hash, { a => { c => 777 }, b => { c => 888 } },
+      'did the hash get changed correctly';
+    is-deeply (%hash{<a b>;"c"}:delete), (777,888),
+      'did deletion return the expected values';
+    is-deeply %hash, { a => { }, b => { } },
+      'did the hash get changed correctly';
+    is-deeply (%hash{<a b>;"d"} = 333, 444), (333,444),
+      'did assignment to non-existing keys return the assigned values';
+    is-deeply %hash, { a => { d => 333 }, b => { d => 444 } },
+      'did the hash get changed correctly';
 }
 
 # vim: expandtab shiftwidth=4
