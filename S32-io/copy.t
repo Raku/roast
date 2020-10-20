@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 42;
+plan 43;
 
 my $existing-file     = "tempfile-copy";
 my $non-existent-file = "non-existent-copy";
@@ -30,14 +30,14 @@ nok $non-existent-file.IO.e, "It doesn't";
     my $existing-file-mtgt     = "tempfile-copy-mtgt";
     my $non-existent-file-mtgt = "non-existent-copy-mtgt";
     my $zero-length-file-mtgt  = "tempfile-zero-length-copy-mtgt";
-    
+
     ok $existing-file.IO.copy( $existing-file-mtgt ), '.IO.copy normal file';
     ok $existing-file-mtgt.IO.e, 'It exists';
     ok $existing-file-mtgt.IO.s, 'It has a size';
     is $existing-file-mtgt.IO.s, $existing-file.IO.s, 'The size is equal to source file';
 
     dies-ok { $non-existent-file.IO.copy( $non-existent-file-mtgt ) }, '.IO.copy missing file';
-    nok $non-existent-file-mtgt.IO.e, "It doesn't"; 
+    nok $non-existent-file-mtgt.IO.e, "It doesn't";
     ok $zero-length-file.IO.copy( $zero-length-file-mtgt ), '.IO.copy empty file';
     ok $zero-length-file-mtgt.IO.e, 'It exists';
     nok $zero-length-file-mtgt.IO.s, 'It has no size';
@@ -60,7 +60,7 @@ nok $non-existent-file.IO.e, "It doesn't";
     my $existing-file-stgt     = "tempfile-copy-stgt";
     my $non-existent-file-stgt = "non-existent-copy-stgt";
     my $zero-length-file-stgt  = "tempfile-zero-length-copy-stgt";
-    
+
     ok copy( $existing-file, $existing-file-stgt ), 'copy() normal file';
     ok $existing-file-stgt.IO.e, 'It exists';
     ok $existing-file-stgt.IO.s, 'It has a size';
@@ -98,4 +98,11 @@ subtest 'copying when target and source are same file' => {
     is-deeply $file.slurp, 'foo', 'file contents are untouched';
 }
 
+subtest 'attempt to copy a directory to a file' => {
+    plan 2;
+    my $file = make-temp-file :content<f1>;
+    my $dir  = make-temp-dir;
+    fails-like { copy $dir, $file }, X::IO::Copy, 'cannot copy a directory to a file';
+    is-deeply $file.slurp, 'f1', 'file contents are untouched';
+}
 # vim: expandtab shiftwidth=4
