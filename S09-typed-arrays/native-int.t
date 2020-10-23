@@ -8,7 +8,7 @@ if $*KERNEL.bits == 64 {
     @uint.push: uint64;
 }
 
-plan (@int + @uint) * 179 + @uint * 2 + 3;
+plan (@int + @uint) * 182 + @uint * 2 + 3;
 
 # Basic native int array tests.
 for flat @int,@uint -> $T {
@@ -132,6 +132,11 @@ for flat @int,@uint -> $T {
     is @arr.kv,            (0,22,1,32,2,26,3,34), ".kv from a $t array";
     is @arr.pick,                    22|32|26|34, ".pick from a $t array";
     is @arr.roll,                    22|32|26|34, ".roll from a $t array";
+
+    @arr[1] = @arr[0];
+    is-deeply @arr.unique, (22,26,34), "$t array.unique";
+    is-deeply @arr.repeated, (22,),    "$t array.repeated";
+    is-deeply @arr.squish, (22,26,34), "$t array.squish";
 
     @arr = ();
     throws-like { @arr.pop }, X::Cannot::Empty,

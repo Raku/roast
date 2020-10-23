@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 180;
+plan 183;
 
 # Basic native str array tests.
 my $T := str;
@@ -127,6 +127,11 @@ is @arr.antipairs,     (nn=>0,ff=>1,bb=>2,uu=>3), ".antipairs from a $t array";
 is @arr.kv,        (0,"nn",1,"ff",2,"bb",3,"uu"), ".kv from a $t array";
 is @arr.pick,                "nn"|"ff"|"bb"|"uu", ".pick from a $t array";
 is @arr.roll,                "nn"|"ff"|"bb"|"uu", ".roll from a $t array";
+
+@arr[1] = @arr[0];
+is-deeply @arr.unique, <nn bb uu>, "$t array.unique";
+is-deeply @arr.repeated, ("nn",),  "$t array.repeated";
+is-deeply @arr.squish, <nn bb uu>, "$t array.squish";
 
 @arr = ();
 throws-like { @arr.pop }, X::Cannot::Empty,

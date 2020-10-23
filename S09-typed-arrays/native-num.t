@@ -6,7 +6,7 @@ if $*KERNEL.bits == 64 {
     @num.push:  num64;
 }
 
-plan @num * 167 + 1;
+plan @num * 170 + 1;
 
 # Basic native num array tests.
 for @num -> $T {
@@ -114,8 +114,8 @@ for @num -> $T {
 
     is @arr.grep(* < 4.5e0).elems, 2, "Can grep a $t array";
 
-    if $t =:= num64 {
-        pass "skipping .grep/.first test for num64 as they will fail" for ^10;
+    if $t eq 'num32' {
+        pass "skipping .grep/.first test for num32 as they will fail" for ^10;
     }
     else {
         is-deeply @arr.grep(5.2e0),      (5.2e0,),    "$t array.grep(Num)";
@@ -143,6 +143,11 @@ for @num -> $T {
     is @arr.kv, (0,4.0e0,1,5.0e0,2,4.4e0,3,5.2e0), ".kv from a $t array";
     is @arr.pick,         4.0e0|5.0e0|4.4e0|5.2e0, ".pick from a $t array";
     is @arr.roll,         4.0e0|5.0e0|4.4e0|5.2e0, ".roll from a $t array";
+
+    @arr[1] = @arr[0];
+    is-deeply @arr.unique, (@arr[0],@arr[2],@arr[3]), "$t array.unique";
+    is-deeply @arr.repeated, (@arr[0],),              "$t array.repeated";
+    is-deeply @arr.squish, (@arr[0],@arr[2],@arr[3]), "$t array.squish";
 
     @arr = ();
     throws-like { @arr.pop }, X::Cannot::Empty,
