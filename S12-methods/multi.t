@@ -19,11 +19,11 @@ class Foo {
     multi method bar(Int $int) {
         return "Foo.bar() called with Int : $int";
     }
-    
+
     multi method bar(Numeric $num) {
         return "Foo.bar() called with Numeric : $num";
     }
-    
+
     multi method baz($f) {
         return "Foo.baz() called with parm : $f";
     }
@@ -168,11 +168,11 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     };
 
     my $a = A.new;
-    
+
     is $a.foo("oh hai"), "oh hai",
         'foo() method works when $.foo attribute is present';
 
-    dies-ok { $a.foo }, 
+    dies-ok { $a.foo },
         '$.foo attribute has no accessor when foo() method is present';
 }
 
@@ -194,12 +194,11 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 # RT #74646
 {
     my class A {
-        multi method foo($a) { "general" }
         multi submethod foo(Str $a) { "specific" }
     }
     my class B is A {}
     is A.new.foo("OH HAI"), 'specific', 'multi submethod can be called on exact instance';
-    is B.new.foo("OH HAI"), 'general', 'multi submethod is not inherited';
+    throws-like { B.new.foo("OH HAI") }, X::Method::NotFound, 'multi submethod is not inherited';
 }
 
 # vim: ft=perl6
