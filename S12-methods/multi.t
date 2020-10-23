@@ -2,7 +2,7 @@ use v6.c;
 
 use Test;
 
-plan 31;
+plan 32;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Trusts">
@@ -199,4 +199,14 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     throws-like { B.new.foo("OH HAI") }, X::Method::NotFound, 'multi submethod is not inherited';
 }
 
-# vim: ft=perl6
+# GH rakudo/rakudo#3976 https://github.com/rakudo/rakudo/issues/3976
+{
+    eval-lives-ok q:to/MULTI-SUBMETHOD/, "Declaring both proto and multi for a submethod doesn't die";
+        my class A {
+            proto submethod foo(|) {*}
+            multi submethod foo() { }
+        }
+        MULTI-SUBMETHOD
+}
+
+# vim: expandtab shiftwidth=4
