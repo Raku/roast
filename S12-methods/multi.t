@@ -39,7 +39,7 @@ is($foo.bar(5), 'Foo.bar() called with Int : 5', '... multi-method dispatched on
 is($foo.bar(4.2), 'Foo.bar() called with Numeric : 4.2', '... multi-method dispatched on Numeric');
 
 throws-like { $foo.baz() }, X::Multi::NoMatch,
-    "Call with wrong nnumber of args results in no matching candidate exception";
+    "Call with wrong number of args results in no matching candidate exception";
 
 class Foo2 {
     multi method a($d) {   #OK not used
@@ -112,7 +112,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     is $m.d( '7' ), 'string',  'dispatch to other role';
     is $m.d( 1.2 ), 'any',     'dispatch to the class with the roles';
 
-    my @multi_method = $m.^methods.grep({ .gist eq 'd' });
+    my @multi_method = $m.^methods.grep({ .name eq 'd' });
     is @multi_method.elems, 1, '.^methods returns one element for a multi';
 
     my $routine = @multi_method[0];
