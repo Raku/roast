@@ -112,7 +112,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     is $m.d( '7' ), 'string',  'dispatch to other role';
     is $m.d( 1.2 ), 'any',     'dispatch to the class with the roles';
 
-    my @multi_method = $m.^methods.grep({ ~$_ eq 'd' });
+    my @multi_method = $m.^methods.grep({ .gist eq 'd' });
     is @multi_method.elems, 1, '.^methods returns one element for a multi';
 
     my $routine = @multi_method[0];
