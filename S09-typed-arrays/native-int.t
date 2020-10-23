@@ -8,7 +8,7 @@ if $*KERNEL.bits == 64 {
     @uint.push: uint64;
 }
 
-plan (@int + @uint) * 169 + @uint * 2 + 3;
+plan (@int + @uint) * 179 + @uint * 2 + 3;
 
 # Basic native int array tests.
 for flat @int,@uint -> $T {
@@ -109,7 +109,19 @@ for flat @int,@uint -> $T {
     is @arr[2], 26, "Mutating map on $t array works (3)";
     is @arr[3], 34, "Mutating map on $t array works (4)";
 
-    is @arr.grep(* < 30).elems, 2, "Can grep a $t array";
+    is @arr.grep(* < 30).elems, 2, "grep a $t array";
+    is-deeply @arr.grep(34),      (34,),             "$t array.grep(Int)";
+    is-deeply @arr.grep(34, :k),  (3,),              "$t array.grep(Int, :k)";
+    is-deeply @arr.grep(34, :kv), (3,34),            "$t array.grep(Int, :kv)";
+    is-deeply @arr.grep(34, :p),  (Pair.new(3,34),), "$t array.grep(Int, :p)";
+    is-deeply @arr.grep(34, :v),  (34,),             "$t array.grep(Int, :v)";
+
+    is-deeply @arr.first(34),      34,             "$t array.grep(Int)";
+    is-deeply @arr.first(34, :k),  3,              "$t array.grep(Int, :k)";
+    is-deeply @arr.first(34, :kv), (3,34),         "$t array.grep(Int, :kv)";
+    is-deeply @arr.first(34, :p),  Pair.new(3,34), "$t array.grep(Int, :p)";
+    is-deeply @arr.first(34, :v),  34,             "$t array.grep(Int, :v)";
+
     is ([+] @arr), 114, "Can use reduce meta-op on a $t array";
 
     is @arr.values,                (22,32,26,34), ".values from a $t array";

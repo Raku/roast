@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 170;
+plan 180;
 
 # Basic native str array tests.
 my $T := str;
@@ -105,6 +105,18 @@ is @arr[2], "bb", "Mutating map on $t array works (3)";
 is @arr[3], "uu", "Mutating map on $t array works (4)";
 
 is @arr.grep(* le "ff").elems, 2, "Can grep a $t array";
+is-deeply @arr.grep("uu"),      ("uu",),             "$t array.grep(Str)";
+is-deeply @arr.grep("uu", :k),  (3,),                "$t array.grep(Str, :k)";
+is-deeply @arr.grep("uu", :kv), (3,"uu"),            "$t array.grep(Str, :kv)";
+is-deeply @arr.grep("uu", :p),  (Pair.new(3,"uu"),), "$t array.grep(Str, :p)";
+is-deeply @arr.grep("uu", :v),  ("uu",),             "$t array.grep(Str, :v)";
+
+is-deeply @arr.first("uu"),      "uu",             "$t array.grep(Str)";
+is-deeply @arr.first("uu", :k),  3,                "$t array.grep(Str, :k)";
+is-deeply @arr.first("uu", :kv), (3,"uu"),         "$t array.grep(Str, :kv)";
+is-deeply @arr.first("uu", :p),  Pair.new(3,"uu"), "$t array.grep(Str, :p)";
+is-deeply @arr.first("uu", :v),  "uu",             "$t array.grep(Str, :v)";
+
 is ([~] @arr), "nnffbbuu", "Can use reduce meta-op on a $t array";
 
 is @arr.values,            ("nn","ff","bb","uu"), ".values from a $t array";

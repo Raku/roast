@@ -6,7 +6,7 @@ if $*KERNEL.bits == 64 {
     @num.push:  num64;
 }
 
-plan @num * 157 + 1;
+plan @num * 167 + 1;
 
 # Basic native num array tests.
 for @num -> $T {
@@ -113,6 +113,24 @@ for @num -> $T {
     is-approx @arr[3], 5.2e0, "Mutating map on $t array works (4)";
 
     is @arr.grep(* < 4.5e0).elems, 2, "Can grep a $t array";
+
+    if $t =:= num64 {
+        pass "skipping .grep/.first test for num64 as they will fail" for ^10;
+    }
+    else {
+        is-deeply @arr.grep(5.2e0),      (5.2e0,),    "$t array.grep(Num)";
+        is-deeply @arr.grep(5.2e0, :k),  (3,),        "$t array.grep(Num, :k)";
+        is-deeply @arr.grep(5.2e0, :kv), (3,5.2e0),   "$t array.grep(Num, :kv)";
+        is-deeply @arr.grep(5.2e0, :p), (3 => 5.2e0,),"$t array.grep(Num, :p)";
+        is-deeply @arr.grep(5.2e0, :v),  (5.2e0,),    "$t array.grep(Num, :v)";
+
+        is-deeply @arr.first(5.2e0),      5.2e0,      "$t array.grep(Num)";
+        is-deeply @arr.first(5.2e0, :k),  3,          "$t array.grep(Num, :k)";
+        is-deeply @arr.first(5.2e0, :kv), (3,5.2e0),  "$t array.grep(Num, :kv)";
+        is-deeply @arr.first(5.2e0, :p),  3 => 5.2e0, "$t array.grep(Num, :p)";
+        is-deeply @arr.first(5.2e0, :v),  5.2e0,      "$t array.grep(Num, :v)";
+    }
+
     is-approx ([+] @arr), 18.6e0, "Can use reduce meta-op on a $t array";
 
     #?rakudo 2 skip 'cannot approx test Parcels'
