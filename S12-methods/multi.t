@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 32;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Trusts">
@@ -19,11 +19,11 @@ class Foo {
     multi method bar(Int $int) {
         return "Foo.bar() called with Int : $int";
     }
-    
+
     multi method bar(Numeric $num) {
         return "Foo.bar() called with Numeric : $num";
     }
-    
+
     multi method baz($f) {
         return "Foo.baz() called with parm : $f";
     }
@@ -38,10 +38,8 @@ is($foo.bar("Hello"), 'Foo.bar() called with Str : Hello', '... multi-method dis
 is($foo.bar(5), 'Foo.bar() called with Int : 5', '... multi-method dispatched on Int');
 is($foo.bar(4.2), 'Foo.bar() called with Numeric : 4.2', '... multi-method dispatched on Numeric');
 
-# https://github.com/Raku/old-issue-tracker/issues/1019
-#?rakudo todo 'RT #66006'
-try { EVAL '$foo.baz()' };
-ok ~$! ~~ /:i argument[s?]/, 'Call with wrong number of args should complain about args';
+throws-like { $foo.baz() }, X::Multi::NoMatch,
+    "Call with wrong number of args results in no matching candidate exception";
 
 class Foo2 {
     multi method a($d) {   #OK not used
@@ -115,7 +113,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     is $m.d( '7' ), 'string',  'dispatch to other role';
     is $m.d( 1.2 ), 'any',     'dispatch to the class with the roles';
 
-    my @multi_method = $m.^methods.grep({ ~$_ eq 'd' });
+    my @multi_method = $m.^methods.grep({ .name eq 'd' });
     is @multi_method.elems, 1, '.^methods returns one element for a multi';
 
     my $routine = @multi_method[0];
@@ -165,11 +163,11 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     };
 
     my $a = A.new;
-    
+
     is $a.foo("oh hai"), "oh hai",
         'foo() method works when $.foo attribute is present';
 
-    dies-ok { $a.foo }, 
+    dies-ok { $a.foo },
         '$.foo attribute has no accessor when foo() method is present';
 }
 
@@ -191,12 +189,21 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 # https://github.com/Raku/old-issue-tracker/issues/1722
 {
     my class A {
-        multi method foo($a) { "general" }
         multi submethod foo(Str $a) { "specific" }
     }
     my class B is A {}
     is A.new.foo("OH HAI"), 'specific', 'multi submethod can be called on exact instance';
-    is B.new.foo("OH HAI"), 'general', 'multi submethod is not inherited';
+    throws-like { B.new.foo("OH HAI") }, X::Method::NotFound, 'multi submethod is not inherited';
+}
+
+# GH rakudo/rakudo#3976 https://github.com/rakudo/rakudo/issues/3976
+{
+    eval-lives-ok q:to/MULTI-SUBMETHOD/, "Declaring both proto and multi for a submethod doesn't die";
+        my class A {
+            proto submethod foo(|) {*}
+            multi submethod foo() { }
+        }
+        MULTI-SUBMETHOD
 }
 
 # vim: expandtab shiftwidth=4
