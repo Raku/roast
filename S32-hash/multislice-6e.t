@@ -1,7 +1,7 @@
 use v6.e.PREVIEW;
 use Test;
 
-plan 535;
+plan 543;
 
 # Testing hash multislices, aka %h{a;b;c} and associated adverbs
 
@@ -381,6 +381,29 @@ for
       'did assignment to non-existing keys return the assigned values';
     is-deeply %hash, { a => { d => 333 }, b => { d => 444 } },
       'did the hash get changed correctly';
+}
+
+# make sure || syntax works
+{
+    my %hash;
+    my @indices := <a b>, <c>;   # need binding, no containers!
+
+    is-deeply (%hash{|| @indices} = 42,666), (42,666),
+      '|| did assignment to non-existing hashes return the assigned values';
+    is-deeply %hash, { a => { c => 42 }, b => { c => 666 } },
+      '|| did initialization work';
+    is-deeply (%hash{|| @indices} = 777, 888), (777,888),
+      '|| did assignment return the assigned values';
+    is-deeply %hash, { a => { c => 777 }, b => { c => 888 } },
+      '|| did the hash get changed correctly';
+    is-deeply (%hash{|| @indices}:delete), (777,888),
+      '|| did deletion return the expected values';
+    is-deeply %hash, { a => { }, b => { } },
+      '|| did the hash get changed correctly';
+    is-deeply (%hash{|| <a b>, "d"} = 333, 444), (333,444),
+      '|| did assignment to non-existing keys return the assigned values';
+    is-deeply %hash, { a => { d => 333 }, b => { d => 444 } },
+      '|| did the hash get changed correctly';
 }
 
 # vim: expandtab shiftwidth=4
