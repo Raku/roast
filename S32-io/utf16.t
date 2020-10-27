@@ -7,13 +7,22 @@ plan 39;
 # to test .encode, .decode, .slurp, .spurt. We also make sure .read reads the
 # file properly and that utf16 will get rid of a BOM at the start of the file.
 
+# "Raku's utf16 format specifier will use the endianness of host system when
+# encoding. When decoding it will look for a byte order mark and if it is there
+# use that to set the endianness. If there is no byte order mark it will assume
+# the file uses the same endianness as the host system."
+# Hence for testing a file without a BOM, we must pick the correct ordering:
+
+my $matching_utf16 = $*KERNEL.endian == LittleEndian
+    ?? 'sample-UTF-16LE.txt' !! 'sample-UTF-16BE.txt';
+
 # TODO:
 # * Check that BOM other places other than the start of the file get passed
 #   through with 'utf16'.
 # * Test .lines with both single and multiple lines
 my %enc =
     utf8    => <sample-UTF-8.txt>,
-    utf16   => <sample-UTF-16LE-bom.txt sample-UTF-16BE-bom.txt sample-UTF-16LE.txt>,
+    utf16   => ('sample-UTF-16LE-bom.txt', 'sample-UTF-16BE-bom.txt', $matching_utf16),
     utf16le => <sample-UTF-16LE-bom.txt sample-UTF-16LE.txt>,
     utf16be => <sample-UTF-16BE-bom.txt sample-UTF-16BE.txt>
 ;
