@@ -21,7 +21,7 @@ for IO::Path.^lookup('symlink'), &symlink -> &sl {
     my $rel-link = $target.parent.add(make-temp-file.basename);
 
     is-deeply sl($target, $link), True, 'can create dangling symlinks';
-    is-deeply sl($target.basename, $rel-link, :!absolute),
+    is-deeply sl($target.basename.IO, $rel-link, :!absolute),
         True, 'can create dangling relative symlinks';
 
     for $link, $rel-link -> $path {
@@ -32,7 +32,7 @@ for IO::Path.^lookup('symlink'), &symlink -> &sl {
     $target.spurt: 'foo';
     is-deeply sl($target, $link), True, 'can create symlinks';
     is-deeply sl(
-        $target.basename,
+        $target.basename.IO,
         $rel-link,
         :!absolute ),
         True, 'can create relative symlinks';
