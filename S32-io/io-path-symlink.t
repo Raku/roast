@@ -12,19 +12,35 @@ if $*DISTRO.is-win {
         or plan skip-all => '.symlink on Windows requires escalated privileges';
 }
 
-plan 2 * 6; # $n tests run for method and sub forms
+plan 2 * 11; # $n tests run for method and sub forms
 
 for IO::Path.^lookup('symlink'), &symlink -> &sl {
     my $target = make-temp-file;
     my $link   = make-temp-file;
+    # Link in same dir as $target
+    my $rel-link = $target.parent.add(make-temp-file.basename);
+
     is-deeply sl($target, $link), True, 'can create dangling symlinks';
-    is-deeply ($link ~~ :l), True, 'created dangling link filetests for .l';
-    $link.unlink;
+    is-deeply sl($target.basename.IO, $rel-link, :!absolute),
+        True, 'can create dangling relative symlinks';
+
+    for $link, $rel-link -> $path {
+        is-deeply ($path ~~ :l), True, 'created dangling link filetests for .l';
+        $path.unlink;
+    }
 
     $target.spurt: 'foo';
     is-deeply sl($target, $link), True, 'can create symlinks';
-    is-deeply ($link ~~ :e & :l), True, 'created link filetests for .e and .l';
-    is-deeply $link.slurp, 'foo', 'slurping from a link gives right data';
+    is-deeply sl(
+        $target.basename.IO,
+        $rel-link,
+        :!absolute ),
+        True, 'can create relative symlinks';
+
+    for $link, $rel-link -> $path {
+        is-deeply ($path ~~ :e & :l), True, 'created link filetests for .e and .l';
+        is-deeply $path.slurp, 'foo', 'slurping from a link gives right data';
+    }
 
     fails-like { sl($target, $link) }, X::IO::Symlink, :$target, :name($link),
         'fail when link already exists';
