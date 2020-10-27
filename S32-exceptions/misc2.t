@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 269;
+plan 267;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -95,8 +95,6 @@ throws-like 'OUTER := 5', X::Bind, target => /OUTER/;
 throws-like 'my int $x := 2', X::Bind::NativeType, name => '$x';
 throws-like 'my @a; @a[] := <foo bar baz>', X::Bind::ZenSlice, type => Array;
 throws-like 'my %a; %a{} := foo=>1, bar=>2, baz=>3', X::Bind::ZenSlice, type => Hash;
-throws-like 'my @a; @a[0, 1] := (2, 3)', X::Bind::Slice, type => Array;
-throws-like 'my %a; %a<a b> := (2, 3)', X::Bind::Slice, type => Hash;
 
 
 throws-like 'for (1; 1; 1) { }', X::Obsolete,
