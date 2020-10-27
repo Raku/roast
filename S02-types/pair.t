@@ -219,8 +219,8 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 
 {
   my $pair = (a => [1,2,3]);
-  is ~$pair, "a\t1 2 3", "pairs with arrayrefs as values stringify correctly (1)";
-  is "$pair", "a\t1 2 3", "pairs with arrayrefs as values stringify correctly (2)";
+  is ~$pair, "a\t1 2 3", "pairs with arrayitems as values stringify correctly (1)";
+  is "$pair", "a\t1 2 3", "pairs with arrayitems as values stringify correctly (2)";
 }
 
 # Per Larry L<"http://www.nntp.perl.org/group/perl.perl6.language/23525">:
@@ -228,33 +228,33 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 #   stringification on its left argument too agressively.  It should only do
 #   that for an identifier.
 {
-  my $arrayref = [< a b c >];
+  my $arrayitem = [< a b c >];
   my $hashitem = { :d(1), :e(2) };
 
-  my $pair = ($arrayref => $hashitem);
-  is ~$pair.key,   ~$arrayref, "=> should not stringify the key (1)";
-  is ~$pair.value, ~$hashitem, "=> should not stringify the key (2)";
+  my $pair = ($arrayitem => $hashitem);
+  is ~$pair.key,   ~$arrayitem, "=> should not stringify the key (1)";
+  is ~$pair.value, ~$hashitem,  "=> should not stringify the key (2)";
 
   push $pair.key, "d";
   $pair.value<f> = 3;
-  is ~$pair.key,   ~$arrayref, "=> should not stringify the key (3)";
+  is ~$pair.key,   ~$arrayitem, "=> should not stringify the key (3)";
   is ~$pair.value, ~$hashitem,  "=> should not stringify the key (4)";
   is +$pair.key,            4, "=> should not stringify the key (5)";
   is +$pair.value,          3, "=> should not stringify the key (6)";
 }
 
 {
-  my $arrayref = [< a b c >];
-  my $hashitem = { :d(1), :e(2) };
+  my $arrayitem = [< a b c >];
+  my $hashitem  = { :d(1), :e(2) };
 
-  my $pair = ($arrayref => $hashitem);
+  my $pair = ($arrayitem => $hashitem);
   sub pair_key (Pair $pair) { $pair.key }
 
-  is ~pair_key($pair), ~$arrayref,
+  is ~pair_key($pair), ~$arrayitem,
     "the keys of pairs should not get auto-stringified when passed to a sub (1)";
 
   push $pair.key, "d";
-  is ~pair_key($pair), ~$arrayref,
+  is ~pair_key($pair), ~$arrayitem,
     "the keys of pairs should not get auto-stringified when passed to a sub (2)";
   is +pair_key($pair),          4,
     "the keys of pairs should not get auto-stringified when passed to a sub (3)";

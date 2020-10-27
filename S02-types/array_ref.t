@@ -123,8 +123,8 @@ is     $array9[1][1][1][0], 42, "recursive array access (3)";
 
 {
   my $foo;
-  my $arrayref = [$foo];
-  ok $arrayref[0] !=:= $foo, "creating arrays using [] creates new containers (2)";
+  my $arrayitem = [$foo];
+  ok $arrayitem[0] !=:= $foo, "creating arrays using [] creates new containers (2)";
 }
 
 # vim: expandtab shiftwidth=4

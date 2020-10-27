@@ -5,12 +5,12 @@ use Test;
 
 =begin description
 
- Tests testing that automatical referentiation (e.g. $arrayref = @array)
+ Tests testing that automatical referentiation (e.g. $arrayitem = @array)
  works. To be more detailled, things tested are:
  * Implicit referentiation of arrays & hashes in assignment
  * Implicit referentiation of arrays & hashes in assignment to an
    array & hash element
- * Implicit referentiation of array&hashes&array literals&arrayref
+ * Implicit referentiation of array&hashes&array literals&arrayitem
    literals&hashitem literals in pair creation with key => ... and :key(...)
    and ... => key.
 
@@ -23,8 +23,8 @@ plan 38;
     my @array = <a b c>;
     my $ref   = @array;
 
-    is ~$ref, "a b c", '$arrayref = @array works (1)';
-    is +$ref,       3, '$arrayref = @array works (2)';
+    is ~$ref, "a b c", '$arrayitem = @array works (1)';
+    is +$ref,       3, '$arrayitem = @array works (2)';
 }
 
 # Implicit referentiation of hashes in assignment
@@ -121,7 +121,7 @@ plan 38;
     is +$pair.value,       3, '(key => <...>) works (2)';
 }
 
-# Arrayref literals in pair creation with key => ...
+# Arrayitem literals in pair creation with key => ...
 {
     my $pair  = (key => [<a b c>]);
 
@@ -144,7 +144,7 @@ plan 38;
     is +$pair.value,       3, '(:key(<...>)) works (2)';
 }
 
-# Arrayref literals in pair creation with :key(...)
+# Arrayitem literals in pair creation with :key(...)
 {
     my $pair  = (:key([<a b c>]));
 
@@ -167,7 +167,7 @@ plan 38;
     is +$pair.key,       3, '(<...> => "value") works (2)';
 }
 
-# Arrayref literals in pair creation with ... => "value"
+# Arrayitem literals in pair creation with ... => "value"
 {
     my $pair  = ([<a b c>] => "value");
 

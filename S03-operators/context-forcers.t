@@ -143,9 +143,9 @@ subtest 'numeric context' => {
 }
 
 {
-    my $*arrayref = list(1,2,3);
-    ok eval_elsewhere('?(@$*arrayref)'), '?(@$arrayref) syntax works';
-    ok eval_elsewhere('?(@($*arrayref))'), '?(@($arrayref)) syntax works';
+    my $*arrayitem = list(1,2,3);
+    ok eval_elsewhere('?(@$*arrayitem)'), '?(@$arrayitem) syntax works';
+    ok eval_elsewhere('?(@($*arrayitem))'), '?(@($arrayitem)) syntax works';
 }
 
 # L<S03/Symbolic unary precedence/"prefix:<!>">
@@ -168,9 +168,9 @@ subtest 'numeric context' => {
 
 }
 {
-    my $*arrayref = list(1,2,3);
-    ok eval_elsewhere('!(!(@$*arrayref))'), '!(@$arrayref) syntax works';
-    ok eval_elsewhere('!(!(@($*arrayref)))'), '!(@($arrayref)) syntax works';
+    my $*arrayitem = list(1,2,3);
+    ok eval_elsewhere('!(!(@$*arrayitem))'), '!(@$arrayitem) syntax works';
+    ok eval_elsewhere('!(!(@($*arrayitem)))'), '!(@($arrayitem)) syntax works';
 }
 
 # int context

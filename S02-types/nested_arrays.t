@@ -6,7 +6,7 @@ use Test;
 
 =begin description
 
-Nested array tests; various interactions of arrayrefs, arrays, flattening and nesting.
+Nested array tests; various interactions of arrayitems, arrays, flattening and nesting.
 
 =end description
 

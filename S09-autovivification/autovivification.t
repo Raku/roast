@@ -15,7 +15,7 @@ plan 44;
   my %hash;
 
   %hash<key>[42] = 17;
-  is %hash<key>[42], 17, "autovivification of a hash element to an arrayref worked";
+  is %hash<key>[42], 17, "autovivification of a hash element to an arrayitem worked";
   is +%hash.keys, 1, 'Created one hash item';
 }
 
@@ -32,18 +32,18 @@ plan 44;
 # XXX I understand that @array[0].push(...) should autovivify an Array
 # in @array[0], but is that also true for a normal scalar?
 {
-  my $arrayref;
+  my $arrayitem;
 
-  push $arrayref, 1,2,3;
-  is ~$arrayref, "1 2 3", "autovivification to an array by &push";
-  isa-ok $arrayref, Array, 'autovivified to Array';
+  push $arrayitem, 1,2,3;
+  is ~$arrayitem, "1 2 3", "autovivification to an array by &push";
+  isa-ok $arrayitem, Array, 'autovivified to Array';
 }
 
 {
-  my $arrayref;
+  my $arrayitem;
 
-  unshift $arrayref, 1,2,3;
-  is ~$arrayref, "1 2 3", "autovivification to an array by &unshift";
+  unshift $arrayitem, 1,2,3;
+  is ~$arrayitem, "1 2 3", "autovivification to an array by &unshift";
 }
 
 # Autovification by push, unshift, etc. of an array/hash element
@@ -109,45 +109,45 @@ plan 44;
 
 # Simple array autovivification
 {
-  my $arrayref;
-  ok !$arrayref.isa(Array), "uninitialized variable is not an Array (1)";
+  my $arrayitem;
+  ok !$arrayitem.isa(Array), "uninitialized variable is not an Array (1)";
 
-  $arrayref[42] = 23;
-  ok $arrayref.isa(Array), "uninitialized variable was autovivified to an array (1)";
-  is $arrayref[42],    23, "array element assignment worked";
+  $arrayitem[42] = 23;
+  ok $arrayitem.isa(Array), "uninitialized variable was autovivified to an array (1)";
+  is $arrayitem[42],    23, "array element assignment worked";
 }
 
 {
-  my $arrayref;
-  ok !$arrayref.isa(Array), "uninitialized variable is not an Array (2)";
+  my $arrayitem;
+  ok !$arrayitem.isa(Array), "uninitialized variable is not an Array (2)";
 
 # Note that 
 #    Autovivification will only happen if the *vivifiable* *path* is used as a container
 #    ... value extraction does not autovivify.
-  lives-ok { my $elem = $arrayref[42] },
+  lives-ok { my $elem = $arrayitem[42] },
     "accessing a not existing array element of an uninitialized variable works";
-  ok !$arrayref.isa(Array), "uninitialized variable was not autovivified to an array (2)";
+  ok !$arrayitem.isa(Array), "uninitialized variable was not autovivified to an array (2)";
 
-  my $arrayref2;
-  lives-ok { my $elem = $arrayref2[1][2][3][4][5][6] },
+  my $arrayitem2;
+  lives-ok { my $elem = $arrayitem2[1][2][3][4][5][6] },
     "accessing a not existing array element of an uninitialized variable works";
-  ok !$arrayref2.isa(Array), "uninitialized variable was not autovivified to an array (3)";
-  ok !$arrayref2[1][2][3][4][5].isa(Array), "uninitialized variable was not autovivified to an array (4)";
+  ok !$arrayitem2.isa(Array), "uninitialized variable was not autovivified to an array (3)";
+  ok !$arrayitem2[1][2][3][4][5].isa(Array), "uninitialized variable was not autovivified to an array (4)";
 }
 
 {
-  my $arrayref;
-  ok !$arrayref.isa(Array), "uninitialized variable is not an Array (3)";
+  my $arrayitem;
+  ok !$arrayitem.isa(Array), "uninitialized variable is not an Array (3)";
 
-  lives-ok { my $elem := $arrayref[42] },
+  lives-ok { my $elem := $arrayitem[42] },
     "binding a not existing array element of an uninitialized variable works (1)";
   #?rakudo todo 'unknown'
-  ok $arrayref.isa(Array), "uninitialized variable is autovivified to an array (1)";
+  ok $arrayitem.isa(Array), "uninitialized variable is autovivified to an array (1)";
 
-  lives-ok { my $elem2 := $arrayref[1][2][3][4][5][6] },
+  lives-ok { my $elem2 := $arrayitem[1][2][3][4][5][6] },
     "binding a not existing array element of an uninitialized variable works (2)";
   #?rakudo todo 'unknown'
-  ok $arrayref[1][2][3][4][5].isa(Array), "uninitialized variable is autovivified to an array (2)";
+  ok $arrayitem[1][2][3][4][5].isa(Array), "uninitialized variable is autovivified to an array (2)";
 }
 
 
@@ -156,7 +156,7 @@ plan 44;
   my @array;
 
   @array[42][23] = 17;
-  is @array[42][23], 17, "autovivification of an array element to an arrayref worked";
+  is @array[42][23], 17, "autovivification of an array element to an arrayitem worked";
 }
 
 {

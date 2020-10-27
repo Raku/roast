@@ -80,8 +80,8 @@ does-ok %hash5, Hash, '%hash5 does Hash';
     is(%hash5<three>, 1, 'value was changed successfully with slice assignment');
 
     %hash5<foo> = [3, 1];
-    is(%hash5<foo>[0], 3, 'value assigned successfully with arrayref in list context');
-    is(%hash5<foo>[1], 1, 'value assigned successfully with arrayref in list context');
+    is(%hash5<foo>[0], 3, 'value assigned successfully with arrayitem in list context');
+    is(%hash5<foo>[1], 1, 'value assigned successfully with arrayitem in list context');
 }
 
 # keys

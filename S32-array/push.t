@@ -121,7 +121,7 @@ plan 56;
 {
     throws-like 'push()', X::TypeCheck::Argument,
         'push() requires arguments (1)';
-    # This one is okay, as push will push 0 elems to a rw arrayref.
+    # This one is okay, as push will push 0 elems to a rw arrayitem.
     lives-ok({ push([])  }, 'push() requires arguments (2)');
     throws-like '42.push(3)', X::Multi::NoMatch,
         '.push should not work on scalars';
@@ -134,15 +134,15 @@ plan 56;
 #     todo_throws_ok { 'push @push, 10' }, '?? what should this error message be ??', 'cannot push onto a Inf array';
 # }
 
-# nested arrayref
+# nested arrayitems
 {
     my @push = ();
     push @push, $[ 21 ... 25 ];
 
-    is(@push.elems,     1, 'nested arrayref, array length is 1');
-    is(@push[0].elems,  5, 'nested arrayref, arrayref length is 5');
-    is(@push[0][0],    21, 'nested arrayref, first value is 21');
-    is(@push[0][*-1],  25, 'nested arrayref, last value is 25');
+    is(@push.elems,     1, 'nested arrayitem, array length is 1');
+    is(@push[0].elems,  5, 'nested arrayitem, arrayitem length is 5');
+    is(@push[0][0],    21, 'nested arrayitem, first value is 21');
+    is(@push[0][*-1],  25, 'nested arrayitem, last value is 25');
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/1340

@@ -15,14 +15,14 @@ plan 47;
 {
     my @array = [ 11 .. 15 ], [ 21 .. 25 ], [ 31 .. 35 ];
 
-    is(@array[0].elems,  5, 'first arrayref has 5 elements');
-    is(@array[1].elems,  5, 'second arrayref has 5 elements');
-    is(@array[0][0],    11, 'first element in first arrayref is 11');
-    is(@array[0][*-1],  15, 'last element in first arrayref is 15');
-    is(@array[1][0],    21, 'first element in second arrayref is 21');
-    is(@array[1][*-1],  25, 'last element in second arrayref is 25');
-    is(@array[*-1][0],  31, 'first element in last arrayref is 31');
-    is(@array[*-1][*-1], 35, 'last element in last arrayref is 35');
+    is(@array[0].elems,  5, 'first arrayitem has 5 elements');
+    is(@array[1].elems,  5, 'second arrayitem has 5 elements');
+    is(@array[0][0],    11, 'first element in first arrayitem is 11');
+    is(@array[0][*-1],  15, 'last element in first arrayitem is 15');
+    is(@array[1][0],    21, 'first element in second arrayitem is 21');
+    is(@array[1][*-1],  25, 'last element in second arrayitem is 25');
+    is(@array[*-1][0],  31, 'first element in last arrayitem is 31');
+    is(@array[*-1][*-1], 35, 'last element in last arrayitem is 35');
 }
 
 {

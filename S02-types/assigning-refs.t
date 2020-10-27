@@ -7,26 +7,26 @@ use Test;
 
 plan 18;
 
-# @array = $arrayref
+# @array = $arrayitem
 {
-  my $arrayref = [<a b c>];
-  my @array    = ($arrayref,);
+  my $arrayitem = [<a b c>];
+  my @array     = ($arrayitem,);
 
-  is +@array, 1, '@array = ($arrayref,) does not flatten the arrayref';
+  is +@array, 1, '@array = ($arrayitem,) does not flatten the arrayitem';
 }
 
 {
-  my $arrayref = [<a b c>];
-  my @array    = ($arrayref);
+  my $arrayitem = [<a b c>];
+  my @array     = ($arrayitem);
 
-  is +@array, 1, '@array = ($arrayref) does not flatten the arrayref';
+  is +@array, 1, '@array = ($arrayitem) does not flatten the arrayitem';
 }
 
 {
-  my $arrayref = [<a b c>];
-  my @array    = $arrayref;
+  my $arrayitem = [<a b c>];
+  my @array     = $arrayitem;
 
-  is +@array, 1, '@array = $arrayref does not flatten the arrayref';
+  is +@array, 1, '@array = $arrayitem does not flatten the arrayitem';
 }
 
 # %hash = $hashitem
@@ -56,26 +56,26 @@ plan 18;
 }
 
 # Same as above, but now we never use arrays, but only array*refs*.
-# $arrayref2 = $arrayref1
+# $arrayitem2 = $arrayitem1
 {
   my $foo = [<a b c>];
   my $bar = ($foo,);
 
-  is +$bar, 1, '$bar = ($foo,) does not flatten the arrayref';
+  is +$bar, 1, '$bar = ($foo,) does not flatten the arrayitem';
 }
 
 {
   my $foo = [<a b c>];
   my $bar = ($foo);
 
-  is +$bar, 3, '$bar = ($foo) does flatten the arrayref';
+  is +$bar, 3, '$bar = ($foo) does flatten the arrayitem';
 }
 
 {
   my $foo = [<a b c>];
   my $bar = $foo;
 
-  is +$bar, 3, '$bar = $foo does flatten the arrayref';
+  is +$bar, 3, '$bar = $foo does flatten the arrayitem';
 }
 
 # $hashitem2 = $hashitem1
@@ -103,27 +103,27 @@ plan 18;
 
 # Same as above, but now we directly assign into an element.
 {
-  my $arrayref = [<a b c>];
+  my $arrayitem = [<a b c>];
   my @array;
-  @array[0]    = ($arrayref,);
+  @array[0]     = ($arrayitem,);
 
-  is +@array, 1, '@array[0] = ($arrayref,) does not flatten the arrayref';
+  is +@array, 1, '@array[0] = ($arrayitem,) does not flatten the arrayitem';
 }
 
 {
-  my $arrayref = [<a b c>];
+  my $arrayitem = [<a b c>];
   my @array;
-  @array[0]    = ($arrayref);
+  @array[0]     = ($arrayitem);
 
-  is +@array, 1, '@array[0] = ($arrayref) does not flatten the arrayref';
+  is +@array, 1, '@array[0] = ($arrayitem) does not flatten the arrayitem';
 }
 
 {
-  my $arrayref = [<a b c>];
+  my $arrayitem = [<a b c>];
   my @array;
-  @array[0]    = $arrayref;
+  @array[0]     = $arrayitem;
 
-  is +@array, 1, '@array[0] = $arrayref does not flatten the arrayref';
+  is +@array, 1, '@array[0] = $arrayitem does not flatten the arrayitem';
 }
 
 # Of course, these (should) give a warning ("odd number in hash construction").

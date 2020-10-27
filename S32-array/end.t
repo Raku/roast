@@ -32,17 +32,17 @@ plan 12;
 
 {
   my $a = [];
-  is $a.end, -1, ".end works on empty arrayrefs";
+  is $a.end, -1, ".end works on empty arrayitems";
 }
 
 {
   my $a = [<a b c>];
-  is $a.end, 2, ".end works on initialized arrayrefs (1)";
+  is $a.end, 2, ".end works on initialized arrayitems (1)";
 }
 
 {
   my $a = <a b c>;
-  is $a.end, 2, ".end works on initialized arrayrefs (2)";
+  is $a.end, 2, ".end works on initialized arrayitems (2)";
 }
 
 {

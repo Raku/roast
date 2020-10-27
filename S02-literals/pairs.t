@@ -151,9 +151,9 @@ sub f8 (:$bar!) { WHAT($bar) }
 
 sub f9 (:$bar!) { WHAT($bar) }
 {
-    my $arrayref = <bar>;
+    my $arrayitem = <bar>;
 
-    throws-like 'f9($arrayref => 42)',
+    throws-like 'f9($arrayitem => 42)',
       Exception,
       "variables cannot be keys of syntactical pairs (3)";
 }

@@ -45,34 +45,34 @@ plan 12;
   is $res, "a", "for works with \"a_single_constant\"";
 }
 
-# for with only one item, an arrayref
-# See thread "for $arrayref {...}" on p6l started by Ingo Blechschmidt,
+# for with only one item, an arrayitem
+# See thread "for $arrayitem {...}" on p6l started by Ingo Blechschmidt,
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22970">
 {
-  my $arrayref = [1,2,3];
+  my $arrayitem = [1,2,3];
 
   my $count=0;
-  for ($arrayref,) { $count++ }
+  for ($arrayitem,) { $count++ }
 
-  is $count, 1, 'for ($arrayref,) {...} executes the loop body only once';
+  is $count, 1, 'for ($arrayitem,) {...} executes the loop body only once';
 }
 
 {
-  my $arrayref = [1,2,3];
+  my $arrayitem = [1,2,3];
 
   my $count=0;
-  for ($arrayref) { $count++ }
+  for ($arrayitem) { $count++ }
 
-  is $count, 1, 'for ($arrayref) {...} executes the loop body only once';
+  is $count, 1, 'for ($arrayitem) {...} executes the loop body only once';
 }
 
 {
-  my $arrayref = [1,2,3];
+  my $arrayitem = [1,2,3];
 
   my $count=0;
-  for $arrayref { $count++ }
+  for $arrayitem { $count++ }
 
-  is $count, 1, 'for $arrayref {...} executes the loop body only once';
+  is $count, 1, 'for $arrayitem {...} executes the loop body only once';
 }
 
 # for with only one item, is rw

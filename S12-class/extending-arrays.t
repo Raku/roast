@@ -17,14 +17,14 @@ ok @named_array.test_method, "Uninitialized array";
 
 ok @named_array.test_method, "Populated array";
 
-ok try { [].test_method }, "Bare arrayref";
+ok try { [].test_method }, "Bare arrayitem";
 
 
-my $arrayref = [];
+my $arrayitem = [];
 
-$arrayref = [];
+$arrayitem = [];
 
-ok $arrayref.test_method, "arrayref in a variable";
+ok $arrayitem.test_method, "arrayitem in a variable";
 
 my %named_hash;
 

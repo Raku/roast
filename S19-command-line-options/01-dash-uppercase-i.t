@@ -67,7 +67,7 @@ for @tests -> $t {
   $got .= chomp;
 
   if (substr($got,0,1) ~~ "[") {
-    # Convert from arrayref to array
+    # Convert from arrayitem to array
     $got = substr($got, 1, -1);
   };
 
@@ -82,7 +82,7 @@ for @tests -> $t {
   
   $got .= chomp;
   if (substr($got,0,1) ~~ "[") {
-    # Convert from arrayref to array
+    # Convert from arrayitem to array
     $got = substr($got, 1, -1);
   };
   

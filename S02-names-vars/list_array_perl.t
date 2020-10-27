@@ -36,12 +36,12 @@ my @tests = (
 # Recursive data structures
 {
     my $foo = [ 42 ]; $foo[1] = $foo;
-    is $foo[1][1][1][0], 42, "basic recursive arrayref";
+    is $foo[1][1][1][0], 42, "basic recursive arrayitem";
 
     ok $foo.raku,
-        ".raku doesn't hang on a recursive arrayref";
+        ".raku doesn't hang on a recursive arrayitem";
     ok $foo.raku.EVAL.raku,
-        ".raku output parses on a recursive arrayref";
+        ".raku output parses on a recursive arrayitem";
 }
 
 {

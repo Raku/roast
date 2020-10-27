@@ -45,7 +45,7 @@ plan 34;
 
 # Slices on array literals
 {   is ~(<a b c d>[1,2]),   "b c", "slice on array literal";
-    is ~([<a b c d>][1,2]), "b c", "slice on arrayref literal";
+    is ~([<a b c d>][1,2]), "b c", "slice on arrayitem literal";
 }
 
 # Calculated slices

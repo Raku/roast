@@ -48,7 +48,7 @@ my @a = <b c d>;
 }
 
 {
-    my $test = q{ (VAR @a) received as arrayref };
+    my $test = q{ (VAR @a) received as arrayitem };
     my $o = $p5_dumper($@a);
     is($o[0], "b", $test);
     is($o[2], "d", $test);

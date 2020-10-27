@@ -109,8 +109,8 @@ plan 48;
   @array[1] := $var;
 
   foo @array;
-  is $var,    "new_value",     "passing an array to a sub expecting an arrayref behaves correctly (1)";
-  is ~@array, "a new_value c", "passing an array to a sub expecting an arrayref behaves correctly (2)";
+  is $var,    "new_value",     "passing an array to a sub expecting an arrayitem behaves correctly (1)";
+  is ~@array, "a new_value c", "passing an array to a sub expecting an arrayitem behaves correctly (2)";
 }
 
 {
@@ -206,19 +206,19 @@ plan 48;
   is ~@new_array, "a f c", "array binding does not create new containers (4)";
 }
 
-# Binding @array := $arrayref.
+# Binding @array := $arrayitem.
 # See http://colabti.org/irclogger/irclogger_log/perl6?date=2005-11-06,Sun&sel=388#l564
 # and consider the magic behind parameter binding (which is really normal
 # binding).
 {
-  my $arrayref  = [<a b c>];
-  my @array    := $arrayref;
+  my $arrayitem  = [<a b c>];
+  my @array     := $arrayitem;
 
-  is +@array, 3,          'binding @array := $arrayref works (1)';
+  is +@array, 3,           'binding @array := $arrayitem works (1)';
 
   @array[1] = "B";
-  is ~$arrayref, "a B c", 'binding @array := $arrayref works (2)';
-  is ~@array,    "a B c", 'binding @array := $arrayref works (3)';
+  is ~$arrayitem, "a B c", 'binding @array := $arrayitem works (2)';
+  is ~@array,     "a B c", 'binding @array := $arrayitem works (3)';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/513

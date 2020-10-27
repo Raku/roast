@@ -76,10 +76,10 @@ my @tests = (
     $foo[1] = $bar;
     $bar<b> = $foo;
 
-    is $foo[1]<b>[1]<b>[0], 42, "mixed arrayref/hashitem recursive structure";
+    is $foo[1]<b>[1]<b>[0], 42, "mixed arrayitem/hashitem recursive structure";
 
     ok $foo.raku,
-        ".raku worked correctly on a mixed arrayref/hashitem recursive structure";
+        ".raku worked correctly on a mixed arrayitem/hashitem recursive structure";
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/3771

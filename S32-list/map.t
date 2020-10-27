@@ -159,7 +159,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
   my @array  = <a b c d>;
   my @result = map { [] }, @array;
 
-  is +@result, 4, "map works with the map body returning an empty arrayref";
+  is +@result, 4, "map works with the map body returning an empty arrayitem";
 }
 
 {
@@ -167,7 +167,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
   my $empty  = [];
   my @result = map { $empty }, @array;
 
-  is +@result, 4, "map works with the map body returning an empty arrayref variable";
+  is +@result, 4, "map works with the map body returning an empty arrayitem variable";
 }
 
 {
@@ -207,9 +207,9 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 # map shouldn't flatten array objects
 {
     my @foo = [1, 2, 3].map: { [100+$_, 200+$_] };
-    is +@foo,    3,         "map should't flatten our arrayref (1)";
-    is +@foo[0], 2,         "map should't flatten our arrayref (2)";
-    is ~@foo[0], "101 201", "map should't flatten our arrayref (3)";
+    is +@foo,    3,         "map should't flatten our arrayitem (1)";
+    is +@foo[0], 2,         "map should't flatten our arrayitem (2)";
+    is ~@foo[0], "101 201", "map should't flatten our arrayitem (3)";
 }
 
 # .thing inside map blocks should still default to $_

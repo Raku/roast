@@ -27,17 +27,17 @@ plan 12;
 
 {
   my $a = [];
-  is $a.elems, 0, ".elems works on empty arrayrefs";
+  is $a.elems, 0, ".elems works on empty arrayitems";
 }
 
 {
   my $a = [<a b c>];
-  is $a.elems, 3, ".elems works on initialized arrayrefs (1)";
+  is $a.elems, 3, ".elems works on initialized arrayitems (1)";
 }
 
 {
   my $a = <a b c>;
-  is $a.elems, 3, ".elems works on initialized arrayrefs (2)";
+  is $a.elems, 3, ".elems works on initialized arrayitems (2)";
 }
 
 {
