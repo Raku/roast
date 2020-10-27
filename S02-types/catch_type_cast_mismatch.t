@@ -35,19 +35,19 @@ cmp-ok $ref, '===', $ref[0], 'So [0] returns itself';
 }
 
 {
-    # scalar -> hashref and back
+    # scalar -> hashitem and back
     my $x = 2;
-    lives-ok { $x = {a => 1} }, 'Can assign an hashref to a scalar';
+    lives-ok { $x = {a => 1} }, 'Can assign an hashitem to a scalar';
     my $y = { b => 34 };
-    lives-ok { $y = 3   },   'Can assign a number to scalar with an hashref';
+    lives-ok { $y = 3   },   'Can assign a number to scalar with an hashitem';
 }
 
 {
     # hash -> array and back
     my $x = [0, 1];
-    lives-ok { $x = { a => 3 } }, 'can assign hashref to scalar that held an array ref';
+    lives-ok { $x = { a => 3 } }, 'can assign hashitem to scalar that held an array ref';
     my $y = { df => 'dfd', 'ui' => 3 };
-    lives-ok { $y = [0, 7] }, 'can assign arrayref to scalar that held an hashref';
+    lives-ok { $y = [0, 7] }, 'can assign arrayref to scalar that held an hashitem';
 }
 
 # vim: expandtab shiftwidth=4

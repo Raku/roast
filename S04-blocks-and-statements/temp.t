@@ -109,9 +109,9 @@ plan 46;
 
   {
     temp $struct[1]<key>[1] = 23;
-    is $struct[1]<key>[1], 23, "temp() changed our nested arrayref/hashref element";
+    is $struct[1]<key>[1], 23, "temp() changed our nested arrayref/hashitem element";
   }
-  is $struct[1]<key>[1], 42, "temp() restored our nested arrayref/hashref element";
+  is $struct[1]<key>[1], 42, "temp() restored our nested arrayref/hashitem element";
 }
 
 # Block TEMP{}

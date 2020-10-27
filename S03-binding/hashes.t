@@ -111,9 +111,9 @@ plan 37;
 
   foo %hash;
   is $var, "new_value",
-    "passing a hash to a sub expecting a hashref behaves correctly (1)";
+    "passing a hash to a sub expecting a hashitem behaves correctly (1)";
   is ~%hash.values.sort, "new_value x z",
-    "passing a hash to a sub expecting a hashref behaves correctly (2)";
+    "passing a hash to a sub expecting a hashitem behaves correctly (2)";
 }
 
 # Binding of not yet existing elements should autovivify
@@ -164,19 +164,19 @@ plan 37;
   is ~%new_hash.values.sort, "f x z", "hash binding does not create new containers (4)";
 }
 
-# Binding %hash := $hashref.
+# Binding %hash := $hashitem.
 # See http://colabti.org/irclogger/irclogger_log/perl6?date=2005-11-06,Sun&sel=388#l564
 # and consider the magic behind parameter binding (which is really normal
 # binding).
 {
-  my $hashref = { a => "a", b => "b" };
-  my %hash   := $hashref;
+  my $hashitem = { a => "a", b => "b" };
+  my %hash   := $hashitem;
 
-  is +%hash, 2,                    'binding %hash := $hashref works (1)';
+  is +%hash, 2,                    'binding %hash := $hashitem works (1)';
 
   %hash<b> = "c";
-  is ~$hashref.values.sort, "a c", 'binding %hash := $hashref works (2)';
-  is ~%hash\  .values.sort, "a c", 'binding %hash := $hashref works (3)';
+  is ~$hashitem.values.sort, "a c", 'binding %hash := $hashitem works (2)';
+  is ~%hash\  .values.sort,  "a c", 'binding %hash := $hashitem works (3)';
 }
 
 # vim: expandtab shiftwidth=4

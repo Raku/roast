@@ -29,30 +29,30 @@ plan 18;
   is +@array, 1, '@array = $arrayref does not flatten the arrayref';
 }
 
-# %hash = $hashref
+# %hash = $hashitem
 # Of course, these (should) give a warning ("odd number in hash construction").
 {
-  my $hashref = {:a(1), :b(2), :c(3)};
+  my $hashitem = {:a(1), :b(2), :c(3)};
   my %hash;
-  try { %hash = ($hashref,) };
+  try { %hash = ($hashitem,) };
 
-  is +%hash, 0, '%hash = ($hashref,) does not flatten the hashref';
+  is +%hash, 0, '%hash = ($hashitem,) does not flatten the hashitem';
 }
 
 {
-  my $hashref = {:a(1), :b(2), :c(3)};
+  my $hashitem = {:a(1), :b(2), :c(3)};
   my %hash;
-  try { %hash = ($hashref,) };
+  try { %hash = ($hashitem,) };
 
-  is +%hash, 0, '%hash = ($hashref,) does not flatten the hashref';
+  is +%hash, 0, '%hash = ($hashitem,) does not flatten the hashitem';
 }
 
 {
-  my $hashref = {:a(1), :b(2), :c(3)};
+  my $hashitem = {:a(1), :b(2), :c(3)};
   my %hash;
-  try { %hash = $hashref };
+  try { %hash = $hashitem };
 
-  is +%hash, 3, '%hash = $hashref works due to single argument rule';
+  is +%hash, 3, '%hash = $hashitem works due to single argument rule';
 }
 
 # Same as above, but now we never use arrays, but only array*refs*.
@@ -78,27 +78,27 @@ plan 18;
   is +$bar, 3, '$bar = $foo does flatten the arrayref';
 }
 
-# $hashref2 = $hashref1
+# $hashitem2 = $hashitem1
 # Of course, these (should) give a warning ("odd number in hash construction").
 {
   my $foo = {:a(1), :b(2), :c(3)};
   my $bar = ($foo,);
 
-  is +$bar, 1, '$bar = ($foo,) does not flatten the hashref';
+  is +$bar, 1, '$bar = ($foo,) does not flatten the hashitem';
 }
 
 {
   my $foo = {:a(1), :b(2), :c(3)};
   my $bar = ($foo);
 
-  is +$bar, 3, '$bar = ($foo) does flatten the hashref';
+  is +$bar, 3, '$bar = ($foo) does flatten the hashitem';
 }
 
 {
   my $foo = {:a(1), :b(2), :c(3)};
   my $bar = $foo;
 
-  is +$bar, 3, '$bar = $foo does flatten the hashref';
+  is +$bar, 3, '$bar = $foo does flatten the hashitem';
 }
 
 # Same as above, but now we directly assign into an element.
@@ -128,27 +128,27 @@ plan 18;
 
 # Of course, these (should) give a warning ("odd number in hash construction").
 {
-  my $hashref = {:a(1), :b(2), :c(3)};
+  my $hashitem = {:a(1), :b(2), :c(3)};
   my %hash;
-  %hash<a>    = ($hashref,);
+  %hash<a>    = ($hashitem,);
 
-  is +%hash, 1, '%hash<a> = ($hashref,) does not flatten the hashref';
+  is +%hash, 1, '%hash<a> = ($hashitem,) does not flatten the hashitem';
 }
 
 {
-  my $hashref = {:a(1), :b(2), :c(3)};
+  my $hashitem = {:a(1), :b(2), :c(3)};
   my %hash;
-  %hash<a>    = ($hashref);
+  %hash<a>    = ($hashitem);
 
-  is +%hash, 1, '%hash<a> = ($hashref) does not flatten the hashref';
+  is +%hash, 1, '%hash<a> = ($hashitem) does not flatten the hashitem';
 }
 
 {
-  my $hashref = {:a(1), :b(2), :c(3)};
+  my $hashitem = {:a(1), :b(2), :c(3)};
   my %hash;
-  %hash<a>    = $hashref;
+  %hash<a>    = $hashitem;
 
-  is +%hash, 1, '%hash<a> = $hashref does not flatten the hashref';
+  is +%hash, 1, '%hash<a> = $hashitem does not flatten the hashitem';
 }
 
 # vim: expandtab shiftwidth=4

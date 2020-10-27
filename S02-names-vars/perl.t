@@ -64,10 +64,10 @@ my @tests = (
 # Recursive data structures
 {
     my $foo = { a => 42 }; $foo<b> = $foo;
-    is $foo<b><b><b><a>, 42, "basic recursive hashref";
+    is $foo<b><b><b><a>, 42, "basic recursive hashitem";
 
     ok $foo.raku,
-        ".raku worked correctly on a recursive hashref";
+        ".raku worked correctly on a recursive hashitem";
 }
 
 {
@@ -76,10 +76,10 @@ my @tests = (
     $foo[1] = $bar;
     $bar<b> = $foo;
 
-    is $foo[1]<b>[1]<b>[0], 42, "mixed arrayref/hashref recursive structure";
+    is $foo[1]<b>[1]<b>[0], 42, "mixed arrayref/hashitem recursive structure";
 
     ok $foo.raku,
-        ".raku worked correctly on a mixed arrayref/hashref recursive structure";
+        ".raku worked correctly on a mixed arrayref/hashitem recursive structure";
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/3771

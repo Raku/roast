@@ -24,7 +24,7 @@ plan 44;
   my %hash;
 
   %hash<key><innerkey> = 17;
-  is %hash<key><innerkey>, 17, "autovivification of a hash element to a hashref worked";
+  is %hash<key><innerkey>, 17, "autovivification of a hash element to a hashitem worked";
   isa-ok %hash<key>, Hash, 'Inner hash item is really a Hash';
 }
 
@@ -65,46 +65,46 @@ plan 44;
 
 # Simple hash autovivification
 {
-  my $hashref;
-  ok $hashref !~~ Hash, "uninitialized variable is not a Hash (1)";
+  my $hashitem;
+  ok $hashitem !~~ Hash, "uninitialized variable is not a Hash (1)";
 
-  $hashref<key> = 23;
-  is $hashref<key>,  23, "hash element assignment worked";
+  $hashitem<key> = 23;
+  is $hashitem<key>,  23, "hash element assignment worked";
   #?rakudo skip 'isa multi variant'
-  ok $hashref.isa !~~ Hash, "uninitialized variable was autovivified to a hash (1)";
+  ok $hashitem.isa !~~ Hash, "uninitialized variable was autovivified to a hash (1)";
 }
 
 {
-  my $hashref;
-  ok $hashref !~~ Hash, "uninitialized variable is not a Hash (2)";
+  my $hashitem;
+  ok $hashitem !~~ Hash, "uninitialized variable is not a Hash (2)";
 
 # Note that 
 #    Autovivification will only happen if the *vivifiable* *path* is used as a container
 #    ... value extraction does not autovivify.
-  lives-ok { my $elem = $hashref<key> },
+  lives-ok { my $elem = $hashitem<key> },
     "accessing a not existing hash element of an uninitialized variable works";
-  ok $hashref !~~ Hash, "uninitialized variable is not autovivified to a hash (2)";
+  ok $hashitem !~~ Hash, "uninitialized variable is not autovivified to a hash (2)";
 
-  my $hashref2;
-  lives-ok { my $elem2 = $hashref2<key2><a><b><c><d><e><f> },
+  my $hashitem2;
+  lives-ok { my $elem2 = $hashitem2<key2><a><b><c><d><e><f> },
     "accessing a not existing hash element of an uninitialized variable works (2)";
-  ok $hashref2 !~~ Hash, "uninitialized variable is not autovivified to a hash (3)";
-  ok $hashref2<key2><a><b><c><d><e> !~~ Hash, "uninitialized variable is not autovivified to a hash (4)";
+  ok $hashitem2 !~~ Hash, "uninitialized variable is not autovivified to a hash (3)";
+  ok $hashitem2<key2><a><b><c><d><e> !~~ Hash, "uninitialized variable is not autovivified to a hash (4)";
 }
 
 {
-  my $hashref;
-  ok $hashref !~~ Hash, "uninitialized variable is not a Hash (3)";
+  my $hashitem;
+  ok $hashitem !~~ Hash, "uninitialized variable is not a Hash (3)";
 
-  lives-ok { my $elem := $hashref<key> },
+  lives-ok { my $elem := $hashitem<key> },
     "binding a not existing hash element of an uninitialized variable works";
   #?rakudo todo 'autoviv, binding'
-  ok $hashref ~~ Hash, "uninitialized variable is autovivified to a hash (4)";
+  ok $hashitem ~~ Hash, "uninitialized variable is autovivified to a hash (4)";
 
-  lives-ok { my $elem2 := $hashref<key2><a><b><c><d><e><f> },
+  lives-ok { my $elem2 := $hashitem<key2><a><b><c><d><e><f> },
     "binding a not existing hash element of an uninitialized variable works (2)";
   #?rakudo todo 'autoviv, binding'
-  ok $hashref<key2><a><b><c><d><e> ~~ Hash, "uninitialized variable is autovivified to a hash (5)";
+  ok $hashitem<key2><a><b><c><d><e> ~~ Hash, "uninitialized variable is autovivified to a hash (5)";
 }
 
 # Simple array autovivification
@@ -163,7 +163,7 @@ plan 44;
   my @array;
 
   @array[42]<key> = 17;
-  is @array[42]<key>, 17, "autovivification of an array element to a hashref worked";
+  is @array[42]<key>, 17, "autovivification of an array element to a hashitem worked";
 }
 
 

@@ -229,25 +229,25 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 #   that for an identifier.
 {
   my $arrayref = [< a b c >];
-  my $hashref  = { :d(1), :e(2) };
+  my $hashitem = { :d(1), :e(2) };
 
-  my $pair = ($arrayref => $hashref);
+  my $pair = ($arrayref => $hashitem);
   is ~$pair.key,   ~$arrayref, "=> should not stringify the key (1)";
-  is ~$pair.value, ~$hashref,  "=> should not stringify the key (2)";
+  is ~$pair.value, ~$hashitem, "=> should not stringify the key (2)";
 
   push $pair.key, "d";
   $pair.value<f> = 3;
   is ~$pair.key,   ~$arrayref, "=> should not stringify the key (3)";
-  is ~$pair.value, ~$hashref,  "=> should not stringify the key (4)";
+  is ~$pair.value, ~$hashitem,  "=> should not stringify the key (4)";
   is +$pair.key,            4, "=> should not stringify the key (5)";
   is +$pair.value,          3, "=> should not stringify the key (6)";
 }
 
 {
   my $arrayref = [< a b c >];
-  my $hashref  = { :d(1), :e(2) };
+  my $hashitem = { :d(1), :e(2) };
 
-  my $pair = ($arrayref => $hashref);
+  my $pair = ($arrayref => $hashitem);
   sub pair_key (Pair $pair) { $pair.key }
 
   is ~pair_key($pair), ~$arrayref,

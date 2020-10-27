@@ -33,12 +33,12 @@ ok %named_hash.test_method, "Uninitialized hash";
 
 ok %named_hash.test_method, "Populated hash";
 
-ok try { ~{foo => "bar"}.test_method }, "Bare hashref";
+ok try { ~{foo => "bar"}.test_method }, "Bare hash item";
 
 
-my $hashref = {foo => "bar"};
+my $hashitem = {foo => "bar"};
 
-ok $hashref.test_method, "Named hashref";
+ok $hashitem.test_method, "Named hashitem";
 
 # Now for pairs.
 

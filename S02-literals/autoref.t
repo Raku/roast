@@ -11,7 +11,7 @@ use Test;
  * Implicit referentiation of arrays & hashes in assignment to an
    array & hash element
  * Implicit referentiation of array&hashes&array literals&arrayref
-   literals&hashref literals in pair creation with key => ... and :key(...)
+   literals&hashitem literals in pair creation with key => ... and :key(...)
    and ... => key.
 
 =end description
@@ -32,8 +32,8 @@ plan 38;
     my %hash = (a => 1, b => 2, c => 3);
     my $ref  = %hash;
 
-    is ~$ref.values.sort, "1 2 3", '$hashref = %hash works (1)';
-    is +$ref.values,            3, '$hashref = %hash works (2)';
+    is ~$ref.values.sort, "1 2 3", '$hashitem = %hash works (1)';
+    is +$ref.values,            3, '$hashitem = %hash works (2)';
 }
 
 # Implicit referentiation of arrays in assignment to an array element
@@ -129,7 +129,7 @@ plan 38;
     is +$pair.value,       3, '(key => [<...>]) works (2)';
 }
 
-# Hashref literals in pair creation with key => ...
+# Hashitem literals in pair creation with key => ...
 {
     my $pair  = (key => { a => 1, b => 2 });
 
@@ -152,7 +152,7 @@ plan 38;
     is +$pair.value,       3, '(:key([<...>])) works (2)';
 }
 
-# Hashref literals in pair creation with :key(...)
+# Hashitem literals in pair creation with :key(...)
 {
     my $pair  = (:key({ a => 1, b => 2 }));
 
@@ -175,7 +175,7 @@ plan 38;
     is +$pair.key,       3, '([<...>] => "value") works (2)';
 }
 
-# Hashref literals in pair creation with ... => "value"
+# Hashitem literals in pair creation with ... => "value"
 {
     my $pair  = ({ a => 1, b => 2 } => "value");
 

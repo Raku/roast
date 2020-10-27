@@ -64,7 +64,7 @@ plan 31;
     is $hash<3rd>, 1, 'value was changed successfully with slice assignment';
 }
 
-# hashref assignment using {}
+# hashitem assignment using {}
 # L<S06/Anonymous hashes vs blocks/So you may use sub or hash or pair to disambiguate:>
 {
     my $hash_a = { a => 1, b => 2 };

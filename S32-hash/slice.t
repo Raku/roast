@@ -54,7 +54,7 @@ plan 31;
 }
 
 # Slices on hash literals
-{   is ~({:a(1), :b(2), :c(3), :d(4)}<b c>), "2 3", "slice on hashref literal";
+{   is ~({:a(1), :b(2), :c(3), :d(4)}<b c>), "2 3", "slice on hashitem literal";
 
 =begin pod
 
