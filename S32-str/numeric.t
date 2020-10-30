@@ -3,7 +3,7 @@ use Test;
 plan 190;
 
 #?DOES 2
-sub check($str, $expected_type, $expected_number, $desc?) {
+sub check($str, $expected_type, $expected_number, $desc?) is test-assertion {
     my $result = +$str;
     my $description = $desc // $str;
     is $result.WHAT.gist, $expected_type.gist, "$description (type)";
@@ -11,7 +11,7 @@ sub check($str, $expected_type, $expected_number, $desc?) {
 }
 
 #?DOES 1
-sub f($str) {
+sub f($str) is test-assertion {
     my $num = +$str;
     ok !$num.defined, "+{$str.raku} fails";
 }

@@ -63,7 +63,7 @@ plan 49;
   is( "ok \xFF\xFF\n" ~& "ok 19\n", "ok 19\n", 'stringwise ~&, arbitrary string' );
   is( "ok 20\n" ~| "ok \0\0\n", "ok 20\n",     'stringwise ~|, arbitrary string' );
 
-sub check_string_bitop (Str:D $a, Str:D $b) {
+sub check_string_bitop (Str:D $a, Str:D $b) is test-assertion {
   my @a = $a.ords;
   my @b = $b.ords;
   my @res-AND = ($a ~& $b).ords;

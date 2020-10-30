@@ -41,7 +41,9 @@ multi sub infix:<dot>(Vector $a, Vector $b) { [+]($a.coords >>*<< $b.coords); }
 # so we can't expect it work with class Vector. Thus we re-make one that does
 # the custom ops
 
-sub ia($got, $expected, $descr =  "$got is approximately $expected") {
+sub ia(
+  $got, $expected, $descr =  "$got is approximately $expected"
+) is test-assertion {
     my $tol = $expected.abs < 1e-6 ?? 1e-5 !! $expected.abs * 1e-6;
     my $test = ($got - $expected).abs <= $tol;
     ok(?$test, $descr);

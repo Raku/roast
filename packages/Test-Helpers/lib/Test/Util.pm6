@@ -10,20 +10,22 @@ sub group-of (
         Pair  :value((
             Str:D :key($desc),
                   :value(&tests))))
-) is export {
+) is export is test-assertion {
     subtest $desc => {
         plan $plan;
         tests
     }
 }
 
-sub is-path (IO::Path:D $got, IO::Path:D $exp, Str:D $desc) is export {
+sub is-path(
+  IO::Path:D $got, IO::Path:D $exp, Str:D $desc
+) is export is test-assertion {
     cmp-ok $got.resolve, '~~', $exp.resolve, $desc;
 }
 
 sub is-deeply-junction (
     Junction $got, Junction $expected, Str:D $desc
-) is export {
+) is export is test-assertion {
     sub junction-guts (Junction $j) {
         $j.gist ~~ /^ $<type>=(\w+)/;
         my $type := ~$<type>;
@@ -41,10 +43,11 @@ sub is-deeply-junction (
     is-deeply junction-guts($got), junction-guts($expected), $desc;
 }
 
-multi test-iter-opt (Iterator:D \iter, @data is raw, Str:D $desc) is export {
+proto test-iter-opt(|) is export is test-assertion {*}
+multi test-iter-opt(Iterator:D \iter, @data is raw, Str:D $desc) {
     TEST-ITER-OPT iter, @data, +@data, $desc;
 }
-multi test-iter-opt (Iterator:D \iter, UInt:D \items, Str:D $desc) is export {
+multi test-iter-opt(Iterator:D \iter, UInt:D \items, Str:D $desc) {
     TEST-ITER-OPT iter, Nil, items, $desc;
 }
 sub TEST-ITER-OPT (\iter, \data, \n, $desc,) {
@@ -72,19 +75,20 @@ sub TEST-ITER-OPT (\iter, \data, \n, $desc,) {
     }
 }
 
-multi sub is-eqv(Seq:D $got, Seq:D $expected, Str:D $desc) is export {
+proto sub is-eqv(|) is export is test-assertion {*}
+multi sub is-eqv(Seq:D $got, Seq:D $expected, Str:D $desc) {
     $got.cache; $expected.cache;
     _is-eqv $got, $expected, $desc;
 }
-multi sub is-eqv(Seq:D $got, Mu $expected, Str:D $desc) is export {
+multi sub is-eqv(Seq:D $got, Mu $expected, Str:D $desc) {
     $got.cache;
     _is-eqv $got, $expected, $desc;
 }
-multi sub is-eqv(Mu $got, Seq:D $expected, Str:D $desc) is export {
+multi sub is-eqv(Mu $got, Seq:D $expected, Str:D $desc) {
     $expected.cache;
     _is-eqv $got, $expected, $desc;
 }
-multi sub is-eqv(Mu $got, Mu $expected, Str:D $desc) is export {
+multi sub is-eqv(Mu $got, Mu $expected, Str:D $desc) {
     _is-eqv $got, $expected, $desc;
 }
 sub _is-eqv (Mu $got, Mu $expected, Str:D $desc) {
@@ -104,7 +108,7 @@ sub _is-eqv (Mu $got, Mu $expected, Str:D $desc) {
     $ok
 }
 
-proto sub is_run(|) is export { * }
+proto sub is_run(|) is export is test-assertion {*}
 
 # No input, no test name
 multi sub is_run( Str $code, %expected, *%o ) {
@@ -236,8 +240,8 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
     return %out;
 }
 
-multi doesn't-hang (Str $args, $desc, :$in, :$wait = 15, :$out, :$err)
-is export {
+proto doesn't-hang(|) is export is test-assertion {*}
+multi doesn't-hang (Str $args, $desc, :$in, :$wait = 15, :$out, :$err) {
     if $*DISTRO.name eq 'browser' {
         is_run($args, { :$out, :$err }, $desc);
     } else {
@@ -252,7 +256,7 @@ my $VM-time-scale-multiplier = $*VM.name eq 'jvm' ?? 20/3 !! 1;
 multi doesn't-hang (
     Capture $args, $desc = 'code does not hang',
     :$in, :$wait = 15, :$out, :$err,
-) is export {
+) {
     my $prog = Proc::Async.new: |$args;
     my ($stdout, $stderr) = '', '';
     $prog.stdout.tap: { $stdout ~= $^a };
@@ -298,8 +302,9 @@ multi doesn't-hang (
     };
 }
 
-multi warns-like (Str $code, |c) is export { warns-like {$code.EVAL}, |c }
-multi warns-like (&code, $test, Str $desc) is export {
+proto warns-like(|) is export is test-assertion {*}
+multi warns-like(Str $code, |c) { warns-like {$code.EVAL}, |c }
+multi warns-like(&code, $test, Str $desc) {
     my ($did-warn, $message) = False;
     &code();
     CONTROL { when CX::Warn { $did-warn = True; $message = .message; .resume } }
@@ -311,8 +316,9 @@ multi warns-like (&code, $test, Str $desc) is export {
     }
 }
 
-multi doesn't-warn (Str $code, |c) is export { doesn't-warn {$code.EVAL}, |c }
-multi doesn't-warn (&code, Str $desc) is export {
+proto doesn't-warn(|) is export is test-assertion {*}
+multi doesn't-warn(Str $code, |c) { doesn't-warn {$code.EVAL}, |c }
+multi doesn't-warn(&code, Str $desc) {
     my ($did-warn, $message) = False;
     &code();
     CONTROL { when CX::Warn { $did-warn = True; $message = .message; .resume } }
@@ -353,18 +359,19 @@ sub make-temp-dir (Int $chmod? --> IO::Path:D) is export {
     p
 }
 
-multi no-fatal-throws-like (Str:D $test, |c) is export {
+proto no-fatal-throws-like(|) is export is test-assertion {*}
+multi no-fatal-throws-like(Str:D $test, |c) {
     my $*THROWS-LIKE-CONTEXT = CALLER::;
     throws-like "no fatal; my \$ = do \{ $test }; Nil", |c;
 }
-multi no-fatal-throws-like (&test, |c) is export {
+multi no-fatal-throws-like(&test, |c) {
     my $*THROWS-LIKE-CONTEXT = CALLER::;
     throws-like { no fatal; my $ = do { test }; Nil }, |c;
 }
 
-sub run-with-tty (
+sub run-with-tty(
     $code, $desc, :$in = '', :$status = 0, :$out = '', :$err = ''
-) is export {
+) is export is test-assertion {
     if $*DISTRO.name eq 'ubuntu' and $*KERNEL.release ~~ /:i Microsoft/ {
         skip 'WSL as of Mar 2018 did not support `script` command for test: roast issue #395';
         return;
@@ -390,7 +397,9 @@ sub run-with-tty (
     }
 }
 
-sub throws-like-any($code, @ex_type, $reason?, *%matcher) is export {
+sub throws-like-any(
+  $code, @ex_type, $reason?, *%matcher
+) is export is test-assertion {
     subtest {
         plan 2 + %matcher.keys.elems;
         my $msg;

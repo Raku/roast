@@ -15,7 +15,7 @@ all-basic({ $path });
 # filename as IO tests
 all-basic({ $path.IO });
 
-sub all-basic(Callable $handle) {
+sub all-basic(Callable $handle) is test-assertion {
     my Blob $buf = "hello world".encode("utf-8");
     my $txt = "42";
 

@@ -22,7 +22,7 @@ is-deeply $in_prompt, Any, 'pre ENTER/LEAVE';
 C.issue_prompt(42, 'foo');
 is-deeply $in_prompt, False, 'LEAVE phaser';
 
-sub Open($file, :$w) {
+sub Open($file, :$w) is test-assertion {
     plan 11;
     nok $run-time, "INIT sub call";
     is $file, 'logfile', 'INIT sub arg';
@@ -30,7 +30,7 @@ sub Open($file, :$w) {
     return 42;
 }
 
-sub log($msg) {
+sub log($msg) is test-assertion {
     my $fh = INIT Open("logfile", :w);
     is $fh, 42, 'INIT runtime assign';
 }

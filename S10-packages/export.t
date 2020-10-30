@@ -24,7 +24,7 @@ dies-ok { ::('&exported_foo')() },
 dies-ok { ::('&foo_packc')() }, "lexical export is indeed lexical";
 
 
-sub moose {
+sub moose is test-assertion {
     use Export_PackD;
     is(this_gets_exported_lexically(), 'moose!', "lexical import survives pad regeneration")
 }

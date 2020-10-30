@@ -9,7 +9,7 @@ use Test;
 # Second parameter is a description for this group of tests.
 # Rest is a slurpy with the expected result of pulling all
 # values from the iterator.
-sub iterator-ok(&iterator, $desc, *@expected) is export {
+sub iterator-ok(&iterator, $desc, *@expected) is export is test-assertion {
     subtest {
         plan 17;
         {

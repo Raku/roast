@@ -34,7 +34,7 @@ else {
        "Current directory is '$subdir' subfolder (relative)";
 }
 
-sub test-chdir ($desc, $after, |args) {
+sub test-chdir ($desc, $after, |args) is test-assertion {
     my $before = make-temp-dir;
     subtest "chdir with {args.raku}" => {
         temp $*CWD = $before;
@@ -43,7 +43,7 @@ sub test-chdir ($desc, $after, |args) {
     }
 }
 
-sub test-chdir-fails ($desc, $why, $after, |args) {
+sub test-chdir-fails ($desc, $why, $after, |args) is test-assertion {
     my $before = make-temp-dir;
     subtest "chdir with {args.raku} fails because of $why" => {
         temp $*CWD = $before;

@@ -11,7 +11,7 @@ here is a start from scratch that should be easier to run.
 
 =end description
 
-sub split_test(@splitted, @expected, Str $desc) {
+sub split_test(@splitted, @expected, Str $desc) is test-assertion {
     subtest {
         plan 2;
         ok @splitted.elems ==  @expected.elems,

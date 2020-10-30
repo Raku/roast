@@ -5,20 +5,20 @@ plan 12;
 
 #L<S06/Placeholder variables/>
 
-sub one_placeholder {
+sub one_placeholder is test-assertion {
     is $^bla,  2, "A single placeholder works";
 }
 
 one_placeholder(2);
 
-sub two_placeholders {
+sub two_placeholders is test-assertion {
     is $^b, 2, "Second lexicographic placeholder gets second parameter";
     is $^a, 1, "First lexicographic placeholder gets first parameter";
 }
 
 two_placeholders(1, 2);
 
-sub non_twigil {
+sub non_twigil is test-assertion {
     is $^foo, 5, "A single placeholder (still) works";
     is $foo, 5, "It also has a corresponding non-twigil variable";
 }

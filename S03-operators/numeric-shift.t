@@ -3,7 +3,7 @@ use Test;
 
 plan 38;
 
-sub check ($a, $b, $ls, $rs) {
+sub check ($a, $b, $ls, $rs) is test-assertion {
     is $a * 2**$b, $ls, "expected value for shl $a by $b is sane";
 
     # assume two's complement semantics for negative $a

@@ -50,7 +50,9 @@ sub MAIN (:$scripts = <Hangul Arabic Tibetan>, Int:D :$repeat = 1, Bool:D :$no-t
 
     }
 }
-sub test-regional-indicators ($text, @chars-to-test, @graphs, @cps) {
+sub test-regional-indicators(
+  $text, @chars-to-test, @graphs, @cps
+) is test-assertion {
     is-deeply @chars-to-test, @graphs, "Regional Indicators: Graphemes compare correct in initial test of $text";
     for ^@graphs -> $i {
         is-deeply @graphs[$i].ords, @cps[$i], "Regional Indicators:  Codepoints in isolated grapheme $i are correct";
@@ -61,7 +63,7 @@ sub test-regional-indicators ($text, @chars-to-test, @graphs, @cps) {
     }
 
 }
-sub test-regional {
+sub test-regional() is test-assertion {
     {
         my $text = "join+comb";
         my @chars-to-test = ("a", "🇦", "🇧", "🇨", "🇩", "b").join.comb;

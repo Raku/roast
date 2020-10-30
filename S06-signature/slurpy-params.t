@@ -40,7 +40,7 @@ is first_arg_copy(1, 2, 3), '1',  'can grab first item of a slurpy array (is cop
 }
 
 
-sub whatever {
+sub whatever is test-assertion {
     is(@_[3], 'd', 'implicit slurpy param flattens');
     is(@_[2], 'c', 'implicit slurpy param flattens');
     is(@_[1], 'b', 'implicit slurpy param flattens');

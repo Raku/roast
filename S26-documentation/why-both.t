@@ -4,7 +4,7 @@ plan 291;
 
 my $pod_index = 0;
 
-sub test-both($thing, $leading, $trailing) {
+sub test-both($thing, $leading, $trailing) is test-assertion {
     my $combined = "$leading\n$trailing";
     my $name     = "$leading\\n$trailing";
 

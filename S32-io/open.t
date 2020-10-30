@@ -24,7 +24,9 @@ plan 17;
 #
 ###################################################################################################
 
-sub with-all-open-forms-test (Pair $ (:key($desc), :value(&tests))) {
+sub with-all-open-forms-test(
+  Pair $ (:key($desc), :value(&tests))
+) is test-assertion {
     subtest $desc => {
         plan +my @routines :=
           &open                      => make-temp-path.absolute,

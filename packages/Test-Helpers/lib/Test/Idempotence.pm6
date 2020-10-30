@@ -3,7 +3,9 @@ unit module Test::Idempotence;
 
 use Test;
 
-sub is-perl-idempotent($thing, $desc?, %subst?, :$eqv = False) is export {
+sub is-perl-idempotent(
+  $thing, $desc?, %subst?, :$eqv = False
+) is export is test-assertion {
     my $fail = 1;
     my $stage1p;
     my $stage1r;

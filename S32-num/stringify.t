@@ -5,7 +5,7 @@ plan 62;
 # L<S32::Numeric/Complex/"=item gist">
 
 #?DOES 4
-sub Complex_str_test($value, $str_nucleus) {
+sub Complex_str_test($value, $str_nucleus) is test-assertion {
     is ~$value, $str_nucleus, "~<$str_nucleus>";
     is $value.Str, $str_nucleus, "<$str_nucleus>.Str";
     is $value.gist, $str_nucleus, "<$str_nucleus>.gist";
@@ -39,7 +39,7 @@ lives-ok { Complex.Str }, 'Complex.Str does not die';
 
 # L<S32::Numeric/Rat/"=item gist">
 #?DOES 1
-sub Rat_str_test($value, $str_nucleus, $str, $perl = $str) {
+sub Rat_str_test($value, $str_nucleus, $str, $perl = $str) is test-assertion {
     subtest "Rat Stringification ($value)" => {
         plan 7;
         is ~$value, $str, "~<$str_nucleus>";

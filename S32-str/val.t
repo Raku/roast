@@ -161,7 +161,7 @@ my @ok =
                      ),
 ;
 
-sub ok-val(\value, @strings) {
+sub ok-val(\value, @strings) is test-assertion {
     my \type      := value.WHAT;
     my \allo-type := %type2allo{type};
 

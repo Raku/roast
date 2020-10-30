@@ -9,7 +9,7 @@ my $filename = $?FILE.IO.parent.child('comb.testing');
 LEAVE unlink $filename; # cleanup
 
 #?DOES 1
-sub test-comb($text,@result,|c) {
+sub test-comb($text,@result,|c) is test-assertion {
     subtest {
         plan 4;
         unlink $filename;

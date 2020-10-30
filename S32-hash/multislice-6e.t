@@ -9,12 +9,12 @@ my %hash;
 sub set-up-hash(--> Nil) {
     %hash = a => { b => { c => 42, d => 666, e => { f => 314 } } };
 }
-sub leftover-ok($leftover --> Nil) {
+sub leftover-ok($leftover --> Nil) is test-assertion {
     is-deeply %hash, $leftover,
       'is hash as expected after deletion of key?';
     set-up-hash;
 }
-sub assignable-ok(\target, \values, %result --> Nil) {
+sub assignable-ok(\target, \values, %result --> Nil) is test-assertion {
     subtest "check assignability with {values.raku}" => {
         is-deeply (target = values), values,
           "could we assign {values.raku} and did we get {values.raku} back";
@@ -23,7 +23,7 @@ sub assignable-ok(\target, \values, %result --> Nil) {
     }
     set-up-hash;
 }
-sub non-assignable-ok(\target, \value, $comment) {
+sub non-assignable-ok(\target, \value, $comment) is test-assertion {
     subtest $comment => {
         is-deeply target, value,  "was the value ok";
         dies-ok { target = 999 }, "did assignment die"

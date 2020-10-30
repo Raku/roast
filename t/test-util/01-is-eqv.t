@@ -5,7 +5,7 @@ use Test::Util;
 
 plan 10;
 
-sub is-eqv-fails ($code, $desc) {
+sub is-eqv-fails ($code, $desc) is test-assertion {
     my $package-lib-prefix = $?FILE.IO.parent(3).add('packages/Test-Helpers').absolute;
 
     is_run ~ "use lib $package-lib-prefix.raku();\n" ~ ｢

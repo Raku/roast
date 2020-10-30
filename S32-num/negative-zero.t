@@ -10,7 +10,7 @@ Tests for correct handling of negative zeros
 
 =end pod
 
-sub is-neg-zero ($v, $desc) {
+sub is-neg-zero ($v, $desc) is test-assertion {
     # atan2 is sensitive to the sign of the zero; use it as a way to determine
     # which zero we got from val()
     is-approx atan2($v, -1e0), -π, $desc;

@@ -5,7 +5,9 @@ unit module Test::Assuming;
 
 use Test;
 
-sub is-primed-sig (Block $b, Signature $s, Capture |cap) is export {
+sub is-primed-sig(
+  Block $b, Signature $s, Capture |cap
+) is export is test-assertion {
 
     my $r = $b.assuming(|cap);
     my $res = $r.signature.raku;
@@ -28,7 +30,9 @@ sub is-primed-sig (Block $b, Signature $s, Capture |cap) is export {
     diag $diag2 if $diag2;
 }
 
-sub priming-fails-bind-ok (Block $b, $symbol, $expected, Capture |cap) is export {
+sub priming-fails-bind-ok(
+  Block $b, $symbol, $expected, Capture |cap
+) is export is test-assertion {
     my $thrown;
     my $r;
     try {
@@ -74,7 +78,9 @@ sub priming-fails-bind-ok (Block $b, $symbol, $expected, Capture |cap) is export
     diag $why;
 }
 
-sub is-primed-call (Block $b, \call, @expect, Capture |cap) is export {
+sub is-primed-call(
+  Block $b, \call, @expect, Capture |cap
+) is export is test-assertion {
 
     my $r = $b.assuming(|cap);
     my $res = $r.signature.raku;

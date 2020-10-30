@@ -26,7 +26,7 @@ is_fudged_ok '05-skip', 'impl-1', 'v6.0.0', 'test for skip only working on actua
 is_fudged_ok '06-todo', 'impl-1', 'v6.0.0', 'test for todo only working on actual tests';
 is_fudged_ok '07-register_function', 'impl-1', 'v6.0.0', 'test for registration of custom test function';
 
-sub is_fudged_ok($$$$) {
+sub is_fudged_ok($$$$) is test-assertion {
     my ($file, $impl, $ver, $desc) = @_;
     my ($in, $out)    = ("t/$file.in", "t/$file.out_$impl");
     my $got           = `$^X fudge --version=$ver $impl $in`;

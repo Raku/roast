@@ -4,9 +4,9 @@ use Test::Util;
 
 plan 4;
 
-sub test-out-buffer (
+sub test-out-buffer(
     Str:D $desc, &test, UInt:D :$buffer = 1000, UInt :$exp-bytes, Capture :$open-args = \(:w)
-) {
+) is test-assertion {
     state $path = make-temp-file;
     # print an empty string after open. It's allowed for implementation to pass the first print
     # unbuffed, to test if the handle is writable

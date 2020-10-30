@@ -93,7 +93,7 @@ sub fudge_test_to_run_test {
 # Run fudgeandrun on file with specified $run_opts and
 # verify that fudgeandrun output shows a successful run.
 ######################################################################
-sub fudge_and_run_ok {
+sub fudge_and_run_ok is test-assertion {
     my ($test_file, $test_desc, $run_opts, $success_opts) = @_;
 
     my @far_opts;

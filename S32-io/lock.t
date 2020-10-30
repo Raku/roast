@@ -13,7 +13,7 @@ sub test-lock (
     :$open-for-write, :$blocks-write, :$fails-write,
     :$open-for-read,  :$blocks-read,  :$fails-read,
     :$fh is copy, :$file is copy, :$no-close,
-){
+) is test-assertion {
     $file = make-temp-file :content<test> unless $file;
     $fh = $file.IO.open(:r) if not $fh and $open-for-read;
     $fh = $file.IO.open(:w) if not $fh and $open-for-write;

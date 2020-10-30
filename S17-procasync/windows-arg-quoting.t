@@ -18,7 +18,7 @@ if !$*DISTRO.is-win {
     exit;
 };
 
-sub test-run(@args, $expected, $verbatim = False) {
+sub test-run(@args, $expected, $verbatim = False) is test-asserion {
     my $marker = 'MARKER_Sx%3bX';
     my $script = $?FILE.IO.parent.child('print-raw-arguments.p6');
     my $proc = run($*EXECUTABLE, $script, $marker, |@args, :out, :win-verbatim-args($verbatim));
@@ -26,7 +26,9 @@ sub test-run(@args, $expected, $verbatim = False) {
     $out ~~ s/^ .* $marker ' '//;
     is $out, $expected, $expected;
 }
-sub test-run-verbatim(@args, $expected) { test-run(@args, $expected, True) }
+sub test-run-verbatim(@args, $expected) is test-assertion {
+    test-run(@args, $expected, True)
+}
 
 #?rakudo.jvm skip 'JVM enforces its own process argument quoting.'
 {

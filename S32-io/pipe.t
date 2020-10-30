@@ -11,7 +11,7 @@ proc_captures_out_ok 'exit(1)',         '',    1, 'Child fails and prints nothin
 proc_captures_out_ok 'exit(42)',        '',   42, 'Child fails and prints nothing';
 proc_captures_out_ok 'exit(say(42))',  '42',   1, 'Child fails and prints something';
 
-sub proc_captures_out_ok($code, $out, $exitcode, $desc) {
+sub proc_captures_out_ok($code, $out, $exitcode, $desc) is test-assertion {
     my $proc = run($*EXECUTABLE, '-e', $code, :out, :!err);
 
     subtest $desc => {

@@ -3,7 +3,7 @@ use Test;
 
 plan 1;
 
-sub rmro-match(Mu \type, @exp, Str:D $msg, :$unhid = 0) {
+sub rmro-match(Mu \type, @exp, Str:D $msg, :$unhid = 0) is test-assertion {
     my @got := ( $unhid ?? type.^mro_unhidden(:roles) !! type.^mro(:roles) )[0..*-3];
     unless @got.elems == @exp.elems {
         flunk $msg;

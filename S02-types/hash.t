@@ -150,12 +150,12 @@ ok(~%hash9 ~~ /^(1\t2\s+2\t3|2\t3\s+1\t2)\s*$/, "hash can stringify");
 my %hash10 = <1 2>;
 is(%hash10<1>, 2, "assignment of pointy qw to hash");
 
-sub test1 {
+sub test1() is test-assertion {
     my %sane = hash ('a'=>'b');
     is(%sane.WHAT.gist,Hash.gist,'%sane is a Hash');
 }
 
-sub test2 (%hash) {
+sub test2(%hash) is test-assertion {
     is(%hash.WHAT.gist,Hash.gist,'%hash is a Hash');
 }
 

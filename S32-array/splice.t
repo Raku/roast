@@ -9,7 +9,9 @@ This test tests the C<splice> builtin
 
 =end description
 
-sub splice-ok(\ret, \ret_exp, \rem, \rem_exp, Str $comment) {
+sub splice-ok(
+  \ret, \ret_exp, \rem, \rem_exp, Str $comment
+) is test-assertion {
     subtest {
         plan 4;
         is ret.WHAT, ret_exp.WHAT, 'return types match';

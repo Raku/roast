@@ -196,7 +196,7 @@ $o = $=pod[++$p]; sayo($o);
 }
 
 #===============================================
-sub sayo($o, :$defn) {
+sub sayo($o, :$defn) is test-assertion {
     is $o.config<numbered>:exists, True, 'is config<numbered>:exists';
     ok $o.config<numbered>, 'ok config<numbered>';
     if $defn {

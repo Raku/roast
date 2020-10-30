@@ -20,7 +20,7 @@ ok day.WHAT === day,  'enum.WHAT returned a value';
 ok day.raku, 'enum.raku returned a value';
 
 #?DOES 12
-sub test_stuff($x) {
+sub test_stuff($x) is test-assertion {
   does-ok $x, day::Tue,    "basic enum mixing worked ($x-2)";
   is $x.day, 2,            "automatically created accessor worked ($x)";
   is day::Tue, 2,          "enum provided a correct mapping ($x)";

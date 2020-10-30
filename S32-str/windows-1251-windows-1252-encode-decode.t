@@ -8,12 +8,12 @@ my @keys_1251 = 67, 149, 194, 32, 33, 123, 199, 75, 124, 166, 235, 105, 51, 174,
 
 run_test @values_1252, @keys_1252, 'windows-1252';
 run_test @values_1251, @keys_1251, 'windows-1251';
-sub test_encode (@values, @keys, $encoding) {
+sub test_encode(@values, @keys, $encoding) is test-assertion {
     my $chrs = @values.chrs;
     my $buf = $chrs.encode($encoding);
     is $buf.list, @keys.list, "Test encoding from Unicode to $encoding";
 }
-sub run_test (@values, @keys, $encoding) {
+sub run_test(@values, @keys, $encoding) is test-assertion {
     test_encode @values, @keys, $encoding;
     is-deeply Buf.new(@keys).decode($encoding), @values.chrs, "Test decoding from $encoding to Unicode";
 }

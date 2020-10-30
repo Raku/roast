@@ -2,11 +2,11 @@ use v6;
 use Test;
 plan 44;
 
-sub is-on(:$adverb) {
+sub is-on(:$adverb) is test-assertion {
     is $adverb, True, 'adverb on';
 }
 
-sub is-off(:$adverb) {
+sub is-off(:$adverb) is test-assertion {
     is $adverb, False, 'adverb off';
 }
 
@@ -15,7 +15,7 @@ is-on( :adverb(True) );
 is-off( :!adverb );
 is-off( :adverb(False) );
 
-sub test-strings(:$greet!, :$person) {
+sub test-strings(:$greet!, :$person) is test-assertion {
     is $greet, 'Hello', 'greeting';
     is $person, 'lue', 'person';
 }
@@ -28,7 +28,7 @@ test-strings(:greet('Hello')
 test-strings(:greet<Hello> :person«$user»);
 test-strings(:greet<Hello> :person<<$user>>);
 
-sub test-abbrev(:$foo) {
+sub test-abbrev(:$foo) is test-assertion {
     is $foo, 'bar', 'abbrev';
 }
 
@@ -50,12 +50,12 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
     is($/, 'foooo', 'Matched value for nth(4)');
 }
 
-sub foo($z, :$bar, :$baz) {
+sub foo($z, :$bar, :$baz) is test-assertion {
     is $z, 'zzz', 'positional arg';
     ok $bar, 'adverb 1';
     ok $baz, 'adverb 2';
 }
-sub foo2($z, :$bar, :$baz) {
+sub foo2($z, :$bar, :$baz) is test-assertion {
     is $z, 'zzz', 'positional arg';
     ok $bar, 'adverb 1';
     ok $baz, 'adverb 2';
@@ -153,7 +153,7 @@ throws-like {EVAL '$data ~~ m:nth[5]/fo+/'},
   X::Comp::Group,
   'Square parens not ok';
 
-sub root4($num, :$adv1 = 42, :$adv2, :$adv3!) {
+sub root4($num, :$adv1 = 42, :$adv2, :$adv3!) is test-assertion {
     is $num, 10, 'positional param';
     is $adv1, 42, 'adverb default value';
     ok !defined($adv2), 'adverb missing value';
@@ -163,7 +163,7 @@ sub root4($num, :$adv1 = 42, :$adv2, :$adv3!) {
 throws-like {root4(10)}, Exception, 'missing required adverb - dies';
 root4(10, :adv3<hi>);
 
-sub root3($num, *%advs) {
+sub root3($num, *%advs) is test-assertion {
     is-deeply %advs, {"foo" => False, "bar" => True, "baz" => True, "qux" => "blah"}, 'adverb catch all';
 }
 

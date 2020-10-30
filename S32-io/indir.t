@@ -5,7 +5,7 @@ use Test::Util;
 
 plan 77;
 
-sub test-indir ($desc, $in-path, |args) {
+sub test-indir ($desc, $in-path, |args) is test-assertion {
     temp $*CWD = my $out-path = make-temp-dir;
 
     subtest "\&indir(\$path) {"with " ~ args.raku if args}, $desc" => {
@@ -38,7 +38,7 @@ sub test-indir ($desc, $in-path, |args) {
     }
 }
 
-sub test-indir-fails ($desc, $why, $in-path, |args) {
+sub test-indir-fails ($desc, $why, $in-path, |args) is test-assertion {
     subtest "\&indir(\$path, {args ?? args.raku !! '…'}), $desc" => {
         my @in-paths = $in-path ~~ Str ?? ($in-path, $in-path.IO)
             !! ($in-path.absolute, $in-path.relative, $in-path.Str);

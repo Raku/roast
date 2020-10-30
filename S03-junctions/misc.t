@@ -19,7 +19,7 @@ Misc. Junction tests
 
 # avoid auto-threading on ok()
 #?DOES 1
-sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
+sub jok(Mu $condition, $msg?) is test-assertion { ok ?($condition), $msg }
 
 # L<S03/Junctive operators>
 # L<S09/Junctions>

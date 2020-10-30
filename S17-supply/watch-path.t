@@ -34,7 +34,7 @@ given $*DISTRO.name {
 }
 
 #====  specific tests from here
-sub macosx (:$io-path) {
+sub macosx (:$io-path) is test-assertion {
     plan 55;
     # check watching directories
     {

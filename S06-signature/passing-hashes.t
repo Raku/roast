@@ -6,12 +6,12 @@ use v6;
 use Test;
 plan 3;
 
-sub sanity {
+sub sanity() is test-assertion {
     my %sane = 'a'..'d' Z 1..4;
     isa-ok(%sane, Hash, '%sane is a Hash');
 }
 
-sub insanity (%baloney) {
+sub insanity(%baloney) is test-assertion {
     isa-ok(%baloney, Hash, '%baloney is a Hash');
 }
 

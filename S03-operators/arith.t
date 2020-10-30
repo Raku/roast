@@ -20,12 +20,12 @@ sub undefine(\a) { a = Nil }
 # Probably degrades error messages, so restore once rakudo does .nextwith.
 
 #?DOES 1
-sub tryeq ($lhs, $rhs) {
+sub tryeq ($lhs, $rhs) is test-assertion {
     ok($lhs == $rhs, "$lhs == $rhs");
 }
 
 #?DOES 1
-sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
+sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') is test-assertion {
     my $todo = $todo1;  # TODO is rw
     $todo = ' # TODO ' ~ $todo if $todo;
     if ($lhs == $rhs) {

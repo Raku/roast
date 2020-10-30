@@ -9,7 +9,7 @@ my $pod_index = 0;
 # Also checks the $=pod object is set appropriately.
 # XXX we need to be able to affect the test level (like Test::Builder::Level
 #     in Perl) so that failures point at the caller
-sub test-leading($thing, $value) {
+sub test-leading($thing, $value) is test-assertion {
     is $thing.WHY.?contents, $value, $value  ~ ' - contents';
     is $thing.WHY.?WHEREFORE.^name, $thing.^name, $value ~ ' - WHEREFORE';
     is $thing.WHY.?leading, $value, $value ~ ' - leading';

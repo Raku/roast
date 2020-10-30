@@ -5,7 +5,7 @@ plan 18;
 
 my $filename = $?FILE.IO.parent.child('split.testing');
 
-sub test-split($text,@result,|c) {
+sub test-split($text,@result,|c) is test-assertion {
     subtest {
         plan 4;
         unlink $filename;

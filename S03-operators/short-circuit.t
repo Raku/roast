@@ -21,7 +21,7 @@ sub f0($s)   { $accum ~= $s; 0 }
 sub fAny($s) { $accum ~= $s; Any }
 
 #?DOES 1
-sub accumtest($expect, $op) {
+sub accumtest($expect, $op) is test-assertion {
     is $accum, $expect, "$op operator short circuiting exactly when needed";
     $accum = '';
 }

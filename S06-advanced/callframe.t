@@ -10,7 +10,7 @@ my $baseline = 10;
 
 isa-ok callframe(), CallFrame, 'callframe() returns a CallFrame';
 
-sub f() {
+sub f() is test-assertion {
     is callframe().line, $baseline + 4, 'callframe().line';
     ok callframe().file ~~ /« callframe »/, '.file';
 
@@ -29,7 +29,7 @@ sub f() {
     lower();
 }
 
-sub lower() {
+sub lower() is test-assertion {
     ok callframe(0).code ~~ Sub, 'callframe(0).code returns this Sub';
     ok callframe(1).code ~~ Sub, 'callframe(1).code returns the calling Sub';
     is callframe(0).code.name, 'lower';

@@ -5,7 +5,7 @@ use Test::Util;
 
 plan 7;
 
-sub check-fail (&test-to-run) {
+sub check-fail (&test-to-run) is test-assertion {
     my $message = 'should fail; expected is not within precision';
     todo $message;
     nok test-to-run(), $message;

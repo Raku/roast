@@ -62,7 +62,7 @@ sub failuring-like (&test, $ex-type, $reason?, *%matcher) {
 my $parent := make-temp-dir;
 my $non-resolving-parent := make-temp-file.child('bar');
 
-sub is-path ($got, $expected, $desc) {
+sub is-path ($got, $expected, $desc) is test-assertion {
     cmp-ok $got.resolve, '~~', $expected.resolve, $desc
 }
 

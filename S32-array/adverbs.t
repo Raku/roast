@@ -10,7 +10,7 @@ plan 2 * ( 1 + 15 * 20 ) + 4;
 my $ok = True;
 my $no = False;
 
-sub gen(\a) {
+sub gen(\a) is test-assertion {
     my Int $i = 0;
     a[$i++] = $_ for 'a'..'d';
     is a.elems, 4, "{a.^name} basic sanity";

@@ -35,7 +35,7 @@ my class H {
 # If the endpoint is Whatever, then the tests will automatically also be
 # performed with Inf as the endpoint.
 
-sub test-seq($description, Mu \seed, Mu \endpoint, \list) {
+sub test-seq($description, Mu \seed, Mu \endpoint, \list) is test-assertion {
     my $result;
     my $resultV;
     my $Vresult;

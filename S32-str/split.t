@@ -18,7 +18,7 @@ plan 65;
 sub test($string,$splitter,$limit,$comment,
   $r, $rv, $rk, $rkv, $rp, $rse, $rvse, $rkse, $rkvse, $rpse,
   $rl,$rlv,$rlk,$rlkv,$rlp,$rlse,$rlvse,$rlkse,$rlkvse,$rlpse,
-) {
+) is test-assertion {
     subtest {
         plan 41;
 

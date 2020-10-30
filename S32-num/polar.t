@@ -11,7 +11,7 @@ plan 48;
 =end pod
 
 my $sq2 = 2.sqrt;
-sub check_polar($complex, $magnitude_want, $angle_want) {
+sub check_polar($complex, $magnitude_want, $angle_want) is test-assertion {
    my ($magnitude, $angle) = $complex.polar;
    is-approx($magnitude, $magnitude_want, "$complex has a magnitude of $magnitude_want");
    is-approx($angle, $angle_want, "$complex has an angle of $angle_want");

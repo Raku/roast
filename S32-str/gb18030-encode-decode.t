@@ -19,12 +19,12 @@ is-deeply "盼望着,盼望着,东风来了,春天的脚步近了。".enco
 
 is-deeply "∢盼望着,盼望着,东风来了,㌳春天的脚步近了。".encode('gb18030', :replacement("(未知字符!∢)")).decode('gb18030'), "(未知字符!∢)∢盼望着,盼望着,东风来了,(未知字符!∢)㌳春天的脚步近了。", "Encode with replacement works with gb18030 character replacements";
 
-sub test_encode (@values, @keys, $encoding) {
+sub test_encode (@values, @keys, $encoding) is test-assertion {
     my $chrs = @values.chrs;
     my $buf = $chrs.encode($encoding);
     is $buf.list, @keys.list, "Test encoding from Unicode to $encoding";
 }
-sub run_test (@values, @keys, $encoding) {
+sub run_test (@values, @keys, $encoding) is test-assertion {
     test_encode @values, @keys, $encoding;
     is-deeply Buf.new(@keys).decode($encoding), @values.chrs, "Test decoding from $encoding to Unicode";
 }

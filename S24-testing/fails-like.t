@@ -3,7 +3,7 @@ use Test;
 
 plan 2;
 
-sub check-test-fail (&test-to-run) {
+sub check-test-fail (&test-to-run) is test-assertion {
     my $message = 'should fail';
     todo $message;
     nok test-to-run(), $message;

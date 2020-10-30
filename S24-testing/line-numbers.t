@@ -7,7 +7,7 @@ my $dir    = $?FILE.IO.parent.add('test-data');
 my $prefix = 'line-number-';
 my $suffix = '.txt';
 
-sub execute-test ( :$function, :$line ) {
+sub execute-test(:$function, :$line) is test-assertion {
     my $full-path = $dir.add($prefix ~ $function ~ $suffix);
     my $proc = run($*EXECUTABLE, $full-path, :!out, :err);
     like $proc.err.slurp,

@@ -52,7 +52,7 @@ Basic C<kv> tests, see S32::Containers.
 # test3 and test4 illustrate a bug 
 
 #?DOES 2
-sub test1{
+sub test1() is test-assertion {
     my $pair = boo=>'baz'; 
     my $type = $pair.WHAT.gist;
     for $pair.kv -> $key, $value {
@@ -63,7 +63,7 @@ sub test1{
 test1;
 
 #?DOES 2
-sub test2{
+sub test2() is test-assertion {
     my %pair = boo=>'baz'; 
     my $type = %pair.WHAT.gist;
     my $elems= +%pair;
@@ -76,7 +76,7 @@ test2;
 
 my %hash  = ('foo' => 'baz');
 #?DOES 2
-sub test3 (%h){
+sub test3(%h) is test-assertion {
   for %h.kv -> $key, $value {
         is($key, 'foo', "test3:  from {+%h}-elem {%h.WHAT.gist} \%h got the right \$key");
         is($value, 'baz', "test3: from {+%h}-elem {%h.WHAT.gist} \%h got the right \$value");
@@ -84,7 +84,7 @@ sub test3 (%h){
 }
 test3 %hash;
 
-sub test4 (%h){
+sub test4(%h) is test-assertion {
     for 0..%h.kv.end -> $idx {
         is(%h.kv[$idx], %hash.kv[$idx], "test4: elem $idx of {%h.kv.elems}-elem {%h.kv.WHAT.gist} \%hash.kv correctly accessed");
     }

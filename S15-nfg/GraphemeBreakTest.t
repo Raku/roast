@@ -113,7 +113,7 @@ class parser {
         }
     }
 }
-sub process-line (Str:D $line, @fail, :@only!) {
+sub process-line (Str:D $line, @fail, :@only!) is test-assertion {
     state $line-no = 0;
     $line-no++;
     return if @only and $line-no ne @only.any;

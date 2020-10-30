@@ -4,7 +4,7 @@ use Test;
 
 plan 115;
 
-sub test($range,$min,$max,$exmin,$exmax,$inf,$elems,$perl) {
+sub test($range,$min,$max,$exmin,$exmax,$inf,$elems,$perl) is test-assertion {
     subtest {
         plan $elems == Inf ?? 8 !! 10;
 

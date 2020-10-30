@@ -21,7 +21,7 @@ plan 2;
     split-host-port :$localhost, :$host, :$family;
 }
 
-sub split-host-port(:$localhost, :$host, :$family) {
+sub split-host-port(:$localhost, :$host, :$family) is test-assertion {
     my $c     = Channel.new;
     my $ready = Promise.new;
 

@@ -5,7 +5,7 @@ use Test::Util;
 
 plan 12;
 
-sub test_lines(@lines) {
+sub test_lines(@lines) is test-assertion {
     #!rakudo todo 'line counts'
     is @lines.elems, 3, 'Three lines read';
     is @lines[0],

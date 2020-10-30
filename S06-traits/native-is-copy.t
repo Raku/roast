@@ -5,7 +5,7 @@ use Test;
 
 plan 15;
 
-sub int-is-copy(int $x is copy) {
+sub int-is-copy(int $x is copy) is test-assertion {
     is $x, 41, 'Passed value to native int is copy param received';
     $x = 42;
     is $x, 42, 'Can modify passed value to native int is copy param';
@@ -14,7 +14,7 @@ my $i = 41;
 int-is-copy($i);
 is $i, 41, 'Variable passed to native int is copy is not modified';
 
-sub num-is-copy(num $x is copy) {
+sub num-is-copy(num $x is copy) is test-assertion {
     is $x, 4.1e0, 'Passed value to native num is copy param received';
     $x = 4.2e0;
     is $x, 4.2e0, 'Can modify passed value to native num is copy param';
@@ -23,7 +23,7 @@ my $n = 4.1e0;
 num-is-copy($n);
 is $n, 4.1e0, 'Variable passed to native num is copy is not modified';
 
-sub str-is-copy(str $x is copy) {
+sub str-is-copy(str $x is copy) is test-assertion {
     is $x, 'borsch', 'Passed value to native str is copy param received';
     $x = 'vindaloo';
     is $x, 'vindaloo', 'Can modify passed value to native str is copy param';

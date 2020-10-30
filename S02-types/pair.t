@@ -135,7 +135,7 @@ my %hash  = ('foo' => 'bar');
     }
 }
 
-sub test2 (%h){
+sub test2(%h) is test-assertion {
     for %h.pairs -> $pair {
         isa-ok($pair,Pair) ;
         is($pair.key, 'foo', 'in sub test2 got the right $pair.key');
@@ -147,7 +147,7 @@ test2 %hash;
 # See thread "$pair[0]" on p6l started by Ingo Blechschmidt:
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22593">
 
-sub test3 (%h){
+sub test3(%h) is test-assertion {
     for %h.pairs -> $pair {
         isa-ok($pair,Pair);
         isa-ok($pair[0], Pair, 'sub test3: $pair[0] is $pair');
@@ -160,7 +160,7 @@ test3 %hash;
 
 Hm, Hash::pair? Never heard of that.  --iblech
 
-sub test4 (%h){
+sub test4(%h)o is test-assertion {
     for %h.pair -> $pair {
         isa-ok($pair,Pair);
         is($pair.key, 'foo', 'sub test4: access by unspecced "pair" got the right $pair.key');

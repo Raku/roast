@@ -8,7 +8,7 @@ role R1 is rw {
     has $.r1-ro is readonly;
 }
 
-sub test-R1(Mu \type, Str $msg?) {
+sub test-R1(Mu \type, Str $msg?) is test-assertion {
     my $title = $msg // "rw/ro";
     subtest $title => {
         plan 4;
