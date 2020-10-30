@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 15;
 
 my $dir    = $?FILE.IO.parent.add('test-data');
 my $prefix = 'line-number-';
@@ -53,5 +53,11 @@ execute-test(:function("ok"), :line(9));
 
 #?DOES 1
 execute-test(:function("throws-like"), :line(9));
+
+#?DOES 1
+execute-test(:function("foo-ok"), :line(11));
+
+#?DOES 1
+execute-test(:function("bar-ok"), :line(12));
 
 # vim: expandtab shiftwidth=4

@@ -1,0 +1,11 @@
+use v6;
+use Test;
+
+plan 1;
+
+sub foo-ok() is test-assertion { flunk "foo-ok" }
+
+## the following code should stay at line number 11
+## if you move it to another line, please adjust 
+## the line number in S24-testing/line-numbers.t
+foo-ok;
