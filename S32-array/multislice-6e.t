@@ -1,7 +1,7 @@
 use v6.e.PREVIEW;
 use Test;
 
-plan 718;
+plan 796;
 
 # Testing array multislices, aka @a[0;1;2] and associated adverbs
 
@@ -93,6 +93,21 @@ for
     my $resnona := $result ~~ Array ?? $result.List !! $result;
 
     for False, True -> $delete {
+
+        # fast-path checks
+        unless $delete {
+            is-deeply @array[$a;$b;$c],
+              $exists ?? $result !! Any,
+              "\@array\[$araku;$braku;$craku] gives {
+                  $exists ?? $result !! "Any"
+              } (fast-path)";
+            is-deeply (try @array[$a;$b;$c] = 999), 999,
+              "could we assign 999 and did we get 999 back (fast-path)";
+            is-deeply @array, $assigned,
+              "did we assign value at the right place (fast-path)";
+            set-up-array;
+        }
+
         is-deeply @array[$a;$b;$c]:$delete,
           $exists
             ?? $delete ?? $resnona !! $result
@@ -212,6 +227,21 @@ for
     my $resnona := $result ~~ Array ?? $result.List !! $result;
 
     for False, True -> $delete {
+
+        # check fast-paths
+        unless $delete {
+            is-deeply @array[$a;$b;$c],
+              $exists ?? ($result,) !! (Any,),
+              "\@array\[$araku;$braku;$craku] gives {
+                  $exists ?? "($raku,)" !! "Any"
+              } (fast-path)";
+            is-deeply (try @array[$a;$b;$c] = (999,)), (999,),
+              "could we assign (999,) and did we get (999,) back (fast-path)";
+            is-deeply @array, $assigned,
+              "did we assign value at the right place (fast-path)";
+            set-up-array;
+        }
+
         is-deeply @array[$a;$b;$c]:$delete,
           $exists
             ?? $delete ?? ($resnona,) !! ($result,)
@@ -219,7 +249,9 @@ for
           "\@array\[$araku;$braku;$craku]{
               ":delete" if $delete
           } gives {
-              $exists ?? "($raku,)" !! "(Nil,)"
+              $exists
+                ?? $delete ?? "($resnona.raku(),))" !! "($raku,)"
+                !! $delete ?? "(Nil,)"              !! "(Any,)",
           }";
         $delete
           ?? leftover-ok($leftover)
@@ -313,6 +345,19 @@ for
     # indexing works on multi-level arrayes.
     for False, True -> $delete {
 
+        # check fast-paths
+        unless $delete {
+            is-deeply @array[$a;$b;$c<>],
+              (42,666,[314]),
+              "\@array\[$araku;$braku;$craku] gives (42,666,[314]) (fast-path)";
+            is-deeply (try @array[$a;$b;$c<>] = (777,888,999)),
+              (777,888,999),
+              "could we assign (777,888,999) and get it back (fast-path)";
+            is-deeply @array, $assigned,
+              "did we assign value at the right place (fast-path)";
+            set-up-array;
+        }
+
         if $delete {
             non-assignable-ok @array[$a;$b;$c<>]:delete,
               (42,666,(314,)),
@@ -320,7 +365,7 @@ for
             leftover-ok($leftover);
         }
         else {
-            is-deeply @array[$a;$b;$c<>],
+            is-deeply @array[$a;$b;$c<>]:!delete,
               (42,666,[314]),
               "\@array\[$araku;$braku;$craku] gives (42,666,[314])";
             assignable-ok(@array[$a;$b;$c<>], (777,888,999), $assigned);
