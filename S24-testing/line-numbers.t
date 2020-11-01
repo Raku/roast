@@ -10,7 +10,8 @@ my $suffix = '.txt';
 sub execute-test(:$function, :$line) is test-assertion {
     my $full-path = $dir.add($prefix ~ $function ~ $suffix);
     my $proc = run($*EXECUTABLE, $full-path, :!out, :err);
-    like $proc.err.slurp,
+    my $err := $proc.err.slurp;
+    diag $err unless like $err,
         /'Failed test ' (\N* \n \N*)? 'at ' $full-path ' line ' $line/,
         "failing test with $function reports correct line number $line";
 }
