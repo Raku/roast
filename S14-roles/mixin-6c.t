@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
@@ -244,7 +244,7 @@ throws-like 'True but (1, 1)', Exception, gist => { $^g ~~ /'Int'/ && $g ~~ /res
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/4547
-{ 
+{
     group-of 3 => 'can mixin Block with True' => {
         my $b = Block but True;
         lives-ok { $b.WHICH };
