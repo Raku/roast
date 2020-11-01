@@ -1,7 +1,7 @@
 use v6.e.PREVIEW;
 use Test;
 
-plan 543;
+plan 544;
 
 # Testing hash multislices, aka %h{a;b;c} and associated adverbs
 
@@ -404,6 +404,8 @@ for
       '|| did assignment to non-existing keys return the assigned values';
     is-deeply %hash, { a => { d => 333 }, b => { d => 444 } },
       '|| did the hash get changed correctly';
+    is-deeply %hash{|| "b"}, { d => 444 },
+      '|| did single key get handled correctly';
 }
 
 # vim: expandtab shiftwidth=4

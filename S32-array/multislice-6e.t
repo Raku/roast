@@ -1,7 +1,7 @@
 use v6.e.PREVIEW;
 use Test;
 
-plan 796;
+plan 797;
 
 # Testing array multislices, aka @a[0;1;2] and associated adverbs
 
@@ -473,6 +473,8 @@ for
       '|| did assignment to non-existing indices return the assigned values';
     is-deeply @array, [[Any,333],[Any,444]],
       '|| did the array get changed correctly';
+    is-deeply @array[|| 1], [Any,444],
+      '|| could we specify a single index';
 }
 
 # vim: expandtab shiftwidth=4
