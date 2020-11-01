@@ -34,8 +34,15 @@ but that should not be required.
     #	- [x] the rule that determines whether there is a break or not
 
 =head1 HOW TO FUDGE
-=para The keys of the hash below are line numbers of the unicode test document.
-values are either set to ALL or set to one or more of C,0,1,2,3,4..
+=para The keys of the hash below are full text lines of the unicode test document.
+This is so if the line numbers change with a new unicode version, the tests stay fudged
+Values are either set to ALL or set to one or more of C,0,1,2,3,4..
+
+ALL is for all checks (C, 0, 1 ...)
+C is the check for number of codepoints
+0 is the check for what codepoints end up in grapheme 0
+1 is the check for what codepoints end up in grapheme 1
+and so on for further graphemes
 
 =para B<Example>:
 
@@ -44,20 +51,28 @@ values are either set to ALL or set to one or more of C,0,1,2,3,4..
 =para You can add 835 => ['1'] to the hash and it will fudge that line for you
 
 =end pod
-
-constant %fudged-tests = {
-    #694 => ['ALL'],
-    624 => ['ALL'], #fails hard, commmented out in GraphemeBreakTest.txt
-    625 => ['ALL'], #fails hard, commmented out in GraphemeBreakTest.txt
-};
+# Watch out, these lines have tabs in them, and won't match if you don't include the tabs in the fudge!
+my %fudged-test-lines =
+"÷ 0061 × 200D ÷ 1F6D1 ÷\t#  ÷ [0.2] LATIN SMALL LETTER A (Other) × [9.0] ZERO WIDTH JOINER (ZWJ_ExtCccZwj) ÷ [999.0] OCTAGONAL SIGN (ExtPict) ÷ [0.3]" => ['ALL'],
+"÷ 2701 × 200D × 2701 ÷\t#  ÷ [0.2] UPPER BLADE SCISSORS (Other) × [9.0] ZERO WIDTH JOINER (ZWJ_ExtCccZwj) × [11.0] UPPER BLADE SCISSORS (Other) ÷ [0.3]" => ['ALL'],
+"÷ 200D ÷ 231A ÷\t#  ÷ [0.2] ZERO WIDTH JOINER (ZWJ_ExtCccZwj) ÷ [999.0] WATCH (ExtPict) ÷ [0.3]" => ['ALL']
+;
+# %ok-normalization is a list of input codepoints to output codepoints
+# This is an extra failsafe, because if unexpected normalization happens the test
+# results could be unexpected. New things should be checked MANUALLY against the UCD
+# Decomposition_Mapping property values defined in UnicodeData.txt
+constant %ok-normalization =
+    "44032,4520" => "44033",
+    "97,776"     => "228",
+;
 constant @lines-with-normalization = (
-    419 => [ 0, ],
-    604 => [ 0, ],
-    608 => [ 0, ],
-    616 => [ 0, ],
-    624 => [ 0, ], #fails hard, commmented out in GraphemeBreakTest.txt
-    625 => [ 0, ], #fails hard, commmented out in GraphemeBreakTest.txt
-    626 => [ 0, ],
+    #419 => [ 0, ],
+    #604 => [ 0, ],
+    #608 => [ 0, ],
+    #616 => [ 0, ],
+    #624 => [ 0, ], #fails hard, commmented out in GraphemeBreakTest.txt
+    #625 => [ 0, ], #fails hard, commmented out in GraphemeBreakTest.txt
+    #626 => [ 0, ],
 );
 sub MAIN (Str:D :$file = $location, Str :$only, Bool:D :$debug = False) {
     $DEBUG = $debug;
@@ -66,7 +81,9 @@ sub MAIN (Str:D :$file = $location, Str :$only, Bool:D :$debug = False) {
     die "Can't find file at ", $file.IO.absolute unless $file.IO.f;
     note "Reading file ", $file.IO.absolute;
     my @fail;
-    plan (1706); #1943
+    if (!$only) {
+        plan (1716); #1943
+    }
     for $file.IO.lines -> $line {
         process-line $line, @fail, :@only;
     }
@@ -120,7 +137,7 @@ sub process-line (Str:D $line, @fail, :@only!) {
     $line-no++;
     return if @only and $line-no ne @only.any;
     return if $line.starts-with('#');
-    my Bool:D $fudge-b = %fudged-tests{$line-no}:exists ?? True !! False;
+    my Bool:D $fudge-b = %fudged-test-lines{$line}.Bool;
     note 'LINE: [' ~ $line ~ ']' if $DEBUG;
     my $list = GraphemeBreakTest.parse(
         $line,
@@ -128,31 +145,35 @@ sub process-line (Str:D $line, @fail, :@only!) {
     ).made;
     die "line $line-no undefined parse" if $list.defined.not;
     if $fudge-b {
-        if %fudged-tests{$line-no}.any eq 'ALL' {
-            todo("line $line-no todo for {%fudged-tests{$line-no}.Str} tests", 1 + $list<ord-array>.elems);
+        if %fudged-test-lines{$line}.any eq 'ALL' {
+            todo("line $line-no todo for {%fudged-test-lines{$line}.Str} tests", 1 + $list<ord-array>.elems);
             $fudge-b = False; # We already have todo'd don't attempt again
         }
-        elsif %fudged-tests{$line-no}.any eq 'C' {
+        elsif %fudged-test-lines{$line}.any eq 'C' {
             todo("[C] num of chars line $line-no", 1);
         }
     }
     is-deeply $list<ord-array>.elems, $list<string>.chars, "Line $line-no: [C] right num of chars | {$list<string>.uninames.raku}" or @fail.push($line-no);
     for ^$list<ord-array>.elems -> $elem {
-        if $fudge-b and %fudged-tests{$line-no}.any eq $elem {
+        if $fudge-b and %fudged-test-lines{$line}.any eq $elem {
             todo "[$elem] grapheme line $line-no todo";
         }
+        # Here by expected we mean "as if there were no normalization"
         my Array $expected;
         {
-            $expected = $list<ord-array>[$elem].flat.Array;
-            if $line-no eq @lines-with-normalization».key.any {
-                my $pair = @lines-with-normalization.first({.key eq $line-no});
-                if $pair.value.any eqv $elem {
-                    $expected = $expected.chrs.ords.flat.Array;
-                }
+            my $expected-if-no-normalization = $list<ord-array>[$elem].flat.Array;
+            my Array $got-from-normalization = $expected-if-no-normalization.chrs.ords.Array;
+            my $got-from-normalization-str = $got-from-normalization.join(',');
+            my $expected-if-no-normalization-str = $expected-if-no-normalization.join(',');
+            if %ok-normalization{$expected-if-no-normalization-str} && %ok-normalization{$expected-if-no-normalization-str} eq $got-from-normalization-str {
+                $expected = $got-from-normalization;
             }
-            if $expected.chrs.ords.Array !eqv $expected {
+            elsif $got-from-normalization !eqv $expected-if-no-normalization {
                 die "codepoints change under normalization. manually check and add an exception or fix the script\n" ~ "
-                line no $line-no: elem $elem. Got: ", $expected.chrs.ords.Array.join(', '), ' from: ', $expected.join(',');
+                line no $line-no: elem $elem. Got: ", $got-from-normalization-str, ' from: ', $expected-if-no-normalization-str;
+            }
+            else {
+                $expected = $expected-if-no-normalization;
             }
         }
         is-deeply $list<string>.substr($elem, 1).ords.flat.Array, $expected, "Line $line-no: grapheme [$elem] has correct codepoints" or @fail.push($line-no);
