@@ -1159,7 +1159,7 @@ my @a =
 ( (0x2E49,  0x3F, ), Q«« (⹉) DOUBLE STACKED COMMA»», 1802, True ),
 ( (0x2E49,  0x61, ), Q«« (⹉) DOUBLE STACKED COMMA»», 1803, True ),
 ( (0x2E49,  0x41, ), Q«« (⹉) DOUBLE STACKED COMMA»», 1804, True ),
-( (0x2E49,  0x62, ), Q«« (⹉) DOUBLE STACKED COMMA»», 1805, False ),
+( (0x2E49,  0x62, ), Q«« (⹉) DOUBLE STACKED COMMA»», 1805, True ),
 ( (0x2A74,  0x21, ), Q«« (⩴) DOUBLE COLON EQUAL»», 1806, True ),
 ( (0x2A74,  0x3F, ), Q«« (⩴) DOUBLE COLON EQUAL»», 1807, True ),
 ( (0x2A74,  0x61, ), Q«« (⩴) DOUBLE COLON EQUAL»», 1808, True ),
