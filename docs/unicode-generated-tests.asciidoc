@@ -119,7 +119,7 @@ my IO::Path $repo-dir      = $?FILE.IO.parent(2).add("3rdparty/Unicode/11.0.0/uc
 
 === Also you will have to do stuff in rakudo
 
-Edit t/09-moar/UnipropCheck.pm6 folder to be set to the current version.
+Edit t/09-moar/UnipropCheck.rakumod folder to be set to the current version.
 
 You will have to now copy:
 
