@@ -26,10 +26,10 @@ but many do not.
 * Run `S15-nfg/emoji-test-gen.p6 UNIDATA/emoji-xx.x/emoji-test.txt`
 
 .Version
-* Emoji v12.0
+* Emoji v13.1
 
 .Date
-* Regenerated 2019.07.28
+* Regenerated 2020.10.01
 
 .Generated File(s)
 * Program generates S15-nfg/emoji-test.t
@@ -45,10 +45,10 @@ but many do not.
   to generate the tests.
 
 .Version
-* Unicode v12.1
+* Unicode v13.0
 
 .Date
-* Regenerated 2019.07.28
+* Regenerated 2020.10.01
 
 .Generated File(s)
 * S15-nfg/mass-roundtrip-nfc.t
@@ -68,10 +68,10 @@ MAKE SURE TO RUN `perl6 CollationTestGen.p6 --folder=MoarVM/UNIDATA/UCA/Collatio
 Then paste those failures (if they're ok into CollationTestGen.p6 in the %todo variable.
 
 .Version
-* Unicode v12.1
+* Unicode v13.0
 
 .Date
-* Regenerated 2019.07.28
+* Regenerated 2020.10.01
 
 .Generated File(s)
 * S32-str/CollationTest_NON_IGNORABLE-0.t
@@ -85,10 +85,10 @@ Then paste those failures (if they're ok into CollationTestGen.p6 in the %todo v
 * Run `S15-normalization/test-gen.p6 UNIDATA/NormalizationTest.txt`
 
 .Version
-* Unicode v12.0
+* Unicode v13.0
 
 .Date
-* Regenerated 2019.07.28
+* Regenerated 2020.10.01
 
 .Generated File(s)
 * S15-normalization/nfc-X.t

@@ -1,7 +1,7 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
-# Generated from Unicode version 12.1.0.
+# Generated from Unicode version 13.0.0.
 
 use Test;
 
@@ -507,5 +507,3 @@ ok Uni.new(0xFA8C).NFC.list ~~ (0x6234,), 'FA8C -> 6234';
 ok Uni.new(0xFA8D).NFC.list ~~ (0x63C4,), 'FA8D -> 63C4';
 ok Uni.new(0xFA8E).NFC.list ~~ (0x641C,), 'FA8E -> 641C';
 ok Uni.new(0xFA8F).NFC.list ~~ (0x6452,), 'FA8F -> 6452';
-
-# vim: expandtab shiftwidth=4

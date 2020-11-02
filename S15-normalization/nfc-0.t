@@ -1,7 +1,7 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
-# Generated from Unicode version 12.1.0.
+# Generated from Unicode version 13.0.0.
 
 use Test;
 
@@ -2007,5 +2007,3 @@ ok Uni.new(0x3293).NFC.list ~~ (0x3293,), '3293 -> 3293';
 ok Uni.new(0x3294).NFC.list ~~ (0x3294,), '3294 -> 3294';
 ok Uni.new(0x3295).NFC.list ~~ (0x3295,), '3295 -> 3295';
 ok Uni.new(0x3296).NFC.list ~~ (0x3296,), '3296 -> 3296';
-
-# vim: expandtab shiftwidth=4

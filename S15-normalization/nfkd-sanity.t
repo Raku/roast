@@ -1,7 +1,7 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.p6.
-# Generated from Unicode version 12.1.0.
+# Generated from Unicode version 13.0.0.
 
 use Test;
 
@@ -507,5 +507,3 @@ ok Uni.new(0x0F79).NFKD.list ~~ (0x0FB3, 0x0F71, 0x0F80,), '0F79 -> 0FB3 0F71 0F
 ok Uni.new(0x0F81).NFKD.list ~~ (0x0F71, 0x0F80,), '0F81 -> 0F71 0F80';
 ok Uni.new(0x0F93).NFKD.list ~~ (0x0F92, 0x0FB7,), '0F93 -> 0F92 0FB7';
 ok Uni.new(0x0F9D).NFKD.list ~~ (0x0F9C, 0x0FB7,), '0F9D -> 0F9C 0FB7';
-
-# vim: expandtab shiftwidth=4
