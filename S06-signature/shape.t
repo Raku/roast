@@ -4,19 +4,19 @@ use Test;
 plan 36;
 
 sub single-dim(@a[3]) { }
-lives-ok { single-dim(Array.new(:shape(3))) }, '[3] shape constraint accepts matcing array';
+lives-ok { single-dim(Array.new(:shape(3))) }, '[3] shape constraint accepts matching array';
 dies-ok { single-dim(Array.new()) }, '[3] shape constraint denies unshaped array';
-dies-ok { single-dim(Array.new(:shape(4))) }, '[3] shape constraint denies oversied array';
+dies-ok { single-dim(Array.new(:shape(4))) }, '[3] shape constraint denies oversized array';
 dies-ok { single-dim(Array.new(:shape(2))) }, '[3] shape constraint denies undersized array';
 dies-ok { single-dim(Array.new(1, 2, 3)) }, 'Shape constraints are about declared shape';
 dies-ok { single-dim(Array.new(:shape(2,2))) }, '[3] shape constraint denies over-dimensioned array...';
 dies-ok { single-dim(Array.new(:shape(3,2))) }, '...even if first dimension matches';
 
 sub multi-dim(@a[4,4]) { }
-lives-ok { multi-dim(Array.new(:shape(4,4))) }, '[4,4] shape constraint accepts matcing array';
+lives-ok { multi-dim(Array.new(:shape(4,4))) }, '[4,4] shape constraint accepts matching array';
 dies-ok { multi-dim(Array.new()) }, '[4,4] shape constraint denies unshaped array';
-dies-ok { multi-dim(Array.new(:shape(4, 5))) }, '[4,4] shape constraint denies oversied array (1)';
-dies-ok { multi-dim(Array.new(:shape(5, 4))) }, '[4,4] shape constraint denies oversied array (2)';
+dies-ok { multi-dim(Array.new(:shape(4, 5))) }, '[4,4] shape constraint denies oversized array (1)';
+dies-ok { multi-dim(Array.new(:shape(5, 4))) }, '[4,4] shape constraint denies oversized array (2)';
 dies-ok { multi-dim(Array.new(:shape(3,4))) }, '[4,4] shape constraint denies undersized array (1)';
 dies-ok { multi-dim(Array.new(:shape(4,3))) }, '[4,4] shape constraint denies undersized array (2)';
 dies-ok { multi-dim(Array.new([1..4],[1..4])) }, 'Shape constraints are about declared shape';
