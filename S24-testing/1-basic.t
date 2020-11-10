@@ -3,7 +3,7 @@ use v6;
 use Test;
 
 # More tests planned then really is in this test for testing the trailing skips.
-plan 35;
+plan 39;
 
 =begin kwid
 
@@ -74,6 +74,12 @@ class Foo {};
 my $foo = Foo.new();
 isa-ok($foo, 'Foo');
 isa-ok(Foo.new(), 'Foo');
+
+isa-ok Any.HOW, Metamodel::ClassHOW;
+isa-ok Numeric.HOW, Metamodel::ParametricRoleGroupHOW;
+my enum A <a b c>;
+isa-ok A.HOW, Metamodel::EnumHOW;
+isa-ok UInt.HOW, Metamodel::SubsetHOW;
 
 ## like
 
