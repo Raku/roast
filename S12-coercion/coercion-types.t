@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 21;
+plan 24;
 
 # coercion types in parameter lists
 {
@@ -35,8 +35,7 @@ class NastyChild is Parent { };
     isa-ok c(Parent), Child, 'Coercion with user-defined types';
 
     sub nasty(NastyChild(Parent) $x) { $x }
-    #?rakudo todo 'missing checks'
-    dies-ok { EVAL 'nasty(Parent)' },
+    throws-like { nasty(Parent); }, X::Coerce::Impossible,
         'coercion that does not produce the target type dies';
 }
 
@@ -63,13 +62,10 @@ class NastyChild is Parent { };
     enum A <b c d>;
     ok A(0) === A::b, 'basic enum sanity';
     sub en(A(Any) $x ) { $x }
-    #?rakudo skip 'dies'
     ok en(0) === A::b, 'coercion to enum';
 }
 
 # coercion types on variables
-#?rakudo skip 'NYI RT #124840'
-#?DOES 3
 {
     my Int(Any) $x;
     isa-ok $x, Int, 'Coercion type on variable';
@@ -78,12 +74,27 @@ class NastyChild is Parent { };
     is $x, 24, 'Coercion type on variable after assignment (value)';
 }
 
+# coercion types on arrays
+{
+    my Rat(Str) @a;
+    @a = "3.141", 1, e;
+    is-deeply @a.List, (3.141, 1.0, e.Rat), "an array with coercion type";
+}
+
+# coercion types on hashes
+{
+    my Num(Any) %h;
+    %h = :a("42.13"), :b(True), :c(pi);
+    # We need to flatten the hash in first place or otherwise its type differs from plain %()
+    is-deeply %(|%h), %(:a(42.13e0), :b(1.0e0), :c(pi)), "a hash with coercion type";
+}
+
 # methods exist, too
 #?rakudo skip 'NYI RT #124841'
 #?DOES 2
 {
+    class SubCo {...}
     class Co {
-        class SubCo is Co { }
         method SubCo() { SubCo.new }
         method erce(Array(Any) $x) {
             $x.^name;
@@ -92,6 +103,7 @@ class NastyChild is Parent { };
             SELF;
         }
     }
+    class SubCo is Co { }
     is Co.erce((1, 2)), 'Array', 'coercion on method param';
     isa-ok Co.invocant, SubCo, 'Can coerce invocant to subclass';
 }
@@ -110,4 +122,13 @@ is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
     pass 'coercer with subset target did not crash';
 }
 
-# vim: ft=perl6
+{ # Coerce from a child class
+    my class SStr is Str { }
+    my sub foo(Int:D(Str:D) $i) {
+        $i
+    }
+    my $s = SStr.new: :value("42");
+    is foo($s), 42, "coercions from a Str subclass works";
+}
+
+# vim: expandtab shiftwidth=4
