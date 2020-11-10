@@ -191,10 +191,10 @@ sub showkv($x) {
 
     # .list is just the keys, as per TimToady:
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
-    isa-ok $m.list.elems, 3, ".list returns 3 things";
+    is $m.list.elems, 3, ".list returns 3 things";
     is $m.list.grep(Pair).elems, 3, "... all of which are Pairs";
 
-    isa-ok $m.pairs.elems, 3, ".pairs returns 3 things";
+    is $m.pairs.elems, 3, ".pairs returns 3 things";
     is $m.pairs.grep(Pair).elems, 3, "... all of which are Pairs";
     is $m.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $m.pairs.grep({ .value ~~ Real }).elems, 3, "... and the values of which are Ints";
