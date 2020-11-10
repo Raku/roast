@@ -57,7 +57,6 @@ ok $*DISTRO.name, 'Non-empty $*DISTRO.name';
 
 isa-ok $*DISTRO.version, Version;
 # https://github.com/Raku/old-issue-tracker/issues/3918
-#?rakudo todo 'no Distro.signature yet RT #124624'
 isa-ok $*DISTRO.signature, Blob;
 isa-ok $*DISTRO.is-win, Bool;
 

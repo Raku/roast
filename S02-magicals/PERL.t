@@ -56,7 +56,6 @@ ok $*PERL.Str  ~~ m/\w/, 'We can do a $*PERL.Str';
 
 isa-ok $*PERL.version, Version;
 # https://github.com/Raku/old-issue-tracker/issues/3918
-#?rakudo todo 'no Perl.signature yet RT #124624'
 isa-ok $*PERL.signature, Blob;
 isa-ok $*PERL.compiler, Compiler;
 
@@ -81,7 +80,6 @@ ok $C.raku, 'We can do a $?PERL.compiler.raku';
 ok $C.gist, 'We can do a $?PERL.compiler.gist';
 
 isa-ok $C.version, Version;
-#?rakudo todo 'no Perl.compiler.signature yet'
 isa-ok $C.signature, Blob;
 
 # vim: expandtab shiftwidth=4

@@ -63,7 +63,6 @@ diag "'{$*VM.name}' is an unknown VM, please report" if !
 
 isa-ok $*VM.version, Version;
 # https://github.com/Raku/old-issue-tracker/issues/3918
-#?rakudo todo 'no VM.signature yet RT #124624'
 isa-ok $*VM.signature, Blob;
 
 # vim: expandtab shiftwidth=4

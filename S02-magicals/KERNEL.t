@@ -57,7 +57,6 @@ diag "'{$*KERNEL.name}' is an unknown KERNEL, please report" if !
 
 isa-ok $*KERNEL.version, Version;
 # https://github.com/Raku/old-issue-tracker/issues/3918
-#?rakudo todo 'no Kernel.signature yet RT #124624'
 isa-ok $*KERNEL.signature, Blob;
 isa-ok $*KERNEL.bits, Int;
 
