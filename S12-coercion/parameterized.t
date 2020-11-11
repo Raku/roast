@@ -62,3 +62,5 @@ subtest "Double Parameterization" => {
                 X::TypeCheck::Binding::Parameter,
                 "uncoercible parameter results in X::Coerce::Impossible exception";
 }
+
+done-testing;
