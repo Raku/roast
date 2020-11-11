@@ -131,4 +131,6 @@ is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
     is foo($s), 42, "coercions from a Str subclass works";
 }
 
+done-testing;
+
 # vim: expandtab shiftwidth=4

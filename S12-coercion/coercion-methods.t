@@ -84,3 +84,5 @@ is-coerced $v3, C3, 'a pair', "a descendant class can extend ancestor's coercion
 
 throws-like { $v3 = False }, X::Coerce::Impossible,
             "badly engineered COERCE method results in error on a descendant class";
+
+done-testing;
