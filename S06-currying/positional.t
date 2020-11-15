@@ -237,7 +237,7 @@ is-primed-sig(sub (Array[Str] %, Array[Int] %) { }, :(Array[Str] %), *, $%HoAoI)
 is-primed-sig(sub (Array[Str] %a, Array[Int] %) { }, :(Array[Str] %a), *, $%HoAoI);
 
 priming-fails-bind-ok(sub (Str $a) { }, '$a', Str, 1);
-priming-fails-bind-ok(sub (Int(Str) $a) { }, '$a', Str, 1);
+priming-fails-bind-ok(sub (Int(Str) $a) { }, '$a', Int(Str), 1.1);
 priming-fails-bind-ok(sub ($a) { }, "", "Too many positionals", 1, 2);
 
 sub abc123 ($a,$b,$c,$o,$t,$th) { $a,$b,$c,$o,$t,$th; }
