@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 56;
+plan 57;
 
 my $pod_index = 0;
 
@@ -69,6 +69,7 @@ class Sheep {
 #= a sheep
     has $.wool; #= usually white
     has $.sound is rw = "baa"; #= usually quiet
+    has $.flock = $!sound ?? True !! False; #= usually with friends
 
     method roar { 'roar!' }
     #= not too scary
@@ -77,10 +78,12 @@ class Sheep {
 {
     my $wool-attr   = Sheep.^attributes.first: *.name eq '$!wool';
     my $sound-attr  = Sheep.^attributes.first: *.name eq '$!sound';
+    my $flock-attr  = Sheep.^attributes.first: *.name eq '$!flock';
     my $roar-method = Sheep.^lookup('roar');
     test-trailing(Sheep, 'a sheep');
     test-trailing($wool-attr, 'usually white');
     test-trailing($sound-attr, 'usually quiet');
+    test-trailing($flock-attr, 'usually with friends');
     test-trailing($roar-method, 'not too scary');
 }
 
