@@ -159,6 +159,7 @@ is-primed-sig(sub (Int @a, Str @b) { }, :(Int @a), *, $@AoS);
 is-primed-sig(sub (Int @, Str @b) { }, :(Int @), *, $@AoS);
 is-primed-sig(sub (Int @, Str @) { }, :(Int @), *, $@AoS);
 is-primed-sig(sub (Int @a, Str @) { }, :(Int @a), *, $@AoS);
+#?rakudo.jvm 4 skip "Method 'coerce' not found for invocant of class 'Perl6::Metamodel::CurriedRoleHOW'"
 is-primed-sig(sub (Str(Int) @a, Str(Int) @b) { }, :(Str(Int) @b), $@AoI);
 is-primed-sig(sub (Str(Int) @, Str(Int) @b) { }, :(Str(Int) @b), $@AoI);
 is-primed-sig(sub (Str(Int) @, Str(Int) @) { }, :(Str(Int) @), $@AoI);

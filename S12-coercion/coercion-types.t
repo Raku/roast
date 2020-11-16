@@ -75,6 +75,8 @@ class NastyChild is Parent { };
 }
 
 # coercion types on arrays
+#?rakudo.jvm skip 'Type check failed in assignment to @a; expected Rat(Str) but got Int (1)'
+#?DOES 1
 {
     my Rat(Str) @a;
     @a = "3.141", 1, e;

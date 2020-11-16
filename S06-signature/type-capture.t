@@ -63,6 +63,8 @@ eval-lives-ok q':(::T $x)', "No error on type capture";
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/4657
+#?rakudo.jvm skip "Impossible coercion from 'Rat' into 'T': no acceptable coercion method found"
+#?DOES 2
 {
     sub accum( ::T \a, T(Cool) \b ) { a += b };
 
