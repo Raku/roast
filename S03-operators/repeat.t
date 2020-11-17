@@ -9,7 +9,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 62;
+plan 63;
 
 #L<S03/Changes to Perl operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -222,6 +222,13 @@ subtest 'sunk, plain value `xx` sink cheaply' => {
             }
         }
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/3660
+{
+    my $a = 66666;
+    my $b = 'a' x $a;
+    is-deeply ('a' ~ $b).chars, $a + 1, 'repetition + concatenation lives and gives correct .chars';
 }
 
 # vim: expandtab shiftwidth=4
