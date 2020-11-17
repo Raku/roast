@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 47;
+plan 49;
 
 {
     my @array = 11 .. 15;
@@ -76,6 +76,25 @@ plan 47;
     is(@a.elems, 5, 'Array flattened by .append');
     @a.append: %foo;
     is(@a.elems, 5, 'Hash flattened by .append');
+}
+
+# https://github.com/rakudo/rakudo/issues/4034
+{
+    my (@a, @b);
+    my \values = 1, 2;
+    push @a, values, 3;
+    @b.push: values, 3;
+    is-deeply @a, @b,
+     'push and .push flatten multiple values the same way';
+}
+
+{
+    my (@a, @b);
+    my \values = 1, 2;
+    unshift @a, values, 3;
+    @b.unshift: values, 3;
+    is-deeply @a, @b,
+     'unshift and .unshift flatten multiple values the same way';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/2708
