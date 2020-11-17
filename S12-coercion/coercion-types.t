@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages");
 use Test;
 use Test::Util;
 
-plan 24;
+plan 26;
 
 # coercion types in parameter lists
 {
@@ -77,8 +77,10 @@ class NastyChild is Parent { };
 # coercion types on arrays
 {
     my Rat(Str) @a;
-    @a = "3.141", 1, e;
-    is-deeply @a.List, (3.141, 1.0, e.Rat), "an array with coercion type";
+    # A Str, a Rat, a RatStr
+    @a = "3.141", 1.0, <2.71>;
+    # Only a string gets coerced because the allomorph is a Rat anyway.
+    is-deeply @a.List, (3.141, 1.0, <2.71>), "an array with coercion type";
 }
 
 # coercion types on hashes
@@ -129,6 +131,15 @@ is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
     }
     my $s = SStr.new: :value("42");
     is foo($s), 42, "coercions from a Str subclass works";
+}
+
+{ # https://github.com/rakudo/rakudo/issues/4040
+    throws-like { Int(Str).^coerce(pi) },
+                X::Coerce::Impossible,
+                ".^coerce throws on unacceptable value";
+    throws-like { my Rat(Str) $v = 1 },
+                X::TypeCheck::Assignment,
+                "assigning unacceptable value to a coercive variable throws";
 }
 
 done-testing;
