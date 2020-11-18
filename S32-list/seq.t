@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 52;
+plan 53;
 
 my @result = 1,2,3;
 
@@ -267,6 +267,12 @@ group-of 2 => 'ZEN slices do not cache Seqs' => {
             ok 1|2|3 ~~ .all, 'Second pass on cached Seq';
         }
     }, 'elems call caches Seq';
+}
+
+# https://github.com/rakudo/rakudo/issues/4039
+{
+    is-deeply ({ 1 | -1 } ... *)[^3], (any(1, -1),any(1, -1),any(1, -1)),
+      'check that we do not create 1 element lists';
 }
 
 # vim: expandtab shiftwidth=4
