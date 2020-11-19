@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 28;
+plan 29;
 
 my $localhost = '0.0.0.0';
 my $host      = '127.0.0.1';
@@ -320,6 +320,14 @@ else {
     # MoarVM #234
     eval-lives-ok 'for ^2000 { IO::Socket::INET.new( :0port, :host<127.0.0.1> ); CATCH {next}; next }',
                   'Surviving without SEGV due to incorrect socket connect/close handling';
+}
+
+{
+    my Int:D $family = (0...*).first(ProtocolFamily.^enum_value_list.none);
+    dies-ok {
+        my IO::Socket::INET:D $server .= new: :$localhost, :0localport, :$family;
+        $server.close;
+    }, 'IO::Socket::INET.new Int:D families not corresponding to any ProtocolFamily:D do not typecheck';
 }
 
 sub do-test(Block $b-server, Block $b-client) {
