@@ -8,7 +8,7 @@ if $*KERNEL.bits == 64 {
 
 plan @num * 111;
 
-# Basic native int array tests.
+# Basic native num array tests.
 for @num -> $T {
     my $t = $T.^name;
     diag "Testing $t array";
@@ -93,17 +93,17 @@ for @num -> $T {
     is @arr[3], 34e0, "Mutating map on $t array works (4)";
 
     is @arr.grep(* < 30).elems, 2, "grep a $t array";
-    is-deeply @arr.grep(34),      (34e0,),             "$t array.grep(Int)";
-    is-deeply @arr.grep(34, :k),  (3,),                "$t array.grep(Int, :k)";
-    is-deeply @arr.grep(34, :kv), (3,34e0),            "$t array.grep(Int, :kv)";
-    is-deeply @arr.grep(34, :p),  (Pair.new(3,34e0),), "$t array.grep(Int, :p)";
-    is-deeply @arr.grep(34, :v),  (34e0,),             "$t array.grep(Int, :v)";
+    is-deeply @arr.grep(34),      (34e0,),             "$t array.grep(Num)";
+    is-deeply @arr.grep(34, :k),  (3,),                "$t array.grep(Num, :k)";
+    is-deeply @arr.grep(34, :kv), (3,34e0),            "$t array.grep(Num, :kv)";
+    is-deeply @arr.grep(34, :p),  (Pair.new(3,34e0),), "$t array.grep(Num, :p)";
+    is-deeply @arr.grep(34, :v),  (34e0,),             "$t array.grep(Num, :v)";
 
-    is-deeply @arr.first(34),      34e0,             "$t array.grep(Int)";
-    is-deeply @arr.first(34, :k),  3,                "$t array.grep(Int, :k)";
-    is-deeply @arr.first(34, :kv), (3,34e0),         "$t array.grep(Int, :kv)";
-    is-deeply @arr.first(34, :p),  Pair.new(3,34e0), "$t array.grep(Int, :p)";
-    is-deeply @arr.first(34, :v),  34e0,             "$t array.grep(Int, :v)";
+    is-deeply @arr.first(34),      34e0,             "$t array.grep(Num)";
+    is-deeply @arr.first(34, :k),  3,                "$t array.grep(Num, :k)";
+    is-deeply @arr.first(34, :kv), (3,34e0),         "$t array.grep(Num, :kv)";
+    is-deeply @arr.first(34, :p),  Pair.new(3,34e0), "$t array.grep(Num, :p)";
+    is-deeply @arr.first(34, :v),  34e0,             "$t array.grep(Num, :v)";
 
     is ([+] @arr), 114e0, "Can use reduce meta-op on a $t array";
 
@@ -151,7 +151,7 @@ for @num -> $T {
     #?rakudo todo 'STORE not working correctly yet)'
     is @arr.join(":"), "42:666:0:0", "does re-initializing a $t array work";
 
-    # Interaction of native shaped int arrays and untyped arrays.
+    # Interaction of native shaped num arrays and untyped arrays.
     my @native := array[$T].new(:shape(10),1e0..10e0);
     my @untyped = @native;
     is @untyped.elems, 10, "List-assigning $t array to untyped works (1)";
@@ -168,9 +168,9 @@ for @num -> $T {
     my @untyped2 = 21e0..30e0;
     my @native2 := array[$T].new(:shape(10));
     @native2 = @untyped2;
-    is @native2.elems, 10, "List-assign untyped array of Int to $t array (1)";
-    is @native2[0], 21e0, "List-assign untyped array of Int to $t array (2)";
-    is @native2[9], 30e0, "List-assign untyped array of Int to $t array (3)";
+    is @native2.elems, 10, "List-assign untyped array of Num to $t array (1)";
+    is @native2[0], 21e0, "List-assign untyped array of Num to $t array (2)";
+    is @native2[9], 30e0, "List-assign untyped array of Num to $t array (3)";
 
     @untyped2[9] = 'C-C-C-C-Combo Breaker!';
     throws-like { @native2 = @untyped2 }, Exception,

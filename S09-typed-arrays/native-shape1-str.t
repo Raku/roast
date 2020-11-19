@@ -87,17 +87,17 @@ is @arr[2], "bb", "Mutating map on $t array works (3)";
 is @arr[3], "uu", "Mutating map on $t array works (4)";
 
 is @arr.grep(* le "ff").elems, 2, "grep a $t array";
-is-deeply @arr.grep("uu"),      ("uu",),             "$t array.grep(Int)";
-is-deeply @arr.grep("uu", :k),  (3,),                "$t array.grep(Int, :k)";
-is-deeply @arr.grep("uu", :kv), (3,"uu"),            "$t array.grep(Int, :kv)";
-is-deeply @arr.grep("uu", :p),  (Pair.new(3,"uu"),), "$t array.grep(Int, :p)";
-is-deeply @arr.grep("uu", :v),  ("uu",),             "$t array.grep(Int, :v)";
+is-deeply @arr.grep("uu"),      ("uu",),             "$t array.grep(Str)";
+is-deeply @arr.grep("uu", :k),  (3,),                "$t array.grep(Str, :k)";
+is-deeply @arr.grep("uu", :kv), (3,"uu"),            "$t array.grep(Str, :kv)";
+is-deeply @arr.grep("uu", :p),  (Pair.new(3,"uu"),), "$t array.grep(Str, :p)";
+is-deeply @arr.grep("uu", :v),  ("uu",),             "$t array.grep(Str, :v)";
 
-is-deeply @arr.first("uu"),      "uu",             "$t array.grep(Int)";
-is-deeply @arr.first("uu", :k),  3,                "$t array.grep(Int, :k)";
-is-deeply @arr.first("uu", :kv), (3,"uu"),         "$t array.grep(Int, :kv)";
-is-deeply @arr.first("uu", :p),  Pair.new(3,"uu"), "$t array.grep(Int, :p)";
-is-deeply @arr.first("uu", :v),  "uu",             "$t array.grep(Int, :v)";
+is-deeply @arr.first("uu"),      "uu",             "$t array.grep(Str)";
+is-deeply @arr.first("uu", :k),  3,                "$t array.grep(Str, :k)";
+is-deeply @arr.first("uu", :kv), (3,"uu"),         "$t array.grep(Str, :kv)";
+is-deeply @arr.first("uu", :p),  Pair.new(3,"uu"), "$t array.grep(Str, :p)";
+is-deeply @arr.first("uu", :v),  "uu",             "$t array.grep(Str, :v)";
 
 is ([~] @arr), "nnffbbuu", "Can use reduce meta-op on a $t array";
 
@@ -145,7 +145,7 @@ is @arr.join(":"), ":::", "does emptying a $t array reset";
 #?rakudo todo 'STORE not working correctly yet)'
 is @arr.join(":"), "a:b::", "does re-initializing a $t array work";
 
-# Interaction of native shaped int arrays and untyped arrays.
+# Interaction of native shaped str arrays and untyped arrays.
 my @native := array[$T].new(:shape(10),"a".."j");
 my @untyped = @native;
 is @untyped.elems, 10, "List-assigning $t array to untyped works (1)";
@@ -162,9 +162,9 @@ is @untyped[11], "z", "List-assign $t array surrounded by literals (5)";
 my @untyped2 = "g".."p";
 my @native2 := array[$T].new(:shape(10));
 @native2 = @untyped2;
-is @native2.elems, 10, "List-assign untyped array of Int to $t array (1)";
-is @native2[0], "g", "List-assign untyped array of Int to $t array (2)";
-is @native2[9], "p", "List-assign untyped array of Int to $t array (3)";
+is @native2.elems, 10, "List-assign untyped array of Str to $t array (1)";
+is @native2[0], "g", "List-assign untyped array of Str to $t array (2)";
+is @native2[9], "p", "List-assign untyped array of Str to $t array (3)";
 
 @untyped2[9] = 666;
 throws-like { @native2 = @untyped2 }, Exception,
