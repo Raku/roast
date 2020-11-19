@@ -35,7 +35,7 @@ subtest "Basic role language revision", {
 }
 
 subtest "Multi-module and multi-version", {
-    plan 3;
+    plan 2;
     use Ver6e;
 
     subtest "Type object language revisions", {
@@ -49,18 +49,10 @@ subtest "Multi-module and multi-version", {
     subtest "Cross-boundary compatibility", {
         plan 2;
         # Because parameterized role comes from a 6.e module
-        throws-like 'my class C does VerRole[Int] { }', X::Comp::AdHoc,
+        throws-like 'my class C does VerRole[Int] { }', X::Language::IncompatRevisions,
                     'class from v6.d is not compatible with a role from v6.e';
         # Because unparameterized role comes from a 6.c module
         lives-ok { my class C does VerRole { } }, 'class from v6.d can consume a v6.c role';
-    }
-
-    subtest "Cross-boundary mixins", {
-        plan 2;
-
-        throws-like 'my class C { }; my $v = C.new but VerRole[Int]', X::AdHoc,
-                    'mixin of v6.e role into incompatible v6.d class throws';
-        lives-ok { my class C { }; my $v = C.new but VerRole }, "mixin of v6.c role into a v6.d class";
     }
 }
 
