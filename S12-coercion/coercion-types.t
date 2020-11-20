@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 26;
+plan 27;
 
 # coercion types in parameter lists
 {
@@ -140,6 +140,12 @@ is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
     throws-like { my Rat(Str) $v = 1 },
                 X::TypeCheck::Assignment,
                 "assigning unacceptable value to a coercive variable throws";
+}
+
+{ # https://github.com/rakudo/rakudo/issues/2427
+    my Str(Int(Cool)) $x;
+    $x = 42.13;
+    is $x, "42", "nested coercions work";
 }
 
 done-testing;
