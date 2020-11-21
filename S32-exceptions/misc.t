@@ -3,7 +3,7 @@ use Test;
 use lib "t/spec/packages";
 use Test::Util;
 
-plan 383;
+plan 381;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -87,8 +87,6 @@ throws-like 'OUTER := 5', X::Bind, target => /OUTER/;
 throws-like 'my int $x := 2', X::Bind::NativeType, name => '$x';
 throws-like 'my @a; @a[] := <foo bar baz>', X::Bind::ZenSlice, type => Array;
 throws-like 'my %a; %a{} := foo=>1, bar=>2, baz=>3', X::Bind::ZenSlice, type => Hash;
-throws-like 'my @a; @a[0, 1] := (2, 3)', X::Bind::Slice, type => Array;
-throws-like 'my %a; %a<a b> := (2, 3)', X::Bind::Slice, type => Hash;
 
 
 throws-like 'for (1; 1; 1) { }', X::Obsolete,
@@ -502,22 +500,22 @@ throws-like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
     {
         my $code = q[ sub foo($x) { }; foo; ];
         throws-like $code, X::TypeCheck::Argument,
-            signature => rx/ '($x)' /, 
+            signature => rx/ '($x)' /,
             objname   => { m/foo/ };
     }
 
     {
         my $code = q[ sub foo(Str) { }; foo 42; ];
-        throws-like $code, X::TypeCheck::Argument, 
-            signature => rx/ '(Str)' /, 
-            arguments => { .[0] eq "Int" };
+        throws-like $code, X::TypeCheck::Argument,
+        signature => rx/ '(Str)' /,
+        arguments => { .[0] eq "Int" };
     }
 
     {
         my $code = q[ sub foo(Int $x, Str $y) { }; foo "not", 42; ];
-        throws-like $code, X::TypeCheck::Argument, 
-            arguments => { .[0] ~ .[1] eq "StrInt" },
-            signature => rx/ '(Int $x, Str $y)' /;
+        throws-like $code, X::TypeCheck::Argument,
+        arguments => { .[0] ~ .[1] eq "StrInt" },
+        signature => rx/ '(Int $x, Str $y)' /;
     }
 }
 
@@ -526,44 +524,44 @@ throws-like 'my class A { method b { Q<b> } }; my $a = A.new; my $b = &A::b.assu
     X::Method::NotFound, method => { m/'assuming'/ }, private => { $_ === False };
 
 # RT #66776
-throws-like 'for 1,2,3, { say 3 }', X::Comp::Group, 
-    sorrows => sub (@s) { @s[0] ~~ X::Syntax::BlockGobbled && @s[0].message ~~ /^Expression/ },
-    panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ }; 
+throws-like 'for 1,2,3, { say 3 }', X::Comp::Group,
+sorrows => sub (@s) { @s[0] ~~ X::Syntax::BlockGobbled && @s[0].message ~~ /^Expression/ },
+panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ };
 
 # RT #66776
 throws-like 'CATCH { when X::Y {} }', X::Comp::Group,
-    sorrows => sub (@s) { @s[0] ~~ X::Syntax::BlockGobbled && @s[0].what ~~ /'X::Y'/ },
-    panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ };
+sorrows => sub (@s) { @s[0] ~~ X::Syntax::BlockGobbled && @s[0].what ~~ /'X::Y'/ },
+panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ };
 
 # RT #75230
-throws-like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused, 
-    reason => { m/'Missing semicolon'/ },
-    pre => { m/'1 if 2'/ },
-    post => { m/'3 { say 3 }'/ };
+throws-like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused,
+reason => { m/'Missing semicolon'/ },
+pre => { m/'1 if 2'/ },
+post => { m/'3 { say 3 }'/ };
 
 # RT #77522
 throws-like '/\ X/', X::Syntax::Regex::Unspace,
-    message => { m/'No unspace allowed in regex' .+ '(\' \')' .+ '\x20'/ }, char => { m/' '/ };
+message => { m/'No unspace allowed in regex' .+ '(\' \')' .+ '\x20'/ }, char => { m/' '/ };
 
 # RT #77380
-throws-like '/m ** 1..-1/', X::Comp::Group, 
-    panic => { .payload ~~ m!'Unable to parse regex; couldn\'t find final \'/\''! },
-    sorrows => { .[0] => { $_ ~~ X::Syntax::Regex::MalformedRange } and .[1] => { $_ ~~ X::Syntax::Regex::UnrecognizedMetachar } };
+throws-like '/m ** 1..-1/', X::Comp::Group,
+panic => { .payload ~~ m!'Unable to parse regex; couldn\'t find final \'/\''! },
+sorrows => { .[0] => { $_ ~~ X::Syntax::Regex::MalformedRange } and .[1] => { $_ ~~ X::Syntax::Regex::UnrecognizedMetachar } };
 
 # RT #122502
 throws-like '/m ** 1 ..2/', X::Syntax::Regex::SpacesInBareRange,
-    pre => { m!'/m ** 1 ..'! },
-    post => { m!'2/'! };
+pre => { m!'/m ** 1 ..'! },
+post => { m!'2/'! };
 
 # RT #115726
 throws-like 'sub infix:<> (){}', X::Comp::Group,
-    panic => { $_ ~~ X::Syntax::Extension::Null and .pre ~~ m/'sub infix:<>'/ and .post ~~ m/'()'/ },
-    message => /'Null operator is not allowed'/,
-    worries => { .[0].payload ~~ m/'Pair with <> really means an empty list, not null string'/ };
+panic => { $_ ~~ X::Syntax::Extension::Null and .pre ~~ m/'sub infix:<>'/ and .post ~~ m/'()'/ },
+message => /'Null operator is not allowed'/,
+worries => { .[0].payload ~~ m/'Pair with <> really means an empty list, not null string'/ };
 
 # RT #122646
 throws-like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
-  'unknown operator should complain better';
+'unknown operator should complain better';
 
 # RT #72816
 throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
