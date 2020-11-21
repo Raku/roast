@@ -1054,6 +1054,7 @@ S32-array/end.t
 S32-array/exists-adverb.t
 S32-array/keys_values.t
 S32-array/kv.t
+S32-array/multislice-6e.t
 S32-array/pairs.t
 S32-array/perl.t
 S32-array/pop.t
@@ -1088,6 +1089,7 @@ S32-hash/iterator.t
 S32-hash/keys_values.t
 S32-hash/kv.t
 S32-hash/map.t
+S32-hash/multislice-6e.t
 S32-hash/pairs.t
 S32-hash/perl.t
 S32-hash/push.t
