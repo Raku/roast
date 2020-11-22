@@ -43,11 +43,15 @@ sub is-deeply-junction (
     is-deeply junction-guts($got), junction-guts($expected), $desc;
 }
 
-proto test-iter-opt(|) is export is test-assertion {*}
-multi test-iter-opt(Iterator:D \iter, @data is raw, Str:D $desc) {
+proto test-iter-opt(|) is export {*}
+multi test-iter-opt(
+  Iterator:D \iter, @data is raw, Str:D $desc
+) is test-assertion  {
     TEST-ITER-OPT iter, @data, +@data, $desc;
 }
-multi test-iter-opt(Iterator:D \iter, UInt:D \items, Str:D $desc) {
+multi test-iter-opt(
+  Iterator:D \iter, UInt:D \items, Str:D $desc
+) is test-assertion  {
     TEST-ITER-OPT iter, Nil, items, $desc;
 }
 sub TEST-ITER-OPT (\iter, \data, \n, $desc,) {
@@ -75,20 +79,20 @@ sub TEST-ITER-OPT (\iter, \data, \n, $desc,) {
     }
 }
 
-proto sub is-eqv(|) is export is test-assertion {*}
-multi sub is-eqv(Seq:D $got, Seq:D $expected, Str:D $desc) {
+proto sub is-eqv(|) is export {*}
+multi sub is-eqv(Seq:D $got, Seq:D $expected, Str:D $desc) is test-assertion {
     $got.cache; $expected.cache;
     _is-eqv $got, $expected, $desc;
 }
-multi sub is-eqv(Seq:D $got, Mu $expected, Str:D $desc) {
+multi sub is-eqv(Seq:D $got, Mu $expected, Str:D $desc) is test-assertion {
     $got.cache;
     _is-eqv $got, $expected, $desc;
 }
-multi sub is-eqv(Mu $got, Seq:D $expected, Str:D $desc) {
+multi sub is-eqv(Mu $got, Seq:D $expected, Str:D $desc) is test-assertion {
     $expected.cache;
     _is-eqv $got, $expected, $desc;
 }
-multi sub is-eqv(Mu $got, Mu $expected, Str:D $desc) {
+multi sub is-eqv(Mu $got, Mu $expected, Str:D $desc) is test-assertion {
     _is-eqv $got, $expected, $desc;
 }
 sub _is-eqv (Mu $got, Mu $expected, Str:D $desc) {
@@ -108,24 +112,26 @@ sub _is-eqv (Mu $got, Mu $expected, Str:D $desc) {
     $ok
 }
 
-proto sub is_run(|) is export is test-assertion {*}
+proto sub is_run(|) is export {*}
 
 # No input, no test name
-multi sub is_run( Str $code, %expected, *%o ) {
+multi sub is_run( Str $code, %expected, *%o ) is test-assertion {
     return is_run( $code, '', %expected, '', |%o );
 }
 
 # Has input, but not a test name
-multi sub is_run( Str $code, Str $input, %expected, *%o ) {
+multi sub is_run( Str $code, Str $input, %expected, *%o ) is test-assertion {
     return is_run( $code, $input, %expected, '', |%o );
 }
 
 # No input, named
-multi sub is_run( Str $code, %expected, Str $name, *%o ) {
+multi sub is_run( Str $code, %expected, Str $name, *%o ) is test-assertion {
     return is_run( $code, '', %expected, $name, |%o );
 }
 
-multi sub is_run( Str $code, Str $input, %expected, Str $name, *%o ) {
+multi sub is_run(
+  Str $code, Str $input, %expected, Str $name, *%o
+) is test-assertion {
     my %got = get_out( $code, $input, |%o );
 
     # The test may have executed, but if so, the results couldn't be collected.
@@ -240,8 +246,10 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
     return %out;
 }
 
-proto doesn't-hang(|) is export is test-assertion {*}
-multi doesn't-hang (Str $args, $desc, :$in, :$wait = 15, :$out, :$err) {
+proto doesn't-hang(|) is export {*}
+multi doesn't-hang(
+  Str $args, $desc, :$in, :$wait = 15, :$out, :$err
+) is test-assertion  {
     if $*DISTRO.name eq 'browser' {
         is_run($args, { :$out, :$err }, $desc);
     } else {
@@ -256,7 +264,7 @@ my $VM-time-scale-multiplier = $*VM.name eq 'jvm' ?? 20/3 !! 1;
 multi doesn't-hang (
     Capture $args, $desc = 'code does not hang',
     :$in, :$wait = 15, :$out, :$err,
-) {
+) is test-assertion  {
     my $prog = Proc::Async.new: |$args;
     my ($stdout, $stderr) = '', '';
     $prog.stdout.tap: { $stdout ~= $^a };
@@ -302,9 +310,9 @@ multi doesn't-hang (
     };
 }
 
-proto warns-like(|) is export is test-assertion {*}
-multi warns-like(Str $code, |c) { warns-like {$code.EVAL}, |c }
-multi warns-like(&code, $test, Str $desc) {
+proto warns-like(|) is export {*}
+multi warns-like(Str $code, |c) is test-assertion { warns-like {$code.EVAL}, |c }
+multi warns-like(&code, $test, Str $desc) is test-assertion {
     my ($did-warn, $message) = False;
     &code();
     CONTROL { when CX::Warn { $did-warn = True; $message = .message; .resume } }
@@ -316,9 +324,11 @@ multi warns-like(&code, $test, Str $desc) {
     }
 }
 
-proto doesn't-warn(|) is export is test-assertion {*}
-multi doesn't-warn(Str $code, |c) { doesn't-warn {$code.EVAL}, |c }
-multi doesn't-warn(&code, Str $desc) {
+proto doesn't-warn(|) is export {*}
+multi doesn't-warn(Str $code, |c) is test-assertion {
+    doesn't-warn {$code.EVAL}, |c
+}
+multi doesn't-warn(&code, Str $desc) is test-assertion {
     my ($did-warn, $message) = False;
     &code();
     CONTROL { when CX::Warn { $did-warn = True; $message = .message; .resume } }
@@ -359,12 +369,12 @@ sub make-temp-dir (Int $chmod? --> IO::Path:D) is export {
     p
 }
 
-proto no-fatal-throws-like(|) is export is test-assertion {*}
-multi no-fatal-throws-like(Str:D $test, |c) {
+proto no-fatal-throws-like(|) is export {*}
+multi no-fatal-throws-like(Str:D $test, |c) is test-assertion {
     my $*THROWS-LIKE-CONTEXT = CALLER::;
     throws-like "no fatal; my \$ = do \{ $test }; Nil", |c;
 }
-multi no-fatal-throws-like(&test, |c) {
+multi no-fatal-throws-like(&test, |c) is test-assertion {
     my $*THROWS-LIKE-CONTEXT = CALLER::;
     throws-like { no fatal; my $ = do { test }; Nil }, |c;
 }
