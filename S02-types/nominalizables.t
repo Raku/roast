@@ -5,7 +5,7 @@ plan 2;
 
 # https://github.com/rakudo/rakudo/issues/2446
 subtest "Subset of a coercion", {
-    plan 4;
+    plan 7;
     subset OfCoercion of Int();
     my OfCoercion $v = 1;
     $v = "42";
@@ -17,6 +17,14 @@ subtest "Subset of a coercion", {
         is $p, 13, "the parameter got the right value";
     }
     foo("13");
+
+    # https://github.com/rakudo/rakudo/issues/1405
+    subset NumStr1 of Num(Str);
+    ok Str ~~ NumStr1, "constraint type matches against coercive subset";
+    ok Num ~~ NumStr1, "target type matches against coercive subset";
+
+    subset NumStr2 of Num(Str) where {!.defined || $_ >= 0};
+    ok "42" ~~ NumStr2, "a string is coerced and matches against subset";
 }
 
 # https://github.com/rakudo/rakudo/issues/2427
