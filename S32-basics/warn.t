@@ -82,8 +82,8 @@ is_run ｢
 {
     my int $warnings;
     {
-        ok List ~~ List.new, 'did the smartmatch work out';
-        CONTROL { ++$warnings; .resume }
+        nok List ~~ List.new, 'did the smartmatch work out';
+        CONTROL { ++$warnings if $_ ~~ CX::Warn; .resume }
     }
     is $warnings, 0, 'should not have warned';
 }
