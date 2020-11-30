@@ -3,16 +3,23 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 10;
+plan 9;
 
 # https://github.com/Raku/old-issue-tracker/issues/1338
 {
     my $alive = 0;
+    my $exception-produced = 0;
+    my $warn-msg = "# It's OK to see this warning during a test run";
+    CONTROL {
+        when CX::Warn { $exception-produced = .message }
+        default { .rethrow }
+    }
     try {
-        warn "# It's OK to see this warning during a test run";
+        warn $warn-msg;
         $alive = 1;
     }
-    ok $alive, 'try blocks do not catch exceptions'
+    ok $alive, 'warn in try blocks do not interrupt execution';
+    like $exception-produced, /$warn-msg/, q<try don't catch warn's control exception>;
 }
 
 {
@@ -28,10 +35,15 @@ plan 10;
 {
     my $caught = 0;
     {
-        CONTROL { default { $caught = 1 } };
-        ~Any
+        CONTROL {
+            when CX::Warn { $caught = .message; }
+            default { .rethrow }
+        };
+        EVAL '~Any';
     }
-    ok $caught, 'Stringifying Any warns';
+    like $caught,
+        /'Use of uninitialized value of type Any in string context.'/,
+        'Stringifying Any warns';
 }
 
 is_run 'use v6; warn; say "alive"',
@@ -79,8 +91,8 @@ is_run ｢
 {
     my int $warnings;
     {
-        ok List ~~ List.new, 'did the smartmatch work out';
-        CONTROL { ++$warnings; .resume }
+        nok List ~~ List.new, 'did the smartmatch work out';
+        CONTROL { ++$warnings if $_ ~~ CX::Warn; .resume }
     }
     is $warnings, 0, 'should not have warned';
 }
