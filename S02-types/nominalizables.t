@@ -1,7 +1,7 @@
 use Test;
 # Test for different combinations of nominalizable types.
 
-plan 2;
+plan 4;
 
 # https://github.com/rakudo/rakudo/issues/2446
 subtest "Subset of a coercion", {
@@ -25,6 +25,42 @@ subtest "Subset of a coercion", {
 
     subset NumStr2 of Num(Str) where {!.defined || $_ >= 0};
     ok "42" ~~ NumStr2, "a string is coerced and matches against subset";
+}
+
+subtest "Subset of a definite", {
+    plan 3;
+    subset OfDef of Str:D;
+    eval-lives-ok q:to/SNIPPET/,
+                    sub foo(OfDef $s) { }
+                    SNIPPET
+                "the subset compiles";
+
+    my sub bar(OfDef $s) { }
+
+    throws-like { bar(Str) },
+                X::TypeCheck::Binding::Parameter,
+                "doesn't accept undefineds";
+    lives-ok { bar("the answer") }, "accepts a concrete string";
+
+}
+
+subtest "Subset of a definite coercion", {
+    plan 3;
+    subset OfDefCoerce of Str:D(Rat);
+    throws-like q<my OfDefCoerce $v>,
+                X::Syntax::Variable::MissingInitializer,
+                "can't declare a variable without initializer";
+
+    my sub bar(OfDefCoerce $s) { $s }
+    is bar(3.14), "3.14", "coerces correctly";
+
+    my class BadOne {
+        method Str { Str }
+    }
+
+    throws-like { bar(BadOne.new) },
+                X::TypeCheck::Binding::Parameter,
+                "incorrect coercion into a typeobject throws on the subset";
 }
 
 # https://github.com/rakudo/rakudo/issues/2427
