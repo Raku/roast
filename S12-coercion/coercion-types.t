@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 27;
+plan 28;
 
 # coercion types in parameter lists
 {
@@ -146,6 +146,13 @@ is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
     my Str(Int(Cool)) $x;
     $x = 42.13;
     is $x, "42", "nested coercions work";
+}
+
+{ # https://github.com/rakudo/rakudo/issues/4092
+    sub with-optional(Int(Str) $foo?) {
+        ok $foo === Int, "optional coercive parameter defaults to its target type";
+    }
+    with-optional();
 }
 
 done-testing;
