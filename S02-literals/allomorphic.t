@@ -458,6 +458,6 @@ group-of 4 => '.comb on allomorphs uses Str variant' => {
 }
 
 # https://github.com/rakudo/rakudo/issues/3308
-is Str($*USER).^name, "Str", 'No leaking of guts types when coercing allomorph to Str';
+isa-ok Str($*USER), Str, 'No leaking of guts types when coercing allomorph to Str';
 
 # vim: expandtab shiftwidth=4
