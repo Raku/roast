@@ -224,10 +224,16 @@ eval-lives-ok '[;0]', '[;0] does not explode the compiler';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/2879
-throws-like ｢class A114672 {}; class B114672 is A114672 { has $!x = 5; ｣
-    ~ ｢our method foo(A114672:) { say $!x } }; &B::foo(A.new)｣,
+throws-like q:to/CODE_END/,
+            class A114672 {};
+            class B114672 is A114672 {
+                has $!x = 5;
+                our method foo(A114672:) { say $!x }
+            };
+            &B114672::foo(A114672.new)
+            CODE_END
     Exception,
-'no segfault';
+    'no segfault';
 
 {
     # Purpose of the test is to check that despite having a race
