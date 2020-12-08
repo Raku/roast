@@ -143,12 +143,9 @@ for @num -> $T {
 
     is @arr.join(":"), "1:2:3:4", "does join a $t array";
 
-    #?rakudo todo 'STORE not working correctly yet)'
     is (@arr = ()), "0 0 0 0", "Can clear $t array by assigning empty list";
-    #?rakudo todo 'STORE not working correctly yet)'
     is @arr.join(":"), "0:0:0:0", "does emptying a $t array reset";
     @arr = 42e0,666e0;
-    #?rakudo todo 'STORE not working correctly yet)'
     is @arr.join(":"), "42:666:0:0", "does re-initializing a $t array work";
 
     # Interaction of native shaped num arrays and untyped arrays.

@@ -144,13 +144,10 @@ for flat @int,@uint -> $T {
 
     is @arr.join(":"), "1:2:3:4", "does join a $t array";
 
-    #?rakudo todo 'STORE not working correctly yet)'
     is (@arr = ()), "0 0 0 0", "Can clear $t array by assigning empty list";
-    #?rakudo todo 'STORE not working correctly yet)'
     is @arr.join(":"), "0:0:0:0", "does emptying a $t array reset";
-    @arr = 42,666;
-    #?rakudo todo 'STORE not working correctly yet)'
-    is @arr.join(":"), "42:666:0:0", "does re-initializing a $t array work";
+    @arr = 42,66;
+    is @arr.join(":"), "42:66:0:0", "does re-initializing a $t array work";
 
     # Interaction of native shaped int arrays and untyped arrays.
     my @native := array[$T].new(:shape(10),1..10);

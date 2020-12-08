@@ -137,12 +137,9 @@ is-deeply @arr[my $ = ^2], "c", 'does slice handle containerized range';
 
 is @arr.join(":"), "a:b:c:d", "does join a $t array";
 
-#?rakudo todo 'STORE not working correctly yet)'
 is (@arr = ()), "   ", "Can clear $t array by assigning empty list";
-#?rakudo todo 'STORE not working correctly yet)'
 is @arr.join(":"), ":::", "does emptying a $t array reset";
 @arr = "a","b";
-#?rakudo todo 'STORE not working correctly yet)'
 is @arr.join(":"), "a:b::", "does re-initializing a $t array work";
 
 # Interaction of native shaped str arrays and untyped arrays.
