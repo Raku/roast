@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 32;
+plan 39;
 
 # L<S13/"Type Casting"/"method CALL-ME(**@slice) {...}">
 # basic tests to see if the methods overload correctly.
@@ -83,7 +83,7 @@ plan 32;
         method add(&c){ @.a.push(&c) }
         method CALL-ME($self: |c) {
             @.a>>.(|c)
-        } 
+        }
     }
     my $foo = Foo.new;
     $foo.add(&somesub);
@@ -124,6 +124,36 @@ plan 32;
     }
     my Bar $x .= new: :str("abcde");
     is $x(2, 1), 'c', 'example works';
+}
+
+{ # https://github.com/rakudo/rakudo/issues/4094
+    my role R01 {
+        multi method CALL-ME(::?ROLE:U:) { ::?ROLE }
+        multi method CALL-ME(::?ROLE:U: \v) {
+            v.raku
+        }
+    }
+
+    isa-ok R01.(), R01, "role pretends to be a sub";
+    is R01(pi), pi.raku, "argument passing to role's CALL-ME";
+
+    my role R02 { }
+    throws-like { R02("boom!") },
+        X::Coerce::Impossible,
+        "coercion attempt for a non-invocable role throws";
+
+    my role R03 {
+        has $.val;
+        method COERCE($val) { self.new(:$val) }
+    }
+
+    my $coerced = R03("foo");
+    isa-ok $coerced, R03, "coerced into a pun";
+    is $coerced.val, "foo", "coercion initialized with value";
+
+    my role R04 does R01 { }
+    isa-ok R04.(), R01, "role consuming other role pretends to be a sub";
+    is R04.(e), e.raku, "argument passing to a role consuming another role"
 }
 
 # vim: expandtab shiftwidth=4
