@@ -158,9 +158,11 @@ for @num -> $T {
       action => 'shift',
       what   => "array[$t]",
       "Trying to shift an empty $t array dies";
+    #?rakudo.jvm todo 'message still "Cannot bind to a natively typed array"'
     throws-like { @arr[0] := my $a }, Exception,
       message => 'Cannot bind to a native num array',
       "Cannot push non-int/Int to $t array";
+    #?rakudo.jvm todo 'message still "Cannot delete from a natively typed array"'
     throws-like { @arr[0]:delete }, Exception,
       message => 'Cannot delete from a native num array',
       "Cannot push non-int/Int to $t array";
