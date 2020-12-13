@@ -158,6 +158,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/4261
+#?rakudo.jvm skip 'Type check failed in assignment to $in; expected File but got Str ("/path/to/...)'
 {
     use lib $?FILE.IO.parent(2).add("packages/RT125245/lib");
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT125245>));
