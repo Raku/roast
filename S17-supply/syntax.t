@@ -378,7 +378,6 @@ throws-like 'emit 42', X::ControlFlow, illegal => 'emit';
 throws-like 'done', X::ControlFlow, illegal => 'done';
 
 # whenever with channel
-#?rakudo.jvm skip 'UnwindException'
 {
     my $c = Channel.new;
     start {
@@ -492,7 +491,6 @@ throws-like 'done', X::ControlFlow, illegal => 'done';
     is await(foo(69)), 69, 'LAST in whenever triggered without iterations sees correct outer (2)';
 }
 
-#?rakudo.jvm skip 'UnwindException'
 lives-ok {
     react {
         whenever Supply.from-list(gather { die }) {
@@ -501,7 +499,6 @@ lives-ok {
     }
 }, 'QUIT properly handles exception even when dieing synchronously with the .tap';
 
-#?rakudo.jvm skip 'UnwindException'
 {
     sub foo($a) {
         supply {
@@ -752,7 +749,6 @@ lives-ok {
     }, "no exception for 'last' inside a single whenever in a react without LAST block";
 }
 
-#?rakudo.jvm skip 'UnwindException'
 {
     lives-ok {
         react { 
