@@ -200,7 +200,7 @@ my @quads =
   <a b c>,                                         <a b c>.Set,
 ;
 
-plan 2 * (3 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2) + 4;
+plan 2 * (3 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2) + 5;
 
 # symmetric difference
 for
@@ -263,6 +263,12 @@ for
     is-deeply (1..3, 1..3 Z⊖ 2..4, 1..4 Z⊖ 2..3, 2..3),
       ((1,4).Set, (4,).Set),
       'did Z handle ⊖ correctly (2)';
+}
+
+# https://github.com/rakudo/rakudo/issues/4118
+{
+    is-deeply ([⊖] (0,1,2), (0,1,2), (0,1,2)), set(),
+      'using 0 in symmetric difference should be counted as 1';
 }
 
 # vim: expandtab shiftwidth=4
