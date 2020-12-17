@@ -19,19 +19,18 @@ is_run q[gather for ^1 { take 42; last }],
     my $res = gather loop { take 42; last };
     is-deeply $res, (42).Seq, 'gather/take with last in loop';
 
-    #?rakudo.jvm 3 skip 'UnwindException'
     $res = gather while 1 { take 42; last };
     is-deeply $res, (42).Seq, 'gather/take with last in while loop';
 
     $res = gather repeat { take 42; last } until 0;
     is-deeply $res, (42).Seq, 'gather/take with last in repeat-until loop';
 
+    #?rakudo.jvm skip 'UnwindException'
     $res = gather for ^3 { take 42; last };
     is-deeply $res, (42).Seq, 'gather/take with last in for loop';
 }
 
 ## last in loop with eager
-#?rakudo.jvm skip 'UnwindException'
 {
     my $res = eager gather loop { take 42; last };
     is-deeply $res, (42).List, 'eager gather/take with last in loop';
@@ -41,13 +40,16 @@ is_run q[gather for ^1 { take 42; last }],
 
     $res = eager gather repeat { take 42; last } until 0;
     is-deeply $res, (42).List, 'eager gather/take with last in repeat-until loop';
+}
 
-    $res = eager gather for ^3 { take 42; last };
+## last in for loop with eager -- separated to be able to skip for rakudo.jvm
+#?rakudo.jvm skip 'UnwindException'
+{
+    my $res = eager gather for ^3 { take 42; last };
     is-deeply $res, (42).List, 'eager gather/take with last in for loop';
 }
 
 ## next in loop
-#?rakudo.jvm skip 'UnwindException'
 {
     my $res = gather loop { state $count = 0; last if $count == 4; next if ++$count > 1; take $count };
     is-deeply $res, (1).Seq, 'gather/take with next in loop';
@@ -63,7 +65,6 @@ is_run q[gather for ^1 { take 42; last }],
 }
 
 ## redo in loop
-#?rakudo.jvm skip 'UnwindException'
 {
     my $res = gather loop { state $count = 0; last if $count == 4; redo if ++$count < 2; take $count };
     is-deeply $res, (2, 3, 4).Seq, 'gather/take with redo in loop';
@@ -79,7 +80,6 @@ is_run q[gather for ^1 { take 42; last }],
 }
 
 ## last in nested for loop
-#?rakudo.jvm skip 'UnwindException'
 {
     my $res = gather for ^3 {
         state $count_outer = 0;
@@ -94,7 +94,6 @@ is_run q[gather for ^1 { take 42; last }],
 }
 
 ## next in nested for loop
-#?rakudo.jvm skip 'UnwindException'
 {
     my $res = gather for ^3 {
         state $count_outer = 0;
@@ -109,7 +108,6 @@ is_run q[gather for ^1 { take 42; last }],
 }
 
 ## redo in nested for loop
-#?rakudo.jvm skip 'UnwindException'
 {
     my $res = gather for ^3 {
         state $count_outer = 0;
@@ -124,7 +122,6 @@ is_run q[gather for ^1 { take 42; last }],
 }
 
 ## last in nested for loop with label
-#?rakudo.jvm skip 'UnwindException'
 {
     my $res = gather {
         LABEL_OUTER:
