@@ -137,11 +137,13 @@ for flat @int,@uint -> $T {
     # RT #125123
     throws-like { @arr.push('it real good') }, Exception,
       "Cannot push non-int/Int to $t array";
+    #?rakudo todo 'error message more explicit since 2020.12'
     throws-like { @arr[0] := my $a }, Exception,
-      message => 'Cannot bind to a natively typed array',
+      message => 'Cannot bind to a native int array',
       "Cannot push non-int/Int to $t array";
+    #?rakudo todo 'error message more explicit since 2020.12'
     throws-like { @arr[0]:delete }, Exception,
-      message => 'Cannot delete from a natively typed array',
+      message => 'Cannot delete from a native int array',
       "Cannot push non-int/Int to $t array";
 
     is (@arr.push(101, 105)), (42,101,105), "can push multiple to $t array";
