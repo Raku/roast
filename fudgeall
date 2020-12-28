@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use File::Glob ':bsd_glob';
+use File::Glob 'bsd_glob';
 
 my @opts;
 while( $_ = $ARGV[0], /^-/ ) {
