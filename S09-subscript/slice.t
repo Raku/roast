@@ -10,7 +10,7 @@ Testing array slices.
 
 =end pod
 
-plan 34;
+plan 35;
 
 {   my @array = (3,7,9,11);
 
@@ -139,6 +139,12 @@ subtest 'infinite ranges and whatever stars' => {
     is-deeply (^3)[0 ..^ *],         (0, 1, 2), 'Whatever range exclusive';
     is        (^3)[*-1],             2,         'Whatever callable';
     is        (^3)[{ $^elems - 1 }], 2,         'Callable';
+}
+
+# https://github.com/Raku/old-issue-tracker/issues/6233
+subtest 'nested slices' => {
+    plan 1;
+    is-deeply ("a".."z")[(3, (4, (5,)))],    ("d", ("e", ("f",))), 'Nested slice, no adverbs';
 }
 
 # vim: expandtab shiftwidth=4
