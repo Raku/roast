@@ -143,12 +143,137 @@ subtest 'infinite ranges and whatever stars' => {
 
 # https://github.com/Raku/old-issue-tracker/issues/6233
 subtest 'nested slices' => {
-    plan 5;
-    is-deeply ("a".."z")[(3, (4, (5,)))],    ("d", ("e", ("f",))),                'Nested slice, no adverbs';
-    is-deeply ("a".."z")[(3, (4, (5,)))]:p,  (3 => "d", (4 => "e", (5 => "f",))), 'Nested slice, p adverb';
-    is-deeply ("a".."z")[(3, (4, (5,)))]:k,  (3, (4, (5,))),                      'Nested slice, k adverb';
-    is-deeply ("a".."z")[(3, (4, (5,)))]:v,  ("d", ("e", ("f",))),                'Nested slice, v adverb';
-    is-deeply ("a".."z")[(3, (4, (5,)))]:kv, (3, "d", (4, "e", (5, "f"))),        'Nested slice, kv adverb';
+    plan 44;
+    is-deeply ("a".."z")[(3, (4, (5,)))],      ("d", ("e", ("f",))),                 'Nested slice, no adverbs';
+    is-deeply ("a".."z")[(3, (30, (5,)))]:p,   (3 => "d", ((5 => "f",),)),           'Nested slice, p adverb';
+    is-deeply ("a".."z")[(3, (30, (5,)))]:!p,  (3 => "d", (30 => Nil, (5 => "f",))), 'Nested slice, negated p adverb';
+    is-deeply ("a".."z")[(3, (30, (5,)))]:k,   (3, ((5,),)),                         'Nested slice, k adverb';
+    is-deeply ("a".."z")[(3, (30, (5,)))]:!k,  (3, (30, (5,))),                      'Nested slice, negated k adverb';
+    is-deeply ("a".."z")[(3, (30, (5,)))]:v,   ("d", (("f",),)),                     'Nested slice, v adverb';
+    is-deeply ("a".."z")[(3, (30, (5,)))]:!v,  ("d", (Nil, ("f",))),                 'Nested slice, negated v adverb';
+    is-deeply ("a".."z")[(3, (30, (5,)))]:kv,  (3, "d", ((5, "f"),)),                'Nested slice, kv adverb';
+    is-deeply ("a".."z")[(3, (30, (5,)))]:!kv, (3, "d", (30, Nil, (5, "f"))),        'Nested slice, negated kv adverb';
+
+    is-deeply ("a".."z")[(3, (4, (5,)))]:exists,   (True, (True, (True,))),   'Nested slice, exists adverb 1';
+    is-deeply ("a".."z")[(3, (30, (5,)))]:exists,  (True, (False, (True,))),  'Nested slice, exists adverb 2';
+    is-deeply ("a".."z")[(3, (30, (5,)))]:!exists, (False, (True, (False,))), 'Nested slice, exists adverb 3';
+
+    my @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (4, (5,)))]:delete, ("d", ("e", ("f",))),   'Nested slice, delete adverb 1-1';
+    is @a, ("a", "b", "c"),                                      'Nested slice, delete adverb 1-2';
+
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete, ("d", (Any, ("f",))),  'Nested slice, delete adverb 2-1';
+    is @a, ("a", "b", "c", Any, "e"),                            'Nested slice, delete adverb 2-2';
+
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:!delete, ("d", (Any, ("f",))), 'Nested slice, delete adverb 3-1';
+    is @a, ("a", "b", "c", "d", "e", "f"),                       'Nested slice, delete adverb 3-2';
+
+    # multiple adverbs
+    # :delete :kv            delete, return key/values of actually deleted keys
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:kv, (3, "d", ((5, "f"),)),                             'Nested slice, delete + kv adverbs';
+
+    # :delete :!kv           delete, return key/values of all keys attempted
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:!kv, (3, "d", (30, Any, (5, "f"))),                    'Nested slice, delete + !kv adverbs';
+
+    # :delete :p             delete, return pairs of actually deleted keys
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:p, (3 => "d", ((5 => "f",),)),                         'Nested slice, delete + p adverbs';
+
+    # :delete :!p            delete, return pairs of all keys attempted
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:!p, (3 => "d", (30 => Any, (5 => "f",))),              'Nested slice, delete + !p adverbs';
+
+    # :delete :k             delete, return actually deleted keys
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:k, (3, ((5,),)),                                       'Nested slice, delete + k adverbs';
+
+    # :delete :!k            delete, return all keys attempted to delete
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:!k, (3, (30, (5,))),                                   'Nested slice, delete + !k adverbs';
+
+    # :delete :v             delete, return values of actually deleted keys
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:v, ("d", (("f",),)),                                   'Nested slice, delete + v adverbs';
+
+    # :delete :!v            delete, return values of all keys attempted
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:!v, ("d", (Any, ("f",))),                              'Nested slice, delete + !v adverbs';
+
+    # :delete :exists        delete, return Bools indicating keys existed
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:exists, (True, (False, (True,))),                      'Nested slice, delete + exists adverbs';
+
+    # :delete :!exists       delete, return Bools indicating keys did not exist
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:!exists, (False, (True, (False,))),                    'Nested slice, delete + !exists adverbs';
+
+    # :delete :exists :kv    delete, return list with key,True for key existed
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:exists:kv, (3, True, ((5, True),)),                    'Nested slice, delete + exists + kv adverbs';
+
+    # :delete :!exists :kv   delete, return list with key,False for key existed
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:!exists:kv, (3, False, ((5, False),)),                 'Nested slice, delete + !exists + kv adverbs';
+
+    # :delete :exists :!kv   delete, return list with key,Bool whether key existed
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:exists:!kv, (3, Bool::True, (30, False, (5, True))),   'Nested slice, delete + exists + !kv adverbs';
+
+    # :delete :!exists :!kv  delete, return list with key,!Bool whether key existed
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:!exists:!kv, (3, False, (30, True, (5, False))),       'Nested slice, delete + !exists + !kv adverbs';
+
+    # :delete :exists :p     delete, return pairs with key/True for key existed
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:exists:p, (3 => True, ((5 => True,),)),                'Nested slice, delete + exists + p adverbs';
+
+    # :delete :!exists :p    delete, return pairs with key/False for key existed
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:!exists:p, (3 => False, ((5 => False,),)),             'Nested slice, delete + !exists + p adverbs';
+
+    # :delete :exists :!p    delete, return pairs with key/Bool whether key existed
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:exists:!p, (3 => True, (30 => False, (5 => True,))),   'Nested slice, delete + exists + !p adverbs';
+
+    # :delete :!exists :!p   delete, return pairs with key/!Bool whether key existed
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:delete:!exists:!p, (3 => False, (30 => True, (5 => False,))), 'Nested slice, delete + !exists + !p adverbs';
+
+    # :exists :kv            return pairs with key,True for key exists
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:exists:kv, (3, True, ((5, True),)),                           'Nested slice, exists + kv adverbs';
+
+    # :!exists :kv           return pairs with key,False for key exists
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:!exists:kv, (3, False, ((5, False),)),                        'Nested slice, !exists + kv adverbs';
+
+    # :exists :!kv           return pairs with key,Bool for key exists
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:exists:!kv, (3, True, (30, False, (5, True))),                'Nested slice, exists + !kv adverbs';
+
+    # :!exists :!kv          return pairs with key,!Bool for key exists
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:!exists:!kv, (3, False, (30, True, (5, False))),              'Nested slice, !exists + !kv adverbs';
+
+    # :exists :p             return pairs with key/True for key exists
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:exists:p, (3 => True, ((5 => True,),)),                       'Nested slice, exists + p adverbs';
+
+    # :!exists :p            return pairs with key/False for key exists
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:!exists:p, (3 => False, ((5 => False,),)),                    'Nested slice, !exists + p adverbs';
+
+    # :exists :!p            return pairs with key/Bool for key exists
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:exists:!p, (3 => True, (30 => False, (5 => True,))),          'Nested slice, exists + !p adverbs';
+
+    # :!exists :!p           return pairs with key/!Bool for key exists
+    @a = ("a", "b", "c", "d", "e", "f");
+    is-deeply @a[(3, (30, (5,)))]:!exists:!p, (3 => False, (30 => True, (5 => False,))),        'Nested slice, !exists + !p adverbs';
 }
 
 # vim: expandtab shiftwidth=4
