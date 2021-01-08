@@ -83,12 +83,16 @@ sub gen_array { (1..10).list }
       (1=>True,2=>True),                          "Test exists:p TT.";
     is-deeply @a[1,2,10]:exists:!p,
       (1=>True,2=>True,10=>False),                "Test exists:!p TTF";
+    is-deeply @a[1,2,10]:exists:!v,
+      (True,True,False),                          "Test exists:!v TTF";
     is-deeply @a[1,2, 4]:!exists:p,
       (1=>False,2=>False,4=>False),               "Test !exists:p FFF";
     is-deeply @a[1,2,10]:!exists:p,
       (1=>False,2=>False),                        "Test !exists:p FF.";
     is-deeply @a[1,2,10]:!exists:!p,
       (1=>False,2=>False,10=>True),               "Test !exists:!p FFT";
+    is-deeply @a[1,2,10]:!exists:!v,
+      (False,False,True),                         "Test !exists:!v FFT";
 
     #?niezca 6 todo "no combined adverbial pairs"
     dies-ok { @a[1]:exists:k },    "Test exists:k,   invalid combo";
@@ -98,9 +102,7 @@ sub gen_array { (1..10).list }
 
     #?niezca 6 todo "no combined adverbial pairs"
     dies-ok { @a[1]:exists:v },    "Test exists:v,   invalid combo";
-    dies-ok { @a[1]:exists:!v },   "Test exists:!v,  invalid combo";
     dies-ok { @a[1]:!exists:v },   "Test !exists:v,  invalid combo";
-    dies-ok { @a[1]:!exists:!v },  "Test !exists:!v, invalid combo";
 
     is @a.elems, 10, "should be untouched";
 } #46
