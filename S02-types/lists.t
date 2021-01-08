@@ -78,8 +78,7 @@ plan 32;
   ok $foo == 23 && $bar == 24,
     "using list slices as lvalues works (1)";
 
-  throws-like { ($foo, 42, $bar, 19)[1, 3] = (23, 24) },
-    X::Assignment::RO,
+  dies-ok { ($foo, 42, $bar, 19)[1, 3] = (23, 24) },
     "using list slices as lvalues works (2)";
 }
 
