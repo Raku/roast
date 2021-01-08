@@ -52,10 +52,10 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[1]:p($no), (1=>"b"), "$n single elem existing: :p(\$no)";
 
     throws-like '@a[1]:k:v', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<k v>);
+      :source(@a.name), :what("element access"), :nogo(<k v>);
     throws-like '@a[1]:zorp', Exception; # caught by MMD
     throws-like '@a[1]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
+      :source(@a.name), :what("element access"), :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # array single existing element
@@ -106,10 +106,10 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[11]:p($no), (11=>$T), "$n single elem missing: :p(\$no)";
 
     throws-like '@a[11]:k:v', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<k v>);
+      :source(@a.name), :what("element access"), :nogo(<k v>);
     throws-like '@a[11]:kabam', Exception;  # caught by MMD
     throws-like '@a[11]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
+      :source(@a.name), :what("element access"), :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # array single missing element
@@ -377,10 +377,10 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[*-1]:p($no),                      (3=>"d"), "$n callable: :p(\$no)";
 
     throws-like '@a[*-1]:k:v', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<k v>);
+      :source(@a.name), :what("element access"), :nogo(<k v>);
     throws-like '@a[*-1]:callable', Exception;  # caught by MMD
     throws-like '@a[*-1]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
+      :source(@a.name), :what("element access"), :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # whatever
@@ -404,10 +404,10 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[*]:p($no), (0=>"a",1=>"b",2=>"c",3=>"d"), "$n whatever: :p(\$no)";
 
     throws-like '@a[*]:k:v', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<k v>);
+      :source(@a.name), :what("whatever slice"), :nogo(<k v>);
     throws-like '@a[*]:sourceever', Exception;  # caught by MMD
     throws-like '@a[*]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
+      :source(@a.name), :what("whatever slice"), :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 # zen
@@ -431,11 +431,11 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[]:p($no), (0=>"a",1=>"b",2=>"c",3=>"d"), "$n zen: :p(\$no)";
 
     throws-like '@a[]:foo', X::Adverb,
-      :source(@a.name), :what('[] slice'), :unexpected<foo>,
+      :source(@a.name), :what("zen slice"), :unexpected<foo>,
     throws-like '@a[]:k:v', X::Adverb,
       :source(@a.name), :nogo(<k v>);
     throws-like '@a[]:kv:p:zip:zop', X::Adverb,
-      :source(@a.name), :what<slice>, :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
+      :source(@a.name), :what("zen slice"), :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
 } #20
 
 }
