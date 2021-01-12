@@ -98,7 +98,7 @@ is-deeply @searches[0].Array, @expected-searches, 'seq => array works 3';
 
 # https://github.com/Raku/old-issue-tracker/issues/5124
 {
-    eager my \s = ().Seq; # eager consumes the Seq
+    eager my \s = ().Seq.slice; # eager consumes the Seq
     cmp-ok s.raku.EVAL, '~~', Seq:D, '.raku.EVAL on consumed Seq gives Seq:D';
     throws-like { s.raku.EVAL.list }, X::Seq::Consumed,
         '.raku.EVAL-roundtripped Seq throws when attempting to consume again';
@@ -174,8 +174,8 @@ subtest 'methods on cached Seqs' => {
     subtest 'methods still throw when Seq is NOT cached' => {
         plan 12;
 
-        (my $s1 = (1, 2, 3).Seq).sink; # consume the Seq
-        (my $s2 = (3, 4, 5).Seq).sink; # consume the Seq
+        (my $s1 = (1, 2, 3).Seq.slice(0,1,2)).sink; # consume the Seq
+        (my $s2 = (3, 4, 5).Seq.slice(0,1,2)).sink; # consume the Seq
         throws-like { cmp-ok $s1, 'eqv', $s2 }, X::Seq::Consumed, 'infix:<eqv>';
         throws-like { $s1."$_"() }, X::Seq::Consumed, ".$_"
             for <iterator  Slip  join  List  list  eager  Array  is-lazy>;
@@ -213,16 +213,16 @@ Seq.new(
 ).Numeric;
 
 group-of 2 => 'ZEN slices do not cache Seqs' => {
-    (my $z-hash := ().Seq)<>.iterator;
+    (my $z-hash := ().Seq.slice)<>.iterator;
     throws-like { $z-hash.iterator }, X::Seq::Consumed, '<> ZEN slice';
-    (my $z-list := ().Seq)[].iterator;
+    (my $z-list := ().Seq.slice)[].iterator;
     throws-like { $z-list.iterator }, X::Seq::Consumed, '[] ZEN slice';
 }
 
 
 # https://github.com/Raku/old-issue-tracker/issues/3014
 {
-    my $s = (1, 2, 3).Seq;
+    my $s = (1, 2, 3).Seq.slice(0,1,2);
     is $s.iterator.pull-one, 1, 'did we get 1 as the first value';
     dies-ok { $s[0] }, 'did accessing first element die';
 }
