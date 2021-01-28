@@ -63,17 +63,15 @@ plan 40;
     is($str, "gloop ding", "lvalue assignment modified original string (substr-rw(Int, Int)).");
 
     {
-        my $r = \substr-rw($str, 0, 5);
+        my $r := substr-rw($str, 0, 5);
         ok(WHAT($r).gist, '$r is a reference (substr-rw(Int, Int)).');
         is($$r, "gloop", '$r referent is eq to the substr-rwing (substr-rw(Int, Int)).');
 
         $$r = "boing";
-        #?rakudo todo 'NYI'
         is($str, "boing ding", "assignment to reference modifies original (substr-rw(Int, Int)).");
         is($$r, "boing", '$r is consistent (substr-rw(Int, Int)).');
 
-        my $o = \substr-rw($str, 3, 2);
-        #?rakudo 3 todo 'NYI'
+        my $o := substr-rw($str, 3, 2);
         is($$o, "ng", "other ref to other lvalue (substr-rw(Int, Int)).");
         $$r = "foo";
         is($str, "foo ding", "lvalue ref size varies but still works (substr-rw(Int, Int)).");
