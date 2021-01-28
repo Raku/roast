@@ -657,6 +657,6 @@ is-deeply (1,2,3).MixHash.ACCEPTS(().MixHash), False, 'can we smartmatch empty';
 }
 
 # https://github.com/rakudo/rakudo/issues/1862
-lives-ok { <a b c>.MixHash.item = 42 }, 'does .item work on MixHashes';
+is <a b c>.MixHash.item.VAR.^name, 'Scalar', 'does .item work on MixHashes';
 
 # vim: expandtab shiftwidth=4

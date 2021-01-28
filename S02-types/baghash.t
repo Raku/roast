@@ -795,6 +795,6 @@ is-deeply (1,2,3).BagHash.ACCEPTS(().BagHash), False, 'can we smartmatch empty';
 }
 
 # https://github.com/rakudo/rakudo/issues/1862
-lives-ok { <a b c>.BagHash.item = 42 }, 'does .item work on BagHashes';
+is <a b c>.BagHash.item.VAR.^name, 'Scalar', 'does .item work on BagHashes';
 
 # vim: expandtab shiftwidth=4

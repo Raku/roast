@@ -564,6 +564,6 @@ is-deeply (1,2,3).Mix.ACCEPTS(().Mix), False, 'can we smartmatch empty';
 }
 
 # https://github.com/rakudo/rakudo/issues/1862
-lives-ok { <a b c>.Mix.item = 42 }, 'does .item work on Mixes';
+is <a b c>.Mix.item.VAR.^name, 'Scalar', 'does .item work on Mixes';
 
 # vim: expandtab shiftwidth=4

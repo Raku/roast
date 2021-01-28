@@ -606,6 +606,6 @@ my @b = [1, 2, 4];
 is-deeply BagHash.new.STORE(@a, @b), BagHash.new.STORE(@a Z=> @b), 'the two Set:D.STORE candidates create equivalent objects';
 
 # https://github.com/rakudo/rakudo/issues/1862
-lives-ok { <a b c>.Set.item = 42 }, 'does .item work on Sets';
+is <a b c>.Set.item.VAR.^name, 'Scalar', 'does .item work on Sets';
 
 # vim: expandtab shiftwidth=4

@@ -682,6 +682,6 @@ is-deeply (1,2,3).SetHash.ACCEPTS(().SetHash), False, 'can we smartmatch empty';
 }
 
 # https://github.com/rakudo/rakudo/issues/1862
-lives-ok { <a b c>.SetHash.item = 42 }, 'does .item work on SetHashes';
+is <a b c>.SetHash.item.VAR.^name, 'Scalar', 'does .item work on SetHashes';
 
 # vim: expandtab shiftwidth=4
