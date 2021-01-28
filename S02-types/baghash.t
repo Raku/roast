@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 332;
+plan 333;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -793,5 +793,8 @@ is-deeply (1,2,3).BagHash.ACCEPTS(().BagHash), False, 'can we smartmatch empty';
     dies-ok { %bh<foo> = 42 }, 'adding element of wrong type fails';
     dies-ok { my %bh is BagHash[Int] = <a b c> }, 'must have Ints on creation';
 }
+
+# https://github.com/rakudo/rakudo/issues/1862
+lives-ok { <a b c>.BagHash.item = 42 }, 'does .item work on BagHashes';
 
 # vim: expandtab shiftwidth=4

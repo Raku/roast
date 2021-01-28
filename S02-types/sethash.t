@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 271;
+plan 272;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -680,5 +680,8 @@ is-deeply (1,2,3).SetHash.ACCEPTS(().SetHash), False, 'can we smartmatch empty';
     dies-ok { %sh<foo> = True }, 'adding element of wrong type fails';
     dies-ok { my %sh is SetHash[Int] = <a b c> }, 'must have Ints on creation';
 }
+
+# https://github.com/rakudo/rakudo/issues/1862
+lives-ok { <a b c>.SetHash.item = 42 }, 'does .item work on SetHashes';
 
 # vim: expandtab shiftwidth=4

@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 239;
+plan 240;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -604,5 +604,8 @@ is-deeply Set.Setty, Set, 'multi method Setty(Set:U:) returns a Set type object'
 my @a = ["a", "b", "c"];
 my @b = [1, 2, 4]; 
 is-deeply BagHash.new.STORE(@a, @b), BagHash.new.STORE(@a Z=> @b), 'the two Set:D.STORE candidates create equivalent objects';
+
+# https://github.com/rakudo/rakudo/issues/1862
+lives-ok { <a b c>.Set.item = 42 }, 'does .item work on Sets';
 
 # vim: expandtab shiftwidth=4

@@ -601,4 +601,7 @@ is-deeply (1,2,3).Bag.ACCEPTS( ().Bag ), False, 'can we smartmatch empty';
     dies-ok { my %b is Bag[Int] = <a b c> }, 'must have Ints on creation';
 }
 
+# https://github.com/rakudo/rakudo/issues/1862
+lives-ok { <a b c>.Bag.item = 42 }, 'does .item work on Bags';
+
 # vim: expandtab shiftwidth=4

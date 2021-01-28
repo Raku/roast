@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 235;
+plan 236;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -562,5 +562,8 @@ is-deeply (1,2,3).Mix.ACCEPTS(().Mix), False, 'can we smartmatch empty';
 
     dies-ok { my %m is Mix[Int] = <a b c> }, 'must have Ints on creation';
 }
+
+# https://github.com/rakudo/rakudo/issues/1862
+lives-ok { <a b c>.Mix.item = 42 }, 'does .item work on Mixes';
 
 # vim: expandtab shiftwidth=4
