@@ -18,9 +18,9 @@ if !$*DISTRO.is-win {
     exit;
 };
 
-sub test-run(@args, $expected, $verbatim = False) is test-asserion {
+sub test-run(@args, $expected, $verbatim = False) is test-assertion {
     my $marker = 'MARKER_Sx%3bX';
-    my $script = $?FILE.IO.parent.child('print-raw-arguments.p6');
+    my $script = $?FILE.IO.parent.child('windows-print-raw-args.p6');
     my $proc = run($*EXECUTABLE, $script, $marker, |@args, :out, :win-verbatim-args($verbatim));
     my $out = $proc.out.slurp(:close).trim-trailing();
     $out ~~ s/^ .* $marker ' '//;

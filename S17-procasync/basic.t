@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 46;
+plan 47;
 
 my $pc = $*DISTRO.is-win
     ?? Proc::Async.new( 'cmd', </c echo Hello World> )
@@ -175,6 +175,39 @@ subtest '.new accepts command + args via a single Iterable arg' => {
         is-deeply $stdout, 'test passed', 'stdout is good';
         is-deeply $stderr, '',            'stderr is empty';
         cmp-ok $proc.exitcode, '==', 0,   'exit code successful';
+    }
+}
+
+subtest 'Specifying ARG0 via separate arg works.' => {
+    plan 4;
+    if $*DISTRO.is-win {
+        sub test-run($arg0, $expected) is test-assertion {
+            my $proc = run($*EXECUTABLE,
+                $?FILE.IO.parent.child('windows-print-raw-args.p6'),
+                :$arg0, 'some-other-arg', :out);
+            my $out = $proc.out.slurp(:close).trim-trailing();
+            ok $out ~~ / ^ $expected ' ' \S /, "\"$out\" has \"$expected\" as first arg";
+        }
+        test-run 'some-name', 'some-name';
+        test-run 'some name', '"some name"';
+        test-run ' ', '" "';
+        test-run '', '';
+    }
+    else {
+# There is no simple way to access arg0 from either a Raku script
+# or a sh script on unixes. So this can't be tested on *nix for now.
+         skip("No way to portably determine arg0 on *nix.", 4);
+#        sub test-run($arg0, @args, $expected) is test-assertion {
+#            my $proc = run('sh',
+#                $?FILE.IO.parent.child('unix-print-args.sh'),
+#                :$arg0, |@args, :out);
+#            my $out = $proc.out.slurp(:close).trim-trailing();
+#            is $out, $expected, $expected;
+#        }
+#        test-run 'some-name', ('a',), 'some-name:a';
+#        test-run 'some name', ('a',), 'some name:a';
+#        test-run ' ', ('a',), ' :a';
+#        test-run '', ('a',), ':a';
     }
 }
 
