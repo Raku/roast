@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 69;
+plan 71;
 
 =begin pod
 
@@ -183,6 +183,14 @@ subtest '[R~]=' => {
 
     is-deeply $a [R~]= "foo", "foobar", 'assign to :D, return value';
     is-deeply $a,             "foobar", 'assign to :D, result';
+}
+
+# https://github.com/rakudo/rakudo/issues/1632
+{
+    my $got;
+    sub with-named(:$value) { $got = $value };
+    lives-ok { with-named(:value(3 R- 2)) }, "call doesn't throw";
+    is $got, -1, "named is good";
 }
 
 # vim: expandtab shiftwidth=4
