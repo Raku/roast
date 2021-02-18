@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 40;
+plan 42;
 
 # L<S09/Fixed-size arrays>
 
@@ -172,6 +172,13 @@ subtest '.Array on uninited shaped array' => {
 
 {
     eval-lives-ok 'my @*a[3]', "Accept dynamic shaped arrays"
+}
+
+# https://github.com/rakudo/rakudo/issues/4205
+{
+    my @a[1] = 42;
+    lives-ok { (@a>>++).raku }, 'call .raku on result of hyper on shaped';
+    is-deeply @a[0], 43, 'did the hyper actually run';
 }
 
 # vim: expandtab shiftwidth=4
