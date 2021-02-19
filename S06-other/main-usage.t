@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 43;
+plan 48;
 
 # Basic functionality
 
@@ -133,30 +133,35 @@ subtest 'Extra arg with newline value' => {
 # Spacey options may be removed from core spec; for now, moving to end of tests
 # (discussion starts at http://irclog.perlgeek.de/perl6/2011-10-17#i_4578353 )
 
-# https://github.com/Raku/old-issue-tracker/issues/3949
-#?rakudo todo 'nom regression'
-is_run 'sub MAIN(:$x) { print $x }', {:out<23>}, :args<--x 23>,
-    'option with spacey value';
+is_run 'sub MAIN(Any :$x) { print $x }', {:status<2>}, :args<--x 23>,
+    'short option with optional argument rejects spacey value';
 
-# https://github.com/Raku/old-issue-tracker/issues/3949
-#?rakudo todo 'nom regression'
-is_run 'sub MAIN(:xen(:$x)) { print $x }', {:out<23>}, :args<--xen 23>,
-    'long option with spacey value';
+is_run 'sub MAIN(Str :$x) { print $x }', {:out<23>}, :args<--x 23>,
+    'short option with required argument accepts spacey value';
 
-# https://github.com/Raku/old-issue-tracker/issues/3949
-#?rakudo todo 'nom regression'
-is_run 'sub MAIN(:xen(:$xin)) { print $xin }', {:out<23>}, :args<--xin 23>,
-    'named alias (inner name) with spacey value';
+is_run 'sub MAIN(Any :xen(:$x)) { print $x }', {:status<2>}, :args<--xen 23>,
+    'long option with optional argument rejects spacey value';
 
-# https://github.com/Raku/old-issue-tracker/issues/3949
-#?rakudo todo 'nom regression'
-is_run 'sub MAIN(:xen(:$xin)) { print $xin }', {:out<23>}, :args<--xen 23>,
-    'named alias (outer name) with spacey value';
+is_run 'sub MAIN(Str :xen(:$x)) { print $x }', {:out<23>}, :args<--xen 23>,
+    'long option with required argument accepts spacey value';
 
-# https://github.com/Raku/old-issue-tracker/issues/3949
-#?rakudo todo 'nom regression'
-is_run 'sub MAIN(:xen(:$x)) { print $x }', {:out<23>}, :args<-x 23>,
-    'short option with spacey value';
+is_run 'sub MAIN(Any :xen(:$xin)) { print $xin }', {:status<2>}, :args<--xin 23>,
+    'named alias (inner name) with optional argument rejects spacey value';
+
+is_run 'sub MAIN(Str :xen(:$xin)) { print $xin }', {:out<23>}, :args<--xin 23>,
+    'named alias (inner name) with required argument accepts spacey value';
+
+is_run 'sub MAIN(Any :xen(:$xin)) { print $xin }', {:status<2>}, :args<--xen 23>,
+    'named alias (outer name) with optional argument rejects spacey value';
+
+is_run 'sub MAIN(Str :xen(:$xin)) { print $xin }', {:out<23>}, :args<--xen 23>,
+    'named alias (outer name) with required argument accepts spacey value';
+
+is_run 'sub MAIN(Any :xen(:$x)) { print $x }', {:status<2>}, :args<-x 23>,
+    'named alias (short option) with optional argument rejects spacey value';
+
+is_run 'sub MAIN(Str :xen(:$x)) { print $x }', {:out<23>}, :args<-x 23>,
+    'named alias (short option) with required argument accepts spacey value';
 
 is_run 'subset Command of Str where "run";
         multi MAIN(Command $c) { print 1 },
