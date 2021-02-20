@@ -107,12 +107,7 @@ for $@n, Any, $@s, Str -> @a, $T {
     is @a[11]:p($no), (11=>$T), "$n single elem missing: :p(\$no)";
 
     throws-like '@a[11]:k:v', X::Adverb,
-<<<<<<< HEAD
-      :source(@a.name), :what<slice>, :nogo(<k v>);
-#?rakudo skip 'does not die reliably, not reproducable alas'
-=======
       :source(@a.name), :what("element access"), :nogo(<k v>);
->>>>>>> 5f67d2a47 (Tweak checks on error messages to match array slice re-imagination)
     throws-like '@a[11]:kabam', Exception;  # caught by MMD
     throws-like '@a[11]:kv:p:zip:zop', X::Adverb,
       :source(@a.name), :what("element access"), :nogo(<kv p>), :unexpected({m/"zip"/ && m/"zop"/});
