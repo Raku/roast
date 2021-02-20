@@ -11,7 +11,7 @@ plan 40;
     is($str, "gloop ding", "lvalue assignment modified original string");
 
     {
-        my $r = substr-rw($str, 0, 5);
+        my $r := substr-rw($str, 0, 5);
         is($r, "gloop", '$r referent is eq to the substr-rwing');
 
         $r = "boing";
@@ -19,7 +19,7 @@ plan 40;
         is($str, "boing ding", "assignment to reference modifies original");
         is($r, "boing", '$r is consistent');
 
-        my $o = substr-rw($str, 3, 2);
+        my $o := substr-rw($str, 3, 2);
         #?rakudo 3 todo 'NYI'
         is($o, "ng", "other ref to other lvalue");
         $r = "foo";
