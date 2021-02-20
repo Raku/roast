@@ -1,7 +1,7 @@
 use v6.c;
 use Test;
 
-plan 26;
+plan 22;
 
 my @result = 1,2,3;
 
@@ -89,27 +89,9 @@ is-deeply @searches[0].Array, @expected-searches, 'seq => array works 3';
 
 }
 
-# Lazy assignment.  This behavior is experimental.
+# Lazy assignment.
 {
     my @n = 0,1;
     eager @n.map(-> $v is rw {$v})[0,1] = <a b>.sort;
     is @n, <a b>, 'Seq slice assignment works';
-
-    @n = 0,1;
-    my $b = 0;
-    @n.map(-> $v is rw {$b++; $v})[0,1] = <a b>.sort;
-    is $b, 0, 'Seq slice assignment is lazy';
-
-    @n = 0,1;
-    my @log;
-    eager @n.map(-> $v is rw {@log.push("A " ~ $++); $v;})[0,1] = @n.map(-> $v is rw {@log.push("B " ~ $++); $v})[0,1] = <a b>.sort;
-    is @n, <a b>, 'Chained Seq slice assignment works';
-    is @log, ("A 0","B 0","A 1","B 1"), 'Chained Seq slice assignment is lazy';
-
-    @n = 0,1;
-    # (NYI need to cache in sub eagerize when reifying for elems)    
-    { eager @n.map(-> $v is rw {$v})[*-2,*-1] = <a b>.sort, <a b>, 'WhateverCode in Seq slice assignment'; CATCH { default { $_.defined } } };
-#?rakudo todo 'Cannot assign immutable'
-    is @n, <a b>, 'WhateverCode in Seq slice assignment';
-
 }
