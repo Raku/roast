@@ -9,7 +9,7 @@ if $*DISTRO.is-win {
     my IO::Socket::INET:_ $server;
     my IO::Socket::INET:_ $client;
     my IO::Socket::INET:_ $accepted;
-    my Str:D              $host      = $?FILE.IO.sibling('test.sock').Str;
+    my Str:D              $host      = $*TMPDIR.add("test-$*PID.sock").Str;
     my Str:D              $sent      = 'Hello, world!';
     my Str:_              $received;
     LEAVE $host.IO.unlink if $host.IO.e;
