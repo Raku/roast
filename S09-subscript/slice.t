@@ -126,6 +126,7 @@ subtest 'no "drift" when re-using lazy iterable for indexing' => {
         'fewer indexes than els';
 
     my @idx3 := 0, 1, 2, |(lazy 3, 4), 5, 6;
+    #?rakudo todo 'semantics of a lazy slip are questionable'
     is-deeply <a b>[@idx3], <a b>,
         'lazy iterable with iterator starting non-lazy';
 }
