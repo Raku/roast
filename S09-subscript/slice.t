@@ -10,7 +10,7 @@ Testing array slices.
 
 =end pod
 
-plan 35;
+plan 55;
 
 {   my @array = (3,7,9,11);
 
@@ -293,6 +293,70 @@ subtest 'nested slices' => {
     # :!exists :!p           return pairs with key/!Bool for key exists
     @a = ("a", "b", "c", "d", "e", "f");
     is-deeply @a[(3, (30, (5,)))]:!exists:!p, (3 => False, (30 => True, (5 => False,))),        'Nested slice, !exists + !p adverbs';
+}
+
+# https://github.com/rakudo/rakudo/issues/4216
+{
+    my @a;
+
+    @a = 1..5;
+    is-deeply @a[1,(lazy 3,4,5)],   (2,(4,5)),
+      'lazy sublist in slice 1';
+    is-deeply @a[1,(lazy 3,4,5),2], (2,(4,5),3),
+      'lazy sublist in slice 2';
+
+    is-deeply @a[lazy 1,2,(4,5)],     (2,3,(5,Any)),
+      'sublist in lazy slice 1';
+    is-deeply @a[lazy 1,2,(4,5),4,5], (2,3,(5,Any),5),
+      'sublist in lazy slice 2';
+
+    @a = 11..15;
+    is-deeply (@a[1,(lazy 3,4,5)] = "a"...*),   ("a",("b","c")),
+      'lazy sublist in slice assignment 1';
+    is-deeply @a, [11,"a",13,"b","c"],
+      'result of lazy sublist in slice assignment 1';
+
+    @a = 11..15;
+    is-deeply (@a[1,(lazy 3,4,5),2] = "a"...*), ("a",("b","c"),"d"),
+      'lazy sublist in slice assignment 2';
+    is-deeply @a, [11,"a","d","b","c"],
+      'result of lazy sublist in slice assignment 2';
+
+    @a = 11..15;
+    is-deeply (@a[1,(lazy 3,4,5)] := "a"...*),   ("a",("b","c")),
+      'lazy sublist in slice binding 1';
+    is-deeply @a, [11,"a",13,"b","c"],
+      'result of lazy sublist in slice binding 1';
+
+    @a = 11..15;
+    is-deeply (@a[1,(lazy 3,4,5),2] := "a"...*), ("a",("b","c"),"d"),
+      'lazy sublist in slice binding 2';
+    is-deeply @a, [11,"a","d","b","c"],
+      'result of lazy sublist in slice binding 2';
+
+    @a = 11..15;
+    is-deeply (@a[lazy 1,2,(4,5)] = "a"...*),   ("a","b",("c","d")),
+      'sublist in lazy slice assignment 1';
+    is-deeply @a, [11,"a","b",14,"c","d"],
+      'result of sublist in lazy slice assignment 1';
+
+    @a = 11..15;
+    is-deeply (@a[lazy 1,2,(4,5),4,5] = "a"...*), ("a","b",("e","d"),"e"),
+      'sublist in lazy slice assignment 2';
+    is-deeply @a, [11,"a","b",14,"e","d"],
+      'result of sublist in lazy slice assignment 2';
+
+    @a = 11..15;
+    is-deeply (@a[lazy 1,2,(4,5)] := "a"...*),   ("a","b",("c","d")),
+      'sublist in lazy slice binding 1';
+    is-deeply @a, [11,"a","b",14,"c","d"],
+      'result of sublist in lazy slice binding 1';
+
+    @a = 11..15;
+    is-deeply (@a[lazy 1,2,(4,5),4,5] := "a"...*), ("a","b",("c","d"),"e","f"),
+      'sublist in lazy slice binding 2';
+    is-deeply @a, [11,"a","b",14,"e","f"],
+      'result of sublist in lazy slice binding 2';
 }
 
 # vim: expandtab shiftwidth=4
