@@ -9,7 +9,7 @@ built-in "list" tests
 
 =end pod
 
-plan 11;
+plan 10;
 
 my $list_sub = list(1, 2, 3);
 isa-ok($list_sub, List, '&list() creates a list assignable to a scalar.');
