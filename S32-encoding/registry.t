@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 40;
+plan 42;
 
 for <utf8  utf-8  UTF-8 ascii  iso-8859-1  latin-1 utf16 utf-16 UTF-16 UTF16
      utf16le utf-16le utf16-le utf-16-le utf16be UTF16BE UTF-16be utf16-be
@@ -71,6 +71,22 @@ throws-like { Encoding::Registry.find('utf-29') },
     }
     is-deeply Encoding::Registry.register(NoAlternativeNamesEncoding), Nil,
         "Encodings with no alternative names method can be registered";
+}
+
+{
+    my class TestEncoding4 does Encoding {
+        method name()             { 'userspace-encoding' }
+        method encoder(*%options) { Encoding::Encoder::Builtin.new('utf8', blob8, |%options) }
+        method decoder(*%options) { Encoding::Decoder::Builtin.new('utf8', |%options) }
+    }
+    Encoding::Registry.register(TestEncoding4);
+    is-deeply "Hello, world!".encode('userspace-encoding'),
+              Blob[uint8].new(72,101,108,108,111,44,32,119,111,114,108,100,33),
+              'Regesterd encodings can be used to encode a Str';
+
+    is-deeply Blob[uint8].new(72,101,108,108,111,44,32,119,111,114,108,100,33).decode('userspace-encoding'),
+              "Hello, world!",
+              'Regesterd encodings can be used to decode a Blob';
 }
 
 # vim: expandtab shiftwidth=4
