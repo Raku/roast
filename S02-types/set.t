@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 240;
+plan 242;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -607,5 +607,10 @@ is-deeply BagHash.new.STORE(@a, @b), BagHash.new.STORE(@a Z=> @b), 'the two Set:
 
 # https://github.com/rakudo/rakudo/issues/1862
 is <a b c>.Set.item.VAR.^name, 'Scalar', 'does .item work on Sets';
+
+{
+    is-deeply Set.of, Bool, 'does Set type object return proper type';
+    is-deeply Set.new.of, Bool, 'does Set object return proper type';
+}
 
 # vim: expandtab shiftwidth=4

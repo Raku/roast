@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 105;
+plan 107;
 
 #L<S02/Mutable types/Array>
 
@@ -438,6 +438,11 @@ subtest 'no funny business in assignment' => {
     sub init() { my @a = 1, (init() unless $++); @res.push: @a; 42 };
     init();
     is-deeply @res, [[1], [1, 42]], 'works fine when re-entrant';
+}
+
+{
+    is Array.of.^name, 'Mu', 'does Array type object return proper type';
+    is Array.new.of.^name, 'Mu', 'does Array object return proper type';
 }
 
 # vim: expandtab shiftwidth=4

@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 98;
+plan 100;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -349,6 +349,11 @@ eval-lives-ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
     my %m := Map.new: (:42foo);
     cmp-ok %m.list,  'eqv', (:42foo,), 'Map.list   returns a List';
     cmp-ok %m.cache, 'eqv', (:42foo,), 'Map.cache  returns a List';
+}
+
+{
+    is Hash.of.^name, 'Mu', 'does Hash type object return proper type';
+    is Hash.new.of.^name, 'Mu', 'does Hash object return proper type';
 }
 
 # vim: expandtab shiftwidth=4

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 246;
+plan 248;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -603,5 +603,10 @@ is-deeply (1,2,3).Bag.ACCEPTS( ().Bag ), False, 'can we smartmatch empty';
 
 # https://github.com/rakudo/rakudo/issues/1862
 is <a b c>.Set.item.VAR.^name, 'Scalar', 'does .item work on Sets';
+
+{
+    is-deeply Bag.of, UInt, 'does Bag type object return proper type';
+    is-deeply Bag.new.of, UInt, 'does Bag object return proper type';
+}
 
 # vim: expandtab shiftwidth=4
