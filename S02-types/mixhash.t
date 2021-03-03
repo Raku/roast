@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 284;
+plan 286;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -658,5 +658,10 @@ is-deeply (1,2,3).MixHash.ACCEPTS(().MixHash), False, 'can we smartmatch empty';
 
 # https://github.com/rakudo/rakudo/issues/1862
 is <a b c>.MixHash.item.VAR.^name, 'Scalar', 'does .item work on MixHashes';
+
+{
+    is-deeply MixHash.of, Real, 'does MixHash type object return proper type';
+    is-deeply MixHash.new.of, Real, 'does MixHash object return proper type';
+}
 
 # vim: expandtab shiftwidth=4

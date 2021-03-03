@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 333;
+plan 335;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -796,5 +796,10 @@ is-deeply (1,2,3).BagHash.ACCEPTS(().BagHash), False, 'can we smartmatch empty';
 
 # https://github.com/rakudo/rakudo/issues/1862
 is <a b c>.BagHash.item.VAR.^name, 'Scalar', 'does .item work on BagHashes';
+
+{
+    is-deeply BagHash.of, UInt, 'does BagHash type object return proper type';
+    is-deeply BagHash.new.of, UInt, 'does BagHash object return proper type';
+}
 
 # vim: expandtab shiftwidth=4
