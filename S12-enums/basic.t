@@ -268,4 +268,15 @@ is-deeply do { my enum Foos (a => <42>); a.Str }, 'a',
                   'Coercing an enum from a coercion of an enum from an int works';
 }
 
+# https://github.com/rakudo/rakudo/issues/4233 fixed by https://github.com/rakudo/rakudo/commit/3a11293871
+{
+    my enum T1 <a b c>;
+    is T1.keys                             .sort.join('|'), 'a|b|c',                     'enum keys';
+    is T1.values                           .sort.join('|'), '0|1|2',                     'enum values';
+    is T1.pairs    .map({ .key ~ .value } ).sort.join('|'), 'a0|b1|c2',                  'enum pairs';
+    is T1.antipairs.map({ .key ~ .value } ).sort.join('|'), '0a|1b|2c',                  'enum antipairs';
+    is T1.invert   .map({ .key ~ .value } ).sort.join('|'), '0a|1b|2c',                  'enum invert';
+}
+
+
 # vim: expandtab shiftwidth=4
