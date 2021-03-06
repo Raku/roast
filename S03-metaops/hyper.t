@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 412;
+plan 413;
 
 =begin pod
 
@@ -1131,5 +1131,9 @@ lives-ok {
     my @t2482 = |<1 2> >>xx>> 2;
     is-deeply @t2482, [<1 1>.Seq, <2 2>.Seq], 'Hyper on slip values is correct';
 }, 'Values created with a hyperoperator can be wrapped in a slip';
+
+# https://github.com/rakudo/rakudo/issues/4237
+is-deeply (:42a, :666b).Map>>.Str, (a => "42", b => "666").Map,
+  'does hypering a Map give a Map without issues';
 
 # vim: expandtab shiftwidth=4
