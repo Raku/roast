@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 10;
 
 =begin description
 
@@ -30,5 +30,9 @@ This test tests C<deepmap>.
 # https://github.com/Raku/old-issue-tracker/issues/6302
 lives-ok { Array».gist; deepmap *.self, Array },
     'hypering or deepmapping an Iterable type object does not hang';
+
+# regression spotted by gfldex++
+is <a b c>.deepmap({ next if $_ eq "b"; $_ }), "a c", 'did next work';
+is <a b c>.nodemap({ next if $_ eq "b"; $_ }), "a c", 'did next work';
 
 # vim: expandtab shiftwidth=4

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 7;
+plan 8;
 
 =begin description
 
@@ -27,5 +27,8 @@ This test tests C<duckmap>.
     is-deeply duckmap(-> Int $x { $x ~~ Int ?? $x !! Any }, [1, [2,3], 4]), [1, [2,3], 4], 'duckmap preserves structure types';
     is-deeply duckmap(-> Int $x { $x ~~ Int ?? $x + 1 !! Any }, [1, [2,3], 4]), [2, [3,4], 5], 'duckmap preserves structure types';
 } #2
+
+# regression spotted by gfldex++
+is <a b c>.duckmap({ next if $_ eq "b"; $_ }), "a c", 'did next work';
 
 # vim: expandtab shiftwidth=4
