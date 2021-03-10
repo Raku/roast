@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 11;
 
 =begin description
 
@@ -34,5 +34,11 @@ lives-ok { Array».gist; deepmap *.self, Array },
 # regression spotted by gfldex++
 is <a b c>.deepmap({ next if $_ eq "b"; $_ }), "a c", 'did next work';
 is <a b c>.nodemap({ next if $_ eq "b"; $_ }), "a c", 'did next work';
+
+# regression spotted by SqrtNegInf++
+# Note that we cannot use is-deeply, as that ignores differences
+# at the container level.
+is ((0,1),(2,3)).deepmap(* + 1).raku, '($(1, 2), $(3, 4))',
+  'did we get sublists in containers';
 
 # vim: expandtab shiftwidth=4
