@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 42;
+plan 159;
 
 # L<S32::Numeric/Real/"=item frac">
 
@@ -10,6 +10,52 @@ plan 42;
 Basic tests for the frac() builtin
 
 =end pod
+
+throws-like { frac(Inf) }, Exception, "frac(Inf) throws";
+throws-like { frac(-Inf) }, Exception, "frac(-Inf) throws";
+throws-like { frac(NaN) }, Exception, "frac(NaN) throws";
+
+my %n =
+    '-100' => 0,
+    '-5.9' => 0.9,
+    '-5.499' => 0.499,
+    '-2' => 0, 
+    '-3/2' => 0.5,
+    '-1.5e0' => 0.5,
+    '-1.4999' => 0.4999,
+    '-1.23456' => 0.23456,
+    '-1' => 0, 
+    '-0.5' => 0.5, 
+    '-0.499' => 0.499, 
+    '-0.1' => 0.1, 
+    '0' => 0,
+;
+
+for %n.kv -> $tgt is copy, $exp {
+    is $tgt.frac, $exp, "$tgt.frac";
+    is frac($tgt), $exp, "frac($tgt)";
+    is (frac $tgt), $exp, "(frac $tgt)";
+    isa-ok $tgt.frac, Real, "$tgt.frac is type Real";
+    isa-ok frac($tgt), Real, "frac($tgt) is type Real";
+    isa-ok (frac $tgt), Real, "(frac $tgt) is type Real";
+
+    $tgt .= abs;
+    is $tgt.frac, $exp, "$tgt.frac";
+    is frac($tgt), $exp, "frac($tgt)";
+    is (frac $tgt), $exp, "(frac $tgt)";
+    isa-ok $tgt.frac, Real, "$tgt.frac is type Real";
+    isa-ok frac($tgt), Real, "frac($tgt) is type Real";
+    isa-ok (frac $tgt), Real, "(frac $tgt) is type Real";
+}
+
+
+=finish
+
+# tests:
+tgt.frac # is
+frac tgt # is
+(tgt).frac # is
+tgt.frac # type Real # is-ok
 
 is(0.frac, 0, 'got the right frac result for 0');
 is(-100.frac, 0, 'got the right frac result for -100');
@@ -43,10 +89,6 @@ isa-ok(frac(1.5), Real, 'got the right type for 1.5');
 isa-ok(frac(-1.5), Real, 'got the right type for -1.5');
 isa-ok(frac(1.5e0), Real, 'got the right type for 1.5e0');
 isa-ok(frac(-1.5e0), Real, 'got the right type for -1.5e0');
-
-throws-like { frac(Int) }, Exception;
-throws-like { frac(NaN) }, Exception;
-throws-like { frac(Int) }, Exception;
 
 is frac(1.5), 0.5; 
 is frac(2), 0; 
