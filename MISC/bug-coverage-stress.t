@@ -38,7 +38,17 @@ doesn't-hang ｢
     }
     else {
         with Proc::Async.new: $*EXECUTABLE, '-e',
-            ｢react { whenever signal(SIGTERM).merge(signal SIGINT) { say ‘pass’; exit 0 }; say ‘started’; $*OUT.flush}｣
+            ｢react {
+                whenever signal(SIGTERM).merge(signal SIGINT) {
+                    say ‘pass’;
+                    exit 0
+                };
+                whenever Promise.in(600) {
+                    exit 1;
+                }
+                say ‘started’;
+                $*OUT.flush;
+            };｣
         -> $proc {
             react {
                 whenever $proc.stdout.lines {
