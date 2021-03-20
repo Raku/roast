@@ -9,7 +9,7 @@ try {
 }
 
 my @signals = SIGINT;
-plan 2 + @signals * 5;
+plan 2 + @signals * 6;
 
 for @signals -> $signal {
     my $program = (make-temp-file content => q:to/END/).absolute;
@@ -17,8 +17,7 @@ for @signals -> $signal {
 
         say 'Started';
         my $ = get();
-        my $ = get();
-        say 'Done';
+        exit 1; # should actually not get here
         END
 
     with Proc::Async.new($*EXECUTABLE, $program, :w) -> $proc {
@@ -30,12 +29,7 @@ for @signals -> $signal {
         react {
             whenever $proc.stdout.lines {
                 when 'Started' {
-                    $proc.say(1).then: {
-                        $proc.kill($signal);
-                        $proc.say(2);
-                    }
-                }
-                when 'Done' {
+                    $proc.kill($signal);
                 }
                 default {
                     is $_, $signal, 'Output correct for Supply.merge on signals';
@@ -70,7 +64,7 @@ doesn't-hang ｢
 # https://github.com/Raku/old-issue-tracker/issues/4418
 subtest 'can rapid-kill our Proc::Async without hanging' => {
     plan 1;
-    my $proc = Proc::Async.new: $*EXECUTABLE, "-e", "sleep 1";
+    my $proc = Proc::Async.new: $*EXECUTABLE, "-e", "sleep";
     my $prom = $proc.start;
     $proc.kill;
     $ = await $prom;
