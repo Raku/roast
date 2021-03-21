@@ -46,8 +46,15 @@ doesn't-hang ｢
                 whenever Promise.in(600) {
                     exit 1;
                 }
-                say ‘started’;
-                $*OUT.flush;
+                whenever Promise.kept {
+                    # Run this in a whenever handler to ensure that by this time
+                    # those handlers really are already installed.
+                    # signal() may use await() to wait for the signal handler to
+                    # be in place but react runs the awaited code after the
+                    # react block itself is finished.
+                    say ‘started’;
+                    $*OUT.flush;
+                }
             };｣
         -> $proc {
             react {
