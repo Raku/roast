@@ -188,7 +188,8 @@ if $*DISTRO.is-win {
     skip('Not clear if there is an alternative to this issue on Windows', 4);
 } elsif $*DISTRO.name eq 'browser' {
     skip('We don\'t have directories in the browser', 4);
-} elsif $*DISTRO.name eq 'macosx' {
+} elsif $*KERNEL eq 'darwin' {
+    # currently $*DISTRO.name is 'macosx' on OS X, 'macos' on macOS
     skip('Some problems on MacOS', 4);
 } else {
     my $test-dir = make-temp-dir;
