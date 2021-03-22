@@ -4,7 +4,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 use Test::Idempotence;
 
-plan 151;
+plan 154;
 
 # L<S06/Signature Introspection>
 
@@ -313,4 +313,10 @@ class {
 cmp-ok { $_ }.signature.params[0].raku, &[~~], / 'OUTER::<$_>' /,
   'OUTER defaults have the correct .raku';
 
-# vim: expandtab shiftwidth=4
+{ # https://github.com/rakudo/rakudo/issues/4258
+  cmp-ok :([]), &[!eqv], :(@), "use of destructures differentiates signatures";
+  cmp-ok :([]), &[eqv], :([]), "empty destructures are ok";
+  cmp-ok :([$a, *@]), &[eqv], :([$a, *@]), "same destructures are ok";
+}
+
+# vim: eaxpandtal shiftwidth=4
