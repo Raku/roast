@@ -37,7 +37,9 @@ ok dsi('2005-12-31T23:59:60') < dsi('2006-01-01T00:00:00'), 'DateTime.Instant co
   # These seconds have equal POSIX times.
 
 is diff(second => 5), 5, 'Instant subtraction (seconds)';
-is diff(second => 2/7), 2/7, 'Instant subtraction (non-integral seconds)';
+# Note that we can not check non-representable Rats easily, so we're settling
+# for 8 digits accuracy
+is diff(second => 2/7).fmt('%.8f'), (2/7).fmt('%.8f'), 'Instant subtraction (non-integral seconds)';
 is diff(second => 3.14159), 3.14159, 'Instant subtraction (needing high precision)';
 is diff(minute => 15), 15 * 60, 'Instant subtraction (minutes)';
 is diff(:hour(3), :minute(15), :second(33)),
