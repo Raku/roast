@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 25;
 
 =begin pod
 
@@ -58,18 +58,6 @@ throws-like 'my class A { submethod BUILD(:$!notthere = 10) { } }; A.new',
     ok $error ~~ /:i 'foo(Int)' /, "simple Str vs Int reports call profile";
     ok $error ~~ /:i '(Str)' /, "simple Str vs Int reports signature";
     ok $error ~~ /signature/, "simple Str vs Int mentions signature";
-    ok $error ~~ / :i call /, '... error message mentions "call"';
-}
-
-#?rakudo.jvm todo "unival NYI"
-{
-    try { EVAL 'unival(42.2)' }
-    my $error = ~$!;
-    ok $error ~~ /:i 'unival(Rat)' /, "fails multi sigs reports call profile";
-    ok $error ~~ /multi/, "mentions multi";
-    ok $error ~~ /signatures/, "mentions signatures";
-    ok $error ~~ /^^ \h* '(Str'/, "Error mentions Str";
-    ok $error ~~ /^^ \h* '(Int'/, "Error mentions Int";
     ok $error ~~ / :i call /, '... error message mentions "call"';
 }
 
