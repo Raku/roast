@@ -2,7 +2,7 @@ use v6.c;
 
 use Test;
 
-plan 31;
+plan 25;
 
 =begin pod
 
@@ -62,7 +62,7 @@ throws-like 'my class A { submethod BUILD(:$!notthere = 10) { } }; A.new',
     ok $error ~~ / :i call /, '... error message mentions "call"';
 }
 
-# RT #78670
+# https://github.com/Raku/old-issue-tracker/issues/2235
 {
     try { EVAL 'multi rt78670(Int) {}; my $str = "foo"; rt78670 $str' }
     my $error = ~$!;
