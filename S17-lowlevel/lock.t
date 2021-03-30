@@ -100,9 +100,9 @@ plan 23;
         my $counter = 0;
         my $t1 = Thread.start({
             $l.protect({
-                while $counter == 0 {
-                    $c.wait();
-                }
+#                while $counter == 0 {
+                    $c.wait( { $counter != 0 } );
+#                }
                 $now1 = now;
             });
         });
