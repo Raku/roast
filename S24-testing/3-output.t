@@ -53,8 +53,24 @@ is_run ｢
         ok 1, "foo\nbar";
         subtest "meow" => { ok 1, "mass\nbass\nmiss\nbiss" }
     ｣,
-    { :err(''), :0status,  :out("1..2\nok 1 - foo\n# bar\n    ok 1 - mass\n"
-        ~ "    # bass\n    # miss\n    # biss\n    1..1\nok 2 - meow\n") },
+    {
+        :err(''),
+        :status(0),
+        :out(/
+            "1..2\n"
+            "ok 1 - foo\n"
+            "# bar\n"
+            "# Subtest: meow\n"
+            # The particular width of indentation is not relevant but must be no less than 1 whitespace and be
+            # consistent across all lines of subtest output.
+            $<indent>=[\s+] "ok 1 - mass\n"
+            $<indent> "# bass\n"
+            $<indent> "# miss\n"
+            $<indent> "# biss\n"
+            $<indent> "1..1\n"
+            "ok 2 - meow\n"
+        /),
+    },
 'descriptions with newlines get escaped from TAP with `#` at start of line';
 
 # https://irclog.perlgeek.de/perl6/2017-08-18#i_15038473
