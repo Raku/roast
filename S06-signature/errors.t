@@ -62,18 +62,6 @@ throws-like 'my class A { submethod BUILD(:$!notthere = 10) { } }; A.new',
     ok $error ~~ / :i call /, '... error message mentions "call"';
 }
 
-#?rakudo.jvm todo "unival NYI RT #124920"
-{
-    try { EVAL 'unival(42.2)' }
-    my $error = ~$!;
-    ok $error ~~ /:i 'unival(Rat)' /, "fails multi sigs reports call profile";
-    ok $error ~~ /multi/, "mentions multi";
-    ok $error ~~ /signatures/, "mentions signatures";
-    ok $error ~~ /^^ \h* '(Str'/, "Error mentions Str";
-    ok $error ~~ /^^ \h* '(Int'/, "Error mentions Int";
-    ok $error ~~ / :i call /, '... error message mentions "call"';
-}
-
 # RT #78670
 {
     try { EVAL 'multi rt78670(Int) {}; my $str = "foo"; rt78670 $str' }
