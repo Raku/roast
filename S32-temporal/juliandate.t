@@ -32,7 +32,7 @@ constant MJD-offset = 2_400_000.5;
 
 for %jpl.kv -> $JPL-utc, $JPL-out {
     # get all the data of interest in desired formats
-    my $JPL-jd      = $JPL-out[0]; 
+    my $JPL-jd      = $JPL-out[0];
     my $JPL-jdday   = $JPL-jd.truncate;
     my $JPL-mjd     = $JPL-jd - MJD-offset;
     my $JPL-mjdday  = $JPL-mjd.truncate;
@@ -41,8 +41,8 @@ for %jpl.kv -> $JPL-utc, $JPL-out {
 
     # get our data from the input utc as a DateTime object
     my $dt       = DateTime.new: $JPL-utc;
-    my $mjd      = $dt.mjd;
-    my $jd       = $dt.juliandate;
+    my $mjd      = $dt.modified-julian-date;
+    my $jd       = $dt.julian-date;
     my $day-frac = $dt.day-fraction;
     my $mjdday   = $dt.daycount;
     my $dow      = $dt.day-of-week;
