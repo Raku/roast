@@ -1284,6 +1284,7 @@ S32-temporal/DateTime-Instant-Duration.t
 S32-temporal/DateTime.t   # slow
 S32-temporal/calendar.t
 S32-temporal/local.t
+S32-temporal/juliandate.t
 S32-trig/atan2.t
 S32-trig/cos.t
 S32-trig/cosec.t
