@@ -614,7 +614,7 @@ S09-typed-arrays/native-shape1-num.t
 S09-typed-arrays/native-shape1-str.t
 S09-typed-arrays/native-str.t
 S09-typed-arrays/native.t
-S10-packages/basic.t
+S10-packages/basic.t # slow
 S10-packages/export.t
 S10-packages/joined-namespaces.t
 S10-packages/nested-use.t
