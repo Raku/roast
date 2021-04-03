@@ -10,10 +10,8 @@ plan 48;
 
 # https://github.com/Raku/old-issue-tracker/issues/3841
 is uniname(""), Nil, "uniname an empty string yields Nil";
-#?rakudo.jvm skip "Method 'NFC' not found for invocant of class 'Str'"
 is uninames(""), (), "uninames an empty string yields an empty list";
 is "".uniname, Nil, "''.uniname yields Nil";
-#?rakudo.jvm skip "Method 'NFC' not found for invocant of class 'Str'"
 is "".uninames, (), "''.uninames yields an empty list";
 throws-like "uniname Str", X::Multi::NoMatch, 'cannot call uniname with a Str';
 throws-like "Str.uniname", X::Multi::NoMatch, 'cannot call uniname with a Str';
@@ -87,7 +85,6 @@ is uniname(0x110000), '<unassigned>', "uniname too high returns <unassigned> (1)
 is uniname(0x210000), '<unassigned>', "uniname too high returns <unassigned> (2)";
 
 # https://github.com/Raku/old-issue-tracker/issues/3841
-#?rakudo.jvm 2 skip "Method 'NFC' not found for invocant of class 'Str'"
 is uninames("AB"), ("LATIN CAPITAL LETTER A", "LATIN CAPITAL LETTER B"), "uninames correctly works on every character";
 is "AB".uninames, ("LATIN CAPITAL LETTER A", "LATIN CAPITAL LETTER B"), "uninames correctly works on every character";
 
