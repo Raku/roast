@@ -469,9 +469,7 @@ throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
         CATCH { default {
             my $bt = .backtrace;
             is-deeply $bt.flat, $bt.list, '.flat on Backtrace returns .list';
-            #?rakudo.jvm todo 'got "6"'
             is $bt.list.elems, 4, 'we correctly have 2 elements in .list';
-            #?rakudo.jvm todo 'got "new"'
             is $bt.list[0].code.name, 'foo', '.list contains correct items';
         }}
     }
