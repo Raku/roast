@@ -1,6 +1,6 @@
 use Test;
 
-plan 126;
+plan 128;
 
 my %jpl =
     # using test data from the JPL website:
@@ -82,3 +82,9 @@ sub ndp($x) {
             !! ($f.chars-2)
 }
 
+is-deeply DateTime.new(1972,6,29,12,0,0).day-fraction, .5,
+  "noon on a date without a leap second";
+is-deeply DateTime.new(1972,6,30,12,0,0).day-fraction, 43200/86401,
+  "noon on a date with a leap second";
+
+# vim: expandtab shiftwidth=4
