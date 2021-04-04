@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 66;
+plan 67;
 
 =begin pod
 
@@ -63,9 +63,10 @@ is +(DateTime.new('1985-03-14T13:28:22').Instant - dti),
     $b .= clone(timezone => 3*60*60);
     is +($a.Instant() - $b.Instant), 0.1, 'Instant subtraction (time zones)';
 
-    diff({:year(1997), :month(6), :day(30)},
+    is diff({:year(1997), :month(6), :day(30)},
             :year(1997), :month(7), :day(1)),
         days(1) + 1, 'Instant subtraction (June 30 leap second)';
+        
     $a .= clone(year => 2005, timezone => 0);
     $b .= clone(year => 2006, timezone => 0);
     is +($b.Instant() - $a.Instant), $expected-diff + 1, 'Instant subtraction (December 31 leap second)';
