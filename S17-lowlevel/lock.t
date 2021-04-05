@@ -97,17 +97,17 @@ plan 23;
         my $c = $l.condition;
         my $now1;
         my $now2;
-        my $counter = 0;
+        my $flag = False;
         my $t1 = Thread.start({
             $l.protect({
-                $c.wait( { $counter != 0 } );
+                $c.wait( { $flag } );
                 $now1 = now;
             });
         });
 
         my $t2 = Thread.start({
             $l.protect({
-                $counter++;
+                $flag = True;
                 $c.signal();
             });
         });
