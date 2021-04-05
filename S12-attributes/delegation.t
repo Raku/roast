@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 65;
+plan 68;
 
 =begin desc
 
@@ -108,7 +108,7 @@ class PairTest {
 {
   class ReFrontend { has $.backend is rw handles /^hi|oo/ };
   ok ReFrontend.new, "class definition using a smartmatch handle worked";
- 
+
   {
     my $a;
     ok ($a = ReFrontend.new), "basic instantiation worked (3)";
@@ -200,6 +200,28 @@ class PairTest {
     is $a.b(), 2, 'got all methods via "handles $typeObject" (2)';
     is $a.c(), 3, 'got all methods via "handles $typeObject" (next role)';
     dies-ok { $a.d() }, '... but non existing methods still die';
+}
+
+# A class must be able to override a delegated method.
+eval-lives-ok q:to/CODE/, "class overrides a delegated method";
+role R {
+    has $.backend handles <Str Int>;
+}
+class C does R {
+    method Str { "class C" }
+}
+CODE
+
+{ # As long as the previous test succeeds, make sure we do override the delegated method.
+    my role ROverridable {
+        has $.backend handles <hi cool>;
+    }
+    my class Overrider does ROverridable {
+        method hi { "class C" }
+    }
+    my $a = Overrider.new(backend => Backend1.new);
+    is $a.hi, 'class C', "backend method overriden";
+    is $a.cool, 1337, "un-overriden backend method is intact";
 }
 
 # vim: expandtab shiftwidth=4
