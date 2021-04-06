@@ -1421,5 +1421,3 @@ integration/substr-after-match-in-gather-in-for.t
 integration/topic_in_double_loop.t
 integration/variables-in-do.t
 integration/weird-errors.t     # slow
-rosettacode/greatest_element_of_a_list.t
-rosettacode/sierpinski_triangle.t
