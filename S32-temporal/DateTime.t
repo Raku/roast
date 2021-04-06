@@ -872,16 +872,25 @@ throws-like { DateTime.new: :2016year, 42 }, Exception,
         :6minute,  :second(7.77),  :timezone(14*3600);
     constant $dur = Duration.new: 59826610.48;
 
+    # TODO fix this test for Real posix
     is-deeply $dt1 - $dt2, $dur, 'DateTime - DateTime = Duration';
+
+    # TODO fix this test for Real posix
     is-deeply $dt1 - $dur, $dt2.in-timezone($dt1.timezone),
         'DateTime - Duration = DateTime';
 
+    # TODO fix this test for Real posix
     is-deeply $dt1 − $dt2, $dur, 'DateTime − DateTime = Duration(U+2212 minus)';
+
+    # TODO fix this test for Real posix
     is-deeply $dt1 − $dur, $dt2.in-timezone($dt1.timezone),
         'DateTime − Duration = DateTime(U+2212 minus)';
 
+    # TODO fix this test for Real posix
     is-deeply $dt2 + $dur, $dt1.in-timezone($dt2.timezone),
         'DateTime + Duration = DateTime';
+
+    # TODO fix this test for Real posix
     is-deeply $dur + $dt2, $dt1.in-timezone($dt2.timezone),
         'Duration + DateTime = DateTime';
 }

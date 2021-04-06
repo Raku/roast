@@ -39,8 +39,13 @@ ok dsi('2005-12-31T23:59:60') < dsi('2006-01-01T00:00:00'), 'DateTime.Instant co
 is diff(second => 5), 5, 'Instant subtraction (seconds)';
 # Note that we can not check non-representable Rats easily, so we're settling
 # for 8 digits accuracy
+
+# TODO fix this test for Real posix
 is diff(second => 2/7).fmt('%.8f'), (2/7).fmt('%.8f'), 'Instant subtraction (non-integral seconds)';
+
+# TODO fix this test for Real posix
 is diff(second => 3.14159), 3.14159, 'Instant subtraction (needing high precision)';
+
 is diff(minute => 15), 15 * 60, 'Instant subtraction (minutes)';
 is diff(:hour(3), :minute(15), :second(33)),
     3*60*60 + 15*60 + 33, 'Instant subtraction (HMS)';
@@ -57,18 +62,24 @@ is +(DateTime.new('1985-03-14T13:28:22').Instant - dti),
     my $a = dtp(2004, 12, 31,   23, 57,  8.5);
     my $b = dtp(2005,  1,  1,    2, 22, 13.4);
     my $expected-diff = 60 - 8.5 + 2*60 + 2*60*60 + 22*60 + 13.4;
+
+    # TODO fix this test for Real posix
     is +($b.Instant() - $a.Instant), $expected-diff, 'Instant subtraction (ugly case)';
 
     $a .= clone(timezone => 35*60 - 5);
     $b .= clone(timezone => 3*60*60);
+
+    # TODO fix this test for Real posix
     is +($a.Instant() - $b.Instant), 0.1, 'Instant subtraction (time zones)';
 
     is diff({:year(1997), :month(6), :day(30)},
             :year(1997), :month(7), :day(1)),
         days(1) + 1, 'Instant subtraction (June 30 leap second)';
-        
+
     $a .= clone(year => 2005, timezone => 0);
     $b .= clone(year => 2006, timezone => 0);
+
+    # TODO fix this test for Real posix
     is +($b.Instant() - $a.Instant), $expected-diff + 1, 'Instant subtraction (December 31 leap second)';
 
     $a = DateTime.new('2006-01-01T12:33:58+1234');
@@ -92,12 +103,22 @@ is ~DateTime.new(dsi('2005-12-31T23:59:59')), '2005-12-31T23:59:59Z', 'Round-tri
 is ~DateTime.new(dsi('2005-12-31T23:59:60')), '2005-12-31T23:59:60Z', 'Round-tripping DateTime.Instant (2005-12-31T23:59:60Z)';
 is ~DateTime.new(dsi('2006-01-01T00:00:00')), '2006-01-01T00:00:00Z', 'Round-tripping DateTime.Instant (2006-01-01T00:00:00Z)';
 
+# TODO fix this test for Real posix
 is DateTime.new(dtpi 2005, 12, 31,   23, 59, 59.5).second, 59.5, 'Round-tripping DateTime.Instant (2005-12-31T23:59:59.5Z)';
+
+# TODO fix this test for Real posix
 is DateTime.new(dtpi 2005, 12, 31,   23, 59, 60.5).second, 60.5, 'Round-tripping DateTime.Instant (2005-12-31T23:59:60.5Z)';
+
+# TODO fix this test for Real posix
 is DateTime.new(dtpi 2006,  1,  1,    0,  0,  0.5).second,  0.5, 'Round-tripping DateTime.Instant (2006-01-01T00:00:00.5Z)';
 
+# TODO fix this test for Real posix
 is DateTime.new(dtpi 2005, 12, 31,   23, 59, 59.2).second, 59.2, 'Round-tripping DateTime.Instant (2005-12-31T23:59:59.2Z)';
+
+# TODO fix this test for Real posix
 is DateTime.new(dtpi 2005, 12, 31,   23, 59, 60.2).second, 60.2, 'Round-tripping DateTime.Instant (2005-12-31T23:59:60.2Z)';
+
+# TODO fix this test for Real posix
 is DateTime.new(dtpi 2006,  1,  1,    0,  0,  0.2).second,  0.2, 'Round-tripping DateTime.Instant (2006-01-01T00:00:00.2Z)';
 
 
