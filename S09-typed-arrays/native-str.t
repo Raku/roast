@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 183;
+plan 184;
 
 # Basic native str array tests.
 my $T := str;
@@ -238,6 +238,7 @@ is @arr.gist, '[a b c d e]', ".gist space-separates on $t array";
 is @arr.raku, qq/array[$t].new("a", "b", "c", "d", "e")/,
   ".raku includes type and int values on $t array";
 
+
 is-deeply @arr[^2], array[$T].new("a","b"), 'does slice return same type';
 is-deeply @arr[my $ = ^2], "c", 'does slice handle containerized range';
 
@@ -251,6 +252,7 @@ is @arr.join(":"), "a:b:c:d:e", "does join a $t array";
 @arr = ();
 @arr[4] = "z";
 is @arr.join(":"), "::::z", "does emptying a $t array really empty";
+is @arr.raku, qq/array[$t].new("", "", "", "", "z")/, "holes handled ok";
 
 my @holes := array[$T].new;
 @holes[4] = "z";
