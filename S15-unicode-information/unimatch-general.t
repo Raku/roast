@@ -11,10 +11,10 @@ plan 223;
 #?niecza 223 skip "unimatch NYI"
 is unimatch("",'Nd'), Nil, "unimatch an empty string yields Nil";
 is "".unimatch('Nd'), Nil, "''.unimatch yields Nil";
-throws-like "unimatch Str", X::Multi::NoMatch, 'cannot call unimatch with a Str';
-throws-like "Str.unimatch", X::Multi::NoMatch, 'cannot call unimatch with a Str';
-throws-like "unimatch Int", X::TypeCheck::Argument, 'cannot call unimatch with a Int';
-throws-like "Int.unimatch", X::Multi::NoMatch, 'cannot call unimatch with a Int';
+throws-like "unimatch Str, 'Latin'", X::Multi::NoMatch, 'cannot call unimatch with a Str';
+throws-like "Str.unimatch: 'Latin'", X::Multi::NoMatch, 'cannot call unimatch with a Str';
+throws-like "unimatch Int, 'Latin'", X::Multi::NoMatch, 'cannot call unimatch with a Int';
+throws-like "Int.unimatch: 'Latin'", X::Multi::NoMatch, 'cannot call unimatch with a Int';
 
 nok unimatch(0x29, 'Nd'), "0x29 is not Nd";
 ok unimatch(0x30, 'Nd'), "0x30 is Nd";
