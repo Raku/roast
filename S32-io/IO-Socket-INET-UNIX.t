@@ -6,10 +6,12 @@ plan 8;
 if $*DISTRO.is-win {
     skip-rest 'UNIX socket support on Windows NYI';
 } else {
+    chdir $*TMPDIR;
+
     my IO::Socket::INET:_ $server;
     my IO::Socket::INET:_ $client;
     my IO::Socket::INET:_ $accepted;
-    my Str:D              $host      = $*TMPDIR.add("test-$*PID.sock").Str;
+    my Str:D              $host      = "./test-$*PID.sock";
     my Str:D              $sent      = 'Hello, world!';
     my Str:_              $received;
     LEAVE $host.IO.unlink if $host.IO.e;
