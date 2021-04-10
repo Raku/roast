@@ -11,7 +11,7 @@ if $*DISTRO.is-win {
     my IO::Socket::INET:_ $server;
     my IO::Socket::INET:_ $client;
     my IO::Socket::INET:_ $accepted;
-    my Str:D              $host      = "./test-$*PID.sock";
+    my Str:D              $host      = "./test-$*PID-{(1..1_000).pick}.sock";
     my Str:D              $sent      = 'Hello, world!';
     my Str:_              $received;
     LEAVE $host.IO.unlink if $host.IO.e;
