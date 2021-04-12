@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 24;
 
 {
     class EnumClass     { enum C <a b c> }
@@ -77,6 +77,47 @@ plan 18;
 {
     my enum RT<R T>;
     is-deeply R.ACCEPTS(RT), False, 'enum member does not ACCEPTS the enum type object';
+}
+
+# https://github.com/rakudo/rakudo/issues/4310
+{
+    my Array enum PageSizes «
+      :Letter[0,0,612,793]
+      :Tabloid[0,0,792,1224]
+    »;
+
+    is-deeply
+      PageSizes.pairs.sort,
+      (:Letter[0, 0, 612, 793], :Tabloid[0, 0, 792, 1224]),
+      ".pairs on an Enum with Array values";
+
+    is-deeply
+      PageSizes.kv.sort,
+      ([0, 0, 612, 793], [0, 0, 792, 1224], "Letter", "Tabloid"),
+      ".kv on an Enum with Array values";
+
+    is-deeply
+      PageSizes.keys.sort,
+      <Letter Tabloid>,
+      ".keys on an Enum with Array values";
+
+    is-deeply
+      PageSizes.values.sort,
+      ([0, 0, 612, 793],[0, 0, 792, 1224]),
+      ".values on an Enum with Array values";
+
+    is-deeply
+      PageSizes.antipairs.sort,
+      ([0, 0, 612, 793] => "Letter", [0, 0, 792, 1224] => "Tabloid"),
+      ".antipairs on an Enum with Array values";
+
+    is-deeply
+      PageSizes.invert.sort,
+      (  0 => "Letter",    0 => "Letter",
+         0 => "Tabloid",   0 => "Tabloid",
+       612 => "Letter",  792 => "Tabloid",
+       793 => "Letter", 1224 => "Tabloid"),
+      ".invert on an Enum with Array values";
 }
 
 # vim: expandtab shiftwidth=4
