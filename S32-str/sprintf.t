@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 174;
+plan 175;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -358,6 +358,12 @@ subtest 'sprintf with Numeric/Str type objects' => {
 }
 
 is sprintf("%.16e", sqrt 3.0e0), '1.7320508075688772e+00',
-    'sprintf maintains sane precision when stringifying nums'
+    'sprintf maintains sane precision when stringifying nums';
+
+# https://github.com/rakudo/rakudo/issues/4321{
+{
+    enum Str ( :Free<f>, :Inuse<n> );
+    lives-ok { "ok %s".sprintf: Free };
+}
 
 # vim: expandtab shiftwidth=4
