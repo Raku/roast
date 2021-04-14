@@ -7,7 +7,7 @@ use Test;
 # start {...}), Channels and Supplies.  Thank you!
 #-------------------------------------------------------------------------------
 
-plan 23;
+plan 24;
 
 {
     my $l = Lock.new;
@@ -86,6 +86,42 @@ plan 23;
 
     diag "log = {@log}{ $now1>$now2 ?? ', thread was running *after* join' !! ''}" if !
       is @log.join(','), 'ale,porter,stout', 'Condition variable worked';
+}
+
+{
+    my $times = 100;
+    my $tried;
+    my $failed;
+    for ^$times {
+        my $l = Lock.new;
+        my $c = $l.condition;
+        my $now1;
+        my $now2;
+        my $counter = 0;
+        my $t1 = Thread.start({
+            $l.protect({
+                while ($counter == 0 ) {
+                    $c.wait();
+                }
+                $now1 = now;
+            });
+        });
+
+        my $t2 = Thread.start({
+            $l.protect({
+                $counter++;
+                $c.signal();
+            });
+        });
+
+        $t1.join();
+        $now2 = now;
+        $t2.join();
+
+        $tried++;
+        last if $failed = ( !$now1.defined or $now1 > $now2 );
+    }
+    ok !$failed, "Thread 1 never ran after it was tried $tried times";
 }
 
 {
