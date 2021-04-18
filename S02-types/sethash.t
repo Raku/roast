@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 274;
+plan 275;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -687,6 +687,12 @@ is <a b c>.SetHash.item.VAR.^name, 'Scalar', 'does .item work on SetHashes';
 {
     is-deeply SetHash.of, Bool, 'does SetHash type object return proper type';
     is-deeply SetHash.new.of, Bool, 'does SetHash object return proper type';
+}
+
+# https://github.com/rakudo/rakudo/issues/4332
+{
+    my %sh is SetHash = 1,2;
+    lives-ok { while %sh.grab -> $n { $n } }, 'Emptying a SetHash works';
 }
 
 # vim: expandtab shiftwidth=4
