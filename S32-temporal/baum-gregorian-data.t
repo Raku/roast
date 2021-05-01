@@ -93,14 +93,14 @@ for @baum-test-data -> $arr {
     {
         my $mjd = $d.daycount;
         $mjd   += day-frac $d;
-        my $jd  = sprintf '%-0.*f', $ndp, $mjd + MJD0; # from the relationship: MJD = JD - 240000.5
+        my $jd  = sprintf '%-0.*f', $ndp, $mjd + MJD0; # from the relationship: MJD = JD - 2_400_000.5
         is $jd, $JD, "cmp JD from DateTime.daycount + day-frac";
     }
 
     {
         my $mjd = $d.daycount;
         $mjd   += $d.day-fraction;
-        my $jd  = sprintf '%-0.*f', $ndp, $mjd + MJD0; # from the relationship: MJD = JD - 240000.5
+        my $jd  = sprintf '%-0.*f', $ndp, $mjd + MJD0; # from the relationship: MJD = JD - 2_400_000.5
         is $jd, $JD, "cmp JD from DateTime.daycount + day-fraction";
     }
 
@@ -111,7 +111,7 @@ for @baum-test-data -> $arr {
 
     {
         my $mjd = $d.modified-julian-date;
-        my $jd  = sprintf '%-0.*f', $ndp, $mjd + MJD0; # from the relationship: MJD = JD - 240000.5
+        my $jd  = sprintf '%-0.*f', $ndp, $mjd + MJD0; # from the relationship: MJD = JD - 2_400_000.5
         is $jd, $JD, "cmp JD from DateTime.modified-julian-date";
     }
 }
