@@ -1285,6 +1285,7 @@ S32-temporal/DateTime.t   # slow
 S32-temporal/baum-gregorian-data.t
 S32-temporal/calendar.t
 S32-temporal/local.t
+S32-temporal/greg-jd-frac-seconds.t
 S32-temporal/juliandate.t
 S32-trig/atan2.t
 S32-trig/cos.t
