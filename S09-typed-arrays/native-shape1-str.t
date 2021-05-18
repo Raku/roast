@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 111;
+plan 112;
 
 # Basic native str array tests.
 my $T := str;
@@ -179,5 +179,9 @@ is array[$T].new(:shape(2),"b","a").sort, "a b",
 
 is array[$T].new(:shape(1),"a").sort, "a",
   "Can we sort 1-element sorted $t array";
+
+# https://github.com/rakudo/rakudo/issues/4363
+lives-ok { my str @a[1]; my str @b[1]; @a = @b; @a.gist },
+  "does copying from an uninitialized shaped str array work";
 
 # vim: expandtab shiftwidth=4
