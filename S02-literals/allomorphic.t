@@ -7,7 +7,7 @@ use Test::Util;
 
 # L<S02/Allomorphic value semantics>
 
-plan 118;
+plan 119;
 
 ## Sanity tests (if your compiler fails these, there's not much hope for the
 ## rest of the test)
@@ -459,5 +459,18 @@ group-of 4 => '.comb on allomorphs uses Str variant' => {
 
 # https://github.com/rakudo/rakudo/issues/3308
 isa-ok Str($*USER), Str, 'No leaking of guts types when coercing allomorph to Str';
+
+subtest '.substr-rw allomorphs' => {
+    my @tests = <42> => "32", <42.0> => "32.0",
+        <42e0> => "32e0", <42+0i> => "32+0i";
+    plan 2*@tests;
+
+    for @tests -> (:key($allo) is copy, :value($str)) {
+        my $type = $allo.WHAT;
+        $allo.substr-rw(0,1) = "3";
+        isa-ok $allo, Str, ".substr-rw on {$type.raku} allomorph returns Str";
+        is $allo, $str, "{$type.raku} allomorph .substr-rw lvalue assignment modified original string";
+    }
+}
 
 # vim: expandtab shiftwidth=4
