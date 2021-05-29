@@ -181,6 +181,7 @@ is array[$T].new(:shape(1),"a").sort, "a",
   "Can we sort 1-element sorted $t array";
 
 # https://github.com/rakudo/rakudo/issues/4363
+#?rakudo.jvm todo 'Dies with NullPointerException'
 lives-ok { my str @a[1]; my str @b[1]; @a = @b; @a.gist },
   "does copying from an uninitialized shaped str array work";
 
