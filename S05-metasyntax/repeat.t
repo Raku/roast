@@ -44,7 +44,6 @@ ok("abcabcabcabcd" ~~ m/'abc'**1^..4/, 'Fixed non inclusive min range repetition
 ok(!( "abc"        ~~ m/'abc'**1^..4/ ), 'Fail fixed non inclusive min range repetition');
 ok("abcabcabcabcd" ~~ m/'abc'**1^..^5/, 'Fixed non inclusive min & max range repetition');
 ok(!( "abc"        ~~ m/'abc'**1^..^5/ ), 'Fail fixed non inclusive min & max range repetition');
-say $/;
 ok("abcabcabcabcd" ~~ m/'abc'**^5/, 'Fixed non inclusive max repetition');
 is $/, 'abc' x 4, '...with the correct capture';
 ok("abcabcabcabcd" ~~ m/'abc'**^2/, 'Fixed non inclusive max repetition');
