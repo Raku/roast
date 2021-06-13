@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 59;
+plan 64;
 
 # L<S03/Comparison semantics/Binary eqv tests equality much like === does>
 # L<S32::Basics/Any/"=item eqv">
@@ -256,5 +256,11 @@ subtest 'Throws/lives in lazy cases' => {
     lives-ok    { (1…∞).List  eqv (1…3).List  }, 'Lists, only one lazy';
     lives-ok    { (1…∞).Array eqv (1…3).Array }, 'Arrays, only one lazy';
 }
+
+is-deeply Mu  eqv Mu,  True,  'undefined Mu Mu equivalence';
+is-deeply Mu  eqv Any, False, 'undefined Mu Any equivalence';
+is-deeply Any eqv Mu,  False, 'undefined Any Mu equivalence';
+is-deeply 42  eqv Mu,  False, '42 undefined Mu equivalence';
+is-deeply Mu  eqv 42,  False, 'undefined Mu 42 equivalence';
 
 # vim: expandtab shiftwidth=4
