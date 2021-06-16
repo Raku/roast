@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 317;
+plan 320;
 
 =begin description
 
@@ -187,5 +187,12 @@ subtest '.pick on object Hashes' => {
         (:42foo, (True) => False, 42e0 => ½).sort, 'many Pairs';
 }
 
+{
+    my @a  = <a b c d e>;
+    my @aa = (|@a, |@a).sort;
+    ok @a.pick(**).is-lazy, 'did .pick(**) give a lazy Seq';
+    is-deeply [@a.pick(**)[ ^@a].sort],  @a, 'all with .pick(**)';
+    is-deeply [@a.pick(**)[^@aa].sort], @aa, 'all with .pick(**) twice';
+}
 
 # vim: expandtab shiftwidth=4
