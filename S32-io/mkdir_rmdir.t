@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 5;
+plan 6;
 
 # Tests for IO::Path.mkdir and IO::Path.rmdir
 #
@@ -14,6 +14,13 @@ plan 5;
     my $dir = make-temp-dir;
     ok $dir.e, "$dir exists";
     ok $dir.d, "$dir is a directory";
+}
+
+# mkdir soft-fails when pathname exists and is not a directory.
+{
+    my $file = make-temp-dir.add: "file";
+    spurt $file, "hello world";
+    fails-like { $file.mkdir }, X::IO::Mkdir;
 }
 
 # rmdir soft-fails when dir doesn't exist.
