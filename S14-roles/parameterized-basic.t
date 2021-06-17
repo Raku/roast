@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 41;
+plan 51;
 
 =begin pod
 
@@ -191,6 +191,36 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
 
     ok r ~~ PR01[Str], "Curryied role matches a consumed role explicitly";
     nok r ~~ PR00[Str], "Curryied role only matches its own consumed roles";
+}
+
+{
+    # Indirect role consumption
+    my role Foo {
+        method foo { ::?ROLE.^name }
+    }
+    my role RR[::T] does T { }
+    my class C does RR[Foo] { }
+
+    does-ok C, Foo, "class does indirectly consumed role";
+    is C.foo, "Foo", "method of indirectly consumed role is available";
+    does-ok RR[Foo], Foo, "role does indirectly consumed role";
+    nok RR[Foo] ~~ Numeric, "consuming role doesn't accidentally match to a not consumed role";
+    nok Foo ~~ RR[Foo], "indirectly consumed role doesn't match against consumer";
+}
+
+{
+    # Indirect inheritance
+    my class Bar {
+        method bar { ::?CLASS.^name }
+    }
+    my role RC[::T] is T {}
+    my class C does RC[Bar] {}
+
+    isa-ok C, Bar, "class typechecks against indirectly inherited parent";
+    is C.bar, "Bar", "method from indirect parent is available";
+    isa-ok RC[Bar], Bar, "role typechecks against indirect parent";
+    nok RC[Bar] ~~ Int, "role doesn't accidentally match against non-parent";
+    nok Bar ~~ RC[Bar], "indirect parent doesn't accidentally typecheck against the role";
 }
 
 # vim: expandtab shiftwidth=4
