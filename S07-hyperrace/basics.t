@@ -189,9 +189,8 @@ is-deeply ^1000 .hyper.map(*+1).Array, [^1000 + 1], '.hyper preserves order';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5261
-#?rakudo skip 'reliably hangs / segfaults on at least MacOS'
 {
-    is-deeply (^100).race(batch=>1).map({ sprintf '%1$s %2$s', 5, 42 }).List, ‘5 42’ xx 100, 
+    is-deeply (^100).race(batch=>1).map({ sprintf '%s %s', 5, 42 }).List, ‘5 42’ xx 100,
         'sprintf is threadsafe when format tokens use explicit indices';
 }
 
