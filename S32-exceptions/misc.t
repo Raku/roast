@@ -457,7 +457,6 @@ throws-like Q/my Array[Numerix] $x;/, X::Undeclared::Symbols, gist => /Numerix/;
 throws-like 'for 1, 2 { my $p = {};', X::Syntax::Missing, what => 'block';
 
 # https://github.com/Raku/old-issue-tracker/issues/5682
-#?rakudo.jvm todo 'dies with X::AdHoc -- __P6opaque__77@3dc2adf9 in sub-signature of parameter @array'
 throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
     X::TypeCheck::Binding, got => IntStr, expected => Positional;
 
