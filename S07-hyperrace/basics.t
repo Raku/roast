@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 89;
+plan 90;
 
 for <hyper race> -> $meth {
         sub hr (\seq) { $meth eq 'race' ?? seq.sort !! seq }
@@ -223,5 +223,66 @@ is-deeply ^1000 .hyper.map(*+1).Array, [^1000 + 1], '.hyper preserves order';
         { (.iterator, .iterator) given (^10).race },
         X::Seq::Consumed,
         "can only have single iterator per race";
+}
+
+# Test if concurrent requests for a sequence iterator throw as expected
+subtest "Concurrent iterator access" => {
+    plan 2;
+    my sub test-a-seq(&producer, &tester, :$exception = X::Seq::Consumed) {
+        subtest &producer().^name => {
+            plan 4;
+            my $workers = 10; # count of parallel requests to a single sequence
+            my $repetitions = 1; # Will be adjusted later
+            my atomicint $thrown = 0;
+            my atomicint $succeeded = 0;
+            my atomicint $wrong_exceptions = 0;
+            my atomicint $completed = 0;
+            my sub does-fail($seq) {
+                my $starter = Promise.new;
+                my @ready;
+                my @w;
+                for ^$workers -> $widx {
+                    @ready.push: my $worker_ready = Promise.new;
+                    @w.push: start {
+                        $worker_ready.keep;
+                        await $starter;
+                        my $rc = try &tester($seq);
+                        with $rc {
+                            ++⚛$succeeded;
+                        }
+                        else {
+                            $! ~~ $exception ?? ++⚛$thrown !! ++⚛$wrong_exceptions;
+                        }
+                    }
+                }
+                await @ready;
+                $starter.keep;
+                await Promise.anyof(
+                    Promise.allof(@w).then({ ++⚛$completed }),
+                    Promise.in(30)
+                );
+            }
+            my $st = now;
+            my $i = 0;
+            while $i < ($repetitions | 10) {
+                does-fail(&producer());
+                if ++$i == 10 {
+                    # Make the test do as many attempts as possible but don't let it take more than 1 sec. This a
+                    # compromise between increasing the chances of a failure and not allowing it to take too long on
+                    # slower architectures.
+                    $repetitions = max 10, Int(1 / ((now - $st) / 10));
+                    #diag "Set repetitions to " ~ $repetitions;
+                }
+            }
+            is $completed, $repetitions, "no freezes";
+            is $succeeded, $repetitions, "success rate";
+            is $thrown, $repetitions * ($workers - 1), "correct exceptions thrown";
+            is $wrong_exceptions, 0, "no unexpected exceptions";
+        }
+    }
+
+    # We don't try Seq because it is not thread-safe by design.
+    test-a-seq { (^10).hyper }, { .iterator };
+    test-a-seq { (^10).race }, { .iterator };
 }
 # vim: expandtab shiftwidth=4
