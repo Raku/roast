@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 87;
+plan 90;
 
 for <hyper race> -> $meth {
         sub hr (\seq) { $meth eq 'race' ?? seq.sort !! seq }
@@ -49,7 +49,7 @@ for <hyper race> -> $meth {
         }
 
         # https://github.com/Raku/old-issue-tracker/issues/5008
-        
+
         for <batch degree> -> $name {
             for (-1,0) -> $value {
                 throws-like { (^10)."$meth"(|($name => $value)) },
@@ -59,7 +59,7 @@ for <hyper race> -> $meth {
         }
 
         # https://github.com/Raku/old-issue-tracker/issues/5651
-        
+
         dies-ok { for (1..1)."$meth"() { die } },
             "Exception thrown in $meth for is not lost (1..1)";
         dies-ok { for (1..1000)."$meth"() { die } },
@@ -74,7 +74,7 @@ for <hyper race> -> $meth {
             "Exception thrown in $meth grep is not lost (1..1000)";
 
         # https://github.com/Raku/old-issue-tracker/issues/5111
-        
+
         subtest ".$meth with .map that sleep()s" => {
             plan 10;
 
@@ -90,7 +90,7 @@ for <hyper race> -> $meth {
         }
 
         # https://github.com/Raku/old-issue-tracker/issues/5301
-        
+
         {
             multi sub f { $^a² }
             is-deeply (^10)."$meth"().map(&f).&hr.List,
@@ -99,7 +99,7 @@ for <hyper race> -> $meth {
         }
 
         # https://github.com/Raku/old-issue-tracker/issues/6435
-        
+
         {
             my atomicint $got = 0;
             for <a b c>."$meth"() { $got⚛++ }
@@ -107,7 +107,7 @@ for <hyper race> -> $meth {
         }
 
         # https://github.com/Raku/old-issue-tracker/issues/5994
-        
+
         is-deeply ([+] (1..100)."$meth"()), 5050,
             "Correct result for [+] (1..100).$meth";
         is-deeply ([+] (1..100)."$meth"().grep(* != 22)), 5028,
@@ -189,9 +189,8 @@ is-deeply ^1000 .hyper.map(*+1).Array, [^1000 + 1], '.hyper preserves order';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5261
-#?rakudo skip 'reliably hangs / segfaults on at least MacOS'
 {
-    is-deeply (^100).race(batch=>1).map({ sprintf '%1$s %2$s', 5, 42 }).List, ‘5 42’ xx 100, 
+    is-deeply (^100).race(batch=>1).map({ sprintf '%s %s', 5, 42 }).List, ‘5 42’ xx 100,
         'sprintf is threadsafe when format tokens use explicit indices';
 }
 
@@ -213,4 +212,77 @@ is-deeply ^1000 .hyper.map(*+1).Array, [^1000 + 1], '.hyper preserves order';
         'die in a hyper nested in a hyper propagates exception';
 }
 
+# https://github.com/rakudo/rakudo/issues/4413
+{
+    throws-like
+        { (.iterator, .iterator) given (^10).hyper },
+        X::Seq::Consumed,
+        "can only have single iterator per hyper";
+
+    throws-like
+        { (.iterator, .iterator) given (^10).race },
+        X::Seq::Consumed,
+        "can only have single iterator per race";
+}
+
+# Test if concurrent requests for a sequence iterator throw as expected
+subtest "Concurrent iterator access" => {
+    plan 2;
+    my sub test-a-seq(&producer, &tester, :$exception = X::Seq::Consumed) {
+        subtest &producer().^name => {
+            plan 4;
+            my $workers = 10; # count of parallel requests to a single sequence
+            my $repetitions = 1; # Will be adjusted later
+            my atomicint $thrown = 0;
+            my atomicint $succeeded = 0;
+            my atomicint $wrong_exceptions = 0;
+            my atomicint $completed = 0;
+            my sub does-fail($seq) {
+                my $starter = Promise.new;
+                my @ready;
+                my @w;
+                for ^$workers -> $widx {
+                    @ready.push: my $worker_ready = Promise.new;
+                    @w.push: start {
+                        $worker_ready.keep;
+                        await $starter;
+                        my $rc = try &tester($seq);
+                        with $rc {
+                            ++⚛$succeeded;
+                        }
+                        else {
+                            $! ~~ $exception ?? ++⚛$thrown !! ++⚛$wrong_exceptions;
+                        }
+                    }
+                }
+                await @ready;
+                $starter.keep;
+                await Promise.anyof(
+                    Promise.allof(@w).then({ ++⚛$completed }),
+                    Promise.in(30)
+                );
+            }
+            my $st = now;
+            my $i = 0;
+            while $i < ($repetitions | 10) {
+                does-fail(&producer());
+                if ++$i == 10 {
+                    # Make the test do as many attempts as possible but don't let it take more than 1 sec. This a
+                    # compromise between increasing the chances of a failure and not allowing it to take too long on
+                    # slower architectures.
+                    $repetitions = max 10, Int(1 / ((now - $st) / 10));
+                    #diag "Set repetitions to " ~ $repetitions;
+                }
+            }
+            is $completed, $repetitions, "no freezes";
+            is $succeeded, $repetitions, "success rate";
+            is $thrown, $repetitions * ($workers - 1), "correct exceptions thrown";
+            is $wrong_exceptions, 0, "no unexpected exceptions";
+        }
+    }
+
+    # We don't try Seq because it is not thread-safe by design.
+    test-a-seq { (^10).hyper }, { .iterator };
+    test-a-seq { (^10).race }, { .iterator };
+}
 # vim: expandtab shiftwidth=4
