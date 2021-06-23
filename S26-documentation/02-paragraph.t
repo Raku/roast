@@ -116,12 +116,13 @@ is $r.contents[4].contents[0].contents, "Turn into Jelly Beans!",
 
 
 # https://github.com/Raku/old-issue-tracker/issues/6293
+#?rakudo.jvm skip 'GH Raku/nqp#727'
 is_run Q:to/♥♥♥/, :compiler-args['--doc=Text'],
     =for pod
     =for nested
     =for para :nested(1)
-    E<a;b>E<a;b;c>
+    E<alpha;beta>E<alpha;beta;gamma>
     ♥♥♥
-{:err(''), :out("ababc\n"), :0status}, 'nested paras do not crash/warn';
+{:err(''), :out("αβαβγ\n"), :0status}, 'nested paras do not crash/warn';
 
 # vim: expandtab shiftwidth=4
