@@ -17,7 +17,6 @@ plan 6;
 }
 
 # mkdir soft-fails when pathname exists and is not a directory.
-#?rakudo todo "Awaits for MoarVM/MoarVM#1507"
 {
     my $file = make-temp-dir.add: "file";
     spurt $file, "hello world";
