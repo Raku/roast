@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 43;
+plan 49;
 
 my $r;
 
@@ -89,5 +89,38 @@ for @$=pod[5, 6] {
 
 $r = $=pod[7];
 is $r.contents[0].contents[0].contents[1].contents[0], 'foo','FC inside balanced <>';
+
+=pod E<65>
+
+$r = $=pod[8];
+is $r.contents[0].contents[0].contents[0], 'A', 'Plain decimal Int literal codepoint escape';
+
+=pod E<0x41>
+
+$r = $=pod[9];
+is $r.contents[0].contents[0].contents[0], 'A', 'Hex literal codepoint escape';
+
+=pod E<LATIN CAPITAL LETTER A>
+
+$r = $=pod[10];
+is $r.contents[0].contents[0].contents[0], 'A', 'Unicode character name escape';
+
+=pod E<amp>
+
+$r = $=pod[11];
+#?rakudo.jvm skip 'HTML5 entities NYI under JVM due to GH Raku/nqp#727'
+is $r.contents[0].contents[0].contents[0], '&', 'Lowercase HTML5 entity escape';
+
+=pod E<Assign>
+
+$r = $=pod[12];
+#?rakudo.jvm skip 'HTML5 entities NYI under JVM due to GH Raku/nqp#727'
+is $r.contents[0].contents[0].contents[0], '≔', 'Mixed-case HTML5 entity escape';
+
+=pod E<sup2>
+
+$r = $=pod[13];
+#?rakudo.jvm skip 'HTML5 entities NYI under JVM due to GH Raku/nqp#727'
+is $r.contents[0].contents[0].contents[0], '²', 'HTML5 entity escape containing a digit';
 
 # vim: expandtab shiftwidth=4
