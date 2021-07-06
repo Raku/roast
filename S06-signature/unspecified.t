@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 19;
 
 # L<S06/Perlish subroutine declarations/You can declare a sub without
 # parameter list>
@@ -49,6 +49,11 @@ is both(), '',
     lives-ok { rt71112( $tender ) }, 'Sub can modify its @_ as it has is copy semantics';
     is rt71112( $tender ), 'changed', 'And its modifications stick in its copy';
     is $tender, 'sanity', 'The variable passed is unchanged';
+}
+
+# https://github.com/rakudo/rakudo/issues/1358
+{
+    is-deeply .raku.EVAL, $_ with :( Int(Cool) $ ), 'Calling .raku on a Signature object handles coercers';
 }
 
 # vim: expandtab shiftwidth=4
