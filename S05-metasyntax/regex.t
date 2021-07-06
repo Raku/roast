@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 52;
+plan 53;
 
 throws-like 'qr/foo/', X::Obsolete, 'qr// is gone';
 
@@ -288,5 +288,8 @@ is_run ｢/a/; print "pass"｣, {:out<pass>, :err(''), :0status},
 
 # https://github.com/rakudo/rakudo/issues/2901
 is 'a' ~~ / a & a /, 'a', 'Unescaped & works as conjunction';
+
+# https://github.com/rakudo/rakudo/issues/2118
+ok 1 ~~ TR/\#//, 'Backslashed # is parsed correctly in a regex';
 
 # vim: expandtab shiftwidth=4
