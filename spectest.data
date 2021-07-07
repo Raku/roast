@@ -760,7 +760,6 @@ S14-roles/parameter-subtyping.t
 S14-roles/parameterized-basic.t
 S14-roles/parameterized-mixin.t
 S14-roles/parameterized-type.t
-S14-roles/generic-subtyping.t
 S14-roles/rw.t
 S14-roles/stubs.t
 S14-roles/submethods-6e.t
