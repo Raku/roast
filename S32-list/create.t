@@ -9,7 +9,7 @@ built-in "list" tests
 
 =end pod
 
-plan 10;
+plan 11;
 
 my $list_sub = list(1, 2, 3);
 isa-ok($list_sub, List, '&list() creates a list assignable to a scalar.');
@@ -32,6 +32,13 @@ is(+$list_sub, 3, 'Finding the length of the list works as expected.');
   is(+@list, 1, 'The lenght is one');
   is(@list, ('foo',), 'The list constains the expected value');
 }
+
+# https://github.com/rakudo/rakudo/issues/2060
+{
+    my @a is List = 1, 2, 3;
+    throws-like { @a = 4,5,6 }, X::Assignment::RO, 'An immutable List created via `is List` cannot be re-assigned';
+}
+
 # vim: ft=perl6
 
 
