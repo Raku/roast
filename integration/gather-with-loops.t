@@ -4,14 +4,9 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 22;
+plan 21;
 
 # https://github.com/rakudo/rakudo/issues/3634
-
-## canary test to notice that bug is fixed
-is_run q[gather for ^1 { take 42; last }],
-    { status => 0, err => '', out => ''},
-    'golfed code does not blow up';
 
 ## last in loop
 {
