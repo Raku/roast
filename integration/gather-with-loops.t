@@ -9,7 +9,6 @@ plan 22;
 # https://github.com/rakudo/rakudo/issues/3634
 
 ## canary test to notice that bug is fixed
-#?rakudo.jvm todo 'UnwindException'
 is_run q[gather for ^1 { take 42; last }],
     { status => 0, err => '', out => ''},
     'golfed code does not blow up';
@@ -25,7 +24,6 @@ is_run q[gather for ^1 { take 42; last }],
     $res = gather repeat { take 42; last } until 0;
     is-deeply $res, (42).Seq, 'gather/take with last in repeat-until loop';
 
-    #?rakudo.jvm skip 'UnwindException'
     $res = gather for ^3 { take 42; last };
     is-deeply $res, (42).Seq, 'gather/take with last in for loop';
 }
@@ -40,12 +38,8 @@ is_run q[gather for ^1 { take 42; last }],
 
     $res = eager gather repeat { take 42; last } until 0;
     is-deeply $res, (42).List, 'eager gather/take with last in repeat-until loop';
-}
 
-## last in for loop with eager -- separated to be able to skip for rakudo.jvm
-#?rakudo.jvm skip 'UnwindException'
-{
-    my $res = eager gather for ^3 { take 42; last };
+    $res = eager gather for ^3 { take 42; last };
     is-deeply $res, (42).List, 'eager gather/take with last in for loop';
 }
 
