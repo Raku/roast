@@ -73,7 +73,7 @@ plan 50;
       X::Comp,  # no exception type yet
       "no spaces allowed between '#`' and '\{'";
     throws-like { EVAL "3 * #`\n<invalid comment> 2" },
-      X::Syntax::Confused,
+      X::Syntax::Comment::Embedded,
       "no spaces allowed between '#`' and '<'";
 
 }
