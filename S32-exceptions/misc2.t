@@ -184,7 +184,6 @@ throws-like 'sub f(:$a, $b) { }', X::Parameter::WrongOrder,
     misplaced   => 'required',
     after       => 'named';
 
-#?rakudo todo 'parsing regression'
 # https://github.com/Raku/old-issue-tracker/issues/3960
 {
     throws-like '#`', X::Syntax::Comment::Embedded;
