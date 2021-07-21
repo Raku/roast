@@ -32,7 +32,7 @@ my $keys_p5 = EVAL('sub {keys %{$_[0]}}', :lang<Perl5>);
 my $tohash_p5 = EVAL('sub { return {map {$_ => 1} @_ } }', :lang<Perl5>);
 my %hash = (foo => 'bar', hate => 'software');
 {
-    my $foo = $tohash_p5.(keys %hash);
+    my $foo = $tohash_p5.(|keys %hash);
     cmp-ok($foo, &infix:<cmp>, %hash);
     is-deeply([$foo.keys].sort, [%hash.keys].sort);
 }
