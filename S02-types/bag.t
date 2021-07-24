@@ -4,7 +4,7 @@ use Test;
 plan 205;
 
 sub showkv($x) {
-    $x.keys.sort({$^a.ords cmp $^b.ords}).map({ $^k ~ ':' ~ $x{$k} }).join(' ')
+    $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
 }
 
 # L<S02/Immutable types/'the bag listop'>
