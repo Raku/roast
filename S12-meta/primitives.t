@@ -2,7 +2,7 @@ use v6.d;
 
 use Test;
 
-plan 17;
+plan 16;
 
 {
     my $union-type-checks = 0;
@@ -28,13 +28,6 @@ plan 17;
             Metamodel::Primitives.configure_type_checking($type,
                 [@!types, Any, Mu],
                 :authoritative, :call_accepts);
-
-            # Steal methods of Any/Mu for our method cache.
-            my %cache;
-            for flat Any.^method_table.pairs, Mu.^method_table.pairs {
-                %cache{.key} //= .value;
-            }
-            Metamodel::Primitives.install_method_cache($type, %cache);
 
             $type
         }
@@ -73,7 +66,7 @@ plan 17;
     nok 4.2 ~~ $int-or-rat, 'Union type broken before compose (4)';
 
     ok $union-type-checks >= 4, 'Type checking called method before compose';
-    ok $union-find-method-calls >= 4, 'ACCEPTS method lookup before compose';
+    ok $union-find-method-calls >= 1, 'ACCEPTS method lookup before compose';
 
     $int-or-rat.^compose;
     $union-type-checks = 0;
@@ -86,7 +79,7 @@ plan 17;
     nok Str ~~ $int-or-rat, 'Union type works with cache (5)';
     nok 'w' ~~ $int-or-rat, 'Union type works with cache (6)';
 
-    #?rakudo.jvm 2 todo 'RT #123426'
+    # https://github.com/Raku/old-issue-tracker/issues/3606
+    #?rakudo.jvm 1 todo 'RT #123426'
     is $union-type-checks, 0, 'Really did use type cache';
-    is $union-find-method-calls, 0, 'Really did use method cache';
 }
