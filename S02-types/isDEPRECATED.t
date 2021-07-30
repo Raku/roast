@@ -4,7 +4,7 @@ BEGIN %*ENV<RAKUDO_DEPRECATIONS_FATAL>:delete; # disable fatal setting for tests
 
 use Test;
 
-plan 13;
+plan 14;
 
 # L<S02/Deprecations>
 
@@ -128,6 +128,18 @@ Please use 'bar' instead.
 --------------------------------------------------------------------------------
 TEXT
 } #2
+
+{
+    $line = $?LINE; Proc.new.status;
+    is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for Proc.new.status';
+Saw 1 occurrence of deprecated code.
+================================================================================
+Method status (from Proc) seen at:
+  $*PROGRAM, line $line
+Please use exitcode and/or signal methods (status is to be removed in 2022.06) instead.
+--------------------------------------------------------------------------------
+TEXT
+}
 
 # https://github.com/Raku/old-issue-tracker/issues/3302
 {
