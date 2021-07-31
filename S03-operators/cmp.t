@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 61;
+plan 64;
 
 # cmp on scalar values
 {
@@ -97,6 +97,13 @@ plan 61;
     is (5^..^10) cmp (6,7,8,9), Same, "(5^..^10) cmp (6,7,8,9),";
     is (5^..10) cmp (5,6,7,8,9,10), More, "(5^..10) cmp (5,6,7,8,9,10),";
     is (5..^10) cmp (5,6,7,8,9,10), Less, "(5..^10) cmp (5,6,7,8,9,10),";
+}
+
+# https://github.com/rakudo/rakudo/issues/4471
+{
+    is () cmp (0,), Less, 'empty list on the left';
+    is (0,) cmp (), More, 'empty list on the right';
+    is () cmp (), Same, 'empty lists on both sides';
 }
 
 for Rat, FatRat -> \RatT {
