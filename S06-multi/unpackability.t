@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 10;
+plan 12;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S06/Unpacking array parameters>
@@ -37,6 +37,23 @@ is bar(1,2,3), "1+2+3", "multi dispatch on slurpy packed with two required eleme
     is a([]), '2',    'Multi-dispatch descends into sub signatures (1)';
     is a(@t), '11 2', 'Multi-dispatch descends into sub signatures (2)';
 
+}
+
+subtest 'One-level unpack callsame and nextcallee' => {
+    multi def_unpack(@a) { @a.join(',') }
+    multi def_unpack([$x, $y]) { "cs:" ~callsame }
+    multi def_unpack([$x, $y, $z]) { my &nc = nextcallee; "nc:" ~ nc([4,5,6]) }
+    is def_unpack([1,2]), 'cs:1,2', 'callsame works with unpack-based disaptch';
+    is def_unpack([1,2,3]), 'nc:4,5,6', 'nextcallee works with unpack-based disaptch';
+}
+
+subtest 'Multi-level nextcallee' => {
+    multi def_unpack(@a) { @a.join(',') }
+    multi def_unpack([$x, $y, $z]) { my &nc = nextcallee; "nc1:" ~ nc([$x + 1, $y + 2, $z + 3]) }
+    multi def_unpack([$x, $y, $z]) { my &nc = nextcallee; "nc2:" ~ nc([$x * 1, $y * 2, $z * 3]) }
+    multi def_unpack([$n, $o, $p, $e]) { 'oops' }
+    is def_unpack([1,2,3]), 'nc1:nc2:2,8,18',
+        'nextcallee works through multiple candidates that unpack';
 }
 
 # vim: expandtab shiftwidth=4
