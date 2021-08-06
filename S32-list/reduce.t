@@ -12,7 +12,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 =end description
 
-plan 18;
+plan 22;
 
 # L<S32::Containers/List/=item reduce>
 
@@ -107,6 +107,28 @@ eval-lives-ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper 
     }
     ok (5,4,3,2,1).reduce(&infix:<eog>),
         'Reduce method respects chain associativity';
+}
+
+# https://github.com/rakudo/rakudo/issues/4458
+{
+    is-deeply (True, True, True, True).permutations».reduce(&infix:<&&>).reduce(&infix:<&&>),
+    True,
+    '.reduce with infix:<&&> returns True';
+
+    is-deeply
+      (True, True, True, False).permutations».reduce(&infix:<&&>).reduce(&infix:<&&>),
+      False,
+      '.reduce with infix:<&&> returns False';
+
+    my &falseish = { False };
+    my &trueish = { True };
+    is-deeply (True, True, True, &falseish).permutations».reduce(&infix:<&&>).reduce(&infix:<&&>),
+    False,
+    '.reduce with infix:<&&> and callable returns False';
+
+    is-deeply (True, True, True, &trueish).permutations».reduce(&infix:<&&>).reduce(&infix:<&&>),
+    True,
+    '.reduce with infix:<&&> and callable returns True';
 }
 
 # vim: expandtab shiftwidth=4
