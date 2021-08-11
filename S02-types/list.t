@@ -15,7 +15,7 @@ is ().perl, '()', '.perl on empty List';
 is ().item.perl, '$( )', '.item.perl on empty List';
 is-deeply ().item, ().item.perl.EVAL, 'can roundtrip ().item';
 #?rakudo.jvm skip 'dies with t/harness5'
-cmp-ok ().item.VAR, '===', ().item.perl.EVAL.VAR,
+cmp-ok ().item.VAR.WHAT, '===', ().item.perl.EVAL.VAR.WHAT,
     '().item .perl.EVAL roundtrip preserves itemization';
 
 # L<S02/Quoting forms/Elsewhere it is equivalent to a parenthesized list of strings>
