@@ -133,7 +133,7 @@ is-deeply (<a b c>, *.reverse ... *)[5], <c b a>.Seq,
 
 # https://github.com/rakudo/rakudo/issues/2920
 {
-    lives-ok { (0, { $_ == 1000 ?? die ‘ouch!’ !! $_ + 1 } ... 99999).gist }, 'Large non-Infinite gists are properly detected as lazy';
+    lives-ok { (0, { $_ == 1 ?? die ‘ouch!’ !! $_ + 1 } ... 99999).is-lazy }, 'A sequence with a block and an end value does not iterate the whole sequence to recognize it as non-lazy';
 }
 
 # vim: expandtab shiftwidth=4
