@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 31;
+plan 32;
 
 is ("fom" ... /foo/), "fom fon foo", "can use regex for endpoint without it being confused for closure";
 
@@ -130,5 +130,10 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 > 2000 }, 'a', *~'z' ... { $_.char
 
 is-deeply (<a b c>, *.reverse ... *)[5], <c b a>.Seq,
     '… op does not prematurely cause consumtion of Seqs';
+
+# https://github.com/rakudo/rakudo/issues/2920
+{
+    lives-ok { (0, { $_ == 1 ?? die ‘ouch!’ !! $_ + 1 } ... 99999).is-lazy }, 'A sequence with a block and an end value does not iterate the whole sequence to recognize it as non-lazy';
+}
 
 # vim: expandtab shiftwidth=4
