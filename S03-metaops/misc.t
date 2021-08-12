@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 1;
+plan 3;
 
 =begin pod
 
@@ -66,6 +66,12 @@ subtest 'cover metaop call simplification optimization' => {
         # https://github.com/rakudo/rakudo/issues/1987
         throws-like '42.abs += 42', X::Assignment::RO, '(5)';
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/1890
+{
+    lives-ok { [] ,= 42 }, ',= metaop works properly with []';
+    lives-ok { my @a; my @b; @a [R,]= @b }, '[R,]= metaop properly works with two empty lists';
 }
 
 # vim: expandtab shiftwidth=4
