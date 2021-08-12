@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 95;
+plan 124;
 
 {
     my int $x;
@@ -398,6 +398,20 @@ subtest 'meta-assign op with native nums' => {
     my int @a = 1,2,3;
     my $i = 0;
     throws-like { @a[$i-1] }, X::OutOfRange, 'do we check for negative indices';
+}
+
+# GH#4485 https://github.com/rakudo/rakudo/issues/4485
+{
+    for Real, Numeric -> \num-role {
+       for int, int8, int16, int32, int64,
+           uint, uint8, uint16, uint32, uint64,
+           byte, num, num32, num64
+       -> \native-type {
+           does-ok native-type, num-role,  native-type.^name ~ " does " ~ num-role.^name;
+       }
+    }
+
+    does-ok str, Stringy, "str does Stringy";
 }
 
 # vim: expandtab shiftwidth=4
