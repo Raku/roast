@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use lib $?FILE.IO.parent(2).add("packages/S02-names/lib");
 use Test::Util;
 
-plan 199;
+plan 202;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -628,6 +628,70 @@ is_run q|BEGIN { UNIT; Nil }|, { :0status, :out(''), :err('') },
         use Pseudo6e;
         is test-dispatch(pseudo-stash), "from e", "class from a 6.e module dispatches correctly";
     }
+}
+
+subtest "Non-dynamic failures" => {
+    plan 2;
+
+    fails-like {
+        my $non-dynamic = 42;
+        DYNAMIC::<$non-dynamic>
+    },
+    X::Symbol::NotDynamic,
+    'a dynamic only pseudostash fails if a non-dynamic symbol requested';
+
+    fails-like {
+        my $non-dynamic = 42;
+        sub foo is raw {
+            CALLER::<$non-dynamic>
+        }
+        foo
+    },
+    X::Symbol::NotDynamic, # In 6.c this would be X::Caller::NotDynamic
+    'CALLER fails if requested for a non-dynamic symbol';
+}
+
+# Even if a dynamic symbol is not a scalar it must still be visible in a dynamic chain
+subtest "Bound dynamics" => {
+    plan 2;
+    my sub bar {
+        ok DYNAMIC::<$*BOUND>:exists, "DYNAMIC sees a bout dynamic symbol";
+        is DYNAMIC::<$*BOUND>, pi, "bound dynamic value is accessible";
+    }
+    my sub foo {
+        # Normally .dynamic of a Scalar returns True; but in this case there is no container, no .dynamic
+        my $*BOUND := pi;
+        bar;
+    }
+    foo;
+}
+
+# A dynamic chain pseudostash must not only iterate over dynamic symbols
+subtest "Dynamic is only dynamic" => {
+    plan 1;
+    sub s1 {
+        my $*dyn1;
+        my $lex1;
+        my $lex-sym = "";
+        for DYNAMIC::.keys -> $sym {
+            # A symbol is dynamic if its name has * twigil or its container .dynamic is True
+            $lex-sym = $sym unless $sym.substr(1,1) eq '*' || try DYNAMIC::{$sym}.VAR.dynamic;
+            say "LEX SYM {$lex-sym}: ", DYNAMIC::{$sym}.VAR.^name if $lex-sym;
+            last if $lex-sym;
+        }
+        is $lex-sym, "", "DYNAMIC does iterate over dynamics only";
+    }
+    sub s2 {
+        my $*dyn2;
+        my $lex2;
+        s1;
+    }
+    sub s3 {
+        my $*dyn3;
+        my $lex3;
+        s2;
+    }
+    s3;
 }
 
 # vim: expandtab shiftwidth=4
