@@ -104,7 +104,8 @@ for
      (),(),
     Str,Slip,
     Nil,Slip,
-    Int,Slip
+    Int,Slip,
+    oops,Slip
 
 -> $with, $expected {
 
@@ -114,24 +115,14 @@ for
     ok $foo ~~ $expected, "\$_: with on { $with // $with.^name }";
 }
 
-## had to factor this out of the above for loop, in order to fudge for JVM
-## TODO re-integrate test in above for loop once it passes on JVM
-# https://github.com/Raku/old-issue-tracker/issues/6070
-#?rakudo.jvm todo '$foo is not "$()", but Failure; RT #130775'
-for oops,Slip -> $with, $expected {
-    my $foo is default(Nil) = do with $with {
-        $_;
-    }
-    ok $foo ~~ $expected, "\$_ with on { $with // $with.^name }";
-}
-
 for
       1,1,
       0,0,
      (),(),
     Str,Slip,
     Nil,Slip,
-    Int,Slip
+    Int,Slip,
+    oops,Slip
 
 -> $with, $expected {
 
@@ -141,39 +132,17 @@ for
     ok $foo ~~ $expected, "\$pos: with on { $with // $with.^name }";
 }
 
-## had to factor this out of the above for loop, in order to fudge for JVM
-## TODO re-integrate test in above for loop once it passes on JVM
-# https://github.com/Raku/old-issue-tracker/issues/6070
-#?rakudo.jvm todo '$foo is not "$()", but Failure; RT #130775'
-for oops,Slip -> $with, $expected {
-    my $foo is default(Nil) = do with $with -> $pos {
-        $pos;
-    }
-    ok $foo ~~ $expected, "\$pos: with on { $with // $with.^name }";
-}
-
 for
       1,Slip,
       0,Slip,
      (),Slip,
     Str,Str,
     Nil,Nil,
-    Int,Int
+    Int,Int,
+    oops,Failure
 
 -> $without, $expected {
 
-    my $foo is default(Nil) = do
-    without $without {
-        $_;
-    }
-    ok $foo ~~ $expected, "\$_: without on { $without // $without.^name }";
-}
-
-## had to factor this out of the above for loop, in order to fudge for JVM
-## TODO re-integrate test in above for loop once it passes on JVM
-# https://github.com/Raku/old-issue-tracker/issues/6070
-#?rakudo.jvm todo '$foo is not a Failure, but "$()"; RT #130775'
-for oops,Failure -> $without, $expected {
     my $foo is default(Nil) = do
     without $without {
         $_;
@@ -187,22 +156,11 @@ for
      (),Slip,
     Str,Str,
     Nil,Nil,
-    Int,Int
+    Int,Int,
+    oops,Failure
 
 -> $without, $expected {
 
-    my $foo is default(Nil) = do
-    without $without -> $pos {
-        $pos;
-    }
-    ok $foo ~~ $expected, "\$pos: without on { $without // $without.^name }";
-}
-
-## had to factor this out of the above for loop, in order to fudge for JVM
-## TODO re-integrate test in above for loop once it passes on JVM
-# https://github.com/Raku/old-issue-tracker/issues/6070
-#?rakudo.jvm todo '$foo is not a Failure, but "$()"; RT #130775'
-for oops,Failure -> $without, $expected {
     my $foo is default(Nil) = do
     without $without -> $pos {
         $pos;
@@ -250,7 +208,8 @@ for
       0,  1,1,
       0,Str,Str,
       0,Nil,Nil,
-      0,Int,Int
+      0,Int,Int,
+      0,oops,Failure
 
 -> $if, $orwith, $expected {
 
@@ -266,31 +225,6 @@ for
         $foo = $_;
     }
     ok $foo ~~ $expected, "\$_: if on { $if // $if.^name }, orwith on { $orwith // $orwith.^name }";
-}
-
-## had to factor this out of the above for loop, in order to fudge for JVM
-## TODO re-integrate test in above for loop once it passes on JVM
-# https://github.com/Raku/old-issue-tracker/issues/6070
-#?rakudo.jvm skip 'Failure from oops is thrown; RT #130775'
-{
-    for
-          0,oops,Failure
-
-    -> $if, $orwith, $expected {
-
-        $_ = 43;
-        my $foo is default(Nil) = 42;
-        if $if {
-            $foo = $if;
-        }
-        orwith $orwith {
-            $foo = $_;
-        }
-        else {
-            $foo = $_;
-        }
-        ok $foo ~~ $expected, "\$_: if on { $if // $if.^name }, orwith on { $orwith // $orwith.^name }";
-    }
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5863
