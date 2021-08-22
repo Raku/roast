@@ -14,7 +14,6 @@ is (5, 7, 8).Str, '5 7 8', '.Str on a List';
 is ().raku, '()', '.raku on empty List';
 is ().item.raku, '$( )', '.item.raku on empty List';
 is-deeply ().item, ().item.raku.EVAL, 'can roundtrip ().item';
-#?rakudo.jvm skip 'dies with t/harness5'
 cmp-ok ().item.VAR.WHAT, '===', ().item.raku.EVAL.VAR.WHAT,
     '().item .raku.EVAL roundtrip preserves itemization';
 

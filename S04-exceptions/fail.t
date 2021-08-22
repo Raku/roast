@@ -178,7 +178,6 @@ is_run ｢Failure.new(Exception.new); Nil｣, {:out(""), :err(*), :1status},
     'Failure.new(Exception.new) does not segfault';
 
 # https://github.com/Raku/old-issue-tracker/issues/6313
-#?rakudo.jvm skip 'block does not run'
 {
     without Failure.new {
         is-deeply .raku.EVAL.handled, True,
