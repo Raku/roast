@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use lib $?FILE.IO.parent(2).add("packages/S02-names/lib");
 use Test::Util;
 
-plan 202;
+plan 204;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -13,7 +13,6 @@ plan 202;
 # L<S02/Names>
 
 # (root)
-#?rakudo skip 'the binding in here is NYI'
 {
     my $x = 1; #OK
     my $y = 2; #OK
@@ -29,6 +28,7 @@ plan 202;
         ::<$x> := $y;
         $y = 1.5;
         is $x, 1.5, 'Can bind via root';
+        cmp-ok $x, '=:=', $y, 'binding results in both symbols being the same scalar';
     }
 
     # XXX Where else should rooty access look?
@@ -643,12 +643,12 @@ subtest "Non-dynamic failures" => {
     fails-like {
         my $non-dynamic = 42;
         sub foo is raw {
-            CALLER::<$non-dynamic>
+            CALLERS::<$non-dynamic>
         }
         foo
     },
     X::Symbol::NotDynamic, # In 6.c this would be X::Caller::NotDynamic
-    'CALLER fails if requested for a non-dynamic symbol';
+    'CALLERS fails if requested for a non-dynamic symbol';
 }
 
 # Even if a dynamic symbol is not a scalar it must still be visible in a dynamic chain
@@ -675,8 +675,7 @@ subtest "Dynamic is only dynamic" => {
         my $lex-sym = "";
         for DYNAMIC::.keys -> $sym {
             # A symbol is dynamic if its name has * twigil or its container .dynamic is True
-            $lex-sym = $sym unless $sym.substr(1,1) eq '*' || try DYNAMIC::{$sym}.VAR.dynamic;
-            say "LEX SYM {$lex-sym}: ", DYNAMIC::{$sym}.VAR.^name if $lex-sym;
+            $lex-sym = $sym unless ($sym.substr(1,1) eq '*') || try DYNAMIC::{$sym}.VAR.dynamic;
             last if $lex-sym;
         }
         is $lex-sym, "", "DYNAMIC does iterate over dynamics only";
@@ -694,4 +693,33 @@ subtest "Dynamic is only dynamic" => {
     s3;
 }
 
+# Make sure that all symbols a pseudo iterates over are accessible via it
+subtest "Roundtripping" => {
+    my module RNDTRP {
+        # Make sure that CLIENT points at a known context.
+        our sub give-client { CLIENT }
+    }
+    my @pkgs = MY, CORE, CALLER, OUTER, LEXICAL, OUTERS, DYNAMIC, CALLERS, UNIT, SETTING, RNDTRP::give-client;
+    plan +@pkgs;
+    for @pkgs -> $pkg {
+        subtest $pkg.^name => {
+            plan 2;
+            my $pseudo = $pkg.WHO;
+            my @syms = $pseudo.keys;
+            my $exist = 0;
+            my $readable = 0;
+            for @syms -> $sym {
+                ++$exist if $pseudo{$sym}:exists;
+                given $pseudo{$sym} {
+                    use nqp;
+                    ++$readable unless ($_ ~~ Failure) && .defined && (.exception ~~ X::Symbol::Kind | X::NoSuchSymbol);
+                }
+            }
+            is $exist, +@syms, "all symbols exist";
+            is $readable, +@syms, "all symbols are readable";
+        }
+    }
+}
+
+done-testing;
 # vim: expandtab shiftwidth=4

@@ -513,4 +513,5 @@ subtest "Bound dynamics" => {
     foo;
 }
 
+done-testing;
 # vim: expandtab shiftwidth=4
