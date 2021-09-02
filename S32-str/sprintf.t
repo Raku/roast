@@ -244,15 +244,16 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 # https://github.com/Raku/old-issue-tracker/issues/2593
 {
     throws-like { sprintf 'D6.2', 'foo' }, X::Str::Sprintf::Directives::Count,
-    :message('Your printf-style directives specify 0 arguments, but 1 argument was supplied.'),
+    :args-used(0),
+    :args-have(1),
     'Invalid formats do not spill internal details';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/2593
 {
     throws-like { sprintf("%d-%s", 42) }, X::Str::Sprintf::Directives::Count,
-    :message('Your printf-style directives specify 2 arguments, but 1 argument was supplied.'
-             ~ "\nAre you using an interpolated '\$'?"),
+    :args-used(2),
+    :args-have(1),
     "Warn of possible '\$' in format";
 }
 
@@ -262,8 +263,8 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
         my $k = 'foo';
         my $v = 'bar %s';
         sprintf("%s => $v", $k) }, X::Str::Sprintf::Directives::Count,
-    :message('Your printf-style directives specify 2 arguments, but 1 argument was supplied.'
-             ~ "\nAre you using an interpolated '\$'?"),
+    :args-used(2),
+    :args-have(1),
     "Warn of possible '\$' in format";
 }
 # https://github.com/Raku/old-issue-tracker/issues/3542
