@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use lib $?FILE.IO.parent(2).add("packages/S02-names/lib");
 use Test::Util;
 
-plan 204;
+plan 202;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -13,7 +13,8 @@ plan 204;
 # L<S02/Names>
 
 # (root)
-{
+subtest "Root" => {
+    plan 9;
     my $x = 1; #OK
     my $y = 2; #OK
     is ::<$x>, 1, 'Access via root finds lexicals';
@@ -31,8 +32,14 @@ plan 204;
         cmp-ok $x, '=:=', $y, 'binding results in both symbols being the same scalar';
     }
 
-    # XXX Where else should rooty access look?
-    # OUR and GLOBAL are the main (mutually exclusive) choices.
+    ok ::<OUTERS>:exists, "root sees pseudo-modules";
+
+    # Starting with 6.e static chain pseudos can see OUR namespace
+
+    OUR::<$our-var> = "on OUR";
+    ok ::<$our-var>, "symbol is visible on OUR";
+    is ::<$our-var>, "on OUR", "symbol value on OUR";
+    is-deeply ::.keys.grep('$our-var').List, ('$our-var',), "symbol from OUR is listed in .keys";
 }
 
 # MY
@@ -719,6 +726,62 @@ subtest "Roundtripping" => {
             is $readable, +@syms, "all symbols are readable";
         }
     }
+}
+
+# Promises preserve their dynamic chain (call stack). Make sure it is available for a dynamic chain pseudo-module
+subtest "Dynamic in a promise" => {
+    plan 4;
+    my @inner-reports;
+    my sub inner($p --> Promise:D) {
+        $p.then: {
+            is-deeply
+                DYNAMIC::.keys.grep('$*IN-OUTER').List,
+                ('$*IN-OUTER',),
+                'symbol from Promise dynamic context are listed in .keys';
+            ok DYNAMIC::<$*IN-OUTER>:exists, 'symbol is reported as existing';
+            is DYNAMIC::<$*IN-OUTER>, 'outer', "symbol's value";
+            DYNAMIC::<$*IN-OUTER> := pi;
+        }
+    }
+
+    my sub outer {
+        my $pouter = Promise.new;
+        my $*IN-OUTER = "outer";
+        my $pinner = inner($pouter);
+        $pouter.keep;
+        await $pinner;
+        is $*IN-OUTER, pi, "symbol successfully bound to another value via a dynamic pseudo";
+    }
+
+    outer;
+}
+
+subtest "PROCESS and GLOBAL with dynamic pseudos" => {
+    plan 9;
+    my sub inner {
+        is-deeply
+            DYNAMIC::.keys.grep(/'-VAR'/).Set,
+            set('$*GLOBAL-ONLY-VAR', '$*GLOBAL-VAR', '$*PROCESS-VAR'),
+            "symbols from PROCESS and GLOBAL are listed in .keys";
+        ok DYNAMIC::<$*PROCESS-VAR>:exists, 'symbol from PROCESS is visible as twigilled';
+        ok DYNAMIC::<$*GLOBAL-ONLY-VAR>:exists, 'symbol from GLOBAL is visible as twigilled';
+        is DYNAMIC::<$*PROCESS-VAR>, "via PROCESS", "symbol from PROCESS value";
+        is DYNAMIC::<$*GLOBAL-ONLY-VAR>, "via GLOBAL only", "symbol from GLOBAL value";
+        is DYNAMIC::<$*GLOBAL-VAR>, "via GLOBAL", "symbol from GLOBAL shadow off same-named symbol from PROCESS";
+        DYNAMIC::<$*PROCESS-VAR> := 'bind into PROCESS';
+        DYNAMIC::<$*GLOBAL-VAR> := 'bind into GLOBAL';
+    }
+
+    PROCESS::<$PROCESS-VAR> = "via PROCESS";
+    PROCESS::<$GLOBAL-VAR> = "must be shadowed";
+    GLOBAL::<$GLOBAL-VAR> = "via GLOBAL";
+    GLOBAL::<$GLOBAL-ONLY-VAR> = "via GLOBAL only";
+
+    inner;
+
+    is PROCESS::<$PROCESS-VAR>, 'bind into PROCESS', "binding via dynamic pseudo into PROCESS";
+    is GLOBAL::<$GLOBAL-VAR>, 'bind into GLOBAL', "binding via dynamic pseudo into GLOBAL";
+    is PROCESS::<$GLOBAL-VAR>, 'must be shadowed', "binding doesn't change shadowed symbol";
 }
 
 done-testing;
