@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 8;
+plan 9;
 
 # Tests for Mu type
 
@@ -40,6 +40,22 @@ plan 8;
     is-deeply infix:<=:=>(42),    Bool::True, 'single-arg =:= returns True (2)';
     is-deeply infix:<eqv>(False), Bool::True, 'single-arg eqv returns True (1)';
     is-deeply infix:<eqv>(42),    Bool::True, 'single-arg eqv returns True (2)';
+
+    # https://github.com/rakudo/rakudo/issues/1940
+    subtest 'smartmatching' => {
+        my Mu:_ @todo = |([X] Mu.new X Mu xx 2), |(Any, Any.new X Mu, Mu.new);
+
+        plan @todo * 2;
+
+        for @todo -> [Mu:_ $lhs, Mu:_ $rhs] {
+            my Bool:_ $result;
+            lives-ok {
+                $result = $lhs ~~ $rhs
+            }, "$lhs.raku() ~~ $rhs.raku() smartmatches...";
+            cmp-ok $result, &[===], $lhs.WHAT =:= Mu || not $rhs.DEFINITE,
+                '...with the correct result';
+        }
+    };
 }
 
 # vim: expandtab shiftwidth=4
