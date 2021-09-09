@@ -5,7 +5,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use lib $?FILE.IO.parent(2).add("packages/S02-names/lib");
 use Test::Util;
 
-plan 199;
+plan 202;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -13,8 +13,8 @@ plan 199;
 # L<S02/Names>
 
 # (root)
-#?rakudo skip 'the binding in here is NYI'
-{
+subtest "Root" => {
+    plan 9;
     my $x = 1; #OK
     my $y = 2; #OK
     is ::<$x>, 1, 'Access via root finds lexicals';
@@ -29,10 +29,17 @@ plan 199;
         ::<$x> := $y;
         $y = 1.5;
         is $x, 1.5, 'Can bind via root';
+        cmp-ok $x, '=:=', $y, 'binding results in both symbols being the same scalar';
     }
 
-    # XXX Where else should rooty access look?
-    # OUR and GLOBAL are the main (mutually exclusive) choices.
+    ok ::<OUTERS>:exists, "root sees pseudo-modules";
+
+    # Starting with 6.e static chain pseudos can see OUR namespace
+
+    OUR::<$our-var> = "on OUR";
+    ok ::<$our-var>, "symbol is visible on OUR";
+    is ::<$our-var>, "on OUR", "symbol value on OUR";
+    is-deeply ::.keys.grep('$our-var').List, ('$our-var',), "symbol from OUR is listed in .keys";
 }
 
 # MY
@@ -630,4 +637,152 @@ is_run q|BEGIN { UNIT; Nil }|, { :0status, :out(''), :err('') },
     }
 }
 
+subtest "Non-dynamic failures" => {
+    plan 2;
+
+    fails-like {
+        my $non-dynamic = 42;
+        DYNAMIC::<$non-dynamic>
+    },
+    X::Symbol::NotDynamic,
+    'a dynamic only pseudostash fails if a non-dynamic symbol requested';
+
+    fails-like {
+        my $non-dynamic = 42;
+        sub foo is raw {
+            CALLERS::<$non-dynamic>
+        }
+        foo
+    },
+    X::Symbol::NotDynamic, # In 6.c this would be X::Caller::NotDynamic
+    'CALLERS fails if requested for a non-dynamic symbol';
+}
+
+# Even if a dynamic symbol is not a scalar it must still be visible in a dynamic chain
+subtest "Bound dynamics" => {
+    plan 2;
+    my sub bar {
+        ok DYNAMIC::<$*BOUND>:exists, "DYNAMIC sees a bout dynamic symbol";
+        is DYNAMIC::<$*BOUND>, pi, "bound dynamic value is accessible";
+    }
+    my sub foo {
+        # Normally .dynamic of a Scalar returns True; but in this case there is no container, no .dynamic
+        my $*BOUND := pi;
+        bar;
+    }
+    foo;
+}
+
+# A dynamic chain pseudostash must not only iterate over dynamic symbols
+subtest "Dynamic is only dynamic" => {
+    plan 1;
+    sub s1 {
+        my $*dyn1;
+        my $lex1;
+        my $lex-sym = "";
+        for DYNAMIC::.keys -> $sym {
+            # A symbol is dynamic if its name has * twigil or its container .dynamic is True
+            $lex-sym = $sym unless ($sym.substr(1,1) eq '*') || try DYNAMIC::{$sym}.VAR.dynamic;
+            last if $lex-sym;
+        }
+        is $lex-sym, "", "DYNAMIC does iterate over dynamics only";
+    }
+    sub s2 {
+        my $*dyn2;
+        my $lex2;
+        s1;
+    }
+    sub s3 {
+        my $*dyn3;
+        my $lex3;
+        s2;
+    }
+    s3;
+}
+
+# Make sure that all symbols a pseudo iterates over are accessible via it
+subtest "Roundtripping" => {
+    my module RNDTRP {
+        # Make sure that CLIENT points at a known context.
+        our sub give-client { CLIENT }
+    }
+    my @pkgs = MY, CORE, CALLER, OUTER, LEXICAL, OUTERS, DYNAMIC, CALLERS, UNIT, SETTING, RNDTRP::give-client;
+    plan +@pkgs;
+    for @pkgs -> $pkg {
+        subtest $pkg.^name => {
+            plan 2;
+            my $pseudo = $pkg.WHO;
+            my @syms = $pseudo.keys;
+            my $exist = 0;
+            my $readable = 0;
+            for @syms -> $sym {
+                ++$exist if $pseudo{$sym}:exists;
+                given $pseudo{$sym} {
+                    use nqp;
+                    ++$readable unless ($_ ~~ Failure) && .defined && (.exception ~~ X::Symbol::Kind | X::NoSuchSymbol);
+                }
+            }
+            is $exist, +@syms, "all symbols exist";
+            is $readable, +@syms, "all symbols are readable";
+        }
+    }
+}
+
+# Promises preserve their dynamic chain (call stack). Make sure it is available for a dynamic chain pseudo-module
+subtest "Dynamic in a promise" => {
+    plan 4;
+    my @inner-reports;
+    my sub inner($p --> Promise:D) {
+        $p.then: {
+            is-deeply
+                DYNAMIC::.keys.grep('$*IN-OUTER').List,
+                ('$*IN-OUTER',),
+                'symbol from Promise dynamic context are listed in .keys';
+            ok DYNAMIC::<$*IN-OUTER>:exists, 'symbol is reported as existing';
+            is DYNAMIC::<$*IN-OUTER>, 'outer', "symbol's value";
+            DYNAMIC::<$*IN-OUTER> := pi;
+        }
+    }
+
+    my sub outer {
+        my $pouter = Promise.new;
+        my $*IN-OUTER = "outer";
+        my $pinner = inner($pouter);
+        $pouter.keep;
+        await $pinner;
+        is $*IN-OUTER, pi, "symbol successfully bound to another value via a dynamic pseudo";
+    }
+
+    outer;
+}
+
+subtest "PROCESS and GLOBAL with dynamic pseudos" => {
+    plan 9;
+    my sub inner {
+        is-deeply
+            DYNAMIC::.keys.grep(/'-VAR'/).Set,
+            set('$*GLOBAL-ONLY-VAR', '$*GLOBAL-VAR', '$*PROCESS-VAR'),
+            "symbols from PROCESS and GLOBAL are listed in .keys";
+        ok DYNAMIC::<$*PROCESS-VAR>:exists, 'symbol from PROCESS is visible as twigilled';
+        ok DYNAMIC::<$*GLOBAL-ONLY-VAR>:exists, 'symbol from GLOBAL is visible as twigilled';
+        is DYNAMIC::<$*PROCESS-VAR>, "via PROCESS", "symbol from PROCESS value";
+        is DYNAMIC::<$*GLOBAL-ONLY-VAR>, "via GLOBAL only", "symbol from GLOBAL value";
+        is DYNAMIC::<$*GLOBAL-VAR>, "via GLOBAL", "symbol from GLOBAL shadow off same-named symbol from PROCESS";
+        DYNAMIC::<$*PROCESS-VAR> := 'bind into PROCESS';
+        DYNAMIC::<$*GLOBAL-VAR> := 'bind into GLOBAL';
+    }
+
+    PROCESS::<$PROCESS-VAR> = "via PROCESS";
+    PROCESS::<$GLOBAL-VAR> = "must be shadowed";
+    GLOBAL::<$GLOBAL-VAR> = "via GLOBAL";
+    GLOBAL::<$GLOBAL-ONLY-VAR> = "via GLOBAL only";
+
+    inner;
+
+    is PROCESS::<$PROCESS-VAR>, 'bind into PROCESS', "binding via dynamic pseudo into PROCESS";
+    is GLOBAL::<$GLOBAL-VAR>, 'bind into GLOBAL', "binding via dynamic pseudo into GLOBAL";
+    is PROCESS::<$GLOBAL-VAR>, 'must be shadowed', "binding doesn't change shadowed symbol";
+}
+
+done-testing;
 # vim: expandtab shiftwidth=4
