@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 # L<S12/"Calling sets of methods"/"Any method can defer to the next candidate method in the list">
 
@@ -123,6 +123,19 @@ class BarCallWithInt is Foo {
     ok $after-cw, 'control reaches after callwith that has nowhere to go';
     is DeadEnd.cs(1), Nil, 'callsame with nowhere to defer produces Nil';
     ok $after-cs, 'control reaches after callsame that has nowhere to go';
+}
+
+subtest "Two methods of different names in a class both using callsame" => {
+    my class C1 {
+        method m1() { "c1-m1" }
+        method m2() { "c1-m2" }
+    }
+    my class C2 is C1 {
+        method m1() { "c2-m1," ~ callsame }
+        method m2() { "c2-m2," ~ callsame }
+    }
+    is C2.m1, "c2-m1,c1-m1", "First method callsame works";
+    is C2.m2, "c2-m2,c1-m2", "Second method callsame works";
 }
 
 # vim: expandtab shiftwidth=4
