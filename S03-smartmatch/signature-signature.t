@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 24;
+plan 26;
 
 #L<S03/Smart matching/Signature-signature>
 {
@@ -36,6 +36,12 @@ plan 24;
 
     ok (:(&foo:(Str --> Bool)) ~~ :(&bar:(Str --> Bool))),
         "Code params with signatures";
+
+    nok (:(&foo:(Int --> Bool)) ~~ :(&bar:(Str --> Bool))),
+        "Code params with different signature parameters doesn't match";
+
+    nok (:(&foo:(Int --> Bool)) ~~ :(&bar:(Int --> Str))),
+        "Code params with different signature return types doesn't match";
 
     # https://github.com/Raku/old-issue-tracker/issues/5028
     nok :(Int --> Int) ~~ :(), 'Can smartmatch against empty signature (False)';
