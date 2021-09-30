@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 21;
+plan 28;
 
 # L<S06/Closure parameters>
 
@@ -49,10 +49,9 @@ plan 21;
     multi sub t1 (&code:(Int)) { 'Int' };   #OK not used
     multi sub t1 (&code:(Str)) { 'Str' };   #OK not used
     multi sub t1 (&code:(Str --> Bool)) { 'Str --> Bool' };   #OK not used
-    multi sub t1 (&code:(Any, Any)) { 'Two' };   #OK not used
+    multi sub t1 (&code:(Mu, Mu)) { 'Two' };   #OK not used
 
     # Note that using &code:($,$) instead of &code:(Any, Any) makes this next test work
-    #?rakudo skip 'subsignatures dont factor into multi candidates yet'
     is t1(-> $a, $b { }), 'Two',   #OK not used
        'Multi dispatch based on closure parameter syntax (1)';
     is t1(-> Int $a { }), 'Int',   #OK not used
@@ -96,4 +95,34 @@ subtest 'can use signature unpacking with anonymous parameters' => {
     throws-like '-> &:(Int) {}({;})', X::TypeCheck::Binding::Parameter,
         'typcheck correctly fails with wrong arg';
 }
+
+# https://github.com/rakudo/rakudo/issues/4537
+{
+    my sub testit(Int $v, :&fn:(Int)) { fn($v) }
+    my sub fn(Int $v) { $v * 2 };
+    my sub fn-str(Str $v) { $v ~~ " * 2" };
+
+    is testit(42, :&fn), 84, "signature constraint works with a named callable parameter";
+    dies-ok { testit(13, fn => &fn-str) }, "wrong signature is not accepted by named constrained parameter";
+}
+
+# Signature constraints must also work with type captures (generics)
+{
+    my sub testit(::T $v, &fn:(T)) { fn($v) }
+    my sub fn-int(Int $v) { $v * 2 }
+    my sub fn-str(Str $v) { $v ~ " is OK" }
+
+    is testit(12, &fn-int), 24, "signature constraint with type capture (Int)";
+    is testit("string", &fn-str), "string is OK", "signature constraint with type capture (Str)";
+    dies-ok { testit(13, &fn-str) }, "mismatch on captured and signature types predictably throws";
+
+    my role R[::T] {
+        method testit(T $v, &fn:(T)) { fn($v) }
+    }
+
+    is R[Int].testit(42, &fn-int), 84, "signature-constrained method on a parameterized role works";
+    dies-ok { R[Str].testit("foo", &fn-int) }, "mismatch on role parameterization and signature types predictable throws";
+}
+
+done-testing;
 # vim: expandtab shiftwidth=4
