@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 14;
 
 # L<S12/"FALLBACK methods"/"special name FALLBACK">
 
@@ -62,5 +62,21 @@ class I {
 my $i = I.new;
 is $i.spy, 'yes, I work', 'FALLBACK is effective with a CALL-ME';
 is $i(), 'invaught', 'CALL-ME beats FALLBACK';
+
+# https://github.com/rakudo/rakudo/issues/4543
+{
+    multi trait_mod:<is>(Routine $r, :$me'd!) {
+        $r does role :: {
+            method CALL-ME () {
+                'In CALL-ME'
+            }
+        }
+    }
+
+    proto sub target() is me'd {*}
+    multi sub target() { 'wrong' }
+    is target(), 'In CALL-ME',
+        'A CALL-ME mixed into a proto in a trait_mod is called';
+}
 
 # vim: expandtab shiftwidth=4
