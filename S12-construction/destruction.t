@@ -32,18 +32,18 @@ ok( ! $in_destructor,    'destructor should not fire while object is active' );
 my $child = Child.new();
 $child = Nil;
 
-# no guaranteed timely destruction, so replace $a and try to force some GC here
-await Promise.anyof(
-    Promise.in(5),
-    start {
-        loop
-        {
-            my $foo = Foo.new;
-            my $chld = Child.new unless +@destructor_order;
-            last if $in_destructor && @destructor_order;
-        }
+# no guaranteed timely destruction, so try to force some GC here
+await start {
+    loop
+    {
+        # Non-MoarVM backends currently warn for this method, so surpress that
+        quietly $*VM.request-garbage-collection;
+
+        my $foo = Foo.new;
+        my $chld = Child.new unless +@destructor_order;
+        last if $in_destructor && @destructor_order;
     }
-);
+};
 
 #?rakudo.jvm todo "doesn't work, yet"
 ok( $in_destructor, '... only when object goes away everywhere'                          );
