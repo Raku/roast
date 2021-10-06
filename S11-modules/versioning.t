@@ -11,7 +11,7 @@ for <c d e.PREVIEW> -> $from-rev {
     for <c d e> -> $mod-rev {
         subtest "6.$mod-rev from 6.$from-rev", {
             plan 8;
-            for (:core-revision($mod-rev), :perl-version("6.$mod-rev")) -> (:key($routine), :value($response)) {
+            for (:core-revision($mod-rev), :raku-version("6.$mod-rev")) -> (:key($routine), :value($response)) {
                 for (:use(''), :require(" <\&$routine>")) -> (:key($statement), :value($starg)) {
                     is-run 'use v6.' ~$from-rev ~ '; ' ~ $statement ~ ' Module_6' ~ $mod-rev ~ $starg ~ '; print ' ~ $routine,
                         "$statement: $routine is $response",
