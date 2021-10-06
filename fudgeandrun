@@ -30,12 +30,12 @@ Usage: $0 [options] testfilename ...
 
     Options:
     --impl=implemention
-        Default extracted from perl6 \$*PERL and \$*VM variables.
+        Default extracted from perl6 \$*RAKU and \$*VM variables.
         implementation may be just name or compiler.backend like rakudo.jvm
 
     --backend=(moar|jvm|other)
         specify implementation as
-        compiler from \$*PERL.compiler.name suffixed by ".\$backend"
+        compiler from \$*RAKU.compiler.name suffixed by ".\$backend"
 
     --impl-cmd
         Specify command other than "perl6" to run implementation

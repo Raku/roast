@@ -58,7 +58,7 @@ ok $*VM.gist ~~ m/\w/, 'We can do a $*VM.gist';
 ok $*VM.Str  ~~ m/\w/, 'We can do a $*VM.Str';
 
 diag "'{$*VM.name}' is an unknown VM, please report" if !
-  ok $*VM.name eq any($*PERL.VMnames),
+  ok $*VM.name eq any($*RAKU.VMnames),
   "We know of the VM we are running under";
 
 isa-ok $*VM.version, Version;

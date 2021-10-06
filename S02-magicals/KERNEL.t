@@ -52,7 +52,7 @@ ok $*KERNEL.gist ~~ m/\w/, 'We can do a $*KERNEL.gist';
 ok $*KERNEL.Str  ~~ m/\w/, 'We can do a $*KERNEL.Str';
 
 diag "'{$*KERNEL.name}' is an unknown KERNEL, please report" if !
-  ok $*KERNEL.name eq any($*PERL.KERNELnames),
+  ok $*KERNEL.name eq any($*RAKU.KERNELnames),
   "We know of the KERNEL we are running under";
 
 isa-ok $*KERNEL.version, Version;

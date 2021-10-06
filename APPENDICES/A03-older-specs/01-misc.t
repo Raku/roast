@@ -300,7 +300,7 @@ group-of 2 => ':count arg on &lines/Str.lines' => {
 group-of 5 => 'language switching' => {
     group-of 4 => 'version as first thing' => {
         sub versify ($ver?) {
-            ("use v6.$ver; " with $ver) ~ 'print $*PERL.version'
+            ("use v6.$ver; " with $ver) ~ 'print $*RAKU.version'
         }
 
         is_run versify(),            {:err(''), :0status, :out<6.d> },
@@ -316,7 +316,7 @@ group-of 5 => 'language switching' => {
     group-of 4 => 'version after comments' => {
         sub versify ($ver?) {
             "# meow meow\n"
-              ~ ("use v6.$ver; " with $ver) ~ 'print $*PERL.version'
+              ~ ("use v6.$ver; " with $ver) ~ 'print $*RAKU.version'
         }
 
         is_run versify(),            {:err(''), :0status, :out<6.d> },
@@ -332,7 +332,7 @@ group-of 5 => 'language switching' => {
     group-of 4 => 'version after POD' => {
         sub versify ($ver?) {
             "=begin pod\n\nZE POD\n\n=end pod\n\n"
-              ~ ("use v6.$ver; " with $ver) ~ 'print $*PERL.version'
+              ~ ("use v6.$ver; " with $ver) ~ 'print $*RAKU.version'
         }
 
         is_run versify(),            {:err(''), :0status, :out<6.d> },
@@ -355,7 +355,7 @@ group-of 5 => 'language switching' => {
     }
 
     group-of 4 => 'versions without dot' => {
-        sub versify ($ver?) { ("use v6$ver; " with $ver) ~ 'print $*PERL.version' }
+        sub versify ($ver?) { ("use v6$ver; " with $ver) ~ 'print $*RAKU.version' }
 
         is_run versify(),            {:err(''), :0status, :out<6.d> },
             'no version pragma';

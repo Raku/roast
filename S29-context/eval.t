@@ -131,7 +131,7 @@ is_run 'use MONKEY-SEE-NO-EVAL; EVAL q|print "I ® U"|.encode',
 # GH rakudo/rakudo#3263
 {
     for <c d> -> $rev {
-        is_run q<use v6.> ~ $rev ~ q<; use MONKEY-SEE-NO-EVAL; EVAL 'print $*PERL.version'>,
+        is_run q<use v6.> ~ $rev ~ q<; use MONKEY-SEE-NO-EVAL; EVAL 'print $*RAKU.version'>,
             {:out("6.$rev"), :err(''), :0status},
             "EVAL preserves version 6.$rev";
     }

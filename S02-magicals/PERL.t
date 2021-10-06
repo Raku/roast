@@ -39,27 +39,27 @@ plan 46;
     isa-ok $C.signature, Blob;
 }
 
-ok $*PERL.name,      "We are running under '{$*PERL.name}'";
-ok $*PERL.auth,      "Authority is '{$*PERL.auth}'";
-ok $*PERL.version,   "Version is '{$*PERL.version}'";
+ok $*RAKU.name,      "We are running under '{$*RAKU.name}'";
+ok $*RAKU.auth,      "Authority is '{$*RAKU.auth}'";
+ok $*RAKU.version,   "Version is '{$*RAKU.version}'";
 # https://github.com/Raku/old-issue-tracker/issues/3918
 #?rakudo todo 'no Perl.signature yet RT #124624'
-ok $*PERL.signature, "Signature is '{$*PERL.signature}'";
+ok $*RAKU.signature, "Signature is '{$*RAKU.signature}'";
 # https://github.com/Raku/old-issue-tracker/issues/3918
 #?rakudo todo 'no Perl.desc yet RT #124624'
-ok $*PERL.desc,      "Description is '{$*PERL.desc}'";
-ok $*PERL.compiler,  "Has compiler info";
+ok $*RAKU.desc,      "Description is '{$*RAKU.desc}'";
+ok $*RAKU.compiler,  "Has compiler info";
 
-ok $*PERL.raku ~~ m/\w/, 'We can do a $*PERL.raku';
-ok $*PERL.gist ~~ m/\w/, 'We can do a $*PERL.gist';
-ok $*PERL.Str  ~~ m/\w/, 'We can do a $*PERL.Str';
+ok $*RAKU.raku ~~ m/\w/, 'We can do a $*RAKU.raku';
+ok $*RAKU.gist ~~ m/\w/, 'We can do a $*RAKU.gist';
+ok $*RAKU.Str  ~~ m/\w/, 'We can do a $*RAKU.Str';
 
-isa-ok $*PERL.version, Version;
+isa-ok $*RAKU.version, Version;
 # https://github.com/Raku/old-issue-tracker/issues/3918
-isa-ok $*PERL.signature, Blob;
-isa-ok $*PERL.compiler, Compiler;
+isa-ok $*RAKU.signature, Blob;
+isa-ok $*RAKU.compiler, Compiler;
 
-my $C = $*PERL.compiler;
+my $C = $*RAKU.compiler;
 ok $C.name,       "We were compiled in '{$C.name}'";
 ok $C.auth,       "Authority is '{$C.auth}'";
 ok $C.version,    "Version is '{$C.version}'";
