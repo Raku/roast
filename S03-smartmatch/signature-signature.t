@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 26;
+plan 33;
 
 #L<S03/Smart matching/Signature-signature>
 {
@@ -24,6 +24,13 @@ plan 26;
          :(:$x, Int :$y, Cool :$z, *%_),            :(*%_),                     False,
          :(:$x, *%_),                               :(:$x, *%_),                True,
          :(Mu, Any, Numeric),                       :(Mu, *@_),                 False,
+         :($),                                      :($ ($, $)),                True,
+         :($),                                      :(Int $ ($, $)),            True,
+         :(Int $ ($, $)),                           :($ ($, $)),                False,
+         :(:$),                                     :(:$ ($, $)),               True,
+         :(:$),                                     :(Int :$ ($, $)),           True,
+         :(Int :$ ($, $)),                          :(:$ ($, $)),               False,
+         :(:$b ($, $)),                             :(:$a ($, $)),              False,
         );
 
     for @tests -> $s1, $s2, $res {
