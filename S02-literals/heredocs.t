@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 33;
+plan 37;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -271,6 +271,46 @@ END
          END
     is   no-r(@q6[0]), "line one\n\tline two\n",      'trim 9 leading spaces, leave leading tab in line two';
     isnt no-r(@q6[0]), "line one\n       line two\n", 'should not contain 7 leading spaces in line two';
+}
+
+# Add missing tests for odd cases
+# Fail on using in a block (see issue #4539)
+{
+    lives-ok {
+        =begin comment
+        # Following is the original code that worked that Jonathan
+        # said should NOT have worked.
+        # After his suggested change was made, the code fails
+        # because $a is not defined.
+        sub f { my $a = 'foo'; qq:to/END/ } 
+               $a
+               END
+        =end comment
+        # This is here for a working example of using a heredoc
+        # in a function call:
+        sub f($a) { $a } 
+        my $a = 'foo';
+        say f(qq:to/END/);
+            $a
+            END 
+    }, "heredoc in function call"
+
+}
+
+# Multiple docs on a single line
+{
+    my ($a, $b, $c) = q:to/A/, q:to/B/, q:to/C/;
+    a
+    A
+    b
+    B
+    c
+    C
+
+    is $a.trim, 'a';
+    is $b.trim, 'b';
+    is $c.trim, 'c';
+
 }
 
 # vim: expandtab shiftwidth=4
