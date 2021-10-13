@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 37;
+plan 41;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -274,43 +274,78 @@ END
 }
 
 # Add missing tests for odd cases
-# Fail on using in a block (see issue #4539)
-{
-    lives-ok {
-        =begin comment
-        # Following is the original code that worked that Jonathan
-        # said should NOT have worked.
-        # After his suggested change was made, the code fails
-        # because $a is not defined.
-        sub f { my $a = 'foo'; qq:to/END/ } 
-               $a
-               END
-        =end comment
-        # This is here for a working example of using a heredoc
-        # in a function call:
-        sub f($a) { $a } 
-        my $a = 'foo';
-        say f(qq:to/END/);
-            $a
-            END 
-    }, "heredoc in function call"
-
-}
 
 # Multiple docs on a single line
 {
-    my ($a, $b, $c) = q:to/A/, q:to/B/, q:to/C/;
+    my ($a, $b, $c) = q:to/END/, q:to/END/, q:to/END/;
     a
-    A
+    END
     b
-    B
+    END
     c
-    C
+    END
 
-    is $a.trim, 'a';
-    is $b.trim, 'b';
-    is $c.trim, 'c';
+    is $a.trim, 'a', "heredoc list element 0";
+    is $b.trim, 'b', "heredoc list element 1";
+    is $c.trim, 'c', "heredoc list element 2";
+}
 
+{
+    eval-lives-ok q{
+        # A working example of using a heredoc
+        # in a function call:
+        sub f($a) { $a }
+        my $a = 'foo';
+        say f(qq:to/END/);
+            $a
+            END
+    }, "heredoc in a function call"
+}
+
+{
+    eval-lives-ok q{
+        # A working example of using a heredoc
+        # in a block (from Speculations):
+        BEGIN { say q:to/END/ }
+            Say me!
+            END
+    }, "heredoc ok in block 1"
+}
+
+# Fail on using in a block (see issue #4539)
+{
+    # Following is the original code that worked that Jonathan
+    # said should NOT have worked.
+    # After his suggested change was made, the code fails
+    # because $a in the line following the block is not defined.
+    eval-dies-ok q{
+    sub f() { my $a = 'foo'; qq:to/END/ }
+           $a
+           END
+    }, "heredoc fails in block 2"
+}
+
+# The following code (based on @jnthn's code) illustrates the correct way
+# to use a heredoc in a block without using variables
+# outside of the block:
+{
+    eval-lives-ok q{
+        my $x;
+        if $x { say q:to/END/ } 
+           This is alright
+           END
+    }, "heredoc ok in block 3"
+}
+
+# The following code (based on @jnthn's code) illustrates the incorrect way
+# to use a heredoc in a block by attempting use of a variable outside of
+# of the block:
+{
+    eval-dies-ok q{
+        if $x { my $var = 42; say qq:to/END/ } 
+           Should not be able to use $var
+           END
+    }, "heredoc fails in block 4"
 }
 
 # vim: expandtab shiftwidth=4
