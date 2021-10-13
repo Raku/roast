@@ -2,7 +2,7 @@ use Test;
 
 use lib $?FILE.IO.parent(2).add("packages/S12-meta/lib");
 
-plan 6;
+plan 7;
 
 # https://github.com/Raku/old-issue-tracker/issues/5411
 {
@@ -51,6 +51,24 @@ plan 6;
     $outer.^compose;
 
     lives-ok { $outer.new(inner => $inner.new) }, 'Runtime created classes can be used as attributes';
+}
+
+# https://github.com/rakudo/rakudo/issues/4571
+{
+    my class ASNType {
+        has $.type is rw;
+    }
+    my $new-type = Metamodel::ClassHOW.new_type(name => 'LDAPMessage');
+    my $attribute-type = ASNType.new(type => Int);
+    my $attr = Attribute.new:
+        name => '$!protocol-op',
+        type => $attribute-type.type,
+        package => $new-type,
+        :has_accessor;
+    $new-type.^add_attribute($attr);
+    $new-type.^compose;
+    lives-ok { $new-type.new },
+        'Can construct type with attribute whose type was from an rw accessor';
 }
 
 # vim: expandtab shiftwidth=4
