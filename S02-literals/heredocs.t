@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 41;
+plan 43;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -275,7 +275,7 @@ END
 
 # Add missing tests for odd cases
 
-# Multiple docs on a single line
+# Multiple heredocs on a single line
 {
     my ($a, $b, $c) = q:to/END/, q:to/END/, q:to/END/;
     a
@@ -290,62 +290,75 @@ END
     is $c.trim, 'c', "heredoc list element 2";
 }
 
-{
-    eval-lives-ok q{
-        # A working example of using a heredoc
-        # in a function call:
-        sub f($a) { $a }
-        my $a = 'foo';
-        say f(qq:to/END/);
-            $a
-            END
-    }, "heredoc in a function call"
-}
+# A working example of using a heredoc
+# in a function call:
+eval-lives-ok q{
+    sub f($a) { $a }
+    my $a = 'foo';
+    say f(qq:to/END/);
+        $a
+        END
+}, "heredoc in a function call";
 
-{
-    eval-lives-ok q{
-        # A working example of using a heredoc
-        # in a block (from Speculations):
-        BEGIN { say q:to/END/ }
-            Say me!
-            END
-    }, "heredoc ok in block 1"
-}
+# A working example of using a heredoc
+# in a block (from the Synopses):
+eval-lives-ok q{
+    BEGIN { say q:to/END/ }
+        Say me!
+        END
+}, "heredoc ok in block 1";
 
 # Fail on using in a block (see issue #4539)
-{
-    # Following is the original code that worked that Jonathan
-    # said should NOT have worked.
-    # After his suggested change was made, the code fails
-    # because $a in the line following the block is not defined.
-    eval-dies-ok q{
+# Following is the original code that worked that Jonathan
+# said should NOT have worked.
+#
+# After his suggested change was made, the code properly fails
+# because $a in the line following the block is not defined.
+eval-dies-ok q{
     sub f() { my $a = 'foo'; qq:to/END/ }
-           $a
-           END
-    }, "heredoc fails in block 2"
+       $a
+       END
+}, "heredoc fails in block 2a";
+
+# The code above can be made to seem to work by declaring $a
+# before the block:
+eval-lives-ok q{
+    my $a;
+    sub f() { $a = 'foo'; qq:to/END/ }
+       $a
+       END
+    my $b = f;
+}, "heredoc falsely appears to work in block 2b";
+
+# But the reality hits home when attempting to use the sub:
+{
+    my $a;
+    sub f() { $a = 'foo'; qq:to/END/ }
+       $a
+       END
+    my $b = f;
+    eval-dies-ok q{ 
+        $b.defined
+    }, "\$b is not defined in heredoc block 2c";
 }
 
 # The following code (based on @jnthn's code) illustrates the correct way
 # to use a heredoc in a block without using variables
 # outside of the block:
-{
-    eval-lives-ok q{
-        my $x;
-        if $x { say q:to/END/ } 
-           This is alright
-           END
-    }, "heredoc ok in block 3"
-}
+eval-lives-ok q{
+    my $x;
+    if $x { say q:to/END/ } 
+       This is alright
+       END
+}, "heredoc ok in block 3";
 
 # The following code (based on @jnthn's code) illustrates the incorrect way
 # to use a heredoc in a block by attempting use of a variable outside of
 # of the block:
-{
-    eval-dies-ok q{
-        if $x { my $var = 42; say qq:to/END/ } 
-           Should not be able to use $var
-           END
-    }, "heredoc fails in block 4"
-}
+eval-dies-ok q{
+    if $x { my $var = 42; say qq:to/END/ } 
+       Should not be able to use $var
+       END
+}, "heredoc fails in block 4";
 
 # vim: expandtab shiftwidth=4
