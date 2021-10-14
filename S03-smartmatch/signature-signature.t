@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 37;
+plan 38;
 
 #L<S03/Smart matching/Signature-signature>
 {
@@ -58,6 +58,15 @@ plan 37;
     nok :(Int --> Int) ~~ :(), 'Can smartmatch against empty signature (False)';
     nok :() ~~ :(Int ), 'Can smartmatch an empty signature (False)';
     ok :() ~~ :(), 'Can smartmatch against empty signature (True)';
+
+    ok none((
+        :($T? is raw),
+        :($T? is raw = Mu),
+        :($T? is raw where $T =:= $T.WHAT = Mu),
+        :(:$T? is raw),
+        :(:$T? is raw = Mu),
+        :(:$T? is raw where $T =:= $T.WHAT = Mu)
+    ) X~~ :()), 'Optional parameters do not get dropped in a smartmatch';
 }
 
 # vim: expandtab shiftwidth=4
