@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 33;
+plan 37;
 
 #L<S03/Smart matching/Signature-signature>
 {
@@ -27,9 +27,13 @@ plan 33;
          :($),                                      :($ ($, $)),                True,
          :($),                                      :(Int $ ($, $)),            True,
          :(Int $ ($, $)),                           :($ ($, $)),                False,
+         :(*@),                                     :($ ($, $)),                True,
+         :(|),                                      :($ ($, $)),                True,
          :(:$),                                     :(:$ ($, $)),               True,
          :(:$),                                     :(Int :$ ($, $)),           True,
          :(Int :$ ($, $)),                          :(:$ ($, $)),               False,
+         :(*%),                                     :(:$ ($, $)),               True,
+         :(|),                                      :(:$ ($, $)),               True,
          :(:$b ($, $)),                             :(:$a ($, $)),              False,
         );
 
