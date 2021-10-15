@@ -1,11 +1,9 @@
 use v6;
 use Test;
 use soft;
-plan 6;
+plan 7;
 
-#?rakudo todo "This is canary test. If this TODO passes then it's probably the time to unfudge the main tests"
-# This block is to be removed when time comes.
-{
+subtest 'Basic interaction of nextwith/nextsame with multi and method dispatch' => {
     my class Foo {
         method foo($v) {
             $v * 2
@@ -26,8 +24,50 @@ plan 6;
     is $obj.foo("11"), 22, "Str is dispatched";
 }
 
-#?rakudo skip 'Until 2020 dispatcher proposal is implemented'
-#?DOES 4
+subtest 'Args to callwith in wrapper are used by enclosing multi and method dispatch' => {
+    my class C1 {
+        method m($x) {
+            "C1: $x"
+        }
+    }
+    my class C2 is C1 {
+        multi method m(Any $x) {
+            "C2/Any: $x\n" ~ callsame()
+        }
+        multi method m(Int $x) {
+            "C2/Int: $x\n" ~ callsame()
+        }
+    }
+    C2.^lookup('m').candidates[1].wrap: -> \s, $x {
+        "Wrapper: $x\n" ~ callwith(s, $x + 1)
+    }
+    is C2.m(1), "Wrapper: 1\nC2/Int: 2\nC2/Any: 2\nC1: 2", 'First call';
+    is C2.m(1), "Wrapper: 1\nC2/Int: 2\nC2/Any: 2\nC1: 2", 'Second call';
+}
+
+subtest 'Args to callwith in multi are used by enclosing method dispatch' => {
+    my class C1 {
+        method m($x) {
+            "C1: $x"
+        }
+    }
+    my class C2 is C1 {
+        multi method m(Any $x) {
+            "C2/Any: $x\n" ~ callsame()
+        }
+        multi method m(Int $x) {
+            "C2/Int: $x\n" ~ callwith($x + 1)
+        }
+    }
+    C2.^lookup('m').candidates[1].wrap: -> \s, $x {
+        "Wrapper: $x\n" ~ callwith(s, $x + 1)
+    }
+    is C2.m(1), "Wrapper: 1\nC2/Int: 2\nC2/Any: 3\nC1: 3", 'First call';
+    is C2.m(1), "Wrapper: 1\nC2/Int: 2\nC2/Any: 3\nC1: 3", 'Second call';
+}
+
+#?rakudo skip 'Various cases of wrap not yet supported'
+#?DOES 1
 {
     subtest "Dispatcher Chain" => {
         plan 13;
@@ -144,7 +184,11 @@ plan 6;
         $inst.foo(pi);
         is-deeply @order.List, <C4(Any) C3  C2(Num) C1>, "we can use a multi as a wrapper of a candidate";
     }
+}
 
+#?rakudo skip 'Various cases of wrap not yet supported'
+#?DOES 1
+{
     subtest "Regression: nextcallee" => {
         plan 2;
         my @order;
@@ -182,45 +226,48 @@ plan 6;
         $inst.foo;
         is-deeply @order.List, <C3 C2::foo::wrapper C2 C1>, "nextcallee doesn't break the dispatcher chain";
     }
+}
 
-    subtest "Regression: broken chain" => {
-        plan 2;
-        # A stray $*NEXT-DISPATCHER could wrongfully be picked up by a dispatcher vivified by a nested routine invocation.
-        my @order;
-        my class C1 {
-            multi method foo {
-                @order.push: "C1::foo";
-                $.bar;
-            }
-
-            proto method bar(|) {*}
-            multi method bar {
-                @order.push: "C1::bar";
-                nextsame
-            }
+subtest "Regression: broken chain" => {
+    plan 2;
+    my @order;
+    my class C1 {
+        multi method foo {
+            @order.push: "C1::foo";
+            $.bar;
         }
 
-        my class C2 is C1 {
-            proto method bar(|) {*}
-            multi method bar {
-                @order.push: "C2::bar";
-                nextsame
-            }
-
-            method foo {
-                @order.push: "C2::foo";
-                nextsame;
-            }
+        proto method bar(|) {*}
+        multi method bar {
+            @order.push: "C1::bar";
+            nextsame
         }
-
-        my $inst = C2.new;
-        $inst.bar;
-        is-deeply @order.List, <C2::bar C1::bar>, "control: multi dispatches as expected";
-        @order = [];
-        $inst.foo;
-        is-deeply @order.List, <C2::foo C1::foo C2::bar C1::bar>, "multi-dispatch is not broken";
     }
 
+    my class C2 is C1 {
+        proto method bar(|) {*}
+        multi method bar {
+            @order.push: "C2::bar";
+            nextsame
+        }
+
+        method foo {
+            @order.push: "C2::foo";
+            nextsame;
+        }
+    }
+
+    my $inst = C2.new;
+    $inst.bar;
+    is-deeply @order.List, <C2::bar C1::bar>, "control: multi dispatches as expected";
+    @order = [];
+    $inst.foo;
+    is-deeply @order.List, <C2::foo C1::foo C2::bar C1::bar>, "multi-dispatch is not broken";
+}
+
+#?rakudo skip 'Various cases of wrap not yet supported'
+#?DOES 1
+{
     # GH Raku/problem-solving#170
     subtest "Wrap parent's first multi-candidate" => {
         plan 3;
