@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 43;
+plan 42;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -292,16 +292,17 @@ END
 
 # A working example of using a heredoc
 # in a function call:
-eval-lives-ok q{
-    sub f($a) { $a }
+{
+    sub f($s) { $s }
     my $a = 'foo';
-    say f(qq:to/END/);
+    my $b = f(qq:to/END/);
         $a
         END
-}, "heredoc in a function call";
+    is $b.trim, 'foo', "heredoc in a function call";
+}
 
 # A working example of using a heredoc
-# in a block (from the Synopses):
+# in a block (from Synopsis 2):
 eval-lives-ok q{
     BEGIN { say q:to/END/ }
         Say me!
@@ -320,26 +321,16 @@ eval-dies-ok q{
        END
 }, "heredoc fails in block 2a";
 
-# The code above can be made to seem to work by declaring $a
-# before the block:
-eval-lives-ok q{
-    my $a;
-    sub f() { $a = 'foo'; qq:to/END/ }
-       $a
-       END
-    my $b = f;
-}, "heredoc falsely appears to work in block 2b";
-
-# But the reality hits home when attempting to use the sub:
+# The code above can be made to work by declaring $a
+# before the block (but don't forget about the newline
+# added in the heredoc):
 {
     my $a;
     sub f() { $a = 'foo'; qq:to/END/ }
        $a
        END
     my $b = f;
-    eval-dies-ok q{ 
-        $b.defined
-    }, "\$b is not defined in heredoc block 2c";
+    is $b.trim, 'foo', "heredoc made to work in block 2b";
 }
 
 # The following code (based on @jnthn's code) illustrates the correct way
@@ -356,6 +347,7 @@ eval-lives-ok q{
 # to use a heredoc in a block by attempting use of a variable outside of
 # of the block:
 eval-dies-ok q{
+    my $x;
     if $x { my $var = 42; say qq:to/END/ } 
        Should not be able to use $var
        END
