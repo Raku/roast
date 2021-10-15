@@ -59,6 +59,7 @@ Basic submethod tests. See L<S12/"Submethods">
   is $grtz.baz_blarb,        0, "Baz's submethod blarb was not called";
   is $grtz.grtz_blarb,       1, "Grtz's submethod blarb was called now";
 
+  #?rakudo.jvm 2 todo 'Cannot dispatch to method blarb on Baz because it is not inherited or done by Grtz'
   lives-ok { $grtz.Baz::blarb }, '$obj.Class::submthod';
   is $grtz.baz_blarb,        1, "Baz's submethod blarb was called now";
   is $grtz.grtz_blarb,       1, "Grtz's submethod blarb was not called again";
