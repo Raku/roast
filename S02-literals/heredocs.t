@@ -323,7 +323,7 @@ eval-dies-ok q{
 
 # The code above can be made to work by declaring $a
 # before the block (but don't forget about the newline
-# added in the heredoc):
+# added to every line in the heredoc):
 {
     my $a;
     sub f() { $a = 'foo'; qq:to/END/ }
