@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 33;
+plan 42;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -272,5 +272,85 @@ END
     is   no-r(@q6[0]), "line one\n\tline two\n",      'trim 9 leading spaces, leave leading tab in line two';
     isnt no-r(@q6[0]), "line one\n       line two\n", 'should not contain 7 leading spaces in line two';
 }
+
+# Add missing tests for odd cases
+
+# Multiple heredocs on a single line
+{
+    my ($a, $b, $c) = q:to/END/, q:to/END/, q:to/END/;
+    a
+    END
+    b
+    END
+    c
+    END
+
+    is $a.trim, 'a', "heredoc list element 0";
+    is $b.trim, 'b', "heredoc list element 1";
+    is $c.trim, 'c', "heredoc list element 2";
+}
+
+# A working example of using a heredoc
+# in a function call:
+{
+    sub f($s) { $s }
+    my $a = 'foo';
+    my $b = f(qq:to/END/);
+        $a
+        END
+    is $b.trim, 'foo', "heredoc in a function call";
+}
+
+# A working example of using a heredoc
+# in a block (from Synopsis 2):
+eval-lives-ok q{
+    BEGIN { say q:to/END/ }
+        Say me!
+        END
+}, "heredoc ok in block 1";
+
+# Fail on using in a block (see issue #4539)
+# Following is the original code that worked that Jonathan
+# said should NOT have worked.
+#
+# After his suggested change was made, the code properly fails
+# because $a in the line following the block is not defined.
+eval-dies-ok q{
+    sub f() { my $a = 'foo'; qq:to/END/ }
+       $a
+       END
+}, "heredoc fails in block 2a";
+
+# The code above can be made to work by declaring $a
+# before the block (but don't forget about the newline
+# added to every line in the heredoc):
+{
+    my $a;
+    sub f() { $a = 'foo'; qq:to/END/ }
+       $a
+       END
+    my $b = f;
+    is $b.trim, 'foo', "heredoc made to work in block 2b";
+}
+
+# The following code (based on @jnthn's code) illustrates the correct way
+# to use a heredoc in a block without using variables
+# outside of the block:
+eval-lives-ok q{
+    my $x;
+    if $x { say q:to/END/ } 
+       This is alright
+       END
+}, "heredoc ok in block 3";
+
+# The following code (based on @jnthn's code) illustrates the incorrect way
+# to use a heredoc in a block by attempting use of a variable outside of
+# of the block:
+eval-dies-ok q{
+    my $x;
+    if $x { my $var = 42; say qq:to/END/ } 
+       Should not be able to use $var
+       END
+}, "heredoc fails in block 4";
 
 # vim: expandtab shiftwidth=4
