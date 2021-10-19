@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 25;
 
 {
     class EnumClass     { enum C <a b c> }
@@ -48,7 +48,7 @@ plan 24;
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/3481
-# anonymous Enum in our context, 
+# anonymous Enum in our context,
 {
     enum :: <un>;
     is +un, 0, 'is un the right value';
@@ -118,6 +118,11 @@ plan 24;
        612 => "Letter",  792 => "Tabloid",
        793 => "Letter", 1224 => "Tabloid"),
       ".invert on an Enum with Array values";
+}
+
+{
+    my enum Foo <A B>;
+    throws-like { Foo.new }, X::Constructor::BadType, "invoking .new on an enum throws";
 }
 
 # vim: expandtab shiftwidth=4

@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 66;
+plan 69;
 
 #L<S12/Built-in Enumerations/"Two built-in enumerations are">
 
@@ -138,5 +138,9 @@ my $or = [or] $r;
 is-deeply $or, $r, 'infix `or` with one argument returns the argument';
 $or = [or];
 is-deeply $or, False, 'infix `or` with no argument is False';
+
+for Bool, True, False -> \typish {
+    throws-like { typish.new }, X::Constructor::BadType, "invoking .new on {typish.raku} throws";
+}
 
 # vim: expandtab shiftwidth=4
