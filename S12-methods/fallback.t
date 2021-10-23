@@ -75,6 +75,7 @@ is $i(), 'invaught', 'CALL-ME beats FALLBACK';
 
     proto sub target() is me'd {*}
     multi sub target() { 'wrong' }
+    #?rakudo.jvm todo "got 'wrong'"
     is target(), 'In CALL-ME',
         'A CALL-ME mixed into a proto in a trait_mod is called';
 }

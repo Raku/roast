@@ -10,6 +10,7 @@ use Test::Util;
 plan 14;
 
 # https://github.com/Raku/old-issue-tracker/issues/6501
+#?rakudo.jvm todo 'Fails more often than it passes'
 doesn't-hang ｢
     my $fh = ｣ ~ make-temp-file.raku ~ ｢.open: :w;
     await ^20 .map: -> $t {

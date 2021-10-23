@@ -110,6 +110,7 @@ sub run-harness($code,$bench-name) {
 }
 
 is run-harness($bench1, 'sequence'), $expected-output, 'sequence';
+#?rakudo.jvm todo 'Fails more often than it passes'
 is run-harness($bench2, 'recursive-ternary-hand-cached'), $expected-output, 'recursive-ternary-hand-cached';
 is run-harness($bench3, 'sequence-ternary'), $expected-output, 'sequence-ternary';
 is run-harness($bench4, 'loop'), $expected-output, 'loop';
