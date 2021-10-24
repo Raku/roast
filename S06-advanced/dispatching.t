@@ -20,6 +20,7 @@ subtest 'Basic interaction of nextwith/nextsame with multi and method dispatch' 
     }
 
     my $obj = Bar.new;
+    #?rakudo.jvm 2 todo 'Dispatching needs more work on the JVM backend'
     is $obj.foo(21), 42, "Int is dispatched";
     is $obj.foo("11"), 22, "Str is dispatched";
 }
@@ -41,6 +42,7 @@ subtest 'Args to callwith in wrapper are used by enclosing multi and method disp
     C2.^lookup('m').candidates[1].wrap: -> \s, $x {
         "Wrapper: $x\n" ~ callwith(s, $x + 1)
     }
+    #?rakudo.jvm 2 todo 'Dispatching needs more work on the JVM backend'
     is C2.m(1), "Wrapper: 1\nC2/Int: 2\nC2/Any: 2\nC1: 2", 'First call';
     is C2.m(1), "Wrapper: 1\nC2/Int: 2\nC2/Any: 2\nC1: 2", 'Second call';
 }
@@ -62,6 +64,7 @@ subtest 'Args to callwith in multi are used by enclosing method dispatch' => {
     C2.^lookup('m').candidates[1].wrap: -> \s, $x {
         "Wrapper: $x\n" ~ callwith(s, $x + 1)
     }
+    #?rakudo.jvm 2 todo 'Dispatching needs more work on the JVM backend'
     is C2.m(1), "Wrapper: 1\nC2/Int: 2\nC2/Any: 3\nC1: 3", 'First call';
     is C2.m(1), "Wrapper: 1\nC2/Int: 2\nC2/Any: 3\nC1: 3", 'Second call';
 }
@@ -259,9 +262,11 @@ subtest "Regression: broken chain" => {
 
     my $inst = C2.new;
     $inst.bar;
+    #?rakudo.jvm todo 'Dispatching needs more work on the JVM backend'
     is-deeply @order.List, <C2::bar C1::bar>, "control: multi dispatches as expected";
     @order = [];
     $inst.foo;
+    #?rakudo.jvm todo 'Dispatching needs more work on the JVM backend'
     is-deeply @order.List, <C2::foo C1::foo C2::bar C1::bar>, "multi-dispatch is not broken";
 }
 
