@@ -111,6 +111,7 @@ subtest '.t returns True for TTY' => {
     my $tt = shell :out, :err, 'tty';
     if $tt and (my $path = $tt.out.slurp(:close).trim)
       and $path ne 'not a tty' and my $fh = $path.IO.open {
+        #?rakudo.jvm todo 'TTY detection is only partly implemented for JVM'
         is-deeply $fh.t, True, '.t on a TTY handle';
         $fh.close;
     }
