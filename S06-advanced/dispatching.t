@@ -73,7 +73,7 @@ subtest 'Args to callwith in multi are used by enclosing method dispatch' => {
 #?DOES 1
 {
     subtest "Dispatcher Chain" => {
-        plan 13;
+        plan 14;
         my @order;
         my class C1 {
             method foo(|) { @order.push: ::?CLASS.^name }
@@ -133,9 +133,9 @@ subtest 'Args to callwith in multi are used by enclosing method dispatch' => {
 
         my \proto := C2.^find_method('foo', :local, :no_fallback);
 
-        nok proto.is_wrapped, "proto is not wrapped yet";
+        nok proto.is-wrapped, "proto is not wrapped yet";
         my $wh1 = proto.wrap(my method foo-wrap(|) { @order.push: "foo-proto"; nextsame });
-        ok proto.is_wrapped, "proto is wrapped now";
+        ok proto.is-wrapped, "proto is wrapped now";
 
         @order = [];
         $inst.foo("");
@@ -145,6 +145,7 @@ subtest 'Args to callwith in multi are used by enclosing method dispatch' => {
         @order = [];
         $inst.foo("");
         is-deeply @order.List, <C4(Any) C3 C2(Str) C1>, "proto can be unwrapped";
+        nok proto.is-wrapped, "proto is in unwrapped state";
 
         # This should be foo(Num) candidate
         my \cand = proto.candidates[2];
