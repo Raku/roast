@@ -110,7 +110,7 @@ is Buf.new([255, 254, 72, 0, 101, 0]).decode("utf-16"), 'He', 'utf-16 BOM handle
 
 # R#2421
 {
-    #?rakudo.jvm 2 todo 'Unknown encoding'
+    #?rakudo.jvm todo 'Unknown encoding "utf8-c8"'
     lives-ok { "bark bark bark".encode.decode("utf8-c8") }, 'Can decode utf-8 buffer as if it were utf8-c8';
     lives-ok { "bark bark bark".encode.decode("utf16le") }, 'Can decode utf-8 buffer as if it were utf16le';
     lives-ok { "bark bark bark".encode.decode("utf16be") }, 'Can decode utf-8 buffer as if it were utf16be';
