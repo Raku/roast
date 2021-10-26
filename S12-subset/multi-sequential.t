@@ -16,10 +16,8 @@ plan 1;
 # https://github.com/Raku/roast/issues/765
 group-of 2 => 'ambiguous subset matches resolved sequentially' => {
   # note: godzilla is both a monster and a hero
-  my @monsters  = < godzilla  gammera   ghidra    golem    >;
-  my @heroes    = < godzilla  beowulf   ultraman  inframan >;
-  subset Monster    of Str where { $_ eq any( @monsters ) };
-  subset Hero       of Str where { $_ eq any( @heroes ) };
+  subset Monster of Str where { $_ eq any( <godzilla gammera ghidra golem> ) };
+  subset Hero    of Str where { $_ eq any( <godzilla beowulf ultraman inframan> ) };
 
   group-of 2 => 'two multis based on subsets' => {
     multi sub classify (Monster $name) {
