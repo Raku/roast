@@ -138,14 +138,14 @@ is_run ｢
 
 # https://github.com/Raku/old-issue-tracker/issues/5254
 given make-temp-dir() {
-    .child('myclass.pm6').spurt: ｢
+    .child('myclass.rakumod').spurt: ｢
         unit class myclass;
         use mytraitmodule;
 
         has $!bar is mytrait;
     ｣;
 
-    .child('mytraitmodule.pm6').spurt: ｢
+    .child('mytraitmodule.rakumod').spurt: ｢
         unit module mytraitmodule;
         my role rrHOW {
             method compose(Mu \type) {

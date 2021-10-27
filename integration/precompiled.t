@@ -11,7 +11,7 @@ use Test::Compile;
 # full S10/S11 implementations, we'll see
 
 # Please doublecheck after adding tests that no files that look like
-# /tmp/p6testmod2CF3839E/p6testmod1406E1E1.pm6 (or windowish equiv)
+# /tmp/p6testmod2CF3839E/p6testmod1406E1E1.rakumod (or windowish equiv)
 # are left in $*TMPDIR.
 
 # Note that S10-packages/precompilation.t exists for things that involve

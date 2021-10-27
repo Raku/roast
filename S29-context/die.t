@@ -79,6 +79,6 @@ is_run( 'use Test; pass; die "uh-oh"',
           out    => rx/'ok 1 -'/,
           err    => rx/'uh-oh'/,
         },
-        'die() in combination with Test.pm6 exists non-zero-ish' );
+        'die() in combination with Test.rakumod exists non-zero-ish' );
 
 # vim: expandtab shiftwidth=4

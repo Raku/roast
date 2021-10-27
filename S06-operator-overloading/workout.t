@@ -37,7 +37,7 @@ multi sub infix:<T**>(Vector $a, $b) { Vector.new($a.coords >>**>> $b); }
 multi sub infix:<⋅>(Vector $a, Vector $b) { [+]($a.coords »*« $b.coords); }
 multi sub infix:<dot>(Vector $a, Vector $b) { [+]($a.coords >>*<< $b.coords); }
 
-### note the is-approx from Test.pm6 doesn't lift infix:<-> and abs,
+### note the is-approx from Test.rakumod doesn't lift infix:<-> and abs,
 # so we can't expect it work with class Vector. Thus we re-make one that does
 # the custom ops
 

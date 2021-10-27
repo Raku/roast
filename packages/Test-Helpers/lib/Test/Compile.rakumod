@@ -165,11 +165,11 @@ sub init_compunit {
 	diag "Cannot do any precomp tests; Could not make a temporary directory";
 	return;
     }
-    unless "$fp.pm6".IO.spurt("1;") {
+    unless "$fp.rakumod".IO.spurt("1;") {
 	diag "Cannot do any precomp tests; Could not create a file";
 	return;
     }
-    @compunits_to_delete.push("$fp.pm6");
+    @compunits_to_delete.push("$fp.rakumod");
 
     delete_compunits;
     $compunit_available ||= "Precomp";
@@ -215,13 +215,13 @@ multi sub do_compunit($code_as_str, $reason, $leavefiles = False,
         PROCESS::<$REPO> := $repo;
     }
     when "Precomp" {
-        unless "$fp.pm6".IO.spurt($code_as_str) {
+        unless "$fp.rakumod".IO.spurt($code_as_str) {
             flunk($reason);
 	    diag("All of a sudden cannot create source for precomp.");
-	    try unlink "$fp.pm6";  # In case of partial creation
+	    try unlink "$fp.rakumod";  # In case of partial creation
             return;
         }
-        @compunits_to_delete.push("$fp.pm6");
+        @compunits_to_delete.push("$fp.rakumod");
         my $cr;
         $cu = $repo.need(CompUnit::DependencySpecification.new(:short-name($fn)), $precomp-repository);
         CATCH {
@@ -256,13 +256,13 @@ multi sub do_compunit($code_as_str, $reason, $leavefiles = False,
         return [ $*compunit_result ];
     }
     when "Source" {
-        unless "$fp.pm6".IO.spurt($code_as_str) {
+        unless "$fp.rakumod".IO.spurt($code_as_str) {
             flunk($reason);
 	    diag("All of a sudden cannot create file for source compunits.");
-	    try unlink "$fp.pm6";  # In case of partial creation
+	    try unlink "$fp.rakumod";  # In case of partial creation
             return;
         }
-        @compunits_to_delete.push("$fp.pm6");
+        @compunits_to_delete.push("$fp.rakumod");
         my $comp-unit = $repo.need(CompUnit::DependencySpecification.new(:short-name($fn)), $precomp-repository);
         if defined $! {
             flunk($reason);

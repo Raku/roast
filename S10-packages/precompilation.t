@@ -188,7 +188,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     # precompile it in a different process
     run $*EXECUTABLE, '-I', $rt128156-lib-prefix, '-e', 'use RT128156::One;';
     # trigger recompilation
-    my $trigger-file = $rt128156-lib-prefix.IO.add('RT128156/Two.pm6');
+    my $trigger-file = $rt128156-lib-prefix.IO.add('RT128156/Two.rakumod');
     $trigger-file.IO.spurt($trigger-file.slurp);
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT128156::One>));
     ok $comp-unit.handle.globalish-package<RT128156>.WHO<One Two Three>:exists.all,
@@ -198,7 +198,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     # The dependency layout is: A -> B -> C -> D
     #                            `-> C -> D
     my $before    = run $*EXECUTABLE, '-I', $rt128156-lib-prefix, '-M', 'A', '-e', '';
-    $trigger-file = $rt128156-lib-prefix.IO.add('C.pm6');
+    $trigger-file = $rt128156-lib-prefix.IO.add('C.rakumod');
     $trigger-file.spurt($trigger-file.slurp);
     my $after     = run $*EXECUTABLE,'-I', $rt128156-lib-prefix,'-M','A','-e','';
     is $before.status, 0, 'Can precompile modules before touching source file';
@@ -211,7 +211,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 
     # Test file content actually changing (so that the precomp SHA changes)
     run $*EXECUTABLE, '-I', $rt128156-lib-prefix, '-e', 'need RT128156::Top1; need RT128156::Top2;';
-    my $trigger-file = $rt128156-lib-prefix.IO.add('RT128156/Needed.pm6');
+    my $trigger-file = $rt128156-lib-prefix.IO.add('RT128156/Needed.rakumod');
     for 1..2 -> $i {
         # Alternates putting a '#' at the end of a file
         my $new-content = $trigger-file.IO.slurp.subst(/$/,"#").subst(/"##"$/,"");
@@ -231,7 +231,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     my $rt128156-lib-prefix = $lib-path.add('packages/RT128156/lib').absolute;
 
     run $*EXECUTABLE,'-I', $rt128156-lib-prefix,'-e','need RT128156::Top1;';
-    my $trigger-file = $rt128156-lib-prefix.IO.add('RT128156/Needed.pm6');
+    my $trigger-file = $rt128156-lib-prefix.IO.add('RT128156/Needed.rakumod');
     for 1..2 -> $i {
         my $old-content = $trigger-file.slurp;
         $trigger-file.spurt('class Needed { method version() { ' ~ $i ~ ' } }');
@@ -264,7 +264,7 @@ subtest 'precompiled module constants get updated on change' => {
     plan 2;
 
     BEGIN my $rt129266-lib-prefix = $lib-path.add('packages/RT129266/lib').absolute;
-    constant $module = $rt129266-lib-prefix.IO.add('RT129266/Foo.pm6');
+    constant $module = $rt129266-lib-prefix.IO.add('RT129266/Foo.rakumod');
     constant $module-content = $module.slurp;
     LEAVE $module.spurt: $module-content;
 
@@ -284,7 +284,7 @@ subtest 'precompiled module constants get updated on change' => {
 # https://github.com/Raku/old-issue-tracker/issues/6454
 
 with make-temp-dir() -> $dir {
-    $dir.add('Simple131924.pm6').spurt: ｢
+    $dir.add('Simple131924.rakumod').spurt: ｢
         unit class Simple131924; sub buggy-str is export { “: {‘’}\n\r” ~ “\n\r” }
     ｣;
 
@@ -297,7 +297,7 @@ with make-temp-dir() -> $dir {
 
 # GH rakudo issue #1219
 with make-temp-dir() -> $dir {
-    $dir.add('Simple1219.pm6').spurt: ｢
+    $dir.add('Simple1219.rakumod').spurt: ｢
         class A {
             method a() is DEPRECATED<b> {
             }

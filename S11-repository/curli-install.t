@@ -21,7 +21,7 @@ $repo-path.IO.mkdir;
 }
 
 my $prefix   = $repo-path.IO.parent(2).add('packages/FooBarBaz/lib');
-my %provides = Foo => 'Foo.pm6';
+my %provides = Foo => 'Foo.rakumod';
 my $dist              = Distribution::Hash.new({ :name<Foo>, :api<1>, :ver(v1.2.3), :%provides }, :$prefix);
 my $non-matching-dist = Distribution::Hash.new({ :name<Foo>, :api<2>, :ver(v2.3.4), :%provides }, :$prefix);
 

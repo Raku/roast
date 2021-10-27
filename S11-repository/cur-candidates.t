@@ -15,7 +15,7 @@ my sub dependencyspecification(%_) {
 
 
 subtest 'Basic recommendation manager queries' => {
-    my %meta1 = %( :perl<6.c>, :name<XXX>, :ver<1>, :api<1>, :auth<foo>, :provides(:XXX<lib/XXX.pm6>) );
+    my %meta1 = %( :perl<6.c>, :name<XXX>, :ver<1>, :api<1>, :auth<foo>, :provides(:XXX<lib/XXX.rakumod>) );
     %meta1 does role :: {
         has $.to-json = q:to/END_JSON/
             {
@@ -25,13 +25,13 @@ subtest 'Basic recommendation manager queries' => {
                 "api"  : "1",
                 "auth" : "foo",
                 "provides" : {
-                    "XXX" : "lib/XXX.pm6"
+                    "XXX" : "lib/XXX.rakumod"
                 }
             }
             END_JSON
     }
 
-    my %meta2 = %( :perl<6.c>, :name<XXX>, :ver<1>, :api<2>, :auth<bar>, :provides(:XXX<lib/XXX.pm6>) );
+    my %meta2 = %( :perl<6.c>, :name<XXX>, :ver<1>, :api<2>, :auth<bar>, :provides(:XXX<lib/XXX.rakumod>) );
     %meta2 does role :: {
         has $.to-json = q:to/END_JSON/
             {
@@ -41,7 +41,7 @@ subtest 'Basic recommendation manager queries' => {
                 "api"  : "2",
                 "auth" : "bar",
                 "provides" : {
-                    "XXX" : "lib/XXX.pm6"
+                    "XXX" : "lib/XXX.rakumod"
                 }
             }
             END_JSON
@@ -129,7 +129,7 @@ subtest 'Basic recommendation manager queries' => {
 
     subtest '::FileSystem distributions can usually be installed to ::Installation' => {
         # Also tests resources/libraries/* platform-library-name
-        my %meta = %( :perl<6.c>, :name<XXX::Old>, :auth<foo>, :provides(:XXX<lib/XXX.pm6>), :resources(<config.txt libraries/foo>) );
+        my %meta = %( :perl<6.c>, :name<XXX::Old>, :auth<foo>, :provides(:XXX<lib/XXX.rakumod>), :resources(<config.txt libraries/foo>) );
         %meta does role :: {
             has $.to-json = q:to/END_JSON/
                 {
@@ -137,7 +137,7 @@ subtest 'Basic recommendation manager queries' => {
                     "name" : "XXX::Old",
                     "auth" : "foo",
                     "provides" : {
-                        "XXX" : "lib/XXX.pm6"
+                        "XXX" : "lib/XXX.rakumod"
                     },
                     "resources" : [
                         "config.txt",
@@ -167,7 +167,7 @@ subtest 'Basic recommendation manager queries' => {
 
                 ok $dist.content('resources/config.txt').open(:bin).slurp.decode.chars;
                 ok $dist.content($resource-universal-path).open(:bin).slurp.decode.chars;
-                ok $dist.content('lib/XXX.pm6').open(:bin).slurp.decode.contains('resources is export');
+                ok $dist.content('lib/XXX.rakumod').open(:bin).slurp.decode.contains('resources is export');
                 is $dist.content('bin/my-script').open(:bin).slurp.decode, 'use XXX; sub MAIN($name-path) { print resources(){$name-path} }';
 
                 my $test-resources-script = $dist.content('bin/my-script').open(:bin).slurp.decode;

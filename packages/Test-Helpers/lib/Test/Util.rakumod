@@ -719,7 +719,7 @@ this test routine trying to ignore the generation of timing file.
 
 =head2 no-fatal-throws-like
 
-Same as Test.pm6's C<throws-like>, except wraps the given code into
+Same as Test.rakumod's C<throws-like>, except wraps the given code into
 C<no fatal; my $ = do { … }; Nil>. The point of that is if the code merely
 does C<fail()> instead of C<throw()>, then the test will detect that and fail.
 

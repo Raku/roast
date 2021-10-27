@@ -3,12 +3,12 @@
     "name" : "Test::Helpers",
     "description" : "Helper and utility modules used in the roast",
     "provides" : {
-        "Test::Assuming" : "lib/Test/Assuming.pm6",
-        "Test::Compile" : "lib/Test/Compile.pm6",
-        "Test::Idempotence" : "lib/Test/Idempotence.pm6",
-        "Test::Iterator" : "lib/Test/Iterator.pm6",
-        "Test::Misc" : "lib/Test/Misc.pm6",
-        "Test::Tap" : "lib/Test/Tap.pm6",
-        "Test::Util" : "lib/Test/Util.pm6"
+        "Test::Assuming" : "lib/Test/Assuming.rakumod",
+        "Test::Compile" : "lib/Test/Compile.rakumod",
+        "Test::Idempotence" : "lib/Test/Idempotence.rakumod",
+        "Test::Iterator" : "lib/Test/Iterator.rakumod",
+        "Test::Misc" : "lib/Test/Misc.rakumod",
+        "Test::Tap" : "lib/Test/Tap.rakumod",
+        "Test::Util" : "lib/Test/Util.rakumod"
     }
 }

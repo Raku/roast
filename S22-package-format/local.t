@@ -12,7 +12,7 @@ class NanooNanoo { }
 ';
 
 my $module := 'NanooNanoo';
-my $srcext := 'pm6';
+my $srcext := 'rakumod';
 my $src    := "$module.$srcext";
 my $base   := $*SPEC.catdir($cwd, <t spec S22-package-format>);
 my $srcdir := $*SPEC.catdir($base, 'local-file-src');

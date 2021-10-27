@@ -1,6 +1,6 @@
 class GlobalOuter {
    method load() {
-      require "GlobalInner.pm6";
+      require "GlobalInner.rakumod";
       return ::('GlobalInner') !~~ Failure;
    }
 }

@@ -124,7 +124,7 @@ is_run 'die "foo"; END { say "end run" }',
     try dies();
     ok $!, 'it died';
     my $bt = $!.backtrace;
-    ok any($bt>>.file) ~~ /Foo\.pm6/, 'found original file name in the backtrace';
+    ok any($bt>>.file) ~~ /Foo\.rakumod/, 'found original file name in the backtrace';
     # note that fudging can change the file extension, so don't check
     # for .t here
     ok any($bt>>.file) ~~ /'error-reporting'\./, 'found script file name in the backtrace';

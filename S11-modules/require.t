@@ -20,7 +20,7 @@ plan 58;
 # https://github.com/Raku/old-issue-tracker/issues/4548
 {
     is $required-Test.gist, '(Test)', "successful require PACKAGE returns PACKAGE";
-    is (require "InnerModule.pm6"), "InnerModule.pm6",
+    is (require "InnerModule.rakumod"), "InnerModule.rakumod",
         "successful require STRING returns STRING";
 }
 
@@ -31,13 +31,13 @@ is $staticname.gist, '(Test)', "require Test installs stub Test package at compi
 # L<S11/"Runtime Importation"/"Alternately, a filename may be mentioned directly">
 
 lives-ok {
-    require "InnerModule.pm6";
+    require "InnerModule.rakumod";
     is ::('InnerModule').WHO<EXPORT>.WHO<DEFAULT>.WHO<&bar>(), 'Inner::bar', "can introspect EXPORT of require'd package";
     is ::('InnerModule').WHO<&oursub>(),"Inner::oursub","can call our-sub from required module";
 }, 'can load InnerModule from a path at run time';
 
 
-my $name = 'InnerModule.pm6';
+my $name = 'InnerModule.rakumod';
 
 # https://github.com/Raku/old-issue-tracker/issues/4208
 {
@@ -65,13 +65,13 @@ throws-like { require InnerModule:file($name) <quux> },
 '&-less import of sub does not produce `Null PMC access` error';
 
 {
-    my $class-path = $?FILE.IO.parent(2).add('packages/S11-modules/lib/InnerClass.pm6').absolute;
+    my $class-path = $?FILE.IO.parent(2).add('packages/S11-modules/lib/InnerClass.rakumod').absolute;
     require TestStub:file($class-path);
     my @keys = TestStub::.keys;
-    is @keys.grep('InnerClass').elems, 1, 'can load InnerClass.pm6 class into specified stub';
+    is @keys.grep('InnerClass').elems, 1, 'can load InnerClass.rakumod class into specified stub';
     ok TestStub::<InnerClass>.test1 eq 'test1', 'TestStub::<InnerClass>.test1 is callable';
 
-    is @keys.grep('InnerClassTwo').elems, 1, 'can load multiple classes from InnerClass.pm6 class into specified stub';
+    is @keys.grep('InnerClassTwo').elems, 1, 'can load multiple classes from InnerClass.rakumod class into specified stub';
     ok TestStub::<InnerClassTwo>.test2 eq 'test2', 'TestStub::<InnerClass>.test1 is callable';
 }
 
@@ -113,12 +113,12 @@ is GLOBAL::<$x>, 'still here', 'loading modules does not clobber GLOBAL';
 
 # tests the combination of chdir+require
 my $cwd = $*CWD;
-lives-ok { chdir $?FILE.IO.parent(2).child('packages/FooBarBaz/lib'); require "Foo.pm6"; },
+lives-ok { chdir $?FILE.IO.parent(2).child('packages/FooBarBaz/lib'); require "Foo.rakumod"; },
          'can change directory and require a module';
 chdir $cwd;
 
 # https://github.com/Raku/old-issue-tracker/issues/2966
-lives-ok { try require "THIS_FILE_HOPEFULLY_NEVER_EXISTS.pm6"; },
+lives-ok { try require "THIS_FILE_HOPEFULLY_NEVER_EXISTS.rakumod"; },
          'requiring something non-existent does not make it segfault';
 
 
@@ -130,7 +130,7 @@ eval-lives-ok q|BEGIN require Fancy::Utilities;|, 'require works at BEGIN';
 eval-lives-ok q|BEGIN require Fancy::Utilities <&allgreet>;|,'require can import at BEGIN';
 
 {
-        require "GlobalOuter.pm6";
+        require "GlobalOuter.rakumod";
         nok ::('GlobalOuter') ~~ Failure, "got outer symbol";
         ok  ::('GlobalOuter').load, "call method that causes a require";
         ok ::('GlobalInner') ~~ Failure, "Did not find inner symbol";
@@ -186,7 +186,7 @@ eval-lives-ok q|BEGIN require Fancy::Utilities <&allgreet>;|,'require can import
     ok $question.VAR ~~ Scalar, "the variable is containerized";
 }
 {
-    require ("GH2983.pm6") <R-GH2983 C-GH2983 C2983 $question>;
+    require ("GH2983.rakumod") <R-GH2983 C-GH2983 C2983 $question>;
 
     ok ::('R-GH2983') ~~ R-GH2983, "role imported as itself";
     ok R-GH2983.HOW ~~ Metamodel::ParametricRoleGroupHOW, "role's metaclass is ParametricRoleGroupHOW";

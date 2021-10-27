@@ -48,7 +48,7 @@ cmp-ok(Test2::pkg, &infix:<===>, ::Test2, 'declared package $?PACKAGE');
 is(Test3::pkg, ::Test3, 'EVAL\'ed package $?PACKAGE');
 cmp-ok(Test3::pkg, &infix:<===>, ::Test3, 'EVAL\'ed package type object');
 
-# this one came from t/packages/Test.pm6
+# this one came from t/packages/Test.rakumod
 is(PackageTest::ns, "PackageTest", "loaded package");
 cmp-ok(PackageTest::pkg, &infix:<===>, PackageTest, 'loaded package $?PACKAGE object');
 my $x;
