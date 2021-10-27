@@ -18,7 +18,7 @@ plan 3;
 
 # https://github.com/Raku/old-issue-tracker/issues/1310
 {
-    # NOTE: do NOT eval this code using Test.pm6's routines as then we would
+    # NOTE: do NOT eval this code using Test module routines as then we would
     # depend on whether or not those routines are implemented as multies
     my $desc = 'callsame without dispatcher in scope dies';
     EVAL ｢sub rt69314($n) { if $n { callsame; } }(1)｣;

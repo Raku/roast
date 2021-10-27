@@ -68,10 +68,10 @@ information. It may still have useful bits worth considering.
 ### Spec Review
 
 All new commits in the spec repo since last release of the spec need to be reviewed to ensure
-they spec desired behaviour for the language. The [`tools/spec-review.p6'](tools/spec-review.p6)
+they spec desired behaviour for the language. The [`tools/spec-review.raku'](tools/spec-review.raku)
 can be useful during this process, to open up batches of commits in your browser:
 
-    tools/spec-review.p6 --start=6.c --n=50 --skip-batches=0 --browser=google-chrome
+    tools/spec-review.raku --start=6.c --n=50 --skip-batches=0 --browser=google-chrome
 
 The commits that aren't part of any release version of the spec can be removed or modified, but
 please coordinate with implementation authors, to avoid surprise breakage of code that uses these

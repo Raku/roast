@@ -68,7 +68,7 @@ throws-like { EVAL 'use DeclareBad;' },
 subtest 'export of SUPERSEDE::class' => {
     plan 1;
     with make-temp-dir() {
-        .add("Suptest132236.pm6").spurt: ｢
+        .add("Suptest132236.rakumod").spurt: ｢
             my package EXPORTHOW {
                 class SUPERSEDE::class is Metamodel::ClassHOW {
                     has $.foo;

@@ -5,7 +5,7 @@
     "description" : "A distribution for basic testing of $?DISTRIBUTION and %?RESOURCES",
     "depends"     : [ ],
     "provides"    : {
-        "CurrentDistributionOne" : "lib/CurrentDistributionOne.pm6"
+        "CurrentDistributionOne" : "lib/CurrentDistributionOne.rakumod"
     },
     "resources" : [
         "foo.txt"

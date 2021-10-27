@@ -4,7 +4,7 @@
     "description" : "Like CurrentDistributionOne, but also depends on CurrentDistributionOne and its $?DISTRIBUTION",
     "depends"     : [ "CurrentDistributionOne" ],
     "provides"    : {
-        "CurrentDistributionTwo" : "lib/CurrentDistributionTwo.pm6"
+        "CurrentDistributionTwo" : "lib/CurrentDistributionTwo.rakumod"
     },
     "resources" : [
         "foo.txt"

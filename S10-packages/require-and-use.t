@@ -12,8 +12,8 @@ subtest 'circular dependencies are detected and reported' => {
     plan 2;
 
     my $dir = make-temp-dir;
-    $dir.add('A.pm6').spurt: 'unit class A; use B';
-    $dir.add('B.pm6').spurt: 'unit class B; use A';
+    $dir.add('A.rakumod').spurt: 'unit class A; use B';
+    $dir.add('B.rakumod').spurt: 'unit class B; use A';
 
     is_run ｢use A｣, :compiler-args['-I', $dir.absolute ],
         { :out(''), :err(/:i «circular»/), :status(*.so) },

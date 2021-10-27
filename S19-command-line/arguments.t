@@ -8,7 +8,7 @@ plan 6;
 # https://github.com/Raku/old-issue-tracker/issues/2769
 {
     my Str $x;
-    my $file = 'ThisDoesNotExistAtAll.p6';
+    my $file = 'ThisDoesNotExistAtAll.raku';
     if $file.IO.e {
         skip "could not run test since file $file exists";
     }
@@ -59,7 +59,7 @@ is_run ｢@*ARGS.head.print｣, :args[<yağmur>],
     'printed chars match input';
 
 # https://github.com/Raku/old-issue-tracker/issues/6064
-is_run(Str, :args['--nosucharg=foo', 'foo.p6'],
+is_run(Str, :args['--nosucharg=foo', 'foo.raku'],
     { out => '' },
     'Unknown options do not spit warnings to stdout');
 

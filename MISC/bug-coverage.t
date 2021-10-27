@@ -366,7 +366,7 @@ group-of 2 => 'negative offset in JIT lables errors' => {
 }
 
 { # https://github.com/rakudo/rakudo/issues/2345
-    (my $lib := make-temp-dir).add('Foo.pm6').spurt: ｢$ = IO::Path:D｣;
+    (my $lib := make-temp-dir).add('Foo.rakumod').spurt: ｢$ = IO::Path:D｣;
     is_run ｢use Foo; -> --> IO::Path:D {".".IO}(); print 'pass'｣,
         :compiler-args['-I', $lib.absolute], {:out<pass>, :err(''), :0status},
     'no weird type check issues with modules';
@@ -374,7 +374,7 @@ group-of 2 => 'negative offset in JIT lables errors' => {
 
 #?rakudo.jvm todo 'dies for unknown reason'
 { # https://github.com/rakudo/rakudo/issues/1207
-    (my $lib := make-temp-dir).add('Foo.pm6').spurt:
+    (my $lib := make-temp-dir).add('Foo.rakumod').spurt:
         ｢our sub module-transform { my Int:D % = :1a }｣;
     is_run ｢
         use Foo;
@@ -389,8 +389,8 @@ group-of 2 => 'negative offset in JIT lables errors' => {
 
 { # https://github.com/rakudo/rakudo/issues/2400
     my $lib := make-temp-dir;
-    $lib.add('Bar.pm6').spurt: ｢my $ = Hash[Any:D,List:D]｣;
-    $lib.add('Foo.pm6').spurt: ｢
+    $lib.add('Bar.rakumod').spurt: ｢my $ = Hash[Any:D,List:D]｣;
+    $lib.add('Foo.rakumod').spurt: ｢
         use Bar;
         our sub foo(--> Hash[Any:D,List:D]) { my Any:D %tree{List:D} }
     ｣;

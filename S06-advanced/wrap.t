@@ -167,7 +167,7 @@ is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 # https://github.com/Raku/old-issue-tracker/issues/1390
 # call to nextsame with nowhere to go
 # - Can't use throws-like() here due to difference in what error you get
-# - depending on version of Test.pm6: https://github.com/rakudo/rakudo/pull/743
+# - depending on version of Test.rakumod: https://github.com/rakudo/rakudo/pull/743
 try {
     my $msg = '{nextsame}() dies properly';
     {nextsame}();

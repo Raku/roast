@@ -17,7 +17,7 @@ for @tests -> $mod, $expected_ret {
 
   my @strings = (
     "use $mod",
-    "require '{ $mod.split("::").join("/") ~ ".pm6" }'",
+    "require '{ $mod.split("::").join("/") ~ ".rakumod" }'",
   );
 
   for @strings -> $str {

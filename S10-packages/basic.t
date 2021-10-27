@@ -208,8 +208,8 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 # https://github.com/Raku/old-issue-tracker/issues/1617
 # also checks RT #73740
 {
-    eval-lives-ok 'use PM6', 'can load a module ending in .pm6';
-    is EVAL('use PM6; pm6_works()'), 42, 'can call subs exported from .pm6 module';
+    eval-lives-ok 'use PM6', 'can load a module ending in .rakumod';
+    is EVAL('use PM6; pm6_works()'), 42, 'can call subs exported from .rakumod module';
 }
 
 # package Foo; is Perl code;
