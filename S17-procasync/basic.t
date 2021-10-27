@@ -182,7 +182,7 @@ subtest 'Specifying ARG0 via separate arg works.' => {
     if $*DISTRO.is-win {
         sub test-run($arg0, $expected) is test-assertion {
             my $proc = run($*EXECUTABLE,
-                $?FILE.IO.parent.child('windows-print-raw-args.p6'),
+                $?FILE.IO.parent.child('windows-print-raw-args.raku'),
                 :$arg0, 'some-other-arg', :out);
             my $out = $proc.out.slurp(:close).trim-trailing();
             ok $out ~~ / ^ $expected ' ' \S /, "\"$out\" has \"$expected\" as first arg";

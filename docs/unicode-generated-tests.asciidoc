@@ -2,7 +2,7 @@
 :toc:
 
 == Instructions
-The `UNIDATA` folder referred to below can be obtained by running `tools/UCD-download.p6`
+The `UNIDATA` folder referred to below can be obtained by running `tools/UCD-download.raku`
 from MoarVM's repository.
 
 .Please list these data points if possible:
@@ -20,10 +20,10 @@ Nice things to add: ensure all tests generate files which have a heading that
 shows which Unicode version was used to generate them. Some tests do this already,
 but many do not.
 
-== S15-nfg/emoji-test-gen.p6
+== S15-nfg/emoji-test-gen.raku
 
 .Steps
-* Run `S15-nfg/emoji-test-gen.p6 UNIDATA/emoji-xx.x/emoji-test.txt`
+* Run `S15-nfg/emoji-test-gen.raku UNIDATA/emoji-xx.x/emoji-test.txt`
 
 .Version
 * Emoji v13.1
@@ -34,14 +34,14 @@ but many do not.
 .Generated File(s)
 * Program generates S15-nfg/emoji-test.t
 
-== S15-nfg/mass-roundtrip-test-gen.p6
+== S15-nfg/mass-roundtrip-test-gen.raku
 
 .Steps
-* Run `S15-nfg/mass-roundtrip-test-gen.p6 --test UNIDATA/NormalizationTest.txt`
+* Run `S15-nfg/mass-roundtrip-test-gen.raku --test UNIDATA/NormalizationTest.txt`
   to test normalization if you don't get any failures, all is ok.
 * The --test option is needed to test all options, as not all tests will be put into
   the roast .t file
-* Run `S15-nfg/mass-roundtrip-test-gen.p6 UNIDATA/NormalizationTest.txt`
+* Run `S15-nfg/mass-roundtrip-test-gen.raku UNIDATA/NormalizationTest.txt`
   to generate the tests.
 
 .Version
@@ -57,15 +57,15 @@ but many do not.
 * S15-nfg/mass-roundtrip-nfkd.t
 
 
-== S32-str/CollationTestGen.p6
+== S32-str/CollationTestGen.raku
 
 Note: you will have to be in S32-str before running this, so it puts files in the
 correct folder.
 
-S32-str/CollationTestGen.p6 --folder=$UNIDATA/UCA/CollationTest --test-only --should-test
-MAKE SURE TO RUN `perl6 CollationTestGen.p6 --folder=MoarVM/UNIDATA/UCA/CollationTest --test-only --should-test ` to ensure there are ~74 failures only!
+S32-str/CollationTestGen.raku --folder=$UNIDATA/UCA/CollationTest --test-only --should-test
+MAKE SURE TO RUN `raku CollationTestGen.raku --folder=MoarVM/UNIDATA/UCA/CollationTest --test-only --should-test ` to ensure there are ~74 failures only!
 
-Then paste those failures (if they're ok into CollationTestGen.p6 in the %todo variable.
+Then paste those failures (if they're ok into CollationTestGen.raku in the %todo variable.
 
 .Version
 * Unicode v13.0
@@ -79,10 +79,10 @@ Then paste those failures (if they're ok into CollationTestGen.p6 in the %todo v
 * S32-str/CollationTest_NON_IGNORABLE-2.t
 * S32-str/CollationTest_NON_IGNORABLE-3.t
 
-== S15-normalization/test-gen.p6
+== S15-normalization/test-gen.raku
 
 .Steps
-* Run `S15-normalization/test-gen.p6 UNIDATA/NormalizationTest.txt`
+* Run `S15-normalization/test-gen.raku UNIDATA/NormalizationTest.txt`
 
 .Version
 * Unicode v13.0
