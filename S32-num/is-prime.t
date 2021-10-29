@@ -78,6 +78,11 @@ subtest 'Complex.is-prime with Complex that cannot be Real throw' => {
     }
 }
 
-is-deeply is-prime(-2), False, 'negative numbers are *not* prime';
+subtest 'negative numbers are *not* prime' => {
+    plan 3;
+    nok is-prime(-2),  'negative number whose value when interpreted as unsigned is not prime is not prime';
+    nok is-prime(-5),  'negative number whose value when interpreted as unsigned is not prime is not prime';
+    nok is-prime(-99), 'negative number whose value when interpreted as unsigned is prime is not prime';
+}
 
 # vim: expandtab shiftwidth=4
