@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 118;
+plan 119;
 
 # L<S32::Numeric/Numeric/"=item expmod">
 
@@ -23,16 +23,21 @@ is 2988348162058574136915891421498819466320163312926952423791023078876139.expmod
    1527229998585248450016808958343740453059, "Rosettacode example is correct";
 
 # https://github.com/Raku/old-issue-tracker/issues/6053
+# libtommath used to hang for these values (https://github.com/libtom/libtommath/issues/475)
 {
   subtest '.expmod with negative powers does not hang' => {
     plan 5;
-    #?rakudo.moar skip 'libtommath incorrectly errors out for these values (https://github.com/libtom/libtommath/issues/475)'
-    is-deeply 42.expmod(-1,1),  0, '42,  -1,  1';
+    #?rakudo.moar todo 'libtommath incorrectly errors and causes a throw instead of giving 0'
+    lives-ok { die if 42.expmod(-1,1) != 0 }, '42,  -1,  1';
     dies-ok { 42.expmod(-42,42) }, '42, -42, 42';
     is-deeply  3.expmod(-4,4),  1,  '3,  -4,  4';
     is-deeply -3.expmod(-4,4), -1, '-3,  -4,  4';
     dies-ok { 42.expmod(-1,7)   }, '42,  -1,  7';
   }
 }
+# This test is just copied out of the above subtest because passing todos in subtests aren't
+# reported. When this starts passing, this test can just be removed and the todo above removed.
+#?rakudo.moar todo 'libtommath incorrectly errors and causes a throw instead of giving 0'
+lives-ok { die if 42.expmod(-1,1) != 0 }, '42,  -1,  1';
 
 # vim: expandtab shiftwidth=4
