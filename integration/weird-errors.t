@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 35;
+plan 36;
 
 # this used to segfault in rakudo
 is_run(
@@ -281,5 +281,14 @@ is_run ｢sub f1 { hash a=>1 }; f1 for ^100000｣, {:out(''), :err(''), :0status
 # https://github.com/rakudo/rakudo/issues/1374
 is_run ｢class Foo {}; -> Foo() $x { $x.say }("42")｣, {:out(''), :err(*), :1status },
     'no segfault when using coercers';
+
+# https://github.com/MoarVM/MoarVM/issues/1223
+{
+    my $lot-of-variables = "";
+    $lot-of-variables ~= "my \$x$_ = $_;\n" for ^9_000;
+    $lot-of-variables ~= "exit 42";
+    #?rakudo.jvm todo 'dies with `java.lang.OutOfMemoryError: Java heap space`'
+    is_run($lot-of-variables, { :42status }, "no segv or throw with lots of variables");
+}
 
 # vim: expandtab shiftwidth=4
