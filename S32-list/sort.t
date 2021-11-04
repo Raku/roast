@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 50;
+plan 44;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -259,34 +259,6 @@ is-eqv <a c b>.sort(&lc), <a b c>.Seq, 'no crashes when using &lc in .sort';
 {
     is-deeply sort( {1}, ^2), (0,1),
       'is sorting a 2 elem list with a mapper stable?';
-}
-
-#?rakudo todo 'awaiting https://github.com/rakudo/rakudo/pull/3849'
-{
-    throws-like { (1|2,3).sort }, X::Cannot::Junction,
-      junction => 'any(1, 2)',
-      for      => /sorting/,
-      'does 2-element list with Junction throw when sorting';
-    throws-like { (1|2,3,4).sort }, X::Cannot::Junction,
-      junction => 'any(1, 2)',
-      for      => /sorting/,
-      'does 3-element list with Junction throw when sorting';
-    throws-like { ([1|2],[3]).sort }, X::Cannot::Junction,
-      junction => 'any(1, 2)',
-      for      => /sorting/,
-      'does 2-element list with list with Junction throw when sorting';
-    throws-like { ([1|2],[3],[4]).sort }, X::Cannot::Junction,
-      junction => 'any(1, 2)',
-      for      => /sorting/,
-      'does 3-element list with list with Junction throw when sorting';
-    throws-like { (1 => any(1, 2), 1 => 2).sort }, X::Cannot::Junction,
-      junction => 'any(1, 2)',
-      for      => /sorting/,
-      'does 2-element list with Pairs with Junction throw when sorting';
-    throws-like { (1 => any(1, 2), 1 => 2, 2 => 4).sort }, X::Cannot::Junction,
-      junction => 'any(1, 2)',
-      for      => /sorting/,
-      'does 3-element list with Pairs with Junction throw when sorting';
 }
 
 # tests mentioned in / derived from https://github.com/rakudo/rakudo/pull/384
