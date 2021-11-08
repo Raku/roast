@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 26;
+plan 38;
 
 #L<S03/Smart matching/Signature-signature>
 {
@@ -24,6 +24,17 @@ plan 26;
          :(:$x, Int :$y, Cool :$z, *%_),            :(*%_),                     False,
          :(:$x, *%_),                               :(:$x, *%_),                True,
          :(Mu, Any, Numeric),                       :(Mu, *@_),                 False,
+         :($),                                      :($ ($, $)),                True,
+         :($),                                      :(Int $ ($, $)),            True,
+         :(Int $ ($, $)),                           :($ ($, $)),                False,
+         :(*@),                                     :($ ($, $)),                True,
+         :(|),                                      :($ ($, $)),                True,
+         :(:$),                                     :(:$ ($, $)),               True,
+         :(:$),                                     :(Int :$ ($, $)),           True,
+         :(Int :$ ($, $)),                          :(:$ ($, $)),               False,
+         :(*%),                                     :(:$ ($, $)),               True,
+         :(|),                                      :(:$ ($, $)),               True,
+         :(:$b ($, $)),                             :(:$a ($, $)),              False,
         );
 
     for @tests -> $s1, $s2, $res {
@@ -47,6 +58,15 @@ plan 26;
     nok :(Int --> Int) ~~ :(), 'Can smartmatch against empty signature (False)';
     nok :() ~~ :(Int ), 'Can smartmatch an empty signature (False)';
     ok :() ~~ :(), 'Can smartmatch against empty signature (True)';
+
+    ok none((
+        :($T? is raw),
+        :($T? is raw = Mu),
+        :($T? is raw where $T =:= $T.WHAT = Mu),
+        :(:$T? is raw),
+        :(:$T? is raw = Mu),
+        :(:$T? is raw where $T =:= $T.WHAT = Mu)
+    ) X~~ :()), 'Optional parameters do not get dropped in a smartmatch';
 }
 
 # vim: expandtab shiftwidth=4
