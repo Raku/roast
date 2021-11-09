@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 10;
 
 class fish {
     has $.x is required;
@@ -51,6 +51,42 @@ throws-like { fowl.new() },
         has $!thing is required;
     }
     dies-ok { DEF.new }, 'does the is required on private attributes work';
+}
+
+subtest 'is required with array attributes' => {
+    my class C1 {
+        has @.arr-b = 1,2,3;
+        has @.arr-r is required;
+    }
+    throws-like { C1.new },
+        X::Attribute::Required,
+        'Unassigned Array attribute marked `is required` dies';
+    lives-ok { C1.new(arr-r => (4,5,6)) },
+        'Constructing with an array sets required parameter';
+    lives-ok { C1.new(arr-r => ()) },
+        'Constructing with an empty array is considered sufficient';
+    is-deeply C1.new(arr-r => ()).arr-b, [1,2,3],
+        'Default array value is used if no argument passed';
+    is-deeply C1.new(arr-b => 4..6, arr-r => ()).arr-b, [4,5,6],
+        'Default array value is not used if argument is passed';
+}
+
+subtest 'is required with hash attributes' => {
+    my class C1 {
+        has %.hash-b = a => 1, b => 2;
+        has %.hash-r is required;
+    }
+    throws-like { C1.new },
+        X::Attribute::Required,
+        'Unassigned Hash attribute marked `is required` dies';
+    lives-ok { C1.new(hash-r => { x => 1 }) },
+        'Constructing with a hash sets required parameter';
+    lives-ok { C1.new(hash-r => {}) },
+        'Constructing with an empty hash is considered sufficient';
+    is-deeply C1.new(hash-r => {}).hash-b, { a => 1, b => 2 },
+        'Default hash value is used if no argument passed';
+    is-deeply C1.new(hash-b => { x => 1 }, hash-r => {}).hash-b, { x => 1 },
+        'Default hash value is not used if argument is passed';
 }
 
 # vim: expandtab shiftwidth=4
