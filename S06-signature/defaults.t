@@ -10,7 +10,7 @@ Tests assigning default values to variables of type code in sub definitions.
 
 # L<S06/Optional parameters/Default values can be calculated at run-time>
 
-plan 9;
+plan 13;
 
 sub doubler($x) { return 2 * $x }
 
@@ -68,6 +68,15 @@ ok((MyPack::val_v), "default sub called in package namespace");
         ok $r ~~ Regex, 'rx{foo} works as a default';
     }
     foo();
+}
+
+# https://github.com/rakudo/rakudo/issues/4647
+{
+    cmp-ok -> :@l { @l }(), &[eqv], my @, 'untyped optional arrays get their default';
+    cmp-ok -> :%h { %h }(), &[eqv], my %, 'untyped optional hashes get their default';
+
+    cmp-ok -> Str :@l { @l }(), &[eqv], my Str @, 'typed optional arrays get their default';
+    cmp-ok -> Str :%h { %h }(), &[eqv], my Str %, 'typed optional hashes get their default';
 }
 
 # vim: expandtab shiftwidth=4
