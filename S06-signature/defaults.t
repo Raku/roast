@@ -10,7 +10,7 @@ Tests assigning default values to variables of type code in sub definitions.
 
 # L<S06/Optional parameters/Default values can be calculated at run-time>
 
-plan 13;
+plan 17;
 
 sub doubler($x) { return 2 * $x }
 
@@ -72,15 +72,23 @@ ok((MyPack::val_v), "default sub called in package namespace");
 
 # https://github.com/rakudo/rakudo/issues/4647
 {
-    -> :@l { cmp-ok @l.WHAT, &[=:=], Array,
-        'untyped optional arrays get their default' }();
-    -> :%h { cmp-ok %h.WHAT, &[=:=], Hash,
-        'untyped optional hashes get their default' }();
-
-    -> Str :@l { cmp-ok @l.WHAT, &[=:=], Array[Str],
-        'typed optional arrays get their default' }();
-    -> Str :%h { cmp-ok %h.WHAT, &[=:=], Hash[Str],
-        'typed optional hashes get their default' }();
+    # Inlined to avoid errors in forwarding arguments to other routines.
+    -> :@l {
+        cmp-ok @l.WHAT, &[=:=], Array, 'untyped optional arrays get their default Array...';
+        ok @l.DEFINITE, '...which is an instance';
+    }();
+    -> Str :@l {
+        cmp-ok @l.WHAT, &[=:=], Array[Str], 'typed optional arrays get their default parameterized Array...';
+        ok @l.DEFINITE, '...which is an instance';
+    }();
+    -> :%h {
+        cmp-ok %h.WHAT, &[=:=], Hash, 'untyped optional hashes get their default Hash...';
+        ok %h.DEFINITE, '...which is an instance';
+    }();
+    -> Str :%h {
+        cmp-ok %h.WHAT, &[=:=], Hash[Str], 'typed optional hashes get their default parameterized Hash...';
+        ok %h.DEFINITE, '...which is an instance';
+    }();
 }
 
 # vim: expandtab shiftwidth=4
