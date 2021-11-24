@@ -72,11 +72,15 @@ ok((MyPack::val_v), "default sub called in package namespace");
 
 # https://github.com/rakudo/rakudo/issues/4647
 {
-    cmp-ok -> :@l { @l }(), &[eqv], my @, 'untyped optional arrays get their default';
-    cmp-ok -> :%h { %h }(), &[eqv], my %, 'untyped optional hashes get their default';
+    cmp-ok WHAT(-> :@l { @l }()), &[=:=], Array,
+        'untyped optional arrays get their default';
+    cmp-ok WHAT(-> :%h { %h }()), &[=:=], Hash,
+        'untyped optional hashes get their default';
 
-    cmp-ok -> Str :@l { @l }(), &[eqv], my Str @, 'typed optional arrays get their default';
-    cmp-ok -> Str :%h { %h }(), &[eqv], my Str %, 'typed optional hashes get their default';
+    cmp-ok WHAT(-> Str :@l { @l }()), &[=:=], Array[Str],
+        'typed optional arrays get their default';
+    cmp-ok WHAT(-> Str :%h { %h }()), &[=:=], Hash[Str],
+        'typed optional hashes get their default';
 }
 
 # vim: expandtab shiftwidth=4
