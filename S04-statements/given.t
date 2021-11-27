@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 51;
+plan 52;
 
 =begin pod
 
@@ -142,8 +142,8 @@ Tests the given block, as defined in L<S04/"Switch statements">
        }
      }
 
-    is( ret_test("a"), "A", "given returns the correct value (1)" ); 
-    is( ret_test("b"), "B", "given returns the correct value (2)" ); 
+    is( ret_test("a"), "A", "given returns the correct value (1)" );
+    is( ret_test("b"), "B", "given returns the correct value (2)" );
 }
 
 # given/succeed returns the correct value:
@@ -155,8 +155,8 @@ Tests the given block, as defined in L<S04/"Switch statements">
        }
      }
 
-    is( ret_test("a"), "A", "given returns the correct value (1)" ); 
-    is( ret_test("b"), "B", "given returns the correct value (2)" ); 
+    is( ret_test("a"), "A", "given returns the correct value (1)" );
+    is( ret_test("b"), "B", "given returns the correct value (2)" );
 }
 
 # given/when and junctions
@@ -171,11 +171,77 @@ Tests the given block, as defined in L<S04/"Switch statements">
           when all(1)      { $all = 1; }
     }
     given 1 {
-          when one(1)      { $one = 1; }          
+          when one(1)      { $one = 1; }
     }
     is($any, 1, 'when any');
     is($all, 1, 'when all');
     is($one, 1, 'when one');
+}
+
+# given/when and junctions as topics
+subtest "given/when with junctions as topics" => {
+    plan 4;
+    my sub test-given(Mu \topic, Mu \condition, $message, :$match = True) is test-assertion {
+        given topic {
+            when condition {
+                ok $match, $message;
+            }
+            default {
+                ok !$match, $message;
+            }
+        }
+    }
+
+    subtest "typechecking" => {
+        plan 9;
+        test-given all(1,2), Int, "matching all() with a type object";
+        test-given all(1,"a"), Int, :!match, "non-matching all() with a type object";
+        test-given any(1,"a"), Int, "matching any() with a type object";
+        test-given any("a", "b"), Int, :!match, "non-matching any() with a type object";
+        test-given one(1,"a"), Int, "matching one() with a type object";
+        test-given one(1,2), Int, :!match, "non-matching one() with a type object: all match";
+        test-given one("a", "b"), Int, :!match, "no-matching one() with a type object: none matches";
+        test-given none("a", "b"), Int, "matching none() with a type object";
+        test-given none(1,"a"), Int, :!match, "non-matching one() with a type object";
+    }
+
+    subtest "exact value" => {
+        test-given any(3,10,13), 3, "any, when at least one value matches";
+        test-given any(0,10,13), 3, :!match, "any, when no value matches";
+        test-given all(3,3), 3, "all, when all values match";
+        test-given all(1,3,13), 3, :!match, "all, when at least one value doesn't match";
+        test-given one(3,10,13), 3, "one, when exactly one matches";
+        test-given one(0,10,13), 3, :!match, "one, when none matches";
+        test-given one(3,3,13), 3, :!match, "one, when two or more matches";
+        test-given none(0,10,13), 3, "none, when none matches";
+        test-given none(3,10,13), 3, :!match, "none, when at least one matches";
+    }
+
+    subtest "range" => {
+        plan 9;
+        test-given any(3,10,13), 1..7, "any, when at least one value matches";
+        test-given any(0,10,13), 1..7, :!match, "any, when no value matches";
+        test-given all(1,3,4), 1..7, "all, when all values match";
+        test-given all(1,3,13), 1..7, :!match, "all, when at least one value doesn't match";
+        test-given one(1,10,13), 1..7, "one, when exactly one matches";
+        test-given one(0,10,13), 1..7, :!match, "one, when none matches";
+        test-given one(1,3,13), 1..7, :!match, "one, when two or more matches";
+        test-given none(0,10,13), 1..7, "none, when none matches";
+        test-given none(1,10,13), 1..7, :!match, "none, when at least one matches";
+    }
+
+    subtest "regex" => {
+        plan 9;
+        test-given any("abc", "a1b", "123"), /^ \d+ $/, "any, when at least one value matches";
+        test-given any("abc", "a1b", "v123"), /^ \d+ $/, :!match, "any, when no value matches";
+        test-given all("123", "456", "7890"), /^ \d+ $/, "all, when all values matche";
+        test-given all("a123", "456", "7890"), /^ \d+ $/, :!match, "all, when at least one value doesn't match";
+        test-given one("a123", "b456", "7890"), /^ \d+ $/, "one, when exactly one matches";
+        test-given one("a123", "b456", "c7890"), /^ \d+ $/, :!match, "one, when none matches";
+        test-given one("123", "b456", "7890"), /^ \d+ $/, :!match, "one, when two or more matches";
+        test-given none("a123", "b456", "c7890"), /^ \d+ $/, "none, when none matches";
+        test-given none("a123", "456", "c7890"), /^ \d+ $/, :!match, "none, when at least one matches";
+    }
 }
 
 # given + objects
@@ -288,8 +354,8 @@ eval-lives-ok 'sub a() { } given 3',     'can define a sub inside a statement-mo
 
 {
     my $capture-is-correct = False;
-    given "Hello" { 
-        when /e(\w\w)/ { $capture-is-correct = $0 eq "ll"; } 
+    given "Hello" {
+        when /e(\w\w)/ { $capture-is-correct = $0 eq "ll"; }
     }
     ok $capture-is-correct, 'matches in when correctly set $0';
 }
