@@ -31,7 +31,7 @@ plan 59;
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/3830
-#?rakudo skip 'multi-dim sized arrays NYI'
+#?rakudo skip 'ragged multi-dim sized arrays NYI'
 {
     my @md[*;*;2];
     @md[0;0;0] = 'foo';
