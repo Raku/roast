@@ -9,7 +9,7 @@ built-in grep tests
 
 =end pod
 
-plan 49;
+plan 50;
 
 my @list = (1 .. 10);
 
@@ -195,6 +195,12 @@ is-deeply ("foo").grep({ /foo/ }), ("foo",),
       'is one junction handled correctly in grep';
     is-deeply ((0, 0), (0, 1), (1, 1)).grep(*.none), ((0,0),),
       'is none junction handled correctly in grep';
+}
+
+# https://github.com/rakudo/rakudo/issues/4660
+{
+    is-deeply (^12).grep(*+*+*), ((0,1,2),(3,4,5),(6,7,8),(9,10,11)),
+      'does grep work with more than 2 args';
 }
 
 # vim: expandtab shiftwidth=4
