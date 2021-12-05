@@ -323,7 +323,6 @@ for @uint -> $T {
         ok @arr[0] > 0,        "negative value on $t array becomes positive";
     }
     elsif $t eq "uint32" {
-        #?rakudo.jvm todo 'missing an invert? (-1 --> 0, -2 --> -1)'
         #?rakudo.js todo 'the js backend is 32bit so we get RT #124088 here'
         ok @arr[0] > 0,        "negative value on $t array becomes positive";
     } else {
