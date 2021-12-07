@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 55;
+plan 56;
 
 {
     class A { method Str() { 'foo' } };
@@ -138,6 +138,11 @@ plan 55;
 
 {
     eval-lives-ok 'my %*a{Int}', "Accept dynamic object hash"
+}
+
+# https://github.com/rakudo/rakudo/issues/1486
+{
+    ok {:foo, (if 0.5.rand < 1 { :bar })}, 'a conditional inside circumfix {} works';
 }
 
 #vim: ft=perl6
