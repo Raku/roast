@@ -1200,6 +1200,7 @@ S32-num/fatrat.t
 S32-num/int.t
 S32-num/is-prime.t
 S32-num/log.t
+S32-num/modf.t
 S32-num/narrow.t
 S32-num/negative-zero.t
 S32-num/pi.t
