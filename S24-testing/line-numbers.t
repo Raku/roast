@@ -32,7 +32,7 @@ execute-test(:function("eval-lives-ok"), :line(9));
 execute-test(:function("isa-ok"), :line(9));
 
 #?DOES 1
-execute-test(:function("is_approx"), :line(9));
+execute-test(:function("is-approx"), :line(9));
 
 #?DOES 1
 execute-test(:function("is-deeply"), :line(9));
