@@ -44,16 +44,10 @@ is (1, 1, 2, 3, { $^a + $^b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'a
 is (1, 2, sub {[*] @_[*-1], @_ + 1} ... 720).join(' '), '1 2 6 24 120 720', 'slurpy factorial generator';
 
 # https://github.com/Raku/old-issue-tracker/issues/3118
-# TODO: better test (e.g. typed exception instead of testing for backend specific error messages
+# TODO: typed exception instead of testing for specific error message
 {
     throws-like { ( ^1, *+* ... * )[^20] }, Exception,
-        message => {
-            m/
-                'Too few positionals passed; expected 2 arguments but got 1'
-                |
-                'Not enough positional parameters passed; got 1 but expected 2'
-            /
-        },
+        message => / 'Too few positionals passed' .+ 'expected 2 arguments but got 1' /,
         'no internals leaking out with series operator used wrongly (arity 2)';
 }
 
