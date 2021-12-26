@@ -4,7 +4,7 @@ use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use lib $?FILE.IO.parent(2).add: 'packages/S14-roles/lib';
 use Test::Util;
 
-plan 3;
+plan 4;
 
 subtest "Basic role language revision", {
     my @rev-map = :c<c>, :d<d>, :e<e.PREVIEW>;
@@ -35,25 +35,12 @@ subtest "Basic role language revision", {
 }
 
 subtest "Multi-module and multi-version", {
-    plan 2;
+    plan 3;
     use Ver6e;
-
-    subtest "Type object language revisions", {
-        plan 3;
-        is-deeply VerRole.^candidates.map( *.^language-revision ), <c e>,
-                  "role candidates are coming from different language revisions";
-        is VerRole.new.^language-revision, 'c', "pun of role defined in 6.c remains 6.c";
-        is VerRole[Str].new.^language-revision, 'e', "pun of role defined in 6.e remains 6.e";
-    }
-
-    subtest "Cross-boundary compatibility", {
-        plan 2;
-        # Because parameterized role comes from a 6.e module
-        throws-like 'my class C does VerRole[Int] { }', X::Language::IncompatRevisions,
-                    'class from v6.d is not compatible with a role from v6.e';
-        # Because unparameterized role comes from a 6.c module
-        lives-ok { my class C does VerRole { } }, 'class from v6.d can consume a v6.c role';
-    }
+    is-deeply VerRole.^candidates.map( *.^language-revision ), <c e>,
+              "role candidates are coming from different language revisions";
+    is VerRole.new.^language-revision, 'c', "pun of role defined in 6.c remains 6.c";
+    is VerRole[Str].new.^language-revision, 'e', "pun of role defined in 6.e remains 6.e";
 }
 
 subtest "Enum", {
@@ -66,6 +53,97 @@ subtest "Enum", {
     is Enum-v6c.^language-revision, 'c', "enum for v6.c";
     is Enum-v6d.^language-revision, 'd', "enum for v6.e";
     is Enum-v6e.^language-revision, 'e', "enum for v6.d";
+}
+
+subtest "Submethods" => {
+    plan 7;
+    my @compiler-args = '-I' ~ $?FILE.IO.parent(2).add: 'packages/S14-roles/lib';
+    is_run q:to/V6C/,
+            use v6.c;
+            use Ver6e;
+            class C does R6e_1 { }
+            print C.^language-revision, ": ", C.^submethod_table.keys.join(" ");
+            V6C
+        :@compiler-args,
+        { :err(""), :out("c: BUILDALL") },
+        "6.c class consuming 6.e role doesn't receive role's submethods";
+
+    is_run q:to/V6C/,
+            use v6.c;
+            use Ver6c;
+            use Ver6e;
+            class C does R6e_1 does R6c_1 { }
+            print C.^language-revision, ": ", C.^submethod_table.keys.sort.join(" ");
+            V6C
+        :@compiler-args,
+        { :err(""), :out("c: BUILDALL r6c") },
+        "6.c class consuming both 6.c and 6.e roles only gets submethods from 6.c role";
+
+    is_run q:to/V6E/,
+            use v6.e.PREVIEW;
+            use Ver6e;
+            class C does R6e_1 { }
+            print C.^language-revision, ": ", C.^submethod_table.keys.join(" ");
+            V6E
+        :@compiler-args,
+        { :err(""), :out("e: BUILDALL") },
+        "6.e class consuming 6.e role doesn't receive role's submethods";
+
+    is_run q:to/V6E/,
+            use v6.e.PREVIEW;
+            use Ver6c;
+            use Ver6e;
+            class C does R6e_1 does R6c_1 { }
+            print C.^language-revision, ": ", C.^submethod_table.keys.join(" ");
+            V6E
+        :@compiler-args,
+        { :err(""), :out("e: BUILDALL") },
+        "6.e class consuming both 6.c and 6.e roles gets submethods from neither";
+
+    is_run q:to/V6C/,
+            use v6.c;
+            use Ver6e;
+            use Ver6c;
+            my @stages;
+            class C does R6e_2[@stages] does R6c_2[@stages] { }
+            C.new;
+            print C.^language-revision, ": ", @stages.join(" ");
+            V6C
+        :@compiler-args,
+        { :err(""), :out("c: R6e_2.BUILD R6c_2.BUILD R6e_2.TWEAK R6c_2.TWEAK") },
+        "6.c class with no own constructors: 6.c and 6.e roles constructors are ran";
+
+    is_run q:to/V6C/,
+            use v6.c;
+            use Ver6e;
+            use Ver6c;
+            my @stages;
+            class C does R6e_2[@stages] does R6c_2[@stages] {
+                submethod BUILD {}
+                submethod TWEAK {}
+            }
+            C.new;
+            print C.^language-revision, ": ", @stages.join(" ");
+            V6C
+        :@compiler-args,
+        { :err(""), :out("c: R6e_2.BUILD R6e_2.TWEAK") },
+        "6.c class with own constructors blocks 6.c role constructors, but not 6.e";
+
+    is_run q:to/V6E/,
+            use v6.e.PREVIEW;
+            use Ver6e;
+            use Ver6c;
+            my @stages;
+            class C does R6e_2[@stages] does R6c_2[@stages] {
+                submethod BUILD {}
+                submethod TWEAK {}
+            }
+            C.new;
+            print C.^language-revision, ": ", @stages.join(" ");
+            V6E
+        :@compiler-args,
+        { :err(""), :out("e: R6e_2.BUILD R6c_2.BUILD R6e_2.TWEAK R6c_2.TWEAK") },
+        "6.e class with own constructors doesn't block neither 6.e, nor 6.c constructors";
 }
 
 done-testing;
