@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 179;
+plan 180;
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
 
@@ -194,7 +194,7 @@ is (1..6 Z 'a' .. 'c').flat.join, '1a2b3c',   'Ranges and infix:<Z>';
 
 {
     my $range;
-    lives-ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = ~$0..~$1 },
+    lives-ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = (~$0)..(~$1) },
              'can make range from match vars with string context forced';
     is $range.min, 1, 'range starts at one';
     is $range.min.WHAT.gist, Str.gist, 'range start is a string';
@@ -336,6 +336,29 @@ subtest 'Ranges can have an offset applied' => {
 
     @a = do $_ for (^4) / 2;
     is-deeply [0.0, 1.0], @a, 'dividing a ^ range by an integer literal offset';
+}
+
+# https://github.com/rakudo/rakudo/issues/1809
+subtest "Smartmatch Coercions" => {
+    plan 14;
+
+    ok ("42" ~~ 20..50), "stringified number in a context of numeric range, inside the range";
+    nok ("13" ~~ 20..50), "stringified number in a context of numeric range, less than the min";
+    nok ("666" ~~ 20..50), "stringified number in a context of numeric range, more than the max";
+    my $succeed;
+    lives-ok { $succeed = "abc" ~~ 1..10 }, "a string in non-numeric against numeric range doesn't throw";
+    cmp-ok $succeed, '===', False, "previous smartmatch resulted in False";
+
+    ok 42 ~~ "3".."9", "number in a context of stringy range, inside the range";
+    ok "42" ~~ "3".."9", "same number, stringified, in a context of stringy range, inside the range";
+    nok 42 ~~ "5".."9", "number in a context of stringy range, before the min";
+    nok "42" ~~ "5".."9", "same number, stringified, in a context of stringy range, before the min";
+    nok 42 ~~ "1".."3", "number in a context of stringy range, after the max";
+    nok "42" ~~ "1".."3", "same number, stringified, in a context of stringy range, after the max";
+
+    ok 42 ~~ *.."5", "number in a context of whatever-string range, inside the range";
+    nok 42 ~~ *..5, "number in a context of whatever-number range, outside the range";
+    nok 42 ~~ *.."3", "number in a context of whatever-string range, outside the range";
 }
 
 # vim: expandtab shiftwidth=4
