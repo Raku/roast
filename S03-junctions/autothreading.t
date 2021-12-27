@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 106;
+plan 107;
 
 {
     # Solves the equation A + B = A * C for integers
@@ -367,6 +367,19 @@ ok any(1.0,2,'3') ~~ Junction, 'any/Junction smartmatch does not autothread';
 ok Mu !~~ Junction, 'Mu/Junction smartmatch False';
 ok Junction ~~ Junction, 'Junction/Junction smartmatch True';
 ok Junction ~~ Mu, 'Junction/Mu smartmatch True';
+
+subtest "smartmatch against ranges" => {
+    plan 9;
+    ok any(3,10,13) ~~ 1..7,    "any, when at least one value matches";
+    nok any(0,10,13) ~~ 1..7,   "any, when no value matches";
+    ok all(1,3,4) ~~ 1..7,      "all, when all values match";
+    nok all(1,3,13) ~~ 1..7,    "all, when at least one value doesn't match";
+    ok one(1,10,13) ~~ 1..7,    "one, when exactly one matches";
+    nok one(0,10,13) ~~ 1..7,   "one, when none matches";
+    nok one(1,3,13) ~~ 1..7,    "one, when two or more matches";
+    ok none(0,10,13) ~~ 1..7,   "none, when none matches";
+    nok none(1,10,13) ~~ 1..7,  "none, when at least one matches";
+}
 
 # https://github.com/Raku/old-issue-tracker/issues/5925
 subtest 'smartmatch against Bool:U' => {
