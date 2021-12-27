@@ -640,7 +640,7 @@ S11-modules/nested.t
 S11-modules/rakulib.t
 S11-modules/require.t
 S11-modules/runtime.t
-S11-modules/versioning.t
+S11-modules/versioning.t                    # slow
 S11-repository/cur-candidates.t
 S11-repository/cur-current-distribution.t
 S11-repository/curli-install.t
@@ -802,7 +802,7 @@ S15-normalization/nfc-6.t       # moar stress
 S15-normalization/nfc-7.t       # moar stress
 S15-normalization/nfc-8.t       # moar stress
 S15-normalization/nfc-9.t       # moar stress
-S15-normalization/nfc-concat.t  # moar
+S15-normalization/nfc-concat.t  # moar slow
 S15-normalization/nfc-sanity.t  # moar
 S15-normalization/nfd-0.t       # moar stress
 S15-normalization/nfd-1.t       # moar stress
