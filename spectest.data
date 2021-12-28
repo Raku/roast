@@ -313,6 +313,7 @@ S03-smartmatch/any-sub.t
 S03-smartmatch/any-type.t
 S03-smartmatch/array-array.t
 S03-smartmatch/array-hash.t
+S03-smartmatch/array-map.t
 S03-smartmatch/capture-signature.t
 S03-smartmatch/disorganized.t
 S03-smartmatch/hash-hash.t
