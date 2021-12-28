@@ -4,7 +4,6 @@ plan 6;
 
 #L<S03/"Smart matching"/Array Hash hash slice existence>
 # https://github.com/Raku/old-issue-tracker/issues/3801
-#?rakudo skip 'RT #124444'
 {
     my %h = (a => 'b', c => Mu);
 
