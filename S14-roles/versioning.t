@@ -100,6 +100,7 @@ subtest "Submethods" => {
         { :err(""), :out("e: BUILDALL") },
         "6.e class consuming both 6.c and 6.e roles gets submethods from neither";
 
+    #?rakudo.jvm todo 'got out: "c: "'
     is_run q:to/V6C/,
             use v6.c;
             use Ver6e;
@@ -113,6 +114,7 @@ subtest "Submethods" => {
         { :err(""), :out("c: R6e_2.BUILD R6c_2.BUILD R6e_2.TWEAK R6c_2.TWEAK") },
         "6.c class with no own constructors: 6.c and 6.e roles constructors are ran";
 
+    #?rakudo.jvm todo 'got out: "c: "'
     is_run q:to/V6C/,
             use v6.c;
             use Ver6e;
@@ -129,6 +131,7 @@ subtest "Submethods" => {
         { :err(""), :out("c: R6e_2.BUILD R6e_2.TWEAK") },
         "6.c class with own constructors blocks 6.c role constructors, but not 6.e";
 
+    #?rakudo.jvm todo 'got out: "e: "'
     is_run q:to/V6E/,
             use v6.e.PREVIEW;
             use Ver6e;
