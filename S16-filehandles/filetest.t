@@ -72,34 +72,28 @@ close $fh;
 ok "empty_file".IO ~~ :z,      "~~:z returns true for an empty file";
 unlink "empty_file";
 
+#?rakudo skip ':M, :C, :A'
 {
-    if $*DISTRO.is-win {
-      skip "~~:M/~~:C/~~:A not working on Win32 yet", 9
-    }
-    else {
-        my $fn = 'test_file_filetest_t';
-        my $fh = open($fn, :w);
-        close $fh;
-        sleep 1; # just to make sure
-        #?rakudo 3 skip ':M, :C, :A'
-        ok ($fn.IO ~~ :M) < 0,      "~~:M works on new file";
-        ok ($fn.IO ~~ :C) < 0,      "~~:C works on new file";
-        ok ($fn.IO ~~ :A) < 0,      "~~:A works on new file";
-        unlink $fn;
+    my $fn = 'test_file_filetest_t';
+    my $fh = open($fn, :w);
+    close $fh;
+    sleep 1; # just to make sure
+    ok ($fn.IO ~~ :M) < 0,      "~~:M works on new file";
+    ok ($fn.IO ~~ :C) < 0,      "~~:C works on new file";
+    ok ($fn.IO ~~ :A) < 0,      "~~:A works on new file";
+    unlink $fn;
 
-        if "README".IO !~~ :f {
-            skip "no file README", 3;
-        } else {
-            ok ("README".IO ~~ :M) > 0, "~~:M works on existing file";
-            ok ("README".IO ~~ :C) > 0, "~~:C works on existing file";
-            ok ("README".IO ~~ :A) > 0, "~~:A works on existing file";
-        }
-
-        #?rakudo 3 skip ':M, :C, :A'
-        ok not "xyzzy".IO ~~ :M, "~~:M returns undefined when no file";
-        ok not "xyzzy".IO ~~ :C, "~~:C returns undefined when no file";
-        ok not "xyzzy".IO ~~ :A, "~~:A returns undefined when no file";
+    if "README.md".IO !~~ :f {
+        skip "no file README.md", 3;
+    } else {
+        ok ("README.md".IO ~~ :M) > 0, "~~:M works on existing file";
+        ok ("README.md".IO ~~ :C) > 0, "~~:C works on existing file";
+        ok ("README.md".IO ~~ :A) > 0, "~~:A works on existing file";
     }
+
+    ok not "xyzzy".IO ~~ :M, "~~:M returns undefined when no file";
+    ok not "xyzzy".IO ~~ :C, "~~:C returns undefined when no file";
+    ok not "xyzzy".IO ~~ :A, "~~:A returns undefined when no file";
 }
 
 # potential parsing difficulties
