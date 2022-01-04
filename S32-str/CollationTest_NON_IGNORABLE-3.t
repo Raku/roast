@@ -1,4 +1,4 @@
-# Test created with GenerateCollationTest.raku on 2021-08-22 from CollationTest_NON_IGNORABLE.txt UCA version 13.0.0 UCD version 13.0.0
+# Test created with CollationTestGen.raku on 2021-08-22 from CollationTest_NON_IGNORABLE.txt UCA version 13.0.0 UCD version 13.0.0
 # ( (codepoints), description, line-num-from-UCA-file, expect-success )
 
 my @a = 
@@ -990,7 +990,6 @@ my @a =
 ( (0x9FFD,  0x61, ), Q«« ('U+9FFD') null»», 206696, True ),
 ( (0x9FFD,  0x41, ), Q«« ('U+9FFD') null»», 206697, True ),
 ( (0x9FFD,  0x62, ), Q«« ('U+9FFD') null»», 206698, True ),
-( (0xD800,  0x21, ), Q«« ('U+D800') <surrogate-D800>»», 206699, True ),
 ( (0xFDD0,  0x21, ), Q«« ('U+FDD0') <noncharacter-FDD0>»», 206789, True ),
 ( (0xFDD0,  0x3F, ), Q«« ('U+FDD0') <noncharacter-FDD0>»», 206790, True ),
 ( (0xFDD0,  0x61, ), Q«« ('U+FDD0') <noncharacter-FDD0>»», 206791, True ),
@@ -1225,7 +1224,7 @@ my @a =
 ( (0x10FFFF,  0x62, ), Q«« ('U+0010FFFF') <noncharacter-10FFFF>»», 207273, True ),
 ( (0xFFFD,  0x21, ), Q«« (�) REPLACEMENT CHARACTER»», 207274, True ),;
 use Test;
-plan 1221;
+plan 1220;
 use Test;
 # Iterate from 0 to one before the last index
 for ^(@a-1) {

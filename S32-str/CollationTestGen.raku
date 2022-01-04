@@ -79,7 +79,7 @@ sub MAIN (Bool :$should-test = False, Str:D :$folder) {
     }
     for ^@output-files {
         "{$file.basename.subst(/'.txt'$/, '')}-$_.t".IO.spurt:
-            [~] "# Test created with GenerateCollationTest.raku on {DateTime.now.yyyy-mm-dd} from $filename UCA version $uca-version UCD version $ucd-version\n",
+            [~] "# Test created with $*PROGRAM-NAME on {Date.today.yyyy-mm-dd} from $filename UCA version $uca-version UCD version $ucd-version\n",
             "# ( (codepoints), description, line-num-from-UCA-file, expect-success )\n\n",
             'my @a = ', "\n", @output-files[$_].join("\n"), ";\n",
             "use Test;\n", "plan {@output-files[$_].elems - 1};\n", $tail, "\n";
@@ -102,8 +102,8 @@ sub MAIN (Bool :$should-test = False, Str:D :$folder) {
 }
 
 sub is-surrogate (Int:D $cp) {
-    return 0xDC00 <= $cp && $cp <= 0xDFFF #`( <Low Surrogate> )
-        or 0xD800 <= $cp && $cp <= 0xDB7F #`( <Non Private Use High Surrogate> )
+         (0xDC00 <= $cp && $cp <= 0xDFFF) #`( <Low Surrogate> )
+      or (0xD800 <= $cp && $cp <= 0xDB7F) #`( <Non Private Use High Surrogate> )
 }
 
 sub quote-it (Str:D $str = "") {
