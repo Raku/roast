@@ -22,7 +22,7 @@ ok TestGH2613 ~~ GH2613::R1, "class smartmatches against full role name";
     my role R2714_1[::T] is C2714_2 { }
 
     ok R2714_1 ~~ C2714_1, "Role group matches a parent class of its non-parameterized member";
-    nok R2714_1 ~~ C2714_2, "Role group doesn't a parent class of a parameterized member";
+    nok R2714_1 ~~ C2714_2, "Role group doesn't match a parent class of a parameterized member";
 
     my \r = R2714_1[Int];
     ok r ~~ C2714_2, "Curryied role matches its parent class";
