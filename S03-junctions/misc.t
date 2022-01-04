@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 150;
+plan 149;
 
 =begin pod
 
@@ -451,9 +451,6 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 
 # https://github.com/Raku/old-issue-tracker/issues/2623
 ok { a => 1} ~~ List|Hash, 'Can construct junction with List type object';
-
-# https://github.com/Raku/old-issue-tracker/issues/2711
-ok (1|2).Str ~~ Str, 'Junction.Str returns a Str, not a Junction';
 
 # https://github.com/Raku/old-issue-tracker/issues/2511
 ok (0|1 == 0&1), 'test junction evaluation order';
