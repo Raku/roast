@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 52;
+plan 53;
 
 =begin pod
 
@@ -179,7 +179,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
 }
 
 # given/when and junctions as topics
-subtest "given/when with junctions as topics" => {
+subtest "given/when with junctions as topics and indirect condition" => {
     plan 4;
     my sub test-given(Mu \topic, Mu \condition, $message, :$match = True) is test-assertion {
         given topic {
@@ -241,6 +241,81 @@ subtest "given/when with junctions as topics" => {
         test-given one("123", "b456", "7890"), /^ \d+ $/, :!match, "one, when two or more matches";
         test-given none("a123", "b456", "c7890"), /^ \d+ $/, "none, when none matches";
         test-given none("a123", "456", "c7890"), /^ \d+ $/, :!match, "none, when at least one matches";
+    }
+}
+
+subtest "given/when with explicit conditions" => {
+    my sub produce-tester(Str:D $condition --> Code:D) {
+        EVAL qq:to/TESTER/;
+            sub test-given(Mu \\topic, \$message, :\$match = True) is test-assertion \{
+                given topic \{
+                    when $condition \{
+                        ok \$match, \$message;
+                    }
+                    default \{
+                        ok !\$match, \$message;
+                    }
+                }
+            }
+            TESTER
+    }
+
+    my @subtests =
+        'Int' => (
+            (True,  all(1,2)),
+            (False, all(1,"a")),
+            (True,  any(1,"a")),
+            (False, any("a","b")),
+            (True,  one(1, "a")),
+            (False, one(1,2)),
+            (False, one("a", "b")),
+            (True,  none("a", "b")),
+            (False, none(1, "a")),
+        ),
+        'Str' => (
+            (True,  all("a","b")),
+            (False, all(1,"a")),
+            (True,  any(1,"a")),
+            (False, any(1,2)),
+            (True,  one(1,"a")),
+            (False, one("a","b")),
+            (False, one(1,2)),
+            (True,  none(1,2)),
+            (False, none(1,"a")),
+        ),
+        # Allomorphs match this condition, but no strings or integers
+        'Int & Str' => (
+            (True, <1>),
+            (False, "1"),
+            (False, 1),
+            (True, <1 2>.all),
+            (False, all(<1>, "1")),
+            (False, all(<1>, 1)),
+            (True, <1 2>.any),
+            (True, any(<1>, "1")),
+            (True, any(<1>, 1)),
+            (False, any("1", 1)),
+            (True, one(<1>, 1)),
+            (True, one(<1>, "1")),
+            (False, <1 2>.one),
+            (False, one(1, 2)),
+            (False, one("1", "2")),
+            (True, none("1", "2")),
+            (True, none(1, 2)),
+            (False, none(<1>, 1)),
+            (False, none(<1>, "1")),
+        );
+
+    plan +@subtests;
+
+    for @subtests -> (:key($condition), :value(@tests)) {
+        subtest $condition => {
+            plan +@tests;
+            my &test-given = produce-tester $condition;
+            for @tests -> ($match, \topic) {
+                test-given topic, ($match ?? "" !! "non-") ~ "matching " ~ topic.raku, :$match;
+            }
+        }
     }
 }
 
