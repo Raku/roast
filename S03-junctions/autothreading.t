@@ -309,7 +309,7 @@ plan 107;
 # autothreading over named-only params
 {
     sub foo(Int :$n) { $n }
-    ok foo(n => 1|2) ~~ Junction, 'named-only params autothread correctly';
+    isa-ok foo(n => 1|2), Junction, 'named-only params autothread correctly';
 }
 
 # test that junctions doen't flatten ranges
