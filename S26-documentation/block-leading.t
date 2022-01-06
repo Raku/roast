@@ -1,24 +1,26 @@
 use v6.d;
 use Test;
-plan 335;
+plan 64;
 
 my $pod_index = 0;
 
 # Test that we get the values we expect from WHY.contents, WHY.leading,
 # WHY.trailing, and that WHY.WHEREFORE is the appropriate thing
 # Also checks the $=pod object is set appropriately.
-# XXX we need to be able to affect the test level (like Test::Builder::Level
-#     in Perl 5) so that failures point at the caller
-sub test-leading($thing, $value) {
-    is $thing.WHY.?contents, $value, $value  ~ ' - contents';
-    is $thing.WHY.?WHEREFORE.^name, $thing.^name, $value ~ ' - WHEREFORE';
-    is $thing.WHY.?leading, $value, $value ~ ' - leading';
-    ok !$thing.WHY.?trailing.defined, $value ~ ' - no trailing';
-    is ~$thing.WHY, $value, $value ~ ' - stringifies correctly';
+#?DOES 1
+sub test-leading($thing, $value) is test-assertion {
+    subtest $thing.^name => {
+        plan 7;
+        is $thing.WHY.?contents, $value, $value  ~ ' - contents';
+        is $thing.WHY.?WHEREFORE.^name, $thing.^name, $value ~ ' - WHEREFORE';
+        is $thing.WHY.?leading, $value, $value ~ ' - leading';
+        ok !$thing.WHY.?trailing.defined, $value ~ ' - no trailing';
+        is ~$thing.WHY, $value, $value ~ ' - stringifies correctly';
 
-    is $=pod[$pod_index].?WHEREFORE.^name,$thing.^name, "\$=pod $value - WHEREFORE";
-    is ~$=pod[$pod_index], $value, "\$=pod $value";
-    $pod_index++;
+        is $=pod[$pod_index].?WHEREFORE.^name,$thing.^name, "\$=pod $value - WHEREFORE";
+        is ~$=pod[$pod_index], $value, "\$=pod $value";
+        $pod_index++;
+    }
 }
 
 
@@ -192,7 +194,6 @@ role Boxer {
 
 {
     my $method = Boxer.^lookup('actor');
-    ok !Boxer.WHY.defined, q{Role group's WHY should not be defined};
     test-leading(Boxer.HOW.candidates(Boxer)[0], 'Are you talking to me?');
     test-leading($method, 'Robert De Niro');
 }
