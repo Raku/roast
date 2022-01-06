@@ -1,22 +1,26 @@
 use v6;
 use Test;
-plan 291;
+plan 58;
 
 my $pod_index = 0;
 
+#?DOES 1
 sub test-both($thing, $leading, $trailing) is test-assertion {
-    my $combined = "$leading\n$trailing";
-    my $name     = "$leading\\n$trailing";
+    subtest $thing.^name => {
+        plan 7;
+        my $combined = "$leading\n$trailing";
+        my $name     = "$leading\\n$trailing";
 
-    is $thing.WHY.?contents, $combined, $name  ~ ' - contents';
-    is $thing.WHY.?WHEREFORE.^name, $thing.^name, $name ~ ' - WHEREFORE';
-    is $thing.WHY.?leading, $leading, $name ~ ' - trailing';
-    is $thing.WHY.?trailing, $trailing, $name ~ ' - trailing';
-    is ~$thing.WHY, $combined, $name ~ ' - stringifies correctly';
+        is $thing.WHY.?contents, $combined, $name  ~ ' - contents';
+        is $thing.WHY.?WHEREFORE.^name, $thing.^name, $name ~ ' - WHEREFORE';
+        is $thing.WHY.?leading, $leading, $name ~ ' - trailing';
+        is $thing.WHY.?trailing, $trailing, $name ~ ' - trailing';
+        is ~$thing.WHY, $combined, $name ~ ' - stringifies correctly';
 
-    is $=pod[$pod_index].?WHEREFORE.^name, $thing.^name, "\$=pod $name - WHEREFORE";
-    is ~$=pod[$pod_index], $combined, "\$=pod $name";
-    $pod_index++;
+        is $=pod[$pod_index].?WHEREFORE.^name, $thing.^name, "\$=pod $name - WHEREFORE";
+        is ~$=pod[$pod_index], $combined, "\$=pod $name";
+        $pod_index++;
+    }
 }
 
 #| simple case
@@ -74,7 +78,7 @@ my $roar-method = Sheep.^lookup('roar');
 
 test-both($roar-method, 'not too scary', '...unless you fear sheep!');
 
-#| trailing space here  
+#| trailing space here
 sub third {}
 #=    leading space here
 
@@ -141,11 +145,17 @@ role Boxer {
     #= he's an actor
 }
 
+#| I'm not talkative
+role Boxer[::T] {
+#= and this is OK
+}
+
 {
     my $method = Boxer.^lookup('actor');
-    ok !Boxer.WHY.defined, q{Role group's WHY should not be defined};
     test-both(Boxer.HOW.candidates(Boxer)[0], 'Are you talking to me?', 'I said, are you talking to me?');
+    ok Boxer.WHY =:= Boxer.^candidates[0].WHY, q{Role group's WHY is the one of its default candidate};
     test-both($method, 'Robert De Niro', q{he's an actor});
+    test-both(Boxer.HOW.candidates(Boxer)[1], q{I'm not talkative}, q{and this is OK});
 }
 
 class C {
