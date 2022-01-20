@@ -111,9 +111,9 @@ is @arr.pick,                    "nn"|"ff"|"bb"|"uu", ".pick from a $t array";
 is @arr.roll,                    "nn"|"ff"|"bb"|"uu", ".roll from a $t array";
 
 @arr[1] = @arr[0];
-is-deeply @arr.unique, <nn bb uu>, "$t array.unique";
-is-deeply @arr.repeated, ("nn",),    "$t array.repeated";
-is-deeply @arr.squish, <nn bb uu>, "$t array.squish";
+is-deeply @arr.unique.List, <nn bb uu>, "$t array.unique";
+is-deeply @arr.repeated.List, ("nn",),    "$t array.repeated";
+is-deeply @arr.squish.List, <nn bb uu>, "$t array.squish";
 
 dies-ok { @arr.pop },         "Trying to pop a shaped $t array dies";
 dies-ok { @arr.shift },       "Trying to shift a shaped $t array dies";

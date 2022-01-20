@@ -117,9 +117,9 @@ for @num -> $T {
     is @arr.roll,            22e0|32e0|26e0|34e0, ".roll from a $t array";
 
     @arr[1] = @arr[0];
-    is-deeply @arr.unique, (22e0,26e0,34e0), "$t array.unique";
-    is-deeply @arr.repeated, (22e0,),        "$t array.repeated";
-    is-deeply @arr.squish, (22e0,26e0,34e0), "$t array.squish";
+    is-deeply @arr.unique.List, (22e0,26e0,34e0), "$t array.unique";
+    is-deeply @arr.repeated.List, (22e0,),        "$t array.repeated";
+    is-deeply @arr.squish.List, (22e0,26e0,34e0), "$t array.squish";
 
     dies-ok { @arr.pop },         "Trying to pop a shaped $t array dies";
     dies-ok { @arr.shift },       "Trying to shift a shaped $t array dies";

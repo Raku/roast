@@ -145,9 +145,9 @@ for @num -> $T {
     is @arr.roll,         4.0e0|5.0e0|4.4e0|5.2e0, ".roll from a $t array";
 
     @arr[1] = @arr[0];
-    is-deeply @arr.unique, (@arr[0],@arr[2],@arr[3]), "$t array.unique";
-    is-deeply @arr.repeated, (@arr[0],),              "$t array.repeated";
-    is-deeply @arr.squish, (@arr[0],@arr[2],@arr[3]), "$t array.squish";
+    is-deeply @arr.unique.List, (@arr[0],@arr[2],@arr[3]), "$t array.unique";
+    is-deeply @arr.repeated.List, (@arr[0],),              "$t array.repeated";
+    is-deeply @arr.squish.List, (@arr[0],@arr[2],@arr[3]), "$t array.squish";
 
     @arr = ();
     throws-like { @arr.pop }, X::Cannot::Empty,

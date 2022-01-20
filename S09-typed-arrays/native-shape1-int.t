@@ -118,9 +118,9 @@ for flat @int,@uint -> $T {
     is @arr.roll,                    22|32|26|34, ".roll from a $t array";
 
     @arr[1] = @arr[0];
-    is-deeply @arr.unique, (22,26,34), "$t array.unique";
-    is-deeply @arr.repeated, (22,),    "$t array.repeated";
-    is-deeply @arr.squish, (22,26,34), "$t array.squish";
+    is-deeply @arr.unique.List, (22,26,34), "$t array.unique";
+    is-deeply @arr.repeated.List, (22,),    "$t array.repeated";
+    is-deeply @arr.squish.List, (22,26,34), "$t array.squish";
 
     dies-ok { @arr.pop },         "Trying to pop a shaped $t array dies";
     dies-ok { @arr.shift },       "Trying to shift a shaped $t array dies";
