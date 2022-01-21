@@ -8,12 +8,14 @@ plan 2;
 # or indirectly, when RHS type is hiddent behind a symbol, – we need to test both cases.
 
 subtest "direct" => {
-    plan 9;
+    plan 11;
     isa-ok (1 ~~ 1).WHAT, Bool, "plan smartmatch return Bool";
     isa-ok (any(1,2) ~~ 1).WHAT, Bool, "a junction on LHS doesn't autothread";
     isa-ok (1 ~~ any(1,2)).WHAT, Bool, "a junction on RHS doesn't autothread";
     isa-ok ("123" ~~ /\d+/).WHAT, Match, "simple regex returns a Match object on success";
+    isa-ok ("123" !~~ /\d+/).WHAT, Bool, "simple regex returns a Bool object on negated success";
     isa-ok ("123" ~~ m/\d+/).WHAT, Match, "successfull m// returns a Match object";
+    isa-ok ("123" !~~ m/\d+/).WHAT, Bool, "successfull m// returns a Bool object when negated";
     my $s = "1..5";
     isa-ok ($s ~~ s/\.+/_/).WHAT, Match, "successfull s/// returns a Match object";
     cmp-ok ("abc" ~~ /\d+/), '===', Nil, "failed regex match returns Nil";
