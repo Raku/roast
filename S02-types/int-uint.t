@@ -24,7 +24,9 @@ plan 11 * @inttypes + 4;
 for @inttypes -> $type {
     my ($minval,$maxval) = ::($type).Range.int-bounds;
 
+    # TODO: merge this if/else into one test once the fundge isn't needed
     if $type eq "uint64" {
+        #?rakudo.jvm todo 'getting -1 instead of 18446744073709551615'
         is EVAL("my $type \$var = $maxval; \$var"), $maxval,
           "$type can be $maxval";
     } else {
