@@ -24,7 +24,7 @@ plan 11 * @inttypes + 4;
 for @inttypes -> $type {
     my ($minval,$maxval) = ::($type).Range.int-bounds;
 
-    # TODO: merge this if/else into one test once the fundge isn't needed
+    # TODO: merge this if/else into one test once the fudge isn't needed
     if $type eq "uint64" {
         #?rakudo.jvm todo 'getting -1 instead of 18446744073709551615'
         is EVAL("my $type \$var = $maxval; \$var"), $maxval,
@@ -37,10 +37,8 @@ for @inttypes -> $type {
     is EVAL("my $type \$var = $minval; \$var"), $minval,
       "$type can be $minval";
 
-    if $type eq "uint64" {
-        is EVAL("my $type \$var = $maxval; \$var++; \$var"), $minval,
-          "$type overflows to $minval";
-    } elsif $type eq "int64" {
+    # TODO: merge this if/else into one test once the fudge isn't needed
+    if $type eq "uint64" || $type eq "int64" {
         is EVAL("my $type \$var = $maxval; \$var++; \$var"), $minval,
           "$type overflows to $minval";
     } else {
@@ -49,10 +47,8 @@ for @inttypes -> $type {
           "$type overflows to $minval";
     }
 
-    if $type eq "uint64" {
-        is EVAL("my $type \$var = $minval; \$var--; \$var"), $maxval,
-          "$type underflows to $maxval";
-    } elsif $type eq "int64" {
+    # TODO: merge this if/else into one test once the fudge isn't needed
+    if $type eq "int64" {
         is EVAL("my $type \$var = $minval; \$var--; \$var"), $maxval,
           "$type underflows to $maxval";
     } else {
@@ -61,25 +57,17 @@ for @inttypes -> $type {
           "$type underflows to $maxval";
     }
 
-    if $type eq "uint64" {
+    # XXX TODO: merge this if/else into one test once the fudge isn't needed
+    if $type eq "uint64" || $type eq "int64" {
         #?rakudo.jvm todo 'setting to more than max'
         throws-like { EVAL "my $type \$var = {$maxval+1}" },
           Exception,
           "setting $type to more than $maxval throws";
     } else {
-        # XXX TODO: merge this if/else into one test once the fudge isn't needed
-        if $type eq 'int64' {
-            #?rakudo.jvm todo 'setting more than max throws'
-            throws-like { EVAL "my $type \$var = {$maxval+1}" },
-              Exception,
-              "setting $type to more than $maxval throws";
-        }
-        else {
-            #?rakudo todo 'setting more than max throws'
-            throws-like { EVAL "my $type \$var = {$maxval+1}" },
-              Exception,
-              "setting $type to more than $maxval throws";
-        }
+        #?rakudo todo 'setting more than max throws'
+        throws-like { EVAL "my $type \$var = {$maxval+1}" },
+          Exception,
+          "setting $type to more than $maxval throws";
     }
 
     # XXX TODO: merge this if/else into one test once the fudge isn't needed
