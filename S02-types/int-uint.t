@@ -25,7 +25,6 @@ for @inttypes -> $type {
     my ($minval,$maxval) = ::($type).Range.int-bounds;
 
     if $type eq "uint64" {
-        #?rakudo todo 'getting -1 instead of 18446744073709551615'
         is EVAL("my $type \$var = $maxval; \$var"), $maxval,
           "$type can be $maxval";
     } else {
@@ -49,7 +48,6 @@ for @inttypes -> $type {
     }
 
     if $type eq "uint64" {
-        #?rakudo todo 'getting -1 instead of 0'
         is EVAL("my $type \$var = $minval; \$var--; \$var"), $maxval,
           "$type underflows to $maxval";
     } elsif $type eq "int64" {
