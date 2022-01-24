@@ -2,7 +2,7 @@ use v6.d;
 
 use Test;
 
-plan 16;
+plan 18;
 
 {
     my $union-type-checks = 0;
@@ -10,32 +10,36 @@ plan 16;
 
     class UnionTypeHOW {
         has @!types;
+        has $.name;
 
         submethod BUILD(:@!types) { }
 
         method new_type(*@types) {
             my $how = self.new(:@types);
             my $type = Metamodel::Primitives.create_type($how, 'Uninstantiable');
+            $type.^set_name: @types.map({ .^name }).join(' | ');
             $type
         }
 
-        method name($) {
-            @!types.map({ .^name }).join(' | ');
+        method set_name(Mu $, $!name) {}
+
+        method name(Mu $) {
+            $!name
         }
 
-        method compose($type) {
+        method compose(Mu $type) {
             # Set up type checking with cache.
             Metamodel::Primitives.configure_type_checking($type,
-                [@!types, Any, Mu],
+                [|@!types, Any, Mu],
                 :authoritative, :call_accepts);
 
             $type
         }
 
         method type_check(Mu $, Mu \check) {
-            $union-type-checks++;
-            for flat @!types, Any, Mu {
-                return True if Metamodel::Primitives.is_type(check, $_);
+            ++$union-type-checks;
+            for |@!types, Any, Mu {
+                return True if check<> =:= $_<>
             }
             return False;
         }
@@ -47,7 +51,7 @@ plan 16;
             return False;
         }
 
-        method find_method($, $name) {
+        method find_method(Mu $, $name) {
             $union-find-method-calls++;
             Any.^find_method($name);
         }
@@ -65,7 +69,8 @@ plan 16;
     nok 420 ~~ $int-or-rat, 'Union type broken before compose (3)';
     nok 4.2 ~~ $int-or-rat, 'Union type broken before compose (4)';
 
-    ok $union-type-checks >= 4, 'Type checking called method before compose';
+    ok $int-or-rat ~~ Int, "Union type ok before comopes if on LHS";
+    ok $union-type-checks > 0, 'Type checking called method before compose';
     ok $union-find-method-calls >= 1, 'ACCEPTS method lookup before compose';
 
     $int-or-rat.^compose;
@@ -78,6 +83,8 @@ plan 16;
     ok 4.2 ~~ $int-or-rat, 'Union type works with cache (4)';
     nok Str ~~ $int-or-rat, 'Union type works with cache (5)';
     nok 'w' ~~ $int-or-rat, 'Union type works with cache (6)';
+
+    ok $int-or-rat ~~ Int, "Union type ok after comopes if on LHS";
 
     # https://github.com/Raku/old-issue-tracker/issues/3606
     #?rakudo.jvm 1 todo 'RT #123426'
