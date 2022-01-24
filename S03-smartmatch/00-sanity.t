@@ -2,6 +2,10 @@ use v6;
 use Test;
 plan 2;
 
+my $seed = (($_ - .Int) * 1_000_000_000).Int with now;
+diag "Random seed: " ~ $seed;
+srand($seed);
+
 # Make sure that smarmatch doesn't return unexpected values. In particular, it must always return Boolean except for
 # when used with regexes.
 # Since optimizations may result in different code for matching directly against objects, when RHS is known exactly,
@@ -24,18 +28,25 @@ subtest "direct" => {
 }
 
 subtest "indirect" => {
-    plan 5;
-
+    # The order of tests here is randomized to ensure that any possible call-site bound caching of smartmatch outcomes,
+    # akin to the one taking place with new-disp implementation on Rakudo, doesn't happen too agressively. Note that if
+    # test fails then it can be reproduced with the reported above seed value.
     my sub test-sm(Mu $lhs, Mu $rhs --> Mu) is raw {
         $lhs ~~ $rhs
     }
 
-    isa-ok test-sm(1, 1).WHAT, Bool, "plan smartmatch return Bool";
-    isa-ok test-sm(any(1,2), 1).WHAT, Bool, "a junction on LHS doesn't autothread";
-    isa-ok test-sm(1, any(1,2)).WHAT, Bool, "a junction on RHS doesn't autothread";
-    isa-ok test-sm("123", /\d+/).WHAT, Match, "simple regex returns a Match object on success";
-    my $s = "1..5";
-    cmp-ok test-sm("abc", /\d+/), '===', Nil, "failed regex match returns Nil";
+    my @tests =
+        { isa-ok test-sm(1, 1).WHAT, Bool, "plan smartmatch return Bool"; },
+        { isa-ok test-sm(any(1,2), 1).WHAT, Bool, "a junction on LHS doesn't autothread"; },
+        { isa-ok test-sm(1, any(1,2)).WHAT, Bool, "a junction on RHS doesn't autothread"; },
+        { isa-ok test-sm("123", /\d+/).WHAT, Match, "simple regex returns a Match object on success"; },
+        { isa-ok test-sm("abc", /\d+/), Nil, "failed regex match returns Nil" };
+
+    plan +@tests;
+
+    for @tests.pick(*) -> &test-code {
+        test-code
+    }
 }
 
 
