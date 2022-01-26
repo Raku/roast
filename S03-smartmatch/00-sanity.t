@@ -35,12 +35,21 @@ subtest "indirect" => {
         $lhs ~~ $rhs
     }
 
+    my sub test-sm-negated(Mu $lhs, Mu $rhs --> Mu) is raw {
+        $lhs !~~ $rhs
+    }
+
     my @tests =
-        { isa-ok test-sm(1, 1).WHAT, Bool, "plan smartmatch return Bool"; },
-        { isa-ok test-sm(any(1,2), 1).WHAT, Bool, "a junction on LHS doesn't autothread"; },
-        { isa-ok test-sm(1, any(1,2)).WHAT, Bool, "a junction on RHS doesn't autothread"; },
+        { isa-ok test-sm(1, 1).WHAT,         Bool,  "plain smartmatch return Bool"; },
+        { isa-ok test-sm(any(1,2), 1).WHAT,  Bool,  "a junction on LHS doesn't autothread"; },
+        { isa-ok test-sm(1, any(1,2)).WHAT,  Bool,  "a junction on RHS doesn't autothread"; },
         { isa-ok test-sm("123", /\d+/).WHAT, Match, "simple regex returns a Match object on success"; },
-        { isa-ok test-sm("abc", /\d+/), Nil, "failed regex match returns Nil" };
+        { isa-ok test-sm("abc", /\d+/),      Nil,   "failed regex match returns Nil" },
+        { isa-ok test-sm-negated(1, 1).WHAT,         Bool, "negated plain smartmatch return Bool"; },
+        { isa-ok test-sm-negated(any(1,2), 1).WHAT,  Bool, "negated: a junction on LHS doesn't autothread"; },
+        { isa-ok test-sm-negated(1, any(1,2)).WHAT,  Bool, "negated: a junction on RHS doesn't autothread"; },
+        { isa-ok test-sm-negated("123", /\d+/).WHAT, Bool, "negated simple regex returns a Bool object"; },
+        { isa-ok test-sm-negated("abc", /\d+/),      Bool, "negated failed regex match returns Bool" };
 
     plan +@tests;
 
