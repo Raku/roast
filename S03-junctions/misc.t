@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 149;
+plan 150;
 
 =begin pod
 
@@ -562,6 +562,37 @@ subtest q<meta-assignment to a scalar doesn't cause freezing> => {
     is-deeply-junction (any("a","b","c") ~ all("d","e")),
       all(any("ad", "ae"), any("bd", "be"), any("cd", "ce")),
       'did any() on left concate with all() on right ok';
+}
+
+# GH rakudo/rakudo#4742
+# https://github.com/rakudo/rakudo/issues/4742
+subtest "IO" => {
+    my @routines =
+        say => %(
+            out => "any(1, any(2, 3))\n",
+            err => "",
+        ),
+        put => %(
+            out => "1\n2\n3\n",
+            err => "",
+        ),
+        note => %(
+            err => "any(1, any(2, 3))\n",
+            out => "",
+        ),
+        print => %(
+            out => "123",
+            err => "",
+        );
+
+    plan +@routines * 4;
+
+    for @routines -> (:key($routine), :value(%expected)) {
+        is_run "$routine (1|(2|3))", %expected, "$routine";
+        is_run "(1|(2|3)).&$routine", %expected, "$routine sub as .\&method";
+        is_run "(1|(2|3)).$routine", %expected, "$routine as method";
+        is_run "$routine (1|(2|3)):", %expected, "$routine as method-prefix";
+    }
 }
 
 # vim: expandtab shiftwidth=4
