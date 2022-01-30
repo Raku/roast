@@ -7,7 +7,7 @@ isa-ok 1, Int, '1 produces a Int';
 does-ok 1, Numeric, '1 does Numeric';
 does-ok 1, Real, '1 does Real';
 
-isa-ok 1.Num, Num, '1.Num produces a Int';
+isa-ok 1.Num, Num, '1.Num produces a Num';
 does-ok 1.Num, Numeric, '1.Num does Numeric';
 does-ok 1.Num, Real, '1.Num does Real';
 
