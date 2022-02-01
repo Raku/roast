@@ -147,7 +147,6 @@ throws-like { EVAL 'class Warfare { has int $a; say $a }' }, X::Syntax::NoSelf;
     is-deeply $c2.ff, 100, 'unsigned int sanity';
     $c2.ff = 200;
 # https://github.com/Raku/old-issue-tracker/issues/6184
-#?rakudo todo 'RT #131122'
     is-deeply $c2.ff, 200, 'large unsigned ints';
 }
 
