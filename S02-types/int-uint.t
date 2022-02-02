@@ -118,7 +118,6 @@ for @inttypes -> $type {
     }
     my $overlap = Overlap.new(u32 => 1234567);
     is $overlap.u32, 1234567, "uint32 in union is unsigned";
-    #?rakudo 2 todo 'uint behaves like signed int in CUnion'
     is $overlap.u16,   54919, "uint16 in union is unsigned";
     is $overlap.u8,      135,  "uint8 in union is unsigned";
 }

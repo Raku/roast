@@ -134,8 +134,6 @@ throws-like { EVAL 'class Warfare { has int $a; say $a }' }, X::Syntax::NoSelf;
         has uint8 $.ff;
     }
     my $c = C1.new(ff => 255);
-# https://github.com/Raku/old-issue-tracker/issues/6184
-#?rakudo.moar todo 'RT #131122'
     is-deeply $c.ff, 255, 'large unsigned ints';
 
     my class C2 is repr('CStruct') {
