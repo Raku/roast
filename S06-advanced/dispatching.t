@@ -69,8 +69,6 @@ subtest 'Args to callwith in multi are used by enclosing method dispatch' => {
     is C2.m(1), "Wrapper: 1\nC2/Int: 2\nC2/Any: 3\nC1: 3", 'Second call';
 }
 
-#?rakudo skip 'Various cases of wrap not yet supported'
-#?DOES 1
 {
     subtest "Dispatcher Chain" => {
         plan 14;
@@ -168,19 +166,28 @@ subtest 'Args to callwith in multi are used by enclosing method dispatch' => {
 
         my $wh2 = cand.wrap(&multi-wrap);
         @order = [];
+#?rakudo skip 'NYI multi-candidate wrapping with a multi'
+{
         $inst.foo(pi);
         is-deeply @order.List, <C4(Any) C3 multi-wrap(Num) multi-wrap(Any) foo-num-wrap C2(Num) C1>, "we can use a multi as a wrapper of a candidate";
+}
 
         cand.unwrap($wh1);
         @order = [];
+#?rakudo skip 'NYI multi-candidate wrapping with a multi'
+{
         $inst.foo(pi);
         is-deeply @order.List, <C4(Any) C3 multi-wrap(Num) multi-wrap(Any) C2(Num) C1>, "we can unwrap a multi";
+}
 
         # Even nastier thing: wrap a candidate of our wrapper!
         my $wwh = &multi-wrap.candidates[1].wrap(sub wrap-wrapper(|) { @order.push: 'cand-wrap'; nextsame });
         @order = [];
+#?rakudo skip 'NYI multi-candidate wrapping with a multi'
+{
         $inst.foo(pi);
         is-deeply @order.List, <C4(Any) C3 multi-wrap(Num) cand-wrap multi-wrap(Any) C2(Num) C1>, "we can use a multi as a wrapper of a candidate";
+}
 
         # Unwrap the method candidate from the second wrapper. We then get the original behavior.
         cand.unwrap($wh2);
