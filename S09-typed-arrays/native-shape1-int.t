@@ -119,6 +119,7 @@ for flat @int,@uint -> $T {
 
     @arr[1] = @arr[0];
     is-deeply @arr.unique.List, (22,26,34), "$t array.unique";
+    #?rakudo.jvm skip 'https://github.com/rakudo/rakudo/issues/4732'
     is-deeply @arr.repeated.List, (22,),    "$t array.repeated";
     is-deeply @arr.squish.List, (22,26,34), "$t array.squish";
 

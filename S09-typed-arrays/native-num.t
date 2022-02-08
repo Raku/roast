@@ -146,6 +146,7 @@ for @num -> $T {
 
     @arr[1] = @arr[0];
     is-deeply @arr.unique.List, (@arr[0],@arr[2],@arr[3]), "$t array.unique";
+    #?rakudo.jvm skip 'https://github.com/rakudo/rakudo/issues/4732'
     is-deeply @arr.repeated.List, (@arr[0],),              "$t array.repeated";
     is-deeply @arr.squish.List, (@arr[0],@arr[2],@arr[3]), "$t array.squish";
 
