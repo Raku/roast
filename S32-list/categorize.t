@@ -7,9 +7,9 @@ plan 28;
 
 { # basic categorize with all possible mappers
     my @list      = 29, 7, 12, 9, 18, 23, 3, 7;
-    my %expected1{Any} =
+    my %expected1{Mu} =
       (0=>[7,9,3,7],         10=>[12,18],       20=>[29,23]);
-    my %expected2{Any} =
+    my %expected2{Mu} =
       (0=>[7,9,3,7,7,9,3,7], 10=>[12,18,12,18], 20=>[29,23,29,23]);
     my sub subber ($a) { $a - ($a % 10) };
     my $blocker = { $_ - ($_ % 10) };
@@ -22,14 +22,14 @@ plan 28;
         is-deeply @list.categorize( $mapper ), %expected1,
           "method call on list with {$mapper.^name}";
 
-        categorize( $mapper, @list, :into(my %h{Any}) );
+        categorize( $mapper, @list, :into(my %h{Mu}) );
         is-deeply %h, %expected1,
           "basic categorize as sub with {$mapper.^name} and new into";
         categorize( $mapper, @list, :into(%h) );
         is-deeply %h, %expected2,
           "basic categorize as sub with {$mapper.^name} and existing into";
 
-        @list.categorize( $mapper, :into(my %i{Any}) );
+        @list.categorize( $mapper, :into(my %i{Mu}) );
         is-deeply %i, %expected1,
           "basic categorize from list with {$mapper.^name} and new into";
         @list.categorize( $mapper, :into(%i) );
@@ -63,7 +63,7 @@ plan 28;
 {
     # Method form, code block mapper, using :as
     my %got = (1...6).categorize: {
-        my @categories = ( $_ % 2 ?? 'odd' !! 'even');
+        my @categories = ($_ % 2) ?? 'odd' !! 'even';
         unless $_ % 3 { push @categories, 'triple'}
         @categories;
     }, :as(* * 10);
@@ -91,12 +91,12 @@ plan 28;
 #?niecza todo 'feature'
 {
     is-deeply( categorize( { map { [$_+0, $_+10] }, .comb }, 100,104,112,119 ),
-      (my %{Any} =
-        1 => ( my %{Any} = 11 => [100, 104, 112, 112, 119, 119] ),
-        0 => ( my %{Any} = 10 => [100, 100, 104] ),
-        4 => ( my %{Any} = 14 => [104] ),
-        2 => ( my %{Any} = 12 => [112] ),
-        9 => ( my %{Any} = 19 => [119] ),
+      (my %{Mu} =
+        1 => ( my %{Mu} = 11 => [100, 104, 112, 112, 119, 119] ),
+        0 => ( my %{Mu} = 10 => [100, 100, 104] ),
+        4 => ( my %{Mu} = 14 => [104] ),
+        2 => ( my %{Mu} = 12 => [112] ),
+        9 => ( my %{Mu} = 19 => [119] ),
       ), 'multi-level categorize' );
 }
 
