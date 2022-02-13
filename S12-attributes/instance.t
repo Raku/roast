@@ -690,13 +690,13 @@ throws-like q[class RT74274 { has $!a }; my $a = RT74274.new(a => 42);
       X::Comp::Trait::Unknown,
       type      => 'is',
       subtype   => 'bar',
-      declaring => 'n attribute',
+      declaring => /attribute/,
     ;
     throws-like 'class Zapwill { has $.a will bar { ... } }',
       X::Comp::Trait::Unknown,
       type      => 'will',
       subtype   => 'bar',
-      declaring => 'n attribute',
+      declaring => /attribute/,
     ;
 }
 
