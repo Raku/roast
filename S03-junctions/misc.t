@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 150;
+plan 151;
 
 =begin pod
 
@@ -593,6 +593,14 @@ subtest "IO" => {
         is_run "(1|(2|3)).$routine", %expected, "$routine as method";
         is_run "$routine (1|(2|3)):", %expected, "$routine as method-prefix";
     }
+}
+
+# Junction is a value object
+subtest "Value Object", {
+    my $j1 := any(<a b c>);
+    my $j2 := any(<a b c>);
+    cmp-ok $j1, &[!=:=], $j2, "identical junctions are different object";
+    cmp-ok $j1.WHICH, &[===], $j2.WHICH, "but they're identity";
 }
 
 # vim: expandtab shiftwidth=4
