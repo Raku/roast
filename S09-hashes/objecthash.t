@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 55;
+plan 54;
 
 {
     class A { method Str() { 'foo' } };
@@ -56,10 +56,8 @@ plan 55;
 
 {
     my %h{Mu};
-    #?rakudo todo 'oh noes, it dies'
-    lives-ok { %h{Mu} = 2 }, "using Mu as a key (1)"; # TODO: remove 'lives-ok' when this no longer dies
-    #?rakudo skip 'oh noes, it dies'
-    is %h{Mu}, 2, 'using Mu as a key (2)';
+    %h{Mu} = 2;
+    is %h{Mu}, 2, 'using Mu as a key';
     %h{Any} = 3;
     is %h{Any}, 3, 'using Any as a key';
     #?rakudo skip 'oh noes, it dies'
