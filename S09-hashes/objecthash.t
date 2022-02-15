@@ -62,7 +62,7 @@ plan 54;
     is %h{Any}, 3, 'using Any as a key';
     #?rakudo skip 'oh noes, it dies'
     is %h{ Mu, Any }.join(","), "2,3", 'check slice access on Mu';
-    is %h{*}.join(","), "2,3", 'check whatever access with Mu as key';
+    is %h{*}.sort.join(","), "2,3", 'check whatever access with Mu as key';
 } #6
 
 # https://github.com/Raku/old-issue-tracker/issues/3139
