@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Path>
 
-plan 37;
+plan 43;
 
 # make sure we have a controlled environment here
 my $*SPEC = IO::Spec::Unix;

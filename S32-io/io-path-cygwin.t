@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Path>
 
-plan 52;
+plan 58;
 
 # Make sure we have a controlled environment
 my $*SPEC = IO::Spec::Cygwin;

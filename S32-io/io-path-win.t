@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Path>
 
-plan 51;
+plan 57;
 
 my $*SPEC = IO::Spec::Win32;  # .IO needs to have IO::Spec::Win32
 my $*CWD  = 'C:\\zip\\loc'.IO;
