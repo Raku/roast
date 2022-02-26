@@ -50,19 +50,19 @@ is $relpath.absolute("/foo").IO.relative("/foo"),
 #?rakudo 1 todo 'resolve NYI, needs nqp::readlink'
 is $abspath.relative.IO.absolute.IO.resolve, "/foo/bar", "absolute inverts relative with resolve";
 
-is IO::Path::Unix.new("foo/bar").parent, "foo",       "parent of 'foo/bar' is 'foo'";
-is IO::Path::Unix.new("foo").parent,     ".",         "parent of 'foo' is '.'";
-is IO::Path::Unix.new(".").parent,       "..",        "parent of '.' is '..'";
-is IO::Path::Unix.new("..").parent,      "../..",     "parent of '..' is '../..'";
-is IO::Path::Unix.new("/foo").parent,    "/",         "parent at top level is '/'";
-is IO::Path::Unix.new("/").parent,       "/",         "parent of root is '/'";
-is IO::Path::Unix.new("../foo").parent,  "..",        "parent of '../foo' is '..'";
-is IO::Path::Unix.new("foo/..").parent,  "foo/../..", "parent of 'foo/..' is 'foo/../..'";
+is IO::Path::Unix.new("foo/bar").parent, "foo",   "parent of 'foo/bar' is 'foo'";
+is IO::Path::Unix.new("foo").parent,     ".",     "parent of 'foo' is '.'";
+is IO::Path::Unix.new(".").parent,       "..",    "parent of '.' is '..'";
+is IO::Path::Unix.new("..").parent,      "../..", "parent of '..' is '../..'";
+is IO::Path::Unix.new("/foo").parent,    "/",     "parent at top level is '/'";
+is IO::Path::Unix.new("/").parent,       "/",     "parent of root is '/'";
+is IO::Path::Unix.new("../foo").parent,  "..",    "parent of '../foo' is '..'";
+is IO::Path::Unix.new("foo/..").parent,  "foo",   "parent of 'foo/..' is 'foo'";
 
-is IO::Path::Unix.new("/foo/bar").parent,    "/foo",       "parent of '/foo/bar' is '/foo'";
-is IO::Path::Unix.new("/foo").parent,        "/",          "parent of '/foo' is '/'";
-is IO::Path::Unix.new("/foo/..").parent,     "/foo/../..", "parent of '/foo/..' is '/foo/../..'";
-is IO::Path::Unix.new("/foo/../bar").parent, "/foo/..",    "parent of '/foo/../bar' is '/foo/..'";
+is IO::Path::Unix.new("/foo/bar").parent,    "/foo",    "parent of '/foo/bar' is '/foo'";
+is IO::Path::Unix.new("/foo").parent,        "/",       "parent of '/foo' is '/'";
+is IO::Path::Unix.new("/foo/..").parent,     "/foo",    "parent of '/foo/..' is '/foo'";
+is IO::Path::Unix.new("/foo/../bar").parent, "/foo/..", "parent of '/foo/../bar' is '/foo/..'";
 
 is IO::Path::Unix.new("/").child('foo'), "/foo",  "append to root";
 is IO::Path::Unix.new(".").child('foo'), "foo",   "append to cwd";

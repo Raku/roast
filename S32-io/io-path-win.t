@@ -65,19 +65,19 @@ is $relpath.absolute("/foo").IO.relative("\\foo"), "foo\\bar","absolute inverts 
 #?rakudo 1 todo 'resolve NYI, needs nqp::readlink'
 is $abspath.relative.IO.absolute.IO.resolve, "\\foo\\bar",    "absolute inverts relative with resolve";
 
-is IO::Path::Win32.new("foo/bar").parent, "foo",         "parent of 'foo/bar' is 'foo'";
-is IO::Path::Win32.new("foo").parent,     ".",           "parent of 'foo' is '.'";
-is IO::Path::Win32.new(".").parent,       "..",          "parent of '.' is '..'";
-is IO::Path::Win32.new("..").parent,      "..\\..",      "parent of '..' is '../..'";
-is IO::Path::Win32.new("\\foo").parent,   "\\",          "parent at top level is '/'";
-is IO::Path::Win32.new("\\").parent,      "\\",          "parent of root is '/'";
-is IO::Path::Win32.new("..\\foo").parent, "..",          "parent of '../foo' is '..'";
-is IO::Path::Win32.new("foo\\..").parent, "foo\\..\\..", "parent of 'foo/..' is 'foo/../..'";
+is IO::Path::Win32.new("foo/bar").parent, "foo",    "parent of 'foo/bar' is 'foo'";
+is IO::Path::Win32.new("foo").parent,     ".",      "parent of 'foo' is '.'";
+is IO::Path::Win32.new(".").parent,       "..",     "parent of '.' is '..'";
+is IO::Path::Win32.new("..").parent,      "..\\..", "parent of '..' is '../..'";
+is IO::Path::Win32.new("\\foo").parent,   "\\",     "parent at top level is '/'";
+is IO::Path::Win32.new("\\").parent,      "\\",     "parent of root is '/'";
+is IO::Path::Win32.new("..\\foo").parent, "..",     "parent of '../foo' is '..'";
+is IO::Path::Win32.new("foo\\..").parent, "foo",    "parent of 'foo/..' is 'foo'";
 
-is IO::Path::Win32.new("A:\\foo\\bar").parent,     "A:\\foo",         "parent of '/foo/bar' is '/foo'";
-is IO::Path::Win32.new("A:\\foo").parent,          "A:\\",            "parent of '/foo' is '/'";
-is IO::Path::Win32.new("A:\\foo\\..").parent,      "A:\\foo\\..\\..", "parent of '/foo/..' is '/foo/../..'";
-is IO::Path::Win32.new("A:\\foo\\..\\bar").parent, "A:\\foo\\..",     "parent of '/foo/../bar' is '/foo/..'";
+is IO::Path::Win32.new("A:\\foo\\bar").parent,     "A:\\foo",     "parent of '/foo/bar' is '/foo'";
+is IO::Path::Win32.new("A:\\foo").parent,          "A:\\",        "parent of '/foo' is '/'";
+is IO::Path::Win32.new("A:\\foo\\..").parent,      "A:\\foo",     "parent of '/foo/..' is '/foo'";
+is IO::Path::Win32.new("A:\\foo\\..\\bar").parent, "A:\\foo\\..", "parent of '/foo/../bar' is '/foo/..'";
 
 is IO::Path::Win32.new("\\").child('foo'), "\\foo", "append to root";
 is IO::Path::Win32.new(".").child('foo'),  "foo",   "append to cwd";
