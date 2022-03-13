@@ -383,7 +383,7 @@ is-deeply (:42a)<foo>, Nil, 'accessing non-existent key on a Pair returns Nil';
 
 subtest 'Pair.ACCEPTS' => {
     my @true = <a a a z>.Bag, <a a a z>.BagHash, <a a a z z>.Mix,
-        <a a a z z>.MixHash, %(:3a, :5z), Map.new((:3a, :5z)), :3a.Pair, :3z.Pair;
+        <a a a z z>.MixHash, %(:3a, :5z), Map.new((:3a, :5z)), :3a.Pair;
     my @false = <a z>.Bag, <a z>.BagHash, <a z>.Set, <a z>.SetHash,
         <a z>.Mix, <a z>.MixHash, %(:a, :z), Map.new((:a, :z)), :a.Pair, :z.Pair;
     plan 6 + @true + @false;

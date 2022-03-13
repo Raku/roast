@@ -1,12 +1,12 @@
 use v6.d;
 use Test;
-plan 55;
+plan 54;
 
 my $pod_index = 0;
 
 #?DOES 1
-sub test-trailing($thing, $value) {
-    subtest $thing.^name, {
+sub test-trailing($thing, $value) is test-assertion {
+    subtest $thing.^name => {
         plan 7;
         is $thing.WHY.?contents, $value, $value  ~ ' - contents';
         is $thing.WHY.?WHEREFORE.^name, $thing.^name, $value ~ ' - WHEREFORE';
@@ -181,7 +181,6 @@ role Boxer {
 
 {
     my $method = Boxer.^lookup('actor');
-    ok !Boxer.WHY.defined, q{Role group's WHY should not be defined};
     test-trailing(Boxer.HOW.candidates(Boxer)[0], 'Are you talking to me?');
     test-trailing($method, 'Robert De Niro');
 }
