@@ -1144,6 +1144,7 @@ S32-io/socket-recv-vs-read.t
 S32-io/spurt.t
 S32-io/tell.t
 S32-io/utf16.t    # moar
+S32-list/are.t
 S32-list/batch.t
 S32-list/categorize-list.t
 S32-list/categorize.t
