@@ -77,7 +77,7 @@ ok &infix:<+>.WHAT ~~ Sub, '.WHAT of built-in infix op is Multi (RT #66928)';
     sub wm($x) { return $x.WHAT.gist }
     sub rt69915wm( $b, :$a ) { return wm($a) ~ '~' ~ wm($b) }
     is rt69915wm( a => 42, 23 ), '(Int)~(Int)', 'WHAT method on ints via func';
-    
+
     sub wf($x) { return WHAT($x).gist }
     sub rt69915wf( $b, :$a ) { return wf($a) ~ '~' ~ wf($b) }
     is rt69915wf( a => 42, 23 ), '(Int)~(Int)', 'WHAT func on ints via func';

@@ -36,7 +36,7 @@ This test tests the C<repeated> builtin.
       "method form of repeated with own comparator works";
     is ~repeated(@array, with => { lc($^a) eq lc($^b) }), "b A",
       "subroutine form of repeated with own comparator works";
-  
+
     # Semantics w/ junctions
     is EVAL('~@array.repeated(with => { lc($^a) eq lc($^b) }).values.sort'), "A b", 'sorting the result';
 } #3

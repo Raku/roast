@@ -45,7 +45,7 @@ throws-like q{ $baz ~~ Baz }, X::Undeclared::Symbols, 'smartmatch against non-ex
     role A { method say_hello(Str $to) { "Hello, $to" } }
     my Bar $a .= new();
     ok(defined($a does A), 'mixing A into $a worked');
-    is $a.say_hello("Ingo"), "Hello, Ingo", 
+    is $a.say_hello("Ingo"), "Hello, Ingo",
         '$a "inherited" the .say_hello method of A';
 }
 

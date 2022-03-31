@@ -4,7 +4,7 @@ use Test;
 
 plan 4;
 
-# Insure we can process a big string 
+# Insure we can process a big string
 
 my $filename = "tmpfile.txt";
 my $fh = open $filename, :w;

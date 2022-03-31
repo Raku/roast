@@ -58,7 +58,7 @@ class DifferentReal is Real {
     multi method Bridge() {
         self.value.Num;
     }
-}            
+}
 
 
 
@@ -70,7 +70,7 @@ for @sines -> $angle
     my $desired-result = sin($angle.key()) / cos($angle.key());
 
     # Num.tan tests -- very thorough
-    is-approx($angle.key().tan, $desired-result, 
+    is-approx($angle.key().tan, $desired-result,
               "Num.tan - {$angle.key()}");
 
     # Complex.tan tests -- also very thorough
@@ -80,7 +80,7 @@ for @sines -> $angle
     my Complex $sz1 = { sin($_) / cos($_) }($zp1);
     my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { sin($_) / cos($_) }($zp2);
-    
+
     is-approx($zp0.tan, $sz0, "Complex.tan - $zp0");
     is-approx($zp1.tan, $sz1, "Complex.tan - $zp1");
     is-approx($zp2.tan, $sz2, "Complex.tan - $zp2");
@@ -91,7 +91,7 @@ for @sines -> $angle
     is(tan(Inf), NaN, "tan(Inf) -");
     is(tan(-Inf), NaN, "tan(-Inf) -");
 }
-        
+
 {
     # Num tests
     is-approx(tan((-6.283185).Num), -5.82864638634609e-11, "tan(Num) - -6.283185");
@@ -141,16 +141,16 @@ for @sines -> $angle
     my $desired-result = sin($angle.key()) / cos($angle.key());
 
     # Num.atan tests -- thorough
-    is-approx($desired-result.Num.atan.tan, $desired-result, 
+    is-approx($desired-result.Num.atan.tan, $desired-result,
               "Num.atan - {$angle.key()}");
-    
+
     # Num.atan(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is-approx($z.atan.tan, $z, 
+        is-approx($z.atan.tan, $z,
                   "Complex.atan - $z");
     }
 }
-        
+
 {
     # Num tests
     is-approx(atan((0.577350269196102).Num), 0.5235988, "atan(Num) - 0.5235988");

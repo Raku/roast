@@ -49,11 +49,11 @@ Basic C<kv> tests, see S32::Containers.
     is ~$sub(%hash).sort, "a b x y", ".kv works with dereferenced constant hash references";
 }
 
-# test3 and test4 illustrate a bug 
+# test3 and test4 illustrate a bug
 
 #?DOES 2
 sub test1() is test-assertion {
-    my $pair = boo=>'baz'; 
+    my $pair = boo=>'baz';
     my $type = $pair.WHAT.gist;
     for $pair.kv -> $key, $value {
         is($key, 'boo', "test1: $type \$pair got the right \$key");
@@ -64,7 +64,7 @@ test1;
 
 #?DOES 2
 sub test2() is test-assertion {
-    my %pair = boo=>'baz'; 
+    my %pair = boo=>'baz';
     my $type = %pair.WHAT.gist;
     my $elems= +%pair;
     for %pair.kv -> $key, $value {

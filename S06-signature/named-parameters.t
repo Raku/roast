@@ -17,7 +17,7 @@ plan 100;
 {
     sub c(:$w=4){
         return $w;
-    } 
+    }
     is c(w => 3), 3, 'Named argument passes an integer, not a Pair';
     my $w = 5;
     is c(:$w), 5, 'can use :$x colonpair syntax to call named arg';
@@ -77,7 +77,7 @@ is(foo2( :x(10), :y(10) ), 20, "naming named params x & y adverb-style also work
 is(foo2( x => 10, :y(10) ), 20, "mixing fat-comma and adverb naming styles also works for named params (foo2)");
 is(foo2( :x(10), y => 10 ), 20, "mixing adverb and fat-comma naming styles also works for named params (foo2)");
 
-sub assign_based_on_named_positional ($x, :$y = $x) { $y } 
+sub assign_based_on_named_positional ($x, :$y = $x) { $y }
 
 is(assign_based_on_named_positional(5), 5, "When we don't explicitly specify, we get the original value");
 is(assign_based_on_named_positional(5, y => 2), 2, "When we explicitly specify, we get our value");
@@ -110,7 +110,7 @@ is(assign_based_on_named_positional($var => 2), ("y"=>2),
     is(named_array2(:!y, 1), (1, 42, 0), 'named and unnamed args - one named, one pos');
     is(named_array2(1, :!y), (1, 42, 0), 'named and unnamed args - one named, one pos - backwards');
     is(named_array2(:y, 1, :!y), (1, 42, 1, 0), 'named and unnamed args - two named, one pos');
-    
+
     nok(try { EVAL 'named_array2(:y, :y)'}.defined, 'named and unnamed args - two named with same name');
 
     is(named_array2(:y, (:x)), (0, 1, 42, 1), 'named and unnamed args - passing parenthesized pair');
@@ -132,7 +132,7 @@ dies-ok {EVAL 'mandatory()' },  "not specifying a mandatory parameter fails";
     sub mandatory_by_trait (:$param is required) {
         return $param;
     }
-    
+
     is(mandatory_by_trait(param => 5) , 5, "named mandatory parameter is returned");
     dies-ok( { mandatory_by_trait() }, "not specifying a mandatory parameter fails");
 }
@@ -140,7 +140,7 @@ dies-ok {EVAL 'mandatory()' },  "not specifying a mandatory parameter fails";
 
 # L<S06/Named parameters/sub formalize>
 sub formalize($text, :$case, :$justify) {
-   return($text,$case,$justify); 
+   return($text,$case,$justify);
 }
 
 {

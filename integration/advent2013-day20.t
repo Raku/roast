@@ -36,7 +36,7 @@ lives-ok { EVAL 'my Bool $a is default(True)' }, 'eval type check';
     my @a is default(42);
     is-deeply @a[0], 42, 'array default has value';
     ok @a[0].defined, 'array default is defined';
-    is-deeply @a[0]:exists, False, '...but does not exist';  
+    is-deeply @a[0]:exists, False, '...but does not exist';
 }
 
 lives-ok { EVAL 'my $a is default(Int) = "foo"' }, "default doesn't set type";
@@ -46,7 +46,7 @@ throws-like { EVAL 'my Int $a = "foo"' }, X::TypeCheck::Assignment;
     my @a is default(42) = 69;
     @a[0]:delete;
     is-deeply @a[0], 42, 'deleted value';
-    is-deeply @a[0]:exists, False, 'deleted !exists'; 
+    is-deeply @a[0]:exists, False, 'deleted !exists';
 }
 
 {

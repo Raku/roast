@@ -72,7 +72,7 @@ sub write-test-file($target, $method, @source, @expected) {
                     $list-joined   = @list.join(', ');
                     $result-joined = @result.join(', ');
                     $NFC-concat-tests-number++;
-                    $NFC-concat-tests ~= "\@list = $list-joined; \@result = $result-joined; \n";
+                    $NFC-concat-tests ~= "\@list = $list-joined; \@result = $result-joined;\n";
                     $NFC-concat-tests ~= (
                         "ok all(((Uni.new(\@list[0..(\$_ - 1)]) ~ Uni.new(\@list[\$_..*]"
                        ~ ")).$method.list ~~ \@result for 1..(\@list-1))), "

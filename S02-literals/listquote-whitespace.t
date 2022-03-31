@@ -57,7 +57,7 @@ for @nonseparators -> $sep {
   is( @res, [@list.join($sep)], "'\\x$vis' does not split in a whitespace quoted list")
 };
 
-is < foo  
+is < foo
 	    >, 'foo', 'various combinations of whitespace are stripped';
 
 # https://github.com/Raku/old-issue-tracker/issues/1622

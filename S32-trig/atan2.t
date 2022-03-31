@@ -58,7 +58,7 @@ class DifferentReal is Real {
     multi method Bridge() {
         self.value.Num;
     }
-}            
+}
 
 
 
@@ -68,13 +68,13 @@ class DifferentReal is Real {
 
 for @sines -> $angle
 {
-    next if abs(cos($angle.key())) < 1e-6;     
+    next if abs(cos($angle.key())) < 1e-6;
 	my $desired-result = sin($angle.key()) / cos($angle.key());
 
     # Num.atan2 tests
-    is-approx($desired-result.Num.atan2.tan, $desired-result, 
+    is-approx($desired-result.Num.atan2.tan, $desired-result,
               "Num.atan2() - {$angle.key()}");
-    is-approx($desired-result.Num.atan2(1.Num).tan, $desired-result, 
+    is-approx($desired-result.Num.atan2(1.Num).tan, $desired-result,
               "Num.atan2(1.Num) - {$angle.key()}");
 }
 

@@ -199,7 +199,7 @@ subtest 'Int.new' => { # coverage; 2016-10-05
     is-deeply Int.new, 0, 'no args default to 0';
 
     # https://github.com/Raku/old-issue-tracker/issues/6539
-    
+
     subtest '.new of subclass of Int' => {
         plan 3*
         my @tests = no-arg => \(),              Int => \( 42 ),

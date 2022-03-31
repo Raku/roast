@@ -7,12 +7,12 @@ plan 3;
 
 my $marker = 0;
 
-sub infix:<;>($a, $b) { 
+sub infix:<;>($a, $b) {
  $marker = 1;
  0, 0
-}; 
+};
 
-my @a = 1; 2; 3; 
+my @a = 1; 2; 3;
 
 
 is +@a, 1, '@a is array with 1 element';

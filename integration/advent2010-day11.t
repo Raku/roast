@@ -20,7 +20,7 @@ sub sliding-window(@a, $n) is export {
     }
 }
 #--
- 
+
 my $model-text = q
 <To sleep, perchance to Dream; Aye, there's the rub,
 For in that sleep of death, what dreams may come,

@@ -63,7 +63,7 @@ for 1..4 -> $attempt {
             $i⚛++;
         }
     } xx 4;
-    is atomic-fetch($i), 4 * 20000, "Atomic increment of lexical works ($attempt)"; 
+    is atomic-fetch($i), 4 * 20000, "Atomic increment of lexical works ($attempt)";
 }
 
 # Atomic integer post-decrement stress
@@ -74,7 +74,7 @@ for 1..4 -> $attempt {
             $i⚛--;
         }
     } xx 4;
-    is atomic-fetch($i), 100000 - 4 * 20000, "Atomic decrement of lexical works ($attempt)"; 
+    is atomic-fetch($i), 100000 - 4 * 20000, "Atomic decrement of lexical works ($attempt)";
 }
 
 # Atomic integer add stress.
@@ -85,7 +85,7 @@ for 1..4 -> $attempt {
             $i ⚛+= 4;
         }
     } xx 4;
-    is ⚛$i, 100000 + 4 * 4 * 20000, "Atomic add of lexical works ($attempt)"; 
+    is ⚛$i, 100000 + 4 * 4 * 20000, "Atomic add of lexical works ($attempt)";
 }
 
 # vim: expandtab shiftwidth=4

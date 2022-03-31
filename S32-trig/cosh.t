@@ -58,7 +58,7 @@ class DifferentReal is Real {
     multi method Bridge() {
         self.value.Num;
     }
-}            
+}
 
 
 
@@ -66,11 +66,11 @@ class DifferentReal is Real {
 
 for @coshes -> $angle
 {
-    
+
     my $desired-result = $angle.value;
 
     # Num.cosh tests -- very thorough
-    is-approx($angle.key().cosh, $desired-result, 
+    is-approx($angle.key().cosh, $desired-result,
               "Num.cosh - {$angle.key()}");
 
     # Complex.cosh tests -- also very thorough
@@ -80,7 +80,7 @@ for @coshes -> $angle
     my Complex $sz1 = { (exp($_) + exp(-$_)) / 2 }($zp1);
     my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { (exp($_) + exp(-$_)) / 2 }($zp2);
-    
+
     is-approx($zp0.cosh, $sz0, "Complex.cosh - $zp0");
     is-approx($zp1.cosh, $sz1, "Complex.cosh - $zp1");
     is-approx($zp2.cosh, $sz2, "Complex.cosh - $zp2");
@@ -90,7 +90,7 @@ for @coshes -> $angle
     is(cosh(Inf), Inf, "cosh(Inf) -");
     is(cosh(-Inf), Inf, "cosh(-Inf) -");
 }
-        
+
 {
     # Num tests
     is-approx(cosh((-6.283185).Num), 267.746761499354, "cosh(Num) - -6.283185");
@@ -136,20 +136,20 @@ for @coshes -> $angle
 
 for @coshes -> $angle
 {
-    
+
     my $desired-result = $angle.value;
 
     # Num.acosh tests -- thorough
-    is-approx($desired-result.Num.acosh.cosh, $desired-result, 
+    is-approx($desired-result.Num.acosh.cosh, $desired-result,
               "Num.acosh - {$angle.key()}");
-    
+
     # Num.acosh(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is-approx($z.acosh.cosh, $z, 
+        is-approx($z.acosh.cosh, $z,
                   "Complex.acosh - $z");
     }
 }
-        
+
 {
     # Num tests
     is-approx(acosh((1.14023832107909).Num), 0.5235988, "acosh(Num) - 0.5235988");

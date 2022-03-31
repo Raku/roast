@@ -232,7 +232,7 @@ throws-like { temp $*foo = 42 }, X::Dynamic::NotFound,
     'Useful error conveyed when trying to temp a non-existing dynamic';
 
 # https://github.com/Raku/old-issue-tracker/issues/5057
-{ 
+{
     my %h{Pair}; %h{a => 1} = 2;
     my %c{Pair}; %c{a => 1} = 2;
     {

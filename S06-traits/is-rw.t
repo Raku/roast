@@ -17,7 +17,7 @@ plan 8;
   is foo($bar), 19, "calling a sub with an is rw param";
   is $bar,      42, "sub changed our variable";
   # https://github.com/Raku/old-issue-tracker/issues/2593
-  
+
   dies-ok { EVAL('foo(28)') }, 'is rw requires a variable';
 }
 

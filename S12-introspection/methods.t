@@ -130,9 +130,9 @@ ok @methods[2].name ne '!pm1', 'methods call did not find private method in supe
 #?rakudo skip 'nom regression'
 {
     @methods = PT2.^methods(:private);
-    ok @methods[0].name eq '!pm2' || @methods[1].name eq '!pm2', 
+    ok @methods[0].name eq '!pm2' || @methods[1].name eq '!pm2',
                                 'methods call with :private found private method in subclass';
-    ok @methods[2].name eq '!pm1' || @methods[3].name eq '!pm1', 
+    ok @methods[2].name eq '!pm1' || @methods[3].name eq '!pm1',
                                 'methods call with :private found private method in superclass';
 }
 
@@ -144,7 +144,7 @@ is @methods[0].name, 'bar', 'methods call found public method in subclass (with 
 {
     @methods = PT2.^methods(:local, :private);
     is +@methods, 2,            'methods call with :private includes private methods (with :local)';
-    ok @methods[0].name eq '!pm2' || @methods[1].name eq '!pm2', 
+    ok @methods[0].name eq '!pm2' || @methods[1].name eq '!pm2',
                                 'methods call with :private found private method in subclass (with :local)';
 }
 
@@ -162,7 +162,7 @@ is @methods[0].name, 'bar', 'methods call found public method in subclass (with 
 # https://github.com/Raku/old-issue-tracker/issues/1962
 # order of ^methods
 {
-    class Foo { has $.bar; has $.baz; has $.antler }; 
+    class Foo { has $.bar; has $.baz; has $.antler };
     is Foo.^methods[0,1,2].join(","), "bar,baz,antler", "order of ^methods consistent";
 }
 

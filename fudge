@@ -72,7 +72,7 @@ Usage: $0 [options] [implname] testfilename [fudgedtestfilename]
         comment out num tests or blocks and call skip(num)
 
     #?implname [num] eval 'reason'
-        eval num tests or blocks and flunk() with todo(reason,num) if parse 
+        eval num tests or blocks and flunk() with todo(reason,num) if parse
         fails
 
     #?implname [num] try 'reason'

@@ -23,7 +23,7 @@ is        $a.base(16), 'FF',     'delegation and arguments';
 is        A.base(16),  'FF',     '... same with type object invocant';
 
 {
-    role R { 
+    role R {
         method foo { self.bar(42) };
         method bar($x) { $x };
     };
@@ -34,7 +34,7 @@ is        A.base(16),  'FF',     '... same with type object invocant';
 
     is C.new.foo, 42, 'role method calls works through role delegation independent of declaration order.';
 
-    role Rr { 
+    role Rr {
         method bar($x) { $x };
         method foo { self.bar(42) };
     };

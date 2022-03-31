@@ -17,7 +17,7 @@ for 17, 50, 100 -> $age {
    @results.push: $result;
 }
 
-is-deeply @results, ["You're not of age yet", '', "congratulations!"], 'given/when'; 
+is-deeply @results, ["You're not of age yet", '', "congratulations!"], 'given/when';
 
 sub smart-match-medley($foo) {
     [

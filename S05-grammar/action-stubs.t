@@ -57,7 +57,7 @@ is $action.calls, 'ab', '... and in the right order';
             # the given/when is pretty pointless, but rakudo
             # used to segfault on it, so test it here
             # https://github.com/Raku/old-issue-tracker/issues/838
-            
+
             given 2 {
                 when * {
                     make $/ x 3;

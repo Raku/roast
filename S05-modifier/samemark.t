@@ -14,7 +14,7 @@ Testing the C<:mm> or C<:samemark> modifier - as always, need more tests
 {
     my $s = 'äaä';
     ok $s ~~ s:mm/aaa/ooo/, ':mm implies :m';
-    is $s, 'öoö', 
+    is $s, 'öoö',
        ':mm transported mark information from source to destination';
 }
 

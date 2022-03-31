@@ -75,7 +75,7 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
 # diamond composition
 # https://github.com/Raku/old-issue-tracker/issues/2593
 {
-    role DA { 
+    role DA {
         method foo { "OH HAI" };
     }
     role DB does DA { }

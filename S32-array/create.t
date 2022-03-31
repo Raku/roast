@@ -33,7 +33,7 @@ eval-lives-ok ｢
 ｣, 'array elements get writable containers';
 
 # https://github.com/Raku/old-issue-tracker/issues/5706
-{ 
+{
     subtest 'Array.clone [partially-reified]' => {
         plan 7;
 

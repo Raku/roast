@@ -14,10 +14,10 @@ my @expected = /^'The square root of 5 is 2.23'\d+$/,
     'Cannot take square root of -3: negative',
     /^'Other error: '.+$/;
 my @results;
- 
+
 for @inputs -> $n {
     @results.push: "The square root of $n is " ~ might_die($n);
- 
+
     CATCH {
         # CATCH sets $_ to the error object,
         # and then checks the various cases:

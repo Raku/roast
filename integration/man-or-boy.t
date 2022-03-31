@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 # stress test for lexicals and lexical subs
-# See 
+# See
 # http://en.wikipedia.org/w/index.php?title=Man_or_boy_test&oldid=249795453#Perl
 
 my @results = 1, 0, -2, 0, 1, 0, 1, -1, -10, -30;

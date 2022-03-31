@@ -91,7 +91,7 @@ is-deeply guess("World",37), True, 'optional';
     is doctor(:$number, :$prop),
     'Doctor # 2 liked to play with his recorder',
     'named (mapped)';
-    
+
 }
 
 # Slurpy
@@ -130,7 +130,7 @@ is-deeply guess("World",37), True, 'optional';
     sub tst-ro($p is readonly) {$p = 42;}
     throws-like {EVAL 'tst-ro($a)'}, Exception, 'readonly trait, does not have a type object yet';
 }
-{    
+{
     my $a = 35;
     sub tst-rw($p is rw) {$p = 42;}
     tst-rw($a);

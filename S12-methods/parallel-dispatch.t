@@ -96,7 +96,7 @@ class Bar is Foo {
 
     is (@a».mul(3)).join(", "), (3, 6, 9).join(", "),  'return value of @a».method(@args)';
     is (@a»."$method"(3)).join(", "), (3, 6, 9).join(", "),  '... indirect';
-      
+
     is (@a».?mul(3)).join(", "), (3, 6, 9).join(", "), 'return value of @a».?method(@args)';
     is (@a».?"$method"(3)).join(", "), (3, 6, 9).join(", "), '... indirect';
 

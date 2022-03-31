@@ -28,12 +28,12 @@ my Fish $c;
 
 my @array = ($a, $b, $c);
 regex canine { <.isa(Dog)> }
-regex herbivore { <.isa(::Antelope)> }; 
+regex herbivore { <.isa(::Antelope)> };
 
 # does that work? ord does it need a Cat?
 ok(@array ~~ /<canine>/, 'rules on an array - positive');
 ok(@array !~~ /<herbivore>/, 'rules on an array - negative');
-# These seem to be failing for some sort of scoping error rather than a problem with the 
+# These seem to be failing for some sort of scoping error rather than a problem with the
 # regex matching itself.
 
 # And matching against each element of an array... a different topic really, but it's still in

@@ -22,10 +22,10 @@ plan 20;
 
     is EVAL("(NotANumber.new(:number(4)) NAN+ NotANumber.new(:number(-1))).number"), 3, "infix:<NAN+> was exported";
     is EVAL("(NotANumber.new(:number(4)) + NotANumber.new(:number(-1))).number"), 3, "multi infix:<+> was exported and is visible";
-    
+
     is EVAL('my $a = NotANumber.new(:number(4)); $a NAN+= NotANumber.new(:number(-1)); $a.number;'), 3, "NAN+= works too";
     is EVAL('my $a = NotANumber.new(:number(4)); $a += NotANumber.new(:number(-1)); $a.number;'), 3, "+= works too";
-    
+
     is 4 + 2, 6, "Normal infix:<+> still works";
 
     dies-ok { EVAL('3 notthere 4') }, 'not-exported operator was not imported';

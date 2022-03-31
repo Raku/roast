@@ -24,7 +24,7 @@ ok($b1 ~~ Array, 'it is a Array type');
 
 # this seems to be the only way to make a hash - ref at the moment
 my %b2 = ("one", 1); my $b2 = %b2;
-ok($b2 ~~ Hash, 'it is a Hash type'); 
+ok($b2 ~~ Hash, 'it is a Hash type');
 
 # WHAT() on subroutines
 
@@ -37,7 +37,7 @@ isa-ok($s1, Sub, 'it is a Sub type');
 #                        ____________|________________
 #                       |                             |
 #                    Routine                        Block
-#       ________________|_______________ 
+#       ________________|_______________
 #      |     |       |       |    |     |
 #     Sub Method Submethod Multi Rule Macro
 

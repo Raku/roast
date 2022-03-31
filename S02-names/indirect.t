@@ -8,7 +8,7 @@ plan 10;
     class ::(name) {
         method f() { 42 }
     }
-    is TestName.f, 42, 
+    is TestName.f, 42,
        'can declare and use a class with indirect (but constant) name';
     is ::(name).^name, 'TestName',
         'and it reports the right name';

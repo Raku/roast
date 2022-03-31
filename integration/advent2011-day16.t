@@ -50,8 +50,8 @@ my @b = (3, 4);
 {
     my @a = 1, 2;
     my $scalar = @a;
-    
-    is +(gather for @a { 
+
+    is +(gather for @a {
         # two iterations
         take 1;
     }), 2, 'for @a { }';

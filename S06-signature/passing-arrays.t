@@ -51,7 +51,7 @@ plan 11;
         return @a[0] + @b[0];
     }
 
-    is(test_two_array([100,5],[20,300]), 120, 
+    is(test_two_array([100,5],[20,300]), 120,
     "Passing array references to functions accepting arrays works.");
 }
 

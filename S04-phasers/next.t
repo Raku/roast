@@ -4,7 +4,7 @@ use Test;
 
 plan 16;
 
-# L<S04/Phasers/NEXT executes "only if" 
+# L<S04/Phasers/NEXT executes "only if"
 #   "end of the loop block" or "explicit next">
 {
     my $str = '';

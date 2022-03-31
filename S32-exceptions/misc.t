@@ -494,7 +494,7 @@ throws-like 'sub foo(@array ($first, @rest)) { say @rest }; foo <1 2 3>;',
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5689
-{ 
+{
     my sub bar { X::AdHoc.new.throw }();
     CATCH { default {
         my $bt = .backtrace;
@@ -584,7 +584,7 @@ say 50;｣, X::Comp::FailGoal, line => 3, message => /«'line 1'»/;
 
         q:to/QUOTED/;
         <<<<<<< HEAD
-        this is not 
+        this is not
         =======
         a vcs conflict
         >>>>>>> branch

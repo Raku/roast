@@ -36,7 +36,7 @@ is($a, 3, '$a has changed'); # XXX is that right?
     package D1 {
         our $d1 = 7;
         is($d1, 7, "we can of course see the variable from its own package");
-        
+
         package D2 {
             our $d2 = 8;
             {
@@ -45,7 +45,7 @@ is($a, 3, '$a has changed'); # XXX is that right?
             {
                 throws-like '$d3', X::Undeclared, "variables aren't seen within other lexical child blocks";
                 is($D2::d3, 9, "variables are seen within other lexical child blocks via package");
-                
+
                 package D3 {
                     throws-like '$d3', X::Undeclared, " ... and not from within child packages";
                     is($D2::d3, 9, " ... and from within child packages via package");
@@ -56,7 +56,7 @@ is($a, 3, '$a has changed'); # XXX is that right?
         }
         throws-like '$d2', X::Undeclared, 'our() variable not yet visible outside its package';
         throws-like '$d3', X::Undeclared, 'our() variable not yet visible outside its package';
-        
+
     }
     throws-like '$d1', X::Undeclared, 'our() variable not yet visible outside its package';
 }

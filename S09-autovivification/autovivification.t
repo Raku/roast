@@ -78,7 +78,7 @@ plan 44;
   my $hashitem;
   ok $hashitem !~~ Hash, "uninitialized variable is not a Hash (2)";
 
-# Note that 
+# Note that
 #    Autovivification will only happen if the *vivifiable* *path* is used as a container
 #    ... value extraction does not autovivify.
   lives-ok { my $elem = $hashitem<key> },
@@ -121,7 +121,7 @@ plan 44;
   my $arrayitem;
   ok !$arrayitem.isa(Array), "uninitialized variable is not an Array (2)";
 
-# Note that 
+# Note that
 #    Autovivification will only happen if the *vivifiable* *path* is used as a container
 #    ... value extraction does not autovivify.
   lives-ok { my $elem = $arrayitem[42] },

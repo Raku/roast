@@ -5,10 +5,10 @@ plan 5;
 
 =begin description
 
-The C<:ex> and C<:x($count)> modifiers are orthogonal, and therefore 
+The C<:ex> and C<:x($count)> modifiers are orthogonal, and therefore
 can be combined.
 
-Still lacking are tests for C<$/>, since the specs are not clear 
+Still lacking are tests for C<$/>, since the specs are not clear
 how the C<$/> looks like with the C<:x($count)> modifier.
 
 =end description

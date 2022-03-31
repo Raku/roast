@@ -252,7 +252,7 @@ is @rows[4], "^,symmetric set intersection / XOR";
 # column separators
 
 =begin table
-    
+
     Type    | Comments
     ========+================================================
     Complex |
@@ -262,7 +262,7 @@ is @rows[4], "^,symmetric set intersection / XOR";
     Rat     |
     Int     |
 
-=end table 
+=end table
 
 $r = $=pod[++$p];
 is $r.headers.elems, 2;
@@ -280,7 +280,7 @@ is @rows[5], "Int,";
 # a variant table using the '+' visual column separator
 
 =begin table
-    
+
     Type    | Comments
     ========+================================================
     Num     +
@@ -288,7 +288,7 @@ is @rows[5], "Int,";
     Rat     |
     Int     +
 
-=end table 
+=end table
 
 $r = $=pod[++$p];
 is $r.headers.elems, 2;

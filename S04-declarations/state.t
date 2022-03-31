@@ -174,7 +174,7 @@ plan 44;
 {
     my $i = 0;
     my $func = { state $x = $i++; $x };
-    my ($a, $b) = $func.clone, $func.clone; 
+    my ($a, $b) = $func.clone, $func.clone;
     is $a(), 0, 'state was initialized correctly for clone 1';
     is $b(), 1, 'state was initialized correctly for clone 2';
     is $a(), 0, 'state between clones is independent';

@@ -153,7 +153,7 @@ is EVAL('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
         "bare block can't take 'last'";
 }
 
-# L<S04/Statement parsing/"final closing curly on a line" 
+# L<S04/Statement parsing/"final closing curly on a line"
 #   reverts to semicolon>
 {
     my $a = do {

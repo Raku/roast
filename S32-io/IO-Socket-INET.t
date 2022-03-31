@@ -69,7 +69,7 @@ do-test
 
         # Multibyte characters
         # https://github.com/Raku/old-issue-tracker/issues/2981
-        
+
         $received = $^client.recv(1);
         is $received, chr(0xA001), "received {chr 0xA001}";
         is $received.chars, 1, "... which is 1 character";
@@ -77,7 +77,7 @@ do-test
         $received = $^client.recv(1);
         is $received.chars, 1, "received another character";
         # https://github.com/Raku/old-issue-tracker/issues/2981
-        
+
         is $received, chr(0xA002), "combined the bytes form {chr 0xA002}";
 
         $^client.close();
@@ -117,7 +117,7 @@ do-test
         is $received, 'All mimsy were the borogoves,',
           "\\r\\n separator";
         # https://github.com/Raku/old-issue-tracker/issues/2627
-        
+
         is $received.encode('ascii').elems, 29,
           "\\r was not left behind on the string";
 

@@ -9,10 +9,10 @@ plan 13;
     my $pall = Promise.allof($p1, $p2);
     isa-ok $pall, Promise, "allof returns a Promise";
     nok $pall.Bool, "No result yet";
-    
+
     $p1.keep(1);
     nok $pall.Bool, "Still not kept";
-    
+
     $p2.keep(1);
     is $pall.result, True, "result is true after both kept";
     is $pall.status, Kept, "Promise was kept";

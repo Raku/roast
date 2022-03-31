@@ -359,7 +359,7 @@ group-of 15 => 'tests that use unspecced $?BITS to make decisions' => {
     }
 
     # https://github.com/Raku/old-issue-tracker/issues/6041
-    if $?BITS >= 64 { 
+    if $?BITS >= 64 {
         is-deeply (my int $ = 10000000000000000) div 4, 2500000000000000,
             'large `int` values do not overflow prematurely';
     }

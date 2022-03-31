@@ -66,11 +66,11 @@ ok @parents[2].WHAT =:= A, 'third parent is A';
 
 @parents = B.^parents(:local);
 is +@parents, 1, 'right number of parents in list, from type-object, :local';
-ok @parents[0].WHAT =:= A, 'parent is A'; 
+ok @parents[0].WHAT =:= A, 'parent is A';
 
 @parents = B.new.^parents(:local);
 is +@parents, 1, 'right number of parents in list, from instance, :local';
-ok @parents[0].WHAT =:= A, 'parent is A'; 
+ok @parents[0].WHAT =:= A, 'parent is A';
 
 @parents = D.^parents(:local);
 is +@parents, 2, 'right number of parents in list, from type-object, :local, multiple inheritance';

@@ -8,7 +8,7 @@ plan 15;
     nok @a.Bool, '@a.Bool returns False for empty @a';
     nok ?@a,     '?@a returns False for empty @a';
     nok @a,      '@a in bool context returns False for empty @a';
-    
+
     @a.push: 37;
     ok @a.Bool, '@a.Bool returns True for @a with one element';
     ok ?@a,     '?@a returns True for @a with one element';
@@ -25,7 +25,7 @@ plan 15;
     nok @a.Bool, '@a.Bool returns False for empty range in @a';
     nok ?@a,     '?@a returns False for empty range in @a';
     nok @a,      '@a in bool context returns False for empty range in @a';
-    
+
     @a = 4..6;
     ok @a.Bool, '@a.Bool returns True for non-empty range in @a';
     ok ?@a,     '?@a returns True for non-empty range in @a';

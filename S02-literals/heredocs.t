@@ -338,7 +338,7 @@ eval-dies-ok q{
 # outside of the block:
 eval-lives-ok q{
     my $x;
-    if $x { say q:to/END/ } 
+    if $x { say q:to/END/ }
        This is alright
        END
 }, "heredoc ok in block 3";
@@ -348,7 +348,7 @@ eval-lives-ok q{
 # of the block:
 eval-dies-ok q{
     my $x;
-    if $x { my $var = 42; say qq:to/END/ } 
+    if $x { my $var = 42; say qq:to/END/ }
        Should not be able to use $var
        END
 }, "heredoc fails in block 4";

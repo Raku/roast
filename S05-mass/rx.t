@@ -523,7 +523,7 @@ ok 'cbaccb' ~~ /<!after cd><[ab]>/, 'lookbehind <!after>';
 
 #### $ <after ^a>		a		y				lookbehind <after>
 # https://github.com/Raku/old-issue-tracker/issues/4075
-ok 'a' ~~ /$ <after ^a>/, 'lookbehind <after>'; 
+ok 'a' ~~ /$ <after ^a>/, 'lookbehind <after>';
 
 #### <after x+>y		axxbxxyc	y				lookbehind <after>
 ok 'axxbxxyc' ~~ /<after x+>y/, 'lookbehind <after>';

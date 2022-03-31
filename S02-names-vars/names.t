@@ -166,7 +166,7 @@ throws-like {
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5479
-subtest 'can use compile-time variables in names' => { 
+subtest 'can use compile-time variables in names' => {
     plan 2;
     constant $i = 42;
     my $foo:bar«$i» = 'meow';

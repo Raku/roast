@@ -9,7 +9,7 @@ plan 2;
 
 {
     class A { has $.b }
-   
+
     throws-like { EVAL "new A" },
       X::Obsolete,
       'parameterless prefixed new is allowed';

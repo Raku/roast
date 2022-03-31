@@ -7,7 +7,7 @@ plan 4 * 7;
 
 # Test iterators coming from Hashes
 
-for 
+for
     (my % = "a" .. "z" Z=> 1..26),          "hash",
     (my %{Any} = "a" .. "z" Z=> 1..26),     "hash\{Any}",
     (my Int % = "a" .. "z" Z=> 1..26),      "Int Hash",

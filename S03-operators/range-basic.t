@@ -76,7 +76,7 @@ test     *^..^*, -Inf,   Inf,  True,  True,  True, Inf, "-Inf^..^Inf";
     throws-like          '^10 .. *',  X::Range::InvalidArg, got => ^10;
     throws-like          '* .. 42i',  X::Range::InvalidArg, got => 42i;
     throws-like          '42i .. *',  X::Range::InvalidArg, got => 42i;
-    throws-like '42.map({$_}) .. *',  X::Range::InvalidArg, got => Seq; 
+    throws-like '42.map({$_}) .. *',  X::Range::InvalidArg, got => Seq;
     throws-like '* .. 42.map({$_})',  X::Range::InvalidArg, got => Seq;
 }
 
@@ -144,7 +144,7 @@ nok 6 ~~ 1^..^5,        'not 6 ~~ 1^..^5';
 nok 5.001 ~~ 1^..^5,    'not 5.001 ~~ 1^..^5';
 nok 5.001e0 ~~ 1^..^5,  'not 5.001e0 ~~ 1^..^5';
 
-# Tests which check to see if Range is properly doing numeric 
+# Tests which check to see if Range is properly doing numeric
 # comparisons for numbers.
 
 ok 6 ~~ 5..21,          '6 ~~ 5..21';

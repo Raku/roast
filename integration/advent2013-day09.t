@@ -92,7 +92,7 @@ Pair.^add_fallback(
             $name ~~ /^c(<[ad]>*)(<[ad]>)r$/;        # split out last 'a' or 'd'
             my $r = $1 eq 'a' ?? $p.key !! $p.value; # choose key or value
             $0 ne '' ?? $r."c{$0}r"() !! $r;               # maybe recurse
-        } 
+        }
     }
     );
 

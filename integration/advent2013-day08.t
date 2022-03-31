@@ -17,7 +17,7 @@ class Vector is Array {
     method z () is rw { self[2] }
 
     method magnitude () {
-        sqrt [+] self »**» 2 
+        sqrt [+] self »**» 2
     }
 
     method subtract (@vec) {

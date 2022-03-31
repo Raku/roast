@@ -13,7 +13,7 @@ ok ($rat-methods ~~ /<wb>'Str'<wb>/ && $rat-methods ~~ /<wb>'round'<wb>/), 'Rat 
 
 ok Rat.^methods(:local).grep({.name eq 'log'}).[0].signature.raku, 'log signature';
 
-# sub log-calls($obj, Role $r) { ... } 
+# sub log-calls($obj, Role $r) { ... }
 # wrapper example omitted - see
 # https://github.com/Raku/old-issue-tracker/issues/3396
 

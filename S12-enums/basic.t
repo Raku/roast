@@ -222,7 +222,7 @@ group-of 3 => 'can build enum with built-ins\' names' => {
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5272
-{ 
+{
     my enum RT128017 ( (('RT128017-' X~ 1..8) Z=> (1, 2, 4 ... 256)) );
     is-deeply RT128017.enums,  Map.new((
         "RT128017-1" => 1,"RT128017-2" => 2,"RT128017-3" => 4,
@@ -255,7 +255,7 @@ is-deeply do { my enum Foos (a => <42>); a.Str }, 'a',
     '"NumericStringyEnumeration" uses key as .Str value';
 
 # https://github.com/Raku/old-issue-tracker/issues/3546
-{ 
+{
     my enum Bug ("foo" => -42, "A", "bar" => 100, "B", :12ber, "C", "D");
     is-deeply [+foo, +A,  +bar, +B,  +ber, +C, +D],
               [-42,  -41, 100,  101, 12,   13, 14],
@@ -263,7 +263,7 @@ is-deeply do { my enum Foos (a => <42>); a.Str }, 'a',
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5627
-{ 
+{
     eval-lives-ok 'my enum FF <zero one two three>; my enum GG <fee fie foo fum>; { FF(GG(2)).raku }',
                   'Coercing an enum from a coercion of an enum from an int works';
 }

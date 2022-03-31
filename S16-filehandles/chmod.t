@@ -14,7 +14,7 @@ Given a list of files and directories change the rights on them.
 MODE should be an octet representing or a string like similar to what can be used in
      the same UNIX program:
      one or more of the letters ugoa, one of the symbols +-= and one or more of the letters rwxXstugo.
-     
+
 return list should be the list of files that were successfully changed
 in scalar context it should be the number of files successfully changed
 

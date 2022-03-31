@@ -9,9 +9,9 @@ grammar Alts {
     token alt:sym<foo> { <sym> };
     token alt:sym<bar> { 'bar' };
     # https://github.com/Raku/old-issue-tracker/issues/2787
-    token alt:sym«baz» { 'argl' };    
+    token alt:sym«baz» { 'argl' };
     # https://github.com/Raku/old-issue-tracker/issues/2787
-    token alt:sym«=>»  { <sym> };     
+    token alt:sym«=>»  { <sym> };
 }
 
 ok (my $match = Alts.subparse('foo')), 'can parse with proto regexes (1)';
@@ -48,36 +48,36 @@ grammar LTM {
     token lit:sym<foo>    { 'foo' }
     token lit:sym<foobar> { 'foobar' }
     token lit:sym<foob>   { 'foob' }
-    
+
     proto token cclass1  {*}
     token cclass1:sym<a> { <[0..9]> }
     token cclass1:sym<b> { <[0..9]> '.' <[0..9]> }
-    
+
     proto token cclass2  {*}
     token cclass2:sym<a> { <[0..9]> '.' <[0..9]> }
     token cclass2:sym<b> { <[0..9]> }
-    
+
     proto token cclass3 {*}
     token cclass3:sym<a> { \d\d }
     token cclass3:sym<b> { 1 }
-    
+
     proto token cclass4 {*}
     token cclass4:sym<a> { '.' }
     token cclass4:sym<b> { \W\W }
-    
+
     proto token quant1  {*}
     token quant1:sym<a> { ab? }
     token quant1:sym<b> { a }
-    
+
     proto token quant2  {*}
     token quant2:sym<a> { a }
     token quant2:sym<c> { ab+ }
     token quant2:sym<b> { ab? }
-    
+
     proto token quant3  {*}
     token quant3:sym<a> { aaa }
     token quant3:sym<b> { a* }
-    
+
     proto token declok {*}
     token declok:sym<a> {
         :my $x := 42;           #OK not used
@@ -100,7 +100,7 @@ grammar LTM {
     proto token ass2 {*}
     token ass2:sym<a> { a <!{ 0 }> .+ }
     token ass2:sym<b> { aa }
-    
+
     proto token block {*}
     token block:sym<a> { a {} .+ }
     token block:sym<b> { aa }

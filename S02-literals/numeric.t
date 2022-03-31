@@ -69,7 +69,7 @@ is  <NaN+Inf\i>,   NaN + Inf\i, '<NaN+Inf\i> produces correct value';
 is  <NaN-Inf\i>,   NaN - Inf\i, '<NaN-Inf\i> produces correct value';
 
 # https://github.com/Raku/old-issue-tracker/issues/5759
-{ 
+{
     isa-ok <0--Inf\i>, Str, '0--Inf\i is a Str';
     isa-ok <0++Inf\i>, Str, '0++Inf\i is a Str';
     isa-ok <0+-Inf\i>, Str, '0+-Inf\i is a Str';

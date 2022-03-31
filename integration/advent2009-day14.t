@@ -17,7 +17,7 @@ is (3/7).numerator, 3;
 is (3/7).denominator, 7;
 is (3/7).nude.join('|'), "3|7";
 
-my $a = 1/60000 + 1/60000; 
+my $a = 1/60000 + 1/60000;
 is-deeply $a.WHAT, Rat;
 is-approx $a, 3.3333333e-05;
 is $a.raku, "<1/30000>";

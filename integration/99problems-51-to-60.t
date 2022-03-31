@@ -4,26 +4,26 @@ plan 37;
 
 {
     # P54A (*) Check whether a given term represents a binary tree
-    # 
+    #
     # Write a predicate istree which returns true if and only if its argument is a
     # list representing a binary tree.
-    # 
+    #
     # Example:
     # * (istree (a (b nil nil) nil))
     # T
     # * (istree (a (b nil nil)))
     # NIL
-    
+
     # We keep representing trees as lists
     # but it could be interesting to use something like
     #  subtype List::Tree of List where {istree($_)}
     # or to define a proper class Node
-    
+
     sub istree($obj) returns Bool {
       return Bool::True unless $obj.defined;
       return +$obj==3 and istree($obj[1]) and istree($obj[2]);
     }
-        
+
     ok istree(Any), "We tell that an empty tree is a tree";
     ok istree(['a',Any,Any]), ".. and a one-level tree is a tree";
     ok istree(['a',Any,['c',Any,Any]]), ".. and n-level trees";
@@ -33,19 +33,19 @@ plan 37;
 
 {
     # P55 (**) Construct completely balanced binary trees
-    # 
+    #
     # In a completely balanced binary tree, the following property holds for
     # every node: The number of nodes in its left subtree and the number of
     # nodes in its right subtree are almost equal, which means their
     # difference is not greater
     # than one.
-    # 
+    #
     # Write a function cbal-tree to construct completely balanced binary
     # trees for a given number of nodes. The predicate should generate all
     # solutions via
     # backtracking. Put the letter 'x' as information into all nodes of the
     # tree.
-    # 
+    #
     # Example:
     # * cbal-tree(4,T).
     # T = t(x, t(x, nil, nil), t(x, nil, t(x, nil, nil))) ;
@@ -82,7 +82,7 @@ plan 37;
        [['x', Any, Any],],
        'built a balanced binary tree with 1 item';
 
-    is-deeply [ cbal-tree(2) ], 
+    is-deeply [ cbal-tree(2) ],
        [['x', ['x', Any, Any], Any],
         ['x', Any,               ['x', Any, Any]]],
        'built a balanced binary tree with 2 items';
@@ -96,7 +96,7 @@ plan 37;
 
 {
     # P56 (**) Symmetric binary trees
-    # 
+    #
     # Let us call a binary tree symmetric if you can draw a vertical line
     # through the root node and then the right subtree is the mirror image
     # of the left subtree.
@@ -106,15 +106,15 @@ plan 37;
     # the mirror image of another. We are only interested in the structure,
     # not in
     # the contents of the nodes.
-    
+
     sub symmetric($tree) {
         mirror(left($tree),right($tree))
     }
-    
-     
-    # We use multi subs so that in theory we can replace this definitions 
+
+
+    # We use multi subs so that in theory we can replace this definitions
     # for example using classes or Array subtyping instead of lispish trees
-    
+
     # in Rakudo you can't pass a Mu to where an Array is expected,
     # so we add multis for explicit undefined values
     multi sub mirror(Mu:U $a, Mu:U $b) { return True;  }   #OK not used
@@ -152,19 +152,19 @@ plan 37;
             [12,
             [121,Mu,[1221,Mu,Mu]],
             [122,Mu,Mu]]]),
-       "symmetric works with n-level trees"; 
+       "symmetric works with n-level trees";
 }
 
 {
     # P57 (**) Binary search trees (dictionaries)
-    # 
+    #
     # Use the predicate add/3, developed in chapter 4 of the course, to write a
     # predicate to construct a binary search tree from a list of integer numbers.
-    # 
+    #
     # Example:
     # * construct([3,2,5,7,1],T).
     # T = t(3, t(2, t(1, nil, nil), nil), t(5, nil, t(7, nil, nil)))
-    # 
+    #
     # Then use this predicate to test the solution of the problem P56.
     # Example:
     # * test-symmetric([5,3,18,1,4,12,21]).
@@ -174,7 +174,7 @@ plan 37;
 
     sub add-to-tree($tree, $node) {
         if not $tree.defined {
-            return [$node, Any, Any] 
+            return [$node, Any, Any]
         } elsif $node <= $tree[0] {
             return [$tree[0], add-to-tree($tree[1], $node), $tree[2]];
         } else {
@@ -189,21 +189,21 @@ plan 37;
         return $tree;
     }
 
-    is-deeply construct(3, 2, 5, 7, 1), 
+    is-deeply construct(3, 2, 5, 7, 1),
        [3, [2, [1, Any, Any], Any], [5, Any, [7, Any, Any]]],
        'Can construct a binary search tree';
 }
 
 {
     # P58 (**) Generate-and-test paradigm
-    # 
+    #
     # Apply the generate-and-test paradigm to construct all symmetric, completely
     # balanced binary trees with a given number of nodes. Example:
-    # 
+    #
     # * sym-cbal-trees(5,Ts).
-    # 
+    #
     # Ts = [t(x, t(x, nil, t(x, nil, nil)), t(x, t(x, nil, nil), nil)), t(x, t(x, t(x, nil, nil), nil), t(x, nil, t(x, nil, nil)))]
-    # 
+    #
     # How many such trees are there with 57 nodes? Investigate about how many
     # solutions there are for a given number of nodes? What if the number is even?
     # Write an appropriate predicate.
@@ -213,16 +213,16 @@ plan 37;
 
 {
     # P59 (**) Construct height-balanced binary trees
-    # 
+    #
     # In a height-balanced binary tree, the following property holds for every
     # node: The height of its left subtree and the height of its right subtree
     # are almost equal, which means their difference is not greater than one.
-    # 
+    #
     # Write a predicate hbal-tree/2 to construct height-balanced binary trees
     # for a given height. The predicate should generate all solutions via
     # backtracking. Put the letter 'x' as information into all nodes of the
     # tree.
-    # 
+    #
     # Example:
     # * hbal-tree(3,T).
     # T = t(x, t(x, t(x, nil, nil), t(x, nil, nil)), t(x, t(x, nil, nil), t(x, nil, nil))) ;
@@ -271,30 +271,30 @@ plan 37;
 {
     # P60 (**) Construct height-balanced binary trees with a given number
     # of nodes
-    # 
+    #
     # Consider a height-balanced binary tree of height H. What is the maximum
-    # number of nodes it can contain?  Clearly, MaxN = 2**H - 1. However, 
-    # what is the minimum number MinN? This question is more difficult. 
+    # number of nodes it can contain?  Clearly, MaxN = 2**H - 1. However,
+    # what is the minimum number MinN? This question is more difficult.
     # Try to find a recursive
     # statement and turn it into a predicate minNodes/2 defined as follwos:
-    # 
-    # % minNodes(H,N) :- N is the minimum number of nodes in a 
+    #
+    # % minNodes(H,N) :- N is the minimum number of nodes in a
     # height-balanced binary tree of height H.
-    # 
+    #
     # (integer,integer), (+,?)
-    # 
+    #
     # On the other hand, we might ask: what is the maximum height H a
     # height-balanced  binary tree with N nodes can have?
-    # 
+    #
     # % maxHeight(N,H) :- H is the maximum height of a height-balanced
     # binary tree with N nodes
     # (integer,integer), (+,?)
-    # 
+    #
     # Now, we can attack the main problem: construct all the height-balanced
     # binary trees with a given nuber of nodes.
-    # 
+    #
     # % hbal-tree-nodes(N,T) :- T is a height-balanced binary tree with N nodes.
-    # 
+    #
     # Find out how many height-balanced trees exist for N = 15.
 
     skip "Test(s) not yet written: (**) Construct height-balanced binary trees with a given number of nodes", 1;

@@ -54,7 +54,7 @@ subtest "all forms of yadas work to stub classes" => {
 
 # https://github.com/Raku/old-issue-tracker/issues/4670
 {
-    is_run ｢class X::B { ... }; X::B.new.a.print; class X::B { has $.a = 42}｣, 
+    is_run ｢class X::B { ... }; X::B.new.a.print; class X::B { has $.a = 42}｣,
         { :out<42>, :err('') }, 'Can stub a class in a core namespace';
 }
 

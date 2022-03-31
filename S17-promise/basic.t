@@ -60,7 +60,7 @@ plan 41;
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/3758
-{ 
+{
     my $p = Promise.new;
     my $vowname = $p.vow.^name;
 

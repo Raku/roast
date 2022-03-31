@@ -76,7 +76,7 @@ dies-ok {$o."b"() },  'can not call private method via quotes from outside';   #
 
     is $b.public1, 24, '"my method private" can be called as self!private';
     is $b.public2, 18, 'can call role shared private methods';
-    throws-like { $b.public3() }, X::Method::NotFound, 
+    throws-like { $b.public3() }, X::Method::NotFound,
         typename => { m/'B'/ }, method => { m/'role_private'/ }; #'can not call role private methods scoped with my';
 }
 

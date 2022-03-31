@@ -9,7 +9,7 @@ Rakudo had a bug which caused failures when a regex match happened inside the
 body of a C<while> loop.
 
 So now we test that you can use both a regex and its result object in any
-kind of block, and in the condition, if any. 
+kind of block, and in the condition, if any.
 
 =end description
 

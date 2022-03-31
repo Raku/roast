@@ -61,7 +61,7 @@ throws-like 'bar(41)', Exception, 'impossible dispatch failed (anon cap)';
 {
     throws-like q[
         multi sub i1(Int $x) {}
-        sub i1(Int $x, Str $y) {} 
+        sub i1(Int $x, Str $y) {}
     ], X::Redeclaration, 'declaring a multi and a single routine dies';
 
     throws-like q[

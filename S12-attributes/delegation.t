@@ -108,7 +108,7 @@ class PairTest {
 {
   class ReFrontend { has $.backend is rw handles /^hi|oo/ };
   ok ReFrontend.new, "class definition using a smartmatch handle worked";
- 
+
   {
     my $a;
     ok ($a = ReFrontend.new), "basic instantiation worked (3)";

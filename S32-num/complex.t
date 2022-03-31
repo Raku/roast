@@ -280,12 +280,12 @@ subtest 'distinct Complex literals do not compare the same' => {
     cmp-ok $l1, &[!===], $l2, '===';
 
     # https://github.com/Raku/old-issue-tracker/issues/5520
-    
+
     cmp-ok $l1.WHICH, &[!===], $l2.WHICH, '=== of .WHICHes';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5518
-{ 
+{
     my $n := <1180591620717411303424.0e0+1180591620717409992704e0i>;
     cmp-ok $n, '==', $n.raku.EVAL,
         '.raku roundtrips the Complex correctly';

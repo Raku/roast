@@ -34,8 +34,8 @@ sub capture-out($code) {
     $code();
     return $output.lines;
 }
-is capture-out( {@array.map: *.say} ), [< a b c d>], "map"; 
-is capture-out( {@array».say } ).sort, [<a b c d>], "hyperoperator form (say)"; 
+is capture-out( {@array.map: *.say} ), [< a b c d>], "map";
+is capture-out( {@array».say } ).sort, [<a b c d>], "hyperoperator form (say)";
 is @array».Str , <a b c d> , 'testing hyperoperator form';
 
 

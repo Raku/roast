@@ -751,7 +751,7 @@ lives-ok {
 
 {
     lives-ok {
-        react { 
+        react {
             whenever Supply.from-list([1, 2, 3, 4, 5, 6]) {
                 last if $_ > 2;
                 die "failed to 'last' at 4, got to $_" if $_ > 3;

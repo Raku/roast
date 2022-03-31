@@ -18,7 +18,7 @@ my $filename = 'tempfile_rebindstdhandles' ~ nonce();
     $*OUT := $old_out;
 
     is(slurp($filename), "OH HAI!\n", 'rebound $*OUT to file handle OK');
-    
+
     unlink($filename);
 }
 

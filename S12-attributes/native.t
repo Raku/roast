@@ -116,7 +116,7 @@ class NoTwigilNatives {
 throws-like { EVAL 'class Warfare { has int $a; say $a }' }, X::Syntax::NoSelf;
 
 # https://github.com/Raku/old-issue-tracker/issues/5139
-{ 
+{
     my class MV {
         has uint64 $.start;
         method s { if $!start { 5 } }

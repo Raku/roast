@@ -7,10 +7,10 @@ use Test;
 
 =begin pod
 
-Tests for the feed operators 
+Tests for the feed operators
 
-    ==> and <== 
-    
+    ==> and <==
+
 =end pod
 
 plan 23;
@@ -18,7 +18,7 @@ plan 23;
 {
     my @a = (1, 2);
     my (@b, @c);
-    
+
     @a ==> @b;
     @c <== @a;
 

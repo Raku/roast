@@ -10,13 +10,13 @@ plan 12;
     my $str = "abc\ndef";
     ok($str ~~ /./,   '. matches something');
     ok($str ~~ /c.d/, '. matches \n');
-    
+
     # ^ and $ now always match the start/end of a string, like the old \A and \z.
     ok($str ~~ /^abc/, '^ matches beginning of string');
     ok(!($str ~~ /^de/), '^ does not match \n');
     ok($str ~~ /def$/, '$ matches end of string');
     ok(!($str ~~ /bc$/), '$ does not match \n');
-    
+
     # (The /m modifier is gone.)
     throws-like '$str ~~ m/bc$/m', X::Obsolete, '/m modifier is gone';
 }

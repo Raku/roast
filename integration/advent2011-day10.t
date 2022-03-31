@@ -44,7 +44,7 @@ my $main = q:to"END";
 
     #| it's a sheep! really!
     class Sheep {
-        
+
         #| produces a funny sound
         method bark {
             say "Actually, I don't think sheeps bark"

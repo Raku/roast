@@ -1,7 +1,7 @@
 # Test created with GenerateCollationTest.raku on 2021-08-22 from CollationTest_NON_IGNORABLE.txt UCA version 13.0.0 UCD version 13.0.0
 # ( (codepoints), description, line-num-from-UCA-file, expect-success )
 
-my @a = 
+my @a =
 ( (0x338,  0x334, ), Q«« (̸) COMBINING LONG SOLIDUS OVERLAY»», 10, True ),
 ( (0xE4D,  0x21, ), Q«« (ํ) THAI CHARACTER NIKHAHIT»», 3404, True ),
 ( (0xEC8,  0x21, ), Q«« (່) LAO TONE MAI EK»», 3405, True ),

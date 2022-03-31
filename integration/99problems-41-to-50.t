@@ -17,8 +17,8 @@ plan 13;
     # 18 = 5 + 13
     # 20 = 3 + 17
     #
-    # In most cases, if an even number is written as the sum of two prime 
-    # numbers, one of them is very small. Very rarely, the primes are both 
+    # In most cases, if an even number is written as the sum of two prime
+    # numbers, one of them is very small. Very rarely, the primes are both
     # bigger than say 50. Try to find out how many such cases there are in
     # the range 2..3000.
     #
@@ -28,7 +28,7 @@ plan 13;
     # 1382 = 61 + 1321
     # 1856 = 67 + 1789
     # 1928 = 61 + 1867
-    
+
     sub primes($from, $to) {
         my @p = (2);
         for 3..$to -> $x {
@@ -36,7 +36,7 @@ plan 13;
         }
         grep { $_ >= $from }, @p;
     }
-    
+
     sub goldbach($n) {
         my @p = primes(1, $n-1);
         for @p -> $x {
@@ -46,11 +46,11 @@ plan 13;
         }
         0;
     }
-    
+
     sub goldbachs($from, $to) {
         [ map { [$_, goldbach $_] }, grep { $_ % 2 == 0 }, $from .. $to ]
     }
-    
+
     is goldbachs(3, 11), [[4, 2, 2], [6, 3, 3], [8, 3, 5], [10, 3, 7]], 'P41 (**) A list of Goldbach compositions.';
 }
 
@@ -75,10 +75,10 @@ plan 13;
     # true fail true
     # fail true fail
     # fail fail fail
-    
-    
+
+
     # --
-    
+
     grammar LogicalExpr {
 
         rule TOP {
@@ -150,7 +150,7 @@ plan 13;
 
         method term:sym<var>($/)   {
             my $id = ~$<id>;
-            make sub () { 
+            make sub () {
                 %*VAR{$id} // die "unknown variable: $id"
             }
         }
@@ -164,7 +164,7 @@ plan 13;
         }
 
     }
- 
+
     my $parser = LogicalExpr;
     my $actions = LogicalExpr::Actions;
 
@@ -178,12 +178,12 @@ plan 13;
 
 {
     # P47 (*) Truth tables for logical expressions (2).
-    # 
+    #
     # Continue problem P46 by defining and/2, or/2, etc as being operators. This
     # allows to write the logical expression in the more natural way, as in the
     # example: A and (A or not B). Define operator precedence as usual; i.e.
     # as in  Java.
-    # 
+    #
     # Example:
     # * table(A,B, A and (A or not B)).
     # true true true
@@ -251,12 +251,12 @@ plan 13;
 
 {
     # P48 (**) Truth tables for logical expressions (3).
-    # 
+    #
     # Generalize problem P47 in such a way that the logical expression may contain
     # any number of logical variables. Define table/2 in a way that table(List,Expr)
     # prints the truth table for the expression Expr, which contains the logical
     # variables enumerated in List.
-    # 
+    #
     # Example:
     # * table([A,B,C], A and (B or C) equ A and B or A and C).
     # true true true true
@@ -287,26 +287,26 @@ plan 13;
 
 {
     # P49 (**) Gray code.
-    # 
+    #
     # An n-bit Gray code is a sequence of n-bit strings constructed according to
     # certain rules. For example,
-    # 
+    #
     # n = 1: C(1) = ['0','1'].
     # n = 2: C(2) = ['00','01','11','10'].
     # n = 3: C(3) = ['000','001','011','010','110','111','101','100'].
-    # 
+    #
     # Find out the construction rules and write a predicate with the following
     # specification:
-    # 
+    #
     # % gray(N,C) :- C is the N-bit Gray code
-    # 
+    #
     # Can you apply the method of "result caching" in order to make the predicate
     # more efficient, when it is to be used repeatedly?
 
     use experimental :cached;
     sub gray($n) is cached {
         return [''] if $n == 0;
-        [flat '0' xx 2**($n-1) >>~<< gray($n-1), 
+        [flat '0' xx 2**($n-1) >>~<< gray($n-1),
          '1' xx 2 ** ($n-1) >>~<< gray($n-1).reverse];
     }
     is-deeply gray(0), [''];
@@ -315,7 +315,7 @@ plan 13;
     is-deeply gray(3), [<000 001 011 010 110 111 101 100>».Str];
 }
 
-{    
+{
     sub gray2($n) {
         return [''] if $n == 0;
         (state @g)[$n] //= [flat '0' xx 2**($n-1) >>~<< gray2($n-1),
@@ -329,40 +329,40 @@ plan 13;
 
 {
     # P50 (***) Huffman code.
-    # 
+    #
     # First of all, consult a good book on discrete mathematics or algorithms
     # for a  detailed description of Huffman codes!
-    # 
-    # We suppose a set of symbols with their frequencies, given as a list of 
-    # fr(S,F) terms. 
-    # Example: [fr(a,45),fr(b,13),fr(c,12),fr(d,16),fr(e,9),fr(f,5)]. 
-    # 
+    #
+    # We suppose a set of symbols with their frequencies, given as a list of
+    # fr(S,F) terms.
+    # Example: [fr(a,45),fr(b,13),fr(c,12),fr(d,16),fr(e,9),fr(f,5)].
+    #
     # Our objective is to construct a list hc(S,C) terms, where C is the
     # Huffman code word for the symbol S. In our example, the result could
-    # be Hs = [hc(a,'0'), # hc(b,'101'), hc(c,'100'), hc(d,'111'), 
+    # be Hs = [hc(a,'0'), # hc(b,'101'), hc(c,'100'), hc(d,'111'),
     # hc(e,'1101'), hc(f,'1100')] [hc(a,'01'),...etc.]. The task shall be
     # performed by the predicate huffman/2
     # defined as follows:
-    # 
+    #
     # % huffman(Fs,Hs) :- Hs is the Huffman code table for the frequency table Fs
-    # 
+    #
     # Binary Trees
-    # 
+    #
     # A binary tree is either empty or it is composed of a root element and two
     # successors, which are binary trees themselves.  In Lisp we represent the empty
     # tree by 'nil' and the non-empty tree by the list (X L R), where X denotes the
     # root node and L and R denote the left and right subtree, respectively. The
     # example tree depicted opposite is therefore represented by the following list:
-    # 
+    #
     # (a (b (d nil nil) (e nil nil)) (c nil (f (g nil nil) nil)))
-    # 
+    #
     # Other examples are a binary tree that consists of a root node only:
-    # 
+    #
     # (a nil nil) or an empty binary tree: nil.
-    # 
+    #
     # You can check your predicates using these example trees. They are given as test
     # cases in p54.lisp.
-    
+
     my @fr = (
             $['a', 45],
             $['b', 13],
@@ -371,7 +371,7 @@ plan 13;
             $['e', 9 ],
             $['f', 5 ],
     	 );
-    
+
     my %expected = (
             'a' => '0',
             'b' => '101',
@@ -380,9 +380,9 @@ plan 13;
             'e' => '1101',
             'f' => '1100'
             );
-    
+
     my @c = @fr;
-    
+
     # build the tree:
     while @c.elems > 1 {
         # Choose lowest frequency nodes and combine.  Break ties
@@ -392,9 +392,9 @@ plan 13;
         my $b = shift @c;
         unshift @c, $[ $[$a[0], $b[0]], $a[1] + $b[1]];
     }
-    
+
     my %res;
-    
+
     sub traverse ($a, Str $code = "") {
         if $a ~~ Str {
             %res{$a} = $code;
@@ -404,9 +404,9 @@ plan 13;
         }
     }
     traverse(@c[0][0]);
-    
-    is(~%res.sort, ~%expected.sort, "P50 (**) Huffman tree builds correctly");    
-        
+
+    is(~%res.sort, ~%expected.sort, "P50 (**) Huffman tree builds correctly");
+
 }
 
 # vim: expandtab shiftwidth=4

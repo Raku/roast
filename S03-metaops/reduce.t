@@ -769,8 +769,8 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
 
 # https://github.com/rakudo/rakudo/issues/3541
 {
-    sub infix:<eog> ( $a,  $b ) is assoc<chain> is pure { 
-        so $a == $b+1 
+    sub infix:<eog> ( $a,  $b ) is assoc<chain> is pure {
+        so $a == $b+1
     }
     ok ([eog] 5,4,3,2,1),
         'Reduce meta-operator respects chain associativity';

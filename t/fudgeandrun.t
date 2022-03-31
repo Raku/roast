@@ -10,7 +10,7 @@ my $impl = `perl6 -e "EVAL qq/say \\c[DOLLAR SIGN]*PERL.compiler.name, '.', \\c[
 die capture_error('perl6', $impl) if $?;
 chomp($impl);
 
-my ($compiler) = $impl =~ /([^.]*)[.]?/; 
+my ($compiler) = $impl =~ /([^.]*)[.]?/;
 
 my $fudge_run_test = fudge_test_to_run_test('t/01-implname.in');
 

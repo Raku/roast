@@ -24,7 +24,7 @@ sub nim-svg(@piles) {
             }
         }
     }
-    
+
 ##    say SVG.serialize('svg' => [ :$width, :$height, @elements ]);
     return [ :$width, :$height, |@elements ];
 }
@@ -39,7 +39,7 @@ sub nim(&block) {
 
     &block();
     finish-last-pile();
-    
+
     nim-svg(@*piles);
 }
 

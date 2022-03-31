@@ -20,7 +20,7 @@ is-approx(log(5), $log_5, 'got the log of 5');
 is-approx(log(0.1), $log_one_tenth, 'got the log of 0.1');
 
 # with given base:
-is-approx(log(8, 2), 3, 'log(8, 2) is 3'); 
+is-approx(log(8, 2), 3, 'log(8, 2) is 3');
 is-approx(log(42, 23),  1.192051192, 'log(42, 23)');
 
 # with non-Num

@@ -126,7 +126,7 @@ plan 23;
 
 {
     my @empty;
-    is +@empty, 0, 'Sanity: empty array, @empty, has 0 elements'; 
+    is +@empty, 0, 'Sanity: empty array, @empty, has 0 elements';
 
     my $before =  @empty.raku;
     @empty[5] ~~ /nothing/;

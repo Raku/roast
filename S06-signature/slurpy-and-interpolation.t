@@ -42,9 +42,9 @@ dies-ok {
 # https://github.com/Raku/old-issue-tracker/issues/4886
 {
     sub f(*%h) { %h.keys.sort };
-    
-    my %typedhash := :{ a => 1, b => 2 }; 
-    
+
+    my %typedhash := :{ a => 1, b => 2 };
+
     is-deeply f(|%typedhash).List, <a b>,
         'Can interpolate typed hashes into slurpy named parameters';
 }

@@ -58,7 +58,7 @@ class DifferentReal is Real {
     multi method Bridge() {
         self.value.Num;
     }
-}            
+}
 
 
 
@@ -70,7 +70,7 @@ for @sines -> $angle
     my $desired-result = sinh($angle.key()) / cosh($angle.key());
 
     # Num.tanh tests -- very thorough
-    is-approx($angle.key().tanh, $desired-result, 
+    is-approx($angle.key().tanh, $desired-result,
               "Num.tanh - {$angle.key()}");
 
     # Complex.tanh tests -- also very thorough
@@ -80,7 +80,7 @@ for @sines -> $angle
     my Complex $sz1 = { sinh($_) / cosh($_) }($zp1);
     my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { sinh($_) / cosh($_) }($zp2);
-    
+
     is-approx($zp0.tanh, $sz0, "Complex.tanh - $zp0");
     is-approx($zp1.tanh, $sz1, "Complex.tanh - $zp1");
     is-approx($zp2.tanh, $sz2, "Complex.tanh - $zp2");
@@ -90,7 +90,7 @@ for @sines -> $angle
     is(tanh(Inf), 1, "tanh(Inf) -");
     is(tanh(-Inf), -1, "tanh(-Inf) -");
 }
-        
+
 {
     # Num tests
     is-approx(tanh((-6.283185).Num), -0.999993025339611, "tanh(Num) - -6.283185");
@@ -140,16 +140,16 @@ for @sines -> $angle
     my $desired-result = sinh($angle.key()) / cosh($angle.key());
 
     # Num.atanh tests -- thorough
-    is-approx($desired-result.Num.atanh.tanh, $desired-result, 
+    is-approx($desired-result.Num.atanh.tanh, $desired-result,
               "Num.atanh - {$angle.key()}");
-    
+
     # Num.atanh(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is-approx($z.atanh.tanh, $z, 
+        is-approx($z.atanh.tanh, $z,
                   "Complex.atanh - $z");
     }
 }
-        
+
 {
     # Num tests
     is-approx(atanh((0.480472778160188).Num), 0.5235988, "atanh(Num) - 0.5235988");

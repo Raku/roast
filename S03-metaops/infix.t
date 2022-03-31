@@ -108,7 +108,7 @@ for @infixes -> $name, &op, &metaop {
     for (
         @a, @b, @reset, @result, @resultop3, @result3op,
         @ac, @bc, @resetc, @resultc, @resultop3c, @result3opc,
-    
+
     ) -> @a, @b, @reset, @result, @resultop3, @result3op {
 
         # @a >>op<< @b
@@ -210,13 +210,13 @@ for @infixes -> $name, &op, &metaop {
         is-deeply %a, %result, "%a assigned from %a >>$name=>> %b";
         %a = %reset;
 
-        # %a >>op<< 3 
+        # %a >>op<< 3
         dies-ok { %a >>[&op]<< 3 }, "%a >>$name\<< 3 dies";
         dies-ok { %a <<[&op]<< 3 }, "%a <<$name\<< 3 dies";
         is-deeply %a <<[&op]>> 3, %resultop3, "%a <<$name>> 3";
         is-deeply %a >>[&op]>> 3, %resultop3, "%a >>$name>> 3";
 
-        # %a >>op=<< 3 
+        # %a >>op=<< 3
         dies-ok { %a >>[&metaop]<< 3 }, "%a >>$name=<< 3 dies";
         dies-ok { %a <<[&metaop]<< 3 }, "%a <<$name=<< 3 dies";
         is-deeply %a <<[&metaop]>> 3, %resultop3, "%a <<$name=>> 3";
@@ -292,13 +292,13 @@ for @int-infixes -> $name, &op, &metaop {
         is-deeply %a, %result, "$type %a assigned from %a >>$name=>> %b";
         %a = %reset.pairs;
 
-        # %a >>op<< 3 
+        # %a >>op<< 3
         dies-ok { %a >>[&op]<< 3 }, "$type %a >>$name\<< 3 dies";
         dies-ok { %a <<[&op]<< 3 }, "$type %a <<$name\<< 3 dies";
         is-deeply %a <<[&op]>> 3, %resultop3, "$type %a <<$name>> 3";
         is-deeply %a >>[&op]>> 3, %resultop3, "$type %a >>$name>> 3";
 
-        # %a >>op=<< 3 
+        # %a >>op=<< 3
         dies-ok { %a >>[&metaop]<< 3 }, "$type %a >>$name=<< 3 dies";
         dies-ok { %a <<[&metaop]<< 3 }, "$type %a <<$name=<< 3 dies";
         is-deeply %a <<[&metaop]>> 3, %resultop3, "$type %a <<$name=>> 3";

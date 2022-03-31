@@ -7,7 +7,7 @@ plan 2 * 7;
 
 # Test iterators coming from Mixes
 
-for 
+for
     (a => 1.1, b => 2.2, c => 3.3, d => 4.4).Mix,       "Mix",
     (a => 1.1, b => 2.2, c => 3.3, d => 4.4).MixHash,   "MixHash"
 

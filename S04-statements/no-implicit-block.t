@@ -4,7 +4,7 @@ use Test;
 
 plan 12;
 
-# L<S04/The Relationship of Blocks and Declarations/"no implicit blocks" around 
+# L<S04/The Relationship of Blocks and Declarations/"no implicit blocks" around
 #   "standard control structures">
 {
     my $y;

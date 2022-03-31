@@ -49,10 +49,10 @@ sub Type($num, $type) {
         when "Rat" {
             $typed-num = "({$num}).{$type}(1e-9)";
         }
-        when "NotComplex" { 
+        when "NotComplex" {
             $typed-num = "NotComplex.new($num)";
         }
-        when "DifferentReal" { 
+        when "DifferentReal" {
             $typed-num = "DifferentReal.new($num)";
         }
     }
@@ -63,8 +63,8 @@ sub ForwardTest($str, $angle, $fun, $type, $desired-result-rule) {
     my $input_angle = $angle.key();
     my $desired-result = EVAL($desired-result-rule);
     given $type {
-        when "Complex" | "NotComplex" { 
-            $input_angle = $angle.key + 2i;  
+        when "Complex" | "NotComplex" {
+            $input_angle = $angle.key + 2i;
             $desired-result = ($angle.key() + 2i)."$fun"();
         }
     }
@@ -80,7 +80,7 @@ sub InverseTest($str, $angle, $fun, $type, $desired-result-rule) {
     my $input_angle = $angle.key();
     my $desired-result = EVAL($desired-result-rule);
     given $type {
-        when "Complex" | "NotComplex" { 
+        when "Complex" | "NotComplex" {
             $input_angle = ($angle.key() + 2i)."$fun"();
             $desired-result = ($angle.key() + 2i);
         }
@@ -130,8 +130,8 @@ class TrigFunction
     has $.plus_inf;
     has $.minus_inf;
     has $.inf_fudge;
-    
-    multi method new(Str $function_name is copy, 
+
+    multi method new(Str $function_name is copy,
                      Str $inverted_function_name is copy;
                      Str $angle_and_results_name is copy,
                      Str $rational_inverse_tests is copy;
@@ -141,9 +141,9 @@ class TrigFunction
                      Str $plus_inf is copy,
                      Str $minus_inf is copy) {
         self.bless(
-                   :$function_name, 
-                   :$inverted_function_name, 
-                   :$angle_and_results_name, 
+                   :$function_name,
+                   :$inverted_function_name,
+                   :$angle_and_results_name,
                    :$rational_inverse_tests,
                    :$skip,
                    :$desired-result-code,
@@ -171,7 +171,7 @@ class TrigFunction
                 my $desired-result = $.desired-result-code;
 
                 # Num.$.function_name tests -- very thorough
-                is-approx($angle.key().$.function_name, $desired-result, 
+                is-approx($angle.key().$.function_name, $desired-result,
                           "Num.$.function_name - {$angle.key()}");
 
                 # Complex.$.function_name tests -- also very thorough
@@ -181,12 +181,12 @@ class TrigFunction
                 my Complex $sz1 = $.complex_check($zp1);
                 my Complex $zp2 = $angle.key + 2.0i;
                 my Complex $sz2 = $.complex_check($zp2);
-                
+
                 is-approx($zp0.$.function_name, $sz0, "Complex.$.function_name - $zp0");
                 is-approx($zp1.$.function_name, $sz1, "Complex.$.function_name - $zp1");
                 is-approx($zp2.$.function_name, $sz2, "Complex.$.function_name - $zp2");
             }
-            
+
             $.inf_fudge
             {
                 is($.function_name(Inf), $.plus_inf, "$.function_name(Inf) -");
@@ -206,26 +206,26 @@ class TrigFunction
         $code.=subst: / ^^ ' ' ** 12 /, '', :g;
 
         $file.say: $code;
-        
+
         # next block is bordering on evil, and hopefully can be cleaned up in the near future
         my $angle_list = grep-and-repeat(EVAL($.angle_and_results_name), $.skip);
         my $fun = $.function_name;
         for <Num Rat Complex Str NotComplex DifferentReal FatRat> -> $type {
             $file.say: '{';
             $file.say: "    \# $type tests";
-            
+
             unless $type eq "Num" || $type eq "Complex" {
-                $file.say: ForwardTest('    is-approx($typed-angle.$fun, $desired-result, "$type.$fun - $angle");', 
+                $file.say: ForwardTest('    is-approx($typed-angle.$fun, $desired-result, "$type.$fun - $angle");',
                                         $angle_list.shift, $fun, $type, $.desired-result-code);
             }
-            $file.say: ForwardTest('    is-approx($fun($typed-angle), $desired-result, "$fun($type) - $angle");', 
+            $file.say: ForwardTest('    is-approx($fun($typed-angle), $desired-result, "$fun($type) - $angle");',
                                     $angle_list.shift, $fun, $type, $.desired-result-code);
-            
+
             $file.say: '}';
             $file.say: "";
         }
     }
-    
+
     method dump_inverse_tests($file) {
         my $setup_block = $skip ?? "next if " ~ $.skip.subst('$angle', '$angle.key()') ~ ";" !! "";
 
@@ -238,12 +238,12 @@ class TrigFunction
                 my $desired-result = $.desired-result-code;
 
                 # Num.$.inverted_function_name tests -- thorough
-                is-approx($desired-result.Num.$.inverted_function_name.$.function_name, $desired-result, 
+                is-approx($desired-result.Num.$.inverted_function_name.$.function_name, $desired-result,
                           "Num.$.inverted_function_name - {$angle.key()}");
-                
+
                 # Num.$.inverted_function_name(Complex) tests -- thorough
                 for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-                    is-approx($z.$.inverted_function_name.$.function_name, $z, 
+                    is-approx($z.$.inverted_function_name.$.function_name, $z,
                               "Complex.$.inverted_function_name - $z");
                 }
             }
@@ -257,11 +257,11 @@ class TrigFunction
         $code.=subst: '$.plus_inf', $.plus_inf, :g;
         $code.=subst: '$.minus_inf', $.minus_inf, :g;
         $code.=subst: / ^^ ' ' ** 12 /, '', :g;
-        
+
         $file.say: $code;
-        
+
         # next block is bordering on evil, and hopefully can be cleaned up in the near future
-        my $angle_list = grep-and-repeat(notgrep(EVAL($.angle_and_results_name), 
+        my $angle_list = grep-and-repeat(notgrep(EVAL($.angle_and_results_name),
                                                  {0 < $_.key() < pi / 2}), $.skip);
         my $fun = $.function_name;
         my $inv = $.inverted_function_name;
@@ -269,11 +269,11 @@ class TrigFunction
             $file.say: '{';
             $file.say: "    # $type tests";
             unless $type eq "Num" || $type eq "Complex" {
-                $file.say: InverseTest('    is-approx(($typed-result).$fun, $angle, "$type.$fun - $angle");', 
+                $file.say: InverseTest('    is-approx(($typed-result).$fun, $angle, "$type.$fun - $angle");',
                                         $angle_list.shift, $inv, $type, $.desired-result-code);
             }
 
-            $file.say: InverseTest('    is-approx($fun($typed-result), $angle, "$fun($type) - $angle");', 
+            $file.say: InverseTest('    is-approx($fun($typed-result), $angle, "$fun($type) - $angle");',
                                     $angle_list.shift, $inv, $type, $.desired-result-code);
 
 
@@ -347,10 +347,10 @@ class DifferentReal is Real {
     multi method Bridge() {
         self.value.Num;
     }
-}            
+}
 
 ';
-    
+
     return $file;
 }
 
@@ -380,7 +380,7 @@ my Str $minus_inf;
 for $functions.lines {
     when /^'#'/ { } # skip comment lines
     when /Function\:\s+(.*)/ {
-        $function_name = ~$0; 
+        $function_name = ~$0;
         $inverted_function_name = "a$0";
         $angle_and_results_name = "";
         $rational_inverse_tests = "(-2/2, -1/2, 1/2, 2/2)";
@@ -389,7 +389,7 @@ for $functions.lines {
         $complex_check = "";
         $plus_inf = "NaN";
         $minus_inf = "NaN";
-        
+
         $file = OpenAndStartOutputFile($function_name ~ ".t");
     }
     when /skip\:\s+(.*)/ { $skip = ~$0; }
@@ -402,7 +402,7 @@ for $functions.lines {
     when /minus_inf\:\s+(.*)/ { $minus_inf = ~$0; }
     when /End/ {
         say :$function_name.raku;
-        my $tf = TrigFunction.new($function_name, $inverted_function_name, $angle_and_results_name, 
+        my $tf = TrigFunction.new($function_name, $inverted_function_name, $angle_and_results_name,
                                   $rational_inverse_tests, $skip, $desired-result-code,
                                   $complex_check, $plus_inf, $minus_inf);
         $tf.dump_forward_tests($file);
@@ -421,13 +421,13 @@ $file.say: q[
 
 for @sines -> $angle
 {
-    next if abs(cos($angle.key())) < 1e-6;     
+    next if abs(cos($angle.key())) < 1e-6;
 	my $desired-result = sin($angle.key()) / cos($angle.key());
 
     # Num.atan2 tests
-    is-approx($desired-result.Num.atan2.tan, $desired-result, 
+    is-approx($desired-result.Num.atan2.tan, $desired-result,
               "Num.atan2() - {$angle.key()}");
-    is-approx($desired-result.Num.atan2(1.Num).tan, $desired-result, 
+    is-approx($desired-result.Num.atan2(1.Num).tan, $desired-result,
               "Num.atan2(1.Num) - {$angle.key()}");
 }
 
@@ -453,25 +453,25 @@ sub filter-type(@values is copy, $type) {
 for <Num Rat Int Str DifferentReal FatRat> -> $type1 {
     $file.say: "\{";
     $file.say: "    # $type1 tests";
-    
+
     unless $type1 eq "Num" {
-        $file.say: Atan2Test('    is-approx($type1-value.atan2, $desired-result, "$type1.atan2");', 
+        $file.say: Atan2Test('    is-approx($type1-value.atan2, $desired-result, "$type1.atan2");',
                              filter-type(@values, $type1).pick, $type1);
     }
 
-    $file.say: Atan2Test('    is-approx(atan2($type1-value), $desired-result, "atan2($type1)");', 
+    $file.say: Atan2Test('    is-approx(atan2($type1-value), $desired-result, "atan2($type1)");',
                          filter-type(@values, $type1).pick, $type1);
 
     $file.say: "}";
     $file.say: "";
-    
+
     for <Num Rat Int Str DifferentReal FatRat> -> $type2 {
         $file.say: '{';
         $file.say: "    # $type1 vs $type2 tests";
-        
-        $file.say: Atan2Test('    is-approx($type1-value.atan2($type2-value), $desired-result, "$type1.atan2($type2)");', 
+
+        $file.say: Atan2Test('    is-approx($type1-value.atan2($type2-value), $desired-result, "$type1.atan2($type2)");',
                              filter-type(@values, $type1).pick, filter-type(@values, $type2).pick, $type1, $type2);
-        $file.say: Atan2Test('    is-approx(atan2($type1-value, $type2-value), $desired-result, "atan2($type1, $type2)");', 
+        $file.say: Atan2Test('    is-approx(atan2($type1-value, $type2-value), $desired-result, "atan2($type1, $type2)");',
                              filter-type(@values, $type1).pick, filter-type(@values, $type2).pick, $type1, $type2);
         $file.say: "}";
         $file.say: "";

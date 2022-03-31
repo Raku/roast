@@ -88,7 +88,7 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
 # :nth
 {
     # https://github.com/Raku/old-issue-tracker/issues/4475
-    throws-like '"a b c d".subst(/\w/, "x", :nth(0))', Exception, message => rx/nth/; 
+    throws-like '"a b c d".subst(/\w/, "x", :nth(0))', Exception, message => rx/nth/;
     is 'a b c d'.subst(/\w/, 'x', :nth(1)), 'x b c d', '.subst and :nth(1)';
     is 'a b c d'.subst(/\w/, 'x', :nth(2)), 'a x c d', '.subst and :nth(2)';
     is 'a b c d'.subst(/\w/, 'x', :nth(3)), 'a b x d', '.subst and :nth(3)';
@@ -97,7 +97,7 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
 
     # string pattern versions
     # https://github.com/Raku/old-issue-tracker/issues/4475
-    throws-like '"a a a a".subst("a", "x", :nth(0))', Exception, message => rx/nth/; 
+    throws-like '"a a a a".subst("a", "x", :nth(0))', Exception, message => rx/nth/;
     is 'a a a a'.subst('a', 'x', :nth(1)), 'x a a a', '.subst (str pattern) and :nth(1)';
     is 'a a a a'.subst('a', 'x', :nth(2)), 'a x a a', '.subst (str pattern) and :nth(2)';
     is 'a a a a'.subst('a', 'x', :nth(3)), 'a a x a', '.subst (str pattern) and :nth(3)';
@@ -563,7 +563,7 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5699
-{ 
+{
     throws-like { "".subst: /\w/, "", :x(my class SomeInvalidXParam {}.new) },
         X::Str::Match::x, 'giving .subst invalid args throws';
 }

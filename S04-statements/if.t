@@ -147,7 +147,7 @@ if Mu { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
 }
 # Sing it again.  This time with slurpy.
 # https://github.com/Raku/old-issue-tracker/issues/2577
-{ 
+{
     my ($got, $a_val, $b_val);
     my sub testa { $a_val };
     my sub testb { $b_val };

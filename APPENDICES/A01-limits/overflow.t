@@ -59,7 +59,7 @@ throws-like 'say 1.0000001 ** (10 ** 90000)',
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/3319
-if $?BITS >= 64 { 
+if $?BITS >= 64 {
     my int $low  = 10**15;
     my int $high = 2**60 - 1;
     is $low, 1_000_000_000_000_000,

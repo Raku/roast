@@ -397,7 +397,7 @@ plan 70;
 # L<S09/Sized types/"num16">
 # num16 num32 num64 num128
 # complex16 complex32 complex64 complex128
-# buf8 buf16 buf32 buf64 
+# buf8 buf16 buf32 buf64
 
 #?rakudo skip 'num16  NYI'
 {

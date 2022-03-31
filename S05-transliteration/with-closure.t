@@ -49,7 +49,7 @@ is $y, 2,                            'Closure invoked twice (once per replacemen
     is $x, 'hello', 'Original string not modified';
 }
 
-my $orig = 'hello'; 
+my $orig = 'hello';
 #?rakudo skip 'Unable to resolve method ord in class Any'
 is $orig.trans(/(l)/ => { $_[0].ord }), 'he108108o', 'capturing regex + closure with .ord on $_';
 is $orig, 'hello', 'original string unchanged';

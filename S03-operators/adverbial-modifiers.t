@@ -58,7 +58,7 @@ is blub "bar":times(2), 'BLUBBLUBbar', 'user-defined prefix operator, :times adv
 
 # Exercise various mixes of "fiddle", parens "()",
 # and adverbs with "X' and without "x" an argument.
-sub violin($x) { 
+sub violin($x) {
     if $x ~~ Bool {
         $x ?? "1" !! "0";
     } else {

@@ -44,7 +44,7 @@ plan 10;
 		       :actions($a)), "a♥ 7♥ 7♦ 8♣ j♥; 10♥ j♥ q♥ k♥ a♦", "card game + actions parse";
 
     is-deeply $a.dups, ["a♥", "j♥"], 'duplicates detected in actions';
-    
+
 }
 
 {

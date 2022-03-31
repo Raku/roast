@@ -9,7 +9,7 @@ Closure over parameters of outer subs, as per
 # closure">
 # L<S06/Dynamically scoped subroutines>
 
-=end desc 
+=end desc
 
 plan 4;
 

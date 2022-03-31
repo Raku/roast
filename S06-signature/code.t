@@ -25,7 +25,7 @@ sub tester2(&my_sub) { 1 }    #OK not used
 dies-ok {EVAL 'tester2(42)' }, "can't pass thing that doesn't do Callable";
 
 sub not_returns_a_sub { 3 };
-dies-ok { EVAL 'tester2(not_returns_a_sub)' }, 
+dies-ok { EVAL 'tester2(not_returns_a_sub)' },
         "can't pass thing that doesn't do Callable";
 
 is tester2({ 'block' }), 1, 'Can pass a block to a &parameter';

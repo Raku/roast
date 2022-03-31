@@ -5,7 +5,7 @@ use Test::Iterator;
 
 plan 2 * 6;
 
-for 
+for
     ("a".."z").Set,       "Set",
     ("a".."z").SetHash,   "SetHash"
 

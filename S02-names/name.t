@@ -83,7 +83,7 @@ plan 24;
 
     sub infix:«\$>» { "$^a -> $^b\n" };
     is &[$>].name, 'infix:<$\>>', 'custom $> op name uses <> and backslash';
-    
+
     sub infix:<$\<> { "$^a -> $^b\n" };
     is &[$<].name, 'infix:<$\<>', 'custom $< op name uses <> and backslash';
 }

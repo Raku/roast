@@ -58,7 +58,7 @@ class DifferentReal is Real {
     multi method Bridge() {
         self.value.Num;
     }
-}            
+}
 
 
 
@@ -66,11 +66,11 @@ class DifferentReal is Real {
 
 for @cosines -> $angle
 {
-    
+
     my $desired-result = $angle.value;
 
     # Num.cos tests -- very thorough
-    is-approx($angle.key().cos, $desired-result, 
+    is-approx($angle.key().cos, $desired-result,
               "Num.cos - {$angle.key()}");
 
     # Complex.cos tests -- also very thorough
@@ -80,7 +80,7 @@ for @cosines -> $angle
     my Complex $sz1 = { (exp($_ * 1i) + exp(-$_ * 1i)) / 2 }($zp1);
     my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { (exp($_ * 1i) + exp(-$_ * 1i)) / 2 }($zp2);
-    
+
     is-approx($zp0.cos, $sz0, "Complex.cos - $zp0");
     is-approx($zp1.cos, $sz1, "Complex.cos - $zp1");
     is-approx($zp2.cos, $sz2, "Complex.cos - $zp2");
@@ -91,7 +91,7 @@ for @cosines -> $angle
     is(cos(Inf), NaN, "cos(Inf) -");
     is(cos(-Inf), NaN, "cos(-Inf) -");
 }
-        
+
 {
     # Num tests
     is-approx(cos((-7.8539816).Num), 0, "cos(Num) - -7.8539816");
@@ -137,20 +137,20 @@ for @cosines -> $angle
 
 for @cosines -> $angle
 {
-    
+
     my $desired-result = $angle.value;
 
     # Num.acos tests -- thorough
-    is-approx($desired-result.Num.acos.cos, $desired-result, 
+    is-approx($desired-result.Num.acos.cos, $desired-result,
               "Num.acos - {$angle.key()}");
-    
+
     # Num.acos(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is-approx($z.acos.cos, $z, 
+        is-approx($z.acos.cos, $z,
                   "Complex.acos - $z");
     }
 }
-        
+
 {
     # Num tests
     is-approx(acos((0.707106781186548).Num), 0.7853982, "acos(Num) - 0.7853982");

@@ -28,7 +28,7 @@ plan 12;
     ok( &gaz, 'Foo::gaz multi is defined (implicitly :others)' );
     is( gaz(), 'Foo::gaz1', 'Foo::gaz is the sub we expect' );
     is( gaz(1), 'Foo::gaz2', 'Foo::gaz($x) is the sub we expect' );
-    
+
 }
 
 # vim: expandtab shiftwidth=4

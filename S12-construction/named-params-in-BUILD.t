@@ -14,7 +14,7 @@ class Foo {
 
 my $obj = Foo.new( value => 'bar' );
 
-is( $obj.v, 'bar', 
+is( $obj.v, 'bar',
     'BUILD arg declared as named and invoked with literal pair should'
     ~ ' contain only the pair value' );
 isa-ok($obj.v, Str, 'same arg should be of declared type' );

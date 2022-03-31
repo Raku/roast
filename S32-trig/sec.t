@@ -58,7 +58,7 @@ class DifferentReal is Real {
     multi method Bridge() {
         self.value.Num;
     }
-}            
+}
 
 
 
@@ -70,7 +70,7 @@ for @cosines -> $angle
     my $desired-result = 1.0 / cos($angle.key());
 
     # Num.sec tests -- very thorough
-    is-approx($angle.key().sec, $desired-result, 
+    is-approx($angle.key().sec, $desired-result,
               "Num.sec - {$angle.key()}");
 
     # Complex.sec tests -- also very thorough
@@ -80,7 +80,7 @@ for @cosines -> $angle
     my Complex $sz1 = { 1.0 / cos($_) }($zp1);
     my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { 1.0 / cos($_) }($zp2);
-    
+
     is-approx($zp0.sec, $sz0, "Complex.sec - $zp0");
     is-approx($zp1.sec, $sz1, "Complex.sec - $zp1");
     is-approx($zp2.sec, $sz2, "Complex.sec - $zp2");
@@ -91,7 +91,7 @@ for @cosines -> $angle
     is(sec(Inf), NaN, "sec(Inf) -");
     is(sec(-Inf), NaN, "sec(-Inf) -");
 }
-        
+
 {
     # Num tests
     is-approx(sec((-5.4977871).Num), 1.41421356230097, "sec(Num) - -5.4977871");
@@ -141,16 +141,16 @@ for @cosines -> $angle
     my $desired-result = 1.0 / cos($angle.key());
 
     # Num.asec tests -- thorough
-    is-approx($desired-result.Num.asec.sec, $desired-result, 
+    is-approx($desired-result.Num.asec.sec, $desired-result,
               "Num.asec - {$angle.key()}");
-    
+
     # Num.asec(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is-approx($z.asec.sec, $z, 
+        is-approx($z.asec.sec, $z,
                   "Complex.asec - $z");
     }
 }
-        
+
 {
     # Num tests
     is-approx(asec((1.4142135623834).Num), 0.7853982, "asec(Num) - 0.7853982");

@@ -95,9 +95,9 @@ sub b() { die "oops" }
 
     is MethodTester.m('a'),        'a|',   'basic sanity 1 (class method)';
     is MethodTester.m('a', :y<b>), 'a|b',  'basic sanity 2 (class method)';
-    lives-ok { MethodTester.m('a', :y<b>, :z<b>) }, 
+    lives-ok { MethodTester.m('a', :y<b>, :z<b>) },
              'additional named args are ignored (class method)';
-    is MethodTester.m('a', :y<b>, :z<b>), 'a|b', 
+    is MethodTester.m('a', :y<b>, :z<b>), 'a|b',
        '... same, but test value (class method)';
 }
 

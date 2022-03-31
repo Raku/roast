@@ -39,7 +39,7 @@ is ~(0.uc),         ~0, '.uc on Int';
 is ~(0.tc),         ~0, '.tc on Int';
 is ~(0.lc),         ~0, '.lc on Int';
 
-#?DOES 3 
+#?DOES 3
 {
     role A {
         has $.thing = 3;

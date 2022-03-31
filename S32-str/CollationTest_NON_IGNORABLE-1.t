@@ -1,7 +1,7 @@
 # Test created with GenerateCollationTest.raku on 2021-08-22 from CollationTest_NON_IGNORABLE.txt UCA version 13.0.0 UCD version 13.0.0
 # ( (codepoints), description, line-num-from-UCA-file, expect-success )
 
-my @a = 
+my @a =
 ( (0xEC1,  0xEDE,  0x21, ), Q«« (ແໞ) LAO VOWEL SIGN EI, LAO LETTER KHMU GO»», 101212, True ),
 ( (0xEC1,  0xEDE,  0x3F, ), Q«« (ແໞ) LAO VOWEL SIGN EI, LAO LETTER KHMU GO»», 101213, True ),
 ( (0xEC1,  0xEDE,  0x61, ), Q«« (ແໞ) LAO VOWEL SIGN EI, LAO LETTER KHMU GO»», 101214, True ),

@@ -89,7 +89,7 @@ is EVAL('abs -42:'), 42, 'indirect object notation with colon at EOF works';
 
     is $o.@c(),         'p|q', 'called the first candidate in the list, which did not defer';
     is $o.called,       1,     'called only one method dispatch';
-    
+
     @c.shift();
     $o.called = 0;
     is $o.@c,           'p~q', 'got result from method we deferred to';

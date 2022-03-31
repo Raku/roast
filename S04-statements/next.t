@@ -55,7 +55,7 @@ plan 12;
 }
 
 {
-    my $tracker="err"; 
+    my $tracker="err";
     $tracker = 0; DONE: for 1..2 { next DONE; $tracker++;};
     is(
         $tracker,
@@ -73,8 +73,8 @@ plan 12;
 }
 
 {
-    my $tracker="err"; 
-    $tracker = 0; 
+    my $tracker="err";
+    $tracker = 0;
     OUT: for 1..2 {
         IN: for 1..2 {
             next OUT;
@@ -122,37 +122,37 @@ Check that C<next> works on the correct loop/block
 }
 
 {
-    my @log;    
+    my @log;
     my $i = 0;
     while ++$i < 2 {
         push @log, "before";
         next;
         push @log, "after";
     }
-    
+
     is(~@log, "before", "statements after next are not executed");
 }
 
 {
     my $i = 0;
-    
+
     for 1, 1, 0, 1, 0, 1 -> $x {
         if ($x) { next }
         $i++;
     }
-    
+
     is($i, 2, '$i++ executed only twice, because next ')
 }
 
 {
     my $i = 0;
     my $j;
-    
+
     loop ($j = 0; $j < 6; $j++) {
         if ($j % 2 == 0) { next }
         $i++;
     }
-    
+
     is($i, 3, '$i++ was not executed when next was called before it in loop {}');
 }
 

@@ -48,7 +48,7 @@ plan 16;
     is $test, 42, 'can define and use circumfix using << >> and both delimiters from the same constant';
 
     throws-like { EVAL q[ constant $x = "@ µ ."; sub circumfix:<<$x>>($) { 42 } ] },
-        X::Syntax::AddCategorical::TooManyParts, 
+        X::Syntax::AddCategorical::TooManyParts,
         'constants containing too many parts throw correctly';
 }
 

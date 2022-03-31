@@ -24,7 +24,7 @@ ok picker-seems-random( { $z = @array.pick } ), '$z = @array.pick;';
 
 is-deeply [gather for 0 .. @array.end -> $i { take $i }], $array-indices, 'for 0 .. @array.end -> $i {...}';
 is-deeply [gather for @array.keys -> $i { take $i }], $array-indices, 'for @array.keys -> $i {...}';
- 
+
 # Whole number division
 
 for [3, 1], [5,1], [6, 2], [42,14] {
@@ -41,8 +41,8 @@ is-deeply @array.elems, 25, '@array.elems';
 
 # Do something every 5th time
 
-is-deeply [gather for 0 .. 42 -> $x { if !($x % 5) {take $x}  }], [0, 5, 10, 15, 20, 25, 30, 35, 40], 'if !($x % 5) {...}'; 
-is-deeply [gather for 0 .. 42 -> $x { if $x %% 5 {take $x}  }], [0, 5, 10, 15, 20, 25, 30, 35, 40], 'if $x %% 5 {...}'; 
+is-deeply [gather for 0 .. 42 -> $x { if !($x % 5) {take $x}  }], [0, 5, 10, 15, 20, 25, 30, 35, 40], 'if !($x % 5) {...}';
+is-deeply [gather for 0 .. 42 -> $x { if $x %% 5 {take $x}  }], [0, 5, 10, 15, 20, 25, 30, 35, 40], 'if $x %% 5 {...}';
 
 # Do something $n times, counting up to $n-1
 

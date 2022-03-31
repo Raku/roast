@@ -36,7 +36,7 @@ This test tests the C<unique> builtin.
       "method form of unique with own comparator works";
     is ~unique(@array, with => { lc($^a) eq lc($^b) }), "a b d c",
       "subroutine form of unique with own comparator works";
-  
+
     # Semantics w/ junctions
     is EVAL('~@array.unique(with => { lc($^a) eq lc($^b) }).values.sort'), "a b c d", 'sorting the result';
 } #3

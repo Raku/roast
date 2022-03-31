@@ -6,7 +6,7 @@ plan 8;
 multi sub steve(Str $name) {
     return "Hello, $name";
 }
- 
+
 multi sub steve(Int $number) {
     return "You are person number $number to use this sub!";
 }
@@ -40,7 +40,7 @@ throws-like { EVAL $ambiguous   ~ 'Slurp('~$?FILE.raku~')' },
 class Present {
     has $.item;
     has $.iswrapped = True;
- 
+
     method look() {
         if $.iswrapped {
             "It's wrapped.";
@@ -49,7 +49,7 @@ class Present {
             "A $.item!";
         }
     }
- 
+
     method unwrap() {
         $!iswrapped = False;
     }

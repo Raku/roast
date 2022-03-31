@@ -24,7 +24,7 @@ plan 6;
 
 # https://github.com/Raku/old-issue-tracker/issues/2171
 {
-    my $cmd = $*DISTRO.is-win 
+    my $cmd = $*DISTRO.is-win
         ?? 'echo exit(42) | \qq[$*EXECUTABLE] -'
         !! 'echo "exit(42)" | \qq[$*EXECUTABLE] -';
 

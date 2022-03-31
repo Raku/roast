@@ -79,13 +79,13 @@ for @tests -> $t {
 
   $command = join " ", map { qq[-I "$_"] }, @dirs;
   $got = run_pugs( $command ~ " $fragment" );
-  
+
   $got .= chomp;
   if (substr($got,0,1) ~~ "[") {
     # Convert from arrayitem to array
     $got = substr($got, 1, -1);
   };
-  
+
   @got = EVAL $got;
   @got = @got[ 0..@dirs-1 ];
   @expected = @dirs;

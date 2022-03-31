@@ -58,7 +58,7 @@ class DifferentReal is Real {
     multi method Bridge() {
         self.value.Num;
     }
-}            
+}
 
 
 
@@ -66,11 +66,11 @@ class DifferentReal is Real {
 
 for @sines -> $angle
 {
-    
+
     my $desired-result = $angle.value;
 
     # Num.sin tests -- very thorough
-    is-approx($angle.key().sin, $desired-result, 
+    is-approx($angle.key().sin, $desired-result,
               "Num.sin - {$angle.key()}");
 
     # Complex.sin tests -- also very thorough
@@ -80,7 +80,7 @@ for @sines -> $angle
     my Complex $sz1 = { (exp($_ * 1i) - exp(-$_ * 1i)) / 2i }($zp1);
     my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { (exp($_ * 1i) - exp(-$_ * 1i)) / 2i }($zp2);
-    
+
     is-approx($zp0.sin, $sz0, "Complex.sin - $zp0");
     is-approx($zp1.sin, $sz1, "Complex.sin - $zp1");
     is-approx($zp2.sin, $sz2, "Complex.sin - $zp2");
@@ -91,7 +91,7 @@ for @sines -> $angle
     is(sin(Inf), NaN, "sin(Inf) -");
     is(sin(-Inf), NaN, "sin(-Inf) -");
 }
-        
+
 {
     # Num tests
     is-approx(sin((-6.283185).Num), 0, "sin(Num) - -6.283185");
@@ -137,20 +137,20 @@ for @sines -> $angle
 
 for @sines -> $angle
 {
-    
+
     my $desired-result = $angle.value;
 
     # Num.asin tests -- thorough
-    is-approx($desired-result.Num.asin.sin, $desired-result, 
+    is-approx($desired-result.Num.asin.sin, $desired-result,
               "Num.asin - {$angle.key()}");
-    
+
     # Num.asin(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is-approx($z.asin.sin, $z, 
+        is-approx($z.asin.sin, $z,
                   "Complex.asin - $z");
     }
 }
-        
+
 {
     # Num tests
     is-approx(asin((0.5).Num), 0.5235988, "asin(Num) - 0.5235988");

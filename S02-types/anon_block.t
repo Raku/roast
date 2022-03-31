@@ -149,7 +149,7 @@ isnt((sub { -> { 3 } }).(), 3, 'as are pointies');
         'call via -> &point { &point() }.( &s ) works for multi';
     is (sub (&x) { &x() }).( &mone ), 'one',
         'call via (sub (&x) { &x() }).( &s ) works for multi';
-    
+
 }
 
 # vim: expandtab shiftwidth=4

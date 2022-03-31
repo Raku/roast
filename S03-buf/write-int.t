@@ -82,7 +82,7 @@ for @umethods -> $bytes, $mask, $write, $read {
 
     # make sure we never exceed 64 int values for 8,16,32,64 bit read/write
     $value +&= 1 +< 63 - 1 if $bytes != 16;
-    
+
     # values to test against
     my \existing := buf8.new(0 xx (@byte-widths[*-1] + 8));
     my $elems    := existing.elems;
@@ -177,7 +177,7 @@ for @imethods -> $bytes, $mask, $write, $read {
 
     # make sure we never exceed 64 int values for 8,16,32,64 bit read/write
     $value +&= 1 +< 63 - 1 if $bytes != 16;
-    
+
     # values to test against
     my \existing := buf8.new(0 xx (@byte-widths[*-1] + 8));
     my $elems    := existing.elems;

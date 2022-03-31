@@ -102,8 +102,8 @@ eval-lives-ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper 
 
 # https://github.com/rakudo/rakudo/issues/3541
 {
-    sub infix:<eog> ( $a,  $b ) is assoc<chain> is pure { 
-        so $a == $b+1 
+    sub infix:<eog> ( $a,  $b ) is assoc<chain> is pure {
+        so $a == $b+1
     }
     ok (5,4,3,2,1).reduce(&infix:<eog>),
         'Reduce method respects chain associativity';

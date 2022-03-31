@@ -68,7 +68,7 @@ role WithAttr {
 {
     class TestA is SampleRole { }
     is(TestA.new.sample_method, 42, "can call method from punned class of inherited role");
-    
+
     class TestB is WithAttr { }
     my $obj = TestB.new(x => 1, y => 2);
     is($obj.x, 1, "can access attribute from punned class of inherited role");

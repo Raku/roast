@@ -6,7 +6,7 @@ plan 12;
 
 =begin description
 
-Test for 
+Test for
 
 =end description
 

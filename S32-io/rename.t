@@ -28,13 +28,13 @@ nok $non-existent-file.IO.e, "sanity check 2";
 {
     my $dest1a = "tempfile-rename-dest1a";
     my $dest1b = "tempfile-rename-dest1b";
-    
+
     my $existing-size1 = $existing-file1.IO.s;
     ok $existing-file1.IO.rename( $dest1a ), '.IO.rename normal file';
     nok $existing-file1.IO.e, 'source file no longer exists';
     ok $dest1a.IO.e, 'dest file exists';
     is $dest1a.IO.s, $existing-size1, 'dest file has same size as source file';
-    
+
     throws-like { $non-existent-file.IO.rename( $dest1b ) }, X::IO::Rename, '.IO.rename non-existent file';
     nok $dest1b.IO.e, "dest file doesn't exist";
 
@@ -53,7 +53,7 @@ nok $non-existent-file.IO.e, "sanity check 2";
 {
     my $dest2a = "tempfile-rename-dest2a";
     my $dest2b = "tempfile-rename-dest2b";
-    
+
     my $existing-size3 = $existing-file2.IO.s;
     ok rename( $existing-file2, $dest2a ), 'rename() normal file';
     nok $existing-file2.IO.e, 'source file no longer exists';

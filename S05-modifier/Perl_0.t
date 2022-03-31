@@ -77,8 +77,8 @@ is(@vals[1], 'world', 'returned correct second value in the match');
 
     my $rule3 = 'r+';
     my $subst = 'z';
-    my $bar = "barrrr"; 
-    $bar ~~ s:P5:g{$rule3}=qq{$subst}; 
+    my $bar = "barrrr";
+    $bar ~~ s:P5:g{$rule3}=qq{$subst};
     #?rakudo todo 'NYI'
     is($bar, "baz", 'variable interpolation in substitute regexp works with :g modifier');
 

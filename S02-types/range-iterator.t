@@ -5,7 +5,7 @@ use Test::Iterator;
 
 plan 12 * 6;
 
-for 
+for
     (1..26),       "int range",
     (1^..26),      "^int range",
     (1..^26),      "int^ range",

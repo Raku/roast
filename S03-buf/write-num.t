@@ -47,7 +47,7 @@ for @methods -> $bytes, $mask, $write, $read {
 
   # run for a set or predetermined and random values
   for @values -> $value {
-    
+
     # values to test against
     my \existing := buf8.new(0 xx (@byte-widths[*-1] + 8));
     my $elems    := existing.elems;

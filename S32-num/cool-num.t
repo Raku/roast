@@ -46,14 +46,14 @@ is-approx NotComplex.new.sqrt, $magic.sqrt, 'NotComplex.new.sqrt == $magic.sqrt'
 {
     my @found-roots = "17".roots("4");
     my @ideal-roots = 17.roots(4);
-    
+
     for @ideal-roots -> $i {
         is @found-roots.grep({ ($i - $_).abs < 1e-6 }).elems, 1, "root $i found once";
     }
 
     @found-roots = NotComplex.new.roots("3");
     @ideal-roots = $magic.roots(3);
-    
+
     for @ideal-roots -> $i {
         is @found-roots.grep({ ($i - $_).abs < 1e-6 }).elems, 1, "root $i found once";
     }

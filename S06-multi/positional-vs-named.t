@@ -35,7 +35,7 @@ is( earth('d', 'e'),           'pos d pos e',       'pos, pos');
 is( earth('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
 
 
-# ensure we get the same results when the subroutines are 
+# ensure we get the same results when the subroutines are
 # defined in reverse order
 #
 

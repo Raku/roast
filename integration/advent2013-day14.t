@@ -136,24 +136,24 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
             <section>+
             $
             }
-    
+
             token section {
             '[' ~ ']' <key> \n
             <entries>
             }
-    
+
             token entries {
             [
             | <entry> \n
             | \n
             ]*
             }
-    
+
             rule entry { <key> '=' <value> }
-    
+
             token key   { \w+ }
             token value { \N+ }
-    
+
             token ws { \h* }
         }
 
@@ -166,7 +166,7 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
             }
             make %result;
             }
-    
+
             method entries($/) {
             my %entries;
             for @<entry> -> $e {
@@ -175,7 +175,7 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
             make %entries;
             }
         }
-    
+
         start {
             react {
                 whenever $source {

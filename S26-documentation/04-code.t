@@ -54,7 +54,7 @@ is $r.contents[4].contents, "But this is just a text. Again";
 Tests for the feed operators
 
     ==> and <==
-    
+
 =end pod
 
 $r = $=pod[2];

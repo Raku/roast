@@ -28,7 +28,7 @@ my $pi = 312689/99532;
     is-approx(5.Rat.exp(2), 32, '5.Rat.exp == 32');
     is-approx(5.Num.exp(2), 32, '5.Num.exp == 32');
     is-approx(0.exp(2), 1, '0.exp(2) == 1');
- 
+
     is-approx((1i*$pi).exp(2), 2 ** (1i*$pi), '(i pi).exp(2) == 2 ** (1i*$pi)');
     is-approx((-1i*$pi).exp(2), 2 ** (-1i*$pi), '(-i pi).exp(2) == 2 ** (-1i*$pi)');
     is-approx(2.exp(1i*$pi), (1i*$pi) ** 2, '(2).exp(i pi) == (1i*$pi) ** 2');

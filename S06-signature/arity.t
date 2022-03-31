@@ -68,7 +68,7 @@ is &o_two.count,    1, 'count on sub with optional and required named params';
         "block with three placeholder vars has .arity == 3";
     is (-> $a, $b, $c { $a,$b,$c }).arity, 3,
         "pointy block with three placeholder vars has .arity == 3";
-    
+
     is ({ $^a         }.count), 1,
         "block with one placeholder var has .count == 1";
     is (-> $a { $a         }.count), 1,

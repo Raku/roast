@@ -9,9 +9,9 @@ plan 1;
 sub dying($in) {
     supply {
         whenever $in {
-            die "oh no"; 
-        }   
-    }   
+            die "oh no";
+        }
+    }
 }
 
 my $caught = 0;

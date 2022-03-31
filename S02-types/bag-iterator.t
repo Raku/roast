@@ -7,7 +7,7 @@ plan 2 * 7;
 
 # Test iterators coming from Bags
 
-for 
+for
     <a b b c c c d d d d>.Bag,       "Bag",
     <a b b c c c d d d d>.BagHash,   "BagHash"
 

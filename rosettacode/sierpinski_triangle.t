@@ -17,7 +17,7 @@ sub sierpinski ($n) {
     }
     return @down;
 }
- 
+
 .say for sierpinski 4;
 #### RC-end
 

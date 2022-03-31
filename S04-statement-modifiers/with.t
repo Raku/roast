@@ -101,7 +101,7 @@ plan 35;
 	my @y = 41, ($answer andthen 42), 43;
 	my @z = 41, 42, 43;
 	is @y, @z, "sanity check";
-	is @x, @y, "with expr on true cond"; 
+	is @x, @y, "with expr on true cond";
 }
 
 {
@@ -110,7 +110,7 @@ plan 35;
 	my @y = 41, ($answer andthen 42), 43;
 	my @z = 41, 42, 43;
 	is @y, @z, "sanity check";
-	is @x, @y, "with expr on true cond"; 
+	is @x, @y, "with expr on true cond";
 }
 
 {
@@ -119,7 +119,7 @@ plan 35;
 	my @y = 41, ($answer andthen 42), 43;
 	my @z = 41, 43;
 	is @y, @z, "sanity check";
-	is @x, @y, "with expr on false cond"; 
+	is @x, @y, "with expr on false cond";
 }
 
 {
@@ -131,7 +131,7 @@ plan 35;
 	my @z = 41, 43;
 
 	is @y, @z, "sanity check";
-	is @x, @y, "with expr on false cond"; 
+	is @x, @y, "with expr on false cond";
 }
 
 {
@@ -144,7 +144,7 @@ plan 35;
 	for foo() -> @foo {
 	    $ok = 0;
 	}
-	ok $ok, "condition in statement level respects context" 
+	ok $ok, "condition in statement level respects context"
 }
 
 {

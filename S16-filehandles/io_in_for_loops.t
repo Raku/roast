@@ -59,13 +59,13 @@ my $filename = 'tempfile_io_in_for_loop';
         is($line, "$num", '... got the right line (array controlled loop)');
         $num++;
         my $line2 = get $fh;
-        is($line2, "$num", '... got the right line2 (array controlled loop)');        
-        $num++;        
+        is($line2, "$num", '... got the right line2 (array controlled loop)');
+        $num++;
     }
     $fh.close();
 }
 
-{ # now read it in with the $fh controlling the loop but call 
+{ # now read it in with the $fh controlling the loop but call
   # the $fh.get inside the loop inside parens (is this list context??)
     my $fh = open($filename);
     my $num = 1;
@@ -79,7 +79,7 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
-{ # now read it in with the $fh controlling the loop but call 
+{ # now read it in with the $fh controlling the loop but call
   # the get $fh inside the loop w/out parens (is this scalar context??)
     my $fh = open($filename);
     my $num = 1;

@@ -32,7 +32,7 @@ is(@a, @e, "list was reversed");
 # #?rakudo skip 'want()'
 # {
 #     my @cxt_log;
-# 
+#
 #     class Foo {
 #         my @.n;
 #         method foo () {
@@ -47,12 +47,12 @@ is(@a, @e, "list was reversed");
 #             }
 #         }
 #     }
-# 
+#
 #     my @n = do {
 #         push @cxt_log, want();
 #         Foo.new.bar;
 #     };
-# 
+#
 #     is(~@cxt_log, ~("List (Any)" xx 4), "contexts were passed correctly around masak's bug");
 #     is(+@n, 3, "list context reverse in masak's bug");
 #     is(~@n, "3 2 1", "elements seem reversed");

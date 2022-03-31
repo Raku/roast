@@ -33,14 +33,14 @@ Test attributes with recursively typed attributes
     class B {
         my B $.attr;
     };
-    
+
     my B $a;
     lives-ok {
         $a .= new();
         B.attr = $a;
     }, "Can instantiate class with recursively-typed class lexical";
     ok B.attr === $a, "Recursively-typed class lexical stores correctly";
-    
+
 }
 
 #L<S12/Invocants/current lexically-determined class ::?CLASS>

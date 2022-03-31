@@ -8,11 +8,11 @@ plan 16;
 class T {
     has $.a;
     has $.b;
-    method l1 is rw { 
+    method l1 is rw {
         return-rw $!a;
     }
 
-    method l2 is rw { 
+    method l2 is rw {
         $!b;
     }
 }

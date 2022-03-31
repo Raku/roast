@@ -78,7 +78,7 @@ eval-lives-ok q[
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/1447
-# some integers produces from ranges didn't have 
+# some integers produces from ranges didn't have
 # methods that augment added. Weird.
 
 {

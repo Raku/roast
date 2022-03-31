@@ -602,7 +602,7 @@ is-deeply (1,2,3).Set.ACCEPTS(().Set), False, 'can we smartmatch empty';
 is-deeply Set.Setty, Set, 'multi method Setty(Set:U:) returns a Set type object';
 
 my @a = ["a", "b", "c"];
-my @b = [1, 2, 4]; 
+my @b = [1, 2, 4];
 is-deeply BagHash.new.STORE(@a, @b), BagHash.new.STORE(@a Z=> @b), 'the two Set:D.STORE candidates create equivalent objects';
 
 # https://github.com/rakudo/rakudo/issues/1862

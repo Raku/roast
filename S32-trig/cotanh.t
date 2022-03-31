@@ -58,7 +58,7 @@ class DifferentReal is Real {
     multi method Bridge() {
         self.value.Num;
     }
-}            
+}
 
 
 
@@ -70,7 +70,7 @@ for @sines -> $angle
     my $desired-result = cosh($angle.key()) / sinh($angle.key());
 
     # Num.cotanh tests -- very thorough
-    is-approx($angle.key().cotanh, $desired-result, 
+    is-approx($angle.key().cotanh, $desired-result,
               "Num.cotanh - {$angle.key()}");
 
     # Complex.cotanh tests -- also very thorough
@@ -80,7 +80,7 @@ for @sines -> $angle
     my Complex $sz1 = { cosh($_) / sinh ($_) }($zp1);
     my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { cosh($_) / sinh ($_) }($zp2);
-    
+
     is-approx($zp0.cotanh, $sz0, "Complex.cotanh - $zp0");
     is-approx($zp1.cotanh, $sz1, "Complex.cotanh - $zp1");
     is-approx($zp2.cotanh, $sz2, "Complex.cotanh - $zp2");
@@ -90,7 +90,7 @@ for @sines -> $angle
     is(cotanh(Inf), 1, "cotanh(Inf) -");
     is(cotanh(-Inf), -1, "cotanh(-Inf) -");
 }
-        
+
 {
     # Num tests
     is-approx(cotanh((-6.283185).Num), -1.00000697470903, "cotanh(Num) - -6.283185");
@@ -140,16 +140,16 @@ for @sines -> $angle
     my $desired-result = cosh($angle.key()) / sinh($angle.key());
 
     # Num.acotanh tests -- thorough
-    is-approx($desired-result.Num.acotanh.cotanh, $desired-result, 
+    is-approx($desired-result.Num.acotanh.cotanh, $desired-result,
               "Num.acotanh - {$angle.key()}");
-    
+
     # Num.acotanh(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is-approx($z.acotanh.cotanh, $z, 
+        is-approx($z.acotanh.cotanh, $z,
                   "Complex.acotanh - $z");
     }
 }
-        
+
 {
     # Num tests
     is-approx(acotanh((2.08128336391745).Num), 0.5235988, "acotanh(Num) - 0.5235988");

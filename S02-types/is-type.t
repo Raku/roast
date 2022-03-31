@@ -6,7 +6,7 @@ plan 14;
 {
     my @a is Buf;
     ok @a ~~ Buf, 'is TypeName on @ sigil has effect (my)';
-    
+
     my %h is BagHash;
     ok %h ~~ BagHash, 'is TypeName on % sigil has effect (my)';
 }
@@ -14,7 +14,7 @@ plan 14;
 {
     state @a is Buf;
     ok @a ~~ Buf, 'is TypeName on @ sigil has effect (state)';
-    
+
     state %h is BagHash;
     ok %h ~~ BagHash, 'is TypeName on % sigil has effect (state)';
 }

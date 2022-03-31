@@ -7,7 +7,7 @@ plan 13;
 
 # How clever we get with type-captures and subsignatures is TBD.  So
 # these tests are more tenuous, they just test the intent
-# of the currently prototyped functionality. 
+# of the currently prototyped functionality.
 
 is-primed-sig(sub (::T $a, $b, :$c) { }, :($b, :$c), 1);
 is-primed-sig(sub (::T $a, T $b, T :$c) { }, :($b, :$c), 1);

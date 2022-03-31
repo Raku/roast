@@ -28,7 +28,7 @@ plan 18;
     my $i = 0;
     is($i, 0, 'verify our starting condition');
     loop ($i = 0; $i < 10; $i++) {
-        if $i == 5 { 
+        if $i == 5 {
             last;
         }
     }
@@ -86,7 +86,7 @@ plan 18;
 
 {
     my $rt65962 = 'did not loop';
-    
+
     loop ( my $a = 1, my $b = 2; $a < 5; $a++, $b++ ) {
         $rt65962 = "$a $b";
     }

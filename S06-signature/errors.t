@@ -11,7 +11,7 @@ These are misc. sub argument errors.
 =end pod
 
 sub bar (*@x) { 1 }   #OK not used
-lives-ok { bar(reverse(1,2)) }, 'slurpy args are not bounded (2)';  
+lives-ok { bar(reverse(1,2)) }, 'slurpy args are not bounded (2)';
 
 throws-like 'sub quuux ($?VERSION) { ... }', X::Parameter::Twigil,
     'parser rejects magicals as args (1)';

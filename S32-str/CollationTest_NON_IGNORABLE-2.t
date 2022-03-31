@@ -1,7 +1,7 @@
 # Test created with GenerateCollationTest.raku on 2021-08-22 from CollationTest_NON_IGNORABLE.txt UCA version 13.0.0 UCD version 13.0.0
 # ( (codepoints), description, line-num-from-UCA-file, expect-success )
 
-my @a = 
+my @a =
 ( (0xAAB6,  0xAA90,  0x3F, ), Q«« (ꪶꪐ) TAI VIET VOWEL O, TAI VIET LETTER LOW NYO»», 103832, True ),
 ( (0xAAB6,  0xAA90,  0x61, ), Q«« (ꪶꪐ) TAI VIET VOWEL O, TAI VIET LETTER LOW NYO»», 103833, True ),
 ( (0xAAB6,  0xAA90,  0x41, ), Q«« (ꪶꪐ) TAI VIET VOWEL O, TAI VIET LETTER LOW NYO»», 103834, True ),

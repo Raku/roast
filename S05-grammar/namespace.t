@@ -3,7 +3,7 @@ use Test;
 
 plan 5;
 
-# TODO: smart match against a grammar to get a Match object 
+# TODO: smart match against a grammar to get a Match object
 # isn't specced and will likely change; see
 #
 # https://github.com/Raku/old-issue-tracker/issues/302

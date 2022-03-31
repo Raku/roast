@@ -814,7 +814,7 @@ ok("\c[DEVANAGARI VOWEL SIGN AU]\c[SYRIAC ABBREVIATION MARK]" ~~ m/<:Format>/, q
     #?rakudo.jvm todo 'get: Match.new(orig => "\t \t", pos => 2,  made => Any, from => 1, list => (), hash => Map.new(()))'
     #?rakudo.js 1 skip 'test seems wrong'
     # https://github.com/Raku/old-issue-tracker/issues/5966
-    is "\t \t" ~~ /<:space>+/, "\t \t", 'space chars';  
+    is "\t \t" ~~ /<:space>+/, "\t \t", 'space chars';
 
     is $latin-chars.comb(/<:cntrl>/)>>.ord.join(","), (flat 0..31, 127..159).join(","), 'cntrl chars';
 

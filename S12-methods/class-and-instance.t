@@ -47,7 +47,7 @@ throws-like(
 class Act {
     my method rules() { 'the world' }
     our method rocks() { 'the house' }
-    
+
     is(rules(Act), 'the world', 'my method is lexically installed');
 }
 dies-ok({ Act.rules }, 'my method not installed in methods table');

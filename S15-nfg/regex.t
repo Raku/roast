@@ -11,7 +11,7 @@ plan 13;
 
     # Basic grapheme level matching.
     ok $x ~~ /^..$/, 'Str matches at grapheme level';
-    ok $x !~~ /^....$/, '(and not NFC code points)'; 
+    ok $x !~~ /^....$/, '(and not NFC code points)';
     ok $x !~~ /^......$/, '(and certainly not the input code points!)';
 
     # Character classes work on the base character.

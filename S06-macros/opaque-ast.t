@@ -15,27 +15,27 @@ See L<S06/"Macros">.
 plan 7;
 
 # L<S06/Macros>
-macro four () { quasi { 2+2 } } 
+macro four () { quasi { 2+2 } }
 
 is(four, 4, "macro returning quasi");
 
 #?rakudo skip ':COMPILING flag'
 {
-    macro hi () { quasi :COMPILING { "hello $s" } } 
+    macro hi () { quasi :COMPILING { "hello $s" } }
 
-    macro hey () { ({ "hello $^s" }.body) } 
+    macro hey () { ({ "hello $^s" }.body) }
 
-    my $s="world"; 
+    my $s="world";
     is(hi(),"hello world","macros can bind in caller's lexical env");
 
-    $s="paradise"; 
+    $s="paradise";
     is(hi(),"hello paradise","macros but it's a binding only");
     is(hey(),"hello paradise","macros but it's a binding only");
 }
 
 {
     my $x;
-    macro noop ()  { $x = "Nothing happened"; quasi { } } 
+    macro noop ()  { $x = "Nothing happened"; quasi { } }
     noop();
 
     is($x,"Nothing happened", "Macros can return noops");
@@ -57,7 +57,7 @@ is(four, 4, "macro returning quasi");
         my $COMPILING::x = 4;
         return quasi { {{{ $ast }}} }
     }
-    is outside-declaration( { $x * 2 } ), 8, 
+    is outside-declaration( { $x * 2 } ), 8,
        'A macro can declare lexicals that are visible where called';
 }
 

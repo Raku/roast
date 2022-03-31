@@ -97,8 +97,8 @@ class SimpleClass does Bar {}
 #     : >
 #     : > Of course, there's never been any controversy here about what to call
 #     : > "self", oh no... :-)
-#     : 
-#     : IMHO just call it "self" (by default) and be done with it. :) 
+#     :
+#     : IMHO just call it "self" (by default) and be done with it. :)
 #
 #     Let it be so.
 #

@@ -161,7 +161,7 @@ plan 50;
       "comments can't contain unspace";
 }
 
-# L<S02/Single-line Comments/"# may not be used as" 
+# L<S02/Single-line Comments/"# may not be used as"
 #   delimiter quoting>
 {
     my $a;
@@ -178,7 +178,7 @@ plan 50;
 # L<S02/Single-line Comments/"single-line comments">
 # https://github.com/Raku/old-issue-tracker/issues/1410
 {
-    lives-ok { EVAL "#=======\n#=======\nuse v6;" }, 
+    lives-ok { EVAL "#=======\n#=======\nuse v6;" },
       "pragma use after single line comments";
 }
 

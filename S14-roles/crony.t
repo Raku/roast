@@ -30,7 +30,7 @@ is $w.outer_role_var_2, 'red', "string attribute is set in outer role" ;
 
 $w.inner_role_var_1 = 3;
 $w.inner_role_var_2 = 'dog';
-is $w.inner_role_var_1, 3 , "integer attribute is set in inner role" ; 
+is $w.inner_role_var_1, 3 , "integer attribute is set in inner role" ;
 is $w.inner_role_var_2,'dog' , "string attribute is set in inner role" ;
 
 # vim: expandtab shiftwidth=4

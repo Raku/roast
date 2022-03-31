@@ -10,7 +10,7 @@ class Bar {
 
 class Foo {
     has Bar $.bar;
-    
+
     method call_bar {
         return $.bar.baz();
     }

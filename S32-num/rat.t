@@ -167,7 +167,7 @@ subtest '±Inf/NaN ⇿ Rat' => {
             "(-Inf).$m.Str throws division-by-zero";
 
         # https://github.com/Raku/old-issue-tracker/issues/5822
-        
+
         is-deeply    NaN."$m"().raku.EVAL, ::($m).new(0, 0),
                "NaN.$m.raku.EVAL roundtrips";
         is-deeply    Inf."$m"().raku.EVAL, ::($m).new(1, 0),
@@ -176,7 +176,7 @@ subtest '±Inf/NaN ⇿ Rat' => {
             "(-Inf).$m.raku.EVAL roundtrips";
 
         # https://github.com/Raku/old-issue-tracker/issues/5822
-        
+
         is-deeply    NaN."$m"() * 0, ::($m).new(0, 0),
                "NaN.$m does not explode when used in Rational math";
         is-deeply    Inf."$m"() * 0, ::($m).new(0, 0),
@@ -185,7 +185,7 @@ subtest '±Inf/NaN ⇿ Rat' => {
             "(-Inf).$m does not explode when used in Rational math";
 
         # https://github.com/Raku/old-issue-tracker/issues/5538
-        
+
         cmp-ok    NaN."$m"(), '~~', ::($m),    "NaN.$m smartmatches with $m";
         cmp-ok    Inf."$m"(), '~~', ::($m),    "Inf.$m smartmatches with $m";
         cmp-ok (-Inf)."$m"(), '~~', ::($m), "(-Inf).$m smartmatches with $m";

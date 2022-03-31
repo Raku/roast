@@ -16,7 +16,7 @@ my @test =
         expected => {
             out => "1..1\nok 1 - Passes\n"
                  ~ "ok 2 - Passes extra test\nFalse\n",
-            status => DUBIOUS, 
+            status => DUBIOUS,
         },
         program => Q{
             use Test;

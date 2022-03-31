@@ -9,7 +9,7 @@ plan 39;
 # Standard gather
 {
     my $i;
-    
+
     my @a := gather {
         $i = 1;
         for (1 .. 5) -> $j {
@@ -146,7 +146,7 @@ plan 39;
             take $_ if $_ %% $n;
         }
     }
-    
+
     my \evens = grep-div((1...*), 2);
     is ~grep-div(evens, 3)[^16], ~grep-div((1...100), 6), "Nested identical gathers";
 }
@@ -197,7 +197,7 @@ plan 39;
 {
     my $x;
     my @a = gather { $x = take 3; };
-    is $x, 3, "return value of take" 
+    is $x, 3, "return value of take"
 }
 
 # tests for the S04-control.pod document

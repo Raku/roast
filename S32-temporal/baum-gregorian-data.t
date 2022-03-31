@@ -4,18 +4,18 @@ plan 209;
 
 # New Julian Date reference, from an online site:
 #     https://researchgate.net/publication/316558298
-# 
+#
 # Author: Peter Baum, Aesir Research
-# 
+#
 # Article: Date Algorithms
 #          Version: 5
 #          Last modified: October 21, 2020
-# 
-# The article Provides lots of test data as well as the best 
-# description of Julian Date versus calendars I've found.  
-# The test data in Table 2 have been checked against the NASA 
-# JPL Time Conversion Tool and the Gregorian data are tested 
-# here against Raku. 
+#
+# The article Provides lots of test data as well as the best
+# description of Julian Date versus calendars I've found.
+# The test data in Table 2 have been checked against the NASA
+# JPL Time Conversion Tool and the Gregorian data are tested
+# here against Raku.
 #
 # Important note: No test data herein have fractional seconds.
 my @baum-test-data = [
@@ -63,7 +63,7 @@ for @baum-test-data -> $arr {
 
     my ($day-frac, $day) = modf $da;
     my ($ho, $mi, $se) = day-frac2hms $day-frac;
- 
+
     # check the Raku implementations
 
     # Given the Julian Date (JD) of an instant, determine its Gregorian UTC
