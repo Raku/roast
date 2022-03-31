@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 413;
+plan 414;
 
 =begin pod
 
@@ -1135,5 +1135,12 @@ lives-ok {
 # https://github.com/rakudo/rakudo/issues/4237
 is-deeply (:42a, :666b).Map>>.Str, (a => "42", b => "666").Map,
   'does hypering a Map give a Map without issues';
+
+# https://github.com/rakudo/rakudo/issues/4838
+{
+    my @a = 0,0,0;
+    is-deeply @a >>!=<< @a, [False, False, False],
+      "is != treated as an infix, instead of a meta-ed assignment";
+}
 
 # vim: expandtab shiftwidth=4
