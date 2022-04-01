@@ -267,7 +267,6 @@ throws-like '1, 2 Z 3, 4 X 5, 6',
     is($r, False, 'sanity 3 != 3');
     $r = True;
     # https://github.com/Raku/old-issue-tracker/issues/3322
-    #?rakudo 2 todo 'Inequality (!=) misparsed as assignment'
     lives-ok { foo 3 !=3 }, '3 !=3 does not die';
     is($r, False, 'ensure 3 !=3 gives same result as 3 != 3');
 }
