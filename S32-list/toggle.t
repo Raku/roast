@@ -34,11 +34,10 @@ subtest 'chaining' => {
 }
 
 subtest 'empty sources' => {
-    my @tests = $, (), [], Map.new, %(), set(), mix();
-    @tests[0] := Empty; # can't just list it normally above; it will vanish
+    my @tests = (), [], Map.new, %(), set(), mix();
     plan +@tests;
     for @tests -> \v {
-        subtest v<>.perl => {
+        subtest v<>.raku => {
             plan 6;
             is-deeply v.toggle,           ().Seq, 'no args';
             is-deeply v.toggle(:off),     ().Seq, 'no args (:off)';
