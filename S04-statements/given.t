@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 53;
+plan 54;
 
 =begin pod
 
@@ -433,6 +433,18 @@ eval-lives-ok 'sub a() { } given 3',     'can define a sub inside a statement-mo
         when /e(\w\w)/ { $capture-is-correct = $0 eq "ll"; }
     }
     ok $capture-is-correct, 'matches in when correctly set $0';
+}
+
+# Make sure lexically scoped topic is accessible within a nested closure.
+# https://github.com/rakudo/rakudo/issues/4850
+{
+    my &c;
+    given 'foo' {
+        when Str {
+            &c = { $_  };
+        }
+    }
+    is &c(), 'foo', 'lexical topic in a nested closure';
 }
 
 # vim: expandtab shiftwidth=4
