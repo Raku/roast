@@ -7,7 +7,9 @@ my $pod_index = 0;
 #?DOES 1
 sub test-trailing($thing, $value) is test-assertion {
     subtest $thing.^name => {
-        plan 7;
+        plan 8;
+        #?rakudo todo 'https://github.com/rakudo/rakudo/issues/4866'
+        is $=pod[$pod_index].?WHEREFORE.^name, $thing.^name, ' - $=pod $value WHEREFORE (pre WHY)';
         is $thing.WHY.?contents, $value, $value  ~ ' - contents';
         is $thing.WHY.?WHEREFORE.^name, $thing.^name, $value ~ ' - WHEREFORE';
         is $thing.WHY.?trailing, $value, $value ~ ' - trailing';
