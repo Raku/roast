@@ -4,7 +4,7 @@ use Test;
 # L<S06/Parameters and arguments>
 # TODO: better smart-linking
 
-plan 11;
+plan 12;
 
 {
     sub count(@a) {
@@ -63,6 +63,31 @@ plan 11;
     my @x = 1, 2, 4;
     lives-ok { ro_b(@x) },   'can pass parameter Array on to next function';
     lives-ok { @x = 5, 6 }, '... and that did not make the caller Array ro';
+}
+
+# Positional Bind Failover
+# https://github.com/rakudo/rakudo/issues/4864
+subtest "Positional Bind Failover" => {
+    #| @-siglled
+    my sub pos_a(@a) { @a.List }
+    #| Positional-typed
+    my sub pos_p(Positional $p) { $p.List }
+    #| List-typed
+    my sub pos_l(List $l) { $l }
+
+    my @data = ((1...10), (1..10).hyper, (1..10).race);
+
+    for &pos_a, &pos_p, &pos_l -> &pbf {
+        subtest "PBF on {&pbf.WHY}" => {
+            for @data -> $seq {
+                my $out;
+                subtest $seq.^name ~ " argument" => {
+                    lives-ok { $out = pbf($seq) }, "argument is accepted";
+                    is-deeply $out, (1..10).List, "parameter value";
+                }
+            }
+        }
+    }
 }
 
 # vim: expandtab shiftwidth=4
