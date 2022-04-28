@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 51;
+plan 52;
 
 =begin pod
 
@@ -193,8 +193,8 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
     nok r ~~ PR00[Str], "Curryied role only matches its own consumed roles";
 }
 
+# Indirect role consumption
 {
-    # Indirect role consumption
     my role Foo {
         method foo { ::?ROLE.^name }
     }
@@ -208,8 +208,8 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
     nok Foo ~~ RR[Foo], "indirectly consumed role doesn't match against consumer";
 }
 
+# Indirect inheritance
 {
-    # Indirect inheritance
     my class Bar {
         method bar { ::?CLASS.^name }
     }
@@ -221,6 +221,16 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
     isa-ok RC[Bar], Bar, "role typechecks against indirect parent";
     nok RC[Bar] ~~ Int, "role doesn't accidentally match against non-parent";
     nok Bar ~~ RC[Bar], "indirect parent doesn't accidentally typecheck against the role";
+}
+
+# https://github.com/rakudo/rakudo/issues/3483
+{
+    throws-like q:to/CODE/, X::Role::Unimplemented::Multi, "use of ::?CLASS results in the right exception";
+my role R {
+    multi method multi(::?CLASS:D: --> ::?CLASS) {...}
+}
+my class Foo does R { }
+CODE
 }
 
 # vim: expandtab shiftwidth=4
