@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 2;
+plan 3;
 
 # L<S11/Runtime Importation>
 
@@ -23,5 +23,8 @@ subtest 'circular dependencies are detected and reported' => {
 # https://github.com/Raku/old-issue-tracker/issues/6587
 throws-like ｢use lib ‘’｣, X::LibEmpty,
     'use lib with empty string throws a useful error';
+
+# https://github.com/rakudo/rakudo/issues/4911
+eval-lives-ok 'my class CompUnit {}; use Test', 'no confusion about CompUnit';
 
 # vim: expandtab shiftwidth=4
