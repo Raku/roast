@@ -55,7 +55,7 @@ my $compunit-src = $curlf.need(CompUnit::DependencySpecification.new(:short-name
 # TODO Perl6 to be changed to Raku when implementation changes
 subtest {
     if isa-ok $compunit-src, CompUnit {
-        is $compunit-src.from,        'Perl6', "is the language 'Perl6'";
+        is $compunit-src.from,        'Raku' | 'Perl6', "is the language ok";
         is $compunit-src.short-name,  $module, "is the name '$module'";
         is $compunit-src.precompiled,   False, "is the module pre-compiled";
     }
