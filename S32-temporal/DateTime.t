@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 309;
+plan 311;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -290,6 +290,10 @@ dies-ok { ds('2012-12-22T07:02:00+7:') }, 'single digit hour, trailing colon';
 
 {
     is dt(year => 1970).posix, 0, 'DateTime.posix (1970-01-01T00:00:00Z)';
+    is dt(year => 1970, second => 1.2345).posix(:real), 1.2345,
+      'DateTime.posix (1970-01-01T00:00:01.2345Z)';
+    is dt(year => 1970, second => 1.2345).posix(:!real), 1,
+      'DateTime.posix (1970-01-01T00:00:01.2345Z)';
     my $dt = dt
         year => 1970, month  => 1, day => 1,
         hour =>    1, minute => 1, second => 1;
@@ -305,7 +309,7 @@ dies-ok { ds('2012-12-22T07:02:00+7:') }, 'single digit hour, trailing colon';
     $dt = dt
         year => @t[5], month => @t[4], day => @t[3],
         hour => @t[2], minute => @t[1], second => @t[0];
-    is $dt.posix, $t, "at $dt, POSIX is {$dt.posix}";
+    is $dt.posix, $t, "at $dt, POSIX is $dt.posix()";
 }
 
 # --------------------------------------------------------------------
