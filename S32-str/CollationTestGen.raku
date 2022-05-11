@@ -82,7 +82,7 @@ sub MAIN (Bool :$should-test = False, Str:D :$folder) {
             [~] "# Test created with $*PROGRAM-NAME on {Date.today.yyyy-mm-dd} from $filename UCA version $uca-version UCD version $ucd-version\n",
             "# ( (codepoints), description, line-num-from-UCA-file, expect-success )\n\n",
             'my @a = ', "\n", @output-files[$_].join("\n"), ";\n",
-            "use Test;\n", "plan {@output-files[$_].elems - 1};\n", $tail, "\n";
+            "plan {@output-files[$_].elems - 1};\n", $tail, "\n";
     }
     say "\n>>> Generated tests into output files";
     if @unexpected-failures {

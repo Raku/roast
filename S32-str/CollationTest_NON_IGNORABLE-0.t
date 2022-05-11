@@ -1,4 +1,4 @@
-# Test created with GenerateCollationTest.raku on 2021-08-22 from CollationTest_NON_IGNORABLE.txt UCA version 13.0.0 UCD version 13.0.0
+# Test created with CollationTestGen.raku 2021-08-22 from CollationTest_NON_IGNORABLE.txt UCA version 13.0.0 UCD version 13.0.0
 # ( (codepoints), description, line-num-from-UCA-file, expect-success )
 
 my @a =
@@ -2305,7 +2305,6 @@ my @a =
 ( (0xEC1,  0xEDE,  0x21, ), Q«« (ແໞ) LAO VOWEL SIGN EI, LAO LETTER KHMU GO»», 101212, True ),;
 use Test;
 plan 2300;
-use Test;
 # Iterate from 0 to one before the last index
 for ^(@a-1) {
     todo 1 if !@a[$_][3];
