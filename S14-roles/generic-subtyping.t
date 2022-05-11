@@ -2,23 +2,43 @@ use v6;
 
 use Test;
 
-plan 5;
-
-lives-ok({ EVAL(Q:to/ROLES/) }, 'can do subtyped generic roles');
 role R1[Any ::T] { }
-role R2[Cool ::T] does R1[T] { }
-ROLES
 
-EVAL(Q:to/TESTS/);
-ok(R2[Cool] ~~ R1[Any],  'subtyped generic roles');
-ok(R2[Cool] ~~ R2[Cool], 'subtyped generic roles');
-ok(R2[Int] ~~ R2[Cool],  'subtyped generic roles');
-TESTS
+role R2[Cool ::T] is R1[T] { }
 
-lives-ok({ EVAL(Q:to/ROLE/) }, 'can lookup roles of subtyped generic roles done by roles before they get composed');
-multi sub trait_mod:<is>(Mu:U \T, :ok($)!) { T.^roles[0].^roles }
+role R3[Stringy ::T] does R2[T] { }
 
-role R2[Int ::T] does R1[T] is ok { }
+role R4[Str ::T] does R2[T] is R3[T] { }
+
+only infix:<checks>(Mu $a is raw, Mu $b is raw) is test-assertion {
+    ok $a ~~ $b, "$a.raku() ~~ $b.raku()";
+    nok $b ~~ $a, "$b.raku() !~~ $a.raku()";
+}
+
+plan 2;
+
+subtest 'subtyped generic roles can typecheck', {
+    plan 14 * 2;
+
+    R2[Str] checks R2;
+    R2[Str] checks R1;
+    R2[Str] checks R1[Any];
+    R2[Str] checks R2[Cool];
+    R3[Str] checks R1;
+    R3[Str] checks R1[Any];
+    R3[Str] checks R3[Stringy];
+    R4[Allomorph] checks R3;
+    R4[Allomorph] checks R2;
+    R4[Allomorph] checks R1;
+    R4[Allomorph] checks R1[Any];
+    R4[Allomorph] checks R2[Cool];
+    R4[Allomorph] checks R3[Stringy];
+    R4[Allomorph] checks R4[Str];
+};
+
+lives-ok({ EVAL Q:to/ROLE/ }, 'can lookup generic doees of a role before they get composed');
+multi trait_mod:<is>(Mu:U \T, :roled($)!) { T.^roles[0].^roles }
+role R5[Int ::T] does R2[T] is roled { }
 ROLE
 
 # vim: expandtab shiftwidth=4
