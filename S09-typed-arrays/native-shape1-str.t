@@ -9,17 +9,14 @@ my $t  = $T.^name;
 diag "Testing $t array";
 
 ok array[$T].new(:shape(5)) ~~ Positional,     "$t array is Positional";
-#?rakudo todo 'apparently it is not a typed Positional'
 ok array[$T].new(:shape(5)) ~~ Positional[$T], "$t array is Positional[$t]";
 ok array[$T].new(:shape(5)).of === $T,         "$t array .of is $t";
 
 my @a := EVAL "my $t @[5]";
 ok @a ~~ Positional,         "$t array is Positional";
-#?rakudo todo 'apparently it is not a typed Positional'
 ok @a ~~ Positional[$T],     "$t array is Positional[$t]";
 ok @a.of === $T,             "$t array .of is $t";
 ok @a.new ~~ Positional,     ".new from $t array is Positional";
-#?rakudo todo 'apparently it is not a typed Positional'
 ok @a.new ~~ Positional[$T], ".new from $t array Positional[$t]";
 ok @a.new.of === $T,         ".new from $t array .of is $t";
 
