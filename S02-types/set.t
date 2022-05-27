@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 242;
+plan 243;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -612,5 +612,7 @@ is <a b c>.Set.item.VAR.^name, 'Scalar', 'does .item work on Sets';
     is-deeply Set.of, Bool, 'does Set type object return proper type';
     is-deeply Set.new.of, Bool, 'does Set object return proper type';
 }
+
+lives-ok { my %h is Set = 42 }, "Can we initialize a Set with a single value";
 
 # vim: expandtab shiftwidth=4

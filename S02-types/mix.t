@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 238;
+plan 239;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -570,5 +570,7 @@ is <a b c>.Mix.item.VAR.^name, 'Scalar', 'does .item work on Mixes';
     is-deeply Mix.of, Real, 'does Mix type object return proper type';
     is-deeply Mix.new.of, Real, 'does Mix object return proper type';
 }
+
+lives-ok { my %h is Mix = 42 }, "Can we initialize a Mix with a single value";
 
 # vim: expandtab shiftwidth=4

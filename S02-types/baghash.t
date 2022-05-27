@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 335;
+plan 336;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -801,5 +801,8 @@ is <a b c>.BagHash.item.VAR.^name, 'Scalar', 'does .item work on BagHashes';
     is-deeply BagHash.of, UInt, 'does BagHash type object return proper type';
     is-deeply BagHash.new.of, UInt, 'does BagHash object return proper type';
 }
+
+lives-ok { my %h is BagHash = 42 },
+  "Can we initialize a BagHash with a single value";
 
 # vim: expandtab shiftwidth=4

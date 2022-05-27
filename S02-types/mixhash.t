@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 286;
+plan 287;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -663,5 +663,8 @@ is <a b c>.MixHash.item.VAR.^name, 'Scalar', 'does .item work on MixHashes';
     is-deeply MixHash.of, Real, 'does MixHash type object return proper type';
     is-deeply MixHash.new.of, Real, 'does MixHash object return proper type';
 }
+
+lives-ok { my %h is MixHash = 42 },
+  "Can we initialize a MixHash with a single value";
 
 # vim: expandtab shiftwidth=4

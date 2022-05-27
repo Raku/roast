@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 275;
+plan 276;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -694,5 +694,8 @@ is <a b c>.SetHash.item.VAR.^name, 'Scalar', 'does .item work on SetHashes';
     my %sh is SetHash = 1,2;
     lives-ok { while %sh.grab -> $n { $n } }, 'Emptying a SetHash works';
 }
+
+lives-ok { my %h is SetHash = 42 },
+  "Can we initialize a SetHash with a single value";
 
 # vim: expandtab shiftwidth=4

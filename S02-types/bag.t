@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 248;
+plan 249;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -608,5 +608,7 @@ is <a b c>.Set.item.VAR.^name, 'Scalar', 'does .item work on Sets';
     is-deeply Bag.of, UInt, 'does Bag type object return proper type';
     is-deeply Bag.new.of, UInt, 'does Bag object return proper type';
 }
+
+lives-ok { my %h is Bag = 42 }, "Can we initialize a Bag with a single value";
 
 # vim: expandtab shiftwidth=4
