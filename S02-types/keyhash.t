@@ -185,6 +185,8 @@ subtest 'QuantHash.Capture' => {
     plan 7;
 
     is-deeply class :: does QuantHash {
+        method Map  { %(:42a, :72b) }
+        method hash { %(:42a, :72b) }
         method Hash { %(:42a, :72b) }
     }.new.Capture, %(:42a, :72b).Capture, 'custom QuantHash';
 
