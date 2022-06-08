@@ -82,6 +82,7 @@ subtest "Positional Bind Failover" => {
             for @data -> $seq {
                 my $out;
                 subtest $seq.^name ~ " argument" => {
+                    #?rakudo 2 todo "unclear whether this is valid behaviour"
                     lives-ok { $out = pbf($seq) }, "argument is accepted";
                     is-deeply $out, (1..10).List, "parameter value";
                 }
