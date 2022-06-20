@@ -103,10 +103,26 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
 
 subtest "run and shell's :cwd" => {
     plan 4;
-    my @run-cmd   = $*DISTRO.is-win ?? ('cmd.exe', '/C', 'echo %CD%')
-                                    !! ('/bin/sh', '-c', 'echo $PWD');
-    my $shell-cmd = $*DISTRO.is-win ?? 'echo %CD%'
-                                    !! 'echo $PWD';
+
+    my @run-cmd;
+    my $shell-cmd;
+
+    given $*DISTRO {
+        when .is-win {
+            @run-cmd  = ('cmd.exe', '/C', 'echo %CD%');
+            $shell-cmd = 'echo %CD%';
+        }
+        when .Str.starts-with("solaris") {
+            # Solaris has ksh as /bin/sh which changes $PWD env var only when
+            # builtin 'cd' is called
+            @run-cmd  = ('/bin/sh', '-c', '/usr/bin/pwd');
+            $shell-cmd = '/usr/bin/pwd';
+        }
+        default {
+            @run-cmd  = ('/bin/sh', '-c', 'echo $PWD');
+            $shell-cmd = 'echo $PWD';
+        }
+    }
 
     indir (my $cwd = make-temp-dir.absolute), {
         (my $p = run @run-cmd, :!err, :out)

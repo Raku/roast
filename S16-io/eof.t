@@ -79,7 +79,19 @@ subtest '.eof on empty files' => {
         .read: 42;
         is-deeply .eof, True,  'eof is True after a read';
     }
-    with "/proc/$*PID/status".IO -> $p {
+
+    # Different operating systems have different content in /proc filesystem.
+    # We are looking for a file which has text (not binary) content. If no
+    # such file is found (like on Windows) the tests are skipped altogether.
+    my $proc-text-file;
+    if $*DISTRO.Str.starts-with("solaris") {
+        $proc-text-file = "/proc/$*PID/environ";
+    }
+    else {
+        $proc-text-file = "/proc/$*PID/status";
+    }
+
+    with $proc-text-file.IO -> $p {
         subtest "reading from '$p'" => {
             plan 3;
             when not $p.e { skip "don't have '$p' available", 3 }
