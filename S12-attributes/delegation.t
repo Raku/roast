@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 65;
+plan 62;
 
 =begin desc
 
@@ -119,21 +119,6 @@ class PairTest {
     is $a.cool, 1337, "method was successfully handled by backend object (3)";
   }
 }
-{
-    class WorrevaFrontend {
-        has $.backend is rw handles *;
-        has $.backend2 is rw handles *;
-        method test { 1 }
-        method hi { 2 }
-    }
-    ok WorrevaFrontend.new, "class definition using a smartmatch on * worked";
-    my $a = WorrevaFrontend.new();
-    $a.backend = Backend1.new();
-    $a.backend2 = Backend2.new();
-    is $a.test, 1, "didn't try to delegate method in the class even with handles *...";
-    is $a.hi, 2, "...even when it exists in the target class";
-    is $a.cool, 1337, "...but otherwise it delegates, and first * wins";
-}
 
 # delegation with lvalue routines
 {
@@ -200,6 +185,31 @@ class PairTest {
     is $a.b(), 2, 'got all methods via "handles $typeObject" (2)';
     is $a.c(), 3, 'got all methods via "handles $typeObject" (next role)';
     dies-ok { $a.d() }, '... but non existing methods still die';
+}
+
+subtest "handles(*)" => {
+    my class WorrevaFrontend {
+        has $.backend is rw handles *;
+        has $.backend2 is rw handles *;
+        method test { 1 }
+        method hi { 2 }
+    }
+    my class WorrevaFrontendModified is WorrevaFrontend { }
+
+    my sub ensure-handles-whatever(\type, $message) is test-assertion {
+        subtest $message => {
+            ok type.new, "class definition using a smartmatch on * worked";
+            my $a = type.new();
+            $a.backend = Backend1.new();
+            $a.backend2 = Backend2.new();
+            is $a.test, 1, "didn't try to delegate method in the class even with handles *...";
+            is $a.hi, 2, "...even when it exists in the target class";
+            is $a.cool, 1337, "...but otherwise it delegates, and first * wins";
+        }
+    }
+
+    ensure-handles-whatever WorrevaFrontend, "for class itself";
+    ensure-handles-whatever WorrevaFrontendModified, "for a child class";
 }
 
 # vim: expandtab shiftwidth=4
