@@ -72,17 +72,14 @@ subtest "Positional Bind Failover" => {
     my sub pos_a(@a) { @a.List }
     #| Positional-typed
     my sub pos_p(Positional $p) { $p.List }
-    #| List-typed
-    my sub pos_l(List $l) { $l }
 
     my @data = ((1...10), (1..10).hyper, (1..10).race);
 
-    for &pos_a, &pos_p, &pos_l -> &pbf {
+    for &pos_a, &pos_p -> &pbf {
         subtest "PBF on {&pbf.WHY}" => {
             for @data -> $seq {
                 my $out;
                 subtest $seq.^name ~ " argument" => {
-                    #?rakudo 2 todo "unclear whether this is valid behaviour"
                     lives-ok { $out = pbf($seq) }, "argument is accepted";
                     is-deeply $out, (1..10).List, "parameter value";
                 }
