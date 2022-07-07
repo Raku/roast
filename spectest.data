@@ -683,6 +683,7 @@ S12-class/stubs.t
 S12-class/type-object.t
 S12-coercion/coercion-methods.t
 S12-coercion/coercion-types.t
+S12-coercion/coercion-return.t
 S12-coercion/parameterized.t
 S12-construction/BUILD.t
 S12-construction/TWEAK.t
