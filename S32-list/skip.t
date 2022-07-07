@@ -1,8 +1,13 @@
 use v6;
 
-use Test;
+# By default, Test exports a "skip" sub, which interferes with the "skip"
+# functionality we want to test here.  Hence the selective import here.
+BEGIN my (&plan, &subtest, &is, &is-deeply, &throws-like) = do {
+    use Test;
+    (&plan, &subtest, &is, &is-deeply, &throws-like)
+}
 
-plan 27;
+plan 55;
 
 =begin description
 
@@ -12,61 +17,98 @@ This test tests the C<skip> builtin.
 
 {
     my $list = <a b b c d e b b e b b f b>;
-    is $list.skip.List, <b b c d e b b e b b f b>,  "List.skip works";
+    is-deeply $list.skip, <b b c d e b b e b b f b>, 'List.skip works';
+
     my @array = <a b b c d e b b e b b f b>;
-    is @array.skip.List, <b b c d e b b e b b f b>, "Array.skip works";
+    is-deeply @array.skip, <b b c d e b b e b b f b>, 'Array.skip works';
+
     my $scalar = 42;
-    is $scalar.skip.List, (),                       "Scalar.skip works";
+    is-deeply $scalar.skip, (), 'Scalar.skip works';
+
     my $range = ^10;
-    is $range.skip.List, (1,2,3,4,5,6,7,8,9),       "Range.skip works";
+    is-deeply $range.skip, (1,2,3,4,5,6,7,8,9), 'Range.skip works';
+
     my $inf = ^Inf;
-    is $inf.skip[0], 1,                "Range.skip works on lazy list";
-} #5
+    is-deeply $inf.skip[0], 1, 'Range.skip works on lazy list';
+}
 
 
 {
     my $list = <a b b c d e b b e b b f b>;
-    is $list.skip(5).List, <e b b e b b f b>,       "List.skip(5) works";
+    is-deeply $list.skip(5),   <e b b e b b f b>, 'List.skip(5) works';
+    is-deeply skip(5,$list),                  (), 'skip(5,$List) works';
+    is-deeply skip(5,$list<>), <e b b e b b f b>, 'skip(5,List) works';
+
     my @array = <a b b c d e b b e b b f b>;
-    is @array.skip(5).List, <e b b e b b f b>,      "Array.skip(5) works";
+    is-deeply @array.skip(5), <e b b e b b f b>, 'Array.skip(5) works';
+    is-deeply skip(5,@array), <e b b e b b f b>, 'skip(5,Array) works';
+
     my $scalar = 42;
-    is $scalar.skip(5).List, (),                    "Scalar.skip(5) works";
+    is-deeply $scalar.skip(5), (), 'Scalar.skip(5) works';
+    is-deeply skip(5,$scalar), (), 'skip(5,Scalar) works';
+
     my $range = ^10;
-    is $range.skip(5).List, (5,6,7,8,9),            "Range.skip(5) works";
+    is-deeply $range.skip(5),   (5,6,7,8,9), 'Range.skip(5) works';
+    is-deeply skip(5,$range),            (), 'skip(5,$Range) works';
+    is-deeply skip(5,$range<>), (5,6,7,8,9), 'skip(5,Range) works';
+
     my $inf = ^Inf;
-    is $inf.skip(5)[0], 5,             "Range.skip(5) works on lazy list";
-} #5
+    is-deeply $inf.skip(5)[0],   5, 'Range.skip(5) works on lazy list';
+    is-deeply skip(5,$inf)[0], Nil, 'skip(5,$Range) works on lazy list';
+    is-deeply skip(5,$inf<>)[0], 5, 'skip(5,$Range) works on lazy list';
+}
 
 {
     for 0, -1 {
         my $list = <a b b c d e b b e>;
-        is $list.skip($_).List, <a b b c d e b b e>,    "List.skip($_) works";
+        is-deeply $list.skip($_),   <a b b c d e b b e>, "List.skip($_) works";
+        is-deeply skip($_,$list),              ($list,),"skip($_,\$List) works";
+        is-deeply skip($_,$list<>), <a b b c d e b b e>, "skip($_,List) works";
+
         my @array = <a b b c d e b b e>;
-        is @array.skip($_).List, <a b b c d e b b e>,   "Array.skip($_) works";
+        is-deeply @array.skip($_), <a b b c d e b b e>, "Array.skip($_) works";
+        is-deeply skip($_,@array), <a b b c d e b b e>, "skip($_,Array) works";
+
         my $scalar = 42;
-        is $scalar.skip($_).List, (42,),                "Scalar.skip($_) works";
+        is-deeply $scalar.skip($_), (42,), "Scalar.skip($_) works";
+        is-deeply skip($_,$scalar), (42,), "skip($_,Scalar) works";
+
         my $range = ^10;
-        is $range.skip($_).List, (0,1,2,3,4,5,6,7,8,9), "Range.skip($_) works";
+        is-deeply $range.skip($_),   (0,1,2,3,4,5,6,7,8,9), "Range.skip($_) works";
+        is-deeply skip($_,$range),               ($range,), "skip($_,\$Range) works";
+        is-deeply skip($_,$range<>), (0,1,2,3,4,5,6,7,8,9), "skip($_,Range) works";
     }
-} #8
+}
 
 {
     my $list = <a b c>;
-    is $list.skip(5).List, (),  "List.skip works if too short";
+    is-deeply $list.skip(5),   (),  'List.skip works if too short';
+    is-deeply skip(5,$list),   (),  'skip(N,$List) works if too short';
+    is-deeply skip(5,$list<>), (),  'skip(N,List) works if too short';
+
     my @array = <a b c>;
-    is @array.skip(5).List, (), "Array.skip works if too short";
+    is-deeply @array.skip(5), (), 'Array.skip(N) works if too short';
+    is-deeply skip(5,@array), (), 'skip(N,Array) works if too short';
+
     my $range = ^3;
-    is $range.skip(5).List, (), "Range.skip works if too short";
-} #3
+    is-deeply $range.skip(5), (), 'Range.skip works if too short';
+}
 
 {
     my $list = ();
-    is $list.skip(5).List, (),  "List.skip works if empty";
+    is-deeply $list.skip(5),   (), 'List.skip(N) works if empty';
+    is-deeply skip(5,$list),   (), 'skip(N,$List) works if empty';
+    is-deeply skip(5,$list<>), (), 'skip(N,List) works if empty';
+
     my @array;
-    is @array.skip(5).List, (), "Array.skip works if empty";
+    is-deeply @array.skip(5), (), 'Array.skip(N) works if empty';
+    is-deeply skip(5,@array), (), 'skip(N,Array) works if empty';
+
     my $range = ^0;
-    is $range.skip(5).List, (), "Range.skip works if empty";
-} #3
+    is-deeply $range.skip(5),   (), 'Range.skip(N) works if empty';
+    is-deeply skip(5,$range),   (), 'skip(N,$Range) works if empty';
+    is-deeply skip(5,$range<>), (), 'skip(N,Range) works if empty';
+}
 
 # https://github.com/Raku/old-issue-tracker/issues/6529
 subtest '.skip-all and .push-all on slipping slippy iterators' => {
