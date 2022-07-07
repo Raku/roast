@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 29;
+plan 57;
 
 =begin description
 
@@ -12,62 +12,101 @@ This test tests the C<tail> builtin.
 
 {
     my $list = <a b b c d e b b e b b f b>;
-    is $list.tail.List, ("b",),  "List.tail works";
+    is-deeply $list.tail, "b", 'List.tail works';
+
     my @array = <a b b c d e b b e b b f b>;
-    is @array.tail(5).List, <e b b f b>, "Array.tail works";
+    is-deeply @array.tail(5), <e b b f b>,  'Array.tail(N) works';
+    is-deeply tail(5, @array), <e b b f b>, 'tail(N,Array) works';
+
     my $scalar = 42;
-    is $scalar.tail.List, (42,),      "Scalar.tail works";
+    is-deeply $scalar.tail, 42, 'Scalar.tail works';
+
     my $range = ^10;
-    is $range.tail.List, (9,), "Range.tail works";
+    is-deeply $range.tail, 9, 'Range.tail works';
+
     throws-like { ^Inf .tail }, X::Cannot::Lazy,
       :action<tail>,
       'Range.tail on lazy list does not work';
-} #5
+}
 
 {
     my $list = <a b b c d e b b e b b f b>;
-    is $list.tail(5).List, <e b b f b>,  "List.tail(5) works";
+    is-deeply $list.tail(5),   <e b b f b>, 'List.tail(5) works';
+    is-deeply tail(5,$list),       ($list,), 'tail(5,$List) works';
+    is-deeply tail(5,$list<>), <e b b f b>, 'tail(5,List) works';
+
     my @array = <a b b c d e b b e b b f b>;
-    is @array.tail(5).List, <e b b f b>, "Array.tail(5) works";
+    is-deeply @array.tail(5), <e b b f b>, 'Array.tail(5) works';
+    is-deeply tail(5,@array), <e b b f b>, 'tail(5,Array) works';
+
     my $scalar = 42;
-    is $scalar.tail(5).List, (42,),      "Scalar.tail(5) works";
+    is-deeply $scalar.tail(5), (42,), 'Scalar.tail(5) works';
+    is-deeply tail(5,$scalar), (42,), 'tail(5,Scalar) works';
+
     my $range = ^10;
-    is $range.tail(5).List, (5,6,7,8,9), "Range.tail(5) works";
+    is-deeply $range.tail(5),   (5,6,7,8,9), 'Range.tail(5) works';
+    is-deeply tail(5,$range),     ($range,), 'tail(5,$Range) works';
+    is-deeply tail(5,$range<>), (5,6,7,8,9), 'tail(5,Range) works';
+
     throws-like { ^Inf .tail(5) }, X::Cannot::Lazy,
       :action<tail>,
       'Range.tail(5) on lazy list does not work';
-} #5
+}
 
 {
     for 0, -1 {
         my $list = <a b b c d e b b e b b f b>;
-        is $list.tail($_).List, (),   "List.tail($_) works";
+        is-deeply $list.tail($_), (), "List.tail($_) works";
+        is-deeply tail($_,$list), (), "tail($_,List) works";
+
         my @array = <a b b c d e b b e b b f b>;
-        is @array.tail($_).List, (),  "Array.tail($_) works";
+        is-deeply @array.tail($_), (), "Array.tail($_) works";
+        is-deeply tail($_,@array), (), "tail($_,Array) works";
+
         my $scalar = 42;
-        is $scalar.tail($_).List, (), "Scalar.tail($_) works";
+        is-deeply $scalar.tail($_), (), "Scalar.tail($_) works";
+        is-deeply tail($_,$scalar), (), "tail($_,Scalar) works";
+
         my $range = ^10;
-        is $range.tail($_).List, (),  "Range.tail($_) works";
+        is-deeply $range.tail($_), (), "Range.tail($_) works";
+        is-deeply tail($_,$range), (), "tail($_,Range) works";
     }
-} #8
+}
 
 {
     my $list = <a b c>;
-    is $list.tail(5).List, <a b c>,  "List.tail works if too short";
+    is-deeply $list.tail(5),    <a b c>,  'List.tail(N) works if too short';
+    is-deeply tail(5,$list), (<a b c>,), 'tail(N,$List) works if too short';
+    is-deeply tail(5,$list<>),  <a b c>, 'tail(N,List) works if too short';
+
     my @array = <a b c>;
-    is @array.tail(5).List, <a b c>, "Array.tail works if too short";
+    is-deeply @array.tail(5), <a b c>, 'Array.tail(N) works if too short';
+    is-deeply tail(5,@array), <a b c>, 'tail(N,Array) works if too short';
+
     my $range = ^3;
-    is $range.tail(5).List, (0,1,2), "Range.tail works if too short";
-} #3
+    is-deeply $range.tail(5),   (0,1,2), 'Range.tail(N) works if too short';
+    is-deeply tail(5,$range), ($range,), 'tail(N,$Range) works if too short';
+    is-deeply tail(5,$range<>), (0,1,2), 'tail(N,Range) works if too short';
+}
 
 {
     my $list = ();
-    is $list.tail(5).List, (),  "List.tail works if empty";
+    is-deeply $list.tail,         Nil,  'List.tail works if empty';
+    is-deeply $list.tail(5),       (),  'List.tail(N) works if empty';
+    is-deeply tail(5,$list), ($list,),  'tail(N,$List) works if empty';
+    is-deeply tail(5,$list<>),     (),  'tail(N,List) works if empty';
+
     my @array;
-    is @array.tail(5).List, (), "Array.tail works if empty";
+    is-deeply @array.tail,   Nil, 'Array.tail works if empty';
+    is-deeply @array.tail(5), (), 'Array.tail(N) works if empty';
+    is-deeply tail(5,@array), (), 'tail(N,Array) works if empty';
+
     my $range = ^0;
-    is $range.tail(5).List, (), "Range.tail works if empty";
-} #3
+    is-deeply $range.tail,          Nil, 'Range.tail works if empty';
+    is-deeply $range.tail(5),        (), 'Range.tail(N) works if empty';
+    is-deeply tail(5,$range), ($range,), 'tail(N,$Range) works if empty';
+    is-deeply tail(5,$range<>),      (), 'tail(N,Range) works if empty';
+}
 
 subtest 'tail makes use .count-only when it is implemented' => {
     plan 4;
