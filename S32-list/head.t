@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 27;
+plan 60;
 
 =begin description
 
@@ -12,60 +12,102 @@ This test tests the C<head> builtin.
 
 {
     my $list = <a b b c d e b b e b b f b>;
-    is $list.head.List, ("a",),  "List.head works";
+    is-deeply $list.head, "a", 'List.head works';
+
     my @array = <a b b c d e b b e b b f b>;
-    is @array.head.List, ("a",), "Array.head works";
+    is-deeply @array.head, "a", 'Array.head works';
+
     my $scalar = 42;
-    is $scalar.head.List, (42,),      "Scalar.head works";
+    is-deeply $scalar.head, 42, 'Scalar.head works';
+
     my $range = ^10;
-    is $range.head.List, (0,),        "Range.head works";
+    is-deeply $range.head, 0, 'Range.head works';
+
     my $inf = ^Inf;
-    is $inf.head.List, (0,),          "Range.head works on lazy list";
-} #5
+    is-deeply $inf.head, 0, 'Range.head works on lazy list';
+}
 
 {
     my $list = <a b b c d e b b e b b f b>;
-    is $list.head(5).List, <a b b c d>,  "List.head(5) works";
+    is-deeply $list.head(5),   <a b b c d>, 'List.head(5) works';
+    is-deeply head(5,$list),      ($list,), 'head(5,$List) works';
+    is-deeply head(5,$list<>), <a b b c d>, 'head(5,List) works';
+
     my @array = <a b b c d e b b e b b f b>;
-    is @array.head(5).List, <a b b c d>, "Array.head(5) works";
+    is-deeply @array.head(5), <a b b c d>, 'Array.head(5) works';
+    is-deeply head(5,@array), <a b b c d>, 'head(5,Array) works';
+
     my $scalar = 42;
-    is $scalar.head(5).List, (42,),      "Scalar.head(5) works";
+    is-deeply $scalar.head(5), (42,), 'Scalar.head(5) works';
+    is-deeply head(5,$scalar), (42,), 'head(5,Scalar) works';
+
     my $range = ^10;
-    is $range.head(5).List, (0,1,2,3,4), "Range.head(5) works";
+    is-deeply $range.head(5),   (0,1,2,3,4), 'Range.head(5) works';
+    is-deeply head(5,$range),     ($range,), 'head(5,$Range) works';
+    is-deeply head(5,$range<>), (0,1,2,3,4), 'head(5,Range) works';
+
     my $inf = ^Inf;
-    is $inf.head(5).List, (0,1,2,3,4),   "Range.head(5) works on lazy list";
-} #5
+    is-deeply $inf.head(5),   (0,1,2,3,4), 'Range.head(5) works on lazy list';
+    is-deeply head(5,$inf),       ($inf,), 'head(5,$Range) works on lazy list';
+    is-deeply head(5,$inf<>), (0,1,2,3,4), 'head(5,Range) works on lazy list';
+}
 
 {
     for 0, -1 {
         my $list = <a b b c d e b b e b b f b>;
-        is $list.head($_).List, (),   "List.head($_) works";
+        is-deeply $list.head($_),   (), "List.head($_) works";
+        is-deeply head($_,$list),   (), "head($_,\$List) works";
+        is-deeply head($_,$list<>), (), "head($_,List) works";
+
         my @array = <a b b c d e b b e b b f b>;
-        is @array.head($_).List, (),  "Array.head($_) works";
+        is-deeply @array.head($_), (),  "Array.head($_) works";
+        is-deeply head($_,@array), (),  "head($_,Array) works";
+
         my $scalar = 42;
-        is $scalar.head($_).List, (), "Scalar.head($_) works";
+        is-deeply $scalar.head($_), (), "Scalar.head($_) works";
+        is-deeply head($_,$scalar), (), "head($_,Scalar) works";
+
         my $range = ^10;
-        is $range.head($_).List, (),  "Range.head($_) works";
+        is-deeply $range.head($_),   (), "Range.head($_) works";
+        is-deeply head($_,$range),   (), "head($_,\$Range) works";
+        is-deeply head($_,$range<>), (), "head($_,Range) works";
     }
-} #8
+}
 
 {
     my $list = <a b c>;
-    is $list.head(5).List, <a b c>,  "List.head works if too short";
+    is-deeply $list.head(5),   <a b c>, 'List.head(N) works if too short';
+    is-deeply head(5,$list),  ($list,), 'head(N,$List) works if too short';
+    is-deeply head(5,$list<>), <a b c>, 'head(N,$List) works if too short';
+
     my @array = <a b c>;
-    is @array.head(5).List, <a b c>, "Array.head works if too short";
+    is-deeply @array.head(5), <a b c>, 'Array.head(N) works if too short';
+    is-deeply head(5,@array), <a b c>, 'head(N,Array) works if too short';
+
     my $range = ^3;
-    is $range.head(5).List, (0,1,2), "Range.head works if too short";
-} #3
+    is-deeply $range.head(5),   (0,1,2), 'Range.head(N) works if too short';
+    is-deeply head(5,$range), ($range,), 'head(N,$Range) works if too short';
+    is-deeply head(5,$range<>), (0,1,2), 'head(N,Range) works if too short';
+}
 
 {
     my $list = ();
-    is $list.head(5).List, (),  "List.head works if empty";
+    is-deeply $list.head,         Nil, 'List.head works if empty';
+    is-deeply $list.head(5),       (), 'List.head(N) works if empty';
+    is-deeply head(5,$list), ($list,), 'head(N,$List) works if empty';
+    is-deeply head(5,$list<>),     (), 'head(N,List) works if empty';
+
     my @array;
-    is @array.head(5).List, (), "Array.head works if empty";
+    is-deeply @array.head,   Nil, 'Array.head works if empty';
+    is-deeply @array.head(5), (), 'Array.head(N) works if empty';
+    is-deeply head(5,@array), (), 'head(N,Array) works if empty';
+
     my $range = ^0;
-    is $range.head(5).List, (), "Range.head works if empty";
-} #3
+    is-deeply $range.head,          Nil, 'Range.head works if empty';
+    is-deeply $range.head(5),        (), 'Range.head(N) works if empty';
+    is-deeply head(5,$range), ($range,), 'head(N,$Range) works if empty';
+    is-deeply head(5,$range<>),      (), 'head(N,Range) works if empty';
+}
 
 # https://github.com/Raku/old-issue-tracker/issues/5867
 is-deeply (4,5,6).head(-999999999999999999999999999), (),
