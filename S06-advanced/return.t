@@ -15,7 +15,7 @@ See also t/blocks/return.t, which overlaps in scope.
 # reference for the spec for 'return', but I couldn't find
 # one either.
 
-plan 101;
+plan 109;
 
 # These test the returning of values from a subroutine.
 # We test each data-type with 4 different styles of return.
@@ -390,12 +390,25 @@ is Foo::official(), 44,
 }
 
 {
-    sub return-Int ($x --> Int) { $x }
+    my sub return-Int ($x --> Int) { $x }
     is return-Int(42), 42, "Can return 42 through Int typecheck";
+    cmp-ok return-Int(Int), '===', Int, "Can return Int through Int typecheck";
     is return-Int(Nil), Nil, "Can return Nil through Int typecheck";
     ok return-Int(Failure.new) ~~ Failure, "Can return Failure through Int typecheck";
     dies-ok { return-Int(42.0) }, "Can't return 42.0 through Int typecheck";
     dies-ok { return-Int(Cool) }, "Can't return Cool through Int typecheck";
+}
+
+{
+    my subset MyInt of Int:D where * % 2;
+    my sub return-MyInt ($x --> MyInt) { $x }
+    is return-MyInt(13), 13, "Can return 42 through a subset typecheck";
+    is return-MyInt(Nil), Nil, "Can return Nil through subset typecheck";
+    ok return-MyInt(Failure.new) ~~ Failure, "Can return Failure through subset typecheck";
+    dies-ok { return-MyInt(42) }, "Can't return through Int typecheck if 'where' constraint is broken";
+    dies-ok { return-MyInt(Int) }, "Can't return typeobject through definite subset typecheck";
+    dies-ok { return-MyInt(13.0) }, "Can't return 13.0 through subset typecheck";
+    dies-ok { return-MyInt(Cool) }, "Can't return Cool through Int typecheck";
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5733

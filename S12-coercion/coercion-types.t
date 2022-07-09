@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 28;
+plan 29;
 
 # coercion types in parameter lists
 {
@@ -92,21 +92,20 @@ class NastyChild is Parent { };
 }
 
 # methods exist, too
-#?rakudo skip 'NYI'
-#?DOES 2
 {
     class SubCo {...}
     class Co {
         method SubCo() { SubCo.new }
         method erce(Array(Any) $x) {
-            $x.^name;
+            $x.WHAT;
         }
-        method invocant(SubCo(Co) SELF:) {
+        method invocant(SubCo(Co) \SELF:) {
             SELF;
         }
     }
     class SubCo is Co { }
-    is Co.erce((1, 2)), 'Array', 'coercion on method param';
+    isa-ok Co.erce((1, 2)), Array, 'coercion on method param';
+    isa-ok Co.erce(2), Array, 'coercion on method param from a non-positional argument';
     isa-ok Co.invocant, SubCo, 'Can coerce invocant to subclass';
 }
 
