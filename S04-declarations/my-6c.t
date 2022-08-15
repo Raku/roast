@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 110;
+plan 112;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible">
@@ -355,6 +355,19 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
     my (\x5, \x6) := 7, 8;
     is x5, 7, 'can signature-bind to my (\a, \b) and get correct values (1)';
     is x6, 8, 'can signature-bind to my (\a, \b) and get correct values (2)';
+}
+
+# https://github.com/rakudo/rakudo/issues/5027
+{
+    eval-lives-ok 'my (Map \foo) = Map.new; foo{1};', 
+        "siglless declared within parens can be used as associative";
+}
+
+# https://github.com/rakudo/rakudo/issues/3919
+#?rakudo todo "not yet fixed"
+{
+    my \v1 = 42;
+    is v1, 42, "lexical version-like symbol is not treated as a version constant";
 }
 
 {
