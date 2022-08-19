@@ -4,7 +4,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Tap;
 use Test::Util;
 
-plan 9;
+plan 11;
 
 dies-ok { Supplier.new.Supply.interval(1) }, 'can not be called as an instance method';
 
@@ -71,6 +71,25 @@ is_run(
         }
     }
     is-deeply @a, [0..5], "Timer with very short interval fires multiple times";
+}
+
+{
+    tap-ok Supply.interval(1, :between),
+      [^3],
+      'interval of 1 second between taps',
+      :emit({ sleep 1 }),
+      :after-tap({ sleep 5.1 }),
+      :virtual-time;
+}
+
+{
+    tap-ok Supply.interval(1, :between).share,
+      [1..2],
+      'interval of 1 second between share taps',
+      :live,
+      :emit({ sleep 1 }),
+      :after-tap({ sleep 5.1 }),
+      :virtual-time;
 }
 
 # vim: expandtab shiftwidth=4
