@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 39;
+plan 43;
 
 # L<S32::IO/IO::Path>
 
@@ -429,6 +429,14 @@ subtest '.parent(Int)' => {
         is-deeply $p.parent(5), $p.parent.parent.parent.parent.parent, "5 $d";
         is-deeply $p.parent(6), $p.parent.parent.parent.parent.parent.parent, "6 $d";
     }
+}
+
+{
+    my $io := $?FILE.IO;
+    ok $io.created < now, 'was this script created before now';
+    ok $io.modified < now, 'was this script modified before now';
+    ok $io.accessed < now, 'was this script accessed before now';
+    ok $io.changed < now, "was this script's meta-date changed before now";
 }
 
 # vim: expandtab shiftwidth=4
