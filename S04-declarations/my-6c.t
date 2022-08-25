@@ -364,7 +364,6 @@ eval-lives-ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
 }
 
 # https://github.com/rakudo/rakudo/issues/3919
-#?rakudo todo "not yet fixed"
 {
     my \v1 = 42;
     is v1, 42, "lexical version-like symbol is not treated as a version constant";
