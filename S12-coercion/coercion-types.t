@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 29;
+plan 33;
 
 # coercion types in parameter lists
 {
@@ -93,8 +93,8 @@ class NastyChild is Parent { };
 
 # methods exist, too
 {
-    class SubCo {...}
-    class Co {
+    my class SubCo {...}
+    my class Co {
         method SubCo() { SubCo.new }
         method erce(Array(Any) $x) {
             $x.WHAT;
@@ -103,7 +103,7 @@ class NastyChild is Parent { };
             SELF;
         }
     }
-    class SubCo is Co { }
+    my class SubCo is Co { }
     isa-ok Co.erce((1, 2)), Array, 'coercion on method param';
     isa-ok Co.erce(2), Array, 'coercion on method param from a non-positional argument';
     isa-ok Co.invocant, SubCo, 'Can coerce invocant to subclass';
@@ -117,13 +117,15 @@ is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
     is Int(a), -42, "Sigilless variable does not confuse coercion type parsing";
 }
 
-{ # https://github.com/rakudo/rakudo/issues/1753
+# https://github.com/rakudo/rakudo/issues/1753
+{ 
     my subset ZInt of Cool where *.elems;
     sub foo(ZInt(Cool) $Z) {};
     pass 'coercer with subset target did not crash';
 }
 
-{ # Coerce from a child class
+# Coerce from a child class
+{ 
     my class SStr is Str { }
     my sub foo(Int:D(Str:D) $i) {
         $i
@@ -132,7 +134,8 @@ is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
     is foo($s), 42, "coercions from a Str subclass works";
 }
 
-{ # https://github.com/rakudo/rakudo/issues/4040
+# https://github.com/rakudo/rakudo/issues/4040
+{ 
     throws-like { Int(Str).^coerce(pi) },
                 X::Coerce::Impossible,
                 ".^coerce throws on unacceptable value";
@@ -141,17 +144,34 @@ is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
                 "assigning unacceptable value to a coercive variable throws";
 }
 
-{ # https://github.com/rakudo/rakudo/issues/2427
+# https://github.com/rakudo/rakudo/issues/2427
+{ 
     my Str(Int(Cool)) $x;
     $x = 42.13;
     is $x, "42", "nested coercions work";
 }
 
-{ # https://github.com/rakudo/rakudo/issues/4092
+# https://github.com/rakudo/rakudo/issues/4092
+{ 
     sub with-optional(Int(Str) $foo?) {
         ok $foo === Int, "optional coercive parameter defaults to its target type";
     }
     with-optional();
+}
+
+# Coercion within a subset must not cause problems in various edge cases
+{
+    eval-lives-ok q:to/OPTIONAL/, "optional coercive parameter";
+        my subset ForceInt of Int();
+        sub foo(ForceInt $f?) { $f };
+        is foo("42"), 42, "optional parameter coerces";
+        OPTIONAL
+
+    eval-lives-ok q:to/MULTI/, "multi-dispatch candidate with a coercive parameter";
+        my subset ForceInt of Int();
+        multi sub bar(ForceInt $f) { $f };
+        is bar("42"), 42, "multi-dispatch coerces";
+        MULTI
 }
 
 done-testing;
