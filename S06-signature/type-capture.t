@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 17;
 
 # TODO: move to S02?
 # L<S02/Generic types/>
@@ -43,7 +43,7 @@ eval-lives-ok q':(::T $x)', "No error on type capture";
 
 # https://github.com/Raku/old-issue-tracker/issues/4375
 {
-    sub foo(::T) {
+    my sub foo(::T) {
         {
             my T $b;
             is $b, Int, 'Type capture works on variable in nested scope';
@@ -54,7 +54,7 @@ eval-lives-ok q':(::T $x)', "No error on type capture";
 
 # https://github.com/Raku/old-issue-tracker/issues/2886
 {
-    sub f (::T $g) {
+    my sub f (::T $g) {
         for ($g) -> T $h {
             return $h ~ ":" ~ T.raku
         }
@@ -64,7 +64,7 @@ eval-lives-ok q':(::T $x)', "No error on type capture";
 
 # https://github.com/Raku/old-issue-tracker/issues/4657
 {
-    sub accum( ::T \a, T(Cool) \b ) { a += b };
+    my sub accum( ::T \a, T(Cool) \b ) { a += b };
 
     my $t = 3;
     accum( $t, 2/3 );
@@ -75,9 +75,9 @@ eval-lives-ok q':(::T $x)', "No error on type capture";
     is-approx $t, 3.666667, 'coerce to Rat via type capture';
 }
 
-# GH rakudo/rakudo#2169
+# https://github.com/rakudo/rakudo/issues/2169
 {
-    sub f1_2169 (::T $type) {
+    my sub f1_2169 (::T $type) {
         my T $t;
         $t.VAR.default;
     }
@@ -94,6 +94,66 @@ eval-lives-ok q':(::T $x)', "No error on type capture";
     lives-ok { $type = f2_2169(Rat) }, "it's ok to assign Nil to a variable of a captured type";
     isa-ok $type, Rat, "reset to default sets varible to captured type";
 
+}
+
+# Make sure typecapture can be used as return type
+subtest "Return typecheck" => {
+    plan 15;
+
+    my sub ret_T(::T \t, $v --> T) {
+        $v
+    }
+
+    my $rv;
+
+    lives-ok { ret_T(Int, 42) }, "basic return type check works";
+    lives-ok { ret_T(Int:D, 42) }, "basic return type check works with definite";
+    lives-ok { ret_T(Int:U, Int) }, "basic return type check works with undefinite";
+    lives-ok { $rv = ret_T(Rat(), "42.12") }, "type capture can be a coercion";
+    is $rv, 42.12, "coercive type capture actually coerces";
+
+    throws-like 
+        { ret_T(Str, 42) }, 
+        X::TypeCheck::Return,
+        "basic type mismatch throws";
+
+    throws-like 
+        { ret_T(Rat:D, Rat) }, 
+        X::TypeCheck::Return,
+        "a definite type capture throws on undefined";
+
+    throws-like 
+        { ret_T(Rat:U, 1.3) }, 
+        X::TypeCheck::Return,
+        "an undefinite type capture throws with a concrete return value";
+
+    my subset Bar of Str:D where *.contains("Bar");
+
+    lives-ok { ret_T(Bar, "A Barrish") }, "type check against a subset";
+    throws-like
+        { ret_T(Bar, "something different") },
+        X::TypeCheck::Return,
+        "type mismatch against a subset";
+
+    my sub ret_TDC(::T \t, $v --> T:D()) {
+        $v
+    }
+
+    lives-ok { $rv = ret_TDC(Int, "12") }, "coercion over a type capture";
+    is $rv, 12, "coercion over a type capture does its job";
+
+    my $Bar-expected = "Give the 'Bar', as it expects!";
+    my class Foo {
+        method Str { $Bar-expected }
+    }
+
+    lives-ok { $rv = ret_TDC(Bar, Foo.new) }, "coercion into a subset works";
+    is $rv, $Bar-expected, "coercion into a subset does its job";
+
+    throws-like 
+            { ret_TDC(Bar, 13) },
+            X::Coerce::Impossible,
+            "coercion into a subset throws when constraint is not fulfilled";
 }
 
 # vim: expandtab shiftwidth=4
