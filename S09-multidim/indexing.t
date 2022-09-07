@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 31;
+plan 32;
 
 my @arr := Array.new(:shape(2;2));
 
@@ -18,6 +18,8 @@ is @arr[0;0], 'a', 'Can store to multi-dim array with indexer (1)';
 is @arr[0;1], 'b', 'Can store to multi-dim array with indexer (2)';
 is @arr[1;0], 'c', 'Can store to multi-dim array with indexer (3)';
 is @arr[1;1], 'd', 'Can store to multi-dim array with indexer (4)';
+
+lives-ok { @arr[*;0] }, 'Partially dimensioned view lives';
 
 dies-ok { @arr[2;0] }, 'Access out of bounds with indexer dies (1)';
 dies-ok { @arr[0;2] }, 'Access out of bounds with indexer dies (2)';
