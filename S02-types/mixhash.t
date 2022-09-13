@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 287;
+plan 288;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -666,5 +666,11 @@ is <a b c>.MixHash.item.VAR.^name, 'Scalar', 'does .item work on MixHashes';
 
 lives-ok { my %h is MixHash = 42 },
   "Can we initialize a MixHash with a single value";
+
+# https://github.com/rakudo/rakudo/issues/5057
+{
+    is-deeply <a b c d e a b>.MixHash>>--, <a b>.MixHash,
+      'did on-the-fly decrement work';
+}
 
 # vim: expandtab shiftwidth=4

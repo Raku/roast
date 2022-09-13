@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 336;
+plan 337;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -804,5 +804,11 @@ is <a b c>.BagHash.item.VAR.^name, 'Scalar', 'does .item work on BagHashes';
 
 lives-ok { my %h is BagHash = 42 },
   "Can we initialize a BagHash with a single value";
+
+# https://github.com/rakudo/rakudo/issues/5057
+{
+    is-deeply <a b c d e a b>.BagHash>>--, <a b>.BagHash,
+      'did on-the-fly decrement work';
+}
 
 # vim: expandtab shiftwidth=4

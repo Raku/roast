@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 243;
+plan 244;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -614,5 +614,11 @@ is <a b c>.Set.item.VAR.^name, 'Scalar', 'does .item work on Sets';
 }
 
 lives-ok { my %h is Set = 42 }, "Can we initialize a Set with a single value";
+
+# https://github.com/rakudo/rakudo/issues/5057
+{
+    is-deeply <a b c d e a b>.Set>>--, Set.new,
+      'did on-the-fly decrement work';
+}
 
 # vim: expandtab shiftwidth=4

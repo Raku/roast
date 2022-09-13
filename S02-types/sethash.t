@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 276;
+plan 277;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -697,5 +697,11 @@ is <a b c>.SetHash.item.VAR.^name, 'Scalar', 'does .item work on SetHashes';
 
 lives-ok { my %h is SetHash = 42 },
   "Can we initialize a SetHash with a single value";
+
+# https://github.com/rakudo/rakudo/issues/5057
+{
+    is-deeply <a b c d e a b>.SetHash>>--, SetHash.new,
+      'did on-the-fly decrement work';
+}
 
 # vim: expandtab shiftwidth=4

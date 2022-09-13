@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 249;
+plan 250;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -610,5 +610,11 @@ is <a b c>.Set.item.VAR.^name, 'Scalar', 'does .item work on Sets';
 }
 
 lives-ok { my %h is Bag = 42 }, "Can we initialize a Bag with a single value";
+
+# https://github.com/rakudo/rakudo/issues/5057
+{
+    is-deeply <a b c d e a b>.Bag>>--, <a b>.Bag,
+      'did on-the-fly decrement work';
+}
 
 # vim: expandtab shiftwidth=4
