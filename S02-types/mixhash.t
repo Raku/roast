@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 288;
+plan 289;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -669,8 +669,11 @@ lives-ok { my %h is MixHash = 42 },
 
 # https://github.com/rakudo/rakudo/issues/5057
 {
-    is-deeply <a b c d e a b>.MixHash>>--, <a b>.MixHash,
-      'did on-the-fly decrement work';
+    my $m := <a b c d e a b>.MixHash;
+    is-deeply $m>>--, <a b c d e a b>.MixHash,
+      'did on-the-fly value return original';
+    is-deeply $m, <a b>.MixHash,
+      'did on-the-fly value change original';
 }
 
 # vim: expandtab shiftwidth=4

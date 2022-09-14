@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 244;
+plan 245;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -617,8 +617,11 @@ lives-ok { my %h is Set = 42 }, "Can we initialize a Set with a single value";
 
 # https://github.com/rakudo/rakudo/issues/5057
 {
-    is-deeply <a b c d e a b>.Set>>--, Set.new,
-      'did on-the-fly decrement work';
+    my $s := <a b c d e>.Set;
+    is-deeply $s>>.&{ 1 }, <a b c d e>.Set,
+      'did on-the-fly value return original';
+    is-deeply $s, <a b c d e>.Set,
+      'did on-the-fly value leave original unchanged';
 }
 
 # vim: expandtab shiftwidth=4

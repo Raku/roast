@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 250;
+plan 251;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -613,8 +613,11 @@ lives-ok { my %h is Bag = 42 }, "Can we initialize a Bag with a single value";
 
 # https://github.com/rakudo/rakudo/issues/5057
 {
-    is-deeply <a b c d e a b>.Bag>>--, <a b>.Bag,
-      'did on-the-fly decrement work';
+    my $b := <a b c d e a b>.Bag;
+    is-deeply $b>>.&{ 3 }, <a a a b b b c c c d d d e e e>.Bag,
+      'did on-the-fly value return original';
+    is-deeply $b, <a b c d e a b>.Bag,
+      'did on-the-fly value leave original unchanged';
 }
 
 # vim: expandtab shiftwidth=4

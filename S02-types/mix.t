@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 240;
+plan 241;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -575,8 +575,11 @@ lives-ok { my %h is Mix = 42 }, "Can we initialize a Mix with a single value";
 
 # https://github.com/rakudo/rakudo/issues/5057
 {
-    is-deeply <a b c d e a b>.Mix>>--, <a b>.Mix,
-      'did on-the-fly decrement work';
+    my $m := <a b c d e a b>.Mix;
+    is-deeply $m>>.&{ 3 }, <a a a b b b c c c d d d e e e>.Mix,
+      'did on-the-fly value return original';
+    is-deeply $m, <a b c d e a b>.Mix,
+      'did on-the-fly value leave original unchanged';
 }
 
 # vim: expandtab shiftwidth=4
