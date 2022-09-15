@@ -4,7 +4,7 @@ BEGIN %*ENV<RAKUDO_DEPRECATIONS_FATAL>:delete; # disable fatal setting for tests
 
 use Test;
 
-plan 14;
+plan 15;
 
 # L<S02/Deprecations>
 
@@ -147,6 +147,14 @@ TEXT
     rt120908();
     ok Deprecation.report ~~ m/'Sub rt120908 (from GLOBAL) seen at:'/,
         'right deprecation for rt120908()';
+}
+
+# https://github.com/rakudo/rakudo/issues/5055
+{
+    sub gh5055() is DEPRECATED('the literal 42') is hidden-from-backtrace { 42 }
+	gh5055();
+    ok Deprecation.report ~~ m/'Sub gh5055 (from GLOBAL) seen at:'/,
+        'right deprecation for gh5055()';
 }
 
 # vim: expandtab shiftwidth=4
