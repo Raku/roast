@@ -15,6 +15,7 @@ sub is-output(Proc:D $p, Str:D $message = "script output", *%matchers) is test-a
             $pattr .= slurp if $pattr ~~ IO::Handle;
             cmp-ok $pattr, &[~~], $matcher, $key;
         }
+        ($p."$_"() andthen .close) for <in out err>;
     }
 }
 
