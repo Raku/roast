@@ -62,7 +62,15 @@ sub test-good(MultiVer:D $mv, @versions, :@compiler-args) is test-assertion {
                 my $dep_spec = make_dep_spec(%good, @keys);
                 my $st-dist = $mv.make-dist(:dist<TestDist>, fields => {:$dep_spec}, :standalone);
                 subtest "with " ~ $dep_spec => {
-                    plan 2;
+                    plan 4;
+                    is-output
+                        $mv.run-standalone('use MVDist; print MVDist.expanded-version', :use-lib),
+                        "template expanded correctly",
+                        :out(%good<ver>), :err(''), :exitcode(0);
+                    is-output
+                        $mv.run-standalone('use MVDist; print MVDist.distribution.meta<ver>', :use-lib),
+                        "dustrubution version",
+                        :out(%good<ver>), :err(''), :exitcode(0);
                     is-output
                         $mv.run-standalone($code, :use-lib), "basic use",
                         :out($dep_spec), :err(''), :exitcode(0);
