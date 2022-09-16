@@ -120,7 +120,7 @@ method run-standalone(Str:D $code is copy, :@compiler-args, Bool :$use-lib) {
         $code = self.use-libs ~ "\n#line 1 test-code.raku\n" ~ $code;
     }
     $!standalone-script.spurt: $code;
-    my $p = self.run: $!standalone-script, :compiler-args[
+    self.run: $!standalone-script, :compiler-args[
         |@compiler-args,
         '-I' ~ $!standalone.prefix
     ];
