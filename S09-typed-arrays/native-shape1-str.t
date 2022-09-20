@@ -104,6 +104,7 @@ is ([~] @arr), "nnffbbuu", "Can use reduce meta-op on a $t array";
 is @arr.values,                ("nn","ff","bb","uu"), ".values from a $t array";
 is @arr.pairup,                  (nn=>"ff",bb=>"uu"), ".pairup from a $t array";
 is @arr.keys,                          ( 0, 1, 2, 3), ".keys from a $t array";
+#?rakudo.jvm 3 skip 'X::Multi::Ambiguous https://github.com/rakudo/rakudo/issues/5037'
 is @arr.pairs,     (0=>"nn",1=>"ff",2=>"bb",3=>"uu"), ".pairs from a $t array";
 is @arr.antipairs,         (nn=>0,ff=>1,bb=>2,uu=>3), ".antipairs from a $t array";
 is @arr.kv,            (0,"nn",1,"ff",2,"bb",3,"uu"), ".kv from a $t array";
