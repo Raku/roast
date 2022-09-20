@@ -20,6 +20,7 @@ plan 21;
 # L<S04/"Phasers">
 
 # https://github.com/Raku/old-issue-tracker/issues/4107
+#?rakudo.jvm skip "Method 'defined' not found for invocant of class 'BOOTInt'"
 #?rakudo todo "NEXT/LEAVE ordering"
 {
     my $str;
@@ -44,6 +45,7 @@ plan 21;
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/4107
+#?rakudo.jvm skip "Method 'defined' not found for invocant of class 'BOOTInt'"
 #?rakudo todo "NEXT/LEAVE ordering"
 {
     my $str;

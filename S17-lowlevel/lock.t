@@ -59,7 +59,10 @@ for Lock, Lock::Soft -> \LOCK-CLASS {
             ok $output ~~ /^ [ a+: b+: | b+: a+: ] $/, 'Lock is at least somewhat effective';
         }
 
-        {
+        if $*VM.name eq 'jvm' && LOCK-CLASS.^name eq 'Lock::Soft' {
+            skip 'Unhandled exception; category = 1';
+        }
+        else {
             my $l = LOCK-CLASS.new;
             my $c = $l.condition;
             my $now1;
@@ -92,7 +95,10 @@ for Lock, Lock::Soft -> \LOCK-CLASS {
               is @log.join(','), 'ale,porter,stout', 'Condition variable worked';
         }
 
-        {
+        if $*VM.name eq 'jvm' && LOCK-CLASS.^name eq 'Lock::Soft' {
+            skip 'Unhandled exception; category = 1';
+        }
+        else {
             my $times = 100;
             my $tried;
             my $failed;
@@ -128,7 +134,10 @@ for Lock, Lock::Soft -> \LOCK-CLASS {
             ok !$failed, "Thread 1 never ran after it was tried $tried times";
         }
 
-        {
+        if $*VM.name eq 'jvm' && LOCK-CLASS.^name eq 'Lock::Soft' {
+            skip 'Unhandled exception; category = 1';
+        }
+        else {
             my $times = 100;
             my $tried;
             my $failed;
@@ -162,7 +171,10 @@ for Lock, Lock::Soft -> \LOCK-CLASS {
             ok !$failed, "Thread 1 never ran after it was tried $tried times";
         }
 
-        {
+        if $*VM.name eq 'jvm' && LOCK-CLASS.^name eq 'Lock::Soft' {
+            skip 'Cannot resolve caller prefix:<++>(Int:D)', 15;
+        }
+        else {
             for 1..15 -> $iter {
                 my $lock = LOCK-CLASS.new;
                 my $cond = $lock.condition;

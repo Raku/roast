@@ -137,7 +137,9 @@ group-of 3 => 'smiley constraints default to type object without smiley' => {
         is-eqv sub (Int:D @v) { @v[^3]    }(my Int:D @), (Int, Int, Int), '@ param in sub';
         is-eqv sub (Int:D %v) { %v<a b c> }(my Int:D %), (Int, Int, Int), '% param in sub';
 
+        #?rakudo.jvm emit # Type check failed in assignment to &foo; expected Callable[Int:D] but got Sub+{Callable[Int:D]}
         my Int:D &foo = sub (--> Int:D) {};
+        #?rakudo.jvm skip "can't run test because &foo is no declared"
         is-eqv &foo.of, Int:D, 'parametarized Callables are parametarized with smiley';
     }
 
@@ -163,6 +165,7 @@ group-of 3 => 'smiley constraints default to type object without smiley' => {
         is-eqv sub (Int:U %v) { %v<a b c> }(my Int:U %), (Int, Int, Int), '% param in sub';
 
         my Int:U &foo = sub (--> Int:U) {};
+        #?rakudo.jvm todo 'expected Int:U, got Int:U'
         is-eqv &foo.of, Int:U, 'parametarized Callables are parametarized with smiley';
     }
 
