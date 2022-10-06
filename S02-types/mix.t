@@ -523,7 +523,6 @@ subtest '.hash does not cause keys to be stringified' => {
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/6430
-#?rakudo.jvm todo 'got: Nil'
 {
     is-deeply (a => ½).Mix    .roll, 'a', 'Mix.roll with fractional weights';
     is-deeply (a => ½).MixHash.roll, 'a', 'MixHash.roll with fractional weights';

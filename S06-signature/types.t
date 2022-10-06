@@ -44,7 +44,6 @@ is-deeply .raku.EVAL, $_, ".raku on an {.raku} roundtrips"
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5676
-#?rakudo.jvm skip "'١' is not a valid number"
 {
     lives-ok
         { sub f(-١) { 2 }; f(-1) },
@@ -71,7 +70,6 @@ group-of 10 => 'numeric literals as type constraints' => {
         eval-lives-ok ｢sub f(−42){}(−42)｣, 'U+2212 minus';
     }
     group-of 4 => 'unum' => {
-        #?rakudo.jvm 4 todo 'Missing block / Malformed parameter on JVM, RT #129915'
         eval-lives-ok ｢sub f( ½){}( .5)｣, 'bare';
         eval-lives-ok ｢sub f(+½){}( .5)｣, 'plus';
         eval-lives-ok ｢sub f(-½){}(-.5)｣, 'minus';

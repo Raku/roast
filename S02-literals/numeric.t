@@ -108,7 +108,6 @@ ok 0e999999999999999 == 0, '0e999999999999 equals zero';
 
 # We are not afraid of unicode
 {
-    #?rakudo.jvm skip 'is not a valid number'
     #?rakudo.js skip 'unsupported unicode stuff'
     is ۵۵, 55, "We can handle Unicode digits";
     #?rakudo.jvm 3 skip 'bogus term'

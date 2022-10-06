@@ -145,7 +145,6 @@ is (2 Z 3), @z, 'joining of single items';
 
     is 2 × 3, 6, "we have infix MULTIPLICATION SIGN";
 
-    #?rakudo.jvm todo 'expected: 0, got: 0.666667'
     is 2 ÷ 3, ⅔, "we have infix DIVISION SIGN";
 
     ok   4 ≤ 23, 'we have infix LESS-THAN OR EQUAL TO';

@@ -2040,7 +2040,6 @@ ok '11 12 13 abc' ~~ /:s^[\d+ ]* abc/, '<?ws> before closing bracket';
     #### a**:!2..4		baaabbb		y	three "a" characters (explicit greed)
     ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
 
-    #?rakudo.jvm 2 skip "'۳' is not a valid number"
     is  'aaaa' ~~ /a**۳/, 'aaa', 'Unicode Nd digits work (match case)';
     nok 'aa'   ~~ /a**۳/,        'Unicode Nd digits work (no match case)';
 }

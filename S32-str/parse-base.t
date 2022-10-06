@@ -34,11 +34,9 @@ for &parse-base, Str.^lookup('parse-base') -> &pb {
     is-deeply pb('-.42', 10), -.42, 'fractional without whole part with -';
     is-deeply pb('−.42', 10), -.42, 'fractional without whole part with U+2212';
 
-    #?rakudo.jvm todo 'Invalid base-10 character'
     is-deeply pb($fancy-nums, 10), $fancy-nums-value,
         'can parse fancy Unicode numerals as Int' ~ $t;
 
-    #?rakudo.jvm skip 'Cannot resolve caller is-approx(Failure, Rat, Str)'
     is-approx pb("$fancy-nums.$fancy-nums", 10),
         "$fancy-nums-value.$fancy-nums-value".Numeric,
         'can parse fancy Unicode numerals as float' ~ $t;
