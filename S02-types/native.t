@@ -3,12 +3,20 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 124;
+plan 143;
 
 {
     my int $x;
     is $x, 0, 'int default value';
-    is $x + 1, 1, 'can do basic math with int';
+    is $x + 1,  1, 'can do + with int';
+    is $x - 1, -1, 'can do - with int';
+}
+
+{
+    my uint $x;
+    is $x, 0, 'uint default value';
+    is $x + 1,  1, 'can do + with uint';
+    is $x - 1, -1, 'can do - with uint';
 }
 
 {
@@ -140,6 +148,35 @@ plan 124;
 }
 
 {
+    my uint   $i   = 1;
+    my uint64 $i64 = 2;
+    my uint32 $i32 = 3;
+    my uint16 $i16 = 4;
+    my uint8  $i8  = 5;
+    my $alias;
+
+    $alias := $i;
+    $alias++;
+    is $i, 2, 'Bound alias to uint native works';
+
+    $alias := $i64;
+    $alias++;
+    is $i64, 3, 'Bound alias to uint64 native works';
+
+    $alias := $i32;
+    $alias++;
+    is $i32, 4, 'Bound alias to uint32 native works';
+
+    $alias := $i16;
+    $alias++;
+    is $i16, 5, 'Bound alias to uint16 native works';
+
+    $alias := $i8;
+    $alias++;
+    is $i8, 6, 'Bound alias to uint8 native works';
+}
+
+{
     my num   $n   = 1e0;
     my num64 $n64 = 2e0;
     my num32 $n32 = 3e0;
@@ -222,19 +259,51 @@ dies-ok { EVAL 'my str $x = Str;' }, '"my str $x = Str" dies';
     is $i8, 42, 'can assign in-range value to int8';
     $i8 = 131;
     #?rakudo.jvm todo 'native int does not truncate, yet'
-    isnt $i8 + 1, 132, 'assigning out-of-range value to int8 truncates';
+    is $i8, -125, 'assigning out-of-range value to int8 truncates';
 
     $i16 = 342;
     is $i16, 342, 'can assign in-range value to int16';
     $i16 = 32770;
     #?rakudo.jvm todo 'native int does not truncate, yet'
-    isnt $i16 + 1, 32771, 'assigning out-of-range value to int16 truncates';
+    is $i16, -32766, 'assigning out-of-range value to int16 truncates';
 
     $i32 = 32771;
     is $i32, 32771, 'can assign in-range value to int32';
-    $i32 = 2147483650;
+    $i32 = 24294967280;
     #?rakudo.jvm todo 'native int does not truncate, yet'
-    isnt $i32 + 1, 2147483651, 'assigning out-of-range value to int32 truncates';
+    is $i32, -1474836496, 'assigning out-of-range value to int32 truncates';
+}
+
+{
+    my uint64 $u64;
+    is $u64, 0, 'uint64 starts off as 0';
+
+    my uint32 $u32;
+    is $u32, 0, 'uint32 starts off as 0';
+
+    my uint16 $u16;
+    is $u16, 0, 'uint16 starts off as 0';
+
+    my uint8 $u8;
+    is $u8, 0, 'uint8 starts off as 0';
+
+    $u8 = 42;
+    is $u8, 42, 'can assign in-range value to uint8';
+    $u8 = 259;
+    #?rakudo.jvm todo 'native int does not truncate, yet'
+    is $u8, 3, 'assigning out-of-range value to uint8 truncates';
+
+    $u16 = 342;
+    is $u16, 342, 'can assign in-range value to uint16';
+    $u16 = 65540;
+    #?rakudo.jvm todo 'native int does not truncate, yet'
+    is $u16, 4, 'assigning out-of-range value to uint16 truncates';
+
+    $u32 = 32771;
+    is $u32, 32771, 'can assign in-range value to uint32';
+    $u32 = 4294967299;
+    #?rakudo.jvm todo 'native int does not truncate, yet'
+    is $u32, 3, 'assigning out-of-range value to uint32 truncates';
 }
 
 {
