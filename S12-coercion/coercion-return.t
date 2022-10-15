@@ -18,7 +18,6 @@ subtest "Basic Coercive Return", {
     isa-ok return-as-str(my $f = Failure.new), Failure, "a Failure is returned as-is";
     $f.so; # Defuse the Failure
 
-    #?rakudo.jvm 2 todo "code doesn't die"
     throws-like { return-as-str(Int) }, X::TypeCheck::Return, "can't return a type object";
     throws-like { return-as-str([1,2]) }, X::TypeCheck::Return, "can't return a non-Numeric";
 

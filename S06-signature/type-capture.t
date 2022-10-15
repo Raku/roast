@@ -106,13 +106,10 @@ subtest "Return typecheck" => {
 
     my $rv;
 
-    #?rakudo.jvm 3 todo 'X::TypeCheck::Return Type check failed for return value; expected T but got Int (42)'
     lives-ok { ret_T(Int, 42) }, "basic return type check works";
     lives-ok { ret_T(Int:D, 42) }, "basic return type check works with definite";
     lives-ok { ret_T(Int:U, Int) }, "basic return type check works with undefinite";
-    #?rakudo.jvm todo 'X::TypeCheck::Return Type check failed for return value; expected T but got Str ("42.12")'
     lives-ok { $rv = ret_T(Rat(), "42.12") }, "type capture can be a coercion";
-    #?rakudo.jvm todo 'got (Any)'
     is $rv, 42.12, "coercive type capture actually coerces";
 
     throws-like 
@@ -132,7 +129,6 @@ subtest "Return typecheck" => {
 
     my subset Bar of Str:D where *.contains("Bar");
 
-    #?rakudo.jvm todo 'X::TypeCheck::Return Type check failed for return value; expected T but got Str ("A Barrish")'
     lives-ok { ret_T(Bar, "A Barrish") }, "type check against a subset";
     throws-like
         { ret_T(Bar, "something different") },
