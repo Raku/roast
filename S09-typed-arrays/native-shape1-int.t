@@ -111,7 +111,6 @@ for flat @int,@uint -> $T {
     is @arr.values,                (22,32,26,34), ".values from a $t array";
     is @arr.pairup,              (22=>32,26=>34), ".pairup from a $t array";
     is @arr.keys,                  ( 0, 1, 2, 3), ".keys from a $t array";
-    #?rakudo.jvm 3 skip 'X::Multi::Ambiguous https://github.com/rakudo/rakudo/issues/5037'
     is @arr.pairs,     (0=>22,1=>32,2=>26,3=>34), ".pairs from a $t array";
     is @arr.antipairs, (22=>0,32=>1,26=>2,34=>3), ".antipairs from a $t array";
     is @arr.kv,            (0,22,1,32,2,26,3,34), ".kv from a $t array";

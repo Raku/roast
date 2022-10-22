@@ -47,7 +47,6 @@ subtest "GH 3383" => {
     ok Array[Str]   ~~ Positional[Str],   "Array[Str] ~~ Positional[Str]";
     ok Array[Str:D] ~~ Positional,        "Array[Str:D] ~~ Positional";
     ok Array[Str:D] ~~ Positional[Str],   "Array[Str:D] ~~ Positional[Str]";
-    #?rakudo.jvm todo 'test worked in the past'
     ok Array[Str:D] ~~ Positional[Str:D], "Array[Str:D] ~~ Positional[Str:D]";
 }
 

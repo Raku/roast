@@ -395,7 +395,6 @@ group-of 2 => 'negative offset in JIT lables errors' => {
         our sub foo(--> Hash[Any:D,List:D]) { my Any:D %tree{List:D} }
     ｣;
 
-    #?rakudo.jvm todo 'Type check failed for return value; expected Hash[Any:D,List:D] but got Hash[Any:D,List:D] ((my Any:D \%\{List:D}))'
     is_run ｢use Foo; foo; print 'pass'｣, :compiler-args['-I', $lib.absolute],
       {:out<pass>, :err(''), :0status},
     'use of Hash[…:D, …:D] in a module does not explode';

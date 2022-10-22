@@ -4,10 +4,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 use Test::Iterator;
 
-## TODO Remove special case for JVM once https://github.com/rakudo/rakudo/issues/5037 is solved.
-my $tests = 1 + ($*VM.name eq 'jvm' ?? 8*6 !! 9*6);
-
-plan $tests;
+plan 1 + 9*6;
 
 # Test iterators coming from Lists
 
@@ -23,9 +20,6 @@ for
     { (my str @[26] = "a".."z") },       "shaped str array"
 
 -> $l, $case {
-
-    ## TODO Remove special case for JVM once https://github.com/rakudo/rakudo/issues/5037 is solved.
-    next if $*VM.name eq 'jvm' && $case eq 'shaped str array';
 
     my @pairs = $l().pairs;
     iterator-ok( { $l().iterator },

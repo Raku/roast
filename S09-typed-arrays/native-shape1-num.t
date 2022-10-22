@@ -110,7 +110,6 @@ for @num -> $T {
     is @arr.values,        (22e0,32e0,26e0,34e0), ".values from a $t array";
     is @arr.pairup,      (22e0=>32e0,26e0=>34e0), ".pairup from a $t array";
     is @arr.keys,                  ( 0, 1, 2, 3), ".keys from a $t array";
-    #?rakudo.jvm 3 skip 'X::Multi::Ambiguous https://github.com/rakudo/rakudo/issues/5037'
     is @arr.pairs, (0=>22e0,1=>32e0,2=>26e0,3=>34e0), ".pairs from a $t array";
     is @arr.antipairs, (22e0=>0,32e0=>1,26e0=>2,34e0=>3), ".antipairs from a $t array";
     is @arr.kv,    (0,22e0,1,32e0,2,26e0,3,34e0), ".kv from a $t array";
