@@ -11,12 +11,11 @@ is $u.codes, 2, 'combining \x[0042,0323] is two codes';
 is "foo\r\nbar".codes, 8, 'CRLF is 2 codes';
 
 # https://github.com/Raku/old-issue-tracker/issues/3841
-#?rakudo.jvm todo "NFG on JVM"
+#?rakudo.jvm todo "nqp::chars works on Java's chars: https://github.com/Raku/nqp/issues/783"
 is $u.chars, 1, '.chars defaults to NFG';
 
 # https://github.com/Raku/old-issue-tracker/issues/953
-# https://github.com/Raku/old-issue-tracker/issues/3842
-#?rakudo.jvm todo "NFG on JVM"
+#?rakudo.jvm todo "nqp::chars works on Java's chars: https://github.com/Raku/nqp/issues/783"
 {
     my $rt65170;
 

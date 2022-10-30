@@ -20,8 +20,7 @@ is "a\nbc\nd".words, <a bc d>, 'words on string with \n';
 is "a\c[NO-BREAK SPACE]bc d".words, <a bc d>, 'words on string with (U+00A0 NO-BREAK SPACE)';
 is "ä bc d".words, <ä bc d>, 'words on string with non-ASCII letter';
 
-# https://github.com/Raku/old-issue-tracker/issues/2593
-#?rakudo.jvm 2 todo 'NFG on JVM RT #124739'
+#?rakudo.jvm 2 todo 'NFG on JVM https://github.com/rakudo/rakudo/issues/4291'
 is "a\c[COMBINING DIAERESIS] bc d".words, ("ä", "bc", "d"), 'words on string with grapheme precomposed';
 is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc d".words,
     ("a\c[COMBINING DOT BELOW, COMBINING DOT ABOVE]", "bc", "d"),

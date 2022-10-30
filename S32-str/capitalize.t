@@ -30,8 +30,7 @@ is "ab cD Ef".wordcase,      "Ab Cd Ef",       "works on ordinary string";
 # Non-ASCII chars:
 is wordcase("äöü abcä"), "Äöü Abcä", "wordcase() works on non-ASCII chars";#
 
-# https://github.com/Raku/old-issue-tracker/issues/2593
-#?rakudo.jvm 2 todo 'NFG on JVM RT #124741'
+#?rakudo.jvm 2 todo 'NFG on JVM https://github.com/rakudo/rakudo/issues/4291'
 is wordcase("a\c[COMBINING DIAERESIS]üö abcä"), "Äüö Abcä", 'wordcase on string with grapheme precomposed';
 is wordcase("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
     "A\c[COMBINING DOT BELOW, COMBINING DOT ABOVE] Bc",

@@ -44,8 +44,7 @@ plan 58;
 { # codepoints greater than 0xFFFF
     my $str = join '', 0x10426.chr, 0x10427.chr;
     is $str.codes, 2, "Sanity check string";
-    # https://github.com/Raku/old-issue-tracker/issues/3970
-    #?rakudo.jvm 2 todo 'wrong result RT #124692'
+    #?rakudo.jvm 2 todo "nqp::substr works on Java's chars: https://github.com/Raku/nqp/issues/783"
     is substr($str, 0, 1), 0x10426.chr, "Taking first char of Deseret string";
     is substr($str, 1, 1), 0x10427.chr, "Taking second char of Deseret string";
 }
