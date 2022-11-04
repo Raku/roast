@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 9;
 
 # simple array
 {
@@ -36,6 +36,7 @@ plan 8;
         'can .raku.EVAL roundtrip a circular array within a circular hash';
 }
 
-#vim: ft=perl6
+# https://github.com/rakudo/rakudo/issues/5093
+is (my @ = 1..*).raku, '[...]', "doesn't die on a lazy iterator";
 
 # vim: expandtab shiftwidth=4
