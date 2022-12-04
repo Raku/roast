@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 67;
+plan 64;
 
 # L<S03/Comparison semantics/Binary eqv tests equality much like === does>
 # L<S32::Basics/Any/"=item eqv">
@@ -262,16 +262,5 @@ is-deeply Mu  eqv Any, False, 'undefined Mu Any equivalence';
 is-deeply Any eqv Mu,  False, 'undefined Any Mu equivalence';
 is-deeply 42  eqv Mu,  False, '42 undefined Mu equivalence';
 is-deeply Mu  eqv 42,  False, 'undefined Mu 42 equivalence';
-
-# https://github.com/rakudo/rakudo/issues/5116
-{
-    my $a = *.foo;
-    my $b = *.bar;
-    my $c = *.foo;
-    is-deeply $a eqv $a, True, 'Identical WhateverCodes are equivalent';
-    is-deeply $a eqv $b, False, 'Different WhateverCodes are non-equivalent';
-    #?rakudo todo 'identically coded WhateverCodes should be equivalent?'
-    is-deeply $a eqv $c, True, 'Same WhateverCodes are equivalent';
-}
 
 # vim: expandtab shiftwidth=4
