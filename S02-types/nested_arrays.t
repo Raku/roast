@@ -38,7 +38,7 @@ plan 10;
     my @a = [1], [2], [3];
     my @b = map { @a[1 - $_][0] }, 0 .. 3;
     isa-ok @b[3], Failure, 'Out of range index returns Failure object';
-    throws-like '@b[3]', X::OutOfRange,
+    throws-like '@b[3].sink', X::OutOfRange,
         what => 'Index', got => -2, range => '0..^Inf',
         'Failure object contains X::OutOfRange exception';
 }
