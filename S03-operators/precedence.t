@@ -301,7 +301,6 @@ throws-like 'my $lizmat = 42; ++$lizmat++',
     };
     import RT128042;
 
-    #?rakudo todo 'RT 128042'
     is (1 + 2 § 3), 1, 'exported multi has correct precedence';
 }
 
