@@ -1,12 +1,15 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 13.0.0.
+# Generated from Unicode version 15.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xC9CA).NFKC.list ~~ (0xC9CA,), 'C9CA -> C9CA';
+ok Uni.new(0xC9CB).NFKC.list ~~ (0xC9CB,), 'C9CB -> C9CB';
+ok Uni.new(0xC9CC).NFKC.list ~~ (0xC9CC,), 'C9CC -> C9CC';
 ok Uni.new(0xC9CD).NFKC.list ~~ (0xC9CD,), 'C9CD -> C9CD';
 ok Uni.new(0xC9CE).NFKC.list ~~ (0xC9CE,), 'C9CE -> C9CE';
 ok Uni.new(0xC9CF).NFKC.list ~~ (0xC9CF,), 'C9CF -> C9CF';
@@ -2004,6 +2007,3 @@ ok Uni.new(0xD196).NFKC.list ~~ (0xD196,), 'D196 -> D196';
 ok Uni.new(0xD197).NFKC.list ~~ (0xD197,), 'D197 -> D197';
 ok Uni.new(0xD198).NFKC.list ~~ (0xD198,), 'D198 -> D198';
 ok Uni.new(0xD199).NFKC.list ~~ (0xD199,), 'D199 -> D199';
-ok Uni.new(0xD19A).NFKC.list ~~ (0xD19A,), 'D19A -> D19A';
-ok Uni.new(0xD19B).NFKC.list ~~ (0xD19B,), 'D19B -> D19B';
-ok Uni.new(0xD19C).NFKC.list ~~ (0xD19C,), 'D19C -> D19C';

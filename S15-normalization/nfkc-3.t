@@ -1,12 +1,15 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 13.0.0.
+# Generated from Unicode version 15.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xBA2A).NFKC.list ~~ (0xBA2A,), 'BA2A -> BA2A';
+ok Uni.new(0xBA2B).NFKC.list ~~ (0xBA2B,), 'BA2B -> BA2B';
+ok Uni.new(0xBA2C).NFKC.list ~~ (0xBA2C,), 'BA2C -> BA2C';
 ok Uni.new(0xBA2D).NFKC.list ~~ (0xBA2D,), 'BA2D -> BA2D';
 ok Uni.new(0xBA2E).NFKC.list ~~ (0xBA2E,), 'BA2E -> BA2E';
 ok Uni.new(0xBA2F).NFKC.list ~~ (0xBA2F,), 'BA2F -> BA2F';
@@ -2004,6 +2007,3 @@ ok Uni.new(0xC1F6).NFKC.list ~~ (0xC1F6,), 'C1F6 -> C1F6';
 ok Uni.new(0xC1F7).NFKC.list ~~ (0xC1F7,), 'C1F7 -> C1F7';
 ok Uni.new(0xC1F8).NFKC.list ~~ (0xC1F8,), 'C1F8 -> C1F8';
 ok Uni.new(0xC1F9).NFKC.list ~~ (0xC1F9,), 'C1F9 -> C1F9';
-ok Uni.new(0xC1FA).NFKC.list ~~ (0xC1FA,), 'C1FA -> C1FA';
-ok Uni.new(0xC1FB).NFKC.list ~~ (0xC1FB,), 'C1FB -> C1FB';
-ok Uni.new(0xC1FC).NFKC.list ~~ (0xC1FC,), 'C1FC -> C1FC';

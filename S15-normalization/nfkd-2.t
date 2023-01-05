@@ -1,12 +1,15 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 13.0.0.
+# Generated from Unicode version 15.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xB25A).NFKD.list ~~ (0x1102, 0x1171, 0x11A9,), 'B25A -> 1102 1171 11A9';
+ok Uni.new(0xB25B).NFKD.list ~~ (0x1102, 0x1171, 0x11AA,), 'B25B -> 1102 1171 11AA';
+ok Uni.new(0xB25C).NFKD.list ~~ (0x1102, 0x1171, 0x11AB,), 'B25C -> 1102 1171 11AB';
 ok Uni.new(0xB25D).NFKD.list ~~ (0x1102, 0x1171, 0x11AC,), 'B25D -> 1102 1171 11AC';
 ok Uni.new(0xB25E).NFKD.list ~~ (0x1102, 0x1171, 0x11AD,), 'B25E -> 1102 1171 11AD';
 ok Uni.new(0xB25F).NFKD.list ~~ (0x1102, 0x1171, 0x11AE,), 'B25F -> 1102 1171 11AE';
@@ -2004,6 +2007,3 @@ ok Uni.new(0xBA26).NFKD.list ~~ (0x1106, 0x1164, 0x11B1,), 'BA26 -> 1106 1164 11
 ok Uni.new(0xBA27).NFKD.list ~~ (0x1106, 0x1164, 0x11B2,), 'BA27 -> 1106 1164 11B2';
 ok Uni.new(0xBA28).NFKD.list ~~ (0x1106, 0x1164, 0x11B3,), 'BA28 -> 1106 1164 11B3';
 ok Uni.new(0xBA29).NFKD.list ~~ (0x1106, 0x1164, 0x11B4,), 'BA29 -> 1106 1164 11B4';
-ok Uni.new(0xBA2A).NFKD.list ~~ (0x1106, 0x1164, 0x11B5,), 'BA2A -> 1106 1164 11B5';
-ok Uni.new(0xBA2B).NFKD.list ~~ (0x1106, 0x1164, 0x11B6,), 'BA2B -> 1106 1164 11B6';
-ok Uni.new(0xBA2C).NFKD.list ~~ (0x1106, 0x1164, 0x11B7,), 'BA2C -> 1106 1164 11B7';

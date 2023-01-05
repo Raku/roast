@@ -1,7 +1,7 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 13.0.0.
+# Generated from Unicode version 15.0.0.
 
 use Test;
 
@@ -371,6 +371,9 @@ ok Uni.new(0x33FF).NFD.list ~~ (0x33FF,), '33FF -> 33FF';
 ok Uni.new(0xA69C).NFD.list ~~ (0xA69C,), 'A69C -> A69C';
 ok Uni.new(0xA69D).NFD.list ~~ (0xA69D,), 'A69D -> A69D';
 ok Uni.new(0xA770).NFD.list ~~ (0xA770,), 'A770 -> A770';
+ok Uni.new(0xA7F2).NFD.list ~~ (0xA7F2,), 'A7F2 -> A7F2';
+ok Uni.new(0xA7F3).NFD.list ~~ (0xA7F3,), 'A7F3 -> A7F3';
+ok Uni.new(0xA7F4).NFD.list ~~ (0xA7F4,), 'A7F4 -> A7F4';
 ok Uni.new(0xA7F8).NFD.list ~~ (0xA7F8,), 'A7F8 -> A7F8';
 ok Uni.new(0xA7F9).NFD.list ~~ (0xA7F9,), 'A7F9 -> A7F9';
 ok Uni.new(0xAB5C).NFD.list ~~ (0xAB5C,), 'AB5C -> AB5C';
@@ -2004,6 +2007,3 @@ ok Uni.new(0xB256).NFD.list ~~ (0x1102, 0x1170, 0x11C1,), 'B256 -> 1102 1170 11C
 ok Uni.new(0xB257).NFD.list ~~ (0x1102, 0x1170, 0x11C2,), 'B257 -> 1102 1170 11C2';
 ok Uni.new(0xB258).NFD.list ~~ (0x1102, 0x1171,), 'B258 -> 1102 1171';
 ok Uni.new(0xB259).NFD.list ~~ (0x1102, 0x1171, 0x11A8,), 'B259 -> 1102 1171 11A8';
-ok Uni.new(0xB25A).NFD.list ~~ (0x1102, 0x1171, 0x11A9,), 'B25A -> 1102 1171 11A9';
-ok Uni.new(0xB25B).NFD.list ~~ (0x1102, 0x1171, 0x11AA,), 'B25B -> 1102 1171 11AA';
-ok Uni.new(0xB25C).NFD.list ~~ (0x1102, 0x1171, 0x11AB,), 'B25C -> 1102 1171 11AB';
