@@ -112,10 +112,10 @@ change the filename in the S15-nfg/GraphemeBreakTest.t
 my IO::Path $repo-dir      = $?FILE.IO.parent(2).add("3rdparty/Unicode/xx.x.x/ucd/auxiliary/GraphemeBreakTest.txt");
 ```
 .Version
-15.0.0
+* Unicode v15.0
 
 .Date
-2023.01.04
+* Regenerated 2023.01.04
 
 == External
 
