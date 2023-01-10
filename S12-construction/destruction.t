@@ -17,12 +17,12 @@ class Foo
 
 class Parent
 {
-    submethod DESTROY { push @destructor_order, 'Parent' }
+    submethod DESTROY { push @destructor_order, "Parent" ~ self.WHERE }
 }
 
 class Child is Parent
 {
-    submethod DESTROY { push @destructor_order, 'Child' }
+    submethod DESTROY { push @destructor_order, "Child" ~ self.WHERE }
 }
 
 my $foo = Foo.new();
@@ -52,10 +52,21 @@ else {
     #?rakudo.jvm todo "doesn't work, yet"
     ok( $in_destructor, '... only when object goes away everywhere'                          );
     is( +@destructor_order % 2, 0, '... only a multiple of the available DESTROY submethods' );
-    #?rakudo.jvm todo "expected: 'Child', got: (Any)"
-    is(  @destructor_order[0], 'Child',  'Child DESTROY should fire first'                   );
-    #?rakudo.jvm todo "expected: 'Parent', got: (Any)"
-    is(  @destructor_order[1], 'Parent', '... then parent'                                   );
+    my $seen = SetHash.new;
+    for @destructor_order {
+        if /Parent/ {
+            if $seen{$_.subst('Parent', 'Child')} {
+                pass "Parent after child";
+            }
+            else {
+                #?rakudo.jvm todo "doesn't work, yet"
+                fail "Found a parent but no corresponding child constructor call";
+            }
+        }
+        if /Child/ {
+            $seen{$_} = True;
+        }
+    }
 }
 
 # vim: expandtab shiftwidth=4
