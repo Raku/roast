@@ -156,8 +156,8 @@ plan 50;
 
 # L<S02/Comments in Unspaces and vice versa/"comment may not contain an unspace">
 {
-    throws-like { EVAL '$a = #`\  (comment) 32' },
-      X::Undeclared,
+    throws-like { EVAL 'my $a = #`\  (comment) 32' },
+      X::Syntax::Comment::Embedded,
       "comments can't contain unspace";
 }
 
