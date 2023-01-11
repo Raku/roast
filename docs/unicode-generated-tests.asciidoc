@@ -26,10 +26,10 @@ but many do not.
 * Run `S15-nfg/emoji-test-gen.raku UNIDATA/emoji-xx.x/emoji-test.txt`
 
 .Version
-* Emoji v13.1
+* Emoji v15.0
 
 .Date
-* Regenerated 2020.10.01
+* Regenerated 2023.01.04
 
 .Generated File(s)
 * Program generates S15-nfg/emoji-test.t
@@ -45,10 +45,10 @@ but many do not.
   to generate the tests.
 
 .Version
-* Unicode v13.0
+* Unicode v15.0
 
 .Date
-* Regenerated 2020.10.01
+* Regenerated 2023.01.04
 
 .Generated File(s)
 * S15-nfg/mass-roundtrip-nfc.t
@@ -68,10 +68,10 @@ MAKE SURE TO RUN `raku CollationTestGen.raku --folder=MoarVM/UNIDATA/UCA/Collati
 Then paste those failures (if they're ok into CollationTestGen.raku in the %todo variable.
 
 .Version
-* Unicode v13.0
+* Unicode v15.0
 
 .Date
-* Regenerated 2020.10.01
+* Regenerated 2023.01.04
 
 .Generated File(s)
 * S32-str/CollationTest_NON_IGNORABLE-0.t
@@ -85,10 +85,10 @@ Then paste those failures (if they're ok into CollationTestGen.raku in the %todo
 * Run `S15-normalization/test-gen.raku UNIDATA/NormalizationTest.txt`
 
 .Version
-* Unicode v13.0
+* Unicode v15.0
 
 .Date
-* Regenerated 2020.10.01
+* Regenerated 2023.01.04
 
 .Generated File(s)
 * S15-normalization/nfc-X.t
@@ -109,11 +109,13 @@ cp UNIDATA/auxilary/GraphemeBreakTest.txt 3rdparty/Unicode/$version/ucd/auxilary
 change the filename in the S15-nfg/GraphemeBreakTest.t
 
 ```
-my IO::Path $repo-dir      = $?FILE.IO.parent(2).add("3rdparty/Unicode/11.0.0/ucd/auxiliary/GraphemeBreakTest.txt");
+my IO::Path $repo-dir      = $?FILE.IO.parent(2).add("3rdparty/Unicode/xx.x.x/ucd/auxiliary/GraphemeBreakTest.txt");
 ```
 .Version
+* Unicode v15.0
 
 .Date
+* Regenerated 2023.01.04
 
 == External
 

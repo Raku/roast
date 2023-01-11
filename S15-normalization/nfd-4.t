@@ -1,12 +1,15 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 13.0.0.
+# Generated from Unicode version 15.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xC1FA).NFD.list ~~ (0x1109, 0x116C, 0x11C1,), 'C1FA -> 1109 116C 11C1';
+ok Uni.new(0xC1FB).NFD.list ~~ (0x1109, 0x116C, 0x11C2,), 'C1FB -> 1109 116C 11C2';
+ok Uni.new(0xC1FC).NFD.list ~~ (0x1109, 0x116D,), 'C1FC -> 1109 116D';
 ok Uni.new(0xC1FD).NFD.list ~~ (0x1109, 0x116D, 0x11A8,), 'C1FD -> 1109 116D 11A8';
 ok Uni.new(0xC1FE).NFD.list ~~ (0x1109, 0x116D, 0x11A9,), 'C1FE -> 1109 116D 11A9';
 ok Uni.new(0xC1FF).NFD.list ~~ (0x1109, 0x116D, 0x11AA,), 'C1FF -> 1109 116D 11AA';
@@ -2004,6 +2007,3 @@ ok Uni.new(0xC9C6).NFD.list ~~ (0x110C, 0x1175, 0x11AD,), 'C9C6 -> 110C 1175 11A
 ok Uni.new(0xC9C7).NFD.list ~~ (0x110C, 0x1175, 0x11AE,), 'C9C7 -> 110C 1175 11AE';
 ok Uni.new(0xC9C8).NFD.list ~~ (0x110C, 0x1175, 0x11AF,), 'C9C8 -> 110C 1175 11AF';
 ok Uni.new(0xC9C9).NFD.list ~~ (0x110C, 0x1175, 0x11B0,), 'C9C9 -> 110C 1175 11B0';
-ok Uni.new(0xC9CA).NFD.list ~~ (0x110C, 0x1175, 0x11B1,), 'C9CA -> 110C 1175 11B1';
-ok Uni.new(0xC9CB).NFD.list ~~ (0x110C, 0x1175, 0x11B2,), 'C9CB -> 110C 1175 11B2';
-ok Uni.new(0xC9CC).NFD.list ~~ (0x110C, 0x1175, 0x11B3,), 'C9CC -> 110C 1175 11B3';

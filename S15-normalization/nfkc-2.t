@@ -1,12 +1,15 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 13.0.0.
+# Generated from Unicode version 15.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xB25A).NFKC.list ~~ (0xB25A,), 'B25A -> B25A';
+ok Uni.new(0xB25B).NFKC.list ~~ (0xB25B,), 'B25B -> B25B';
+ok Uni.new(0xB25C).NFKC.list ~~ (0xB25C,), 'B25C -> B25C';
 ok Uni.new(0xB25D).NFKC.list ~~ (0xB25D,), 'B25D -> B25D';
 ok Uni.new(0xB25E).NFKC.list ~~ (0xB25E,), 'B25E -> B25E';
 ok Uni.new(0xB25F).NFKC.list ~~ (0xB25F,), 'B25F -> B25F';
@@ -2004,6 +2007,3 @@ ok Uni.new(0xBA26).NFKC.list ~~ (0xBA26,), 'BA26 -> BA26';
 ok Uni.new(0xBA27).NFKC.list ~~ (0xBA27,), 'BA27 -> BA27';
 ok Uni.new(0xBA28).NFKC.list ~~ (0xBA28,), 'BA28 -> BA28';
 ok Uni.new(0xBA29).NFKC.list ~~ (0xBA29,), 'BA29 -> BA29';
-ok Uni.new(0xBA2A).NFKC.list ~~ (0xBA2A,), 'BA2A -> BA2A';
-ok Uni.new(0xBA2B).NFKC.list ~~ (0xBA2B,), 'BA2B -> BA2B';
-ok Uni.new(0xBA2C).NFKC.list ~~ (0xBA2C,), 'BA2C -> BA2C';

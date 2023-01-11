@@ -1,7 +1,7 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 13.0.0.
+# Generated from Unicode version 15.0.0.
 
 use Test;
 
@@ -371,6 +371,9 @@ ok Uni.new(0x33FF).NFC.list ~~ (0x33FF,), '33FF -> 33FF';
 ok Uni.new(0xA69C).NFC.list ~~ (0xA69C,), 'A69C -> A69C';
 ok Uni.new(0xA69D).NFC.list ~~ (0xA69D,), 'A69D -> A69D';
 ok Uni.new(0xA770).NFC.list ~~ (0xA770,), 'A770 -> A770';
+ok Uni.new(0xA7F2).NFC.list ~~ (0xA7F2,), 'A7F2 -> A7F2';
+ok Uni.new(0xA7F3).NFC.list ~~ (0xA7F3,), 'A7F3 -> A7F3';
+ok Uni.new(0xA7F4).NFC.list ~~ (0xA7F4,), 'A7F4 -> A7F4';
 ok Uni.new(0xA7F8).NFC.list ~~ (0xA7F8,), 'A7F8 -> A7F8';
 ok Uni.new(0xA7F9).NFC.list ~~ (0xA7F9,), 'A7F9 -> A7F9';
 ok Uni.new(0xAB5C).NFC.list ~~ (0xAB5C,), 'AB5C -> AB5C';
@@ -2004,6 +2007,3 @@ ok Uni.new(0xB256).NFC.list ~~ (0xB256,), 'B256 -> B256';
 ok Uni.new(0xB257).NFC.list ~~ (0xB257,), 'B257 -> B257';
 ok Uni.new(0xB258).NFC.list ~~ (0xB258,), 'B258 -> B258';
 ok Uni.new(0xB259).NFC.list ~~ (0xB259,), 'B259 -> B259';
-ok Uni.new(0xB25A).NFC.list ~~ (0xB25A,), 'B25A -> B25A';
-ok Uni.new(0xB25B).NFC.list ~~ (0xB25B,), 'B25B -> B25B';
-ok Uni.new(0xB25C).NFC.list ~~ (0xB25C,), 'B25C -> B25C';

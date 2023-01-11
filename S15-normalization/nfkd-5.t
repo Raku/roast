@@ -1,12 +1,15 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 13.0.0.
+# Generated from Unicode version 15.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xC9CA).NFKD.list ~~ (0x110C, 0x1175, 0x11B1,), 'C9CA -> 110C 1175 11B1';
+ok Uni.new(0xC9CB).NFKD.list ~~ (0x110C, 0x1175, 0x11B2,), 'C9CB -> 110C 1175 11B2';
+ok Uni.new(0xC9CC).NFKD.list ~~ (0x110C, 0x1175, 0x11B3,), 'C9CC -> 110C 1175 11B3';
 ok Uni.new(0xC9CD).NFKD.list ~~ (0x110C, 0x1175, 0x11B4,), 'C9CD -> 110C 1175 11B4';
 ok Uni.new(0xC9CE).NFKD.list ~~ (0x110C, 0x1175, 0x11B5,), 'C9CE -> 110C 1175 11B5';
 ok Uni.new(0xC9CF).NFKD.list ~~ (0x110C, 0x1175, 0x11B6,), 'C9CF -> 110C 1175 11B6';
@@ -2004,6 +2007,3 @@ ok Uni.new(0xD196).NFKD.list ~~ (0x1110, 0x1168, 0x11B9,), 'D196 -> 1110 1168 11
 ok Uni.new(0xD197).NFKD.list ~~ (0x1110, 0x1168, 0x11BA,), 'D197 -> 1110 1168 11BA';
 ok Uni.new(0xD198).NFKD.list ~~ (0x1110, 0x1168, 0x11BB,), 'D198 -> 1110 1168 11BB';
 ok Uni.new(0xD199).NFKD.list ~~ (0x1110, 0x1168, 0x11BC,), 'D199 -> 1110 1168 11BC';
-ok Uni.new(0xD19A).NFKD.list ~~ (0x1110, 0x1168, 0x11BD,), 'D19A -> 1110 1168 11BD';
-ok Uni.new(0xD19B).NFKD.list ~~ (0x1110, 0x1168, 0x11BE,), 'D19B -> 1110 1168 11BE';
-ok Uni.new(0xD19C).NFKD.list ~~ (0x1110, 0x1168, 0x11BF,), 'D19C -> 1110 1168 11BF';

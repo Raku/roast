@@ -2,8 +2,8 @@ use v6;
 # Normal Form Grapheme roundtrip tests, generated from NormalizationTests.txt in
 # the Unicode database by S15-nfg/test-gen.raku. Check we can take a Uni, turn it
 # into an NFG string, and then get codepoints back out of it in NFKD.
-# NormalizationTest-13.0.0.txt
-# Date: 2019-09-08, 23:31:12 GMT
+# NormalizationTest-15.0.0.txt
+# Date: 2022-04-02, 01:29:09 GMT
 
 use Test;
 
@@ -48,51 +48,51 @@ ok Uni.new(0xF76).Str.NFKD.list ~~ (0xFB2, 0xF80,), '0xF76 -> Str -> 0xFB2, 0xF8
 ok Uni.new(0xF78).Str.NFKD.list ~~ (0xFB3, 0xF80,), '0xF78 -> Str -> 0xFB3, 0xF80 NormalizationTest.txt line no 544';
 ok Uni.new(0xF81).Str.NFKD.list ~~ (0xF71, 0xF80,), '0xF81 -> Str -> 0xF71, 0xF80 NormalizationTest.txt line no 546';
 ok Uni.new(0x2ADC).Str.NFKD.list ~~ (0x2ADD, 0x338,), '0x2ADC -> Str -> 0x2ADD, 0x338 NormalizationTest.txt line no 1512';
-ok Uni.new(0xFB1D).Str.NFKD.list ~~ (0x5D9, 0x5B4,), '0xFB1D -> Str -> 0x5D9, 0x5B4 NormalizationTest.txt line no 14063';
-ok Uni.new(0xFB1F).Str.NFKD.list ~~ (0x5F2, 0x5B7,), '0xFB1F -> Str -> 0x5F2, 0x5B7 NormalizationTest.txt line no 14064';
-ok Uni.new(0xFB2A).Str.NFKD.list ~~ (0x5E9, 0x5C1,), '0xFB2A -> Str -> 0x5E9, 0x5C1 NormalizationTest.txt line no 14075';
-ok Uni.new(0xFB2B).Str.NFKD.list ~~ (0x5E9, 0x5C2,), '0xFB2B -> Str -> 0x5E9, 0x5C2 NormalizationTest.txt line no 14076';
-ok Uni.new(0xFB2C).Str.NFKD.list ~~ (0x5E9, 0x5BC, 0x5C1,), '0xFB2C -> Str -> 0x5E9, 0x5BC, 0x5C1 NormalizationTest.txt line no 14077';
-ok Uni.new(0xFB2D).Str.NFKD.list ~~ (0x5E9, 0x5BC, 0x5C2,), '0xFB2D -> Str -> 0x5E9, 0x5BC, 0x5C2 NormalizationTest.txt line no 14078';
-ok Uni.new(0xFB2E).Str.NFKD.list ~~ (0x5D0, 0x5B7,), '0xFB2E -> Str -> 0x5D0, 0x5B7 NormalizationTest.txt line no 14079';
-ok Uni.new(0xFB2F).Str.NFKD.list ~~ (0x5D0, 0x5B8,), '0xFB2F -> Str -> 0x5D0, 0x5B8 NormalizationTest.txt line no 14080';
-ok Uni.new(0xFB30).Str.NFKD.list ~~ (0x5D0, 0x5BC,), '0xFB30 -> Str -> 0x5D0, 0x5BC NormalizationTest.txt line no 14081';
-ok Uni.new(0xFB31).Str.NFKD.list ~~ (0x5D1, 0x5BC,), '0xFB31 -> Str -> 0x5D1, 0x5BC NormalizationTest.txt line no 14082';
-ok Uni.new(0xFB32).Str.NFKD.list ~~ (0x5D2, 0x5BC,), '0xFB32 -> Str -> 0x5D2, 0x5BC NormalizationTest.txt line no 14083';
-ok Uni.new(0xFB33).Str.NFKD.list ~~ (0x5D3, 0x5BC,), '0xFB33 -> Str -> 0x5D3, 0x5BC NormalizationTest.txt line no 14084';
-ok Uni.new(0xFB34).Str.NFKD.list ~~ (0x5D4, 0x5BC,), '0xFB34 -> Str -> 0x5D4, 0x5BC NormalizationTest.txt line no 14085';
-ok Uni.new(0xFB35).Str.NFKD.list ~~ (0x5D5, 0x5BC,), '0xFB35 -> Str -> 0x5D5, 0x5BC NormalizationTest.txt line no 14086';
-ok Uni.new(0xFB36).Str.NFKD.list ~~ (0x5D6, 0x5BC,), '0xFB36 -> Str -> 0x5D6, 0x5BC NormalizationTest.txt line no 14087';
-ok Uni.new(0xFB38).Str.NFKD.list ~~ (0x5D8, 0x5BC,), '0xFB38 -> Str -> 0x5D8, 0x5BC NormalizationTest.txt line no 14088';
-ok Uni.new(0xFB39).Str.NFKD.list ~~ (0x5D9, 0x5BC,), '0xFB39 -> Str -> 0x5D9, 0x5BC NormalizationTest.txt line no 14089';
-ok Uni.new(0xFB3A).Str.NFKD.list ~~ (0x5DA, 0x5BC,), '0xFB3A -> Str -> 0x5DA, 0x5BC NormalizationTest.txt line no 14090';
-ok Uni.new(0xFB3B).Str.NFKD.list ~~ (0x5DB, 0x5BC,), '0xFB3B -> Str -> 0x5DB, 0x5BC NormalizationTest.txt line no 14091';
-ok Uni.new(0xFB3C).Str.NFKD.list ~~ (0x5DC, 0x5BC,), '0xFB3C -> Str -> 0x5DC, 0x5BC NormalizationTest.txt line no 14092';
-ok Uni.new(0xFB3E).Str.NFKD.list ~~ (0x5DE, 0x5BC,), '0xFB3E -> Str -> 0x5DE, 0x5BC NormalizationTest.txt line no 14093';
-ok Uni.new(0xFB40).Str.NFKD.list ~~ (0x5E0, 0x5BC,), '0xFB40 -> Str -> 0x5E0, 0x5BC NormalizationTest.txt line no 14094';
-ok Uni.new(0xFB41).Str.NFKD.list ~~ (0x5E1, 0x5BC,), '0xFB41 -> Str -> 0x5E1, 0x5BC NormalizationTest.txt line no 14095';
-ok Uni.new(0xFB43).Str.NFKD.list ~~ (0x5E3, 0x5BC,), '0xFB43 -> Str -> 0x5E3, 0x5BC NormalizationTest.txt line no 14096';
-ok Uni.new(0xFB44).Str.NFKD.list ~~ (0x5E4, 0x5BC,), '0xFB44 -> Str -> 0x5E4, 0x5BC NormalizationTest.txt line no 14097';
-ok Uni.new(0xFB46).Str.NFKD.list ~~ (0x5E6, 0x5BC,), '0xFB46 -> Str -> 0x5E6, 0x5BC NormalizationTest.txt line no 14098';
-ok Uni.new(0xFB47).Str.NFKD.list ~~ (0x5E7, 0x5BC,), '0xFB47 -> Str -> 0x5E7, 0x5BC NormalizationTest.txt line no 14099';
-ok Uni.new(0xFB48).Str.NFKD.list ~~ (0x5E8, 0x5BC,), '0xFB48 -> Str -> 0x5E8, 0x5BC NormalizationTest.txt line no 14100';
-ok Uni.new(0xFB49).Str.NFKD.list ~~ (0x5E9, 0x5BC,), '0xFB49 -> Str -> 0x5E9, 0x5BC NormalizationTest.txt line no 14101';
-ok Uni.new(0xFB4A).Str.NFKD.list ~~ (0x5EA, 0x5BC,), '0xFB4A -> Str -> 0x5EA, 0x5BC NormalizationTest.txt line no 14102';
-ok Uni.new(0xFB4B).Str.NFKD.list ~~ (0x5D5, 0x5B9,), '0xFB4B -> Str -> 0x5D5, 0x5B9 NormalizationTest.txt line no 14103';
-ok Uni.new(0xFB4C).Str.NFKD.list ~~ (0x5D1, 0x5BF,), '0xFB4C -> Str -> 0x5D1, 0x5BF NormalizationTest.txt line no 14104';
-ok Uni.new(0xFB4D).Str.NFKD.list ~~ (0x5DB, 0x5BF,), '0xFB4D -> Str -> 0x5DB, 0x5BF NormalizationTest.txt line no 14105';
-ok Uni.new(0xFB4E).Str.NFKD.list ~~ (0x5E4, 0x5BF,), '0xFB4E -> Str -> 0x5E4, 0x5BF NormalizationTest.txt line no 14106';
-ok Uni.new(0x1D15E).Str.NFKD.list ~~ (0x1D157, 0x1D165,), '0x1D15E -> Str -> 0x1D157, 0x1D165 NormalizationTest.txt line no 15143';
-ok Uni.new(0x1D15F).Str.NFKD.list ~~ (0x1D158, 0x1D165,), '0x1D15F -> Str -> 0x1D158, 0x1D165 NormalizationTest.txt line no 15144';
-ok Uni.new(0x1D160).Str.NFKD.list ~~ (0x1D158, 0x1D165, 0x1D16E,), '0x1D160 -> Str -> 0x1D158, 0x1D165, 0x1D16E NormalizationTest.txt line no 15145';
-ok Uni.new(0x1D161).Str.NFKD.list ~~ (0x1D158, 0x1D165, 0x1D16F,), '0x1D161 -> Str -> 0x1D158, 0x1D165, 0x1D16F NormalizationTest.txt line no 15146';
-ok Uni.new(0x1D162).Str.NFKD.list ~~ (0x1D158, 0x1D165, 0x1D170,), '0x1D162 -> Str -> 0x1D158, 0x1D165, 0x1D170 NormalizationTest.txt line no 15147';
-ok Uni.new(0x1D163).Str.NFKD.list ~~ (0x1D158, 0x1D165, 0x1D171,), '0x1D163 -> Str -> 0x1D158, 0x1D165, 0x1D171 NormalizationTest.txt line no 15148';
-ok Uni.new(0x1D164).Str.NFKD.list ~~ (0x1D158, 0x1D165, 0x1D172,), '0x1D164 -> Str -> 0x1D158, 0x1D165, 0x1D172 NormalizationTest.txt line no 15149';
-ok Uni.new(0x1D1BB).Str.NFKD.list ~~ (0x1D1B9, 0x1D165,), '0x1D1BB -> Str -> 0x1D1B9, 0x1D165 NormalizationTest.txt line no 15150';
-ok Uni.new(0x1D1BC).Str.NFKD.list ~~ (0x1D1BA, 0x1D165,), '0x1D1BC -> Str -> 0x1D1BA, 0x1D165 NormalizationTest.txt line no 15151';
-ok Uni.new(0x1D1BD).Str.NFKD.list ~~ (0x1D1B9, 0x1D165, 0x1D16E,), '0x1D1BD -> Str -> 0x1D1B9, 0x1D165, 0x1D16E NormalizationTest.txt line no 15152';
-ok Uni.new(0x1D1BE).Str.NFKD.list ~~ (0x1D1BA, 0x1D165, 0x1D16E,), '0x1D1BE -> Str -> 0x1D1BA, 0x1D165, 0x1D16E NormalizationTest.txt line no 15153';
-ok Uni.new(0x1D1BF).Str.NFKD.list ~~ (0x1D1B9, 0x1D165, 0x1D16F,), '0x1D1BF -> Str -> 0x1D1B9, 0x1D165, 0x1D16F NormalizationTest.txt line no 15154';
-ok Uni.new(0x1D1C0).Str.NFKD.list ~~ (0x1D1BA, 0x1D165, 0x1D16F,), '0x1D1C0 -> Str -> 0x1D1BA, 0x1D165, 0x1D16F NormalizationTest.txt line no 15155';
+ok Uni.new(0xFB1D).Str.NFKD.list ~~ (0x5D9, 0x5B4,), '0xFB1D -> Str -> 0x5D9, 0x5B4 NormalizationTest.txt line no 14066';
+ok Uni.new(0xFB1F).Str.NFKD.list ~~ (0x5F2, 0x5B7,), '0xFB1F -> Str -> 0x5F2, 0x5B7 NormalizationTest.txt line no 14067';
+ok Uni.new(0xFB2A).Str.NFKD.list ~~ (0x5E9, 0x5C1,), '0xFB2A -> Str -> 0x5E9, 0x5C1 NormalizationTest.txt line no 14078';
+ok Uni.new(0xFB2B).Str.NFKD.list ~~ (0x5E9, 0x5C2,), '0xFB2B -> Str -> 0x5E9, 0x5C2 NormalizationTest.txt line no 14079';
+ok Uni.new(0xFB2C).Str.NFKD.list ~~ (0x5E9, 0x5BC, 0x5C1,), '0xFB2C -> Str -> 0x5E9, 0x5BC, 0x5C1 NormalizationTest.txt line no 14080';
+ok Uni.new(0xFB2D).Str.NFKD.list ~~ (0x5E9, 0x5BC, 0x5C2,), '0xFB2D -> Str -> 0x5E9, 0x5BC, 0x5C2 NormalizationTest.txt line no 14081';
+ok Uni.new(0xFB2E).Str.NFKD.list ~~ (0x5D0, 0x5B7,), '0xFB2E -> Str -> 0x5D0, 0x5B7 NormalizationTest.txt line no 14082';
+ok Uni.new(0xFB2F).Str.NFKD.list ~~ (0x5D0, 0x5B8,), '0xFB2F -> Str -> 0x5D0, 0x5B8 NormalizationTest.txt line no 14083';
+ok Uni.new(0xFB30).Str.NFKD.list ~~ (0x5D0, 0x5BC,), '0xFB30 -> Str -> 0x5D0, 0x5BC NormalizationTest.txt line no 14084';
+ok Uni.new(0xFB31).Str.NFKD.list ~~ (0x5D1, 0x5BC,), '0xFB31 -> Str -> 0x5D1, 0x5BC NormalizationTest.txt line no 14085';
+ok Uni.new(0xFB32).Str.NFKD.list ~~ (0x5D2, 0x5BC,), '0xFB32 -> Str -> 0x5D2, 0x5BC NormalizationTest.txt line no 14086';
+ok Uni.new(0xFB33).Str.NFKD.list ~~ (0x5D3, 0x5BC,), '0xFB33 -> Str -> 0x5D3, 0x5BC NormalizationTest.txt line no 14087';
+ok Uni.new(0xFB34).Str.NFKD.list ~~ (0x5D4, 0x5BC,), '0xFB34 -> Str -> 0x5D4, 0x5BC NormalizationTest.txt line no 14088';
+ok Uni.new(0xFB35).Str.NFKD.list ~~ (0x5D5, 0x5BC,), '0xFB35 -> Str -> 0x5D5, 0x5BC NormalizationTest.txt line no 14089';
+ok Uni.new(0xFB36).Str.NFKD.list ~~ (0x5D6, 0x5BC,), '0xFB36 -> Str -> 0x5D6, 0x5BC NormalizationTest.txt line no 14090';
+ok Uni.new(0xFB38).Str.NFKD.list ~~ (0x5D8, 0x5BC,), '0xFB38 -> Str -> 0x5D8, 0x5BC NormalizationTest.txt line no 14091';
+ok Uni.new(0xFB39).Str.NFKD.list ~~ (0x5D9, 0x5BC,), '0xFB39 -> Str -> 0x5D9, 0x5BC NormalizationTest.txt line no 14092';
+ok Uni.new(0xFB3A).Str.NFKD.list ~~ (0x5DA, 0x5BC,), '0xFB3A -> Str -> 0x5DA, 0x5BC NormalizationTest.txt line no 14093';
+ok Uni.new(0xFB3B).Str.NFKD.list ~~ (0x5DB, 0x5BC,), '0xFB3B -> Str -> 0x5DB, 0x5BC NormalizationTest.txt line no 14094';
+ok Uni.new(0xFB3C).Str.NFKD.list ~~ (0x5DC, 0x5BC,), '0xFB3C -> Str -> 0x5DC, 0x5BC NormalizationTest.txt line no 14095';
+ok Uni.new(0xFB3E).Str.NFKD.list ~~ (0x5DE, 0x5BC,), '0xFB3E -> Str -> 0x5DE, 0x5BC NormalizationTest.txt line no 14096';
+ok Uni.new(0xFB40).Str.NFKD.list ~~ (0x5E0, 0x5BC,), '0xFB40 -> Str -> 0x5E0, 0x5BC NormalizationTest.txt line no 14097';
+ok Uni.new(0xFB41).Str.NFKD.list ~~ (0x5E1, 0x5BC,), '0xFB41 -> Str -> 0x5E1, 0x5BC NormalizationTest.txt line no 14098';
+ok Uni.new(0xFB43).Str.NFKD.list ~~ (0x5E3, 0x5BC,), '0xFB43 -> Str -> 0x5E3, 0x5BC NormalizationTest.txt line no 14099';
+ok Uni.new(0xFB44).Str.NFKD.list ~~ (0x5E4, 0x5BC,), '0xFB44 -> Str -> 0x5E4, 0x5BC NormalizationTest.txt line no 14100';
+ok Uni.new(0xFB46).Str.NFKD.list ~~ (0x5E6, 0x5BC,), '0xFB46 -> Str -> 0x5E6, 0x5BC NormalizationTest.txt line no 14101';
+ok Uni.new(0xFB47).Str.NFKD.list ~~ (0x5E7, 0x5BC,), '0xFB47 -> Str -> 0x5E7, 0x5BC NormalizationTest.txt line no 14102';
+ok Uni.new(0xFB48).Str.NFKD.list ~~ (0x5E8, 0x5BC,), '0xFB48 -> Str -> 0x5E8, 0x5BC NormalizationTest.txt line no 14103';
+ok Uni.new(0xFB49).Str.NFKD.list ~~ (0x5E9, 0x5BC,), '0xFB49 -> Str -> 0x5E9, 0x5BC NormalizationTest.txt line no 14104';
+ok Uni.new(0xFB4A).Str.NFKD.list ~~ (0x5EA, 0x5BC,), '0xFB4A -> Str -> 0x5EA, 0x5BC NormalizationTest.txt line no 14105';
+ok Uni.new(0xFB4B).Str.NFKD.list ~~ (0x5D5, 0x5B9,), '0xFB4B -> Str -> 0x5D5, 0x5B9 NormalizationTest.txt line no 14106';
+ok Uni.new(0xFB4C).Str.NFKD.list ~~ (0x5D1, 0x5BF,), '0xFB4C -> Str -> 0x5D1, 0x5BF NormalizationTest.txt line no 14107';
+ok Uni.new(0xFB4D).Str.NFKD.list ~~ (0x5DB, 0x5BF,), '0xFB4D -> Str -> 0x5DB, 0x5BF NormalizationTest.txt line no 14108';
+ok Uni.new(0xFB4E).Str.NFKD.list ~~ (0x5E4, 0x5BF,), '0xFB4E -> Str -> 0x5E4, 0x5BF NormalizationTest.txt line no 14109';
+ok Uni.new(0x1D15E).Str.NFKD.list ~~ (0x1D157, 0x1D165,), '0x1D15E -> Str -> 0x1D157, 0x1D165 NormalizationTest.txt line no 15202';
+ok Uni.new(0x1D15F).Str.NFKD.list ~~ (0x1D158, 0x1D165,), '0x1D15F -> Str -> 0x1D158, 0x1D165 NormalizationTest.txt line no 15203';
+ok Uni.new(0x1D160).Str.NFKD.list ~~ (0x1D158, 0x1D165, 0x1D16E,), '0x1D160 -> Str -> 0x1D158, 0x1D165, 0x1D16E NormalizationTest.txt line no 15204';
+ok Uni.new(0x1D161).Str.NFKD.list ~~ (0x1D158, 0x1D165, 0x1D16F,), '0x1D161 -> Str -> 0x1D158, 0x1D165, 0x1D16F NormalizationTest.txt line no 15205';
+ok Uni.new(0x1D162).Str.NFKD.list ~~ (0x1D158, 0x1D165, 0x1D170,), '0x1D162 -> Str -> 0x1D158, 0x1D165, 0x1D170 NormalizationTest.txt line no 15206';
+ok Uni.new(0x1D163).Str.NFKD.list ~~ (0x1D158, 0x1D165, 0x1D171,), '0x1D163 -> Str -> 0x1D158, 0x1D165, 0x1D171 NormalizationTest.txt line no 15207';
+ok Uni.new(0x1D164).Str.NFKD.list ~~ (0x1D158, 0x1D165, 0x1D172,), '0x1D164 -> Str -> 0x1D158, 0x1D165, 0x1D172 NormalizationTest.txt line no 15208';
+ok Uni.new(0x1D1BB).Str.NFKD.list ~~ (0x1D1B9, 0x1D165,), '0x1D1BB -> Str -> 0x1D1B9, 0x1D165 NormalizationTest.txt line no 15209';
+ok Uni.new(0x1D1BC).Str.NFKD.list ~~ (0x1D1BA, 0x1D165,), '0x1D1BC -> Str -> 0x1D1BA, 0x1D165 NormalizationTest.txt line no 15210';
+ok Uni.new(0x1D1BD).Str.NFKD.list ~~ (0x1D1B9, 0x1D165, 0x1D16E,), '0x1D1BD -> Str -> 0x1D1B9, 0x1D165, 0x1D16E NormalizationTest.txt line no 15211';
+ok Uni.new(0x1D1BE).Str.NFKD.list ~~ (0x1D1BA, 0x1D165, 0x1D16E,), '0x1D1BE -> Str -> 0x1D1BA, 0x1D165, 0x1D16E NormalizationTest.txt line no 15212';
+ok Uni.new(0x1D1BF).Str.NFKD.list ~~ (0x1D1B9, 0x1D165, 0x1D16F,), '0x1D1BF -> Str -> 0x1D1B9, 0x1D165, 0x1D16F NormalizationTest.txt line no 15213';
+ok Uni.new(0x1D1C0).Str.NFKD.list ~~ (0x1D1BA, 0x1D165, 0x1D16F,), '0x1D1C0 -> Str -> 0x1D1BA, 0x1D165, 0x1D16F NormalizationTest.txt line no 15214';
 

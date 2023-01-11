@@ -1,7 +1,7 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 13.0.0.
+# Generated from Unicode version 15.0.0.
 
 use Test;
 
@@ -371,6 +371,9 @@ ok Uni.new(0x33FF).NFKC.list ~~ (0x0067, 0x0061, 0x006C,), '33FF -> 0067 0061 00
 ok Uni.new(0xA69C).NFKC.list ~~ (0x044A,), 'A69C -> 044A';
 ok Uni.new(0xA69D).NFKC.list ~~ (0x044C,), 'A69D -> 044C';
 ok Uni.new(0xA770).NFKC.list ~~ (0xA76F,), 'A770 -> A76F';
+ok Uni.new(0xA7F2).NFKC.list ~~ (0x0043,), 'A7F2 -> 0043';
+ok Uni.new(0xA7F3).NFKC.list ~~ (0x0046,), 'A7F3 -> 0046';
+ok Uni.new(0xA7F4).NFKC.list ~~ (0x0051,), 'A7F4 -> 0051';
 ok Uni.new(0xA7F8).NFKC.list ~~ (0x0126,), 'A7F8 -> 0126';
 ok Uni.new(0xA7F9).NFKC.list ~~ (0x0153,), 'A7F9 -> 0153';
 ok Uni.new(0xAB5C).NFKC.list ~~ (0xA727,), 'AB5C -> A727';
@@ -2004,6 +2007,3 @@ ok Uni.new(0xB256).NFKC.list ~~ (0xB256,), 'B256 -> B256';
 ok Uni.new(0xB257).NFKC.list ~~ (0xB257,), 'B257 -> B257';
 ok Uni.new(0xB258).NFKC.list ~~ (0xB258,), 'B258 -> B258';
 ok Uni.new(0xB259).NFKC.list ~~ (0xB259,), 'B259 -> B259';
-ok Uni.new(0xB25A).NFKC.list ~~ (0xB25A,), 'B25A -> B25A';
-ok Uni.new(0xB25B).NFKC.list ~~ (0xB25B,), 'B25B -> B25B';
-ok Uni.new(0xB25C).NFKC.list ~~ (0xB25C,), 'B25C -> B25C';

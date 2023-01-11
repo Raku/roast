@@ -1,12 +1,15 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 13.0.0.
+# Generated from Unicode version 15.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xC1FA).NFKC.list ~~ (0xC1FA,), 'C1FA -> C1FA';
+ok Uni.new(0xC1FB).NFKC.list ~~ (0xC1FB,), 'C1FB -> C1FB';
+ok Uni.new(0xC1FC).NFKC.list ~~ (0xC1FC,), 'C1FC -> C1FC';
 ok Uni.new(0xC1FD).NFKC.list ~~ (0xC1FD,), 'C1FD -> C1FD';
 ok Uni.new(0xC1FE).NFKC.list ~~ (0xC1FE,), 'C1FE -> C1FE';
 ok Uni.new(0xC1FF).NFKC.list ~~ (0xC1FF,), 'C1FF -> C1FF';
@@ -2004,6 +2007,3 @@ ok Uni.new(0xC9C6).NFKC.list ~~ (0xC9C6,), 'C9C6 -> C9C6';
 ok Uni.new(0xC9C7).NFKC.list ~~ (0xC9C7,), 'C9C7 -> C9C7';
 ok Uni.new(0xC9C8).NFKC.list ~~ (0xC9C8,), 'C9C8 -> C9C8';
 ok Uni.new(0xC9C9).NFKC.list ~~ (0xC9C9,), 'C9C9 -> C9C9';
-ok Uni.new(0xC9CA).NFKC.list ~~ (0xC9CA,), 'C9CA -> C9CA';
-ok Uni.new(0xC9CB).NFKC.list ~~ (0xC9CB,), 'C9CB -> C9CB';
-ok Uni.new(0xC9CC).NFKC.list ~~ (0xC9CC,), 'C9CC -> C9CC';

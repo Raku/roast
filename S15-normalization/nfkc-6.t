@@ -1,12 +1,15 @@
 use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 13.0.0.
+# Generated from Unicode version 15.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xD19A).NFKC.list ~~ (0xD19A,), 'D19A -> D19A';
+ok Uni.new(0xD19B).NFKC.list ~~ (0xD19B,), 'D19B -> D19B';
+ok Uni.new(0xD19C).NFKC.list ~~ (0xD19C,), 'D19C -> D19C';
 ok Uni.new(0xD19D).NFKC.list ~~ (0xD19D,), 'D19D -> D19D';
 ok Uni.new(0xD19E).NFKC.list ~~ (0xD19E,), 'D19E -> D19E';
 ok Uni.new(0xD19F).NFKC.list ~~ (0xD19F,), 'D19F -> D19F';
@@ -2004,6 +2007,3 @@ ok Uni.new(0xFAD0).NFKC.list ~~ (0x22844,), 'FAD0 -> 22844';
 ok Uni.new(0xFAD1).NFKC.list ~~ (0x233D5,), 'FAD1 -> 233D5';
 ok Uni.new(0xFAD2).NFKC.list ~~ (0x3B9D,), 'FAD2 -> 3B9D';
 ok Uni.new(0xFAD3).NFKC.list ~~ (0x4018,), 'FAD3 -> 4018';
-ok Uni.new(0xFAD4).NFKC.list ~~ (0x4039,), 'FAD4 -> 4039';
-ok Uni.new(0xFAD5).NFKC.list ~~ (0x25249,), 'FAD5 -> 25249';
-ok Uni.new(0xFAD6).NFKC.list ~~ (0x25CD0,), 'FAD6 -> 25CD0';
