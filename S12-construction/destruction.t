@@ -8,6 +8,7 @@ plan 6;
 # same way, only in reverse">
 
 my $in_destructor = 0;
+my $order_lock = Lock.new;
 my @destructor_order;
 
 class Foo
@@ -17,12 +18,12 @@ class Foo
 
 class Parent
 {
-    submethod DESTROY { push @destructor_order, "Parent" ~ self.WHERE }
+    submethod DESTROY { $order_lock.protect: { push @destructor_order, "Parent" ~ self } }
 }
 
 class Child is Parent
 {
-    submethod DESTROY { push @destructor_order, "Child" ~ self.WHERE }
+    submethod DESTROY { $order_lock.protect: { push @destructor_order, "Child" ~ self } }
 }
 
 my $foo = Foo.new();
@@ -51,20 +52,24 @@ else {
 
     #?rakudo.jvm todo "doesn't work, yet"
     ok( $in_destructor, '... only when object goes away everywhere'                          );
-    is( +@destructor_order % 2, 0, '... only a multiple of the available DESTROY submethods' );
-    my $seen = SetHash.new;
-    for @destructor_order {
-        if /Parent/ {
-            if $seen{$_.subst('Parent', 'Child')} {
-                pass "Parent after child";
+    $order_lock.protect: {
+        is( +@destructor_order % 2, 0, '... only a multiple of the available DESTROY submethods' )
+            or diag @destructor_order;
+        my $seen = SetHash.new;
+        for @destructor_order {
+            if /Parent/ {
+                if $seen{$_.subst('Parent', 'Child')} {
+                    pass "Parent after child";
+                }
+                else {
+                    #?rakudo.jvm todo "doesn't work, yet"
+                    flunk "Found a parent but no corresponding child constructor call";
+                    diag @destructor_order;
+                }
             }
-            else {
-                #?rakudo.jvm todo "doesn't work, yet"
-                fail "Found a parent but no corresponding child constructor call";
+            if /Child/ {
+                $seen{$_} = True;
             }
-        }
-        if /Child/ {
-            $seen{$_} = True;
         }
     }
 }
