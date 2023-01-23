@@ -37,7 +37,7 @@ subtest "Basic role language revision", {
 subtest "Multi-module and multi-version", {
     plan 3;
     use Ver6e;
-    is-deeply VerRole.^candidates.map( *.^language-revision ), <c e>,
+    is-deeply VerRole.^candidates.map( ~ *.^language-revision ), <c e>,
               "role candidates are coming from different language revisions";
     is VerRole.new.^language-revision, 'c', "pun of role defined in 6.c remains 6.c";
     is VerRole[Str].new.^language-revision, 'e', "pun of role defined in 6.e remains 6.e";
