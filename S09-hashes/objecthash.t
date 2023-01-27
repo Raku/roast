@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 54;
+plan 56;
 
 {
     class A { method Str() { 'foo' } };
@@ -103,6 +103,15 @@ plan 54;
     %hash{"quux" but $r2} = 11;
 
     is %hash.keys>>.foo.sort, (5, 7), 'Can use mixin objects as keys';
+}
+
+# https://github.com/rakudo/rakudo/issues/5165
+{
+    my %input = foo => True, bar => True;
+    my %input-typed{Any} = %input;
+    my %copy = (%input-typed,);
+    is-deeply %copy, %input, 'Assigning a list with an object hash to another Hash gives the content back';
+    is-deeply %(%input-typed,), %input, 'Enforcing hash context on a list of an object hash gives the content back';
 }
 
 {
