@@ -86,12 +86,10 @@ is opt_hash2(),  0, "optional hash not passed is empty (copy)";
 # https://github.com/Raku/old-issue-tracker/issues/3171
 {
     sub opt_array(Int @foo?) { @foo.push(42); @foo };
-    #?rakudo.jvm skip 'Type check failed in binding to parameter "@foo"; expected Positional[Int] but got Array ($[])'
     is-deeply opt_array(),                  Array[Int].new(42),    'can assign to an optional typed array not passed';
     is-deeply opt_array(Array[Int].new(1)), Array[Int].new(1, 42), 'can assign to an optional typed array that is passed';
 
     sub opt_hash(Int %foo?) { %foo<bar> = 42; %foo };
-    #?rakudo.jvm skip 'Type check failed in binding to parameter "%foo"; expected Associative[Int] but got Hash (${})'
     is-deeply opt_hash(),                   (my Int % = :bar(42)),          'can assign to an optional typed hash not passed';
     is-deeply opt_hash(my Int % = :baz(1)), (my Int % = :baz(1), :bar(42)), 'can assign to an optional typed hash that is passed';
 }
