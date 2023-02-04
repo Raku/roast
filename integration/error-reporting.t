@@ -198,6 +198,7 @@ is_run '...', {:out(''), :err{ not $^o.contains: 'Unhandled exception' }},
     'stub code must not produce `Unhandled exception` message';
 
 # https://github.com/Raku/old-issue-tracker/issues/4262
+#?rakudo.jvm todo 'NullPointerException in error reporting, https://github.com/rakudo/rakudo/issues/5180'
 is_run Q[#`{{ my long
 	      unfinished comment'],
 	      { :out(''), :err{ $^o.contains: 'line 1' }}, 'Unfinished comment error points on correct line';
