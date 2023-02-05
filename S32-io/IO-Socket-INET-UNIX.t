@@ -1,5 +1,7 @@
 use v6;
+use lib $?FILE.IO.parent.sibling: 'packages/Test-Helpers/lib';
 use Test;
+use Test::Util;
 
 plan 8;
 
@@ -9,10 +11,9 @@ if $*DISTRO.is-win {
     my IO::Socket::INET:_ $server;
     my IO::Socket::INET:_ $client;
     my IO::Socket::INET:_ $accepted;
-    my Str:D              $host      = $*TMPDIR.add("test-$*PID.sock").Str;
+    my Str:D              $host      = make-temp-path.absolute;
     my Str:D              $sent      = 'Hello, world!';
     my Str:_              $received;
-    LEAVE $host.IO.unlink if $host.IO.e;
 
     lives-ok {
         $server = IO::Socket::INET.listen: $host, 0, family => PF_UNIX;
@@ -38,6 +39,8 @@ if $*DISTRO.is-win {
     lives-ok {
         $server.close;
     }, 'can close TCP UNIX socket servers';
+
+    # Test::Util takes care of cleanup.
 }
 
 # vim: expandtab shiftwidth=4
