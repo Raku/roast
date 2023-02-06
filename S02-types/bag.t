@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 251;
+plan 252;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -618,6 +618,13 @@ lives-ok { my %h is Bag = 42 }, "Can we initialize a Bag with a single value";
       'did on-the-fly value return original';
     is-deeply $b, <a b c d e a b>.Bag,
       'did on-the-fly value leave original unchanged';
+}
+
+# https://github.com/rakudo/rakudo/issues/5190
+{
+    my class Foo is Bag {}
+    isa-ok Foo.new("a") (+) Foo.new("b"), Foo,
+      "union of two Foo instances should be a Foo instance";
 }
 
 # vim: expandtab shiftwidth=4
