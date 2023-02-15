@@ -147,7 +147,7 @@ subtest "When a subset is a subset of a subset", {
 
     is-run 'subset F of Int where * %% 2; subset G of F where * %% 3; my G $g = 9',
         :exitcode(1), :err({ .contains: 'Type check failed in assignment ' }),
-        "Subset works as 'of' of a subset (asigment fails criteria)";
+        "Subset works as 'of' of a subset (assigment fails criteria)";
 }
 
 done-testing;
