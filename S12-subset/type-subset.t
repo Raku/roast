@@ -141,11 +141,11 @@ subtest "When a subset has no where block", {
 subtest "When a subset is a subset of a subset", {
     plan 2;
 
-    is-run 'subset F of Int where * %% 5; subset G of F where * %% 25; my G $g = 25',
+    is-run 'subset F of Int where * %% 2; subset G of F where * %% 3; my G $g = 6',
         :exitcode(0),
         "Subset works as 'of' of a subset (assignment meets criteria)";
 
-    is-run 'subset F of Int where * %% 5; subset G of F where * %% 25; my G $g = 26',
+    is-run 'subset F of Int where * %% 5; subset G of F where * %% 25; my G $g = 9',
         :exitcode(1), :err({ .contains: 'Type check failed in assignment ' }),
         "Subset works as 'of' of a subset (asigment fails criteria)";
 }
