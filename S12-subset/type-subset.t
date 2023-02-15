@@ -3,7 +3,7 @@ use lib <t/packages/>;
 use Test;
 use Test::Helpers;
 
-plan 10;
+plan 11;
 
 subtest "When refinement is an expression value", {
     plan 3;
@@ -143,11 +143,11 @@ subtest "When a subset is a subset of a subset", {
 
     is-run 'subset F of Int where * %% 5; subset G of F where * %% 25; my G $g = 25',
         :exitcode(0),
-        "Subset works as 'of' of a subset";
+        "Subset works as 'of' of a subset (assignment meets criteria)";
 
     is-run 'subset F of Int where * %% 5; subset G of F where * %% 25; my G $g = 26',
-        :exitcode(1),
-        "Subset works as 'of' of a subset";
+        :exitcode(1), :err({ .contains: 'Type check failed in assignment ' }),
+        "Subset works as 'of' of a subset (asigment fails criteria)";
 }
 
 done-testing;
