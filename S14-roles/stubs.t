@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 29;
+plan 30;
 
 role WithStub { method a() { ... } };
 role ProvidesStub1 { method a() { 1 } };
@@ -28,6 +28,10 @@ lives-ok { EVAL 'class F does WithStub does ProvidesStub1 does ProvidesStub2 {
     dies-ok { EVAL 'class H does WithMultiStub { multi method a(Str) { } }' },
         "Interface contract enforced on stubbed multi";
 }
+
+# https://github.com/Raku/old-issue-tracker/issues/2901
+eval-lives-ok q[class C2901 does WithStub { multi method a() { "OHAI" } }],
+    'Class can define multi method to implement non-multi method stubbed in role';
 
 lives-ok { EVAL 'class I does WithStub {
     has WithStub $.with-stub handles <a>}' },
