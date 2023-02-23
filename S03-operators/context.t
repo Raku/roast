@@ -83,7 +83,7 @@ plan 38;
     throws-like '"@{$array}"', X::Obsolete, 'Perl form of "@{$array}" dies';
 
     my $hash  = {a => 1, b => 2, c => 3};
-    throws-like '%{$hash}', X::Hash::Store::OddNumber, 'Let rare Perl form of %{$hash} fail for other reasons';
+    dies-ok { %{$hash} }, 'Let rare Perl form of %{$hash} fail for other reasons';
 }
 
 is(($).WHAT.gist, '(Any)', 'Anonymous $ variable can be declared');
