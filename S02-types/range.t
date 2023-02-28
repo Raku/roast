@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 193;
+plan 205;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -459,6 +459,16 @@ subtest 'no floating point drifts in degenerate Ranges' => {
 {
     my @a = "1"..9;
     is-deeply @a, ["1","2","3","4","5","6","7","8","9"], 'did we get strings';
+}
+
+# https://github.com/rakudo/rakudo/issues/5222
+{
+    for 1..1, 1^..2, 1..^2, 1^..^3, "a".."a", 1..* -> $range {
+        is-deeply $range.Bool, True, "$range.raku().Bool is True";
+    }
+    for 1..0, 1^..1, 1..^1, 1^..^2, "b".."a", 1..-Inf -> $range {
+        is-deeply $range.Bool, False, "$range.raku().Bool is False";
+    }
 }
 
 # vim: expandtab shiftwidth=4
