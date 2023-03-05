@@ -360,9 +360,9 @@ is 'a'.parse-base\   \   (16), 10, 'unspace can recurse';
 
 # https://github.com/Raku/old-issue-tracker/issues/4509
 {
-    eval-lives-ok 'constant nums = 1; my \fizzbuzz = nums\ .map({ $_ });',
+    eval-lives-ok 'my constant nums = 1; my \fizzbuzz = nums\ .map({ $_ });',
         'unspace combined with map and a constant';
-    eval-lives-ok 'constant nums = 1; constant fizzbuzz = nums\ .map({ $_ })',
+    eval-lives-ok 'my constant nums = 1; my constant fizzbuzz = nums\ .map({ $_ })',
         'unspace combined with map and constants';
 }
 
