@@ -593,6 +593,7 @@ S06-traits/slurpy-is-rw.t
 S07-hyperrace/basics.t # moar
 S07-hyperrace/for.t
 S07-hyperrace/stress.t # moar stress
+S07-iterationbuffer/iterationbuffer.t
 S07-iterators/range-iterator.t
 S07-slip/slip.t
 S09-autovivification/autoincrement.t
