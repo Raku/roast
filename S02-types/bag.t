@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 252;
+plan 254;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -625,6 +625,12 @@ lives-ok { my %h is Bag = 42 }, "Can we initialize a Bag with a single value";
     my class Foo is Bag {}
     isa-ok Foo.new("a") (+) Foo.new("b"), Foo,
       "union of two Foo instances should be a Foo instance";
+}
+
+# https://github.com/rakudo/rakudo/issues/5229
+{
+    is-deeply List.Bag,  Bag.new(List),  'got a Bag with a List';
+    is-deeply Array.Bag, Bag.new(Array), 'got a Bag with an Array';
 }
 
 # vim: expandtab shiftwidth=4

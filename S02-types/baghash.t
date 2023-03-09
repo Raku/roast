@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 338;
+plan 340;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -812,6 +812,12 @@ lives-ok { my %h is BagHash = 42 },
       'did on-the-fly value return original';
     is-deeply $b, <a b>.BagHash,
       'did on-the-fly value change original';
+}
+
+# https://github.com/rakudo/rakudo/issues/5229
+{
+    is-deeply List.BagHash,  BagHash.new(List),  'got a BagHash with a List';
+    is-deeply Array.BagHash, BagHash.new(Array), 'got a BagHash with an Array';
 }
 
 # vim: expandtab shiftwidth=4

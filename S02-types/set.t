@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 245;
+plan 247;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -622,6 +622,12 @@ lives-ok { my %h is Set = 42 }, "Can we initialize a Set with a single value";
       'did on-the-fly value return original';
     is-deeply $s, <a b c d e>.Set,
       'did on-the-fly value leave original unchanged';
+}
+
+# https://github.com/rakudo/rakudo/issues/5229
+{
+    is-deeply List.Set,  Set.new(List),  'did we get a Set with a List';
+    is-deeply Array.Set, Set.new(Array), 'did we get a Set with an Array';
 }
 
 # vim: expandtab shiftwidth=4

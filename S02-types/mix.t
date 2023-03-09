@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 241;
+plan 243;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -579,6 +579,12 @@ lives-ok { my %h is Mix = 42 }, "Can we initialize a Mix with a single value";
       'did on-the-fly value return original';
     is-deeply $m, <a b c d e a b>.Mix,
       'did on-the-fly value leave original unchanged';
+}
+
+# https://github.com/rakudo/rakudo/issues/5229
+{
+    is-deeply List.Mix,  Mix.new(List),  'got a Mix with a List';
+    is-deeply Array.Mix, Mix.new(Array), 'got a Mix with an Array';
 }
 
 # vim: expandtab shiftwidth=4

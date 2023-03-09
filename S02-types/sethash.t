@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 278;
+plan 280;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -705,6 +705,12 @@ lives-ok { my %h is SetHash = 42 },
       'did on-the-fly value return original';
     is-deeply $s, SetHash.new,
       'did on-the-fly value change original';
+}
+
+# https://github.com/rakudo/rakudo/issues/5229
+{
+    is-deeply List.SetHash,  SetHash.new(List),  'got a SetHash with a List';
+    is-deeply Array.SetHash, SetHash.new(Array), 'got a SetHash with an Array';
 }
 
 # vim: expandtab shiftwidth=4
