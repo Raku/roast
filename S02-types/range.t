@@ -467,6 +467,7 @@ subtest 'no floating point drifts in degenerate Ranges' => {
         is-deeply $range.Bool, True, "$range.raku().Bool is True";
     }
     for 1..0, 1^..1, 1..^1, 1^..^2, "b".."a", 1..-Inf -> $range {
+        todo("fixed in 6.e");
         is-deeply $range.Bool, False, "$range.raku().Bool is False";
     }
 }
