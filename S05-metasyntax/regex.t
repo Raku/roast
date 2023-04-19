@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 53;
+plan 55;
 
 throws-like 'qr/foo/', X::Obsolete, 'qr// is gone';
 
@@ -291,5 +291,12 @@ is 'a' ~~ / a & a /, 'a', 'Unescaped & works as conjunction';
 
 # https://github.com/rakudo/rakudo/issues/2118
 ok 1 ~~ TR/\#//, 'Backslashed # is parsed correctly in a regex';
+
+# https://github.com/rakudo/rakudo/issues/5248
+is ("aa" ~~ /$<start>=<.alpha> $<start>/).gist,
+  "｢aa｣\n start => ｢a｣", 'non-capturing backref works';
+is ("aa" ~~ /$<start>=<alpha> $<start>/).gist,
+  "｢aa｣\n alpha => ｢a｣\n start => ｢a｣" | "｢aa｣\n start => ｢a｣\n alpha => ｢a｣",
+  'capturing backref works';
 
 # vim: expandtab shiftwidth=4
