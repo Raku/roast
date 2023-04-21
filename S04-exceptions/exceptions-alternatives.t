@@ -35,7 +35,7 @@ grammar JSON::Tiny::Grammar {
 plan 3;
 
 sub json-ex ($code) {
-    'use MONKEY-SEE-NO-EVAL; %*ENV<PERL6_EXCEPTIONS_HANDLER>="JSON";'
+    'use MONKEY-SEE-NO-EVAL; %*ENV<RAKU_EXCEPTIONS_HANDLER>="JSON";'
         ~ 'EVAL q|' ~ $code.subst(:g, '|', '\|') ~ '|;'
 }
 
