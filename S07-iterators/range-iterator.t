@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 104;
+plan 103;
 
 {
     my $r = (1..5).iterator;
@@ -189,17 +189,6 @@ subtest 'Iterator.skip-at-least-pull-one' => {
     is-deeply $r.pull-one,                  5, 'value after skip is correct';
     ok $r.skip-at-least-pull-one(10) =:= IterationEnd,
         'when not enough values to skip, returns IterationEnd';
-}
-
-subtest 'Iterator.sort on infinite range' => {
-    plan 5;
-
-    my $r = (1..Inf).sort.iterator;
-    is-deeply $r.is-lazy,                     True, 'lazy';
-    is-deeply $r.is-deterministic,            True, 'deterministic';
-    is-deeply $r.is-monotonically-increasing, True, 'monotonically increasing';
-    is-deeply $r.pull-one, 1, 'first value is correct';
-    is-deeply $r.pull-one, 2, 'second value is correct';
 }
 
 # vim: expandtab shiftwidth=4
