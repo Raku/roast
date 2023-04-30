@@ -6,28 +6,28 @@ plan 39;
 
 # L<S02/Names/"The following pseudo-package names are reserved">
 {
-    throws-like { EVAL 'module MY;' },
+    throws-like { EVAL 'unit module MY;' },
       X::PseudoPackage::InDeclaration,
       'MY is an out of scope name';
-    throws-like { EVAL 'module OUR;' },
+    throws-like { EVAL 'unit module OUR;' },
       X::PseudoPackage::InDeclaration,
       'OUR is an out of scope name';
-    throws-like { EVAL 'module GLOBAL;' },
+    throws-like { EVAL 'unit module GLOBAL;' },
       Exception,
       'GLOBAL is an out of scope name';
-    throws-like { EVAL 'module PROCESS;' },
+    throws-like { EVAL 'unit module PROCESS;' },
       X::PseudoPackage::InDeclaration,
       'PROCESS is an out of scope name';
-    throws-like { EVAL 'module OUTER;' },
+    throws-like { EVAL 'unit module OUTER;' },
       X::PseudoPackage::InDeclaration,
       'OUTER is an out of scope name';
-    throws-like { EVAL 'module CALLER;' },
+    throws-like { EVAL 'unit module CALLER;' },
       X::PseudoPackage::InDeclaration,
       'CALLER is an out of scope name';
-    throws-like { EVAL 'module DYNAMIC;' },
+    throws-like { EVAL 'unit module DYNAMIC;' },
       X::PseudoPackage::InDeclaration,
       'DYNAMIC is an out of scope name';
-    throws-like { EVAL 'module COMPILING;' },
+    throws-like { EVAL 'unit module COMPILING;' },
       X::PseudoPackage::InDeclaration,
       'COMPILING is an out of scope name';
 }
