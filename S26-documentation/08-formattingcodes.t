@@ -81,9 +81,10 @@ is $r.contents[0].contents, 'C<boo> B<bar> asd';
 =pod C< infix:<+> >
 =pod C<< infix:<+> >>
 
-for @$=pod[5, 6] {
-    is .contents[0].contents[0].contents[0], "infix:<+> ", "Can parse nested angles in formatting codes"
-}
+is $=pod[5].contents[0].contents[0].contents[0], "infix:<+> ",
+  "Can parse nested angles in formatting codes with < >";
+is $=pod[6].contents[0].contents[0].contents[0], "infix:<+> ",
+  "Can parse nested angles in formatting codes with << >>";
 
 =pod B< < B<foo> > >
 
