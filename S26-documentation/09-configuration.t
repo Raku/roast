@@ -37,8 +37,8 @@ is $r.config<number>, 42;
 }
 
 
-# RT #124281
-isa-ok $r.config<feist>, Str;
+#?rakudo todo 'RT #124281'
+is-deeply $r.config<feist>, <1 2 3 4>;
 
 
 =begin pod
