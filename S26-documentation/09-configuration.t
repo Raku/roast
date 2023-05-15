@@ -37,8 +37,8 @@ is $r.config<number>, 42;
 }
 
 
-# https://github.com/Raku/old-issue-tracker/issues/3778
-isa-ok $r.config<feist>, Str;
+#?rakudo todo 'https://github.com/Raku/old-issue-tracker/issues/3778'
+is-deeply $r.config<feist>, <1 2 3 4>;
 
 
 =begin pod
