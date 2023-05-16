@@ -159,8 +159,9 @@ foo
 
 $r = $=pod[$p++];
 say "=== testing nums";
-isa-ok $r.config<k1>, Num;
-isa-ok $r.config<k2>, Num;
+#?rakudo 2 todo '2.3 and -2.3 are Rats, not Nums'
+isa-ok $r.config<k1>, Rat;
+isa-ok $r.config<k2>, Rat;
 isa-ok $r.config<k3>, Num;
 isa-ok $r.config<k4>, Num;
 isa-ok $r.config<k5>, Num;
@@ -227,7 +228,7 @@ foo
 =end table
 
 $r = $=pod[$p++];
-isa-ok $r.config<k1>, Hash;
+isa-ok $r.config<k1>, Map;
 
 is $r.config<k1><a>, 1, Q|1|;
 is $r.config<k1><2>, 'b', Q|'b'|;
@@ -244,7 +245,7 @@ foo
 =end table
 
 $r = $=pod[$p++];
-isa-ok $r.config<k1>, Hash;
+isa-ok $r.config<k1>, Map;
 
 is $r.config<k1><2>, 'b => ?', Q|'b => ?'|;
 is $r.config<k1><c>, ",", Q|","|;
@@ -255,7 +256,7 @@ foo
 =end table
 
 $r = $=pod[$p++];
-isa-ok $r.config<k1>, Hash;
+isa-ok $r.config<k1>, Map;
 
 is $r.config<k1><2>, 'b => "', Q|'b => "'|;
 is $r.config<k1><d>, '"', Q|'"'|;
