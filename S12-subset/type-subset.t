@@ -129,8 +129,9 @@ subtest "When a subset has no where block", {
         :exitcode(0),
         "subset with of but no where succeeds when type constraint met";
 
+    #?rakudo todo 'in RakuAST this is a compile time error, not runtime'
     is-run 'subset MyInt of Int; my MyInt $f = 5.0',
-        :exitcode(1), :err({ .contains: 'expected MyInt but got Rat' }),
+        :exitcode(1), :err({ .contains: 'Cannot assign a literal of type Rat' }),
         "subset with of but no where fails when type constraint not met";
 
     is-run 'my Str subset MyStr; die unless Str ~~ MyStr',
