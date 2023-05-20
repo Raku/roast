@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 58;
+plan 57;
 
 # L<S32::Str/Str/=item substr>
 
@@ -119,9 +119,6 @@ subtest '.substr fails when start is beyond end of string' => {
     fails-like { 'foo'.substr: 5, 3 }, X::OutOfRange, '(from, chars) method';
     fails-like { substr 'foo', 5, 3 }, X::OutOfRange, '(from, chars) sub';
 }
-
-# https://github.com/Raku/old-issue-tracker/issues/3515
-lives-ok { BEGIN "a".subst: /a/, "b" }, '.subst in BEGIN does not die';
 
 subtest 'substr coerces from/to to Ints' => {
     plan 2;

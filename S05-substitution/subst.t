@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 190;
+plan 191;
 
 # L<S05/Substitution/>
 
@@ -697,5 +697,8 @@ subtest '.subst with multi-match args set $/ to a List of matches' => {
     is-deeply ([3,4].map:{S/$^a/X/}), ('12X45', '123X5'),
         'Placeholder parameter in substitution regex (// quoter)';
 }
+ 
+# https://github.com/Raku/old-issue-tracker/issues/3515
+lives-ok { BEGIN "a".subst: /a/, "b" }, '.subst in BEGIN does not die';
 
 # vim: expandtab shiftwidth=4
