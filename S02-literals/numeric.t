@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 69;
+plan 71;
 
 isa-ok 1, Int, '1 produces a Int';
 does-ok 1, Numeric, '1 does Numeric';
@@ -148,6 +148,11 @@ subtest '#2094 prefix as post fix works on number literals' => {
 
     done-testing;
   }
+}
+
+{
+    is-deeply (-1234567890).Str(:superscript), '⁻¹²³⁴⁵⁶⁷⁸⁹⁰', 'Int superscript';
+    is-deeply (-1234567890).Str(:subscript),   '₋₁₂₃₄₅₆₇₈₉₀', 'Int subscript';
 }
 
 # vim: expandtab shiftwidth=4
