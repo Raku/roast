@@ -20,6 +20,7 @@
 # purpose of the repository by browsing the documents it contains, and the issues
 # it has, both opened and closed.
 
+6.c/S03-operators/set_precedes.t
 APPENDICES/A01-limits/misc.t
 APPENDICES/A01-limits/overflow.t
 APPENDICES/A02-some-day-maybe/concreteness.t
@@ -278,7 +279,6 @@ S03-operators/set_elem.t
 S03-operators/set_equality.t
 S03-operators/set_intersection.t
 S03-operators/set_multiply.t
-S03-operators/set_precedes.t
 S03-operators/set_proper_subset.t
 S03-operators/set_subset.t
 S03-operators/set_symmetric_difference.t
