@@ -20,7 +20,10 @@
 # purpose of the repository by browsing the documents it contains, and the issues
 # it has, both opened and closed.
 
+6.c/MISC/bug-coverage.t
+6.c/MISC/bug-coverage-stress.t              # stress
 6.c/S03-operators/set_precedes.t
+
 APPENDICES/A01-limits/misc.t
 APPENDICES/A01-limits/overflow.t
 APPENDICES/A02-some-day-maybe/concreteness.t
@@ -31,8 +34,6 @@ APPENDICES/A03-older-specs/01-misc.t
 APPENDICES/A04-experimental/01-misc.t
 MISC/bug-coverage-6.d.t
 MISC/bug-coverage-stress-6.d.t              # stress
-MISC/bug-coverage-stress.t                  # stress
-MISC/bug-coverage.t
 MISC/misc-6.d.t
 S01-perl-5-integration/array.t              # Perl
 S01-perl-5-integration/basic.t              # Perl
