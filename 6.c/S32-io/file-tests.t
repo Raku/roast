@@ -1,8 +1,6 @@
-#! /usr/bin/env perl6
-
 use v6.c;
 use Test;
-use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use lib $?FILE.IO.parent(3).add("packages/Test-Helpers");
 use Test::Util;
 
 # L<S32::IO/IO::FileTests>
