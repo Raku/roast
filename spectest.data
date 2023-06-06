@@ -20,6 +20,8 @@
 # purpose of the repository by browsing the documents it contains, and the issues
 # it has, both opened and closed.
 
+6.c/APPENDICES/A03-older-specs/01-misc.t
+6.c/APPENDICES/A04-experimental/01-misc.t
 6.c/MISC/bug-coverage.t
 6.c/MISC/bug-coverage-stress.t              # stress
 6.c/S02-names/SETTING-6c.t
@@ -37,8 +39,6 @@ APPENDICES/A02-some-day-maybe/concreteness.t
 APPENDICES/A02-some-day-maybe/io-cathandle.t
 APPENDICES/A02-some-day-maybe/misc.t
 APPENDICES/A02-some-day-maybe/multi-no-match.t
-APPENDICES/A03-older-specs/01-misc.t
-APPENDICES/A04-experimental/01-misc.t
 MISC/bug-coverage-6.d.t
 MISC/bug-coverage-stress-6.d.t              # stress
 MISC/misc-6.d.t
