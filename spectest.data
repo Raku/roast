@@ -22,9 +22,12 @@
 
 6.c/MISC/bug-coverage.t
 6.c/MISC/bug-coverage-stress.t              # stress
+6.c/S02-names/SETTING-6c.t
+6.c/S02-names/pseudo-6c.t
 6.c/S03-operators/set_precedes.t
 6.c/S04-declarations/my-6c.t
 6.c/S06-other/main-refactored.t
+6.c/S12-class/mro-6c.t
 
 APPENDICES/A01-limits/misc.t
 APPENDICES/A01-limits/overflow.t
@@ -115,7 +118,6 @@ S02-names-vars/perl.t
 S02-names-vars/signature.t
 S02-names-vars/variables-and-packages.t
 S02-names-vars/varnames.t
-S02-names/SETTING-6c.t
 S02-names/SETTING-6e.t
 S02-names/bare-sigil.t
 S02-names/caller.t
@@ -127,7 +129,6 @@ S02-names/is_default.t
 S02-names/is_dynamic.t
 S02-names/name.t
 S02-names/our.t
-S02-names/pseudo-6c.t
 S02-names/pseudo-6d.t
 S02-names/pseudo-6e.t
 S02-names/strict.t
@@ -674,7 +675,6 @@ S12-class/interface-consistency.t
 S12-class/lexical.t
 S12-class/literal.t
 S12-class/magical-vars.t
-S12-class/mro-6c.t
 S12-class/mro-6e.t
 S12-class/namespaced.t
 S12-class/open.t
