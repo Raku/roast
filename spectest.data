@@ -24,6 +24,7 @@
 6.c/MISC/bug-coverage-stress.t              # stress
 6.c/S02-names/SETTING-6c.t
 6.c/S02-names/pseudo-6c.t
+6.c/S02-types/subset-6c.t
 6.c/S03-operators/set_precedes.t
 6.c/S04-declarations/my-6c.t
 6.c/S06-other/main-refactored.t
@@ -192,7 +193,6 @@ S02-types/sethash.t
 S02-types/sigils-and-types.t
 S02-types/stash.t
 S02-types/subscripts_and_context.t
-S02-types/subset-6c.t
 S02-types/subset-6e.t
 S02-types/type.t
 S02-types/undefined-types.t
