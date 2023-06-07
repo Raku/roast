@@ -1,3 +1,4 @@
+use v6.e.PREVIEW;
 use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
