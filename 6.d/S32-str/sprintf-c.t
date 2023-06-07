@@ -1,3 +1,5 @@
+use v6.d;
+
 #BEGIN %*ENV<PERL6_TEST_DIE_ON_FAIL> = True;
 use Test;
 

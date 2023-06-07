@@ -39,6 +39,17 @@
 6.c/S14-roles/submethods.t
 6.c/S32-io/file-tests.t
 
+6.d/S32-str/sprintf-b.t
+6.d/S32-str/sprintf-c.t      # moar
+6.d/S32-str/sprintf-d.t
+6.d/S32-str/sprintf-e.t
+6.d/S32-str/sprintf-f.t
+6.d/S32-str/sprintf-o.t
+6.d/S32-str/sprintf-s.t      # moar
+6.d/S32-str/sprintf-u.t
+6.d/S32-str/sprintf-x.t
+6.d/S32-str/sprintf.t
+
 APPENDICES/A01-limits/misc.t
 APPENDICES/A01-limits/overflow.t
 APPENDICES/A02-some-day-maybe/concreteness.t
