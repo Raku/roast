@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # L<S11/"Modules"/"There are two basic declaration syntaxes:">

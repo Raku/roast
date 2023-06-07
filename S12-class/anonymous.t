@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 # L<S12/Classes/"Raku supports multiple inheritance, anonymous classes">

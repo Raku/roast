@@ -1,5 +1,3 @@
-use v6;
-
 # Test phasers interpolated in double-quoted strings
 
 use Test;

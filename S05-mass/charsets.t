@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/"The special named assertions include">

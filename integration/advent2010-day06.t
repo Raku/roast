@@ -1,6 +1,4 @@
 # http://perl6advent.wordpress.com/2010/12/06/the-x-and-z-metaoperators/
-use v6;
-
 use Test;
 
 plan 12;

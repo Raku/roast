@@ -1,5 +1,3 @@
-use v6;
-
 # Test the running order of phasers
 # These blocks appear in descending order
 # [TODO] add tests for ENTER/LEAVE/KEEP/UNDO/PRE/POST/etc

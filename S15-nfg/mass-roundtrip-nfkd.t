@@ -1,4 +1,3 @@
-use v6;
 # Normal Form Grapheme roundtrip tests, generated from NormalizationTests.txt in
 # the Unicode database by S15-nfg/test-gen.raku. Check we can take a Uni, turn it
 # into an NFG string, and then get codepoints back out of it in NFKD.

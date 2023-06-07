@@ -1,5 +1,3 @@
-use v6;
-
 # Test various forms of comments
 
 use Test;

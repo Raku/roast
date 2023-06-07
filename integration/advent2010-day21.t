@@ -1,5 +1,4 @@
 # http://perl6advent.wordpress.com/2010/12/21/day-21-transliteration-and-beyond/
-use v6;
 use Test;
 plan 4;
 

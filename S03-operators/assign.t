@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # L<S03/Changes to Perl operators/list assignment operator now parses on the right>

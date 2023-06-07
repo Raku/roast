@@ -1,5 +1,3 @@
-use v6;
-
 # L<S32::IO/IO/=item say>
 
 use Test;

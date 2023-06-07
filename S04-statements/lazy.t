@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 # L<S04/Other C<do>-like forms/lazy>

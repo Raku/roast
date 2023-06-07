@@ -1,7 +1,5 @@
 # http://perl6advent.wordpress.com/2010/12/08/different-names-of-different-things/
 
-use v6;
-
 use Test;
 
 plan 8;

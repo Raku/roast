@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # Tests for `flat` routine

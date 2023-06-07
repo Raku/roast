@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # Tests for auto-increment and auto-decrement operators

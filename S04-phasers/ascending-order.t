@@ -1,5 +1,3 @@
-use v6;
-
 # Test the running order of BEGIN/CHECK/INIT/ENTER/END
 # These blocks appear in ascending order
 # [TODO] add tests for LEAVE/KEEP/UNDO/PRE/POST/etc

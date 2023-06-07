@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 my @int  =  int, int8, int16, int32;

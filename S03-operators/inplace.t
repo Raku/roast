@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 # L<S03/Assignment operators/A op= B>

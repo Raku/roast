@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 #Ternary operator ?? !!

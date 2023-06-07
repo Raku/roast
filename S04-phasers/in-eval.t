@@ -1,5 +1,3 @@
-use v6;
-
 # Test phasers in EVAL strings
 
 use Test;

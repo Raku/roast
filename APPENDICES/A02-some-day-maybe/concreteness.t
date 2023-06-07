@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # The tests in this file ensure certain constructs die with a decent error

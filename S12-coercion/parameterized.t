@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # Test for coercions in parametric roles

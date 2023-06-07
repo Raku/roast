@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 #L<S06/Placeholder variables/>

@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # Tests of IO::Special class

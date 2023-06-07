@@ -1,4 +1,3 @@
-use v6;
 use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
@@ -46,7 +45,7 @@ plan 9;
         'Stringifying Any warns';
 }
 
-is_run 'use v6; warn; say "alive"',
+is_run 'warn; say "alive"',
     {
         status => 0,
         out => rx/alive/,
@@ -55,7 +54,7 @@ is_run 'use v6; warn; say "alive"',
     'warn() without arguments';
 
 # https://github.com/Raku/old-issue-tracker/issues/3987
-is_run 'use v6; warn("OH NOEZ"); say "alive"',
+is_run 'warn("OH NOEZ"); say "alive"',
     {
         status => 0,
         out => rx/alive/,
@@ -63,7 +62,7 @@ is_run 'use v6; warn("OH NOEZ"); say "alive"',
     },
     'warn() with arguments; line number';
 
-is_run 'use v6; try {warn("OH NOEZ") }; say "alive"',
+is_run 'try {warn("OH NOEZ") }; say "alive"',
     {
         status => 0,
         out => rx/alive/,
@@ -71,7 +70,7 @@ is_run 'use v6; try {warn("OH NOEZ") }; say "alive"',
     },
     'try does not suppress warnings';
 
-is_run 'use v6; quietly {warn("OH NOEZ") }; say "alive"',
+is_run 'quietly {warn("OH NOEZ") }; say "alive"',
     {
         status => 0,
         out => rx/alive/,

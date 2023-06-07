@@ -5,7 +5,6 @@
 # in the string. The test itself defines points where we should break or
 # not break. For now we just test if the number of graphemes is correct.
 # This is mostly good enough.
-use v6;
 sub MAIN ( Str $EmojiTest-file ) {
     note "WHEN UPDATING UNICODE VERSION ALSO UPDATE docs/unicode-generated-tests.asciidoc";
     my @text = $EmojiTest-file.IO.slurp.lines;
@@ -53,7 +52,6 @@ sub MAIN ( Str $EmojiTest-file ) {
     my $file =
     qq:to/END/;
     # Test generated from emoji-test.txt Emoji version $emoji-version
-    use v6;
     use Test;
     plan $test-count;
     END

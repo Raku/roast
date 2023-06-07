@@ -1,14 +1,13 @@
-use v6;
 use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
 plan 33;
 
-is_run "use v6;\n'a' =~ /foo/", {
+is_run "'a' =~ /foo/", {
     status  => { $_ != 0 },
     out     => '',
-    err     => rx/<<2>>/
+    err     => rx/<<1>>/
 }, 'Parse error contains line number';
 
 is_run "my \$x = 2 * 3;\ndie \$x", {
@@ -17,15 +16,15 @@ is_run "my \$x = 2 * 3;\ndie \$x", {
     err     => all(rx/6/, rx/<<2>>/),
 }, 'Runtime error contains line number';
 
-is_run "use v6;\n\nsay 'Hello';\nsay 'a'.my_non_existent_method_6R5();",
+is_run "say 'Hello';\nsay 'a'.my_non_existent_method_6R5();",
     {
         status  => { $_ != 0 },
         out     => /Hello\r?\n/,
-        err     => all(rx/my_non_existent_method_6R5/, rx/<<4>>/),
+        err     => all(rx/my_non_existent_method_6R5/, rx/<<2>>/),
     }, 'Method not found error mentions method name and line number';
 
 # https://github.com/Raku/old-issue-tracker/issues/1795
-is_run 'use v6;
+is_run '
 sub bar {
     pfff();
 }
@@ -59,7 +58,7 @@ is_run 'say 42; nosuchsub()',
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/1878
-is_run 'use v6;
+is_run '
 class A { has $.x is rw };
 A.new.x(42);',
     {
@@ -107,7 +106,7 @@ is_run 'die "foo"; END { say "end run" }',
 
 # https://github.com/Raku/old-issue-tracker/issues/2799
 {
-    try EVAL 'use v6;     # line 1
+    try EVAL '            # line 1
              # another line so we three in total
              (1 + 2) = 3; # line 3
         ';

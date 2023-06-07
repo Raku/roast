@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 plan 2 * ( 1 + 15 * 20 ) + 4;

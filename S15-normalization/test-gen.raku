@@ -41,7 +41,6 @@ sub write-test-files($template, $method, @source, @expected) {
 }
 sub make-header (Str:D $uni-version, Int:D $plan) {
     qq:to/HEADER/;
-    use v6;
     # Unicode normalization tests, generated from NormalizationTests.txt in the
     # Unicode database by S15-normalization/test-gen.raku.
     # Generated from Unicode version $uni-version.
@@ -94,7 +93,6 @@ sub write-sanity-test-file($target, $method, @source, @expected) {
 
     given open($target, :w) {
         .say: qq:to/HEADER/;
-use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
 # Generated from Unicode version $uni-version.

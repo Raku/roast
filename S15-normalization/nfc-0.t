@@ -1,4 +1,3 @@
-use v6;
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
 # Generated from Unicode version 15.0.0.

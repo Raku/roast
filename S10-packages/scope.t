@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 use lib $?FILE.IO.parent(2).add("packages/PackageTest/lib");

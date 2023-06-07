@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 # L<S02/"Built-In Data Types"/Raku>

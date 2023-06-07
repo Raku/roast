@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # L<S12/Types and Subtypes/>

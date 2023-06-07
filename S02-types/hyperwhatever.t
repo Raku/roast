@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # Tests for the HyperWhatever type and its curries

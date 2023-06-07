@@ -1,5 +1,3 @@
-use v6;
-
 # Test control blocks (BEGIN/CHECK/INIT/END) used as rvalues
 # [TODO] add tests for other control blocks
 

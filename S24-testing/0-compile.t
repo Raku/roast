@@ -1,5 +1,3 @@
-use v6;
-
 # Checking that testing is sane: Test.rakumod
 
 use Test;

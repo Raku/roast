@@ -1,5 +1,4 @@
 # http://perl6advent.wordpress.com/2012/12/24/day-24-an-advent-calendar/
-use v6;
 use Test;
 
 plan 1;

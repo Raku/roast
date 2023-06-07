@@ -1,5 +1,4 @@
 # http://perl6advent.wordpress.com/2012/12/09/day-9-longest-token-matching/
-use v6;
 use Test;
 plan 8;
 

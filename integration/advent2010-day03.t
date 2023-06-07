@@ -1,6 +1,5 @@
 # http://perl6advent.wordpress.com/2010/12/03/day-3-file-operations/
 
-use v6;
 use Test;
 
 plan 12;

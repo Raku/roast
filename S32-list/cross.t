@@ -1,6 +1,3 @@
-use v6;
-
-
 use Test;
 
 plan 3;

@@ -1,6 +1,5 @@
 # http://perl6advent.wordpress.com/2010/12/10/day-10-feed-operators/
 
-use v6;
 use Test;
 plan 4;
 

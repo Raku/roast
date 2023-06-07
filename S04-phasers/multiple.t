@@ -1,5 +1,3 @@
-use v6;
-
 # [TODO] add tests for ENTER/LEAVE/KEEP/UNDO/PRE/POST/etc
 
 # Test multiple phasers.

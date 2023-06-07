@@ -1,4 +1,3 @@
-use v6;
 use Test;
 plan 116;
 # L<S02/Names and Variables/To get a Raku representation of any object>

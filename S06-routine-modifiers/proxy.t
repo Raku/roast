@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 # Tests for the Proxy class

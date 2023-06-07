@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Raku intrinsically supports big integers>

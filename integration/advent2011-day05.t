@@ -1,6 +1,5 @@
 #! http://perl6advent.wordpress.com/2011/12/05/the-flip-flop-operator/
 
-use v6;
 use Test;
 plan 5;
 

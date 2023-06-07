@@ -1,5 +1,3 @@
-use v6;
-
 # By default, Test exports a "skip" sub, which interferes with the "skip"
 # functionality we want to test here.  Hence the selective import here.
 BEGIN my (&plan, &subtest, &is, &is-deeply, &throws-like) = do {

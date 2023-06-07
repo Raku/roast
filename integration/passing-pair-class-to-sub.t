@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # L<S02/Mutable types/A single key-to-value association>

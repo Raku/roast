@@ -1,5 +1,4 @@
 # http://perl6advent.wordpress.com/2010/12/23/day-23-its-some-sort-of-wonderful/
-use v6;
 use Test;
 plan 8;
 

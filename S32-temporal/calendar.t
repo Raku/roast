@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # calendar.t: tests some calendar-related methods common to

@@ -1,5 +1,4 @@
 # http://perl6advent.wordpress.com/2011/12/15/day-15-something-exceptional/
-use v6;
 use Test;
 plan 9;
 

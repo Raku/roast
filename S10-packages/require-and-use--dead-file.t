@@ -1,4 +1,3 @@
-use v6;
 use Test;
 use lib $?FILE.IO.parent(2).child("packages/RequireAndUse/lib");
 use lib $?FILE.IO.parent(2).child("packages/LoadCounter/lib");

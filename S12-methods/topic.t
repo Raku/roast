@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 # old: L<A12/"Declaration of Methods" /methods do not set the topic now/>

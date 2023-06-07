@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 # Referencing various parts of Synopsis 12.

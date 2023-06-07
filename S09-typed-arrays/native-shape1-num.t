@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 my @num = num, num32;

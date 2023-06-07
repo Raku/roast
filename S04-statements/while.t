@@ -1,5 +1,3 @@
-use v6;
-
 # L<S04/The C<while> and C<until> statements>
 
 use Test;

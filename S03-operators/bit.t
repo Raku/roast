@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 # Mostly copied from Perl 5.8.4 s t/op/bop.t

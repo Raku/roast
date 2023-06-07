@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # see if you can declare the various built-in types

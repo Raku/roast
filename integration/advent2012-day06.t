@@ -1,4 +1,3 @@
-use v6;
 use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
@@ -6,8 +5,6 @@ use Test::Util;
 plan 2;
 
 my $main = q:to"END-MAIN";
-    use v6;
-
     # the main functionality of the script
     sub deduplicate(Str $s) {
         my %seen;

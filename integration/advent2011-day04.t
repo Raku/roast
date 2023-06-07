@@ -1,6 +1,5 @@
 # http://perl6advent.wordpress.com/2011/12/04/traits-meta-data-with-character/
 
-use v6;
 use Test;
 plan 2;
 

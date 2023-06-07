@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 # See thread "@array = $scalar" on p6l started by Ingo Blechschmidt:

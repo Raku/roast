@@ -1,6 +1,5 @@
 # http://perl6advent.wordpress.com/2012/12/12/exceptions/
 
-use v6;
 use Test;
 
 plan 5;

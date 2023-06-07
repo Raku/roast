@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 # More tests planned then really is in this test for testing the trailing skips.

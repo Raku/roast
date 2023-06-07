@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 # L<S12/Method calls/"Indirect object notation now requires a colon after the invocant, even if there are no arguments">

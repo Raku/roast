@@ -1,5 +1,4 @@
 # http://perl6advent.wordpress.com/2010/12/14/day-14-nextsame-and-its-cousins/
-use v6;
 use Test;
 plan 5;
 

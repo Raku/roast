@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # Test may seem weird, but Rakudo JVM fails it catastrophically at the moment.

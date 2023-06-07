@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 my $backend = $*RAKU.compiler.backend;

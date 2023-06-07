@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # Tests for U+2212 minus operator

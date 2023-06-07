@@ -1,7 +1,5 @@
-use v6;
-
 # Uncomment for quick results on any test failure
-BEGIN %*ENV<RAKU_TEST_DIE_ON_FAIL> = True;
+# BEGIN %*ENV<RAKU_TEST_DIE_ON_FAIL> = True;
 
 use Test;
 

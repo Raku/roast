@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # test odd things we've seen with modules, packages and namespaces

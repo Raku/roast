@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # stress test for lexicals and lexical subs

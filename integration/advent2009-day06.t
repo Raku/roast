@@ -1,6 +1,5 @@
 # http://perl6advent.wordpress.com/2009/12/06/day-6-going-into-hyperspace/
 
-use v6;
 use Test;
 
 plan 15;

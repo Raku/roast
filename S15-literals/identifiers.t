@@ -1,4 +1,3 @@
-use v6;
 # S15-literals/identifiers.t --- tests Unicode (namely non-ASCII) identifiers
 
 use Test;

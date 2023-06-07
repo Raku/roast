@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 constant $repo-path = $?FILE.IO.parent(2).add('packages/curi-install').absolute;

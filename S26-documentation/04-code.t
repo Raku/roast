@@ -1,4 +1,3 @@
-use v6;
 use Test;
 plan 50;
 my $r;

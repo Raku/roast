@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # https://github.com/Raku/old-issue-tracker/issues/5960

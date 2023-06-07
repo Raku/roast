@@ -26,7 +26,6 @@ sub MAIN(Str $unidata-normalization-tests) {
 sub write-equality-test-file($target, @nfd, $limit) {
     given open($target, :w) {
         .say: qq:to/HEADER/;
-use v6;
 # Normal Form Grapheme equanity tests, generated from NormalizationTests.txt in
 # the Unicode database by S15-nfg/mass-equality-gen.raku. Check strings that should come
 # out equal under NFG do, and strings that are "tempting" to make equal but

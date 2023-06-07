@@ -1,5 +1,3 @@
-use v6;
-
 my $required-Test = (require Test <&plan &is &lives-ok &skip &todo
                                   &nok &throws-like &eval-lives-ok &ok>);
 

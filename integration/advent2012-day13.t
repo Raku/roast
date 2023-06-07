@@ -1,5 +1,4 @@
 # http://perl6advent.wordpress.com/2012/12/13/day-13-bags-and-sets/
-use v6;
 use Test;
 
 plan 42;

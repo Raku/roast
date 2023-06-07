@@ -1,5 +1,3 @@
-use v6;
-
 # L<S28/Named variables/$*CWD>
 # See also S16-io/cwd.t
 

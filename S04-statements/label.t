@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 # L<S04/"Loop statements"/"next, last, and redo">
 plan 12;

@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 
 # L<S29/Obsolete Functions/=item pos>

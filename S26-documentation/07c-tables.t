@@ -1,5 +1,3 @@
-use v6;
-
 use MONKEY-SEE-NO-EVAL;
 use Test;
 
@@ -14,8 +12,6 @@ sub gen-test($f) {
     my $fh = open $f, :w;
 
     $fh.print: q:to/HERE/;
-    use v6;
-
     use Test;
 
     plan 8;

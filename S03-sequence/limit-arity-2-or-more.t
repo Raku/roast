@@ -1,4 +1,3 @@
-use v6;
 use Test;
 
 # L<S03/List infix precedence/"the sequence operator">
