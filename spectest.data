@@ -31,6 +31,8 @@
 6.c/S04-declarations/my-6c.t
 6.c/S06-other/main-refactored.t
 6.c/S12-class/mro-6c.t
+6.c/S05-grammar/methods.t
+6.c/S05-grammar/parse_and_parsefile-6c.t
 6.c/S32-io/file-tests.t
 
 APPENDICES/A01-limits/misc.t
@@ -412,10 +414,8 @@ S05-capture/subrule.t
 S05-grammar/action-stubs.t
 S05-grammar/example.t
 S05-grammar/inheritance.t
-S05-grammar/methods.t
 S05-grammar/namespace-6e.t
 S05-grammar/namespace.t
-S05-grammar/parse_and_parsefile-6c.t
 S05-grammar/parse_and_parsefile-6e.t
 S05-grammar/polymorphism.t
 S05-grammar/protoregex.t
