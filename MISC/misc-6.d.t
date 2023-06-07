@@ -22,28 +22,8 @@ group-of 6 => ':sym<> colonpair on subroutine names is reserved' => {
         ':sym«...»:foo<bar>';
 }
 
-group-of 5 => '$*ARGFILES is set to $*IN inside sub MAIN' => {
+group-of 3 => '$*ARGFILES is set to $*IN inside sub MAIN' => {
     my @args = <THE FILES CONTENT>.map: {make-temp-file :$^content}
-
-    is_run ｢
-        use v6.c;
-        sub MAIN(*@args) {
-            .say for lines;
-        }
-    ｣,
-    "blah\nbleh\nbloh", :@args, {
-        :err(''), :0status, :out("THE\nFILES\nCONTENT\n"),
-    }, 'inside MAIN in 6.c language (with @*ARGS content)';
-
-    is_run ｢
-        use v6.c;
-        sub MAIN(*@args) {
-            .say for lines;
-        }
-    ｣,
-    "blah\nbleh\nbloh", {
-        :err(''), :0status, :out("blah\nbleh\nbloh\n"),
-    }, 'inside MAIN in 6.c language (without @*ARGS content)';
 
     is_run ｢
         use v6.d;

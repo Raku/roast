@@ -24,6 +24,7 @@
 6.c/APPENDICES/A04-experimental/01-misc.t
 6.c/MISC/bug-coverage.t
 6.c/MISC/bug-coverage-stress.t              # stress
+6.c/MISC/misc-6.c.t
 6.c/S02-names/SETTING-6c.t
 6.c/S02-names/pseudo-6c.t
 6.c/S02-types/subset-6c.t
