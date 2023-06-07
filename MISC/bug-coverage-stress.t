@@ -1,4 +1,3 @@
-use v6.d;
 use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
