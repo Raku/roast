@@ -29,10 +29,13 @@
 6.c/S02-types/subset-6c.t
 6.c/S03-operators/set_precedes.t
 6.c/S04-declarations/my-6c.t
-6.c/S06-other/main-refactored.t
-6.c/S12-class/mro-6c.t
 6.c/S05-grammar/methods.t
+6.c/S06-other/main-refactored.t
 6.c/S05-grammar/parse_and_parsefile-6c.t
+6.c/S12-class/mro-6c.t
+6.c/S14-roles/attributes.t
+6.c/S14-roles/mixin-6c.t
+6.c/S14-roles/submethods.t
 6.c/S32-io/file-tests.t
 
 APPENDICES/A01-limits/misc.t
@@ -752,7 +755,6 @@ S13-overloading/typecasting-long.t
 S13-syntax/aliasing.t
 S13-type-casting/methods.t
 S14-roles/anonymous.t
-S14-roles/attributes.t
 S14-roles/attributes-6e.t
 S14-roles/basic.t
 S14-roles/bool.t
@@ -761,7 +763,6 @@ S14-roles/conflicts.t
 S14-roles/crony.t
 S14-roles/instantiation.t
 S14-roles/lexical.t
-S14-roles/mixin-6c.t
 S14-roles/mixin-6e.t
 S14-roles/namespaced.t
 S14-roles/parameter-subtyping.t
@@ -771,7 +772,6 @@ S14-roles/parameterized-type.t
 S14-roles/rw.t
 S14-roles/stubs.t
 S14-roles/submethods-6e.t
-S14-roles/submethods.t
 S14-roles/typecheck.t
 S14-roles/versioning.t
 S14-traits/attributes.t
