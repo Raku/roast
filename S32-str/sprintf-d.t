@@ -233,8 +233,8 @@ for @info -> $format, @tests {
     subtest {
         plan +@tests;
 
-        is-deeply sprintf($format, |.value), .key,
-          qq/sprintf("$format",{.value.list.join(",")}) eq '{.key}'/
+        is-deeply zprintf($format, |.value), .key,
+          qq/zprintf("$format",{.value.list.join(",")}) eq '{.key}'/
           for @tests;
     }, "Tested '$format'";
 }

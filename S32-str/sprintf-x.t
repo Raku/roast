@@ -295,10 +295,10 @@ for @info -> $format, @tests {
         plan 2 * @tests;
 
         for @tests {
-            is-deeply sprintf($format, |.value), .key,
-              qq/sprintf("$format",{.value.list.join(",")}) eq '{.key}'/;
-            is-deeply sprintf($format.uc, |.value), .key.uc,
-              qq/sprintf("{$format.uc}",{.value.list.join(",")}) eq '{.key.uc}'/;
+            is-deeply zprintf($format, |.value), .key,
+              qq/zprintf("$format",{.value.list.join(",")}) eq '{.key}'/;
+            is-deeply zprintf($format.uc, |.value), .key.uc,
+              qq/zprintf("{$format.uc}",{.value.list.join(",")}) eq '{.key.uc}'/;
         }
     }, "Tested '$format'";
 }
