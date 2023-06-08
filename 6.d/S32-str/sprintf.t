@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(3).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 175;
+plan 174;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -220,8 +220,6 @@ is sprintf("%x %x", 301281685344656640, 301281685344656669), '42e5e18b84c9d00 42
 is sprintf("%d", 42**20),                                    '291733167875766667063796853374976', 'RT #118253';
 # https://github.com/Raku/old-issue-tracker/issues/3099
 is map({chars sprintf "[%18s]\n", "ಠ" x $_ }, 0..6),         [21, 21, 21, 21, 21, 21, 21],        'RT #117547';
-# https://github.com/Raku/old-issue-tracker/issues/2890
-is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01',                'RT #114760';
 
 # https://github.com/Raku/old-issue-tracker/issues/3019
 {

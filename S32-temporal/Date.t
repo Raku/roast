@@ -2,7 +2,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 136;
+plan 137;
 
 # construction
 {
@@ -311,5 +311,8 @@ is Date.today.clone(:1day, :2month, :2017year).Str, '2017-02-01',
     is-deeply Date($yyyy-mm-dd), Date.new($yyyy-mm-dd),
       'does Date(yyyy-mm-dd) work';
 }
+
+# https://github.com/Raku/old-issue-tracker/issues/2890
+is Date.new(-13_000_000_000, 1, 1), '-13000000000-01-01', 'RT #114760';
 
 # vim: expandtab shiftwidth=4
