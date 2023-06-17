@@ -17,6 +17,7 @@ is sub {
 sub foo {} ; sub bar {}
 #= there
 
+todo 'needs RakuAST', 2;
 is &foo.WHY, "hi", 'leading attaches to first';
 is &bar.WHY, "there", 'trailing attaches to last';
 
@@ -62,6 +63,7 @@ class B {
 }
 
 $first = B.^attributes.first(*.name eq '$!attribute');
+todo 'needs RakuAST', 1;
 is $first.WHY, 'first trailing second trailing', 'interleaved trailing';
 
 sub six(Str $param1, Str $param2) {
@@ -70,8 +72,10 @@ sub six(Str $param1, Str $param2) {
 
 my ( $param1, $param2 ) = &six.signature.params;
 
+todo 'needs RakuAST', 1;
 ok !&six.WHY.defined, "does not bind to sub";;
 ok !$param1.WHY.defined, "does not bind to first parameter";
+todo 'needs RakuAST', 1;
 is $param2.WHY, 'trailing comment for param2', "last on line binds";
 
 sub seven(
