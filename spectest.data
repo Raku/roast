@@ -92,6 +92,7 @@ S02-literals/autoref.t
 S02-literals/char-by-name.t
 S02-literals/char-by-number.t
 S02-literals/fmt-interpolation.t
+S02-literals/format.t                       # rakuast
 S02-literals/hash-interpolation.t
 S02-literals/heredocs.t
 S02-literals/hex_chars.t
