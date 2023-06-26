@@ -166,7 +166,7 @@ given make-temp-dir() {
 
 # https://github.com/rakudo/rakudo/issues/1413
 #?rakudo.jvm todo 'IllegalArgumentException: bad parameter count 850; https://github.com/rakudo/rakudo/issues/1413'
-my $package-lib-prefix = $?FILE.IO.parent(2).IO.add('packages/RAKUDO1413/lib').absolute;
+my $package-lib-prefix = $?FILE.IO.parent(3).IO.add('packages/RAKUDO1413/lib').absolute;
 is_run ｢use RAKUDO1413; print 'pass'｣,
     :compiler-args['-I', $package-lib-prefix],
     {:out<pass>, :err(''), :0status},
