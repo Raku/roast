@@ -9,8 +9,8 @@ plan 49;
 
 my $f0 = Format.new("foo");
 isa-ok $f0, Format;
-isa-ok $f0.code, Callable;
-isa-ok $f0.signature, Signature;
+isa-ok $f0.Callable, Callable;
+isa-ok $f0.Callable.signature, Signature;
 is $f0.arity, 0, 'arity no args';
 is $f0.count, 0, 'count no args';
 
@@ -27,8 +27,8 @@ throws-like { <a b c>.fmt($f0) },
 
 my $f1 = Format.new("%5s");
 isa-ok $f1, Format;
-isa-ok $f1.code, Callable;
-isa-ok $f1.signature, Signature;
+isa-ok $f1.Callable, Callable;
+isa-ok $f1.Callable.signature, Signature;
 is $f1.arity, 1, 'arity one arg';
 is $f1.count, 1, 'count one arg';
 
@@ -38,8 +38,8 @@ is "'$f1("bar")'", "'  bar'", 'does $f1 embed ok';
 
 my $f2 = Format.new("%5s:%5s");
 isa-ok $f2, Format;
-isa-ok $f2.code, Callable;
-isa-ok $f2.signature, Signature;
+isa-ok $f2.Callable, Callable;
+isa-ok $f2.Callable.signature, Signature;
 is $f2.arity, 2, 'arity two args';
 is $f2.count, 2, 'count two args';
 
