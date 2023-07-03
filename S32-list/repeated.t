@@ -149,6 +149,4 @@ This test tests the C<repeated> builtin.
 
 is ((1,2,3),(1,3),(1,3)).repeated(:with({$^a eqv $^b})), "1 3", ".repeated doesn't flatten";
 
-=finish
-
 # vim: expandtab shiftwidth=4
