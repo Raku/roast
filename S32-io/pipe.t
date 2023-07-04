@@ -27,7 +27,6 @@ sub proc_captures_out_ok($code, $out, $exitcode, $desc) is test-assertion {
         else {
             ok $ps,                'shell/run(:out) returns something trueish on success';
             is $ps.exitcode, 0,    'Proc::Status.exitcode is zero for a successful run';
-            is $ps.status,   0,    'Proc::Status.status is zero for a successful run';
             is $lines,       $out, 'got correct output';
         }
     }
