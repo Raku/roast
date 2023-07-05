@@ -114,7 +114,7 @@ is $r.contents[2].contents,
     =for Podcast
         this is not
 
-    this is not code either
+    this is also code
 
     =begin Itemization
         this is not
@@ -138,8 +138,9 @@ isa-ok $r.contents[1], Pod::Block::Named;
 is $r.contents[1].name, 'Podcast';
 is $r.contents[1].contents[0].contents, 'this is not';
 
-isa-ok $r.contents[2], Pod::Block::Para;
-is $r.contents[2].contents, 'this is not code either';
+#?rakudo todo 'legacy pod grammar incorrectly assumes not code'
+isa-ok $r.contents[2], Pod::Block::Code;
+is $r.contents[2].contents, 'this is also code';
 
 isa-ok $r.contents[3], Pod::Block::Named;
 is $r.contents[3].name, 'Itemization';
