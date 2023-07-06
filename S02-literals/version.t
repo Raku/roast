@@ -26,7 +26,6 @@ is  v1.2   cmp  v1.2,   Same,     'cmp: Same';
 is  v1.2   cmp  v3.2,   Less, 'cmp: Less';
 is  v1.2   cmp  v0.2,   More, 'cmp: More';
 is  v1.2   cmp  v1.10,  Less, "cmp isn't Stringy-based";
-#?rakudo 3 todo "trailing zeroes fail"
 ok  v1.2   eqv  v1.2.0, 'trailing zeroes are equivalent';
 ok  v1.2.0 eqv  v1.2,   'trailing zeroes are equivalent';
 ok  v1.2.0 eqv  v1.2.0.0.0.0.0,   'trailing zeroes are equivalent';
