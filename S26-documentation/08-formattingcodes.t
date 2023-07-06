@@ -80,9 +80,10 @@ is $r.contents[0].contents, 'C<boo> B<bar> asd';
 =pod C< infix:<+> >
 =pod C<< infix:<+> >>
 
-is $=pod[5].contents[0].contents[0].contents[0], "infix:<+> ",
+#?rakudo 2 todo 'C<> is supposed to be verbatim including leading space'
+is $=pod[5].contents[0].contents[0].contents[0], " infix:<+> ",
   "Can parse nested angles in formatting codes with < >";
-is $=pod[6].contents[0].contents[0].contents[0], "infix:<+> ",
+is $=pod[6].contents[0].contents[0].contents[0], " infix:<+> ",
   "Can parse nested angles in formatting codes with << >>";
 
 =pod B< < B<foo> > >
