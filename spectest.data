@@ -39,6 +39,7 @@
 6.c/S14-roles/submethods.t
 6.c/S32-io/file-tests.t
 
+6.d/S02-literals/version.t
 6.d/S32-str/sprintf-b.t
 6.d/S32-str/sprintf-c.t      # moar
 6.d/S32-str/sprintf-d.t
@@ -111,7 +112,7 @@ S02-literals/sub-calls.t
 S02-literals/subscript.t
 S02-literals/types.t
 S02-literals/underscores.t
-S02-literals/version.t
+S02-literals/version.t                      # rakuast
 S02-magicals/78258.t
 S02-magicals/DISTRO.t
 S02-magicals/GROUP.t
