@@ -29,7 +29,7 @@ This is an ordinary paragraph
 
     =head1 Mumble mumble
 
-    Suprisingly, this is not a code block
+    Unsurprisingly, this is also a code block
         (with fancy indentation too)
 
 But this is just a text. Again
@@ -43,9 +43,10 @@ isa-ok $r.contents[1], Pod::Block::Code;
 is $r.contents[1].contents, "While this is not\nThis is a code block";
 isa-ok $r.contents[2], Pod::Block;
 is $r.contents[2].contents[0].contents, 'Mumble mumble';
-isa-ok $r.contents[3], Pod::Block::Para;
-is $r.contents[3].contents, "Suprisingly, this is not a code block"
-                        ~ " (with fancy indentation too)";
+#?rakudo 2 todo 'legacy pod grammar incorrectly assumes not code'
+isa-ok $r.contents[3], Pod::Block::Code;
+is $r.contents[3].contents, "Unsurprisingly, this is also a code block\n"
+                        ~ "    (with fancy indentation too)";
 is $r.contents[4].contents, "But this is just a text. Again";
 
 =begin pod
