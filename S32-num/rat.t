@@ -451,7 +451,7 @@ subtest '.Rat/.FatRat coercers' => {
         42, <42>, 42e0, <42e0>, 42.0, <42.0>, <42+0i>, < 42+0i>,
         FatRat.new(42, 1), "42", "42e0", "42.0", "42+0i", [^42], [^42].Seq,
         ^42, ^42 .kv.Map, Duration.new(42), Instant.from-posix(32), "42".IO,
-        '42' ~~ /.+/, StrDistance.new(:before<a> :after('b' x 42));
+        '42' ~~ /.+/, StrDistance.new(:before<a>, :after('b' x 42));
 
     plan 4 + 2*@values;
 
