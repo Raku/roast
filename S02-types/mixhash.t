@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 291;
+plan 292;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -680,5 +680,7 @@ lives-ok { my %h is MixHash = 42 },
     is-deeply List.MixHash,  MixHash.new(List),  'got a MixHash with a List';
     is-deeply Array.MixHash, MixHash.new(Array), 'got a MixHash with an Array';
 }
+
+is-deeply %(:42a, :b(-72)).MixHash.Capture, %(:42a, :b(-72)).Capture, 'MixHash Capture';
 
 # vim: expandtab shiftwidth=4

@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 280;
+plan 281;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -711,5 +711,7 @@ lives-ok { my %h is SetHash = 42 },
     is-deeply List.SetHash,  SetHash.new(List),  'got a SetHash with a List';
     is-deeply Array.SetHash, SetHash.new(Array), 'got a SetHash with an Array';
 }
+
+is-deeply <a b>.SetHash.Capture, %(:a, :b).Capture, 'SetHash Capture';
 
 # vim: expandtab shiftwidth=4

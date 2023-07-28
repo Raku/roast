@@ -185,7 +185,6 @@ S02-types/instants-and-durations.t
 S02-types/int-uint.t
 S02-types/is-type.t
 S02-types/isDEPRECATED.t
-S02-types/keyhash.t
 S02-types/lazy-lists.t
 S02-types/list.t
 S02-types/lists.t

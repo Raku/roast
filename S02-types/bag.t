@@ -1,6 +1,6 @@
 use Test;
 
-plan 254;
+plan 255;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -631,5 +631,7 @@ lives-ok { my %h is Bag = 42 }, "Can we initialize a Bag with a single value";
     is-deeply List.Bag,  Bag.new(List),  'got a Bag with a List';
     is-deeply Array.Bag, Bag.new(Array), 'got a Bag with an Array';
 }
+
+is-deeply %(:42a, :72b).Bag.Capture, %(:42a, :72b).Capture, 'Bag Capture';
 
 # vim: expandtab shiftwidth=4

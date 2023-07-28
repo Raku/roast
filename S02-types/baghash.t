@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 340;
+plan 341;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -818,5 +818,7 @@ lives-ok { my %h is BagHash = 42 },
     is-deeply List.BagHash,  BagHash.new(List),  'got a BagHash with a List';
     is-deeply Array.BagHash, BagHash.new(Array), 'got a BagHash with an Array';
 }
+
+is-deeply %(:42a, :72b).BagHash.Capture, %(:42a, :72b).Capture, 'BagHash Capture';
 
 # vim: expandtab shiftwidth=4
