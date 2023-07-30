@@ -12,7 +12,7 @@ use Carp:from<Perl5>;
 
 my $err;
 lives-ok({ try { Carp.croak() }; $err = $! }, "Perl exception (die) caught");
-like($err.Str, rx:P5/Carp/, "Exception is propagated to Raku land");
+like($err.Str, rx/Carp/, "Exception is propagated to Raku land");
 
 EVAL(q[
 package Foo;

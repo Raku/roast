@@ -81,17 +81,17 @@ isa-ok UInt.HOW, Metamodel::SubsetHOW;
 
 ## like
 
-like("Hello World", rx:P5/\s/, '... testing like()');
+like("Hello World", rx/\s/, '... testing like()');
 
 todo "mitigate failing like";
-like("HelloWorld", rx:P5/\s/, '... testing failing like()');
+like("HelloWorld", rx/\s/, '... testing failing like()');
 
 ## unlike
 
-unlike("HelloWorld", rx:P5/\s/, '... testing unlike()');
+unlike("HelloWorld", rx/\s/, '... testing unlike()');
 
 todo "mitigate failing unlike";
-unlike("Hello World", rx:P5/\s/, '... testing failing unlike()');
+unlike("Hello World", rx/\s/, '... testing failing unlike()');
 
 ## cmp-ok
 
