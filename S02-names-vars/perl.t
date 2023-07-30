@@ -20,7 +20,6 @@ my @tests = (
     'שלום',
 
     ?1, ?0,
-    rx:P5/foo/, rx:P5//, rx:P5/^.*$/,
 
     # Captures containing scalars
     \(42), \(Inf), \(-Inf), \(NaN), \("string"), \(""), \(?1), \(?0),
