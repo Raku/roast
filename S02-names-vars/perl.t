@@ -1,5 +1,5 @@
 use Test;
-plan 116;
+plan 110;
 # L<S02/Names and Variables/To get a Raku representation of any object>
 
 my @tests = (
