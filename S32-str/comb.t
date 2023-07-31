@@ -52,7 +52,7 @@ ok("forty-two".comb() ~~ Iterable, '.comb() returns something Iterable' );
 
 # comb a list
 
-is (<a ab>, <bc ad ba>).comb(rx:Perl5/\S*a\S*/), <a ab ad ba>,
+is (<a ab>, <bc ad ba>).comb(/\S*a\S*/), <a ab ad ba>,
      'comb a list';
 
 # needed: comb a filehandle
