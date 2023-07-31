@@ -1,5 +1,5 @@
 use Test;
-plan 110;
+plan 114;
 # L<S02/Names and Variables/To get a Raku representation of any object>
 
 my @tests = (
@@ -20,6 +20,7 @@ my @tests = (
     'שלום',
 
     ?1, ?0,
+    /foo/, /^.*$/,
 
     # Captures containing scalars
     \(42), \(Inf), \(-Inf), \(NaN), \("string"), \(""), \(?1), \(?0),
@@ -45,9 +46,9 @@ my @tests = (
 
 # L<S02/Names and Variables/To get a Raku representation of any object>
 # Quoting S02 (emphasis added):
-#   To get a Perlish representation of any data value, use the .raku method.
+#   To get a Rakuish representation of any data value, use the .raku method.
 #   This will put quotes around strings, square brackets around list values,
-#   curlies around hash values, etc., **such that standard Perl could reparse
+#   curlies around hash values, etc., **such that standard Raku could reparse
 #   the result**.
 {
     for @tests -> $obj {
@@ -181,7 +182,7 @@ my @tests = (
 # https://github.com/Raku/old-issue-tracker/issues/1366
 {
     is 1.0.WHAT.gist, Rat.gist, '1.0 is Rat';
-    is EVAL( 1.0.raku ).WHAT.gist, Rat.gist, "1.0 perl'd and EVAL'd is Rat";
+    is EVAL( 1.0.raku ).WHAT.gist, Rat.gist, "1.0 raku'd and EVAL'd is Rat";
 }
 
 
