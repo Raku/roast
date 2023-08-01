@@ -132,7 +132,7 @@ plan 44;
     my $str = "abc";
     my $re  = {
         state $a = 0;
-        $str ~~ s:Perl5/^(.)/{ $a++ }/;
+        $str ~~ s/^(.)/{ $a++ }/;
     };
     $re();
     $re();

@@ -77,7 +77,7 @@ my $obj;
         pass "Perl classes not yet shadowed in Raku";
     }
     {
-        like($obj, rx:Perl5/FooBar/, "blessed");
+        like($obj, rx/FooBar/, "blessed");
     }
 }
 
