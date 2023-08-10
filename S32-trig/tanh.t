@@ -1,6 +1,6 @@
 # WARNING:
 # This is a generated file and should not be edited directly.
-# look into generate-tests.pl instead
+# look into generate-tests.raku instead
 
 use Test;
 

@@ -287,7 +287,7 @@ sub OpenAndStartOutputFile($output_file)
 
     $file.say: '# WARNING:
 # This is a generated file and should not be edited directly.
-# look into generate-tests.pl instead
+# look into generate-tests.raku instead
 
 use Test;
 
@@ -355,7 +355,7 @@ sub CloseOutputFile($file)
 {
     # the {} afer 'vim' just generate an empty string.
     # this is to avoid the string constant being interpreted as a modeline
-    # here in generate-tests.pl
+    # here in generate-tests.raku
     $file.say: "done-testing;";
     $file.say: "";
     $file.say: '# vim: ft=perl6 nomodifiable';
