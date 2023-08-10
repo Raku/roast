@@ -1,6 +1,6 @@
 use Test;
 
-plan 101;
+plan 137;
 
 # L<S32::Containers/List/=item min>
 # L<S32::Containers/List/=item max>
@@ -263,6 +263,58 @@ is ([max] 5.4,10.7,-15.2,20.8), 20.8, 'reduce max numeric';
         '[max] of <>-style list finds the numerically largest number';
     is <1 2 3 4 5 10>.max, 10,
         '.max on <>-style list finds the numerically largest number';
+}
+
+# Testing 2023.08 adverbs on .min / .max
+{
+    my @haystack;
+    for
+      :k, :v, :kv, :p
+    -> $adverb {
+        is-deeply @haystack.min(|$adverb), (), "0 .min $adverb.raku()";
+        is-deeply @haystack.max(|$adverb), (), "0 .max $adverb.raku()";
+    }
+    is-deeply @haystack, [], "unchanged after 0";
+
+    @haystack = "a";
+    for
+      :k, (0,), :v, ("a",), :kv, (0,"a"), :p, (0 => "a",)
+    -> $adverb, $result {
+        is-deeply @haystack.min(|$adverb), $result, "1 .min $adverb.raku()";
+        is-deeply @haystack.max(|$adverb), $result, "1 .max $adverb.raku()";
+    }
+    is-deeply @haystack, ["a"], "unchanged after 1";
+
+    @haystack = <a c d e b a>;
+    for
+      :k, (0,5),
+      :v, <a a>,
+      :kv, (0,"a",5,"a"),
+      :p, (0 => "a", 5 => "a")
+    -> $adverb, $result {
+        is-deeply @haystack.min(|$adverb), $result, "N .min $adverb.raku()";
+    }
+    for
+      :k, (3,),
+      :v, ("e",),
+      :kv, (3,"e"),
+      :p, (3 => "e",)
+    -> $adverb, $result {
+        is-deeply @haystack.max(|$adverb), $result, "N .max $adverb.raku()";
+    }
+    is-deeply @haystack, [<a c d e b a>], "unchanged after N";
+
+    @haystack = <a a a>;
+    for
+      :k, (0,1,2),
+      :v, <a a a>,
+      :kv, (0,"a",1,"a",2,"a"),
+      :p, (0 => "a", 1 => "a", 2 => "a")
+    -> $adverb, $result {
+        is-deeply @haystack.min(|$adverb), $result, "Ns .min $adverb.raku()";
+        is-deeply @haystack.max(|$adverb), $result, "Ns .max $adverb.raku()";
+    }
+    is-deeply @haystack, [<a a a>], "unchanged after N same";
 }
 
 # vim: expandtab shiftwidth=4
