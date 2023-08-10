@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 59;
+plan 74;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -295,33 +295,64 @@ is-eqv <a c b>.sort(&lc), <a b c>.Seq, 'no crashes when using &lc in .sort';
 
 # Rakudo 2023.08 sort :k tests
 {
-    is-deeply ().sort(:k),          (),          'empty haystack';
-    is-deeply ("a",).sort(:k),      (0,),        'one elem haystack';
-    is-deeply <a b>.sort(:k),       (0,1),       'two elem haystack sorted';
-    is-deeply <b a>.sort(:k),       (1,0),       'two elem haystack unsorted';
-    is-deeply <a c d e b>.sort(:k), (0,4,1,2,3), 'N elem haystack';
+    for
+      'sub',               sort( (), :k),
+      'method',            ().sort(:k),
+      'sub-Schwartz',      sort( (), :by(*.Str), :k),
+      'method-Schwartz',   ().sort(*.Str, :k),
+      'sub-comparator',    sort( (), :by(&[cmp]), :k),
+      'method-comparator', ().sort(&[cmp], :k)
+    -> $type, $result {
+        is-deeply $result, (), "$type empty haystack";
+    }
 
-    is-deeply ().sort(*.Str, :k), (),
-      'empty haystack with Schwartz';
-    is-deeply (1,).sort(*.Str, :k), (0,),
-      'one elem haystack with Schwartz';
-    is-deeply (1,2).sort(*.Str, :k), (0,1),
-      'two elem haystack sorted with Schwartz';
-    is-deeply (2,1).sort(*.Str, :k), (1,0),
-      'two elem haystack unsorted with Schwartz';
+    for
+      'sub',               sort( ("a",), :k),
+      'method',            ("a",).sort(:k),
+      'sub-Schwartz',      sort( ("a",), :by(*.Str), :k),
+      'method-Schwartz',   ("a",).sort(*.Str, :k),
+      'sub-comparator',    sort( ("a",), :by(&[cmp]), :k),
+      'method-comparator', ("a",).sort(&[cmp], :k)
+    -> $type, $result {
+        is-deeply $result, (0,), "$type one elem haystack";
+    }
+
+    for
+      'sub',               sort( <a b>, :k),
+      'method',            <a b>.sort(:k),
+      'sub-Schwartz',      sort( <a b>, :by(*.Str), :k),
+      'method-Schwartz',   <a b>.sort(*.Str, :k),
+      'sub-comparator',    sort( <a b>, :by(&[cmp]), :k),
+      'method-comparator', <a b>.sort(&[cmp], :k)
+    -> $type, $result {
+        is-deeply $result, (0,1), "$type two elem haystack sorted";
+    }
+
+    for
+      'sub',               sort( <b a>, :k),
+      'method',            <b a>.sort(:k),
+      'sub-Schwartz',      sort( <b a>, :by(*.Str), :k),
+      'method-Schwartz',   <b a>.sort(*.Str, :k),
+      'sub-comparator',    sort( <b a>, :by(&[cmp]), :k),
+      'method-comparator', <b a>.sort(&[cmp], :k)
+    -> $type, $result {
+        is-deeply $result, (1,0), "$type two elem haystack unsorted";
+    }
+
+    is-deeply sort(<a c d e b>, :k), (0,4,1,2,3),
+      'sub N elem haystack';
+    is-deeply <a c d e b>.sort(:k), (0,4,1,2,3),
+      'method N elem haystack';
+
+    is-deeply sort( *.Str, (1,2,3,10), :k), (0,3,1,2),
+      'sub N elem haystack with Schwartz';
     is-deeply (1,2,3,10).sort(*.Str, :k), (0,3,1,2),
-      'N elem haystack with Schwartz';
+      'method N elem haystack with Schwartz';
 
-    is-deeply ().sort(&[cmp], :k), (),
-      'empty haystack with comparator';
-    is-deeply (1,).sort(&[cmp], :k), (0,),
-      'one elem haystack with comparator';
-    is-deeply (1,2).sort(&[cmp], :k), (0,1),
-      'two elem haystack sorted with comparator';
-    is-deeply (2,1).sort(&[cmp], :k), (1,0),
-      'two elem haystack unsorted with comparator';
+    is-deeply sort( &[cmp], (1,10,2,3), :k), (0,2,3,1),
+      'sub N elem haystack with comparator';
     is-deeply (1,10,2,3).sort(&[cmp], :k), (0,2,3,1),
-      'N elem haystack with comparator';
+      'method N elem haystack with comparator';
 }
 
 # vim: expandtab shiftwidth=4
