@@ -1,6 +1,6 @@
 use Test;
 
-plan 137;
+plan 169;
 
 # L<S32::Containers/List/=item min>
 # L<S32::Containers/List/=item max>
@@ -271,8 +271,10 @@ is ([max] 5.4,10.7,-15.2,20.8), 20.8, 'reduce max numeric';
     for
       :k, :v, :kv, :p
     -> $adverb {
-        is-deeply @haystack.min(|$adverb), (), "0 .min $adverb.raku()";
-        is-deeply @haystack.max(|$adverb), (), "0 .max $adverb.raku()";
+        is-deeply @haystack.min(|$adverb), (),  "0 .min $adverb.raku()";
+        is-deeply min(@haystack, |$adverb), (), "0 min() $adverb.raku()";
+        is-deeply @haystack.max(|$adverb), (),  "0 .max $adverb.raku()";
+        is-deeply max(@haystack, |$adverb), (), "0 min() $adverb.raku()";
     }
     is-deeply @haystack, [], "unchanged after 0";
 
@@ -280,8 +282,10 @@ is ([max] 5.4,10.7,-15.2,20.8), 20.8, 'reduce max numeric';
     for
       :k, (0,), :v, ("a",), :kv, (0,"a"), :p, (0 => "a",)
     -> $adverb, $result {
-        is-deeply @haystack.min(|$adverb), $result, "1 .min $adverb.raku()";
-        is-deeply @haystack.max(|$adverb), $result, "1 .max $adverb.raku()";
+        is-deeply @haystack.min(|$adverb),  $result, "1 .min $adverb.raku()";
+        is-deeply min(@haystack, |$adverb), $result, "1 min() $adverb.raku()";
+        is-deeply @haystack.max(|$adverb),  $result, "1 .max $adverb.raku()";
+        is-deeply max(@haystack, |$adverb), $result, "1 max() $adverb.raku()";
     }
     is-deeply @haystack, ["a"], "unchanged after 1";
 
@@ -292,7 +296,8 @@ is ([max] 5.4,10.7,-15.2,20.8), 20.8, 'reduce max numeric';
       :kv, (0,"a",5,"a"),
       :p, (0 => "a", 5 => "a")
     -> $adverb, $result {
-        is-deeply @haystack.min(|$adverb), $result, "N .min $adverb.raku()";
+        is-deeply @haystack.min(|$adverb),  $result, "N .min $adverb.raku()";
+        is-deeply min(@haystack, |$adverb), $result, "N min() $adverb.raku()";
     }
     for
       :k, (3,),
@@ -300,7 +305,8 @@ is ([max] 5.4,10.7,-15.2,20.8), 20.8, 'reduce max numeric';
       :kv, (3,"e"),
       :p, (3 => "e",)
     -> $adverb, $result {
-        is-deeply @haystack.max(|$adverb), $result, "N .max $adverb.raku()";
+        is-deeply @haystack.max(|$adverb),  $result, "N .max $adverb.raku()";
+        is-deeply max(@haystack, |$adverb), $result, "N max() $adverb.raku()";
     }
     is-deeply @haystack, [<a c d e b a>], "unchanged after N";
 
@@ -311,8 +317,10 @@ is ([max] 5.4,10.7,-15.2,20.8), 20.8, 'reduce max numeric';
       :kv, (0,"a",1,"a",2,"a"),
       :p, (0 => "a", 1 => "a", 2 => "a")
     -> $adverb, $result {
-        is-deeply @haystack.min(|$adverb), $result, "Ns .min $adverb.raku()";
-        is-deeply @haystack.max(|$adverb), $result, "Ns .max $adverb.raku()";
+        is-deeply @haystack.min(|$adverb),  $result, "Ns .min $adverb.raku()";
+        is-deeply min(@haystack, |$adverb), $result, "Ns min() $adverb.raku()";
+        is-deeply @haystack.max(|$adverb),  $result, "Ns .max $adverb.raku()";
+        is-deeply max(@haystack, |$adverb), $result, "Ns max() $adverb.raku()";
     }
     is-deeply @haystack, [<a a a>], "unchanged after N same";
 }
