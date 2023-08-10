@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 44;
+plan 59;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -291,6 +291,37 @@ is-eqv <a c b>.sort(&lc), <a b c>.Seq, 'no crashes when using &lc in .sort';
       (NaN, Inf, -Inf).sort,
       (-Inf, Inf, NaN),
       'does NaN sort correctly';
+}
+
+# Rakudo 2023.08 sort :k tests
+{
+    is-deeply ().sort(:k),          (),          'empty haystack';
+    is-deeply ("a",).sort(:k),      (0,),        'one elem haystack';
+    is-deeply <a b>.sort(:k),       (0,1),       'two elem haystack sorted';
+    is-deeply <b a>.sort(:k),       (1,0),       'two elem haystack unsorted';
+    is-deeply <a c d e b>.sort(:k), (0,4,1,2,3), 'N elem haystack';
+
+    is-deeply ().sort(*.Str, :k), (),
+      'empty haystack with Schwartz';
+    is-deeply (1,).sort(*.Str, :k), (0,),
+      'one elem haystack with Schwartz';
+    is-deeply (1,2).sort(*.Str, :k), (0,1),
+      'two elem haystack sorted with Schwartz';
+    is-deeply (2,1).sort(*.Str, :k), (1,0),
+      'two elem haystack unsorted with Schwartz';
+    is-deeply (1,2,3,10).sort(*.Str, :k), (0,3,1,2),
+      'N elem haystack with Schwartz';
+
+    is-deeply ().sort(&[cmp], :k), (),
+      'empty haystack with comparator';
+    is-deeply (1,).sort(&[cmp], :k), (0,),
+      'one elem haystack with comparator';
+    is-deeply (1,2).sort(&[cmp], :k), (0,1),
+      'two elem haystack sorted with comparator';
+    is-deeply (2,1).sort(&[cmp], :k), (1,0),
+      'two elem haystack unsorted with comparator';
+    is-deeply (1,10,2,3).sort(&[cmp], :k), (0,2,3,1),
+      'N elem haystack with comparator';
 }
 
 # vim: expandtab shiftwidth=4
