@@ -260,7 +260,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 
 # https://github.com/Raku/old-issue-tracker/issues/4851
 {
-    ok Any.map({ Slip }) ~~ :(Slip:U),
+    is-deeply Any.map({ Slip }), (Slip,),
         'only defined Slips are treated specially';
 }
 
