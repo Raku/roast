@@ -240,8 +240,13 @@ subtest '.IO on :U gives right class' => {
 }
 
 subtest '.gist' => {
-    my @tests = flat map { @Path-Types.map: *.new: $_ }, flat map {$_, "/$_"},
-        'foo', '-', 'bar/ber', ｢foo/bar\ber.txt｣, 'I ♥ Raku';
+    my @tests = (
+      'foo', '-', 'bar/ber', ｢foo/bar\ber.txt｣, 'I ♥ Raku'
+    ).map: -> $root {
+        ($root, "/$root").map( -> $path {
+            @Path-Types.map(*.new: $path).Slip
+        }).Slip
+    }
     plan +@tests;
 
     { # make $*CWD different from what it was when we made the paths
