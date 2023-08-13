@@ -4,8 +4,8 @@ use Test;
 
 plan 16*3;
 
-for [$*OUT.path, 'STDOUT'], [$*ERR.path, 'STDERR'], [$*IN.path, 'STDIN']
-    -> ($_, $name)
+for $*OUT.path, 'STDOUT', $*ERR.path, 'STDERR', $*IN.path, 'STDIN'
+    -> $_, $name
 {
     sub desc { $^v ~ " for $name" }
 
