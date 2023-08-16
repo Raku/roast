@@ -1,6 +1,6 @@
 use Test;
 
-plan 194;
+plan 195;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -374,6 +374,13 @@ subtest 'infix:<~> works with Blob' => {
         is-deeply EVAL('my @a is buf; @a = ^10'), buf.new(^10),
           "did my @a is { buf.^name }; @a = ^10 work";
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/5348
+{
+    is buf64.new(3, 1, 18446744073709551615).gist,
+      'Buf[uint64]:0x<0000000000000003 0000000000000001 FFFFFFFFFFFFFFFF>',
+      'is large uint value handled correctly in gist';
 }
 
 # vim: expandtab shiftwidth=4
