@@ -181,8 +181,8 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     $trigger-file = $lib-path.child('packages/RT128156/C.pm6');
     $trigger-file.spurt($trigger-file.slurp);
     my $after     = run $*EXECUTABLE,'-I', $lib-path.add('packages/RT128156').absolute,'-M','A','-e','';
-    is $before.status, 0, 'Can precompile modules before touching source file';
-    is $after.status,  0, 'Can precompile modules after touching source file';
+    is $before.exitcode, 0, 'Can precompile modules before touching source file';
+    is $after.exitcode,  0, 'Can precompile modules after touching source file';
 }
 
 # RT #128156 (another)
