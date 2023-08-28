@@ -4,6 +4,7 @@ my @normal = <
   AST
   Any
   array
+  Allomorph
   Array
   Attribute
   Backtrace
@@ -38,6 +39,7 @@ my @normal = <
   FatRat
   Grammar
   Hash
+  Hashray
   HyperConfiguration
   HyperSeq
   HyperWhatever
@@ -84,7 +86,10 @@ my @normal = <
   NumPosRef
   NumStr
   ObjAt
+  Operator
+  OperatorProperties
   Pair
+  ParallelSequence
   Parameter
   Perl
   Pod::Block
@@ -108,10 +113,12 @@ my @normal = <
   Regex
   Routine
   Scalar
+  ScalarVAR
   Seq
   Set
   SetHash
   Signature
+  SignedBlob
   Slang
   Slip
   Stash
@@ -123,6 +130,11 @@ my @normal = <
   Sub
   Submethod
   UInt
+  UIntAttrRef
+  UIntLexRef
+  UIntPosRef
+  Unicode
+  UnsignedBlob
   VM
   Variable
   Version
