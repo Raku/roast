@@ -45,7 +45,7 @@ is @list.grep( { ($_ % 2) }, :k ), (0,2,4,6,8).list.item,
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/3984
-#?rakudo todo "closure as non-final argument"
+#?rakudo skip "closure as non-final argument"
 {
     my @result = grep { ($_ % 2) }: @list, :k;
     is(+@result, 5, 'we got a list back');
