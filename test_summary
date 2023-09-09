@@ -483,6 +483,9 @@ package RealRunner;
 sub get_test_names {
     my ($self) = @_;
 
+    # Should we run tests that only pass with RakuAST (marked as #rakuast in spectest.data)
+    my $rakuast = $ENV{'RAKUDO_RAKUAST'};
+
     # Build the list of test scripts to run in @tfiles
     my @tfiles;
     my $testlist = $ARGV[1] || 't/spec/spectest.data';
@@ -495,6 +498,7 @@ sub get_test_names {
         # XXX each implementation should tell us what files to use
         next if $fudgespec =~ /jvm/ && $implementation !~ /jvm/;
         next if $fudgespec =~ /moar/ && $implementation !~ /moar/;
+        next if $fudgespec =~ /rakuast/ && !$rakuast;
         push @tfiles, "t/spec/$specfile";
     }
     close $fh or die $!;
