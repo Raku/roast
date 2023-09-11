@@ -44,8 +44,8 @@ is $f2.arity, 2, 'arity two args';
 is $f2.count, 2, 'count two args';
 
 is $f2("foo","bar"),     '  foo:  bar',   'is $f2 callable?';
-is "$f2",                '%5s:%5s',       'does $f1 stringify ok';
-is "'$f2("foo","bar")'", "'  foo:  bar'", 'does $f1 embed ok';
+is "$f2",                '%5s:%5s',       'does $f2 stringify ok';
+is "'$f2("foo","bar")'", "'  foo:  bar'", 'does $f2 embed ok';
 
 isa-ok Formatter::Syntax.parse("zippo%10sbar"), Match;
 isa-ok Formatter.CODE("zippo%10sbar"), Callable;
