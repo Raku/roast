@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 130;
+plan 131;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -512,5 +512,8 @@ subtest 'can .assuming with WhateverCode' => {
     is-deeply ((* + * + *.flip + *.abs)).assuming(42, 5)(123, -50), 418,
         '5-params with nested calls, 2 assumed';
 }
+
+# https://github.com/rakudo/rakudo/issues/5343
+is do { $_ = 42; (Int).map(*.new($_)) }, (42,).Seq, "no scoping issues when using topic variables";
 
 # vim: expandtab shiftwidth=4
