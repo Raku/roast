@@ -125,20 +125,20 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 # It seems odd that the numbers on the inside on the <> would be a mix of
 # bases. Maybe I've misread the paragraph -- brian
 {
-    is_approx(:16<dead_beef> * 16**8, :16<dead_beef*16**8>,
+    is-approx(:16<dead_beef> * 16**8, :16<dead_beef*16**8>,
         'Powers outside same as powers inside');
 
-    is_approx(:16<dead_beef> * 16**0, :16<dead_beef*16**0>,
+    is-approx(:16<dead_beef> * 16**0, :16<dead_beef*16**0>,
         'Zero powers inside');
 
     #?rakudo skip "RT #123862 - negative radix"
-    is_approx(:16<dead_beef> * 16**-1, :16<dead_beef*16**-1>,
+    is-approx(:16<dead_beef> * 16**-1, :16<dead_beef*16**-1>,
         'Negative powers inside');    
 }
 
 # L<S02/General radices/"Any radix may include a fractional part">
 
-is_approx(:16<dead_beef.face>,  0xDEAD_BEEF + 0xFACE / 65536.0, 'Fractional base 16 works' );
+is-approx(:16<dead_beef.face>,  0xDEAD_BEEF + 0xFACE / 65536.0, 'Fractional base 16 works' );
 
 
 # L<S02/General radices/":8<177777>">

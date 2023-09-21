@@ -33,7 +33,7 @@ my $pi = 3.14e0;
 my $earth-mass = 5.97e24;  # kg
 is $earth-mass.WHAT.gist, '(Num)';
 
-is_approx (0, 1e-1 ... 2)[11], 1.1, 'missed the 1';
+is-approx (0, 1e-1 ... 2)[11], 1.1, 'missed the 1';
 is (0, 1e-1 ... * >= 1).gist, '(0 0.1 0.2 0.30000000000000004 0.4 0.5 0.6 0.7 0.7999999999999999 0.8999999999999999 0.9999999999999999 1.0999999999999999)', '(oops)';
 is (1e0/10 + 1/10 + 1/10 == 0.3).gist, 'False', '(awww!)';
 
@@ -45,7 +45,7 @@ is (1e0/10 + 1/10 + 1/10 == 0.3).gist, 'False', '(awww!)';
 }
 
 is (i * i).gist, '-1+0i', 'complex number';
-is_approx e ** (i * pi) + 1, 0, 'complex equation';
+is-approx e ** (i * pi) + 1, 0, 'complex equation';
 
 my $googol = EVAL( "1" ~ "0" x 100 );
 is $googol.gist, '1' ~ '0' x 100, 'googol';

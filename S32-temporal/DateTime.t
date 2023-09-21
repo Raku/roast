@@ -273,7 +273,7 @@ dies-ok { ds('2012-12-22T07:02:00+7:') }, 'single digit hour, trailing colon';
         formatter => { ~($^x.hour) });
     is ~$dt2, ~(($dt1.hour + 22) % 24), 'DateTime.now with time zone and formatter';
 
-    is_approx(DateTime.now.Instant, now,
+    is-approx(DateTime.now.Instant, now,
         'DateTime.now agrees with now pseudo-constant');
 }
 

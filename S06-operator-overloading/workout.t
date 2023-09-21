@@ -37,7 +37,7 @@ multi sub infix:<T**>(Vector $a, $b) { Vector.new($a.coords >>**>> $b); }
 multi sub infix:<⋅>(Vector $a, Vector $b) { [+]($a.coords »*« $b.coords); }
 multi sub infix:<dot>(Vector $a, Vector $b) { [+]($a.coords >>*<< $b.coords); }
 
-### note the is_approx from Test.pm doesn't lift infix:<-> and abs,
+### note the is-approx from Test.pm doesn't lift infix:<-> and abs,
 # so we can't expect it work with class Vector. Thus we re-make one that does
 # the custom ops
 
@@ -52,8 +52,8 @@ sub ia($got, $expected, $descr =  "$got is approximately $expected") {
     ?$test;
 }
 
-# a few Vector sanity tests, verifying we can use is_approx for Vectors
-# Note that this assumes that is_approx (1) lifts its operators (See S04)
+# a few Vector sanity tests, verifying we can use is-approx for Vectors
+# Note that this assumes that is-approx (1) lifts its operators (See S04)
 # and (2) uses the method form of abs(), or lifts abs() too.
 # Needs more discussion and spec coverage.
 {
@@ -196,7 +196,7 @@ ia(2 RT** $v1, Vector.new(1/4, 4, 34*34), "R T Scalar power correct");
 ia($v1 Rdot $v2, -1/2 + 2/5 + 34 * 0.3, "R Dot product correct");
 
 #?DOES 1
-multi sub is_approx_array(@got, @expected, $desc) {
+multi sub is-approx_array(@got, @expected, $desc) {
     my $test = all((@got >>-<< @expected)>>.abs.map({$_ <= 0.00001}));
     ok(?$test, $desc);
 }
@@ -218,44 +218,44 @@ ia(([T+] @vectors), (2 T* $v1) + (2 T* $v2), "[T+] of vectors == 2 * (v1 + v2)")
 ia(([-] @vectors), -2 T* $v2, "[-] of vectors == -2 * v2");
 ia(([T-] @vectors), -2 T* $v2, "[T-] of vectors == -2 * v2");
 
-is_approx_array(@vectors >>*>> 2, @vectors >>+<< @vectors, "Hyper: doubling equals self + self");
+is-approx_array(@vectors >>*>> 2, @vectors >>+<< @vectors, "Hyper: doubling equals self + self");
 isnt_approx_array(@vectors >>*>> 2, @vectors, "Hyper: doubling does not equal self");
-is_approx_array((@vectors >>*>> 2) >>*>> 2, (@vectors >>+<< @vectors) >>+<< (@vectors >>+<< @vectors),
+is-approx_array((@vectors >>*>> 2) >>*>> 2, (@vectors >>+<< @vectors) >>+<< (@vectors >>+<< @vectors),
                 "Hyper: doubling twice equals self+self+self+self");
-is_approx_array(2 <<*<< @vectors, @vectors >>+<< @vectors, "Hyper: doubling equals self + self");
+is-approx_array(2 <<*<< @vectors, @vectors >>+<< @vectors, "Hyper: doubling equals self + self");
 isnt_approx_array(2 <<*<< @vectors, @vectors, "Hyper: doubling does not equal self");
-is_approx_array(2 <<*<< (2 <<*<< @vectors), @vectors >>+<< @vectors >>+<< @vectors >>+<< @vectors,
+is-approx_array(2 <<*<< (2 <<*<< @vectors), @vectors >>+<< @vectors >>+<< @vectors >>+<< @vectors,
                 "Hyper: doubling twice equals self+self+self+self");
-is_approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>+<< @vectors) >>T+<< (@vectors >>+<< @vectors),
+is-approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>+<< @vectors) >>T+<< (@vectors >>+<< @vectors),
                 "Hyper: doubling twice equals self+self+self+self");
-is_approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>T+<< @vectors) >>T+<< (@vectors >>T+<< @vectors),
+is-approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>T+<< @vectors) >>T+<< (@vectors >>T+<< @vectors),
                 "Hyper: doubling twice equals self+self+self+self");
-is_approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>T+<< @vectors) >>+<< (@vectors >>T+<< @vectors),
+is-approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>T+<< @vectors) >>+<< (@vectors >>T+<< @vectors),
                 "Hyper: doubling twice equals self+self+self+self");
 
-is_approx_array(@vectors »*» 2, @vectors »+« @vectors, "Hyper: doubling equals self + self");
+is-approx_array(@vectors »*» 2, @vectors »+« @vectors, "Hyper: doubling equals self + self");
 isnt_approx_array(@vectors »*» 2, @vectors, "Hyper: doubling does not equal self");
-is_approx_array((@vectors »*» 2) »*» 2, (@vectors »+« @vectors) »+« (@vectors »+« @vectors),
+is-approx_array((@vectors »*» 2) »*» 2, (@vectors »+« @vectors) »+« (@vectors »+« @vectors),
                 "Hyper: doubling twice equals self+self+self+self");
-is_approx_array(2 «*« @vectors, @vectors »+« @vectors, "Hyper: doubling equals self + self");
+is-approx_array(2 «*« @vectors, @vectors »+« @vectors, "Hyper: doubling equals self + self");
 isnt_approx_array(2 «*« @vectors, @vectors, "Hyper: doubling does not equal self");
-is_approx_array(2 «*« (2 «*« @vectors), @vectors »+« @vectors »+« @vectors »+« @vectors,
+is-approx_array(2 «*« (2 «*« @vectors), @vectors »+« @vectors »+« @vectors »+« @vectors,
                 "Hyper: doubling twice equals self+self+self+self");
 
-is_approx_array((@vectors »⋅« @vectors)».sqrt, @vectors».abs, "Hyper sqrt of hyper dot equals hyper length");
-is_approx_array((@vectors >>⋅<< @vectors)».sqrt, @vectors».abs, "Hyper sqrt of hyper dot equals hyper length");
-is_approx_array((@vectors >>⋅<< @vectors)>>.sqrt, @vectors>>.abs, "Hyper sqrt of hyper dot equals hyper length");
+is-approx_array((@vectors »⋅« @vectors)».sqrt, @vectors».abs, "Hyper sqrt of hyper dot equals hyper length");
+is-approx_array((@vectors >>⋅<< @vectors)».sqrt, @vectors».abs, "Hyper sqrt of hyper dot equals hyper length");
+is-approx_array((@vectors >>⋅<< @vectors)>>.sqrt, @vectors>>.abs, "Hyper sqrt of hyper dot equals hyper length");
 
-is_approx_array((@vectors »dot« @vectors)».sqrt, @vectors».abs, "Hyper sqrt of hyper dot equals hyper length");
-is_approx_array((@vectors >>dot<< @vectors)>>.sqrt, @vectors>>.abs, "Hyper sqrt of hyper dot equals hyper length");
+is-approx_array((@vectors »dot« @vectors)».sqrt, @vectors».abs, "Hyper sqrt of hyper dot equals hyper length");
+is-approx_array((@vectors >>dot<< @vectors)>>.sqrt, @vectors>>.abs, "Hyper sqrt of hyper dot equals hyper length");
 
-is_approx_array(((3/2) <<*<< @vectors) >>-<< @vectors , @vectors >>/>> 2,
+is-approx_array(((3/2) <<*<< @vectors) >>-<< @vectors , @vectors >>/>> 2,
                 "Hyper: 3/2 v - v equals v / 2");
-is_approx_array(((3/2) <<*<< @vectors) »-« @vectors , @vectors >>/>> 2,
+is-approx_array(((3/2) <<*<< @vectors) »-« @vectors , @vectors >>/>> 2,
                 "Hyper: 3/2 v - v equals v / 2");
-is_approx_array(((3/2) <<*<< @vectors) >>T-<< @vectors , @vectors >>/>> 2,
+is-approx_array(((3/2) <<*<< @vectors) >>T-<< @vectors , @vectors >>/>> 2,
                 "Hyper: 3/2 v - v equals v / 2");
-is_approx_array(((3/2) <<*<< @vectors) »T-« @vectors , @vectors >>/>> 2,
+is-approx_array(((3/2) <<*<< @vectors) »T-« @vectors , @vectors >>/>> 2,
                 "Hyper: 3/2 v - v equals v / 2");
 
 # vim: ft=perl6

@@ -14,7 +14,7 @@ plan 20;
 {
     # test with implicit $_
     my $f2 = { .sqrt };
-    is_approx $f2(4), 2, 'Block with implicit $_ has one formal parameter';
+    is-approx $f2(4), 2, 'Block with implicit $_ has one formal parameter';
 }
 
 {

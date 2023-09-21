@@ -44,7 +44,7 @@ plan 83;
     is f($Str), 'Str', 'can identify non-native type with multi dispatch (Str)';
 
     is $int * $Int, 12, 'can do math with mixed native/boxed ints';
-    is_approx $num * $Num, 30e0, 'can do math with mixed native/boxed nums';
+    is-approx $num * $Num, 30e0, 'can do math with mixed native/boxed nums';
     is $str ~ $Str, '78', 'can concatenate native and boxed strings';
 }
 

@@ -13,7 +13,7 @@ does-ok 1.Num, Real, '1.Num does Real';
 
 # L<S02/Rational literals/Rational literals are indicated>
 
-is_approx <1/2>, 0.5, '<1/2> Rat literal';
+is-approx <1/2>, 0.5, '<1/2> Rat literal';
 isa-ok <1/2>, Rat, '<1/2> produces a Rat';
 does-ok <1/2>, Numeric, '<1/2> does Numeric';
 does-ok <1/2>, Real, '<1/2> does Real';
@@ -60,16 +60,16 @@ is <-3.5-2.5i>, -3.5 - 2.5i, '-<3.5-2.5i> produces correct value';
 is  <+3.1e10+2.9e10i>,    3.1e10  +  2.9e10i,  '<3.1e10+2.9e10i> produces correct value';
 is  <+3.1e+11+2.9e+11i>,  3.1e11  +  2.9e11i,  '<+3.1e+11+2.9e+11i> produces correct value';
 is  <-3.1e+12-2.9e+12i>, -3.1e+12 + -2.9e+12i, '<-3.1e+12-2.9e+12i> produces correct value';
-is_approx  <-3.1e-23-2.9e-23i>.re, -3.1e-23, '<-3.1e-23-2.9e-23i> produces correct real value';
-is_approx  <-3.1e-23-2.9e-23i>.im, -2.9e-23, '<-3.1e-23-2.9e-23i> produces correct imaginary value';
-is_approx   <3.1e-99+2.9e-99i>.re,  3.1e-99, '<3.1e-99+2.9e-99i> produces correct real value';
-is_approx   <3.1e-99+2.9e-99i>.im,  2.9e-99, '<3.1e-99+2.9e-99i> produces correct imaginary value';
+is-approx  <-3.1e-23-2.9e-23i>.re, -3.1e-23, '<-3.1e-23-2.9e-23i> produces correct real value';
+is-approx  <-3.1e-23-2.9e-23i>.im, -2.9e-23, '<-3.1e-23-2.9e-23i> produces correct imaginary value';
+is-approx   <3.1e-99+2.9e-99i>.re,  3.1e-99, '<3.1e-99+2.9e-99i> produces correct real value';
+is-approx   <3.1e-99+2.9e-99i>.im,  2.9e-99, '<3.1e-99+2.9e-99i> produces correct imaginary value';
 
 is  <NaN+Inf\i>,   NaN + Inf\i, '<NaN+Inf\i> produces correct value';
 is  <NaN-Inf\i>,   NaN - Inf\i, '<NaN-Inf\i> produces correct value';
 
 # RT #74640
-is_approx 3.14159265358979323846264338327950288419716939937510e0,
+is-approx 3.14159265358979323846264338327950288419716939937510e0,
           3.141592, 'very long Num literals';
 
 # RT #73236
