@@ -25,13 +25,12 @@ plan 42;
 {
     lives-ok { my @arr\    [7] },
       'array with fixed size with unspace';
-   #?rakudo 2 todo 'code does not die, array shapes'
-    throws-like 'my @arr.[8]',
-      Exception,  # XXX fix when this block is no longer skipped
-      'array with dot form dies';
-    throws-like 'my @arr\    .[8]',
-      Exception,  # XXX fix when this block is no longer skipped
-      'array with dot form and unspace dies';
+    my @arr1.[2] = 42;
+    is-deeply @arr1, [Any, Any, 42],
+      'dotted form just calls &postcircumfix:<[ ]>, no shaped array is created';
+    my @arr2\  .[2] = "foo";
+    is-deeply @arr2, [Any, Any, "foo"],
+      'dotted form with unspace also just calls &postcircumfix:<[ ]>';
 }
 
 # L<S09/Typed arrays>
