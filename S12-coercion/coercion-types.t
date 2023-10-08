@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 33;
+plan 35;
 
 # coercion types in parameter lists
 {
@@ -82,12 +82,20 @@ class NastyChild is Parent { };
     is-deeply @a.List, (3.141, 1.0, <2.71>), "an array with coercion type";
 }
 
-# coercion types on hashes
+# coercion types on hashes (values)
 {
     my Num(Any) %h;
     %h = :a("42.13"), :b(True), :c(pi);
     # We need to flatten the hash in first place or otherwise its type differs from plain %()
-    is-deeply %(|%h), %(:a(42.13e0), :b(1.0e0), :c(pi)), "a hash with coercion type";
+    is-deeply %(|%h), %(:a(42.13e0), :b(1.0e0), :c(pi)), "a hash with coercion type for values";
+}
+
+# coercion types on hashes (keys)
+# https://github.com/Raku/old-issue-tracker/issues/6176
+{
+    my %h{Int(Str)} = "10" => 42;
+    isa-ok %h.keys[0], Int, "a hash with coercion type for keys (1)";
+    is %h.values[0] - %h.keys[0], 32, "a hash with coercion type for keys (2)"
 }
 
 # methods exist, too
