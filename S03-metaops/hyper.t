@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 414;
+plan 417;
 
 =begin pod
 
@@ -1140,6 +1140,17 @@ is-deeply (:42a, :666b).Map>>.Str, (a => "42", b => "666").Map,
     my @a = 0,0,0;
     is-deeply @a >>!=<< @a, [False, False, False],
       "is != treated as an infix, instead of a meta-ed assignment";
+}
+
+# https://github.com/Raku/old-issue-tracker/issues/4700
+{
+    my $t4700 := (:a, :b, :c) >>~>> "foo";
+    isa-ok $t4700, List,
+        'hypered infix:<~> on list of pairs gives back a list';
+    is $t4700[2].key, 'c',
+        'hypered infix:<~> on list of pairs leaves keys unchanged';
+    is $t4700[2].value, 'Truefoo',
+        'hypered infix:<~> on list of pairs appends to stringified value';
 }
 
 # vim: expandtab shiftwidth=4
