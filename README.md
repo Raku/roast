@@ -16,10 +16,10 @@ as a conforming Raku.
 ## Introduction
 
 Please consider this test suite to be the bleeding edge of Raku
-development. New tests, tests for proposed new features, etc.,
-will live on this 'master' branch. Once a specification is cut, a tag
+development.  New tests, tests for proposed new features, etc.,
+will live on this 'master' branch.  Once a specification is cut, a tag
 will be created for that version of the spec, e.g., `6.c` for *Christmas*
-language release. If errata becomes available, it will be kept in `-errata`
+language release.  If errata become available, they will be kept in an `-errata`
 branch for that specific language version, e.g. `6.c-errata` for `6.c`.
 
 As they develop, different implementations will certainly be in
@@ -127,8 +127,8 @@ specify a different implementation and other options.
 
 This repository contains
 [`Test::Util` module](packages/Test-Helpers/lib/Test/Util.rakumod) with helper routines
-you can use when writing tests. See POD documentation included at the end of
-the [module's source code](packages/Test-Helpers/lib/Test/Util.rakumod). To include
+you can use when writing tests.  See POD documentation included at the end of
+the [module's source code](packages/Test-Helpers/lib/Test/Util.rakumod).  To include
 the module, in your test file, you need to add `use lib` line to your test file.
 
     use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
@@ -142,7 +142,7 @@ files's location to the root of the repository.
 ## Appendices
 
 The [`APPENDICES`](APPENDICES/) directory contains advisory tests implentations
-may optionally choose to follow. See the [`README`](APPENDICES/README.md)
+may optionally choose to follow.  See the [`README`](APPENDICES/README.md)
 included in that directory for more information.
 
 APPENDICES are not included in released versions of the specification.
@@ -151,9 +151,9 @@ APPENDICES are not included in released versions of the specification.
 
 - **ROAST_TIMING_SCALE**
 
-Some tests rely on a process to complete in a certain amount of time. If you're
+Some tests rely on a process to complete in a certain amount of time.  If you're
 running on a slowish computer, try setting **ROAST_TIMING_SCALE** to a larger
-value that will be used as a multiplier for the time to wait. We don't wait for
+value that will be used as a multiplier for the time to wait.  We don't wait for
 too long a time by default so as to make the roast run faster.  Defaults to `1`.
 
 ## Contributing
