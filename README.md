@@ -17,7 +17,7 @@ as a conforming Raku.
 
 Please consider this test suite to be the bleeding edge of Raku
 development. New tests, tests for proposed new features, etc.,
-will live on this 'master' branch. Once a specification is cut, a branch
+will live on this 'master' branch. Once a specification is cut, a tag
 will be created for that version of the spec, e.g., `6.c` for *Christmas*
 language release. If errata becomes available, it will be kept in `-errata`
 branch for that specific language version, e.g. `6.c-errata` for `6.c`.
