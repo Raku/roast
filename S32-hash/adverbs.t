@@ -28,7 +28,7 @@ my @bC = <b C>;
 #-------------------------------------------------------------------------------
 # Hash
 
-for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
+for $%a, Any, $%i, Int, $%c, Mu, $%j, Int -> %h, $T {
     my $n = %h.VAR.name;
 
 # single existing key
@@ -87,6 +87,8 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
 
 # single missing key
 {
+    todo("#5419 default type on containers on objects hashes corrected in RakuAST")
+      if $T<> =:= Mu;
     is %h<B>,               $T, "$n single key missing: value";
     is %h<B>:k,             (), "$n single key missing: :k";
     is %h<B>:k($ok),        (), "$n single key missing: :k(\$ok)";
@@ -94,6 +96,8 @@ for $%a, Any, $%i, Int, $%c, Any, $%j, Int -> %h, $T {
     is %h<B>:k($no),       "B", "$n single key missing: :k(\$no)";
     is %h<B>:v,             (), "$n single key missing: :v";
     is %h<B>:v($ok),        (), "$n single key missing: :v(\$ok)";
+    todo("#5419 default type on containers on objects hashes corrected in RakuAST",2)
+      if $T<> =:= Mu;
     is %h<B>:!v,            $T, "$n single key missing: :!v";
     is %h<B>:v($no),        $T, "$n single key missing: :v(\$no)";
     is %h<B>:kv,            (), "$n single key missing: :kv(\$ok)";
