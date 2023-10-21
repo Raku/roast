@@ -65,7 +65,6 @@ lives-ok {
 lives-ok { callframe(1).annotations }, '.annotations does not crash';
 
 # https://github.com/MoarVM/MoarVM/issues/562
-#?rakudo.jvm todo 'NullPointerException'
 lives-ok
     {
         for ^Inf {
