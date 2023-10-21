@@ -159,3 +159,9 @@ too long a time by default so as to make the roast run faster.  Defaults to `1`.
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+# Our Amazing Contributors ⭐
+
+<a href="https://github.com/vikhyatsingh123/Naruto-Shippuden/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=vikhyatsingh123/Naruto-Shippuden" />
+</a>
