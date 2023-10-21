@@ -294,6 +294,7 @@ ok 1 ~~ TR/\#//, 'Backslashed # is parsed correctly in a regex';
 # https://github.com/rakudo/rakudo/issues/5248
 is ("aa" ~~ /$<start>=<.alpha> $<start>/).gist,
   "｢aa｣\n start => ｢a｣", 'non-capturing backref works';
+#?rakudo.jvm skip 'Can not invoke object "&has_aliased_name", cmp. https://github.com/Raku/nqp/commit/a124861a37'
 is ("aa" ~~ /$<start>=<alpha> $<start>/).gist,
   "｢aa｣\n alpha => ｢a｣\n start => ｢a｣" | "｢aa｣\n start => ｢a｣\n alpha => ｢a｣",
   'capturing backref works';
