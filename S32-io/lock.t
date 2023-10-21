@@ -132,7 +132,6 @@ test-lock :open-for-read,  :fails-to-lock, args1 => \(:!shared);
 test-lock :open-for-read,  :fails-to-lock, args1 => \(:!shared,  :non-blocking);
 test-lock :open-for-read,  :fails-to-lock, args1 => \(:!shared, :!non-blocking);
 
-#?rakudo.jvm 6 skip '[io grant] Could not obtain blocking, shared lock: NonWritableChannelException'
 test-lock :open-for-read,  :blocks-write, args1 => \(:shared);
 test-lock :open-for-read,  :blocks-write, args1 => \(:shared,  :non-blocking);
 test-lock :open-for-read,  :blocks-write, args1 => \(:shared, :!non-blocking);
@@ -144,7 +143,6 @@ test-lock :open-for-read,  :fails-write, args2 => ':non-blocking',
 test-lock :open-for-read,  :fails-write, args2 => ':non-blocking',
     args1 => \(:shared, :!non-blocking);
 
-#?rakudo.jvm 3 todo '[io grant] expected Failure, bot Bool'
 test-lock :open-for-write, :fails-to-lock, args1 => \(:shared);
 test-lock :open-for-write, :fails-to-lock, args1 => \(:shared,  :non-blocking);
 test-lock :open-for-write, :fails-to-lock, args1 => \(:shared, :!non-blocking);
@@ -162,7 +160,6 @@ test-lock :open-for-write, :blocks-write, :blocks-read,
 test-lock :open-for-write, :blocks-write, :blocks-read,
     args1 => \(:!shared, :!non-blocking);
 
-#?rakudo.jvm 5 skip '[io grant] hangs'
 test-lock :open-for-write, :fails-write, :fails-read,
     args2 => ':non-blocking', args1 => \();
 test-lock :open-for-write, :fails-write, :fails-read,
@@ -175,7 +172,6 @@ test-lock :open-for-write, :fails-write, :fails-read,
     args2 => ':non-blocking', args1 => \(:!shared, :!non-blocking);
 
 
-#?rakudo.jvm skip '[io grant] Could not obtain blocking, shared lock: NonWritableChannelException'
 {
     my $file = make-temp-file :content<test>;
     my $fh = $file.open: :r; LEAVE $fh.close;
@@ -186,7 +182,6 @@ test-lock :open-for-write, :fails-write, :fails-read,
     }, 'we get the write lock after shared lock is unlocked';
 }
 
-#?rakudo.jvm skip '[io grant] Could not obtain blocking, shared lock: NonWritableChannelException'
 {
     my $file = make-temp-file :content<test>;
     my $fh = $file.open: :w; LEAVE $fh.close;
@@ -210,7 +205,6 @@ subtest 'IO::CatHandle' => {
         make-temp-file(:content<ber>).open;
 
     for ^3 {
-      #?rakudo.jvm 3 skip '[io grant] Could not obtain blocking, shared lock: NonWritableChannelException'
       test-lock :fh($cat), :file($cat.path), :fails-to-lock, :no-close,
           args1 => \();
       test-lock :fh($cat), :file($cat.path), :blocks-write,  :no-close,
