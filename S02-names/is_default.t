@@ -412,13 +412,12 @@ subtest "Hash Attributes" => {
       expected => Hash[Int],
       got      => Nil;
 # https://github.com/Raku/old-issue-tracker/issues/6512
-#?rakudo 2 todo "LTA wrong kind of exception"
     throws-like 'class IntFoo { has Int $!a is default("foo") }',
-      X::Parameter::Default::TypeCheck,
+      X::TypeCheck::Attribute::Default,
       expected => Int,
       got      => 'foo';
     throws-like 'class IntNil { has Int $!a is default(Nil) }',
-      X::Parameter::Default::TypeCheck,
+      X::TypeCheck::Attribute::Default,
       expected => Int,
       got      => Nil;
 } #6
@@ -482,11 +481,11 @@ subtest 'is default() respects type constraint' => {
     subtest 'attribute' => {
         plan 3;
         throws-like ｢class { has $.a is default("foo") of Int }｣,
-            X::TypeCheck::Assignment, 'is default() + of';
+            X::TypeCheck::Attribute::Default, 'is default() + of';
         throws-like ｢class { has $.a of Int is default("foo") }｣,
-            X::TypeCheck::Assignment, 'of is default()';
+            X::TypeCheck::Attribute::Default, 'of is default()';
         throws-like ｢class { has Int $.a is default("foo") }｣,
-            X::TypeCheck::Assignment, 'Type $ is default()';
+            X::TypeCheck::Attribute::Default, 'Type $ is default()';
     }
 }
 
@@ -520,7 +519,7 @@ subtest 'default `is default()` gets adjusted to type constraint' => {
     class DefaultTyped { has Int:D $.a is rw is default(42) }
     is DefaultTyped.new.a, 42, 'uninitialized typed:D attribute should have its default';
     throws-like ｢class NilDefaultTyped { has Int:D $.a is rw is default(Nil) }｣,
-                X::TypeCheck::Assignment;
+                X::TypeCheck::Attribute::Default;
 }
 
 # vim: expandtab shiftwidth=4
