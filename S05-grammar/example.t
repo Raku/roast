@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 8;
+plan 10;
 
 =pod calling a rule a grammar with arguments
 
@@ -54,6 +54,15 @@ $content = '<title>Exactly</title> aosihdas
 
 #?rakudo skip 'Method "speaker" not found for invocant of class "Cursor"'
 is($content ~~ m/<title>/, '<title>Exactly</title>', 'match token');
+
+# RT #127945
+{
+    my $result;
+    lives-ok {
+        $result = grammar { token TOP { <return> }; token return { .+ }; }.parse("all-good");
+    }, '<return> inside grammar must reference token `return`, not &return';
+    is ~$result, 'all-good', 'token `return` parses things correctly';
+}
 
 # XXX this can't work this way
 # 'schedule' is a rule (non-backtracking) so the implicit <.ws> will always
