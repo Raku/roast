@@ -1,8 +1,11 @@
 use Test;
 
-plan 187;
+plan 145;
 
 # L<S02/Variables Containing Undefined Values>
+
+# This subset is needed to test Nil assignment where value container is type-constrained
+subset IntOrNil of Any where Int | Nil;
 
 # not specifically typed
 {
@@ -39,10 +42,10 @@ plan 187;
         has $.b is rw is default(42) = 768;
         has $.c is rw is default(Nil);
         has $.d is rw is default(Nil) = 353;
-	method a_var { $!a.VAR }
-	method b_var { $!b.VAR }
-	method c_var { $!c.VAR }
-	method d_var { $!d.VAR }
+        method a_var { $!a.VAR }
+        method b_var { $!b.VAR }
+        method c_var { $!c.VAR }
+        method d_var { $!d.VAR }
     }
     my $a = NoType.new();
     is $a.a, 42, "uninitialized untyped attribute should have its default";
@@ -102,8 +105,8 @@ plan 187;
     class IntTyped {
         has Int $.a is rw is default(42);
         has Int $.b is rw is default(42) = 768;
-	method a_var { $!a.VAR }
-	method b_var { $!b.VAR }
+        method a_var { $!a.VAR }
+        method b_var { $!b.VAR }
     }
     my $a = IntTyped.new();
     is $a.a, 42, "uninitialized typed attribute should have its default";
@@ -153,10 +156,10 @@ plan 187;
         has @.b is rw is default(42) = 768;
         has @.c is rw is default(Nil);
         has @.d is rw is default(Nil) = 353;
-	method a_var { @!a.VAR }
-	method b_var { @!b.VAR }
-	method c_var { @!c.VAR }
-	method d_var { @!d.VAR }
+        method a_var { @!a.VAR }
+        method b_var { @!b.VAR }
+        method c_var { @!c.VAR }
+        method d_var { @!d.VAR }
     }
     my $a = NoTypeArray.new();
     is $a.a[0], 42, "uninitialized untyped attrib element should have its default";
@@ -200,8 +203,8 @@ plan 187;
     class IntTypedArray {
         has Int @.a is rw is default(42);
         has Int @.b is rw is default(42) = 768;
-	method a_var { @!a.VAR }
-	method b_var { @!b.VAR }
+        method a_var { @!a.VAR }
+        method b_var { @!b.VAR }
     }
     my $a = IntTypedArray.new();
     is $a.a[0], 42, "uninitialized typed attrib element should have its default";
@@ -217,65 +220,153 @@ plan 187;
 } #12
 
 # not specifically typed
-{
-    my %a is default(42);
-    is %a<o>, 42, "uninitialized untyped hash element should have its default";
-    is %a.VAR.default, 42, 'is the default set correctly for %a';
-    lives-ok { %a<o>++ }, "should be able to update untyped hash element";
-    is %a<o>, 43, "update of untyped hash element to 43 was successful";
-    lives-ok { %a<o> = Nil }, "assign Nil to untyped hash element";
-    is %a<o>, 42, "untyped hash element returned to its default with Nil";
-    lives-ok { %a<o> = 314 }, "should be able to update untyped hash element";
-    is %a<o>, 314, "update of untyped hash element to 314 was successful";
+subtest "Hashes" => {
+    plan 4;
+    my @hashes =
+        ( "Untyped",
+            (my % is default(42)),
+            (my % is default(42) = o => 768),
+            (my % is default(Nil)),
+            (my % is default(Nil) = o => 353)),
 
-    my %b is default(42) = o => 768;
-    is %b<o>, 768, "untyped hash element should be initialized";
-    is %b.VAR.default, 42, 'is the default set correctly for %b';
+        ( "Typed Key",
+            (my %{Str:D} is default(42)),
+            (my %{Str:D} is default(42) = o => 768),
+            (my %{Str:D} is default(Nil)),
+            (my %{Str:D} is default(Nil) = o => 353)),
 
-    my %c is default(Nil);
-    ok %c.VAR.default === Nil, 'is the default set correctly for %c';
-    lives-ok { %c<o>++ }, 'should be able to increment untyped variable';
-    is %c<o>, 1, "untyped variable should be incremented";
-    lives-ok { %c<o> = Nil }, "able to assign Nil to untyped variable";
-    ok %c<o> === Nil, 'is the default value correctly reset for %c<o>';
+        ( "Typed Value",
+            (my Int % is default(42)),
+            (my Int % is default(42) = o => 768),
+            (my IntOrNil % is default(Nil)),
+            (my IntOrNil % is default(Nil) = o => 353)),
 
-    my %d is default(Nil) = o => 353;
-    is %d<o>, 353, "untyped variable should be initialized";
-    ok %d.VAR.default === Nil, 'is the default set correctly for %d';
-} #19
+        ( "Typed Value And Key",
+            (my Int %{Str:D} is default(42)),
+            (my Int %{Str:D} is default(42) = o => 768),
+            (my IntOrNil %{Str:D} is default(Nil)),
+            (my IntOrNil %{Str:D} is default(Nil) = o => 353)),
+        ;
+
+    for @hashes -> (Str:D $test-name, %a is raw, %b is raw, %c is raw, %d is raw) {
+        subtest $test-name, {
+            plan 2;
+            subtest "concrete default" => {
+                plan 13;
+                is %a<o>, 42, "uninitialized hash element should have its default";
+                is %a.VAR.default, 42, 'is the default set correctly for %a';
+                lives-ok { %a<o>++ }, "should be able to update hash element";
+                is %a<o>, 43, "update of hash element to 43 was successful";
+                lives-ok { %a<o> = Nil }, "assign Nil to hash element";
+                is %a<o>, 42, "hash element returned to its default with Nil";
+                lives-ok { %a<o> = 314 }, "should be able to update hash element";
+                is %a<o>, 314, "update of hash element to 314 was successful";
+                is %a<o>:delete, 314, "delete of existing element returns its value";
+                is %a<o>:delete, 42, "delete of deleted element returns hash default";
+                is %a<z>:delete, 42, "delete of never initialized element returns hash default";
+
+                is %b<o>, 768, "hash element should be initialized";
+                is %b.VAR.default, 42, 'is the default set correctly for %b';
+            }
+
+            subtest "Nil default" => {
+                plan 8;
+                ok %c.VAR.default === Nil, 'is the default set correctly for %c';
+                lives-ok { %c<o>++ }, 'should be able to increment hash element';
+                is %c<o>, 1, "element should be incremented";
+                lives-ok { %c<o> = Nil }, "able to assign Nil to hash element";
+                ok %c<o> === Nil, 'is the default value correctly reset for %c<o>';
+                is %c<z>:delete, Nil, "delete of never initialized element returns Nil from hash default";
+
+                is %d<o>, 353, "hash element should be initialized";
+                ok %d.VAR.default === Nil, 'is the default set correctly for %d';
+            }
+        }
+    }
+}
 
 # not specifically typed attribute
-{
+subtest "Hash Attributes" => {
+    plan 4;
 
-    class NoTypeHash {
+    my class NoTypeHash {
         has %.a is rw is default(42);
         has %.b is rw is default(42) = o => 768;
         has %.c is rw is default(Nil);
         has %.d is rw is default(Nil) = o => 353;
-	method a_var { %!a.VAR }
-	method b_var { %!b.VAR }
-	method c_var { %!c.VAR }
-	method d_var { %!d.VAR }
+        method a_var { %!a.VAR }
+        method b_var { %!b.VAR }
+        method c_var { %!c.VAR }
+        method d_var { %!d.VAR }
+        method name { "Untyped" }
     }
-    my $a = NoTypeHash.new();
-    is $a.a<o>, 42, "uninitialized untyped attrib hash element should have its default";
-    is $a.a_var.default, 42, 'is the default set correctly for %!a';
-    lives-ok { $a.a<o>++ }, "should be able to update untyped attrib hash element";
-    is $a.a<o>, 43, "update of untyped attrib hash element to 43 was successful";
-    lives-ok { $a.a<o> = Nil }, "assign Nil to untyped attrib hash element";
-    is $a.a<o>, 42, "untyped attrib hash element returned to its default with Nil";
-    lives-ok { $a.a<o> = 314 }, "should be able to update untyped attrib hash element";
-    is $a.a<o>, 314, "update of untyped attrib hash element to 314 was successful";
-    is $a.b<o>, 768, "untyped attrib hash element should be initialized";
-    is $a.b_var.default, 42, 'is the default set correctly for %!b';
-    ok $a.c_var.default === Nil, 'is the default set correctly for %!c';
-    lives-ok { $a.c<o>++ }, 'should be able to increment untyped attrib hash element';
-    is $a.c<o>, 1, "untyped attrib hash element should be incremented";
-    lives-ok { $a.c<o> = Nil }, "able to assign Nil to untyped attrib hash element";
-    ok $a.c<o> === Nil, 'is the default value correctly reset for %!c<o>';
-    is $a.d<o>, 353, "untyped attrib hash element should be initialized";
-    ok $a.d.VAR.default === Nil, 'is the default set correctly for %!d';
-} #19
+    my class TypedKeyHash {
+        has %.a{Str:D} is rw is default(42);
+        has %.b{Str:D} is rw is default(42) = o => 768;
+        has %.c{Str:D} is rw is default(Nil);
+        has %.d{Str:D} is rw is default(Nil) = o => 353;
+        method a_var { %!a.VAR }
+        method b_var { %!b.VAR }
+        method c_var { %!c.VAR }
+        method d_var { %!d.VAR }
+        method name { "Typed Key" }
+    }
+    my class TypedValueHash {
+        has Int %.a is rw is default(42);
+        has Int %.b is rw is default(42) = o => 768;
+        has IntOrNil %.c is rw is default(Nil);
+        has IntOrNil %.d is rw is default(Nil) = o => 353;
+        method a_var { %!a.VAR }
+        method b_var { %!b.VAR }
+        method c_var { %!c.VAR }
+        method d_var { %!d.VAR }
+        method name { "Typed Value" }
+    }
+    my class TypedKeyValueHash {
+        has Int %.a{Str:D} is rw is default(42);
+        has Int %.b{Str:D} is rw is default(42) = o => 768;
+        has IntOrNil %.c{Str:D} is rw is default(Nil);
+        has IntOrNil %.d{Str:D} is rw is default(Nil) = o => 353;
+        method a_var { %!a.VAR }
+        method b_var { %!b.VAR }
+        method c_var { %!c.VAR }
+        method d_var { %!d.VAR }
+        method name { "Typed Key and Value" }
+    }
+    for NoTypeHash, TypedValueHash, TypedKeyHash, TypedKeyValueHash -> \hash-type {
+        subtest hash-type.name ~ " Hash" => {
+            plan 2;
+            my $a = hash-type.new();
+            subtest "concrete default" => {
+                plan 13;
+                is $a.a<o>, 42, "uninitialized attrib hash element should have its default";
+                is $a.a_var.default, 42, 'is the default set correctly for %!a';
+                lives-ok { $a.a<o>++ }, "should be able to update attrib hash element";
+                is $a.a<o>, 43, "update of attrib hash element to 43 was successful";
+                lives-ok { $a.a<o> = Nil }, "assign Nil to attrib hash element";
+                is $a.a<o>, 42, "attrib hash element returned to its default with Nil";
+                lives-ok { $a.a<o> = 314 }, "should be able to update attrib hash element";
+                is $a.a<o>, 314, "update of attrib hash element to 314 was successful";
+                is $a.a<o>:delete, 314, "delete of an existing element returns its value";
+                is $a.a<o>:delete, 42, "delete of deleted element returns hash default";
+                is $a.a<z>:delete, 42, "delete of never initialized element returns hash default";
+                is $a.b<o>, 768, "attrib hash element should be initialized";
+                is $a.b_var.default, 42, 'is the default set correctly for %!b';
+            }
+            subtest "Nil default" => {
+                plan 8;
+                ok $a.c_var.default === Nil, 'is the default set correctly for %!c';
+                lives-ok { $a.c<o>++ }, 'should be able to increment attrib hash element';
+                is $a.c<o>, 1, "attrib hash element should be incremented";
+                lives-ok { $a.c<o> = Nil }, "able to assign Nil to attrib hash element";
+                ok $a.c<o> === Nil, 'is the default value correctly reset for %!c<o>';
+                is $a.c<z>:delete, Nil, "delete of never initialized hash element returns Nil from hash default";
+                is $a.d<o>, 353, "attrib hash element should be initialized";
+                ok $a.d.VAR.default === Nil, 'is the default set correctly for %!d';
+            }
+        }
+    }
+}
 
 # typed
 {
@@ -292,27 +383,6 @@ plan 187;
     my Int %b is default(42) = o => 768;
     is %b<o>, 768, "typed hash element should be initialized";
     is %b.VAR.default, 42, 'is the default set correctly for Int %b';
-} #12
-
-# typed
-{
-    class IntTypedHash {
-        has Int %.a is rw is default(42);
-        has Int %.b is rw is default(42) = o => 768;
-	method a_var { %!a.VAR }
-	method b_var { %!b.VAR }
-    }
-    my $a = IntTypedHash.new();
-    is $a.a<o>, 42, "uninitialized type attrib hash element should have its default";
-    is $a.a_var.default, 42, 'is the default set correctly for Int %!a';
-    lives-ok { $a.a<o>++ }, "should be able to update type attrib hash element";
-    is $a.a<o>, 43, "update of hash array element to 43 was successful";
-    lives-ok { $a.a<o> = Nil }, "assign Nil to hash array element";
-    is $a.a<o>, 42, "type attrib hash element returned to its default with Nil";
-    lives-ok { $a.a<o> = 314 }, "should be able to update type attrib hash element";
-    is $a.a<o>, 314, "update of type attrib hash element to 314 was successful";
-    is $a.b<o>, 768, "type attrib hash element should be initialized";
-    is $a.b_var.default, 42, 'is the default set correctly for Int %!b';
 } #12
 
 # type mismatches in setting default
@@ -342,13 +412,12 @@ plan 187;
       expected => Hash[Int],
       got      => Nil;
 # https://github.com/Raku/old-issue-tracker/issues/6512
-#?rakudo 2 todo "LTA wrong kind of exception"
     throws-like 'class IntFoo { has Int $!a is default("foo") }',
-      X::Parameter::Default::TypeCheck,
+      X::TypeCheck::Attribute::Default,
       expected => Int,
       got      => 'foo';
     throws-like 'class IntNil { has Int $!a is default(Nil) }',
-      X::Parameter::Default::TypeCheck,
+      X::TypeCheck::Attribute::Default,
       expected => Int,
       got      => Nil;
 } #6
@@ -412,11 +481,11 @@ subtest 'is default() respects type constraint' => {
     subtest 'attribute' => {
         plan 3;
         throws-like ｢class { has $.a is default("foo") of Int }｣,
-            X::TypeCheck::Assignment, 'is default() + of';
+            X::TypeCheck::Attribute::Default, 'is default() + of';
         throws-like ｢class { has $.a of Int is default("foo") }｣,
-            X::TypeCheck::Assignment, 'of is default()';
+            X::TypeCheck::Attribute::Default, 'of is default()';
         throws-like ｢class { has Int $.a is default("foo") }｣,
-            X::TypeCheck::Assignment, 'Type $ is default()';
+            X::TypeCheck::Attribute::Default, 'Type $ is default()';
     }
 }
 
@@ -450,7 +519,7 @@ subtest 'default `is default()` gets adjusted to type constraint' => {
     class DefaultTyped { has Int:D $.a is rw is default(42) }
     is DefaultTyped.new.a, 42, 'uninitialized typed:D attribute should have its default';
     throws-like ｢class NilDefaultTyped { has Int:D $.a is rw is default(Nil) }｣,
-                X::TypeCheck::Assignment;
+                X::TypeCheck::Attribute::Default;
 }
 
 # vim: expandtab shiftwidth=4
