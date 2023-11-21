@@ -59,7 +59,6 @@ diag "'{$*VM.name}' is an unknown VM, please report" if !
   "We know of the VM we are running under";
 
 isa-ok $*VM.version, Version;
-#?rakudo todo 'no VM.signature yet RT #124613'
 isa-ok $*VM.signature, Blob;
 
 # vim: ft=perl6

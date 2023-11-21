@@ -91,7 +91,6 @@ sub seven(
 {
 }
 
-todo 'comment betwixt signature and block WIP', 1;
 is &seven.WHY, 'trailing comment', 'sub trailing comments may be between signature and block';
 
 sub eight( #| leading for param

@@ -27,7 +27,6 @@ for @inttypes -> $type {
     my ($minval,$maxval) = ::($type).Range.int-bounds;
 
     if $type eq "uint64" {
-        #?rakudo todo 'getting -1 instead of 18446744073709551615'
         is EVAL("my $type \$var = $maxval; \$var"), $maxval,
           "$type can be $maxval";
     } else {
@@ -51,7 +50,6 @@ for @inttypes -> $type {
     }
 
     if $type eq "uint64" {
-        #?rakudo todo 'getting -1 instead of 0'
         is EVAL("my $type \$var = $minval; \$var--; \$var"), $maxval,
           "$type underflows to $maxval";
     } elsif $type eq "int64" {
@@ -121,7 +119,6 @@ for @inttypes -> $type {
     }
     my $overlap = Overlap.new(u32 => 1234567);
     is $overlap.u32, 1234567, "uint32 in union is unsigned";
-    #?rakudo 2 todo 'uint behaves like signed int in CUnion'
     is $overlap.u16,   54919, "uint16 in union is unsigned";
     is $overlap.u8,      135,  "uint8 in union is unsigned";
 }

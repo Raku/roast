@@ -54,7 +54,6 @@ ok $*DISTRO.Str  ~~ m/\w/, 'We can do a $*DISTRO.Str';
 ok $*DISTRO.name, 'Non-empty $*DISTRO.name';
 
 isa-ok $*DISTRO.version, Version;
-#?rakudo todo 'no Distro.signature yet RT #124621'
 isa-ok $*DISTRO.signature, Blob;
 isa-ok $*DISTRO.is-win, Bool;
 

@@ -34,7 +34,6 @@ plan 23;
     # Can't deal with parameters.
     ok (:(::T $x, T $y) R~~ :(Str $y, Str $z)), "Parametric types";
 
-    #?rakudo todo "Parametric types"
     ok (:(&foo:(Str --> Bool)) ~~ :(&bar:(Str --> Bool))),
         "Code params with signatures";
 

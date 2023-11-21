@@ -132,7 +132,6 @@ throws-like { EVAL 'class Warfare { has int $a; say $a }' }, X::Syntax::NoSelf;
         has uint8 $.ff;
     }
     my $c = C1.new(ff => 255);
-#?rakudo.moar todo 'RT #131122'
     is-deeply $c.ff, 255, 'large unsigned ints';
 
     my class C2 is repr('CStruct') {
@@ -143,7 +142,6 @@ throws-like { EVAL 'class Warfare { has int $a; say $a }' }, X::Syntax::NoSelf;
     $c2.ff = 100;
     is-deeply $c2.ff, 100, 'unsigned int sanity';
     $c2.ff = 200;
-#?rakudo todo 'RT #131122'
     is-deeply $c2.ff, 200, 'large unsigned ints';
 }
 

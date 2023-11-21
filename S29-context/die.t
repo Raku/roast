@@ -52,7 +52,6 @@ is ({ try { die_in_return(); 23 }; 42 }()), 42, "die in return";
     try { die $msg };
     is "$!", $msg, 'die with argument sets $!';
     try { die };
-    #?rakudo todo 'RT #67374'
     is "$!", $msg, 'die with no argument uses $!';
 }
 

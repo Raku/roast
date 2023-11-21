@@ -83,7 +83,6 @@ plan 38;
     throws-like '42.pop', X::Method::NotFound, '.pop should not work on scalars';
     throws-like 'pop(@pop,10)', Exception,     'pop() should not allow extra arguments';
     throws-like '@pop.pop(10)', Exception,     '.pop() should not allow extra arguments';
-    #?rakudo todo 'code does not die'
     ## TODO test for correct exception once the code dies
     throws-like '@pop.pop = 3', Exception,  'Cannot assign to a readonly variable or a value';
     throws-like 'pop(@pop) = 3', Exception, 'Cannot assign to a readonly variable or a value';

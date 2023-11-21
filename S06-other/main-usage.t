@@ -150,7 +150,6 @@ is_run 'sub MAIN($arg, Bool :$bool) { print $bool, $arg }',
     {:out<True-option>}, :args['--bool', '--', '-option'],
     'Boolean argument with --';
 
-#?rakudo todo 'NYI RT #124669'
 is_run 'sub MAIN(:@foo) { print @foo }', {out => "bar"}, :args['--foo=bar'],
     'single occurence for named array param';
 

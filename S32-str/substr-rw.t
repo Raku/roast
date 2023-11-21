@@ -15,12 +15,10 @@ plan 40;
         is($r, "gloop", '$r referent is eq to the substr-rwing');
 
         $r = "boing";
-        #?rakudo todo 'NYI'
         is($str, "boing ding", "assignment to reference modifies original");
         is($r, "boing", '$r is consistent');
 
         my $o := substr-rw($str, 3, 2);
-        #?rakudo 3 todo 'NYI'
         is($o, "ng", "other ref to other lvalue");
         $r = "foo";
         is($str, "foo ding", "lvalue ref size varies but still works");
