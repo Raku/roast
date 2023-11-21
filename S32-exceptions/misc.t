@@ -173,7 +173,6 @@ throws-like 'sub f(*@a, $b?) { }', X::Parameter::WrongOrder,
     misplaced   => 'optional positional',
     after       => 'variadic';
 
-#?rakudo todo 'parsing regression RT #124679'
 {
     throws-like '#`', X::Syntax::Comment::Embedded;
 }

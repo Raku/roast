@@ -26,7 +26,6 @@ sub showkv($x) {
     is showkv($m ∪ $m), showkv($m), "Mix union with itself yields self";
     isa-ok ($m ∪ $m), Mix, "... and it's actually a Mix";
     is showkv($mh ∪ $mh), showkv($mh), "MixHash union with itself yields (as Mix)";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
     isa-ok ($mh ∪ $mh), MixHash, "... and it's actually a MixHash";
 
     is showkv($b ∪ $m), "blood:1.1 love:1.2 rhetoric:1", "Bag union with Mix works";
@@ -44,7 +43,6 @@ sub showkv($x) {
     is showkv($m ∩ $m), showkv($m), "Mix intersection with itself yields self (as Mix)";
     isa-ok ($m ∩ $m), Mix, "... and it's actually a Mix";
     is showkv($mh ∩ $mh), showkv($mh), "MixHash intersection with itself yields self (as Mix)";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
     isa-ok ($mh ∩ $mh), MixHash, "... and it's actually a MixHash";
 
     is showkv($b ∩ $m), "blood:1 love:1", "Bag intersection with Mix works";
@@ -53,7 +51,6 @@ sub showkv($x) {
     isa-ok ($b ∩ $mh), Mix, "... and it's actually a Mix";
     #?niecza todo 'Right now this works as $mh ∩ glag ∩ green ∩ blood.  Test may be wrong'
     is showkv($mh ∩ <glad green blood>), "blood:1", "MixHash intersection with array of strings works";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
     isa-ok ($mh ∩ <glad green blood>), MixHash, "... and it's actually a MixHash";
 
     is showkv($b (&) $m), "blood:1 love:1", "Bag intersection with Mix works (texas)";
@@ -62,7 +59,6 @@ sub showkv($x) {
     isa-ok ($b (&) $mh), Mix, "... and it's actually a Mix";
     #?niecza todo 'Right now this works as $mh ∩ glag ∩ green ∩ blood.  Test may be wrong?'
     is showkv($mh (&) <glad green blood>), "blood:1", "MixHash intersection with array of strings works (texas)";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
     isa-ok ($mh (&) <glad green blood>), MixHash, "... and it's actually a MixHash";
 }
 
@@ -78,7 +74,6 @@ sub showkv($x) {
         ($a (|) $m) (-) ($m (&) $a)
     }
 
-    #?rakudo 8 todo "Rakudo update in progress, but not done yet RT #124541"
     is showkv($b (^) $m), showkv(symmetric-difference($b, $m)), "Mix symmetric difference with Bag is correct";
     isa-ok ($b (^) $m), Mix, "... and it's actually a Mix";
     is showkv($m (^) $b), showkv(symmetric-difference($b, $m)), "Bag symmetric difference with Mix is correct";
@@ -96,25 +91,20 @@ sub showkv($x) {
     is showkv($m ⊍ $m), "blood:1.21 love:1.44 rhetoric:1", "Mix multiplication with itself yields self squared";
     isa-ok ($m ⊍ $m), Mix, "... and it's actually a Mix";
     is showkv($mh ⊍ $mh), "blood:1.21 love:1.69", "MixHash multiplication with itself yields self squared";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
     isa-ok ($mh ⊍ $mh), MixHash, "... and it's actually a MixHash";
 
     is showkv($b ⊍ $m), "blood:1.1 love:1.2", "Mix multiplication (Bag / Mix) works";
     isa-ok ($b ⊍ $m), Mix, "... and it's actually a Mix";
     is showkv($bh ⊍ $m), "blood:1.1 rhetoric:1", "Mix multiplication (BagHash / Mix) works";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
     isa-ok ($bh ⊍ $m), MixHash, "... and it's actually a MixHash";
     is showkv($mh ⊍ $m), "blood:1.21 love:1.56", "Mix multiplication (MixHash / Mix) works";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
     isa-ok ($mh ⊍ $m), MixHash, "... and it's actually a MixHash";
 
     is showkv($b (.) $m), "blood:1.1 love:1.2", "Mix multiplication (Bag / Mix) works (texas)";
     isa-ok ($b (.) $m), Mix, "... and it's actually a Mix (texas)";
     is showkv($bh (.) $m), "blood:1.1 rhetoric:1", "Mix multiplication (BagHash / Mix) works (texas)";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
     isa-ok ($bh (.) $m), MixHash, "... and it's actually a MixHash (texas)";
     is showkv($mh (.) $m), "blood:1.21 love:1.56", "Mix multiplication (MixHash / Mix) works (texas)";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
     isa-ok ($mh (.) $m), MixHash, "... and it's actually a MixHash";
 
     # Mix addition
@@ -122,25 +112,20 @@ sub showkv($x) {
     is showkv($m ⊎ $m), "blood:2.2 love:2.4 rhetoric:2", "Mix addition with itself yields twice self";
     isa-ok ($m ⊎ $m), Mix, "... and it's actually a Mix";
     is showkv($mh ⊎ $mh), "blood:2.2 love:2.6", "Mix addition with itself yields twice self";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
     isa-ok ($mh ⊎ $mh), MixHash, "... and it's actually a MixHash";
 
     is showkv($b ⊎ $m), "blood:2.1 love:2.2 rhetoric:1", "Mix addition (Bag / Mix) works";
     isa-ok ($b ⊎ $m), Mix, "... and it's actually a Mix";
     is showkv($bh ⊎ $m), "blood:2.1 love:1.2 rhetoric:2", "Mix addition (BagHash / Mix) works";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
     isa-ok ($bh ⊎ $m), MixHash, "... and it's actually a MixHash";
     is showkv($mh ⊎ $m), "blood:2.2 love:2.5 rhetoric:1", "Mix addition (MixHash / Mix) works";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
     isa-ok ($mh ⊎ $m), MixHash, "... and it's actually a MixHash";
 
     is showkv($b (+) $m), "blood:2.1 love:2.2 rhetoric:1", "Mix addition (Bag / Mix) works (texas)";
     isa-ok ($b (+) $m), Mix, "... and it's actually a Mix (texas)";
     is showkv($bh (+) $m), "blood:2.1 love:1.2 rhetoric:2", "Mix addition (BagHash / Mix) works (texas)";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
     isa-ok ($bh (+) $m), MixHash, "... and it's actually a MixHash (texas)";
     is showkv($mh (+) $m), "blood:2.2 love:2.5 rhetoric:1", "Mix addition (MixHash / Mix) works (texas)";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
     isa-ok ($mh (+) $m), MixHash, "... and it's actually a MixHash";
 }
 
@@ -228,10 +213,11 @@ ok mix(my @large_arr = ("a"...*)[^50000]), "... a large array goes into a bar - 
     is showkv([(.)] $b, $m, $mh), showkv({ blood => 1.21, love => 1.56 }), "Mix multiply reduce works on three sets (Texas)";
 
     is showkv([(^)] @d), showset(∅), "Mix symmetric difference reduce works on nothing";
-    #?rakudo 4 todo "NYI"
+    #?rakudo 2 todo "NYI"
     is showkv([(^)] $b), showset($b), "Bag symmetric difference reduce works on one set";
     isa-ok showkv([(^)] $b), Bag, "Bag symmetric difference reduce works on one set, yields set";
     is showkv([(^)] $m), showkv($m), "Mix symmetric difference reduce works on one mix";
+    #?rakudo todo "NYI"
     isa-ok showkv([(^)] $m), Mix, "Mix symmetric difference reduce works on one mix, yields mix";
     #?rakudo 4 todo "Wrong answer at the moment"
     is showkv([(^)] $b, $m), showkv({ blood => 1, love => 1, rhetoric => 1 }), "Mix symmetric difference reduce works on a mix and a set";

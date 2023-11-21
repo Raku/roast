@@ -79,7 +79,6 @@ TEXT
     class Dwith { has $.foo is DEPRECATED("'bar'") };
 
     $line = $?LINE; D.new.foo;
-    #?rakudo todo 'NYI'
     is Deprecation.report, qq:to/TEXT/.chop.subst("\r\n", "\n", :g), 'right deprecation for D.new.foo';
 Saw 1 occurrence of deprecated code.
 ================================================================================

@@ -52,7 +52,6 @@ ok $*PERL.gist ~~ m/\w/, 'We can do a $*PERL.gist';
 ok $*PERL.Str  ~~ m/\w/, 'We can do a $*PERL.Str';
 
 isa-ok $*PERL.version, Version;
-#?rakudo todo 'no Perl.signature yet RT #124588'
 isa-ok $*PERL.signature, Blob;
 isa-ok $*PERL.compiler, Compiler;
 
@@ -73,7 +72,6 @@ ok $C.perl, 'We can do a $?PERL.compiler.perl';
 ok $C.gist, 'We can do a $?PERL.compiler.gist';
 
 isa-ok $C.version, Version;
-#?rakudo todo 'no Perl.compiler.signature yet RT #124603'
 isa-ok $C.signature, Blob;
 
 # vim: ft=perl6

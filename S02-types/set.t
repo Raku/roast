@@ -369,7 +369,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s, set(5), 'can metaop set assign like: (|)=';
 }
 
-#?rakudo todo 'we have not secured .WHICH creation yet RT #124489'
 {
     isnt 'a Str|b Str|c'.Set.WHICH, <a b c>.Set.WHICH,
       'Faulty .WHICH creation';

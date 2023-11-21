@@ -308,24 +308,20 @@ Note that non-ASCII tests are kept in quoting-unicode.t
   # <<:Pair>>
     my @q = <<:p(1)>>;
     #?niecza todo
-    #?rakudo todo 'containerness of Pair.perl'
     is(@q[0].perl, :p(1).item.perl, "pair inside <<>>-quotes - simple");
 
     @q = <<:p(1) junk>>;
     #?niecza todo
-    #?rakudo todo 'containerness of Pair.perl'
     is(@q[0].perl, :p(1).item.perl, "pair inside <<>>-quotes - with some junk");
     is(@q[1], 'junk', "pair inside <<>>-quotes - junk preserved");
 
     @q = <<:def>>;
     #?niecza todo
-    #?rakudo todo 'containerness of Pair.perl'
     is(@q[0].perl, (:def).item.perl, ":pair in <<>>-quotes with no explicit value");
 
     @q = "(EVAL failed)";
     try { EVAL '@q = <<:p<moose>>>;' };
     #?niecza todo
-    #?rakudo todo 'containerness of Pair.perl'
     is(@q[0].perl, (p => "moose").item.perl, ":pair<anglequoted>");
 };
 

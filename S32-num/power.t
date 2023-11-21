@@ -18,9 +18,9 @@ is 1e0 ** 4553535345364535345634543534, 1, "1e0 ** 4553535345364535345634543534 
 isa-ok 1e0 ** 4553535345364535345634543534, Num, "1e0 ** 4553535345364535345634543534 is a Num";
 #?rakudo.moar skip 'big exponents RT #124798: passes on OSX, fails on Linux'
 is (-1) ** 4553535345364535345634543534, 1, "-1 ** 4553535345364535345634543534 == 1";
-#?rakudo.moar 4 todo 'big exponents RT #124798'
 is (-1) ** 4553535345364535345634543533, -1, "-1 ** 4553535345364535345634543534 == -1";
 #?niecza skip "Slow and wrong"
+#?rakudo.moar 3 todo 'big exponents RT #124798'
 is 2 ** 4553535345364535345634543534, Inf, "2 ** 4553535345364535345634543534 == Inf";
 #?niecza 2 skip "Slow and wrong"
 is (-2) ** 4553535345364535345634543534, Inf, "-2 ** 4553535345364535345634543534 == Inf";
@@ -106,10 +106,10 @@ is 1e0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵, 1, "1e0⁴⁵⁵³⁵
 isa-ok 1e0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵, Num, "1e0⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ is a Num";
 #?rakudo.moar skip 'big exponents RT #124798: passes on OSX, fails on Linux'
 is (-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴, 1, "(-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴ == 1";
-#?rakudo.moar 4 todo 'big exponents RT #124798'
 #?rakudo.jvm todo 'big exponents RT #124798'
 is (-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵, -1, "(-1)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ == -1";
 #?niecza skip "Slow and wrong"
+#?rakudo.moar 3 todo 'big exponents RT #124798'
 is 2⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵, Inf, "2⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ == Inf";
 #?niecza 2 skip "Slow and wrong"
 is (-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴, Inf, "(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁵⁴ == Inf";

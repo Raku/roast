@@ -135,11 +135,9 @@ for @num -> $T {
       action => 'shift',
       what   => "array[$t]",
       "Trying to shift an empty $t array dies";
-    #?rakudo todo 'error message more explicit since 2020.12'
     throws-like { @arr[0] := my $a }, Exception,
       message => 'Cannot bind to a native num array',
       "Cannot push non-int/Int to $t array";
-    #?rakudo todo 'error message more explicit since 2020.12'
     throws-like { @arr[0]:delete }, Exception,
       message => 'Cannot delete from a native num array',
       "Cannot push non-int/Int to $t array";

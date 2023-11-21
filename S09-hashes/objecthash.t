@@ -56,7 +56,6 @@ plan 36;
 
 {
     my %h{Mu};
-    #?rakudo todo 'oh noes, it dies'
     lives-ok { %h{Mu} = 2 }, "using Mu as a key (1)"; # TODO: remove 'lives-ok' when this no longer dies
     #?rakudo skip 'oh noes, it dies'
     is %h{Mu}, 2, 'using Mu as a key (2)';
@@ -64,6 +63,7 @@ plan 36;
     is %h{Any}, 3, 'using Any as a key';
     #?rakudo skip 'oh noes, it dies'
     is %h{ Mu, Any }.join(","), "2,3", 'check slice access on Mu';
+    # note the following todo is a flapper
     #?rakudo todo 'oh noes, it dies'
     is %h{*}.join(","), "2,3", 'check whatever access with Mu as key';
 } #6

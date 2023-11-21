@@ -519,7 +519,6 @@ ok 'dbaacb' ~~ /<!after c|d><[ab]>/, 'lookbehind <!after>';
 ok 'cbaccb' ~~ /<!after cd><[ab]>/, 'lookbehind <!after>';
 
 #### $ <after ^a>		a		y				lookbehind <after>
-#?rakudo todo 'anchors and after RT #124898'
 #?niecza skip "Unsuppored elements in after list"
 ok 'a' ~~ /$ <after ^a>/, 'lookbehind <after>';
 

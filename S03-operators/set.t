@@ -72,19 +72,16 @@ ok <a b c d e> !(cont) "marmoset", "marmoset is not contained by a b c d e";
 is showset($s ∪ $s), showset($s), "Set union with itself yields self";
 isa-ok ($s ∪ $s), Set, "... and it's actually a Set";
 is showset($ks ∪ $ks), showset($ks), "SetHash union with itself yields self (as Set)";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
 isa-ok ($ks ∪ $ks), SetHash, "... and it's actually a SetHash";
 
 is showset($s ∪ $ks), showset(set <I'm afraid it is isn't your day>), "Set union with SetHash works";
 isa-ok ($s ∪ $ks), Set, "... and it's actually a Set";
 is showset($ks ∪ <blue green>), showset(set <I'm afraid it is blue green>), "SetHash union with array of strings works";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
 isa-ok ($ks ∪ <blue green>), SetHash, "... and it's actually a SetHash";
 
 is showset($s (|) $ks), showset(set <I'm afraid it is isn't your day>), "Set union with SetHash works (texas)";
 isa-ok ($s (|) $ks), Set, "... and it's actually a Set (texas)";
 is showset($ks (|) <blue green>), showset(set <I'm afraid it is blue green>), "SetHash union with array of strings works (texas)";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
 isa-ok ($ks (|) <blue green>), SetHash, "... and it's actually a SetHash (texas)";
 
 # Intersection
@@ -92,7 +89,6 @@ isa-ok ($ks (|) <blue green>), SetHash, "... and it's actually a SetHash (texas)
 is showset($s ∩ $s), showset($s), "Set intersection with itself yields self";
 isa-ok ($s ∩ $s), Set, "... and it's actually a Set";
 is showset($ks ∩ $ks), showset($ks), "SetHash intersection with itself yields self (as Set)";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
 isa-ok ($ks ∩ $ks), SetHash, "... and it's actually a SetHash";
 is showset($s ∩ $ks), showset(set <I'm afraid it>), "Set intersection with SetHash works";
 isa-ok ($s ∩ $ks), Set, "... and it's actually a Set";
@@ -108,7 +104,6 @@ isa-ok ($s (-) $s), Set, "... and it's actually a Set";
 is showset($s (-) $ks), showset(set <isn't your day>), "SetHash subtracted from Set is correct";
 isa-ok ($s (-) $ks), Set, "... and it's actually a Set";
 is showset($ks (-) $s), showset(set <is>), "Set subtracted from SetHash is correct";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
 isa-ok ($ks (-) $s), SetHash, "... and it's actually a SetHash";
 
 is showkv($b (-) $s), showkv($b), "Set subtracted from Bag is correct";
@@ -119,7 +114,6 @@ isa-ok ($s (-) $b), Bag, "... and it's actually a Bag";
 is showset($s (-) $kb), showset(set <I'm afraid it isn't day>), "BagHash subtracted from Set is correct";
 isa-ok ($s (-) $kb), Bag, "... and it's actually a Bag";
 is showkv($kb (-) $s), showkv(<Come, take your bread with joy, and wine with a glad heart>.Bag), "Set subtracted from BagHash is correct";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
 isa-ok ($kb (-) $s), BagHash, "... and it's actually a BagHash";
 
 # symmetric difference
@@ -130,7 +124,6 @@ isa-ok ($s (^) $s), Set, "... and it's actually a Set";
 is showset($s (^) $ks), showset(set <is isn't your day>), "SetHash symmetric difference with Set is correct";
 isa-ok ($s (^) $ks), Set, "... and it's actually a Set";
 is showset($ks (^) $s), showset(set <is isn't your day>), "Set symmetric difference with SetHash is correct";
-#?rakudo todo 'Changed in August 2018 to return mutable if left was mutable'
 isa-ok ($ks (^) $s), SetHash, "... and it's actually a SetHash";
 
 # RT #122882

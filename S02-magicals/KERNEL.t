@@ -51,7 +51,6 @@ diag "'{$*KERNEL.name}' is an unknown KERNEL, please report" if !
   "We know of the KERNEL we are running under";
 
 isa-ok $*KERNEL.version, Version;
-#?rakudo todo 'no Kernel.signature yet RT #124627'
 isa-ok $*KERNEL.signature, Blob;
 isa-ok $*KERNEL.bits, Int;
 

@@ -89,7 +89,6 @@ is_run 'my $ = 2; my $ = 3; say q[alive]',
 
 # RT #112724
 #?rakudo.jvm todo "nigh"
-#?rakudo.moar todo "nigh"
 is_run 'sub mysub {
         + Any # trigger an uninitialized warning
     };

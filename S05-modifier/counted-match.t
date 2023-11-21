@@ -66,7 +66,6 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
     is @match, <foo fooo foooo fooooo foooooo>, 'nth(infinite range) matched correctly';
 }
 
-#?rakudo todo 'RT #125026'
 #?niecza skip 'hangs'
 {
     my @match = $data.match(/fo+/, :nth(2, 4 ... *)).list;
@@ -93,7 +92,6 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 # test that non-monotonic items in :nth lists are ignored
 #?niecza todo
 #?rakudo.jvm skip 'RT #124279'
-#?rakudo todo 'RT #129945'
 {
     throws-like '"abacadaeaf".match(/a./, :nth(2, 1, 4)).join', Exception,
         'non-monotonic items in :nth throw';

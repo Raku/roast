@@ -157,7 +157,6 @@ is chrs(104, 101, 108, 108, 111), 'hello', 'chrs works with a list of ints';
 dies-ok {chr(0xD800)}, "chr of surrogate";
 lives-ok {chr(0x2FFFE)}, "chr of noncharacter";
 lives-ok {chr(0x2FFFF)}, "chr of noncharacter";
-#?rakudo.moar todo 'chr max RT #124837'
 dies-ok {chr(0x10FFFF+1)}, "chr out of range (max)";
 dies-ok {chr(-1)}, "chr out of range (negative)";
 

@@ -726,14 +726,12 @@ ok("\x[345B]\c[EXCLAMATION MARK]\c[PARAGRAPH SEPARATOR]" ~~ m/<:ParagraphSeparat
 # C           Other
 
 
-#?rakudo 3 todo "Unions of properties of non-existent codepoints RT #124863"
 ok("\x[FFFE]" ~~ m/^<:C>$/, q{Match <C> (Other)} );
 ok(!( "\x[FFFE]" ~~ m/^<:!C>$/ ), q{Don't match negated <C> (Other)} );
 ok(!( "\x[FFFE]" ~~ m/^<-:C>$/ ), q{Don't match inverted <C> (Other)} );
 ok(!( "\x[6A3F]"  ~~ m/^<:C>$/ ), q{Don't match unrelated <C> (Other)} );
 ok("\x[6A3F]"  ~~ m/^<:!C>$/, q{Match unrelated negated <C> (Other)} );
 ok("\x[6A3F]"  ~~ m/^<-:C>$/, q{Match unrelated inverted <C> (Other)} );
-#?rakudo todo "Unions of properties of non-existent codepoints RT #124866"
 ok("\x[6A3F]\x[FFFE]" ~~ m/<:C>/, q{Match unanchored <C> (Other)} );
 
 # http://www.unicode.org/charts/PDF/Unicode-6.1/U61-A640.pdf

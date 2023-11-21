@@ -234,7 +234,6 @@ for @uint -> $T {
     is (@arr[0] = -1), -1, "assigning -1 on $t array passes value on through?";
     # DRY once the failing cases pass. RT #124088
     if $t eq "uint" or $t eq "uint64" {
-        #?rakudo todo 'highest bit length stays negative, RT #124088'
         ok @arr[0] > 0,        "negative value on $t array becomes positive";
     }
     elsif $t eq "uint32" {

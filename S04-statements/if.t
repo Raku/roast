@@ -146,7 +146,6 @@ if Mu { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
     is $got, '', 'else -> $c { } binding previous if';
 }
 # Sing it again.  This time with slurpy.
-#?rakudo todo 'RT#105872'
 {
     my ($got, $a_val, $b_val);
     my sub testa { $a_val };

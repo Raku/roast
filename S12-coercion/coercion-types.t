@@ -32,7 +32,6 @@ class NastyChild is Parent { };
     isa-ok c(Parent), Child, 'Coercion with user-defined types';
 
     sub nasty(NastyChild(Parent) $x) { $x }
-    #?rakudo todo 'missing checks'
     dies-ok { EVAL 'nasty(Parent)' },
         'coercion that does not produce the target type dies';
 }

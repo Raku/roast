@@ -18,7 +18,6 @@ EVAL q[
 ];
 ok ! $!, 'no exception thrown';
 ok $eval_worked, 'EVAL code executed';
-#?rakudo todo 'MAIN in EVAL RT #124662'
 is $main_invoked, 0, 'sub MAIN is not called in EVAL()';
 
 # vim: ft=perl6

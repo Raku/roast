@@ -62,7 +62,6 @@ throws-like { open("this-surely-won't-exist", :r) }, Exception,
 }
 
 # RT #126598
-#?rakudo todo 'end of file flag is set too early'
 {
     spurt("empty-line","\n");
     is open("empty-line").get, "", 'last empty line should be returned';

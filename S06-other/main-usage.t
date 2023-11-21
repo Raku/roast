@@ -185,7 +185,6 @@ is_run 'sub MAIN($arg, Bool :$bool) { print $bool, $arg }',
     :args['--bool', '--', '-option'],
     'Boolean argument with --';
 
-#?rakudo todo 'NYI RT #124669'
 #?niecza todo
 is_run 'sub MAIN(:@foo) { print @foo }',
     {
