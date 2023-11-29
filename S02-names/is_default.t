@@ -1,6 +1,6 @@
 use Test;
 
-plan 145;
+plan 146;
 
 # L<S02/Variables Containing Undefined Values>
 
@@ -520,6 +520,22 @@ subtest 'default `is default()` gets adjusted to type constraint' => {
     is DefaultTyped.new.a, 42, 'uninitialized typed:D attribute should have its default';
     throws-like ｢class NilDefaultTyped { has Int:D $.a is rw is default(Nil) }｣,
                 X::TypeCheck::Attribute::Default;
+}
+
+subtest "Generics" => {
+    my role R[::T] {
+        has $.v is default(T);
+        has %.h is default(T);
+        has @.a is default(T);
+    }
+
+    my class C does R[Str:D] {}
+
+    my $obj = C.new;
+
+    cmp-ok $obj.v, &[===], Str:D, "scalar gets its default instantiated";
+    cmp-ok $obj.h<the-answer>, &[===], Str:D, "hash gets its default instantiated";
+    cmp-ok $obj.a[42], &[===], Str:D, "array gets its default instantiated";
 }
 
 # vim: expandtab shiftwidth=4
