@@ -236,7 +236,7 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
     # Try to delete all the temp files written.  If any survive, die.
     my @files = map { "$fnbase.$_".IO }, <code in out err>;
     for @files -> $f {
-        unlink $f;
+        try unlink $f;
         if $f.e {
             sleep 3;
             $f.unlink or die "Can't unlink '$f': $!";
@@ -350,8 +350,8 @@ sub make-rand-path (--> IO::Path:D) {
 my @FILES-FOR-make-temp-file;
 my @DIRS-FOR-make-temp-dir;
 END {
-    unlink @FILES-FOR-make-temp-file;
-    rmdir  @DIRS-FOR-make-temp-dir;
+    try { unlink $_ } for @FILES-FOR-make-temp-file;
+    try { rmdir $_ } for @DIRS-FOR-make-temp-dir;
 }
 sub make-temp-path(|c) is export { make-temp-file |c }
 sub make-temp-file
