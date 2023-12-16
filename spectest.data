@@ -177,6 +177,7 @@ S02-types/compact.t
 S02-types/declare.t
 S02-types/fatrat.t
 S02-types/flattening.t
+S02-types/generics.t
 S02-types/hash.t
 S02-types/hash_ref.t
 S02-types/hyperwhatever.t
