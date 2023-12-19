@@ -83,6 +83,7 @@ for \(:w), \(:rw), \(:a) -> $open-args {
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/6374
+todo('Fails on Sonoma') if $*DISTRO.desc eq 'Sonoma';
 run-with-tty ｢say prompt "FOO"｣, :in<bar>,
     # Here we use .contains because (currently) there's some sort of
     # bug with Proc or something where sent STDIN ends up on our STDOUT.
