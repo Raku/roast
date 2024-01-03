@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 91;
+plan 92;
 
 =begin description
 
@@ -713,6 +713,15 @@ group-of 6 => '`&`- sigiled variable be used in where' => {
         # check for both $x or $y values
         cmp-ok $wanted, '~~', 42|73, 'pos arg [Whatever]';
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/5508
+{
+    subset Foo of Int;
+    my Foo:D %h;
+    sub a(Foo:D %f) { }
+    #?rakudo todo 'custom type checking on hashes NYI'
+    lives-ok { a %h }, 'custom type checking ok';
 }
 
 # vim: expandtab shiftwidth=4
