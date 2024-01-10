@@ -127,7 +127,7 @@ die capture_error($fudger, $nt) if $?;
 # uninstalled rakudo doesn't know how to find Test.pm
 # ... or any other modules
 my $pwd = cwd();
-$ENV{PERL6LIB}="$pwd/lib";
+$ENV{RAKULIB}="$pwd/lib";
 
 if ($impl_cmd) {
     $impl_cmd = qq/"$impl_cmd"/ if $impl_cmd =~ /\s/;
