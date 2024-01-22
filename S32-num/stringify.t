@@ -38,13 +38,13 @@ lives-ok { Complex.Str }, 'Complex.Str does not die';
 
 # L<S32::Numeric/Rat/"=item gist">
 #?DOES 1
-sub Rat_str_test($value, $str_nucleus, $str, $perl = $str) is test-assertion {
+sub Rat_str_test($value, $str_nucleus, $str, Mu $raku = $str) is test-assertion {
     subtest "Rat Stringification ($value)" => {
         plan 7;
         is ~$value, $str, "~<$str_nucleus>";
         is $value.Str, $str, "<$str_nucleus>.Str";
         is $value.gist, $str, "<$str_nucleus>.gist";
-        is $value.raku, $perl, "<$str_nucleus>.raku";
+        is $value.raku, $raku, "<$str_nucleus>.raku";
 
         # FatRat tests
         is ~$value.FatRat, $str, "~<$str_nucleus>.FatRat";
@@ -59,7 +59,7 @@ Rat_str_test -1/2, '-1/2', '-0.5';
 # 0/1 and 1/1 are Rats too!
 Rat_str_test 0/2, '0/1', '0', '0.0';
 Rat_str_test 1/1, '1/1', '1', '1.0';
-Rat_str_test 13/39, '1/3', '0.333333', '<1/3>';
+Rat_str_test 13/39, '1/3', '0.333333', '<1/3>' | '¹/₃';
 Rat_str_test 1000001/10000, '1000001/10000', '100.0001';
 Rat_str_test -1000001/10000, '-1000001/10000', '-100.0001';
 Rat_str_test 555555555555555555555555555555555555555555555/5,

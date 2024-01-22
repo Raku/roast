@@ -348,7 +348,9 @@ subtest '0.9999999999999999999999 to string conversions' => {
     # would be output exactly or rounded off
     cmp-ok r.Str, '~~', '1'|'0.9999999999999999999999' ,
         'no weirdness in .Str';
-    is-deeply r.raku, '<9999999999999999999999/10000000000000000000000>',
+    is-deeply r.raku,
+      '<9999999999999999999999/10000000000000000000000>'
+        | '⁹⁹⁹⁹⁹⁹⁹⁹⁹⁹⁹⁹⁹⁹⁹⁹⁹⁹⁹⁹⁹⁹/₁₀₀₀₀₀₀₀₀₀₀₀₀₀₀₀₀₀₀₀₀₀₀',
         '.raku gives accurate result';
     is-deeply r.raku.EVAL, r, '.raku.EVAL roundtrips';
     # https://github.com/Raku/old-issue-tracker/issues/4549
