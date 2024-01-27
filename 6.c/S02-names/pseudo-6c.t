@@ -4,7 +4,7 @@ use Test;
 use lib $?FILE.IO.parent(3).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 159;
+plan 161;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -485,4 +485,33 @@ subtest 'no guts spillage when going too high up scope in pseudopackages' => {
             "CORE symbols are available at compile-time in BEGIN inside EVAL";
 }
 
+subtest "Non-dynamic failures" => {
+    plan 1;
+
+    throws-like {
+        my $non-dynamic = 42;
+        sub foo is raw {
+            CALLER::<$non-dynamic>
+        }
+        foo
+    },
+    X::Caller::NotDynamic, # In 6.c this would be X::Caller::NotDynamic
+    'CALLER throws if requested for a non-dynamic symbol';
+}
+
+# Even if a dynamic symbol is not a scalar it must still be visible in a dynamic chain
+subtest "Bound dynamics" => {
+    plan 2;
+    my sub bar {
+        ok DYNAMIC::<$*BOUND>:exists, "DYNAMIC sees a bout dynamic symbol";
+        is DYNAMIC::<$*BOUND>, pi, "bound dynamic value is accessible";
+    }
+    my sub foo {
+        my $*BOUND := pi; # Normally a Scalar container gets .dynamic set, but in this case there is no container.
+        bar;
+    }
+    foo;
+}
+
+done-testing;
 # vim: expandtab shiftwidth=4
