@@ -133,7 +133,7 @@ dies-ok {EVAL 'mandatory()' },  "not specifying a mandatory parameter fails";
     }
     
     is(mandatory_by_trait(param => 5) , 5, "named mandatory parameter is returned");
-    dies-ok( { mandatory_by_trait() }, "not specifying a mandatory parameter fails");
+    eval-dies-ok "mandatory_by_trait()", "not specifying a mandatory parameter fails";
 }
 
 
@@ -206,7 +206,7 @@ nok(%fellowship<dwarf>.defined, "dwarf arg was not given");
     sub typed_named(Int :$x) { 1 }
     is(typed_named(:x(42)), 1,      'typed named parameters work...');
     is(typed_named(),       1,      '...when value not supplied also...');
-    dies-ok({ typed_named("BBQ") }, 'and the type check is enforced');
+    eval-dies-ok 'typed_named("BBQ")', 'and the type check is enforced';
 }
 
 {
