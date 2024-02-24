@@ -89,7 +89,7 @@ my $pup = Puppy.new();
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/1948
-ok Str.can('split') ~~ /split/, 'return value of .can stringifies sensibly';
+ok quietly Str.can('split') ~~ /split/, 'return value of .can stringifies sensibly';
 
 # https://github.com/Raku/old-issue-tracker/issues/1991
 {
