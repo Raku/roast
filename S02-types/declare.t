@@ -113,7 +113,7 @@ plan 70;
 #?rakudo.jvm todo "trying to put a big Int into an int"
 {
  throws-like { my int $namcu; $namcu = 2**100 }, Exception,
-    message => 'Cannot unbox 101 bit wide bigint into native integer',
+    message => / 'Cannot unbox 101 bit wide bigint into native integer' /,
     "Assign big bigint to native won't overflow silently";
 }
 
