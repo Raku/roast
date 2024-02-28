@@ -18,7 +18,7 @@ unless @inttypes {
     exit;
 }
 
-plan 11 * @inttypes + 4;
+plan 11 * @inttypes + 5;
 
 for @inttypes -> $type {
     my ($minval,$maxval) = ::($type).Range.int-bounds;
@@ -113,5 +113,67 @@ for @inttypes -> $type {
 
 # https://github.com/Raku/old-issue-tracker/issues/6332
 is-eqv byte.Range.int-bounds, (0, 255), "byte.Range works";
+
+# Check coercers
+subtest "Testing native coercers" => {
+    for (
+        byte   => (
+          255, 255,  256, 0,
+        ),
+        uint8  => (
+          255, 255,  256, 0,
+        ),
+        uint16 => (
+          65535, 65535,  65536, 0,
+        ),
+        uint32 => (
+          4294967295, 4294967295,  4294967296, 0,
+        ),
+        uint64 => (
+          18446744073709551615, 18446744073709551615,
+          18446744073709551616, 0
+        ),
+        uint => (
+          18446744073709551615, 18446744073709551615,
+          18446744073709551616, 0,
+        ),
+
+        int8  => (
+          255, -1,  256, 0,  127, 127,  128,  -128,
+        ),
+        int16 => (
+          65535,    -1,  65536,      0,
+          32767, 32767,  32768, -32768,
+        ),
+        int32 => (
+          4294967295,         -1,  4294967296,           0,
+          2147483647, 2147483647,  2147483648, -2147483648,
+        ),
+        int64 => (
+           9223372036854775807,  9223372036854775807,
+           9223372036854775808, -9223372036854775808,
+          18446744073709551615,                   -1,
+          18446744073709551616,                    0,
+        ),
+        int => (
+           9223372036854775807,  9223372036854775807,
+           9223372036854775808, -9223372036854775808,
+          18446744073709551615,                   -1,
+          18446744073709551616,                    0,
+        ),
+    ) {
+        my str $coercer = .key;
+
+        is   0."$coercer"(), 0, "Did 0.$coercer coerce to 0";
+        is "0"."$coercer"(), 0, "Did '0'.$coercer coerce to 0";
+
+        for .value -> $value, $coerced {
+            is $value."$coercer"(), $coerced,
+              "Did $value\.$coercer coerce to $coerced";
+            is "$value"."$coercer"(), $coerced,
+              "Did '$value'.$coercer coerce to $coerced";
+        }
+    }
+}
 
 # vim: expandtab shiftwidth=4
