@@ -66,8 +66,8 @@ my $outer = 'outside';
 
     class A::B { };
 
-    is ::('Outer::Inner').perl, Outer::Inner.perl, 'can look up name with :: (1)';
-    is ::('A::B').perl, A::B.perl, 'can look up name with :: (1)';
+    is ::('Outer::Inner').raku, Outer::Inner.raku, 'can look up name with :: (1)';
+    is ::('A::B').raku, A::B.raku, 'can look up name with :: (1)';
 }
 
 
