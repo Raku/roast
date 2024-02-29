@@ -309,7 +309,7 @@ class {
     }
 }.run-tests;
 
-cmp-ok { $_ }.signature.params[0], &[~~], / 'OUTER::<$_>' /,
+cmp-ok { $_ }.signature.params[0].raku, &[~~], / 'OUTER::<$_>' /,
   'OUTER defaults have the correct .raku';
 
 { # https://github.com/rakudo/rakudo/issues/4258
