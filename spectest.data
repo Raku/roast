@@ -523,6 +523,7 @@ S06-advanced/dispatching.t
 S06-advanced/lexical-subs.t
 S06-advanced/recurse.t
 S06-advanced/return.t
+S06-advanced/return-prioritization.t
 S06-advanced/stub.t
 S06-advanced/wrap.t
 S06-currying/assuming-and-mmd.t
