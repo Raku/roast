@@ -165,7 +165,7 @@ is (1,2 X (<a b> X "x")).flat.join, '1ax1bx2ax2bx',
     ok !(42 X* 1..5 X* 43).is-lazy, "laziness not induced by middle argument (X*)";
 }
 
-throws-like '3 X. foo', X::Syntax::CannotMeta, "X. is too fiddly";
+throws-like '3 X. list', X::Syntax::CannotMeta, "X. is too fiddly";
 throws-like '3 X. "foo"', X::Obsolete, "X. can't do P5 concat";
 
 is-deeply &infix:<X+>((1,2,3),(4,5,6)), (5, 6, 7, 6, 7, 8, 7, 8, 9), "&infix:<X+> can autogen";
