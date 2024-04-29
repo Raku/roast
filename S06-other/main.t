@@ -56,29 +56,29 @@ subtest '%*SUB-MAIN-OPTS<named-anywhere>', {
 
     is_run ｢
         sub MAIN ($a, $b, :$c, :$d) { print "fail" }
-        sub USAGE { print "pass" }
-    ｣, :args[<1 --c=2 3 --d=4>], {:out<pass>, :err('')},
+        sub GENERATE-USAGE(|) { "pass" }
+    ｣, :args[<1 --c=2 3 --d=4>], {:out(''), :err("pass\n"), :2status},
     'no opts set does not allow named args anywhere';
 
     is_run ｢
         (my %*SUB-MAIN-OPTS)<named-anywhere> = False;
         sub MAIN ($a, $b, :$c, :$d) { print "fail" }
-        sub USAGE { print "pass" }
-    ｣, :args[<1 --c=2 3 --d=4>], {:out<pass>, :err('')},
+        sub GENERATE-USAGE(|) { "pass" }
+    ｣, :args[<1 --c=2 3 --d=4>], {:out(''), :err("pass\n"), :2status},
     '<named-anywhere> set to false does not allow named args anywhere';
 
     is_run ｢
         (my %*SUB-MAIN-OPTS)<named-anywhere> = True;
         sub MAIN ($a, $b, :$c, :$d) { print "pass" }
-        sub USAGE { print "fail" }
+        sub GENERATE-USAGE(|) { print "fail" }
     ｣, :args[<1 --c=2 3 --d=4>], {:out<pass>, :err(''), :0status},
     '<named-anywhere> set to true allows named args anywhere';
 }
 
 # https://github.com/rakudo/rakudo/issues/3929
 {
-    is_run 'sub MAIN($a is rw) { }; sub USAGE() { print "usage" }', :args[],
-      { :out<usage>, :err{ .contains("'is rw'") }, :0status },
+    is_run 'sub MAIN($a is rw) { }; sub GENERATE-USAGE(|) { print "usage" }', :args[],
+      { :out<usage>, :err{ .contains("'is rw'") }, :2status },
       'Worry about "is rw" on parameters of MAIN';
 }
 

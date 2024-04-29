@@ -6,26 +6,27 @@ plan 48;
 
 # Basic functionality
 
-is_run 'sub MAIN($x) { }; sub USAGE() { print "USAGE() called" }',
-    {out => 'USAGE() called'},
-    'a user-defined USAGE sub is called if MAIN dispatch fails';
+# normally it is GENERATE-USAGE(&main, |c), but we don't care about the parameters at all
+is_run 'sub MAIN($x) { }; sub GENERATE-USAGE(|) { "GENERATE-USAGE() called" }',
+    {err => "GENERATE-USAGE() called\n", status => 2},
+    'a user-defined GENERATE-USAGE sub is called if MAIN dispatch fails';
 
-is_run 'sub MAIN() { print "MAIN() called" }; sub USAGE() { print "USAGE() called" }',
+is_run 'sub MAIN() { print "MAIN() called" }; sub GENERATE-USAGE(|) { "GENERATE-USAGE() called" }',
     {out => 'MAIN() called', status => 0},
-    'a user-defined USAGE sub is not called if MAIN dispatch succeeds';
+    'a user-defined GENERATE-USAGE sub is not called if MAIN dispatch succeeds';
 
-is_run 'sub MAIN( $a = nosuchsub()) { }; sub USAGE { say 42 }',
+is_run 'sub MAIN( $a = nosuchsub()) { }; sub GENERATE-USAGE { say 42 }',
     { out => '', err => /nosuchsub/},
-    'if the MAIN dispatch results in an error, that error should be printed, not USAGE';
+    'if the MAIN dispatch results in an error, that error should be printed, not GENERATE-USAGE';
 
 is_run 'sub MAIN($foo) { }', { err => /<< foo >>/, out => ''},
-    'auto-generated USAGE message goes to $*ERR and contains parameter name';
+    'auto-generated GENERATE-USAGE message goes to $*ERR and contains parameter name';
 
 is_run 'sub MAIN(\bar) { }', {err => /<< bar >>/},
-    'auto-generated USAGE should handle sigilles parameters';
+    'auto-generated GENERATE-USAGE should handle sigilles parameters';
 
 is_run 'sub MAIN($bar) { }', {out => /<< bar >>/}, :args['--help'],
-    '--help option sends auto-generated USAGE message to $*OUT';
+    '--help option sends auto-generated GENERATE-USAGE message to $*OUT';
 
 is_run 'sub MAIN(Bool :$x) { say "yes" if $x }',
     {out => "yes\n", err => '', status => 0}, :args['--x'], 'boolean option +';
@@ -94,37 +95,37 @@ subtest 'Valid arg with tab then space value' => {
 }
 
 subtest 'Extra arg with zero length value' => {
-    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub USAGE() { "USG".note }', '-y=';
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub GENERATE-USAGE(|) { "USG" }', '-y=';
     ok $proc.err.slurp(:close).match(/USG/);
     is $proc.out.slurp(:close), '';
 }
 
 subtest 'Extra arg with single space value' => {
-    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub USAGE() { "USG".note }', '-y= ';
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub GENERATE-USAGE(|) { "USG" }', '-y= ';
     ok $proc.err.slurp(:close).match(/USG/);
     is $proc.out.slurp(:close), '';
 }
 
 subtest 'Extra arg with two space value' => {
-    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub USAGE() { "USG".note }', '-y=  ';
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub GENERATE-USAGE(|) { "USG" }', '-y=  ';
     ok $proc.err.slurp(:close).match(/USG/);
     is $proc.out.slurp(:close), '';
 }
 
 subtest 'Extra arg with newline value' => {
-    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub USAGE() { "USG".note }', "-y=\n";
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub GENERATE-USAGE(|) { "USG" }', "-y=\n";
     ok $proc.err.slurp(:close).match(/USG/);
     is $proc.out.slurp(:close), '';
 }
 
 subtest 'Extra arg with tab value' => {
-    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub USAGE() { "USG".note }', "-y=\t";
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub GENERATE-USAGE(|) { "USG" }', "-y=\t";
     ok $proc.err.slurp(:close).match(/USG/);
     is $proc.out.slurp(:close), '';
 }
 
 subtest 'Extra arg with newline value' => {
-    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub USAGE() { "USG".note }', "-y=\t ";
+    my $proc = run :out, :err, $*EXECUTABLE, '-e', 'sub MAIN() { }; sub GENERATE-USAGE(|) { "USG" }', "-y=\t ";
     ok $proc.err.slurp(:close).match(/USG/);
     is $proc.out.slurp(:close), '';
 }
@@ -209,8 +210,8 @@ is_run 'sub MAIN (Str $value) { print "String $value" }',
     'passing an integer matches MAIN(Str)';
 
 # https://github.com/Raku/old-issue-tracker/issues/5262
-is_run 'sub MAIN(*@arg where { False }) { }; sub USAGE { print "USAGE called" }',
-    {out => 'USAGE called', err => ''},
+is_run 'sub MAIN(*@arg where { False }) { }; sub GENERATE-USAGE(|) { "GENERATE-USAGE called" }',
+    {out => '', err => "GENERATE-USAGE called\n"},
     "failed constraint check doesn't leak internal exception out to the user";
 
 # https://github.com/Raku/old-issue-tracker/issues/5155
@@ -224,9 +225,9 @@ subtest '$*USAGE tests' => {
     # https://irclog.perlgeek.de/perl6-dev/2017-09-23#i_15206569
     plan 4;
 
-    is_run ｢sub MAIN($meow, :$moo) {}; sub USAGE { $*USAGE.uc.say }｣,
-        {:out(/MEOW/ & /MOO/), :err(''), :0status },
-    'default $*USAGE is available inside `sub USAGE`';
+    is_run ｢sub MAIN($meow, :$moo) {}; sub GENERATE-USAGE(|) { $*USAGE.uc }｣,
+        {:out(''), :err(/MEOW/ & /MOO/), :2status },
+    'default $*USAGE is available inside `sub GENERATE-USAGE`';
 
     is_run ｢sub MAIN($meow, :$moo) {$*USAGE.uc.say; $meow.say; $moo.say}｣,
         :args<--moo=31337  42>,
@@ -239,8 +240,8 @@ subtest '$*USAGE tests' => {
 
     is_run ｢
         sub MAIN ($foo) {}
-        sub USAGE { try $*USAGE = "meow"; $! and "PASS".print }
-    ｣, {:out<PASS>, :err(''), :0status },
+        sub GENERATE-USAGE(|) { try $*USAGE = "meow"; $! and "PASS" }
+    ｣, {:out(''), :err("PASS\n"), :2status },
     'trying to assign to $*USAGE inside sub MAIN throws';
 }
 
