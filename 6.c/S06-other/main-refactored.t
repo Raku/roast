@@ -285,6 +285,10 @@ for @named-anywhere-ok -> \args, @expected, %expected {
 
 # --- Other tests---------------------------------------------------------------
 {
+    # Ignore exits (Rakudo pre-2024.05 always returns 0, after returns 0 or 2)
+    # assign to anonymous state var to avoid ''useless use in sink'
+    my &*EXIT = { $ = $_ };
+
     multi MAIN("NEVER MATCHES") { }
     multi MAIN("THE-HIDDEN-MULTI") is hidden-from-USAGE { }
     @*ARGS = ();
