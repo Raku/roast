@@ -1,6 +1,6 @@
 use Test;
 
-plan 14;
+plan 15;
 
 is-deeply ().are,                 Nil,  'Empty list';
 is-deeply (1,2,3).are,            Int,  'list of Ints';
@@ -19,5 +19,8 @@ is-deeply (Int,Cool,Rat,Num).are, Cool, 'list of Cool type objects';
 class Ztr is Str { }
 is-deeply ("foo",Ztr.new(value => "bar")).are, Str,
   'list of str and custom class';
+
+# https://github.com/rakudo/rakudo/issues/5568
+is-deeply (Numeric,42).are, Numeric, 'bare roles also supported';
 
 # vim: expandtab shiftwidth=4
