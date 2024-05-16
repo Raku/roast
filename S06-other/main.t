@@ -4,7 +4,7 @@ use Test::Util;
 
 use lib $?FILE.IO.parent(2).add("packages/HasMain/lib");
 
-plan 10;
+plan 11;
 
 ## If this test file is fudged, then MAIN never executes because
 ## the fudge script introduces an C<exit(1)> into the mainline.
@@ -36,7 +36,7 @@ is_run 'sub MAIN() { map { print "ha" }, ^3 }',
 
 
 # https://github.com/Raku/old-issue-tracker/issues/5808
-subtest 'MAIN can take type-constrain using Enums' => {
+subtest 'MAIN can take type-constraint using Enums' => {
     plan 3;
 
     my $code = Q:to/END/;
@@ -48,6 +48,22 @@ subtest 'MAIN can take type-constrain using Enums' => {
     is_run $code, :args[<Rock>                    ], { :out<pass>, :err('') }, 'positional works';
     is_run $code, :args[<--pos-hand=Scissors Rock>], { :out<pass>, :err('') }, 'positional + named works';
     is_run $code, :args[<Hand>                    ], { :out{not .contains: 'pass'}, :err(/'=<Hand>'/) },
+        'name of enum itself is not valid and usage message prints the name of the enum';
+}
+
+#?rakudo todo "implemented as of 2024.05"
+subtest 'MAIN can take type-constraint using Enums that contain values that shadow CORE types' => {
+    plan 3;
+
+    my $code = Q:to/END/;
+        enum Shadow <Label Hash Lock>;
+        sub MAIN (Shadow $shadow, Shadow :$pos-shadow) {
+            print "pass";
+        }
+    END
+    is_run $code, :args[<Lock>                   ], { :out<pass>, :err('') }, 'positional works';
+    is_run $code, :args[<--pos-shadow=Label Lock>], { :out<pass>, :err('') }, 'positional + named works';
+    is_run $code, :args[<Shadow>                 ], { :out{not .contains: 'pass'}, :err(/'=<Shadow>'/) },
         'name of enum itself is not valid and usage message prints the name of the enum';
 }
 
