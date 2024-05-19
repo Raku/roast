@@ -1,10 +1,12 @@
 use Test;
-use lib <t/packages>;
-use Test::Helpers;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use Test::Util;
 
 my $lib-path = $?FILE.IO.parent(2).add("packages/S11-modules/lib");
 
 plan 9;
+
+my @compiler-args = '-I', $lib-path.absolute;
 
 for <c d e.PREVIEW> -> $from-rev {
     for <c d e> -> $mod-rev {
@@ -12,14 +14,19 @@ for <c d e.PREVIEW> -> $from-rev {
             plan 8;
             for (:core-revision($mod-rev), :raku-version("6.$mod-rev")) -> (:key($routine), :value($response)) {
                 for (:use(''), :require(" <\&$routine>")) -> (:key($statement), :value($starg)) {
-                    is-run 'use v6.' ~$from-rev ~ '; ' ~ $statement ~ ' Module_6' ~ $mod-rev ~ $starg ~ '; print ' ~ $routine,
-                        "$statement: $routine is $response",
-                        :compiler-args('-I', $lib-path),
-                        :out($response), :err(""), :exitcode(0);
-                    is-run 'use v6.' ~ $from-rev ~ '; print EVAL("' ~ $statement ~ ' Module_6' ~ $mod-rev ~ $starg ~ '; ' ~ $routine ~ '")',
-                        "$statement in EVAL: $routine is $response",
-                        :compiler-args('-I', $lib-path),
-                        :out($response), :exitcode(0);
+                    is_run 'use v6.' ~$from-rev ~ '; ' ~ $statement ~ ' Module_6' ~ $mod-rev ~ $starg ~ '; print ' ~ $routine,
+                        :@compiler-args,
+                        {
+                            :err(''), :exitcode, :out($response),
+                        },
+                        "$statement: $routine is $response";
+
+                    is_run 'use v6.' ~ $from-rev ~ '; print EVAL("' ~ $statement ~ ' Module_6' ~ $mod-rev ~ $starg ~ '; ' ~ $routine ~ '")',
+                        :@compiler-args,
+                        {
+                            :err(''), :exitcode, :out($response),
+                        },
+                        "$statement in EVAL: $routine is $response";
                 }
             }
         }
