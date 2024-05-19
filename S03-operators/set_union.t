@@ -139,7 +139,7 @@ my @quads =
   <a b c>,                                         <a b c>.Set,
 ;
 
-plan 2 * (3 + 3 * @types + 2 * @pairs/2 + @triplets/3 + 6 * @quads/2) + 4;
+plan 2 * (3 + 3 * @types + 2 * @pairs/2 + @triplets/3 + 6 * @quads/2) + 5;
 
 # union
 for
@@ -206,6 +206,14 @@ for
     is-deeply (1..3, 1..3 Z∪ 2..4, 2..5 Z∪ 0..2, 5..7),
       ((0,1,2,3,4).Set, (1,2,3,4,5,6,7).Set),
       'did Z handle ∪ correctly (2)';
+}
+
+# https://github.com/rakudo/rakudo/issues/1726
+subtest "cross operations work as expected", {
+    ok ((<a 1>.Bag,) X∪ (<a 2>.Bag,) ~~ ((IntStr.new(2, "2")=>1,"a"=>1,(IntStr.new(1, "1")=>1,"a"=>1).Bag=>1).Bag,).Seq),
+      'did X handle ∪';
+    ok cross((<a 1>.Bag,), (<a 2>.Bag,), :with(&infix:<∪>)) ~~ cross((<a 1>.Bag,), (<a 2>.Bag,), :with(* ∪ *)),
+      'did cross() handle ∪';
 }
 
 # vim: expandtab shiftwidth=4

@@ -184,7 +184,7 @@ my @quads =
   <a b c>,                                         bag()
 ;
 
-plan 2 * (3 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2) + 4;
+plan 2 * (3 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2) + 5;
 
 # multiplication
 for
@@ -251,6 +251,15 @@ for
     is-deeply (1..3, 1..3 Z⊍ 2..4, 1..4 Z⊍ 2..3, 1..2),
       ((2,3).Bag, (1,2).Bag),
       'did Z handle ⊍ correctly (1)';
+}
+
+# https://github.com/rakudo/rakudo/issues/1726
+{
+    ok ((<a 1>,) X⊍ (<a 2>,)) ~~ Bag('a'),
+      'did X handle ⊍ correctly';
+
+    ok cross((<a 1>,), (<a 2>,), :with(&infix:<⊍>)) ~~ cross((<a 1>,), (<a 2>,), :with(* ⊍ *)),
+      'did cross handle ⊍ correctly';
 }
 
 # vim: expandtab shiftwidth=4
