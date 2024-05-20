@@ -184,7 +184,7 @@ my @quads =
   <a b c>,                                         bag()
 ;
 
-plan 2 * (3 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2) + 5;
+plan 2 * (3 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2) + 6;
 
 # multiplication
 for
@@ -255,7 +255,7 @@ for
 
 # https://github.com/rakudo/rakudo/issues/1726
 {
-    ok ((<a 1>,) X⊍ (<a 2>,)) ~~ Bag('a'),
+    is-deeply ((<a 1>,) X⊍ (<a 2>,)).head, Bag('a'),
       'did X handle ⊍ correctly';
 
     ok cross((<a 1>,), (<a 2>,), :with(&infix:<⊍>)) ~~ cross((<a 1>,), (<a 2>,), :with(* ⊍ *)),
