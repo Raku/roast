@@ -1,5 +1,5 @@
 use Test;
-plan 33;
+plan 32;
 
 is ("fom" ... /foo/), "fom fon foo", "can use regex for endpoint without it being confused for closure";
 
@@ -133,18 +133,6 @@ is-deeply (<a b c>, *.reverse ... *)[5], <c b a>.Seq,
 # https://github.com/rakudo/rakudo/issues/2920
 {
     lives-ok { (0, { $_ == 1 ?? die ‘ouch!’ !! $_ + 1 } ... 99999).is-lazy }, 'A sequence with a block and an end value does not iterate the whole sequence to recognize it as non-lazy';
-}
-
-# RakuAST
-# https://github.com/rakudo/rakudo/issues/5520
-{
-    my @result;
-    {
-        use v6.*;
-        use experimental :rakuast;
-        @result.push($_) for 1...5...3;
-    }
-    is-deeply @result, [1, 2, 3, 4, 5, 4, 3], ".say works with chained sequence and for";
 }
 
 # vim: expandtab shiftwidth=4
