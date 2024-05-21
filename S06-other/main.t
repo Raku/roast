@@ -51,7 +51,6 @@ subtest 'MAIN can take type-constraint using Enums' => {
         'name of enum itself is not valid and usage message prints the name of the enum';
 }
 
-#?rakudo todo "implemented as of 2024.05"
 subtest 'MAIN can take type-constraint using Enums that contain values that shadow CORE types' => {
     plan 3;
 
