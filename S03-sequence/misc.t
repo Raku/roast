@@ -1,6 +1,4 @@
 use Test;
-use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
-use Test::Util;
 plan 33;
 
 is ("fom" ... /foo/), "fom fon foo", "can use regex for endpoint without it being confused for closure";
@@ -140,7 +138,9 @@ is-deeply (<a b c>, *.reverse ... *)[5], <c b a>.Seq,
 # RakuAST
 # https://github.com/rakudo/rakudo/issues/5520
 {
-    is_run 'Q| .say for 1...5...3 |.AST.EVAL', { :out("1\n2\n3\n4\n5\n4\n3\n") }, ".say works with chained sequence and for";
+    my @result;
+    Q| @result.push($_) for 1...5...3 |.AST.EVAL;
+    is-deeply @result, [1, 2, 3, 4, 5, 4, 3], ".say works with chained sequence and for";
 }
 
 # vim: expandtab shiftwidth=4
