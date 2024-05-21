@@ -1,6 +1,6 @@
 use Test;
 
-plan 21;
+plan 22;
 
 # L<S12/"Construction and Initialization">
 
@@ -129,6 +129,22 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
         }
     }
     lives-ok { A.new }, 'can we create with a custom "bless" method';
+}
+
+# https://github.com/rakudo/rakudo/issues/1679
+subtest "all parents' attributes are set with .new" => {
+    plan 3;
+    my class A { has @.a }
+    my class B { has @.b }
+    my class C { has @.c }
+    my class D is A is B {}
+    my class E is D is C {}
+
+    with E.new: :a<a b c>, :b<d e f>, :c<g h i> {
+        is-deeply .a, [<a b c>], 'ancestor 1';
+        is-deeply .b, [<d e f>], 'ancestor 2';
+        is-deeply .c, [<g h i>], 'parent';
+    }
 }
 
 # vim: expandtab shiftwidth=4
