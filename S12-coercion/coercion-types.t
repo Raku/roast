@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 35;
+plan 36;
 
 # coercion types in parameter lists
 {
@@ -179,6 +179,18 @@ is Str(Any).gist, '(Str(Any))', 'Can gist a coercion type';
         multi sub bar(ForceInt $f) { $f };
         is bar("42"), 42, "multi-dispatch coerces";
         MULTI
+}
+
+# https://github.com/rakudo/rakudo/issues/1800
+{
+    sub test() {
+        my regex suffix { <[dhms]> };
+        my %unit-multipliers = 's' => 1;
+        <s>»\
+            .match(/<suffix>/)».hash\
+            .map(-> % ( Str(Any) :$suffix ) { %unit-multipliers{$suffix} });
+    }
+    is test, 1, "No phantom BOOTStr appears with a lookup hash";
 }
 
 done-testing;
