@@ -38,12 +38,13 @@ isa-ok($res, Proc, 'shell() returns a Proc even when not successful');
 ok($res.exitcode != 0, 'shell() exit code is not zero on failure');
 
 # https://github.com/Raku/old-issue-tracker/issues/3062
+# https://github.com/rakudo/rakudo/issues/1590
 throws-like { run("program_that_does_not_exist_ignore_errors_please.exe") },
-    X::Proc::Unsuccessful,
-    'run in sink context throws on unsuccessful exit';
+    X::Proc::Unsuccessful, message => /"exit code: -1"/ & /"OS error = "/,
+    'run() in sink context throws on unsuccessful exit and contains exit code of -1 and OS error';
 throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
     X::Proc::Unsuccessful,
-    'shell in sink context throws on unsuccessful exit';
+    'shell() in sink context throws on unsuccessful exit';
 
 # https://github.com/Raku/old-issue-tracker/issues/2564
 {
