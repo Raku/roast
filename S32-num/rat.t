@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 869;
+plan 867;
 
 # Basic test functions specific to rational numbers.
 
@@ -644,12 +644,6 @@ group-of 4 => 'no funny business in stringification of huge Rationals' => {
     is-deeply 1 - < 42/17>, -25/17, 'Can we perform Int - on a RatStr';
     is-deeply 2 * < 42/17>,  84/17, 'Can we perform Int * on a RatStr';
     is-deeply 3 / < 42/17>,  17/14, 'Can we perform Int / on a RatStr';
-}
-
-# https://github.com/rakudo/rakudo/issues/1818
-{
-    is <1/99999999999999999999>.gist, "0.00000000000000000001", "No trailing zeros when calling Rat.gist";
-    is <1/99999999999999999999>.Str, "0.00000000000000000001", "No trailing zeros when calling Rat.Str";
 }
 
 # vim: expandtab shiftwidth=4

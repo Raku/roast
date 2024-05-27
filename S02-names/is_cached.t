@@ -44,21 +44,21 @@ plan 38;
 
 {
     my @seen;
-    sub noflat ($a) is cached {
-        @seen.append: $a;
-        [~] $a;
+    sub noflat (@a) is cached {
+        @seen.append: @a;
+        [~] @a;
     }
     my @b = <foo bar>;
-    is noflat(@b), 'foobar', 'foo,bar case(1)';
+    is noflat($@b), 'foobar', 'foo,bar case(1)';
     is @seen, [<foo bar>], 'did we run (1)';
-    is noflat(@b), 'foobar', 'foo,bar case(2)';
+    is noflat($@b), 'foobar', 'foo,bar case(2)';
     is @seen, [<foo bar>], 'did we run (2)';
 
     # make sure the cache key is value based
     @b.push: <baz>;
-    is noflat(@b), 'foobarbaz', 'foo,bar,baz case(1)';
+    is noflat($@b), 'foobarbaz', 'foo,bar,baz case(1)';
     is @seen, [<foo bar foo bar baz>], 'did we run (3)';
-    is noflat(@b), 'foobarbaz', 'foo,bar,baz case(2)';
+    is noflat($@b), 'foobarbaz', 'foo,bar,baz case(2)';
     is @seen, [<foo bar foo bar baz>], 'did we run (4)';
 } #8
 
