@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 61;
+plan 62;
 
 # L<S32::IO/Functions/spurt>
 
@@ -263,6 +263,17 @@ subtest 'IO::Handle spurt' => { # 2017 IO Grant; IO::Handle.spurt
     is-deeply $file.slurp, "I ♥ Raku" x 4,
         'appended spurt contents look right';
     }
+}
+
+{
+     # We need a path that doesn't exist to generate a failure
+     # Note that permissions don't matter here, as spurt won't auto-create a missing directory
+     my sub path-gen($path) {
+         (.e and .d with $path.IO) ?? path-gen($path ~ ('a'..'z').roll) !! $path
+     }
+     my $path = IO::Path.new(path-gen($*DISTRO.is-win ?? 'C:\non_existent' !! '/non-existent')).add('test');
+     is do { spurt ~$path, "file content test" or "ENODIR" }, "ENODIR",
+         'spurt failure can be handled like any other failure';
 }
 
 # vim: expandtab shiftwidth=4
