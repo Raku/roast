@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 3;
+plan 4;
 
 # L<S11/Runtime Importation>
 
@@ -25,5 +25,8 @@ throws-like ｢use lib ‘’｣, X::LibEmpty,
 
 # https://github.com/rakudo/rakudo/issues/4911
 eval-lives-ok 'my class CompUnit {}; use Test', 'no confusion about CompUnit';
+
+eval-lives-ok 'use lib "' ~ $?FILE.IO.parent(2).add("packages/R3783") ~ '"; use Shadow; $Shadow::debug or die "not ok"',
+    'A .rakumod file is not over-shadowed by a .pm file of the same basename in a use statement';
 
 # vim: expandtab shiftwidth=4
