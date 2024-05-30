@@ -188,6 +188,9 @@ for @named-anywhere-ok -> \args, @expected, %expected {
 
 # --- Checking correct parsing, failed dispatch and old USAGE ------------------
 for @basic-ok -> \args, @expected, %expected {
+    # Ignore exits (Rakudo pre-2024.05 always returns 0, after returns 0 or 2)
+    # assign to anonymous state var to avoid ''useless use in sink'
+    my &*EXIT = { $ = $_ };
 
     my $main-called;
     sub MAIN("NEVER MATCHES") { $main-called = True } # NOT called by RUN-MAIN
@@ -202,6 +205,10 @@ for @basic-ok -> \args, @expected, %expected {
 }
 
 for @named-anywhere-ok -> \args, @expected, %expected {
+    # Ignore exits (Rakudo pre-2024.05 always returns 0, after returns 0 or 2)
+    # assign to anonymous state var to avoid ''useless use in sink'
+    my &*EXIT = { $ = $_ };
+
     my %*SUB-MAIN-OPTS = named-anywhere => 1;
 
     my $main-called;
@@ -278,6 +285,10 @@ for @named-anywhere-ok -> \args, @expected, %expected {
 
 # --- Other tests---------------------------------------------------------------
 {
+    # Ignore exits (Rakudo pre-2024.05 always returns 0, after returns 0 or 2)
+    # assign to anonymous state var to avoid ''useless use in sink'
+    my &*EXIT = { $ = $_ };
+
     multi MAIN("NEVER MATCHES") { }
     multi MAIN("THE-HIDDEN-MULTI") is hidden-from-USAGE { }
     @*ARGS = ();

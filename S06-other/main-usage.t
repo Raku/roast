@@ -11,7 +11,7 @@ use Test::Util;
 # Basic functionality
 
 is_run 'sub MAIN($x) { }; sub USAGE() { print "USAGE() called" }',
-    {out => 'USAGE() called'},
+    {out => 'USAGE() called', status => 2},
     'a user-defined USAGE sub is called if MAIN dispatch fails';
 
 is_run 'sub MAIN() { print "MAIN() called" }; sub USAGE() { print "USAGE() called" }',
@@ -173,7 +173,7 @@ is_run 'sub MAIN (Str $value) { print "String $value" }',
 
 # RT #127977
 is_run 'sub MAIN(*@arg where { False }) { }; sub USAGE { print "USAGE called" }',
-    {out => 'USAGE called', err => ''},
+    {out => 'USAGE called', err => '', status => 2},
     "failed constraint check doesn't leak internal exception out to the user";
 
 # RT #127621
@@ -188,7 +188,7 @@ subtest '$*USAGE tests' => {
     plan 4;
 
     is_run ｢sub MAIN($meow, :$moo) {}; sub USAGE { $*USAGE.uc.say }｣,
-        {:out(/MEOW/ & /MOO/), :err(''), :0status },
+        {:out(/MEOW/ & /MOO/), :err(''), :2status },
     'default $*USAGE is available inside `sub USAGE`';
 
     is_run ｢sub MAIN($meow, :$moo) {$*USAGE.uc.say; $meow.say; $moo.say}｣,
@@ -203,6 +203,6 @@ subtest '$*USAGE tests' => {
     is_run ｢
         sub MAIN ($foo) {}
         sub USAGE { try $*USAGE = "meow"; $! and "PASS".print }
-    ｣, {:out<PASS>, :err(''), :0status },
+    ｣, {:out<PASS>, :err(''), :2status },
     'trying to assign to $*USAGE inside sub MAIN throws';
 }

@@ -58,14 +58,14 @@ subtest '%*SUB-MAIN-OPTS<named-anywhere>', {
     is_run ｢
         sub MAIN ($a, $b, :$c, :$d) { print "fail" }
         sub USAGE { print "pass" }
-    ｣, :args[<1 --c=2 3 --d=4>], {:out<pass>, :err('')},
+    ｣, :args[<1 --c=2 3 --d=4>], {:out<pass>, :err(''), :2status},
     'no opts set does not allow named args anywhere';
 
     is_run ｢
         (my %*SUB-MAIN-OPTS)<named-anywhere> = False;
         sub MAIN ($a, $b, :$c, :$d) { print "fail" }
         sub USAGE { print "pass" }
-    ｣, :args[<1 --c=2 3 --d=4>], {:out<pass>, :err('')},
+    ｣, :args[<1 --c=2 3 --d=4>], {:out<pass>, :err(''), :2status},
     '<named-anywhere> set to false does not allow named args anywhere';
 
     is_run ｢
