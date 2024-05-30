@@ -13,6 +13,7 @@ use Test::Util;
 is_run 'sub MAIN($x) { }; sub USAGE() { print "USAGE() called" }',
     {
         out => 'USAGE() called',
+        status => 2,
     },
     'a user-defined USAGE sub is called if MAIN dispatch fails';
 
