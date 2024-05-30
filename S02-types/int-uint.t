@@ -57,7 +57,7 @@ for @inttypes -> $type {
           "$type underflows to $maxval";
     }
 
-    if $type eq "uint64" {
+    if $type eq "uint64" || $type eq "int64" {
         #?rakudo.jvm todo 'setting to more than max'
         throws-like { EVAL "my $type \$var = {$maxval+1}" },
           Exception,
@@ -68,10 +68,16 @@ for @inttypes -> $type {
           Exception,
           "setting $type to more than $maxval throws";
     }
-    #?rakudo todo 'setting less than min throws'
-    throws-like { EVAL "my $type \$var = {$minval-1}" },
-      Exception,
-      "setting $type to less than $minval throws";
+    if $type eq "int64" {
+        throws-like { EVAL "my $type \$var = {$minval-1}" },
+          Exception,
+          "setting $type to less than $minval throws";
+    } else {
+        #?rakudo todo 'setting less than min throws'
+        throws-like { EVAL "my $type \$var = {$minval-1}" },
+          Exception,
+          "setting $type to less than $minval throws";
+    }
 
     throws-like { EVAL "my $type \$var = 'foo'" },
       Exception,
