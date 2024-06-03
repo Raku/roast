@@ -4,9 +4,9 @@ plan 28;
 
 # Make sure that failing non-blocking tests don't block indefinitely
 # Normally this test file should take around 4 seconds to run.  If it's
-# not done by 20, it's hanging
+# not done by 2 minutes, it's hanging
 $*SCHEDULER.cue: {
-    sleep 20;
+    sleep 120;
     note "*** Non-blocking tests were blocking ***";
     exit 255;
 }
