@@ -1,5 +1,5 @@
 use Test;
-plan 61;
+plan 62;
 
 # L<S32::Containers/"List"/"=item map">
 
@@ -272,6 +272,18 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
     my $i = 0;
     (^3 .map: -> \x --> Int { $i++ }).sink;
     is-deeply $i, 3, 'non-slippy-non-phaser map sink-all works';
+}
+
+# https://github.com/rakudo/rakudo/issues/5590
+{
+    my $ranLAST;
+    my $iterator := (^20).map({
+        LAST $ranLAST = True;
+        last if $_ == 10;
+        $_
+    }).iterator;
+    Nil until $iterator.pull-one =:= IterationEnd;
+    ok $ranLAST, 'Did the LAST phaser get run';
 }
 
 # vim: expandtab shiftwidth=4
