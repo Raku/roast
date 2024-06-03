@@ -2,6 +2,15 @@ use Test;
 
 plan 28;
 
+# Make sure that failing non-blocking tests don't block indefinitely
+# Normally this test file should take around 4 seconds to run.  If it's
+# not done by 20, it's hanging
+$*SCHEDULER.cue: {
+    sleep 20;
+    note "*** Non-blocking tests were blocking ***";
+    exit 255;
+}
+
 # Limit scheduler to just 4 real threads, so we'll clearly be needing the
 # non-blocking await support for these to pass.
 PROCESS::<$SCHEDULER> := ThreadPoolScheduler.new(max_threads => 4);
