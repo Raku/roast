@@ -145,6 +145,11 @@ plan 56;
     eval-lives-ok 'my %*a{Int}', "Accept dynamic object hash"
 }
 
+# https://github.com/rakudo/rakudo/issues/1486
+{
+    ok {:foo, (if 0.5.rand < 1 { :bar })}, 'a conditional inside circumfix {} works';
+}
+
 #vim: ft=perl6
 
 # vim: expandtab shiftwidth=4
