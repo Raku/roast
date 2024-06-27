@@ -15,7 +15,7 @@ sub make-test-data {
     }
 }
 
-plan 2 * make-test-data() + 20;
+plan 4 + 2*make-test-data;
 
 for make-test-data() -> (:key($got), :value($expected)) {
     is-deeply $got.flat,  $expected, "$got.raku() (method form)";
@@ -33,33 +33,5 @@ is-deeply flat((1, 2, 3), 4..*)[^20], (1..*)[^20],
 
 is-deeply (1..*).flat.is-lazy, True, 'flat propagates .is-lazy (method form)';
 is-deeply flat(1..*).is-lazy,  True, 'flat propagates .is-lazy (subform)';
-
-my $hammered := (1,2,3,4,5);
-my @a = 1,[2,[3,[4,5]]];
-is-deeply @a.flat,     @a.Seq, 'calling .flat on an array is a no-op';
-is-deeply @a.flat($_), @a.Seq, "calling .flat($_) on an array is a no-op"
-  for 1..4;
-is-deeply @a.flat(:hammer), $hammered, 'array.flat(:hammer)';
-is-deeply @a.flat(1, :hammer), (1, 2, [3, [4, 5]]),
-  'array.flat(1, :hammer)';
-is-deeply @a.flat(2, :hammer), (1, 2, 3, [4, 5]),
-  'array.flat(2, :hammer)';
-is-deeply @a.flat(3, :hammer), (1,2,3,4,5),
-  'array.flat(3, :hammer)';
-is-deeply @a.flat(4, :hammer), (1,2,3,4,5),
-  'array.flat(4, :hammer)';
-
-my @b := 1,(2,(3,(4,5)));
-is-deeply @b.flat,          $hammered, 'calling .flat on list flattens deeply';
-is-deeply @b.flat(:hammer), $hammered, 'hammering a list';
-is-deeply @b.flat(1, :hammer), (1, 2, (3, (4, 5))),
-  'list.flat(1, :hammer)';
-is-deeply @b.flat(2, :hammer), (1, 2, 3, (4, 5)),
-  'list.flat(2, :hammer)';
-is-deeply @b.flat(3, :hammer), (1,2,3,4,5),
-  'list.flat(3, :hammer)';
-is-deeply @b.flat(4, :hammer), (1,2,3,4,5),
-  'list.flat(4, :hammer)';
-
 
 # vim: expandtab shiftwidth=4
