@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 36;
+plan 37;
 
 # this used to segfault in rakudo
 is_run(
@@ -288,6 +288,18 @@ is_run ｢class Foo {}; -> Foo() $x { $x.say }("42")｣, {:out(''), :err(*), :1s
     $lot-of-variables ~= "exit 42";
     #?rakudo.jvm todo 'dies with `java.lang.OutOfMemoryError: Java heap space`'
     is_run($lot-of-variables, { :42status }, "no segv or throw with lots of variables");
+}
+
+# https://github.com/rakudo/rakudo/issues/5599
+{
+    enum E <one>;
+    role R {
+        has $.e = one;
+        method m() {
+            ok $!e === one, "default initialization of enums in roles works";
+        }
+    }
+    R.new.m;
 }
 
 # vim: expandtab shiftwidth=4
