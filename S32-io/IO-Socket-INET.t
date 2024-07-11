@@ -1,6 +1,6 @@
 use Test;
 
-plan 29;
+plan 32;
 
 my $localhost = '0.0.0.0';
 my $host      = '127.0.0.1';
@@ -269,6 +269,28 @@ do-test
         $received ~= $^client.read( 1 );
 
         is $received, 'xxxx'.encode('ISO-8859-1'), "test moar cache by reading per byte";
+
+        $^client.close();
+    };
+
+# test 10 tests mixing binary and non binary access.
+do-test
+    # server
+    {
+        # we are handling only one request/reply
+        my $client = $^server.accept();
+        # Also sends two 3 byte unicode characters
+        $client.print(join '',  '0'..'9', 'a'..'z');
+        $client.close;
+        $^server.close;
+    },
+    # client
+    {
+        my $received;
+
+        is $^client.recv(7), '0123456', "received first 7 characters";
+        is $^client.recv(3, :bin).decode, '789', "received next 3 characters";
+        is $^client.recv(26), ([~] 'a' .. 'z'), "remaining 26 were buffered";
 
         $^client.close();
     };
