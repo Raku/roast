@@ -372,7 +372,7 @@ group-of 1 => 'IO::Handle.new can take a bunch of options' => {
     # No final decision has been rendered yet, but it's likely we'll want
     # to limit what IO::Handle.new can take, so keep those tests here
     # https://github.com/rakudo/rakudo/issues/2039
-    # https://colabti.org/irclogger/irclogger_log/perl6-dev?date=2018-07-11#l201
+    # https://irclogs.raku.org/perl6-dev/2018-07-11.html#13:45
     group-of 4 => '.print-nl method' => {
         my $file = make-temp-file;
         with $file.open: :w { .print-nl; .close }

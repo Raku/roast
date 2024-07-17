@@ -6,7 +6,7 @@ use Test::Idempotence;
 
 # See thread "Demagicalizing pair" on p6l started by Luke Palmer,
 # L<"https://www.mail-archive.com/perl6-language@perl.org/msg21472.html"> and
-# L<"http://colabti.org/irclogger/irclogger_log/perl6?date=2005-10-09,Sun&sel=528#l830">.
+# L<"https://irclogs.raku.org/perl6/2005-10-09.html#16:04">.
 # Also see L<"http://www.nntp.perl.org/group/perl.perl6.language/23532">.
 
 # To summarize:

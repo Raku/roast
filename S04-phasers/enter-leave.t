@@ -274,7 +274,7 @@ plan 33;
     isa-ok $res, Duration, 'using ENTER inside LEAVE does not crash';
 }
 
-# https://colabti.org/irclogger/irclogger_log/perl6?date=2019-04-26#l196
+# https://irclogs.raku.org/perl6/2019-04-26.html#08:05
 # When a block has no local variables, the ENTER phaser would not success-
 # fully decont a variable out of a surrounding scope. Didn't have a ticket,
 # was fixed in Rakudo as a side-effect of 541a4f1628.

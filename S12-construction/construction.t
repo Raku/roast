@@ -119,7 +119,7 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
     }.new: :42b;
 }
 
-# http://colabti.org/irclogger/irclogger_log/perl6?date=2018-10-01#l266
+# https://irclogs.raku.org/perl6/2018-10-01.html#10:25
 # https://github.com/rakudo/rakudo/commit/64137bd21c
 {
     class A {

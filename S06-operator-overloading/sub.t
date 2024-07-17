@@ -58,7 +58,7 @@ Testing operator overloading subroutines
 
 # [NOTE]
 # pmichaud ruled that infix<if> is incorrect:
-#   http://colabti.org/irclogger/irclogger_log/perl6?date=2006-07-29,Sat&sel=183#l292
+#   https://irclogs.raku.org/perl6/2006-07-29.html#13:03
 # so we won't test it here either.
 
 # great.  Now, what about those silent auto-conversion operators a la:

@@ -205,7 +205,7 @@ plan 48;
 }
 
 # Binding @array := $arrayitem.
-# See http://colabti.org/irclogger/irclogger_log/perl6?date=2005-11-06,Sun&sel=388#l564
+# See https://irclogs.raku.org/perl6/2005-11-06.html#06:53
 # and consider the magic behind parameter binding (which is really normal
 # binding).
 {
