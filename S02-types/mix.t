@@ -277,14 +277,14 @@ sub showkv($x) {
     is +@a, 2, '.roll(2) returns the right number of items';
     is @a.grep(* eq 'a').elems + @a.grep(* eq 'b').elems, 2, '.roll(2) returned "a"s and "b"s';
 
-    @a = $m.roll: 100;
-    is +@a, 100, '.roll(100) returns 100 items';
-    ok 2 < @a.grep(* eq 'a') < 75, '.roll(100) (1)';
-    ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
+    @a = $m.roll: 100000;
+    is +@a, 100000, '.roll(100000) returns 100000 items';
+    ok 2 < @a.grep(* eq 'a') < 75000, '.roll(100000) (1)';
+    ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100000) (2)';
 
-    @a = $m.roll(*)[^100];
-    ok 2 < @a.grep(* eq 'a') < 75, '.roll(*)[^100] (1)';
-    ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(*)[^100] (2)';
+    @a = $m.roll(*)[^100000];
+    ok 2 < @a.grep(* eq 'a') < 75000, '.roll(*)[^100000] (1)';
+    ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(*)[^100000] (2)';
 
     is $m.total, 3, '.roll should not change Mix';
 }
@@ -295,12 +295,12 @@ sub showkv($x) {
     my $a = $m.roll;
     ok $a eq "a" || $a eq "b", "We got one of the two choices (and this was pretty quick, we hope!)";
 
-    my @a = $m.roll: 100;
-    is +@a, 100, '.roll(100) returns 100 items';
+    my @a = $m.roll: 100000;
+    is +@a, 100000, '.roll(100000) returns 100000 items';
     diag "Found {+@a.grep(* eq 'a')} a's"
-      if !ok @a.grep(* eq 'a') > 97, '.roll(100) (1)';
+      if !ok @a.grep(* eq 'a') > 97000, '.roll(100000) (1)';
     diag "Found {+@a.grep(* eq 'b')} b's"
-      if !ok @a.grep(* eq 'b') < 3, '.roll(100) (2)';
+      if !ok @a.grep(* eq 'b') < 3000, '.roll(100000) (2)';
     is $m.total, 1, '.roll should not change Mix';
 }
 
