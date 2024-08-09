@@ -167,7 +167,7 @@ sub fiddle(:$x,:$y){ violin($x) ~ violin($y) }
 { # adverbs as pairs
 
   my sub f1($s,:$x){$s.raku~$x}
-  is f1(\:bar :x("b")), '("bar" => Bool::True)b', 'f1(\:bar :x("b"))';
+  is f1(\:bar :x("b")), '\("bar" => Bool::True)b', 'f1(\:bar :x("b"))';
 }
 
 {
