@@ -163,7 +163,7 @@ sub fiddle(:$x,:$y){ violin($x) ~ violin($y) }
 
 }
 
-#?rakudo todo 'Multi colonpair syntax not yet understood'
+#?rakudo skip 'Multi colonpair syntax not yet understood'
 { # adverbs as pairs
 
   my sub f1($s,:$x){$s.raku~$x}
