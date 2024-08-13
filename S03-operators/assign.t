@@ -968,7 +968,7 @@ sub l () { 1, 2 };
 {
     my $a; $a -= 2;
     is-deeply $a, -2, '-= with :U target gives right result';
-    throws-like ｢my $b; $b %= 2｣, Exception, '%= with :U target throws';
+    throws-like ｢use fatal; my $b; $b %= 2｣, Exception, '%= with :U target throws';
 }
 
 # vim: expandtab shiftwidth=4
