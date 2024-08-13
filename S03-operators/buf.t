@@ -105,13 +105,13 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
 {
     use experimental :pack;
     my Blob $x;
-    throws-like { $x ~= pack "V",1 }, X::Buf::AsStr, :method<Stringy>;
+    throws-like { $x ~= pack "V",1 }, X::Buf::AsStr;
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/3486
 {
     my $a = buf8.new([]);
-    throws-like { "Foo: $a" }, X::Buf::AsStr, :method<Stringy>;
+    throws-like { "Foo: $a" }, X::Buf::AsStr;
 }
 
 # Tests that used to gobble all memory in rakudo:
