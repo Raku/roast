@@ -1001,7 +1001,6 @@ S17-supply/zip.t
 S19-command-line-options/02-dash-n.t
 S19-command-line-options/03-dash-p.t
 S19-command-line-options/04-negation.t
-S19-command-line-options/05-delimited-options.t
 S19-command-line/arguments.t
 S19-command-line/dash-e.t
 S19-command-line/help.t
