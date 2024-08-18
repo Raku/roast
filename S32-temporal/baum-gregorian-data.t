@@ -134,7 +134,7 @@ sub day-frac2hms(Real $x, :$debug --> List) {
 }
 
 sub day-frac(DateTime:D $dt, :$debug --> Real) {
-    constant sec-per-day = 24 * 60 * 60;
+    my constant sec-per-day = 24 * 60 * 60;
     # get seconds in this day
     my $frac = $dt.hour * 60 * 60;
     $frac += $dt.minute * 60;

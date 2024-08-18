@@ -82,15 +82,15 @@ plan 54;
 }
 
 {
-    constant $d1 = Duration.new(40);
-    constant $d2 = Duration.new(42.5);
+    my constant $d1 = Duration.new(40);
+    my constant $d2 = Duration.new(42.5);
     is-deeply $d2 − 42,  Duration.new( .5), 'infix, Duration:D, Int:D';
     is-deeply $d2 − $d1, Duration.new(2.5), 'infix, Duration:D, Duration:D';
 }
 
 {
-    constant $d1 = Date.new(:2015year);
-    constant $d2 = Date.new(:2016year);
+    my constant $d1 = Date.new(:2015year);
+    my constant $d2 = Date.new(:2016year);
     is-deeply $d2 − 365, $d1, 'infix, Date:D, Int:D';
     is-deeply $d2 − $d1, 365, 'infix, Date:D, Date:D';
 }
