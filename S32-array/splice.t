@@ -264,7 +264,7 @@ for @testing -> @a, $T {
 }
 
 subtest 'Array.splice' => { # coverage; 2016-10-01
-    constant @tests = # Args | Return | Result
+    my constant @tests = # Args | Return | Result
         [ \(                 ), [1,2,3], []            ],
         [ \( *               ), [ ],     [1,2,3]       ],
         [ \( *,   *          ), [ ],     [1,2,3]       ],
@@ -307,7 +307,7 @@ subtest 'Array.splice' => { # coverage; 2016-10-01
 }
 
 subtest 'Array.splice callable args' => {
-    constant @tests =
+    my constant @tests =
         [ ['hello world'.comb], 11, 5 ],
         [ ['deadbeaf'.comb], 8, 2 ],
         [ ['I H Raku!'.comb], 9, 6 ],
