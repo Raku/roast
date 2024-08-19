@@ -99,7 +99,7 @@ eval-lives-ok q[
 
 # https://github.com/Raku/old-issue-tracker/issues/3081
 {
-    try EVAL 'class ::F { ... }; class F is ::F';
+    try EVAL 'class ::F { ... }; class F is ::F { }';
     ok ~$! ~~ / 'cannot inherit from itself' /, "used to crash rakudo";
 }
 
