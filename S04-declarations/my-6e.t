@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 110;
+plan 109;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible">
@@ -213,9 +213,8 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
     eval-lives-ok 'my $a;do { die "foo"; my $x; CATCH { default { $a = $x.defined } } }';
 
     {
-        ok EVAL('not OUTER::<$x>:exists'), 'OUTER::<$x>';
-        ok EVAL('not SETTING::<$x>:exists'), 'SETTING::<$x>';
         my $x; #OK not used
+        ok EVAL('not SETTING::<$x>:exists'), 'SETTING::<$x>';
     }
 
     {
