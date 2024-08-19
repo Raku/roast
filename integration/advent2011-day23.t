@@ -9,15 +9,14 @@ plan 55;
 
 our @array = 10, *+10 ... 250;
 our $array-indices = [ 0 .. 24 ];
-our $z;
 
 sub picker-seems-random(&picker ) {
-    my $sample = set (1 .. 15).map({ &picker() })
+    my $sample = set (1 .. 15).map({ &picker() });
     +$sample.keys > 2 && $sample (<=) set @array;
 }
 
-ok picker-seems-random( { $z = @array[ rand*@array ]; } ), '$z = @array[ rand*@array ];';
-ok picker-seems-random( { $z = @array.pick } ), '$z = @array.pick;';
+ok picker-seems-random( { @array[ rand*@array ]; } ), '@array[ rand*@array ];';
+ok picker-seems-random( { @array.pick } ), '@array.pick;';
 
 # Loop over the keys (indexes) of an array
 
@@ -209,7 +208,7 @@ is-deeply @z, [7,7,7, 9,9,9], '@z = ($_ xx 3 if $_ > 5 for @y);';
 
 # Random integer between 3 and 7 inclusive
 
-$z = 3 + Int(5.rand);
+my $z = 3 + Int(5.rand);
 ok 3 <= $z <= 7, '$z = 3 + Int(5.rand)'
     or diag "z: $z";
 
