@@ -12,7 +12,7 @@ subtest "Enum" => {
     lives-ok { my FOO $foo = foo1; }, "doesn't fire when there is no error";
 
     throws-like
-        { my FOO $foo; $foo = 0; },
+        'my FOO $foo; $foo = 0;',
         X::TypeCheck::Assignment,
         "activated upon failed type check",
         message => /'need something FOO-ish, got 0'/;
