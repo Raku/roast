@@ -682,9 +682,9 @@ subtest 'my | typed | %-sigilled' => {
     plan 3;
     throws-like ｢my Int constant %mths1 = :foo;｣,
         X::ParametricConstant, 'simple value';
-    throws-like ｢my IO::Path constant %mths2 = 42｣, X::ParametricConstant,
+    throws-like ｢my IO::Path constant %mths2 = :a(42)｣, X::ParametricConstant,
         'type with `::` in name';
-    throws-like ClassDefs ~ ｢my Foo2::Bar2[Ber2::Meow2] constant %mths3 = 42｣,
+    throws-like ClassDefs ~ ｢my Foo2::Bar2[Ber2::Meow2] constant %mths3 = :a(42)｣,
         X::ParametricConstant, 'parametarized type with `::` in name';
 }
 
@@ -692,9 +692,9 @@ subtest 'our | typed | %-sigilled' => {
     plan 3;
     throws-like ｢our Int constant %oths1 = :foo;｣,
         X::ParametricConstant, 'statement';
-    throws-like ｢our IO::Path constant %oths2 = 42｣, X::ParametricConstant,
+    throws-like ｢our IO::Path constant %oths2 = :a(42)｣, X::ParametricConstant,
         'type with `::` in name';
-    throws-like ClassDefs ~ ｢our Foo2::Bar2[Ber2::Meow2] constant %oths3 = 42｣,
+    throws-like ClassDefs ~ ｢our Foo2::Bar2[Ber2::Meow2] constant %oths3 = :a(42)｣,
         X::ParametricConstant, 'parametarized type with `::` in name';
 }
 
