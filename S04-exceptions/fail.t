@@ -79,7 +79,7 @@ given (Failure.new()) {
     lives-ok { use fatal; my $x = it-will-fail() || 0; 1 }, 'use fatal respects ||';
     lives-ok { use fatal; my $x = it-will-fail() && 0; 1 }, 'use fatal respects &&';
     lives-ok { use fatal; if it-will-fail() { 1 } else { 0 } }, 'use fatal respects if';
-    lives-ok { use fatal; unless it-will-fail() { 1 }; 0 }, 'use fatal respects unless';
+    lives-ok { use fatal; unless it-will-fail() { Nil }; 0 }, 'use fatal respects unless';
     lives-ok { use fatal; it-will-fail() ?? 1 !! 0 }, 'use fatal respects ?? !!';
     lives-ok { use fatal; my $x = ?it-will-fail(); 1 }, 'use fatal respects ?';
     lives-ok { use fatal; my $x = so it-will-fail(); 1 }, 'use fatal respects so';
