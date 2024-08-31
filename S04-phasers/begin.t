@@ -74,7 +74,7 @@ plan 13;
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/3676
-#?rakudo todo 'RT#123776'
+#?rakudo skip 'RT#123776'
 {
     my $bound;
     BEGIN { $bound := 'foo'; }
