@@ -29,6 +29,11 @@ is_run ｢use Test; plan 1; todo 1; subtest 'foos' => { ok 0; }｣, {
         :out{.&output-has: :2noks, :2fails, :2todos}, :0status
     }, 'case one';
 
+is_run ｢use Test; plan 1; todo 1; subtest { ok 0; } => "foos"｣, {
+    :err{.&output-has: :0noks, :0fails, :0todos},
+    :out{.&output-has: :2noks, :2fails, :2todos}, :0status
+}, 'case one with inverted Pair';
+
 is_run ｢use Test; plan 1; todo 1; subtest 'foos' => { ok 1; }｣, {
         :err{.&output-has: :0noks, :0fails, :0todos},
         :out{.&output-has: :0noks, :0fails, :1todos}, :0status
@@ -54,6 +59,11 @@ is_run ｢use Test; plan 1; todo 1; subtest 'foos' => { todo 1; ok 0; ok 0 }｣,
         :err{.&output-has: :0noks, :0fails, :0todos},
         :out{.&output-has: :3noks, :3fails, :3todos}, :0status
     }, 'case six';
+
+is_run ｢use Test; plan 1; todo 1; subtest { todo 1; ok 0; ok 0 } => 'foos'｣, {
+        :err{.&output-has: :0noks, :0fails, :0todos},
+        :out{.&output-has: :3noks, :3fails, :3todos}, :0status
+    }, 'case six with inverted Pair';
 
 is_run ｢use Test; plan 1; todo 1;
     subtest 'foos' => {
