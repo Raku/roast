@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 8;
+plan 10;
 
 sub output-has(Str:D $output, Int:D :$todos, Int:D :$fails, Int:D :$noks) {
     my $todos-actual = +$output.comb('TODO');
@@ -23,16 +23,16 @@ sub output-has(Str:D $output, Int:D :$todos, Int:D :$fails, Int:D :$noks) {
     }
     $result
 }
-
-is_run ｢use Test; plan 1; todo 1; subtest 'foos' => { ok 0; }｣, {
+my %common-case-one-results = (
         :err{.&output-has: :0noks, :0fails, :0todos},
-        :out{.&output-has: :2noks, :2fails, :2todos}, :0status
-    }, 'case one';
+        :out{.&output-has: :2noks, :2fails, :2todos},
+        :0status
+);
+is_run ｢use Test; plan 1; todo 1; subtest 'foos' => { ok 0; }｣,
+    %common-case-one-results, 'case one';
 
-is_run ｢use Test; plan 1; todo 1; subtest { ok 0; } => "foos"｣, {
-    :err{.&output-has: :0noks, :0fails, :0todos},
-    :out{.&output-has: :2noks, :2fails, :2todos}, :0status
-}, 'case one with inverted Pair';
+is_run ｢use Test; plan 1; todo 1; subtest { ok 0; } => "foos"｣,
+    %common-case-one-results, 'case one with inverted Pair';
 
 is_run ｢use Test; plan 1; todo 1; subtest 'foos' => { ok 1; }｣, {
         :err{.&output-has: :0noks, :0fails, :0todos},
@@ -55,15 +55,16 @@ is_run ｢use Test; plan 1; subtest 'foos' => { todo 1; ok 0; ok 0 }｣, {
         :out{.&output-has: :3noks, :1fails, :1todos}, :1status
     }, 'case five';
 
-is_run ｢use Test; plan 1; todo 1; subtest 'foos' => { todo 1; ok 0; ok 0 }｣, {
+my %common-case-six-results = (
         :err{.&output-has: :0noks, :0fails, :0todos},
-        :out{.&output-has: :3noks, :3fails, :3todos}, :0status
-    }, 'case six';
+        :out{.&output-has: :3noks, :3fails, :3todos},
+        :0status
+);
+is_run ｢use Test; plan 1; todo 1; subtest 'foos' => { todo 1; ok 0; ok 0 }｣,
+    %common-case-six-results, 'case six';
 
-is_run ｢use Test; plan 1; todo 1; subtest { todo 1; ok 0; ok 0 } => 'foos'｣, {
-        :err{.&output-has: :0noks, :0fails, :0todos},
-        :out{.&output-has: :3noks, :3fails, :3todos}, :0status
-    }, 'case six with inverted Pair';
+is_run ｢use Test; plan 1; todo 1; subtest { todo 1; ok 0; ok 0 } => 'foos'｣,
+    %common-case-six-results, 'case six with inverted Pair';
 
 is_run ｢use Test; plan 1; todo 1;
     subtest 'foos' => {
