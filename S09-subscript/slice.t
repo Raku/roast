@@ -9,7 +9,7 @@ Testing array slices.
 
 =end pod
 
-plan 55;
+plan 56;
 
 {   my @array = (3,7,9,11);
 
@@ -356,6 +356,11 @@ subtest 'nested slices' => {
       'sublist in lazy slice binding 2';
     is-deeply @a, [11,"a","b",14,"e","f"],
       'result of sublist in lazy slice binding 2';
+}
+
+{
+    my @a = 0,[1,[2,[3,[4,[5,[6,7,8,9]]]]]];
+    is-deeply @a[**], [^10].List, 'did hyperwhatever hammer';
 }
 
 # vim: expandtab shiftwidth=4
