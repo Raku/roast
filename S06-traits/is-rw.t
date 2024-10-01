@@ -1,6 +1,6 @@
 use Test;
 
-plan 8;
+plan 9;
 # L<S06/"Parameter traits"/"=item is rw">
 
 
@@ -44,5 +44,8 @@ plan 8;
 
 # https://github.com/Raku/old-issue-tracker/issues/6366
 throws-like { sub ($ is rw) {}(42) }, X::Parameter::RW;
+
+# https://github.com/rakudo/rakudo/issues/1211
+throws-like { Q/sub foo(+$x [$ is rw = False]) { $x }/.EVAL }, X::Trait::Invalid
 
 # vim: expandtab shiftwidth=4
