@@ -1,6 +1,6 @@
 use Test;
 
-plan 100;
+plan 103;
 
 # L<S06/Required parameters/"Passing a named argument that cannot be bound to
 # a normal subroutine is also a fatal error.">
@@ -325,4 +325,16 @@ throws-like 'sub svn28865( :$a, :@a ) {}', X::Signature::NameClash,
     is $s, [+](1..1000000), 'Hot looping making call with aliased named parameter works';
 }
 
+# https://github.com/rakudo/rakudo/issues/1294
+{
+    my $ber = 99;
+    -> $ where .z: 42, :foo:bar($ber) {}(class {
+        method z ($v?, :$foo, :$bar) {
+            is-deeply $v,     42, 'did $v get set';
+            is-deeply $foo, True, 'did $foo get set';
+            is-deeply $ber,   99, 'did $bar get set';
+            True
+        }
+    });
+}
 # vim: expandtab shiftwidth=4
