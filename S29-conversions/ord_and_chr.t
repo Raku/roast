@@ -121,7 +121,7 @@ my @maps = (
   "\o03", 3,
 );
 
-plan 55 + @maps;
+plan 56 + @maps;
 
 for @maps -> $char, $code {
   my $descr = "\\{$code}{$code >= 32 ?? " == '{$char}'" !! ""}";
@@ -177,6 +177,8 @@ subtest 'chr with large codepoints throws useful error' => {
     throws-like $_, Exception, .raku for @tests;
 }
 
-#vim: ft=perl6
+# https://github.com/rakudo/rakudo/issues/1625
+throws-like { 0x7FFFFFFF.chr.unival }, X::AdHoc,
+  message => / 'out of bounds' /;
 
 # vim: expandtab shiftwidth=4
