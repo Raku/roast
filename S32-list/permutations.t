@@ -1,6 +1,6 @@
 use Test;
 
-plan 10;
+plan 12;
 
 # L<S32::Containers/List/=item permutations>
 
@@ -27,5 +27,11 @@ subtest '&permutations with Iterable first argument match calls with method form
 
     is-deeply permutations($_).sort, .permutations.sort, .raku for @i;
 }
+
+# https://github.com/rakudo/rakudo/issues/1528
+is-deeply +permutations(30), 265252859812191058636308480000000,
+  'Do not cowardly refuse just the total';
+is-deeply ?permutations(30), True,
+  'Do not cowardly refuse just the truthiness';
 
 # vim: expandtab shiftwidth=4
