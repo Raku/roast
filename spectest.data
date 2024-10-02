@@ -763,6 +763,7 @@ S12-methods/what.t
 S12-subset/multi-dispatch.t
 S12-subset/subtypes.t
 S12-subset/type-subset.t
+S12-traits/precomp.t
 S13-overloading/metaoperators.t
 S13-overloading/operators.t
 S13-overloading/typecasting-long.t
@@ -1107,6 +1108,7 @@ S32-hash/delete-adverb.t
 S32-hash/delete.t
 S32-hash/exists-adverb.t
 S32-hash/exists.t
+S32-hash/hyperslice.t
 S32-hash/invert.t
 S32-hash/iterator.t
 S32-hash/keys_values.t
