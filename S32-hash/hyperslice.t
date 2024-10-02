@@ -1,6 +1,8 @@
 use v6.e.PREVIEW;
 use Test;
 
+plan 10;
+
 my %hash := {
     A => {
         B => 1,
