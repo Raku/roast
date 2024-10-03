@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 33;
+plan 34;
 
 # L<S04/Phasers/ENTER "at every block entry time">
 # L<S04/Phasers/LEAVE "at every block exit time">
@@ -303,6 +303,13 @@ plan 33;
     }
     A.a;
     is $entered, 1, 'Did ENTER only run once';
+}
+
+# https://github.com/rakudo/rakudo/issues/1815
+{
+    my int $entered;
+    class { method apply { ENTER ++$entered; } }.apply;
+    is $entered, 1, 'Did the ENTER only fire once';
 }
 
 # vim: expandtab shiftwidth=4
