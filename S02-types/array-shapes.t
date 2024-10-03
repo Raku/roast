@@ -1,5 +1,5 @@
 use Test;
-plan 42;
+plan 43;
 
 # L<S09/Fixed-size arrays>
 
@@ -177,6 +177,12 @@ subtest '.Array on uninited shaped array' => {
     my @a[1] = 42;
     lives-ok { (@a>>++).raku }, 'call .raku on result of hyper on shaped';
     is-deeply @a[0], 43, 'did the hyper actually run';
+}
+
+# https://github.com/rakudo/rakudo/issues/1794
+{
+    my Int @a[2.5];
+    is @a.gist, "[(Int) (Int)]", 'is shape correctly adapted';
 }
 
 # vim: expandtab shiftwidth=4
