@@ -1,6 +1,6 @@
 use Test;
 
-plan 28;
+plan 29;
 
 {
     my Channel $c .= new;
@@ -104,6 +104,18 @@ plan 28;
 { # coverage; 2016-09-26
     throws-like { Channel.elems     }, Exception, 'Channel:U.elems fails';
     throws-like { Channel.new.elems }, Exception, 'Channel:D.elems fails';
+}
+
+# https://github.com/rakudo/rakudo/issues/1974
+{
+    my @seen;
+    (my Channel $c .= new).Supply.tap: { @seen.push($_) };
+    sub get-urls($url) {
+        gather { take $url; $url.chars > 1 and (.take for get-urls $url.chop) }
+    }
+    await get-urls("meows").Supply.throttle: 3, {$c.send: $_};
+    $c.close;
+    is-deeply @seen, [<meows meow meo me m>], 'got all urls';
 }
 
 # vim: expandtab shiftwidth=4
