@@ -4,7 +4,7 @@ use Test::Util;
 
 use lib $?FILE.IO.parent(2).add("packages/HasMain/lib");
 
-plan 11;
+plan 12;
 
 ## If this test file is fudged, then MAIN never executes because
 ## the fudge script introduces an C<exit(1)> into the mainline.
@@ -95,6 +95,13 @@ subtest '%*SUB-MAIN-OPTS<named-anywhere>', {
     is_run 'sub MAIN($a is rw) { }; sub GENERATE-USAGE(|) { print "usage" }', :args[],
       { :out<usage>, :err{ .contains("'is rw'") }, :2status },
       'Worry about "is rw" on parameters of MAIN';
+}
+
+# https://github.com/rakudo/rakudo/issues/1803
+{
+    is_run '@*ARGS = 42; sub MAIN($x) { say $x }', :args[],
+      { :out("42\n"), :err(''), :0status },
+      'non-string values in @*ARGS do not crash'
 }
 
 # vim: expandtab shiftwidth=4
