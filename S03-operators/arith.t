@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 158;
+plan 162;
 
 my $five = abs(-5);
 
@@ -404,5 +404,11 @@ group-of 3 => '-0x7FFFFFFF - 1 math weirdness' => {
         '== -18446744071562067968';
     is-deeply (-0x7FFFFFFF - 1).base(16), '-80000000', '.base(16)';
 }
+
+# https://github.com/rakudo/rakudo/issues/1850
+is-deeply <-1/0> <  <1/0>, True, 'handling 0 denominators on Rat with <';
+is-deeply <-1/0> <= <1/0>, True, 'handling 0 denominators on Rat with <=';
+is-deeply <1/0> >  <-1/0>, True, 'handling 0 denominators on Rat with >';
+is-deeply <1/0> >= <-1/0>, True, 'handling 0 denominators on Rat with >=';
 
 # vim: expandtab shiftwidth=4

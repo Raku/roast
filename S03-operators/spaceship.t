@@ -29,6 +29,6 @@ throws-like ｢say ’a‘ <=> ’b‘｣, X::Str::Numeric,
     '<=> with non-numerics throws correct exception';
 
 # https://github.com/rakudo/rakudo/issues/1850
-is-deeply <1/0> cmp <-1/0>, More, 'handling 0 denominators on Rat';
+is-deeply <1/0> <=> <-1/0>, More, 'handling 0 denominators on Rat';
 
 # vim: expandtab shiftwidth=4
