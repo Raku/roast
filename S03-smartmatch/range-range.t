@@ -45,7 +45,7 @@ subtest 'smartmatch against numeric range' => {
                            fr2..3, fr2..fr3, fr2..fr3, fr2..fr3;
     plan 2 + @variants * (@true + @false);
     is-deeply 3..4     ~~ -1/0..1/0, True,  '  3..4   ~~ -1/0..1/0';
-    is-deeply 0/0..0/0 ~~ -1/0..1/0, False, '0/0..0/0 ~~ -1/0..1/0';
+    is-deeply 0/0..0/0 ~~ -1/0..1/0, True, '0/0..0/0 ~~ -1/0..1/0';
 
     for @variants -> $r {
         is-deeply $_ ~~ $r, True,  "{.perl} ~~ {$r.perl}" for @true;
