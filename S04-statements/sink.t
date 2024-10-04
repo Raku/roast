@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 9;
+plan 10;
 
 # https://github.com/Raku/old-issue-tracker/issues/3084
 {
@@ -102,5 +102,20 @@ subtest 'sub calls in last statement of sunk `for` get sunk' => {
 # https://github.com/rakudo/rakudo/issues/1693
 is_run ｢unit package A; our sub need() {}; for <s> { A::need }; print 'pass'｣,
     { :out<pass>, :err(''), :0status}, 'no crash in for ... { Package::foo }';
+
+# https://github.com/rakudo/rakudo/issues/2069
+{
+    my int $seen;
+    my sub foo {
+        loop (my int $i = 0; $i <= 2; $i++) {
+            ++$seen;
+        }
+    }
+
+    for 42 {
+        foo
+    }
+    is $seen, 3, 'did the loop get sunk ok';
+}
 
 # vim: expandtab shiftwidth=4
