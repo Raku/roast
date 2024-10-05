@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 417;
+plan 418;
 
 =begin pod
 
@@ -1151,6 +1151,14 @@ is-deeply (:42a, :666b).Map>>.Str, (a => "42", b => "666").Map,
         'hypered infix:<~> on list of pairs leaves keys unchanged';
     is $t4700[2].value, 'Truefoo',
         'hypered infix:<~> on list of pairs appends to stringified value';
+}
+
+# https://github.com/rakudo/rakudo/issues/2128
+{
+    throws-like { with ^1 .hyper { .iterator; .iterator.pull-one } },
+      X::Seq::Consumed,
+      kind => HyperSeq
+    ;
 }
 
 # vim: expandtab shiftwidth=4
