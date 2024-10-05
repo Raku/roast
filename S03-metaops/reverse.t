@@ -1,6 +1,6 @@
 use Test;
 
-plan 71;
+plan 72;
 
 =begin pod
 
@@ -190,6 +190,15 @@ subtest '[R~]=' => {
     sub with-named(:$value) { $got = $value };
     lives-ok { with-named(:value(3 R- 2)) }, "call doesn't throw";
     is $got, -1, "named is good";
+}
+
+# https://github.com/rakudo/rakudo/issues/2093
+{
+    throws-like { Q/my $a; $a R[and]= 42/.EVAL }, X::Syntax::CannotMeta,
+      meta     => "reverse the args of",
+      operator => "=",
+      reason   => "too fiddly",
+    ;
 }
 
 # vim: expandtab shiftwidth=4
