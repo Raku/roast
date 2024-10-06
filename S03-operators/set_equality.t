@@ -339,7 +339,7 @@ my @nok =
   <a>.BagHash,             <a a>.Mix,
 ;
 
-plan 2 * (@identities + @ok + @nok + 2) + 1 * (@identities + @ok + @nok + 2);
+plan 2 * (@identities + @ok + @nok + 2) + 1 * (@identities + @ok + @nok + 2) + 1;
 
 # is equal
 for &infix:<<(==)>>, "(==)", &infix:<≡>, "≡" -> &op, $name {
@@ -405,4 +405,9 @@ for &infix:<≢>, "≢" -> &op, $name {
       "$name with a Failure:D on the LHS throws";
 }
 
-# vim: ft=perl6
+# https://github.com/rakudo/rakudo/issues/2167
+{
+    is-deeply 1 (==) ($ = :42foo,), False, 'no explosion';
+}
+
+# vim: expandtab shiftwidth=4

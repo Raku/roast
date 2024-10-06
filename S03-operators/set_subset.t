@@ -342,7 +342,7 @@ my @nok =
   <a a>.Bag,               <a>.MixHash,
 ;
 
-plan 2 * (2 * @identities + @ok + @nok + 4) + 1 * (2 * @identities + @ok + @nok + 4);
+plan 2 * (2 * @identities + @ok + @nok + 4) + 1 * (2 * @identities + @ok + @nok + 4) + 2;
 
 # is subset of / superset of
 for
@@ -423,6 +423,12 @@ for
       "$rname with a Failure:D on the RHS throws";
     throws-like { rop(Failure.new,^3) }, Exception,
       "$rname with a Failure:D on the LHS throws";
+}
+
+# https://github.com/rakudo/rakudo/issues/2167
+{
+    is-deeply 1 (>=) ($ = :42foo,), False, 'no explosion (>=)';
+    is-deeply 1 (<=) ($ = :42foo,), False, 'no explosion (<=)';
 }
 
 # vim: expandtab shiftwidth=4

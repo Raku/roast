@@ -139,7 +139,7 @@ my @quads =
   <a b c>,                                         <a b c>.Set,
 ;
 
-plan 2 * (3 + 3 * @types + 2 * @pairs/2 + @triplets/3 + 6 * @quads/2) + 5;
+plan 2 * (3 + 3 * @types + 2 * @pairs/2 + @triplets/3 + 6 * @quads/2) + 6;
 
 # union
 for
@@ -214,6 +214,11 @@ subtest "cross operations work as expected", {
       'did X handle ∪';
     ok cross((<a 1>.Bag,), (<a 2>.Bag,), :with(&infix:<∪>)) ~~ cross((<a 1>.Bag,), (<a 2>.Bag,), :with(* ∪ *)),
       'did cross() handle ∪';
+}
+
+# https://github.com/rakudo/rakudo/issues/2167
+{
+    is-deeply 1 (|) ($ = :42foo,), Set.new(1,"foo"), 'no explosion';
 }
 
 # vim: expandtab shiftwidth=4

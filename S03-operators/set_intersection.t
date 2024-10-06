@@ -163,7 +163,7 @@ my @quads =
   <a b c>,                                         set()
 ;
 
-plan 2 * (3 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2) + 4;
+plan 2 * (3 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2) + 5;
 
 # intersection
 for
@@ -227,6 +227,11 @@ for
     is-deeply (1..3, 1..3 Z∩ 2..4, 1..4 Z∩ 1..2, 3..4),
       ((2,).Set, (3,).Set),
       'did Z handle ∩ correctly (2)';
+}
+
+# https://github.com/rakudo/rakudo/issues/2167
+{
+    is-deeply 1 (&) ($ = :42foo,), Set.new, 'no explosion';
 }
 
 # vim: expandtab shiftwidth=4

@@ -82,7 +82,7 @@ my @notelem =
   "d" => "a".."c",
 ;
 
-plan 2 * (2 * @elem/2 + 2 * @notelem + 4) + 1 * (2 * @elem/2 + 2 * @notelem + 4);
+plan 2 * (2 * @elem/2 + 2 * @notelem + 4) + 1 * (2 * @elem/2 + 2 * @notelem + 4) + 1;
 
 # is an element of / contains
 for
@@ -155,5 +155,9 @@ for
       "$rname with a Failure:D on the LHS throws";
 }
 
+# https://github.com/rakudo/rakudo/issues/2167
+{
+    is-deeply 1 (elem) ($ = :42foo,), False, 'no explosion';
+}
 
 # vim: expandtab shiftwidth=4

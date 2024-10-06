@@ -199,7 +199,7 @@ my @quads =
   <a b c>,                                         <a b c>.Set,
 ;
 
-plan 2 * (3 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2) + 5;
+plan 2 * (3 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2) + 6;
 
 # symmetric difference
 for
@@ -268,6 +268,11 @@ for
 {
     is-deeply ([⊖] (0,1,2), (0,1,2), (0,1,2)), set(),
       'using 0 in symmetric difference should be counted as 1';
+}
+
+# https://github.com/rakudo/rakudo/issues/2167
+{
+    is-deeply 1 (^) ($ = :42foo,), Set.new(1,"foo"), 'no explosion';
 }
 
 # vim: expandtab shiftwidth=4

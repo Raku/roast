@@ -184,7 +184,7 @@ my @quads =
   <a b c>,                                         <a b c>.Bag,
 ;
 
-plan 2 * (3 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2) + 4;
+plan 2 * (3 + 3 * @types + @pairs/2 + @triplets/3 + 6 * @quads/2) + 5;
 
 # addition
 for
@@ -249,6 +249,12 @@ for
     is-deeply (1..3, 1..3 Z⊎ 2..4, 1..4 Z⊎ 3..5, 2..3),
       ((1,2,2,3,3,3,4,4,5).Bag, (1,1,2,2,2,3,3,3,4).Bag),
       'did Z handle ⊎ correctly (2)';
+}
+
+# https://github.com/rakudo/rakudo/issues/2167
+{
+    is-deeply 1 (+) ($ = :42foo,), (1=>1,"foo"=>42).Bag,
+      'no explosion';
 }
 
 # vim: expandtab shiftwidth=4
