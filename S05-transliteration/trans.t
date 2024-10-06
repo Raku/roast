@@ -10,7 +10,7 @@ String transliteration
 
 # L<S05/Transliteration>
 
-plan 65;
+plan 66;
 
 is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),
     "abc",
@@ -280,5 +280,10 @@ group-of 4 => 'Adverbs on Cool.trans work the same as on Str.trans' => {
 is_run ｢print '@x'.trans: (/\@/ => '-',), :c｣, {
     :out('@-'), :err(''),
 }, '.trans with complement regex pair does not produce spurious warnings';
+
+# https://github.com/rakudo/rakudo/issues/2305
+{
+    is 4200.trans(42 => 14), "1400", 'Cool values allowed in .trans';
+}
 
 # vim: expandtab shiftwidth=4
