@@ -1,6 +1,6 @@
 use Test;
 
-plan 67;
+plan 68;
 
 =begin pod
 
@@ -203,5 +203,17 @@ subtest 'infix:<%>(Duration, Real)' => {
 }
 
 is-deeply Duration.new.tai, 0.0, 'Duration defaults to 0.0';
+
+# https://github.com/rakudo/rakudo/issues/2221
+{
+    lives-ok {
+        srand(42);
+
+        my $time = DateTime.new(1534447684).utc + Duration.new(0.002);
+        for ^100 -> $i {
+            $time = $time + Duration.new(2.rand);
+        }
+    }, 'rand on Duration does not crash';
+}
 
 # vim: expandtab shiftwidth=4
