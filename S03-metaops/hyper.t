@@ -371,7 +371,7 @@ my @e;
     is [[2, 3], [4, [5, 6]]]».elems.gist, "(2 2)", ".elems is nodal";
     is [[2, 3], [4, [5, 6]]]».end.gist, "(1 1)", ".end is nodal";
     is [[2, 3], [4, [5, 6]]]».first(* > 2).gist, "(3 4)", ".first is nodal";
-    is [[2, 3], [4, [5, 6]]]».flat.gist, "[[(2) (3)] [(4) [(5) (6)]]]", ".flat is nodal";
+    is [[2, 3], [4, [5, 6]]]».flat.gist, "((2 3) (4 [5 6]))", ".flat is nodal";
     is [[2, 3], [4, [5, 6]]]».flatmap(*+1).gist, "((3 4) (5 3))", ".flatmap is nodal";
     is [[2, 3], [4, [5, 6]]]».grep(* > 2).gist, "((3) (4))", ".grep is nodal";
     is [[2, 3], [4, [5, 6]]]».hash.gist, '({2 => 3} {4 => [5 6]})', ".hash is nodal";
