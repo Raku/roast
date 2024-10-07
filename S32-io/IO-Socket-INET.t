@@ -195,7 +195,7 @@ do-test
 
 # for test 7 and 8
 my $file = $*PROGRAM-NAME.IO.dirname.IO.add("socket-test.bin");
-my Buf $binary = slurp( $file, bin => True );
+my Buf[uint8] $binary .= new( ^256 .roll(4000) );
 
 # test 7 tests recv with binary data
 do-test
@@ -213,7 +213,7 @@ do-test
     {
         my $received = $^client.read( $binary.elems );
 
-        is $received, $binary, "successful read binary data";
+        is-deeply $received, $binary, "successful read binary data";
 
         $^client.close();
     };

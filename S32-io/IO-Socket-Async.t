@@ -147,7 +147,7 @@ $echoTap.close;
 }
 
 {
-    my Buf $binary = slurp( $?FILE.IO.parent.child('socket-test.bin'), bin => True );
+    my Buf[uint8] $binary .= new( ^256 .roll(2000) );
     my $binaryTap = $server.tap(-> $c {
         $c.write($binary).then({ $c.close });
     });
@@ -156,7 +156,7 @@ $echoTap.close;
     #?rakudo.jvm todo 'unknown problem, did hang (sometimes)'
     {
         my $received = await client(Buf.new);
-        ok $binary eqv $received, 'bytes-supply';
+        is-deeply $binary, $received, 'bytes-supply';
     }
     $binaryTap.close;
 }
