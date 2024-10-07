@@ -1,6 +1,6 @@
 use Test;
 
-plan 49;
+plan 50;
 
 {
     my @array = 11 .. 15;
@@ -140,6 +140,17 @@ plan 49;
     sub foo (\v) {
         is-deeply v, True, 'slipping a Bool into arguments does not crash'
     }( |True )
+}
+
+# https://github.com/rakudo/rakudo/issues/2442
+{
+    my @types = array, Array, Iterable.^pun, List, Range, Supply;
+    subtest '.flat on type objects' => {
+        plan +@types;
+        for @types -> $type {
+            is-deeply $type.flat, ($type,), "did $type.^name() flatten ok";
+        }
+    }
 }
 
 # vim: expandtab shiftwidth=4
