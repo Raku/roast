@@ -2,7 +2,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Raku intrinsically supports big integers>
 
-plan 108;
+plan 111;
 
 isa-ok( EVAL(1.Num.raku), Num, 'EVAL 1.Num.raku is Num' );
 is-approx( EVAL(1.Num.raku), 1, 'EVAL 1.Num.raku is 1' );
@@ -917,6 +917,28 @@ subtest 'no hangs/crashes when parsing nums with huge exponents' => {
             NumStr.new(Inf, '1e1000000000000000000000000000000000000000000000000000000'),
             'Num allomorph in EVAL';
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/2434
+{
+    my num $a = 5e0;
+    my num $b = 0e0;
+    fails-like { $a % $b }, X::Numeric::DivideByZero,
+      using     => '%',
+      numerator => $a,
+      'does num % 0e0 return a Failure'
+    ;
+
+    fails-like { $a / $b }, X::Numeric::DivideByZero,
+      using     => '/',
+      numerator => $a,
+      'does num / 0e0 return a Failure'
+    ;
+
+    $b = -1e20;
+    fails-like { $a ** $b }, X::Numeric::Underflow,
+      'does num ** -1e20 return a Failure'
+    ;
 }
 
 # vim: expandtab shiftwidth=4
