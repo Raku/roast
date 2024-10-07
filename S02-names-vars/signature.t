@@ -1,6 +1,6 @@
 use Test;
 
-plan 13;
+plan 15;
 
 # The :() form constructs signatures similar to how \() constructs Captures.
 # A subroutine's .signature is a Signature object.
@@ -75,6 +75,12 @@ plan 13;
     my @list = 1..4;
     my (:@even, :@odd) := classify { $_ %% 2 ?? 'even' !! 'odd' }, @list;
     is-deeply @even, [2, 4], 'signature binding with a hash works';
+}
+
+# https://github.com/rakudo/rakudo/issues/2416
+{
+    is :(Int(Cool) $a).raku, ':(Int(Cool) $a)', 'is coercion type.raku shown';
+    ok :(Int(Cool) $a).gist.contains('(Cool)'), 'is coercion type.gist shown';
 }
 
 # vim: expandtab shiftwidth=4
