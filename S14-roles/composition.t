@@ -1,5 +1,5 @@
 use Test;
-plan 49;
+plan 50;
 
 # L<S14/Roles/"Roles may be composed into a class at compile time">
 
@@ -238,6 +238,13 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
 
     my class RoleTarget does DoubleMethod {
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/2418
+{
+    lives-ok {
+        'role A { method x { ... } }; class B does A { has  $.x }'.EVAL
+    }, 'public attribute acceptable as method';
 }
 
 # vim: expandtab shiftwidth=4
