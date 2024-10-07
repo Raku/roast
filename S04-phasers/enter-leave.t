@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 34;
+plan 36;
 
 # L<S04/Phasers/ENTER "at every block entry time">
 # L<S04/Phasers/LEAVE "at every block exit time">
@@ -310,6 +310,21 @@ plan 34;
     my int $entered;
     class { method apply { ENTER ++$entered; } }.apply;
     is $entered, 1, 'Did the ENTER only fire once';
+}
+
+# https://github.com/rakudo/rakudo/issues/2380
+{
+    my $left;
+    sub foo() {
+        do {
+            my IO::Handle $h = $?FILE.IO.open();
+            LEAVE { $left = True; .close with $h};
+            return 42;
+        }
+    }
+
+    is-deeply foo(), 42, 'did foo return the correct value';
+    is-deeply $left, True, 'did the LEAVE phaser fire';
 }
 
 # vim: expandtab shiftwidth=4
