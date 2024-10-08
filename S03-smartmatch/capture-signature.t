@@ -1,6 +1,6 @@
 use Test;
 
-plan 7;
+plan 8;
 
 sub t1(%h) {
     given %h {
@@ -47,6 +47,13 @@ subtest 'non-Capture/non-Signature types on LHS' => {
         True,  'Rat (1)';
     is-deeply  <1/2> ~~ :(Int :$numerator where 3, Int :$denominator where 2),
         False, 'Rat (2)';
+}
+
+# https://github.com/rakudo/rakudo/issues/2596
+{
+    my sub f ( $a, *%_ ) { }
+    is-deeply &f.signature ~~ :( $, | ), True,
+      'Signature against capture operator | if it contains slurpy hash';
 }
 
 # vim: expandtab shiftwidth=4
