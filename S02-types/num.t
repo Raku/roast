@@ -2,7 +2,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Raku intrinsically supports big integers>
 
-plan 111;
+plan 112;
 
 isa-ok( EVAL(1.Num.raku), Num, 'EVAL 1.Num.raku is Num' );
 is-approx( EVAL(1.Num.raku), 1, 'EVAL 1.Num.raku is 1' );
@@ -345,7 +345,7 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
 
 { # coverage; 2016-10-16
     subtest 'infix:<%>(num, num)' => {
-        plan 9;
+        plan 7;
         my num $nu;
         my num $nz  = 0e0;
         my num $n4  = 4e0;
@@ -353,11 +353,6 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         my num $nn4 = -4e0;
 
         cmp-ok $nu % $n5, '===', 0e0, 'uninit % defined';
-        #?rakudo 2 todo 'we die https://github.com/rakudo/rakudo/issues/2434'
-        fails-like { $n5 % $nu }, X::Numeric::DivideByZero,
-            'defined % uninit';
-        fails-like { $nu % $nu }, X::Numeric::DivideByZero,
-            'uninit % uninit';
 
         is-deeply $nz  % $n4,  (my num $ =  0e0), '0 % 4';
         is-deeply $n4  % $n5,  (my num $ =  4e0), '4 % 5';
@@ -922,11 +917,17 @@ subtest 'no hangs/crashes when parsing nums with huge exponents' => {
 # https://github.com/rakudo/rakudo/issues/2434
 {
     my num $a = 5e0;
-    my num $b = 0e0;
+    my num $b;
     fails-like { $a % $b }, X::Numeric::DivideByZero,
       using     => '%',
       numerator => $a,
       'does num % 0e0 return a Failure'
+    ;
+
+    fails-like { $b % $b }, X::Numeric::DivideByZero,
+      using     => '%',
+      numerator => $b,
+      'does 0e0 % 0e0 return a Failure'
     ;
 
     fails-like { $a / $b }, X::Numeric::DivideByZero,
