@@ -4,7 +4,7 @@ use Test::Util;
 
 use lib $?FILE.IO.parent(2).add("packages/HasMain/lib");
 
-plan 12;
+plan 13;
 
 ## If this test file is fudged, then MAIN never executes because
 ## the fudge script introduces an C<exit(1)> into the mainline.
@@ -102,6 +102,14 @@ subtest '%*SUB-MAIN-OPTS<named-anywhere>', {
     is_run '@*ARGS = 42; sub MAIN($x) { say $x }', :args[],
       { :out("42\n"), :err(''), :0status },
       'non-string values in @*ARGS do not crash'
+}
+
+# https://github.com/rakudo/rakudo/issues/2445
+{
+    is_run 'my %*SUB-MAIN-OPTS = :named-anywhere; sub MAIN(|c) { say c }',
+      :args<--foo foo>,
+      { :out(qq|\\("foo", :foo(Bool::True))\n|), :err(''), :0status },
+      'named arguments are also captured'
 }
 
 # vim: expandtab shiftwidth=4
