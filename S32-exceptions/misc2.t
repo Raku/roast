@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 267;
+plan 268;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -483,6 +483,14 @@ if $emits_suggestions {
 {
     throws-like { my Str %a; %a.AT-KEY("K") = 1 }, X::TypeCheck::Assignment, "ContainerDescriptor::BindHashPos has a 'name' method";
     throws-like { my Str @a; @a.AT-POS(0) = 1 }, X::TypeCheck::Assignment, "ContainerDescriptor::BindArrayPos has a 'name' method";
+}
+
+# https://github.com/rakudo/rakudo/issues/2492
+{
+    throws-like { open("/a/b/c/d/bogus", :w).print: 42 },
+      X::Multi::NoMatch,
+      capture => { so $_[0]; $_[0] ~~ Failure }
+    ;
 }
 
 # vim: expandtab shiftwidth=4
