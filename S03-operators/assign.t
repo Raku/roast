@@ -2,8 +2,7 @@ use Test;
 
 # L<S03/Changes to Perl operators/list assignment operator now parses on the right>
 
-plan 301;
-
+plan 302;
 
 # tests various assignment styles
 {
@@ -969,6 +968,13 @@ sub l () { 1, 2 };
     my $a; $a -= 2;
     is-deeply $a, -2, '-= with :U target gives right result';
     throws-like ｢use fatal; my $b; $b %= 2｣, Exception, '%= with :U target throws';
+}
+
+# https://github.com/rakudo/rakudo/issues/2490
+{
+    my @a;
+    @a[0]<a b> = 42, 47;
+    is-deeply @a, [%(:42a, :47b),], 'auto vivifying hash worked';
 }
 
 # vim: expandtab shiftwidth=4
