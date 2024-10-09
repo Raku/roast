@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 12;
+plan 14;
 
 # L<S12/Semantics of C<bless>/The default BUILD and BUILDALL>
 
@@ -170,6 +170,13 @@ group-of 15 => 'BUILD with a native typed attribute' => {
         is-deeply .a-num32,  3e0,  'num32';
         is-deeply .a-num64,  4e0,  'num64';
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/2832
+{
+    class P { has $.x = 42; submethod BUILD() { $!x } }
+    is P.new.x, 42, 'mentioning attribute in BUILD does no interfere';
+    is P.new(:666x).x, 42, 'explicitely setting is ignored';
 }
 
 # vim: expandtab shiftwidth=4
