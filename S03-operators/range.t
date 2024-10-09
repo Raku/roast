@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 180;
+plan 181;
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
 
@@ -358,6 +358,11 @@ subtest "Smartmatch Coercions" => {
     ok 42 ~~ *.."5", "number in a context of whatever-string range, inside the range";
     nok 42 ~~ *..5, "number in a context of whatever-number range, outside the range";
     nok 42 ~~ *.."3", "number in a context of whatever-string range, outside the range";
+}
+
+# https://github.com/rakudo/rakudo/issues/2676
+{
+    is-deeply (so (3,0).one ~~ (1 .. 9)), True, 'Junction ~~ Range ok';
 }
 
 # vim: expandtab shiftwidth=4
