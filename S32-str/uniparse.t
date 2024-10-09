@@ -9,6 +9,7 @@ plan 10 * 4;
 # be removed in 6.e. Other implementations may wish to restructure these
 # tests and not implement `parse-names` at all.
 
+BEGIN %*ENV<RAKUDO_NO_DEPRECATIONS> = 1;
 for &parse-names, Str.^lookup('parse-names'),
     &uniparse,    Str.^lookup('uniparse') -> &pn
 {
@@ -24,10 +25,9 @@ for &parse-names, Str.^lookup('parse-names'),
     is-deeply &pn(' BELL  , BLACK HEART SUIT  '), "\c[BELL]♥",
         "two chars with whitespace around $t";
 
-    fails-like { &pn('   BELL,   '           ) }, X::Str::InvalidCharName,
-        'trailing comma';
-    fails-like { &pn('   ,BELL   '           ) }, X::Str::InvalidCharName,
-        'prefixed comma';
+    is-deeply &pn('   BELL,   '), "\c[BELL]", 'trailing comma';
+    is-deeply &pn('   ,BELL   '), "\c[BELL]", 'prefixed comma';
+
     fails-like { &pn('MEOWS PERL6 IS AWESOME') }, X::Str::InvalidCharName,
         'unknown name';
     fails-like { &pn('MEOWS, BELL'           ) }, X::Str::InvalidCharName,
