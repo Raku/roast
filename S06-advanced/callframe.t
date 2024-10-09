@@ -1,7 +1,6 @@
 use Test;
 
-
-plan 21;
+plan 22;
 
 # this test file contains tests for line numbers, among other things
 # so it's extremely important not to randomly insert or delete lines.
@@ -11,7 +10,7 @@ my $baseline = 10;
 isa-ok callframe(), CallFrame, 'callframe() returns a CallFrame';
 
 sub f() is test-assertion {
-    is callframe().line, $baseline + 4, 'callframe().line';
+    is callframe().line, $baseline + 3, 'callframe().line';
     ok callframe().file ~~ /« callframe »/, '.file';
 
     #?rakudo skip 'Unable to resolve method inline in type CallFrame'
@@ -78,7 +77,7 @@ lives-ok
     },
     "Exploring call frames until no code object does not crash";
 
-# R#1781
+# https://github.com/rakudo/rakudo/issues/1781
 {
     my $seen;
     multi sub a() { ++$seen if callframe(1).my.EXISTS-KEY(<$seen>) };
@@ -94,6 +93,25 @@ lives-ok
     a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;
     a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;
     a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;a;
+    is $seen, 300, 'did we get the right callframe each time?';
+}
+
+# https://github.com/rakudo/rakudo/issues/2853
+{
+    my $seen;
+    multi sub b() { ++$seen if CallFrame.new(1).my.EXISTS-KEY(<$seen>) };
+
+    # call b 300 times
+    b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;
+    b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;
+    b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;
+    b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;
+    b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;
+    b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;
+    b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;
+    b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;
+    b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;
+    b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;b;
     is $seen, 300, 'did we get the right callframe each time?';
 }
 
