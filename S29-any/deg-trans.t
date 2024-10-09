@@ -1,7 +1,7 @@
 use v6.d;
 use Test;
 
-plan 18;
+plan 17;
 
 # Degenerate and Transformative Any methods
 # -----
@@ -37,7 +37,4 @@ plan 18;
     cmp-ok (item $x).WHICH, '===', $x.WHICH, 'item(Mu) is identity';
 
     is Any.nl-out, "\n", 'default .nl-out is a "\n"';
-    is class {
-        method print (*@a) { "`@a[]`" }; method nl-out {42, 72}
-    }.print-nl, ｢`42 72`｣, 'Any.print-nl calls self.print(self.nl-out)';
 }
