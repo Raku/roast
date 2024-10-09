@@ -7,7 +7,7 @@ version 0.3 (12 Apr 2004), file t/lookaround.t.
 
 =end pod
 
-plan 14;
+plan 15;
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/The special named assertions include:>
 
@@ -28,5 +28,10 @@ is ('abc' ~~ /<?after ^^>/).from, 0, '^^ in <?after ...>';
 is ('abc' ~~ /<?after ^>/).from,  0, '^ in <?after ...>';
 is ('abc' ~~ /<?after $$>/).from, 3, '$$ in <?after ...>';
 is ('abc' ~~ /<?after $>/).from,  3, '$ in <?after ...>';
+
+# https://github.com/rakudo/rakudo/issues/2791
+{
+    is "C"  ~~ / <:Lu> <!before \S > /, 'C', 'did assertion at end work';
+}
 
 # vim: expandtab shiftwidth=4
