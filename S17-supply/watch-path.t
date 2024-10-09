@@ -10,11 +10,11 @@ unlink $filename; # in case we missed the cleanup
 ok !$filename.IO.e, "make sure we don't have a file";
 
 given $*DISTRO.name {
-    when "macosx" {
+    when "macos" {
 #?rakudo.jvm 3 skip "file system events NYI?"
 #?DOES 1
 {
-        subtest &macosx, "does watch-path work on Mac OS X";
+        subtest &macos, "does watch-path work on Mac OS X";
 }
 
         unlink $filename; # in case we missed the cleanup
@@ -23,7 +23,7 @@ given $*DISTRO.name {
 #?rakudo.jvm 3 skip "file system events NYI?"
 #?DOES 1
 {
-        subtest { macosx :io-path }, "does IO::Path.watch work on Mac OS X";
+        subtest { macos :io-path }, "does IO::Path.watch work on Mac OS X";
 }
     }
     default {
@@ -32,7 +32,7 @@ given $*DISTRO.name {
 }
 
 #====  specific tests from here
-sub macosx (:$io-path) is test-assertion {
+sub macos (:$io-path) is test-assertion {
     plan 55;
     # check watching directories
     {
