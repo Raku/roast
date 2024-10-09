@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 151;
+plan 155;
 
 =begin pod
 
@@ -600,6 +600,14 @@ subtest "Value Object", {
     my $j2 := any(<a b c>);
     cmp-ok $j1, &[!=:=], $j2, "identical junctions are different object";
     cmp-ok $j1.WHICH, &[===], $j2.WHICH, "but they're identity";
+}
+
+# https://github.com/rakudo/rakudo/issues/2719
+{
+    is-deeply "foo".starts-with("f"|"b"), (True | False), 'starts-with';
+    is-deeply "foo".ends-with("f"|"b"), (False | False),  'ends-with'; 
+    is-deeply "foo".contains("f"|"b"), (True | False),    'contains';
+    is-deeply "foo".substr-eq("f"|"b"), (True | False),   'substr-eq';
 }
 
 # vim: expandtab shiftwidth=4
