@@ -1,6 +1,6 @@
 use Test;
 
-plan 44;
+plan 45;
 
 =begin description
 
@@ -80,4 +80,10 @@ is "\c[SYRIAC ABBREVIATION MARK, ARABIC NUMBER SIGN]" ~~ /:m "\c[SYRIAC ABBREVIA
 nok "\c[SYRIAC ABBREVIATION MARK, ARABIC NUMBER SIGN]" ~~ /:m "\c[ARABIC NUMBER SIGN]" /, "Ignoremark does not match the second codepoint for all Prepend degenerates";
 nok "\c[SYRIAC ABBREVIATION MARK, COMBINING CARON]" ~~ /:m "\c[COMBINING CARON]" /, "Ignoremark doesn't match second codepoint for Prepend+Extend degenerate";
 is "\c[SYRIAC ABBREVIATION MARK, COMBINING CARON]" ~~ /:m "\c[SYRIAC ABBREVIATION MARK]" /, "\c[SYRIAC ABBREVIATION MARK, COMBINING CARON]", "Ignoremark matches the first codepoint for all Prepend+Extend degenerates";
+
+# https://github.com/rakudo/rakudo/issues/2961
+{
+    is "a\x[300]" ~~ / :ignoremark <[ a b c ]> /, 'à', 'charclass ok';
+}
+
 # vim: expandtab shiftwidth=4
