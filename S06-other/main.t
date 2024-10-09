@@ -4,7 +4,7 @@ use Test::Util;
 
 use lib $?FILE.IO.parent(2).add("packages/HasMain/lib");
 
-plan 13;
+plan 14;
 
 ## If this test file is fudged, then MAIN never executes because
 ## the fudge script introduces an C<exit(1)> into the mainline.
@@ -110,6 +110,20 @@ subtest '%*SUB-MAIN-OPTS<named-anywhere>', {
       :args<--foo foo>,
       { :out(qq|\\("foo", :foo(Bool::True))\n|), :err(''), :0status },
       'named arguments are also captured'
+}
+
+# https://github.com/rakudo/rakudo/issues/2794
+{
+    is_run 'sub MAIN(*@a) { say .raku for @a }',
+      :args<True False Less More BigEndian>,
+      { :out(q:to/OUTPUT/), :err(''), :0status },
+      Bool::True
+      Bool::False
+      Order::Less
+      Order::More
+      Endian::BigEndian
+      OUTPUT
+      'enums are converted'
 }
 
 # vim: expandtab shiftwidth=4
