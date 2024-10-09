@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 15;
+plan 17;
 
 =begin desc
 
@@ -107,6 +107,31 @@ is_run( 'sub mention-me() { take 1; }; mention-me',
     is @controls.elems, 1, 'Exception doing X::Control caught by CONTROL block';
     is @catches.elems, 0, 'Exception doing X::Control not caught by CATCH block';
     isa-ok @controls[0], CX::Whatever, 'Correct control exception type';
+}
+
+# https://github.com/rakudo/rakudo/issues/2665
+{
+    my $when;
+    my $default;
+
+    CONTROL {
+        when CX::Warn {
+            when .message.starts-with('a') {
+                $when = True;
+                .resume;
+            }
+            default {
+                $default = True;
+                .rethrow;
+            }
+        }
+    }
+
+    warn 'a warning';
+    warn 'different warning';
+
+    is-deeply $when,    True, "did 'a warning' fire";
+    is-deeply $default, True, "did 'different warning' fire";
 }
 
 # vim: expandtab shiftwidth=4
