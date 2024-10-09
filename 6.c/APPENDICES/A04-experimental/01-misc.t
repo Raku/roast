@@ -323,7 +323,7 @@ subtest 'mistyped typenames in coercers give good error' => {
 { # coverage; 2016-09-21
     # in SAP due to https://github.com/rakudo/rakudo/issues/2442
     my $x = Array;
-    cmp-ok $x.flat,  '===', $x, 'Array:U.flat is identity';
+    is-deeply $x.flat,  ($x,), 'Array:U.flat is identity in a list';
 }
 
 # in SAP due to https://github.com/rakudo/rakudo/issues/2367
