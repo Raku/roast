@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 181;
+plan 182;
 
 # https://github.com/Raku/old-issue-tracker/issues/2075
 throws-like 'sub foo(--> NoSuchType) { }; foo', X::Undeclared, what => { m/'Type'/ }, symbol => { m/'NoSuchType'/ };
@@ -598,6 +598,13 @@ say 50;｣, X::Comp::FailGoal, line => 3, message => /«'line 1'»/;
             $p ~~ X::Comp::AdHoc && $p.line == 10
             && $p.payload eq 'Found a version control conflict marker'
         };
+}
+
+# https://github.com/rakudo/rakudo/issues/2974
+{
+    throws-like { 'my $a := $a'.EVAL }, X::Syntax::Variable::Initializer,
+      name => '$a',
+      'cannot initialize with itself';
 }
 
 # vim: expandtab shiftwidth=4
