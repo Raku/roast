@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 38;
+plan 40;
 
 # L<S04/Exceptions/The fail function>
 
@@ -189,5 +189,16 @@ throws-like {
     sub s { fail 'important failure message' }; my Int $x = s();
 }, Exception, message => /important/,
     'assigning Failure to typed variable that cannot hold it explodes it';
+
+# https://github.com/rakudo/rakudo/issues/2764
+{
+    CATCH {
+        isa-ok $_, X::AdHoc, 'did we get a die';
+        is .payload, "foo", 'did we get the payload expected';
+        .resume;
+    }
+    my $b = Failure.new("foo");
+    $b.new;
+}
 
 # vim: expandtab shiftwidth=4
