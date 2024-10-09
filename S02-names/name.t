@@ -1,6 +1,6 @@
 use Test;
 
-plan 24;
+plan 28;
 
 # not specifically typed
 {
@@ -85,6 +85,15 @@ plan 24;
 
     sub infix:<$\<> { "$^a -> $^b\n" };
     is &[$<].name, 'infix:<$\<>', 'custom $< op name uses <> and backslash';
+}
+
+# https://github.com/rakudo/rakudo/issues/2928
+{
+    my $a = 1;
+    is $a.VAR.name,  '$a', 'VAR.name ok';
+    is $a.VAR.?name, '$a', 'VAR.?name ok';
+    is-deeply $a.VAR.+name, ('$a',), 'VAR.+name ok';
+    is-deeply $a.VAR.*name, ('$a',), 'VAR.*name ok';
 }
 
 # vim: expandtab shiftwidth=4
