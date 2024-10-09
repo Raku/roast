@@ -1,6 +1,6 @@
 use Test;
 
-plan 86;
+plan 88;
 
 # L<S32::Str/Str/=item comb>
 
@@ -215,6 +215,12 @@ subtest 'comb(Regex) returns Seq' => {
         'method (Cool) with limit';
     cmp-ok comb(/./, 123, 2), 'eqv', ('1', '2').Seq,
         'sub (Cool) with limit';
+}
+
+# https://github.com/rakudo/rakudo/issues/2745
+{
+    is-deeply ‘abc’.comb(1, 999), <a b c>, 'comb(1,999)';
+    is-deeply ‘abc’.comb(1,  -1), (),      'comb(1,-1)';
 }
 
 # vim: expandtab shiftwidth=4
