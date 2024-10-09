@@ -1,6 +1,6 @@
 use Test;
 
-plan 39;
+plan 44;
 
 # L<S12/Fancy method calls/"For a call on your own private method">
 
@@ -200,6 +200,27 @@ throws-like q[
     my $o := my class { has Foo::Bar $.a .= new }.new;
     cmp-ok $o.a, '~~', Foo::Bar:D,
 	      '.= able to initialize attributes with types that has `::` in name';
+}
+
+# https://github.com/rakudo/rakudo/issues/2692
+{
+    my class A {
+        has uint8 $.i = 0xFF;
+        method ii is rw {
+            Proxy.new(
+              FETCH => -> $ { $!i },
+              STORE => -> $, $_ { $!i = $_ }
+            )
+        }
+    }
+
+    my $a = A.new;
+    is $a.i,  255, 'is the primary accessor ok';
+    is $a.ii, 255, 'is the proxy ok';
+
+    is ($a.ii = 66), 66, 'is the mutator ok';
+    is $a.i,         66, 'is the primary accessor still ok';
+    is $a.ii,        66, 'is the proxy still ok';
 }
 
 # vim: expandtab shiftwidth=4
