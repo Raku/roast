@@ -1,6 +1,6 @@
 use Test;
 
-plan 219;
+plan 221;
 
 # L<S02/Names and Variables/:delete>
 
@@ -377,6 +377,13 @@ subtest ':delete on lazy Arrays' => {
 
     is @a[2]:exists, False, 'delete element on lazy Arrays succesfully';
     ok @a[2] == 99, 'deleted element replaced with default value';
+}
+
+# https://github.com/rakudo/rakudo/issues/3657
+{
+    my @a = 3, 4;
+    is-deeply @a[1.5, 0.5]:delete, (4,3), 'did :delete return ok';
+    is-deeply @a, [], 'did :delete actually delete';
 }
 
 # vim: expandtab shiftwidth=4
