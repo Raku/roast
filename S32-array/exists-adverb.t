@@ -1,6 +1,6 @@
 use Test;
 
-plan 52;
+plan 53;
 
 # L<S02/Names and Variables/:exists>
 # L<S32::Containers/"Array"/=item exists>
@@ -96,5 +96,15 @@ sub gen_array { (1..10).list }
 
     is @a.elems, 10, "should be untouched";
 } #46
+
+# https://github.com/rakudo/rakudo/issues/2929
+{
+    throws-like {
+        my @a; my $neg=-1; say @a[$neg][0]:exists;
+    }, X::OutOfRange,
+      what => 'Index',
+      got  => -1,
+      'recursive :exists dies on incorrect index';
+}
 
 # vim: expandtab shiftwidth=4
