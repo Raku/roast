@@ -1,6 +1,6 @@
 use Test;
 
-plan 35;
+plan 36;
 
 # L<S05/Grammars/"Like classes, grammars can inherit">
 
@@ -72,13 +72,22 @@ nok Grammar::Baz.parse('boo', :rule<any>), 'No match for bad input (any)';
 
 is(Grammar.WHAT.gist,"(Grammar)", "Grammar.WHAT.gist = Grammar()");
 
-# R#2611
+# https://github.com/rakudo/rakudo/issues/2611
 {
     my class A is Array[Str] { }
     my @a is A = <a b c>;
     is @a, "a b c", "did the array initialize ok";
     is-deeply @a.of, Str, "does it have the right type";
     dies-ok { @a[0] = 42 }, 'does it type check ok';
+}
+
+# https://github.com/rakudo/rakudo/issues/2851
+{
+    my grammar A {
+        token TOP { <to> }
+        token to { \w+ }
+    }
+    is A.parse("abc"), "abc", 'use of "to" as token is ok';
 }
 
 # vim: expandtab shiftwidth=4
