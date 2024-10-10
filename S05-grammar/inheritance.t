@@ -1,6 +1,6 @@
 use Test;
 
-plan 36;
+plan 37;
 
 # L<S05/Grammars/"Like classes, grammars can inherit">
 
@@ -88,6 +88,11 @@ is(Grammar.WHAT.gist,"(Grammar)", "Grammar.WHAT.gist = Grammar()");
         token to { \w+ }
     }
     is A.parse("abc"), "abc", 'use of "to" as token is ok';
+}
+
+# https://github.com/rakudo/rakudo/issues/3038
+{
+    lives-ok { $_="a\n"; m/(..)/ && $0.print }, 'can call Match.print';
 }
 
 # vim: expandtab shiftwidth=4
