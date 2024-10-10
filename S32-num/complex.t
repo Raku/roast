@@ -1,6 +1,6 @@
 use Test;
 
-plan 555;
+plan 557;
 
 # Basic tests functions specific to complex numbers.
 
@@ -287,6 +287,13 @@ subtest 'distinct Complex literals do not compare the same' => {
     my $n := <1180591620717411303424.0e0+1180591620717409992704e0i>;
     cmp-ok $n, '==', $n.raku.EVAL,
         '.raku roundtrips the Complex correctly';
+}
+
+# https://github.com/rakudo/rakudo/issues/2986
+{
+    is-deeply  (-i).reals, (0e0, -1e0), 'constant -i has 0 as real value';
+    my $i = i;
+    is-deeply (-$i).reals, (0e0, -1e0), 'variable -$i has 0 as real value';
 }
 
 # vim: expandtab shiftwidth=4
