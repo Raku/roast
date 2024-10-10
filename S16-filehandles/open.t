@@ -1,5 +1,5 @@
 use Test;
-plan 5;
+plan 6;
 
 # L<S32::IO/IO::File/open>
 # old: L<S16/"Filehandles, files, and directories"/"open">
@@ -39,5 +39,20 @@ Some edge and error cases for open()
 I/O Redirection to scalar tests
 
 =end pod
+
+# https://github.com/rakudo/rakudo/issues/3073
+{
+    my $io = "/tmp/bla".IO;
+    with $io.open(:w) -> $h {
+        $h.close;
+        throws-like { $h.say: "bla" }, X::IO::Closed,
+          trying => "say"
+        ;
+        $io.unlink;
+    }
+    else {
+        skip "could not open file to test with";
+    }
+}
 
 # vim: expandtab shiftwidth=4
