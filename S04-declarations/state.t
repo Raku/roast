@@ -1,6 +1,6 @@
 use Test;
 
-plan 44;
+plan 46;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
@@ -288,6 +288,16 @@ lives-ok { sub foo () {$ = 42}; for ^2000000 { $ = foo } },
     my @arr = ();
     for ^2 { for ^2 { @arr.push( "{ (state $a)++ }") } };
     is-deeply @arr, ["0", "0", "0", "0"], 'Statevar uses the correct scope';
+}
+
+# https://github.com/rakudo/rakudo/issues/3083
+{
+    my multi foo() {
+        state $foo = 42;
+        ++$foo
+    }
+    is foo, 43, 'initial call';
+    is foo, 44, 'second call';
 }
 
 # vim: expandtab shiftwidth=4
