@@ -1,7 +1,7 @@
 # Test various forms of comments
 
 use Test;
-plan 50;
+plan 51;
 
 # L<S02/"Embedded Comments"/"Embedded comments"
 #  "#" plus any bracket>
@@ -227,5 +227,14 @@ are both here, yay!
 is $outerVal, 22, 'Single paragraph Pod, multiple lines parses to whitespace in code';
 
 }} }, 'Single paragraph Pod, multiple lines eval throws no error';
+
+# https://github.com/rakudo/rakudo/issues/3143
+{
+    throws-like { Q:to/DOC/.EVAL }, X::Syntax::Comment::Embedded;
+    #`!
+    comment
+    !
+    DOC
+}
 
 # vim: expandtab shiftwidth=4
