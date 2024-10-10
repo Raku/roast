@@ -1,6 +1,6 @@
 use Test;
 
-plan 31;
+plan 32;
 
 =begin desc
 
@@ -256,5 +256,19 @@ lives-ok { for ^1000 { die Exception.new; CATCH { default {} } } },
 # https://github.com/Raku/old-issue-tracker/issues/3267
 lives-ok { loop { CATCH { default { say 'hi' } }; last if $++ > 100 } },
     'CATCH in a loop lives';
+
+# https://github.com/rakudo/rakudo/issues/3080
+{
+    for ^500000 {
+        CATCH {
+            default { }
+        }
+        {
+            CATCH { }
+            die "foo";
+        }
+    }
+    pass "did not deadlock";
+}
 
 # vim: expandtab shiftwidth=4
