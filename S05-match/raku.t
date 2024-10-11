@@ -1,5 +1,5 @@
 use Test;
-plan 10;
+plan 13;
 
 # tests for Match.raku
 
@@ -35,6 +35,14 @@ lives-ok { $/.raku }, 'lives on quantified named captures';
     is $/.ast, $code_str, 'Match.ast is the code matched';
     is $/.Str, $code_str, 'Match.Str is the code matched';
     is-deeply EVAL($/.raku), $/, 'EVAL of Match.raku recreates Match';
+}
+
+# https://irclogs.raku.org/raku-beginner/2024-10-11.html#10:10
+{
+    my $match := "bar\n" ~~ / r\n /;
+    lives-ok { $match.say  }, 'can call .say on Match';
+    lives-ok { $match.put  }, 'can call .put on Match';
+    lives-ok { $match.note }, 'can call .note on Match';
 }
 
 # vim: expandtab shiftwidth=4
