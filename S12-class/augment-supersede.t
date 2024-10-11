@@ -1,9 +1,8 @@
 use Test;
 
-plan 14;
+plan 15;
 
 # L<S12/"Open vs Closed Classes"/"Otherwise you'll get a class redefinition error.">
-
 
 use MONKEY-TYPING;
 {
@@ -105,5 +104,11 @@ eval-lives-ok q[
 
 eval-lives-ok 'class A { class B {} }; use MONKEY; augment class A { augment class B { } }',
     'Augmenting a nested package lives';
+
+# https://github.com/rakudo/rakudo/issues/3209
+{
+    augment class Any { method foo() { "foo" } };
+    is 1.foo, "foo", 'no .^compose needed';
+}
 
 # vim: expandtab shiftwidth=4
