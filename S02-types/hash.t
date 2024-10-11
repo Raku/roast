@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 100;
+plan 104;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -353,6 +353,19 @@ eval-lives-ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
 {
     is Hash.of.^name, 'Mu', 'does Hash type object return proper type';
     is Hash.new.of.^name, 'Mu', 'does Hash object return proper type';
+}
+
+# https://github.com/rakudo/rakudo/issues/3374
+{
+    my $x;
+    is-deeply {:$x :$x}, Hash.new("x",Any),
+      'is {:$x $x} ok';
+    is-deeply {:x($x) :y($x)}, Hash.new("x",Any,"y",Any),
+      'is {:x($x) :y($x)} ok';
+    is-deeply {:y<a> :y<b>}, Hash.new("y","b"),
+      'is {:x($x) :y($x)} ok';
+    is-deeply {:$x :y($x)}, Hash.new("x",Any,"y",Any),
+      'is {:$x :y($x)} ok';
 }
 
 # vim: expandtab shiftwidth=4
