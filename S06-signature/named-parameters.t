@@ -1,6 +1,6 @@
 use Test;
 
-plan 103;
+plan 104;
 
 # L<S06/Required parameters/"Passing a named argument that cannot be bound to
 # a normal subroutine is also a fatal error.">
@@ -337,4 +337,11 @@ throws-like 'sub svn28865( :$a, :@a ) {}', X::Signature::NameClash,
         }
     });
 }
+
+# https://github.com/rakudo/rakudo/issues/3258
+{
+    my $sig := \( 1, 2, "a" => 3 );
+    is $sig.raku, '\(1, 2, "a" => 3)', 'Pair shown as a Pair';
+}
+
 # vim: expandtab shiftwidth=4
