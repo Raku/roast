@@ -1,6 +1,6 @@
 use Test;
 
-plan 25;
+plan 26;
 
 {
     class EnumClass     { enum C <a b c> }
@@ -121,6 +121,15 @@ plan 25;
 {
     my enum Foo <A B>;
     throws-like { Foo.new }, X::Constructor::BadType, "invoking .new on an enum throws";
+}
+
+# https://github.com/rakudo/rakudo/issues/3349
+{
+    my enum Direction (:LEFT(-1), :NEUTRAL(0), :RIGHT(1));
+    throws-like { Direction( 2 <=> 3 ) }, X::Enum::NoValue,
+      type  => Direction,
+      value => Less,
+    ;
 }
 
 # vim: expandtab shiftwidth=4
