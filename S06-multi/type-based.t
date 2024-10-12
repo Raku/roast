@@ -1,5 +1,5 @@
 use Test;
-plan 65;
+plan 66;
 
 # type based dispatching
 #
@@ -260,6 +260,18 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 {
     multi sub want-array(@array) { @array.elems }
     is want-array("abc".comb), 3, 'Can pass a Seq to an @-sigil arg in a multi';
+}
+
+# https://github.com/rakudo/rakudo/issues/3485
+{
+    my role Foo[\] { }
+    my class Bar {
+        proto method baz($ --> Bool:D)                 {*}
+        multi method baz(::T: $ where Foo[T] --> True) { }
+        multi method baz($ --> False)                  { }
+    }
+
+    is-deeply Bar.baz(Foo[Bar]), True, 'handling of anonymous subset';
 }
 
 # vim: expandtab shiftwidth=4
