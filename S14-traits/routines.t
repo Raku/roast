@@ -1,6 +1,6 @@
 use Test;
 
-plan 16;
+plan 17;
 
 # L<S14/Traits/>
 {
@@ -110,6 +110,18 @@ plan 16;
     push &b.s, { $called = True };
     b;
     ok $called, 'interaction of mixin to routine with array attribute and wrap is correct';
+}
+
+# https://github.com/rakudo/rakudo/issues/3573
+{
+    my $seen;
+    multi sub trait_mod:<is>(Routine:D $r is raw, :$foo!) {
+        $r.wrap: -> | { $seen = True; callsame };
+    }
+
+    class Foo { method ^foo(Mu) is foo { } }
+    Foo.^foo;
+    is-deeply $seen, True, 'was the wrapper preserved';
 }
 
 # vim: expandtab shiftwidth=4
