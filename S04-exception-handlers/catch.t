@@ -1,6 +1,6 @@
 use Test;
 
-plan 32;
+plan 33;
 
 =begin desc
 
@@ -269,6 +269,15 @@ lives-ok { loop { CATCH { default { say 'hi' } }; last if $++ > 100 } },
         }
     }
     pass "did not deadlock";
+}
+
+# https://github.com/rakudo/rakudo/issues/3777
+{
+    my $message = "meh";
+    my class E is Exception { method message { "E" } }
+    CATCH { when E { $message = .message; .resume } }
+    E.new.throw;
+    is $message, 'E', 'did the .resume work out ok';
 }
 
 # vim: expandtab shiftwidth=4

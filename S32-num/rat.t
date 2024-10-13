@@ -167,6 +167,7 @@ subtest '±Inf/NaN ⇿ Rat' => {
 
         # https://github.com/Raku/old-issue-tracker/issues/5822
 
+dd NaN."$m"().raku;
         is-deeply    NaN."$m"().raku.EVAL, ::($m).new(0, 0),
                "NaN.$m.raku.EVAL roundtrips";
         is-deeply    Inf."$m"().raku.EVAL, ::($m).new(1, 0),
