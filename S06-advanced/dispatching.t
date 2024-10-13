@@ -1,6 +1,6 @@
 use Test;
 use soft;
-plan 7;
+plan 8;
 
 subtest 'Basic interaction of nextwith/nextsame with multi and method dispatch' => {
     my class Foo {
@@ -331,6 +331,13 @@ subtest "Regression: broken chain" => {
     }
 }
 
-done-testing;
+# https://github.com/rakudo/rakudo/issues/3611
+{
+    my $dispatched;
+    my proto sub foo(Int:D, uint32) {*}
+    my multi sub foo(0;; uint32)    { $dispatched = True }
+    foo 0, my uint32 $ = 1;
+    is-deeply $dispatched, True, 'native int dispatched ok';
+}
 
 # vim: expandtab shiftwidth=4
