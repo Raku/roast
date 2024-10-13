@@ -2,7 +2,7 @@ use Test;
 
 # L<S32::Containers/List/"=item reverse">
 
-plan 22;
+plan 23;
 
 =begin pod
 
@@ -106,6 +106,12 @@ is(@a, @e, "list was reversed");
 
     is-deeply (1,2,3,4,5).reverse, (5,4,3,2,1),
       'reverse also works on Lists';
+}
+
+# https://github.com/rakudo/rakudo/issues/3595
+{
+    is-deeply (1 .. -Inf).reverse[^5], (Nil,Nil,Nil,Nil,Nil),
+      "infinite range from end produces Nils";
 }
 
 # vim: expandtab shiftwidth=4
