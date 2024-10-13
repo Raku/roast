@@ -1,6 +1,6 @@
 use Test;
 
-plan 205;
+plan 207;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -468,6 +468,14 @@ subtest 'no floating point drifts in degenerate Ranges' => {
         todo("fixed in 6.e");
         is-deeply $range.Bool, False, "$range.raku().Bool is False";
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/3596
+{
+    is-deeply (Inf .. Inf)[^5], (Nil, Nil, Nil, Nil, Nil),
+      'Inf .. Inf produces Nils';
+    is-deeply (Inf .. NaN)[^5], (Nil, Nil, Nil, Nil, Nil),
+      'Inf .. NaN produces Nils';
 }
 
 # vim: expandtab shiftwidth=4
