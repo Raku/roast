@@ -1,5 +1,5 @@
 use Test;
-plan 66;
+plan 68;
 
 # type based dispatching
 #
@@ -272,6 +272,14 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     }
 
     is-deeply Bar.baz(Foo[Bar]), True, 'handling of anonymous subset';
+}
+
+# https://github.com/rakudo/rakudo/issues/3920
+{
+    my sub foo (::T \x --> T){ x }
+    my sub bar (::T \x --> T){ x.Num }
+    is-deeply foo(42), 42, 'return typecheck ok';
+    throws-like { bar(42) }, X::TypeCheck::Return, got => 42e0 ;
 }
 
 # vim: expandtab shiftwidth=4
