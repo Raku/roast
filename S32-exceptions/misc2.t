@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 268;
+plan 269;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -491,6 +491,11 @@ if $emits_suggestions {
       X::Multi::NoMatch,
       capture => { so $_[0]; $_[0] ~~ Failure }
     ;
+}
+
+# https://github.com/rakudo/rakudo/issues/3949
+{
+    throws-like { Q|infix:(&)|.EVAL }, X::Syntax::Adverb;
 }
 
 # vim: expandtab shiftwidth=4
