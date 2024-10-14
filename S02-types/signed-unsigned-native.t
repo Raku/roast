@@ -1,6 +1,6 @@
 use Test;
 
-plan 125;
+plan 131;
 
 my sub is-true(\value, str $description)  is test-assertion {
     ok value =:= True, $description
@@ -179,3 +179,13 @@ is-false $i16 >= $u16, 'greater than or equal on 16bit int / uint';
 is-false $i32 >= $u32, 'greater than or equal on 32bit int / uint';
 is-false $i64 >= $u64, 'greater than or equal on 64bit int / uint';
 is-false $i   >= $u,   'greater than or equal on int / uint';
+
+# https://github.com/rakudo/rakudo/issues/3936
+{
+    is-deeply (my byte   $ = +^0),                  255, 'byte scaled ok';
+    is-deeply (my uint8  $ = +^0),                  255, 'uint8 scaled ok';
+    is-deeply (my uint16 $ = +^0),                65535, 'uint16 scaled ok';
+    is-deeply (my uint32 $ = +^0),           4294967295, 'uint32 scaled ok';
+    is-deeply (my uint64 $ = +^0), 18446744073709551615, 'uint64 scaled ok';
+    is-deeply (my uint   $ = +^0), 18446744073709551615, 'uint scaled ok';
+}
