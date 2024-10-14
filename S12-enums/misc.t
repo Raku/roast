@@ -1,6 +1,6 @@
 use Test;
 
-plan 26;
+plan 27;
 
 {
     class EnumClass     { enum C <a b c> }
@@ -130,6 +130,12 @@ plan 26;
       type  => Direction,
       value => Less,
     ;
+}
+
+# https://github.com/rakudo/rakudo/issues/4134
+{
+    enum BooleanEnum (:!Lies, :Truth);
+    is-deeply True ~~ BooleanEnum, False, 'should not match';
 }
 
 # vim: expandtab shiftwidth=4
