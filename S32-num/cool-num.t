@@ -1,5 +1,6 @@
 use Test;
-plan 46;
+
+plan 48;
 
 =begin pod
 
@@ -28,6 +29,7 @@ is-approx NotComplex.new.exp("2"), $magic.exp("2"), 'NotComplex.new.exp("2") == 
 is-approx "3".exp(NotComplex.new), 3.exp($magic), '"3".exp(NotComplex.new) == 3.exp($magic)';
 is-approx NotComplex.new.exp(NotComplex.new), $magic.exp($magic), 'NotComplex.new.exp(NotComplex.new) == $magic.exp($magic)';
 
+# LOG ================
 is-approx "17".log, 17.log, '"17".log == 17.log';
 is-approx NotComplex.new.log, $magic.log, 'NotComplex.new.log == $magic.log';
 is-approx "17".log("17"), 17.log(17), '"17".log("17") == 17.log(17)';
@@ -35,8 +37,13 @@ is-approx NotComplex.new.log("17"), $magic.log(17), 'NotComplex.new.log("17") ==
 is-approx "17".log(NotComplex.new), 17.log($magic), '"17".log("17") == 17.log(17)';
 is-approx NotComplex.new.log(NotComplex.new), $magic.log($magic), 'NotComplex.new.log(NotComplex.new) == $magic.log($magic)';
 
+# LOG10 ================
 is-approx "17".log10, 17.log10, '"17".log10 == 17.log10';
 is-approx NotComplex.new.log10, $magic.log10, 'NotComplex.new.log10 == $magic.log10';
+
+# LOG2 ================
+is-approx "17".log2, 17.log2, '"17".log2 == 17.log2';
+is-approx NotComplex.new.log2, $magic.log2, 'NotComplex.new.log2 == $magic.log2';
 
 is-approx "17".sqrt, 17.sqrt, '"17".sqrt == 17.sqrt';
 is-approx NotComplex.new.sqrt, $magic.sqrt, 'NotComplex.new.sqrt == $magic.sqrt';
