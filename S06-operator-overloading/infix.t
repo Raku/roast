@@ -1,5 +1,5 @@
 use Test;
-plan 47;
+plan 50;
 
 {
     sub infix:<×> ($a, $b) { $a + $b }
@@ -256,6 +256,28 @@ is infix:['Z~'](<a b>, <c d>), 'ac bd', 'can call autogen infix via compile-time
     is &infix:<<$plus>>(3,4), 7, '&infix:<<$foo>> works';
     is &infix:«$plus»(3,4),   7, '&infix:«$foo» works';
     is &infix:[$plus](3,4),   7, '&infix:[$foo] works';
+}
+
+# https://github.com/rakudo/rakudo/issues/3895
+{
+    my %calls;
+    my sub infix:<==⨧>($a,$b) {
+        my $ans = so $a == $b + 2;
+        push %calls<plain>,
+        "$a ==⨧ $b→$ans";
+        $ans
+    }
+    my sub infix:<is-eq⨧>($a,$b) is equiv(&infix:<==>) {
+        my $ans = so $a == $b + 2;
+        push %calls<is-eq⨧>,
+        "$a ==⨧ $b→$ans";
+        $ans
+    }
+
+    ok !(6 ==⨧ 4 ==⨧ 2), "Custom operator doesn't chain";
+    ok !(6 is-eq⨧ 4 is-eq⨧ 2),
+      "Custom operator with precedence same as == still doesn't chain";
+    is-deeply %calls<plain>, %calls<is-eq⨧>, "Both are called the same";
 }
 
 # vim: expandtab shiftwidth=4
