@@ -9,7 +9,7 @@ version 0.3 (12 Apr 2004), file t/patvar.t.
 
 =end pod
 
-plan 65;
+plan 66;
 
 # L<S05/Variable (non-)interpolation>
 
@@ -153,6 +153,12 @@ throws-like 'my $x := { a => 1 }; "a" ~~ m/$x/', X::Syntax::Reserved, 'cannot in
     throws-like { EVAL 'my class InterpolationTest { has $!c; method m() { /<?> { $!c }/ } }' },
         X::Attribute::Regex, :symbol<$!c>,
         'Cannot interpolate attribute in a closure in a regex';
+}
+
+# https://github.com/rakudo/rakudo/issues/4136
+{
+    my $junction = "a" | "b";
+    is ("a b" ~~ /$junction/).gist, '｢a｣', 'did any junction work out ok';
 }
 
 # vim: expandtab shiftwidth=4
