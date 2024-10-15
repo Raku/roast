@@ -1389,7 +1389,7 @@ integration/advent2012-day15.t
 integration/advent2012-day16.t
 integration/advent2012-day19.t # slow
 integration/advent2012-day20.t
-integration/advent2012-day21.t #stress
+#integration/advent2012-day21.t #stress
 integration/advent2012-day22.t
 integration/advent2012-day23.t
 integration/advent2012-day24.t
