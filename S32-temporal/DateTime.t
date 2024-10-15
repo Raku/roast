@@ -1,6 +1,6 @@
 use Test;
 
-plan 311;
+plan 312;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -958,6 +958,15 @@ lives-ok { DateTime.new(2020,3,10,11,38,.000001).Str },
     my $then-str = DateTime.now.Str;
     is-deeply DateTime($then-str), DateTime.new($then-str),
       'does DateTime(then-str) work';
+}
+
+# https://github.com/rakudo/rakudo/issues/4175
+{
+    my $now = DateTime.now;
+    is-deeply
+      $now.later( (:2hours, :30minutes)),
+      $now.later(:2hours).later(:30minutes),
+      'can specify multiple units as list';
 }
 
 # vim: expandtab shiftwidth=4
