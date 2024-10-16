@@ -1,6 +1,6 @@
 use Test;
 
-plan 63;
+plan 66;
 
 my Int:D $j = 256;
 MY::<$j> = 111;
@@ -168,6 +168,16 @@ throws-like 'use variables :foo',
 
     throws-like ｢my Int:D %x = foo => Nil｣,
     X::TypeCheck::Assignment,'Int:D %x = foo => Nil; throws a typecheck';
+}
+
+# https://github.com/rakudo/rakudo/issues/4255
+{
+    my Int:D ($x = 5);
+    todo 'Initialization fails';
+    is-deeply $x, 5, 'Initialization ok';
+    $x = 6;
+    is-deeply $x, 6, 'Assignment ok';
+    throws-like { $x = Int }, X::TypeCheck::Assignment;
 }
 
 # vim: expandtab shiftwidth=4
