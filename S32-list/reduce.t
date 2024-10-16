@@ -11,7 +11,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 =end description
 
-plan 23;
+plan 24;
 
 # L<S32::Containers/List/=item reduce>
 
@@ -137,6 +137,12 @@ eval-lives-ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper 
     my $slot := (%hash, |@path).reduce: -> $h is raw, $k { $h{$k} };
     $slot = 42;
     is-deeply %hash, %(:a(%(:b(%(:c(42)))))), "reduce returns raw containers when specified"
+}
+
+# https://github.com/rakudo/rakudo/issues/4458
+{
+    is-deeply (True, True, False).reduce(&infix:<&&>), False,
+      'reduce handled && correctly';
 }
 
 # vim: expandtab shiftwidth=4
