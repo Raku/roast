@@ -1,6 +1,6 @@
 use Test;
 # L<S04/"Loop statements"/"next, last, and redo">
-plan 12;
+plan 13;
 
 {
     my $x = 0;
@@ -124,6 +124,13 @@ throws-like { EVAL q[label1: say "OH HAI"; label1: say "OH NOES"] }, X::Redeclar
     @res = [];
     L7: Seq.from-loop( { loop { @res.push: "Loop"; last L7 } }, :label(L7));
     is-deeply @res, ["Loop"], 'nested loop with labeled last (4)';
+}
+
+# https://github.com/rakudo/rakudo/issues/4456
+{
+    my int $i;
+    for ^1000 { gather L: for ^1 { $i++; next L } }
+    is $i, 1000, 'did all of the gathers gather';
 }
 
 # vim: expandtab shiftwidth=4
