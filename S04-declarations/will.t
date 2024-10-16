@@ -1,6 +1,6 @@
 use Test;
 
-BEGIN plan 20;
+BEGIN plan 21;
 
 # L<S04/Phasers>
 
@@ -117,6 +117,15 @@ is $same3, "aebebebc", 'all for blocks get $_';
     my $what;
     my @a will begin { $what = $_.WHAT.raku; };
     is $what, 'Array', 'will begin block gets var as topic';
+}
+
+# https://github.com/rakudo/rakudo/issues/4403
+{
+    my $i = 0;
+    for ^4000 {
+        my $x will leave { ++$i } = 42;
+    }
+    is-deeply $i, 4000, 'Did the leave phaser run';
 }
 
 # vim: expandtab shiftwidth=4
