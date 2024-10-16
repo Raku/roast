@@ -1,6 +1,6 @@
 use Test;
 
-plan 15;
+plan 17;
 
 my $uni = Uni.new(0x0044, 0x0307, 0x0323);
 
@@ -23,5 +23,11 @@ is $uni.gist, 'Uni:0x<0044 0307 0323>', '.gist works on Uni';
 
 ok $uni, 'A non-empty Uni boolifies to true';
 nok Uni.new, 'An empty Uni boolifies to false';
+
+# https://github.com/rakudo/rakudo/issues/4464
+{
+    is-deeply Uni(97) cmp Uni(97), Same, 'Uni cmp-ed ok';
+    is-deeply Uni(97) ~~  Uni(97), True, 'Uni ~~-ed ok';
+}
 
 # vim: expandtab shiftwidth=4
