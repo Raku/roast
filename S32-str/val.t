@@ -238,6 +238,16 @@ for @ok -> \value, @strings {
     ok-val(value, @strings);
 }
 
+# https://github.com/rakudo/rakudo/issues/4475
+{
+    for <½ ↉ ⅓ ⅔ ¼ ¾ ⅕ ⅖ ⅗ ⅘ ⅙ ⅚ ⅐ ⅛ ⅜ ⅝ ⅞ ⅑ ⅒ > {
+        my $allo := val($_);
+        isa-ok $allo, RatStr, "allomorph '$_' is a RatStr";
+        is-deeply +$allo, .unival || Rat.new(0,3),
+          "does val($_) produce the correct numeric result";
+    }
+}
+
 done-testing;
 
 # vim: expandtab shiftwidth=4
