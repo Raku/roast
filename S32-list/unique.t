@@ -1,6 +1,6 @@
 use Test;
 
-plan 39;
+plan 40;
 
 =begin description
 
@@ -156,5 +156,13 @@ is ((1,2,3),(1,2),(1,2)).unique(:with({$^a eqv $^b})), "1 2 3 1 2", ".unique doe
 
 # https://github.com/Raku/old-issue-tracker/issues/6095
 eval-lives-ok ｢Scalar.unique｣, 'no SEGV with Scalar.unique';
+
+# https://github.com/rakudo/rakudo/issues/4513
+{
+    is-deeply
+      [[1], ['1'], [4]].unique(:as(*.map(&[~])), :with(&[eqv])),
+      ([1], [4]),
+      'Seq as the result of an :as caches the Seq';
+}
 
 # vim: expandtab shiftwidth=4
