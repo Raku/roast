@@ -1,6 +1,6 @@
 use Test;
 
-plan 10;
+plan 11;
 
 class fish {
     has $.x is required;
@@ -85,6 +85,17 @@ subtest 'is required with hash attributes' => {
         'Default hash value is used if no argument passed';
     is-deeply C1.new(hash-b => { x => 1 }, hash-r => {}).hash-b, { x => 1 },
         'Default hash value is not used if argument is passed';
+}
+
+# https://github.com/rakudo/rakudo/issues/4624
+{
+    my class Box {
+        has Any:D $.value is required;
+        submethod BUILD(::?CLASS:D:) {
+            $!value
+        }
+    }
+    throws-like { Box.new }, X::Attribute::Required, name => '$!value';
 }
 
 # vim: expandtab shiftwidth=4
