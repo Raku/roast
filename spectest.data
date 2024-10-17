@@ -1292,6 +1292,7 @@ S32-str/uc.t
 S32-str/uniparse.t
 S32-str/unpack.t
 S32-str/utf8-c8.t       # moar
+S32-str/val.t
 S32-str/windows-1251-windows-1252-encode-decode.t
 S32-str/words.t
 S32-temporal/Date.t
