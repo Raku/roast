@@ -1,6 +1,6 @@
 use Test;
 
-plan 18;
+plan 20;
 
 # L<S06/Other matters/Introspection>
 
@@ -39,11 +39,20 @@ is(&multi-sub.cando(\()).[0].(),"m3","you can invoke through introspection");
     ok(\()    ~~ $sig, "junction sig matches third candidate");
 }
 
-# R#2420
+# https://github.com/rakudo/rakudo/issues/2420
 for (* == 42), -> $ { } -> &callable {
     is &callable.cando( \() ).elems,       0, 'Whatevercode with \()';
     is &callable.cando( \(666) ).elems,    1, 'Whatevercode with \(666)';
     is &callable.cando( \(666,42) ).elems, 0, 'Whatevercode with \(666,42)';
+}
+
+# https://github.com/rakudo/rakudo/issues/4730
+{
+    sub foo(Str :@foo) { }
+
+    my $c = \();
+    ok ?&foo.cando($c), 'calling without params should work';
+    lives-ok { foo(|$c) }, 'actually calling should also work';
 }
 
 # vim: expandtab shiftwidth=4
