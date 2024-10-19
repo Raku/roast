@@ -1,6 +1,6 @@
 use Test;
 
-plan 64;
+plan 65;
 
 throws-like { await }, Exception, "a bare await should not work";
 
@@ -298,6 +298,17 @@ lives-ok {
     await $done;
     nok $wrong, 'Sunk but successful `start` does not trigger uncaught exception handler';
     $*SCHEDULER.uncaught_handler = Nil;
+}
+
+####  MUST BE LAST TEST TO PREVENT CPU WASTAGE ####
+# https://github.com/rakudo/rakudo/issues/4989
+{
+    start loop { }
+
+    await start {
+        sleep 1;
+        pass "survived the sleep";
+    }
 }
 
 # vim: expandtab shiftwidth=4
