@@ -15,7 +15,7 @@ sub make-test-data {
     }
 }
 
-plan 2 * make-test-data() + 20;
+plan 2 * make-test-data() + 21;
 
 for make-test-data() -> (:key($got), :value($expected)) {
     is-deeply $got.flat,  $expected, "$got.raku() (method form)";
@@ -61,5 +61,13 @@ is-deeply @b.flat(3, :hammer), (1,2,3,4,5),
 is-deeply @b.flat(4, :hammer), (1,2,3,4,5),
   'list.flat(4, :hammer)';
 
+# https://github.com/rakudo/rakudo/issues/5229
+{
+    subtest "test hanging of list with Iterable type object" => {
+        for Iterable, List, Array, array, Seq -> $type {
+            is-deeply ($type,), ($type,), "($type.^name(),) did not hang";
+        }
+    }
+}
 
 # vim: expandtab shiftwidth=4
