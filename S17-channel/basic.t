@@ -78,6 +78,6 @@ plan 19;
 }
 
 { # coverage; 2016-09-26
-    throws-like { Channel.elems     }, Exception, 'Channel:U.elems fails';
+    is Channel.elems, 1, 'Channel:U.elems returns 1';
     throws-like { Channel.new.elems }, Exception, 'Channel:D.elems fails';
 }
