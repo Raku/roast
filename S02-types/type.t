@@ -8,7 +8,7 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Types as Constraints"/"A variable's type is a constraint indicating what sorts">
 
-plan 80;
+plan 81;
 
 {
     ok(try {my Int $foo; 1}, 'compile my Int $foo');
@@ -178,6 +178,18 @@ throws-like q[my num $n; $n = <42+0i>], X::Syntax::Number::LiteralType, 'num doe
     ok Array ~~ List, 'Array is a kind of List';
     ok List !~~ Array, 'A List is not an Array';
     ok Array ~~ Positional, 'Array does Positional too';
+}
+
+# https://github.com/rakudo/rakudo/issues/5256
+{
+    subtest "testing .elems on core type objects" => {
+        for
+          Bag, BagHash, Capture, Channel, Hash, IterationBuffer, Map,
+          Mix, MixHash, PseudoStash, Range, Seq, Set, SetHash, Uni
+        -> $type {
+            is $type.elems, 1, "$type.^name()\.elems is 1";
+        }
+    }
 }
 
 # vim: expandtab shiftwidth=4
