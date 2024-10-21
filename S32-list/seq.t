@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 49;
+plan 50;
 
 my @result = 1,2,3;
 
@@ -254,6 +254,12 @@ group-of 2 => 'ZEN slices do not cache Seqs' => {
 {
     is-deeply ({ 1 | -1 } ... *)[^3], (any(1, -1),any(1, -1),any(1, -1)),
       'check that we do not create 1 element lists';
+}
+
+# https://github.com/rakudo/rakudo/issues/5662
+{
+    is-deeply <one two three four>.Seq.sort(:k), (3,0,2,1),
+      'Seq.sort(:k) works as it should';
 }
 
 # vim: expandtab shiftwidth=4
