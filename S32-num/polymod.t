@@ -1,5 +1,5 @@
 use Test;
-plan 5;
+plan 10;
 
 # L<S32::Numeric/=item polymod>
 
@@ -7,7 +7,9 @@ is 86400.polymod(60),       (0,1440),  '86400 60';
 is 86400.polymod(60,60),    (0,0,24),  '86400 60 60';
 is 86400.polymod(60,60,24), (0,0,0,1), '86400 60 60 24';
 
-is 1234567890.polymod(10 xx *), (0,9,8,7,6,5,4,3,2,1), '1234567890 10 xx *';
+is   1234567890.polymod(10 xx *), (0,9,8,7,6,5,4,3,2,1), '  1234567890 10 xx *';
+is 0x1234567890.polymod(16 xx *), (0,9,8,7,6,5,4,3,2,1), '0x1234567890 16 xx *';
+is 0x1234567890.polymod(16 xx 5), (0,9,8,7,6,74565),     '0x1234567890 16 xx 5';
 
 # https://github.com/Raku/old-issue-tracker/issues/5327
 subtest '.polymod with a lazy list does not lose divisors when list runs out', {
@@ -19,5 +21,13 @@ subtest '.polymod with a lazy list does not lose divisors when list runs out', {
     is-deeply 12    .polymod(lazy 14, ),
                     (12,),               'last mod is zero';
 }
+
+# https://github.com/rakudo/rakudo/issues/4523
+{
+    is-deeply 100.polymod(    1 xx *), (100,), 'modulo 1 stops (1)';
+    is-deeply 100.polymod(10, 1 xx *), (0,10), 'modulo 1 stops (2)';
+}
+
+is 10e0.polymod(1.5), (1,6), 'polymod on non-integers';
 
 # vim: expandtab shiftwidth=4
