@@ -1,7 +1,7 @@
 use v6.e.PREVIEW;
 use Test;
 
-plan 797;
+plan 812;
 
 # Testing array multislices, aka @a[0;1;2] and associated adverbs
 
@@ -475,6 +475,59 @@ for
       '|| did the array get changed correctly';
     is-deeply @array[|| 1], [Any,444],
       '|| could we specify a single index';
+}
+
+# https://github.com/rakudo/rakudo/issues/2488
+{
+    my @matrix;
+    my sub reset() { @matrix = [1,2,3], [4,5,6], [7,8,9] }
+
+    reset;
+    is-deeply @matrix[*;  0,1 ],
+      (1,2,4,5,7,8),
+      '[*; 0,1]';
+    is-deeply @matrix[*; {0,1}],
+      (1,2,4,5,7,8),
+      '[*; {0,1}]';
+    is-deeply @matrix[*; {0,1}]:exists,
+      (True xx 6),
+      '[*; {0,1}]:exists';
+    is-deeply @matrix[*; {0,1}]:k,
+      ((0,0), (0,1), (1,0), (1,1), (2,0), (2,1)),
+      '[*; {0,1}]:k';
+    is-deeply @matrix[*; {0,1}]:kv,
+      ((0,0), 1, (0,1), 2, (1,0), 4, (1,1), 5, (2,0), 7, (2,1), 8),
+      '[*; {0,1}]:kv';
+    is-deeply @matrix[*; {0,1}]:p,
+      ((0,0) => 1, (0,1) => 2, (1,0) => 4, (1,1) => 5, (2,0) => 7, (2,1) => 8),
+      '[*; {0,1}]:p';
+    is-deeply @matrix[*; {0,1}]:exists:p,
+      ((0,0) => True, (0,1) => True, (1,0) => True, (1,1) => True, (2,0) => True, (2,1) => True),
+      '[*; {0,1}]:exists:p';
+
+    reset;
+    is-deeply @matrix[*; {1,2}]:delete,
+      (2,3,5,6,8,9),
+      '[*; {1,2}]:delete';
+    is-deeply @matrix, [[1],[4],[7]], 'remainder after [*; {1,2}]:delete';
+
+    reset;
+    is-deeply @matrix[*; {1,2}]:delete:k,
+      ((0,1), (0,2), (1,1), (1,2), (2,1), (2,2)),
+      '[*; {1,2}]:delete:k';
+    is-deeply @matrix, [[1],[4],[7]], 'remainder after [*; {1,2}]:delete:k';
+
+    reset;
+    is-deeply @matrix[*; {1,2}]:delete:kv,
+      ((0,1), 2, (0,2), 3, (1,1), 5, (1,2), 6, (2,1), 8, (2,2), 9),
+      '[*; {1,2}]:delete:kv';
+    is-deeply @matrix, [[1],[4],[7]], 'remainder after [*; {1,2}]:delete:kv';
+
+    reset;
+    is-deeply @matrix[*; {1,2}]:delete:p,
+      ((0,1) => 2, (0,2) => 3, (1,1) => 5, (1,2) => 6, (2,1) => 8, (2,2) => 9),
+      '[*; {1,2}]:delete:p';
+    is-deeply @matrix, [[1],[4],[7]], 'remainder after [*; {1,2}]:delete:p';
 }
 
 # vim: expandtab shiftwidth=4
