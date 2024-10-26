@@ -1,6 +1,6 @@
 use Test;
 
-plan 40;
+plan 44;
 
 {
     my $str = "gorch ding";
@@ -149,6 +149,22 @@ plan 40;
     my $s = '.' x 4 ~ 'a';
     $s.substr-rw(1,1) = '';
     is $s, '...a', '.substr-rw on a string constructed with `x` operator';
+}
+
+# https://github.com/rakudo/rakudo/issues/1720
+{
+    my $a = "foobaz";
+    $a.substr-rw(3, 3.3) = "bar";
+    is $a, "foobar", 'Non-int width ok';
+
+    $a.substr-rw(3, *) = "baz";
+    is $a, "foobaz", 'Whatever as width ok';
+
+    $a.substr-rw(3, Inf) = "bar";
+    is $a, "foobar", 'Inf as width ok';
+
+    $a.substr-rw(3, *-3) = "baz";
+    is $a, "foobazbar", 'Callable as width ok';
 }
 
 # vim: expandtab shiftwidth=4
