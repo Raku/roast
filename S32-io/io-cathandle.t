@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 30;
+plan 31;
 
 # Tests for IO::CatHandle class
 
@@ -891,6 +891,13 @@ else {
         is $p.err.slurp(:close), '', 'STDERR is empty';
       }
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/2796
+{
+    is IO::CatHandle.new( ($?FILE,).lazy ).slurp,
+      $?FILE.IO.slurp,
+      'supports lazy list of paths';
 }
 
 # vim: expandtab shiftwidth=4
