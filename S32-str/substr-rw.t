@@ -1,6 +1,6 @@
 use Test;
 
-plan 44;
+plan 45;
 
 {
     my $str = "gorch ding";
@@ -165,6 +165,13 @@ plan 44;
 
     $a.substr-rw(3, *-3) = "baz";
     is $a, "foobazbar", 'Callable as width ok';
+}
+
+# https://github.com/rakudo/rakudo/issues/5677
+{
+    my $s = "foobar";
+    $s.substr-rw(6, 0) = "yyy";
+    is $s, 'foobaryyy', 'can we append using substr-rw';
 }
 
 # vim: expandtab shiftwidth=4
