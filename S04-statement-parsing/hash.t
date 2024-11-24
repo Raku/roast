@@ -11,7 +11,6 @@ is hash('a', 1).values, 1, 'hash() with keys/values (values)';
 is hash('a' => 1).keys, 'a', 'hash() with pair (key)';
 is hash('a' => 1).values, 1, 'hash() with pair (values)';
 
-#?rakudo.jvm 2 skip "Unexpected named argument 'a' passed"
 is hash(a => 1).keys, 'a', 'hash() with autoquoted pair (key)';
 is hash(a => 1).values, 1, 'hash() with autoquoted pair (values)';
 

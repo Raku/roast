@@ -256,7 +256,6 @@ is_run ｢class Foo {}; $ = new Foo:｣, {:out(''), :err(''), :0status },
     'new Foo: calling form does not produce unwanted output';
 
 # https://github.com/rakudo/rakudo/issues/2486
-#?rakudo.jvm todo "Unexpected named argument 'a' passed"
 is_run ｢sub f1 { hash a=>1 }; f1 for ^100000｣, {:out(''), :err(''), :0status },
     'no segfault when using `hash` in a function';
 
