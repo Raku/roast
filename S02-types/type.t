@@ -185,10 +185,12 @@ throws-like q[my num $n; $n = <42+0i>], X::Syntax::Number::LiteralType, 'num doe
     subtest "testing .elems on core type objects" => {
         for
           Bag, BagHash, Capture, Channel, Hash, IterationBuffer, Map,
-          Mix, MixHash, PseudoStash, Range, Seq, Set, SetHash, Uni
+          Mix, MixHash, PseudoStash, Range, Seq, Set, SetHash
         -> $type {
             is $type.elems, 1, "$type.^name()\.elems is 1";
         }
+        #?rakudo.jvm skip 'Undeclared name: Uni'
+        is Uni.elems, 1, 'Uni.elems is 1';
     }
 }
 

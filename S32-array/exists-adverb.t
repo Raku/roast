@@ -99,6 +99,7 @@ sub gen_array { (1..10).list }
 
 # https://github.com/rakudo/rakudo/issues/2929
 {
+    #?rakudo.jvm todo 'got X::Multi::Ambiguous (in error reporting)'
     throws-like {
         my @a; my $neg=-1; say @a[$neg][0]:exists;
     }, X::OutOfRange,

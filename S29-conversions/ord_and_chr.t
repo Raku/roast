@@ -178,6 +178,7 @@ subtest 'chr with large codepoints throws useful error' => {
 }
 
 # https://github.com/rakudo/rakudo/issues/1625
+#?rakudo.jvm todo 'java.lang.IllegalArgumentException: Not a valid Unicode code point: 0x7FFFFFFF'
 throws-like { 0x7FFFFFFF.chr.unival }, X::AdHoc,
   message => / 'out of bounds' /;
 

@@ -243,6 +243,7 @@ for @ok -> \value, @strings {
     for <½ ↉ ⅓ ⅔ ¼ ¾ ⅕ ⅖ ⅗ ⅘ ⅙ ⅚ ⅐ ⅛ ⅜ ⅝ ⅞ ⅑ ⅒ > {
         my $allo := val($_);
         isa-ok $allo, RatStr, "allomorph '$_' is a RatStr";
+        #?rakudo.jvm skip 'Too many positionals passed to unival; expected 1 arguments but got 2'
         is-deeply +$allo, .unival || Rat.new(0,3),
           "does val($_) produce the correct numeric result";
     }

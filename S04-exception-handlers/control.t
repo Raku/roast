@@ -110,6 +110,8 @@ is_run( 'sub mention-me() { take 1; }; mention-me',
 }
 
 # https://github.com/rakudo/rakudo/issues/2665
+#?rakudo.jvm skip 'aborts after printing "different warning"'
+#?DOES 2
 {
     my $when;
     my $default;

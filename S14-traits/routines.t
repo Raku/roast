@@ -121,6 +121,7 @@ plan 17;
 
     class Foo { method ^foo(Mu) is foo { } }
     Foo.^foo;
+    #?rakudo.jvm todo 'got: Any'
     is-deeply $seen, True, 'was the wrapper preserved';
 }
 

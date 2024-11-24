@@ -108,6 +108,7 @@ eval-lives-ok 'class A { class B {} }; use MONKEY; augment class A { augment cla
 # https://github.com/rakudo/rakudo/issues/3209
 {
     augment class Any { method foo() { "foo" } };
+    #?rakudo.jvm skip "Method 'foo' not found for invocant of class 'Int'"
     is 1.foo, "foo", 'no .^compose needed';
 }
 

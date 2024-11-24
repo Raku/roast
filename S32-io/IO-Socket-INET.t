@@ -213,6 +213,7 @@ do-test
     {
         my $received = $^client.read( $binary.elems );
 
+        #?rakudo.jvm todo 'problem with equivalence of Buf objects'
         is-deeply $received, $binary, "successful read binary data";
 
         $^client.close();

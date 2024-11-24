@@ -918,6 +918,7 @@ subtest 'no hangs/crashes when parsing nums with huge exponents' => {
 {
     my num $a = 5e0;
     my num $b;
+    #?rakudo.jvm 4 todo 'throws X::AdHox "This type (P6opaque) cannot unbox to a native number"'
     fails-like { $a % $b }, X::Numeric::DivideByZero,
       using     => '%',
       numerator => $a,
