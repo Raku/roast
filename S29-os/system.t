@@ -25,14 +25,11 @@ is($res.signal, 0, 'shell() signal after completion is zero');
 is($res.command, "$*EXECUTABLE -e \"\"", 'Proc returned from shell() has correct command');
 
 $res = run("program_that_does_not_exist_ignore_this_error_please.exe");
-#?rakudo.jvm todo 'run returns True-ish value (os-error is "java.io.IOException: Cannot run program")'
 ok(!$res, "run() to a nonexisting program does not die (and returns something false)");
 isa-ok($res, Proc, 'run() returns a Proc even when not successful');
-#?rakudo.jvm todo 'exit code 0'
 ok($res.exitcode != 0, 'run() exit code is not zero on failure');
 
 $res = run("program_that_does_not_exist_ignore_errors_please.exe","a","b");
-#?rakudo.jvm todo 'run returns True-ish value (os-error is "java.io.IOException: Cannot run program")'
 ok(!$res, "run() to a nonexisting program with an argument list does not die (and returns something false)");
 
 $res = shell("program_that_does_not_exist_ignore_this_error_please.exe");
@@ -42,7 +39,6 @@ ok($res.exitcode != 0, 'shell() exit code is not zero on failure');
 
 # https://github.com/Raku/old-issue-tracker/issues/3062
 # https://github.com/rakudo/rakudo/issues/1590
-#?rakudo.jvm todo 'run returns True-ish value (os-error is "java.io.IOException: Cannot run program")'
 throws-like { run("program_that_does_not_exist_ignore_errors_please.exe") },
     X::Proc::Unsuccessful, message => /"exit code: -1"/ & /"OS error = "/,
     'run() in sink context throws on unsuccessful exit and contains exit code of -1 and OS error';
@@ -165,10 +161,8 @@ subtest "run and shell's :env" => {
 subtest '.out/.err proc pipes on failed command' => {
     plan 4;
 
-    #?rakudo.jvm todo 'does not throw (os-error is "java.io.IOException: Cannot run program")'
     throws-like { run(:out, "meooooooows").out.close; Nil },
         X::Proc::Unsuccessful, '.out.close Proc explodes when sunk';
-    #?rakudo.jvm todo 'does not throw (os-error is "java.io.IOException: Cannot run program")'
     throws-like { run(:err, "meooooooows").err.close; Nil },
         X::Proc::Unsuccessful, '.err.close Proc explodes when sunk';
     is-deeply run(:out, "meooooooows").out.slurp(:close), '',
