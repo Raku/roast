@@ -480,17 +480,6 @@ S05-metasyntax/sequential-alternation.t
 S05-metasyntax/single-quotes.t
 S05-metasyntax/unicode-property-pair.t
 S05-metasyntax/unknown.t
-S05-modifier/Perl_0.t
-S05-modifier/Perl_1.t
-S05-modifier/Perl_10.t
-S05-modifier/Perl_2.t
-S05-modifier/Perl_3.t
-S05-modifier/Perl_4.t
-S05-modifier/Perl_5.t
-S05-modifier/Perl_6.t
-S05-modifier/Perl_7.t
-S05-modifier/Perl_8.t
-S05-modifier/Perl_9.t
 S05-modifier/exhaustive.t
 S05-modifier/continue.t
 S05-modifier/counted-match.t
@@ -1432,7 +1421,6 @@ integration/passing-pair-class-to-sub.t
 integration/precompiled.t      # moar slow
 integration/real-strings.t
 integration/role-composition-vs-attribute.t
-integration/rule-in-class-Str.t
 integration/say-crash.t
 integration/sequence.t
 integration/substr-after-match-in-gather-in-for.t
