@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 281;
+plan 284;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -713,5 +713,13 @@ lives-ok { my %h is SetHash = 42 },
 }
 
 is-deeply <a b>.SetHash.Capture, %(:a, :b).Capture, 'SetHash Capture';
+
+# https://github.com/rakudo/rakudo/issues/4678
+my %sh is SetHash;
+%sh ,= 1;
+for <Str gist raku> -> $method {
+    lives-ok { %sh."$method"() },
+      "self referencing SetHash doesn't loop on '$method'";
+}
 
 # vim: expandtab shiftwidth=4

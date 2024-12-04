@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 341;
+plan 344;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -820,5 +820,13 @@ lives-ok { my %h is BagHash = 42 },
 }
 
 is-deeply %(:42a, :72b).BagHash.Capture, %(:42a, :72b).Capture, 'BagHash Capture';
+
+# https://github.com/rakudo/rakudo/issues/4678
+my %bh is BagHash;
+%bh ,= 1;
+for <Str gist raku> -> $method {
+    lives-ok { %bh."$method"() },
+      "self referencing BagHash doesn't loop on '$method'";
+}
 
 # vim: expandtab shiftwidth=4

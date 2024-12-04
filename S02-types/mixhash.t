@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 292;
+plan 295;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -682,5 +682,13 @@ lives-ok { my %h is MixHash = 42 },
 }
 
 is-deeply %(:42a, :b(-72)).MixHash.Capture, %(:42a, :b(-72)).Capture, 'MixHash Capture';
+
+# https://github.com/rakudo/rakudo/issues/4678
+my %mh is MixHash;
+%mh ,= 1;
+for <Str gist raku> -> $method {
+    lives-ok { %mh."$method"() },
+      "self referencing MixHash doesn't loop on '$method'";
+}
 
 # vim: expandtab shiftwidth=4
