@@ -6,7 +6,7 @@ use Test;
 
 # L<S02/Lists>
 
-plan 29;
+plan 30;
 
 # Indexing lists
 
@@ -144,7 +144,15 @@ plan 29;
     is $z, 'bacon', "3rd-party reification of List doesn't duplicate rest";
 }
 
-# RT #112216
-is 'foo'[2..*].elems, 0, 'can range-index a Str with infinite range';
+# https://github.com/Raku/old-issue-tracker/issues/2695
+# https://github.com/rakudo/rakudo/issues/3658
+throws-like { 'foo'[2..3] }, X::OutOfRange,
+  got => 2,
+  'obtaining values from out-of-range indices in a lazy slice throws'
+;
+throws-like { 'foo'[2..*] }, X::OutOfRange,
+  got => 2,
+  'obtaining values from out-of-range indices in a lazy slice throws'
+;
 
 # vim: ft=perl6
