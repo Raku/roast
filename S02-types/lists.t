@@ -146,7 +146,7 @@ plan 30;
 # https://github.com/rakudo/rakudo/issues/3658
 throws-like { 'foo'[2..3] }, X::OutOfRange,
   got => 2,
-  'obtaining values from out-of-range indices in a lazy slice throws'
+  'obtaining values from out-of-range indices in a slice throws'
 ;
 throws-like { 'foo'[2..*] }, X::OutOfRange,
   got => 2,
