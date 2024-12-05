@@ -1,6 +1,6 @@
 use Test;
 
-plan 56;
+plan 59;
 
 {
     class A { method Str() { 'foo' } };
@@ -145,6 +145,12 @@ plan 56;
     eval-lives-ok 'my %*a{Int}', "Accept dynamic object hash"
 }
 
-#vim: ft=perl6
+# https://github.com/rakudo/rakudo/issues/4678
+my %oh{Any};
+%oh<a> = %oh;
+for <Str gist raku> -> $method {
+    lives-ok { %oh."$method"() },
+      "self referencing object hash doesn't loop on '$method'";
+}
 
 # vim: expandtab shiftwidth=4

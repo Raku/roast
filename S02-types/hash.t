@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 104;
+plan 107;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -366,6 +366,14 @@ eval-lives-ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
       'is {:x($x) :y($x)} ok';
     is-deeply {:$x :y($x)}, Hash.new("x",Any,"y",Any),
       'is {:$x :y($x)} ok';
+}
+
+# https://github.com/rakudo/rakudo/issues/4678
+my %h;
+%h<a> = %h;
+for <Str gist raku> -> $method {
+    lives-ok { %h."$method"() },
+      "self referencing hash doesn't loop on '$method'";
 }
 
 # vim: expandtab shiftwidth=4
