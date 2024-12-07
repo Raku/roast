@@ -393,7 +393,6 @@ throws-like 'done', X::ControlFlow, illegal => 'done';
 }
 
 # multiple whenevers with channels
-#?rakudo.jvm todo 'fails sometimes'
 {
     my $c1 = Channel.new;
     my $c2 = Channel.new;
@@ -615,7 +614,6 @@ lives-ok {
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/4833
-#?rakudo.jvm skip 'hangs since rakudo commit 1a4df4e100'
 {
   lives-ok {
     for ^500 {
@@ -643,7 +641,6 @@ lives-ok {
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/6056
-#?rakudo.jvm skip 'done without supply or react'
 {
     my @pre-emit;
     my $ran-done = True;
@@ -673,7 +670,6 @@ lives-ok {
         'supply block loop did not run more than expected number of times';
 }
 
-#?rakudo.jvm skip 'done without supply or react'
 {
     my $pre-emits = 0;
     my $post-emits = 0;

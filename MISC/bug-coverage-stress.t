@@ -10,7 +10,6 @@ plan 1;
 # https://github.com/Raku/old-issue-tracker/issues/6069
 # Note: outside `eval-lives-ok`, the failure seems to occurs much rarer and
 #       requires use of ^20000 iterations or so. Keep that in mind if changing.
-#?rakudo.jvm todo 'UnwindException in thread "Thread-xx"'
 eval-lives-ok ｢
     for ^200 {
         await ^5 .map: { start {
