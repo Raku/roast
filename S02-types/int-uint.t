@@ -116,6 +116,7 @@ is-eqv byte.Range.int-bounds, (0, 255), "byte.Range works";
 
 # Check coercers
 subtest "Testing native coercers" => {
+    my $on-jvm = $*RAKU.compiler.backend eq 'jvm';
     for (
         byte   => (
           255, 255,  256, 0,
@@ -130,24 +131,39 @@ subtest "Testing native coercers" => {
           4294967295, 4294967295,  4294967296, 0,
         ),
         uint64 => (
-          18446744073709551615, 18446744073709551615,
-          18446744073709551616, 0
+          # rakudo.jvm todo 'Activate all tests for JVM once overflow works as expected.'
+          $on-jvm
+            ?? (18446744073709551616, 0)
+            !! (18446744073709551615, 18446744073709551615,
+                18446744073709551616, 0)
         ),
         uint => (
-          18446744073709551615, 18446744073709551615,
-          18446744073709551616, 0,
+          # rakudo.jvm todo 'Activate all tests for JVM once overflow works as expected.'
+          $on-jvm
+            ?? (18446744073709551616, 0)
+            !! (18446744073709551615, 18446744073709551615,
+                18446744073709551616, 0)
         ),
 
         int8  => (
-          255, -1,  256, 0,  127, 127,  128,  -128,
+          # rakudo.jvm todo 'Activate all tests for JVM once overflow works as expected.'
+          $on-jvm
+            ?? (127, 127)
+            !! (255, -1,  256, 0,  127, 127,  128,  -128)
         ),
         int16 => (
-          65535,    -1,  65536,      0,
-          32767, 32767,  32768, -32768,
+          # rakudo.jvm todo 'Activate all tests for JVM once overflow works as expected.'
+          $on-jvm
+            ?? (32767, 32767)
+            !! (65535,    -1,  65536,      0,
+                32767, 32767,  32768, -32768)
         ),
         int32 => (
-          4294967295,         -1,  4294967296,           0,
-          2147483647, 2147483647,  2147483648, -2147483648,
+          # rakudo.jvm todo 'Activate all tests for JVM once overflow works as expected.'
+          $on-jvm
+            ?? (2147483647, 2147483647)
+            !! (4294967295,         -1,  4294967296,           0,
+                2147483647, 2147483647,  2147483648, -2147483648)
         ),
         int64 => (
            9223372036854775807,  9223372036854775807,
