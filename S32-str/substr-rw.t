@@ -1,6 +1,6 @@
 use Test;
 
-plan 45;
+plan 46;
 
 {
     my $str = "gorch ding";
@@ -172,6 +172,13 @@ plan 45;
     my $s = "foobar";
     $s.substr-rw(6, 0) = "yyy";
     is $s, 'foobaryyy', 'can we append using substr-rw';
+}
+
+# https://github.com/rakudo/rakudo/issues/5726 (Format::Lisp)
+{
+    my $a = "foobar";
+    $a.substr-rw(*-3, 3) = "zzz";
+    is $a, "foozzz", "can we replace with Callable as first arg";
 }
 
 # vim: expandtab shiftwidth=4
