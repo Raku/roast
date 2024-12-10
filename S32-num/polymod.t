@@ -19,7 +19,7 @@ subtest '.polymod with a lazy list does not lose divisors when list runs out', {
     #?rakudo.jvm skip 'No such attribute $!numerator for this object'
     is-deeply 42.Rat.polymod(lazy 2, 3),
               42.Rat.polymod(     2, 3), 'last mod is non-zero (Rat)';
-    is-deeply 12    .polymod(lazy 14, ),
+    is-deeply 12    .polymod(14 xx *),
                     (12,),               'last mod is zero';
 }
 
