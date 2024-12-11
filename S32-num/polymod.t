@@ -1,5 +1,6 @@
 use Test;
-plan 10;
+
+plan 11;
 
 # L<S32::Numeric/=item polymod>
 
@@ -29,7 +30,10 @@ subtest '.polymod with a lazy list does not lose divisors when list runs out', {
     is-deeply 100.polymod(10, 1 xx *), (0,10), 'modulo 1 stops (2)';
 }
 
-#?rakudo.jvm skip 'No such attribute $!numerator for this object'
 is 10e0.polymod(1.5), (1,6), 'polymod on non-integers';
+
+# https://github.com/rakudo/rakudo/issues/5726 (Digest and others)
+is-deeply 1234567.polymod(256 xx 7), (135, 214, 18, 0, 0, 0, 0, 0),
+  'fixed length produces right number of values, even with zeroes';
 
 # vim: expandtab shiftwidth=4
