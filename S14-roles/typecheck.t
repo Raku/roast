@@ -23,7 +23,6 @@ ok TestGH2613 ~~ GH2613::R1, "class smartmatches against full role name";
     my role R2714_1 is C2714_1 { }
     my role R2714_1[::T] is C2714_2 { }
 
-    #?rakudo.jvm todo 'fails for unknown reason'
     ok R2714_1 ~~ C2714_1, "Role group matches a parent class of its non-parameterized member";
     ok R2714_1 ~~ C2714, "Role group matches a parent of parent of its non-parameterized member";
     ok R2714_1 ~~ R2714, "Role group matches a role of parent of its non-parameterized member";
