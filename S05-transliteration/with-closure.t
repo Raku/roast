@@ -40,16 +40,13 @@ is $y, 2,                            'Closure invoked twice (once per replacemen
     # combined regex / closure
     my $count = 0;
     is 'hello'.trans(/l/ => { ++$count }), 'he12o', 'regex and closure mix';
-    #?rakudo todo 'nom regression'
     is 'hello'.trans(/l/ => { $_ x 2 }), 'hellllo', 'regex and closure mix (with $/ as topic)';
     my $x = 'hello';
-    #?rakudo todo 'nom regression'
     is $x.trans(/(l)/ => { $_[0] x 2 }), 'hellllo', 'regex and closure mix (with $/ as topic and capture)';
     is $x, 'hello', 'Original string not modified';
 }
 
 my $orig = 'hello';
-#?rakudo skip 'Unable to resolve method ord in class Any'
 is $orig.trans(/(l)/ => { $_[0].ord }), 'he108108o', 'capturing regex + closure with .ord on $_';
 is $orig, 'hello', 'original string unchanged';
 
