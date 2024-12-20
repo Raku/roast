@@ -10,7 +10,7 @@ String transliteration
 
 # L<S05/Transliteration>
 
-plan 67;
+plan 69;
 
 is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),
     "abc",
@@ -290,6 +290,14 @@ is_run ｢print '@x'.trans: (/\@/ => '-',), :c｣, {
 {
     is 'twone'.trans((/<?after o>ne/, 'two') => (1, 2)), '21',
       'handles lookbehind assertions correctly';
+}
+
+# https://github.com/rakudo/rakudo/issues/1227
+{
+    is "abc".trans("z" => "♥", :c), "♥♥♥",
+      'handles :c and no matching needles correctly';
+    is "abc".trans("z" => "♥", :c:squash), "♥",
+      'handles :c and no matching needles and squased correctly';
 }
 
 # vim: expandtab shiftwidth=4
