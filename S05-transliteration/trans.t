@@ -10,7 +10,7 @@ String transliteration
 
 # L<S05/Transliteration>
 
-plan 69;
+plan 70;
 
 is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),
     "abc",
@@ -298,6 +298,12 @@ is_run ｢print '@x'.trans: (/\@/ => '-',), :c｣, {
       'handles :c and no matching needles correctly';
     is "abc".trans("z" => "♥", :c:squash), "♥",
       'handles :c and no matching needles and squased correctly';
+}
+
+# https://github.com/rakudo/rakudo/issues/5745
+{
+    is "fusk".trans("U" => "", "u" => ""), "fsk",
+      'multi-needle without any replacements';
 }
 
 # vim: expandtab shiftwidth=4
