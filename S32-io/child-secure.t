@@ -1,45 +1,8 @@
 use Test;
+use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use Test::Util;
 
 plan 10;
-
-sub make-rand-path (--> IO::Path:D) {
-    $*TMPDIR.resolve.child: (
-        'raku_roast_',
-        $*PROGRAM.basename, '_line',
-        ((try callframe(3).code.line)||''), '_',
-        rand,
-        time,
-    ).join.subst: :g, /\W/, '_';
-}
-
-my @FILES-FOR-make-temp-file;
-my @DIRS-FOR-make-temp-dir;
-END {
-    unlink @FILES-FOR-make-temp-file;
-    rmdir  @DIRS-FOR-make-temp-dir;
-}
-
-sub make-temp-file (
-  :$content where Any:U|Blob|Cool,
-  Int :$chmod
---> IO::Path:D) {
-    @FILES-FOR-make-temp-file.push: my \path = make-rand-path;
-    with $chmod {
-        path.spurt: $content // '';
-        path.chmod: $_
-    }
-    orwith $content {
-        path.spurt: $_
-    }
-    path
-}
-
-sub make-temp-dir (Int $chmod? --> IO::Path:D) {
-    @DIRS-FOR-make-temp-dir.push: my \path = make-rand-path;
-    path.mkdir;
-    path.chmod: $_ with $chmod;
-    path
-}
 
 sub failuring-like (&test, $ex-type, $reason?, *%matcher) {
     todo $_ with $*NOT-IMPL-TODO;
@@ -61,10 +24,6 @@ sub failuring-like (&test, $ex-type, $reason?, *%matcher) {
 
 my $parent := make-temp-dir;
 my $non-resolving-parent := make-temp-file.child('bar');
-
-sub is-path ($got, $expected, $desc) is test-assertion {
-    cmp-ok $got.resolve, '~~', $expected.resolve, $desc
-}
 
 {
 #?rakudo emit my $*NOT-IMPL-TODO = "IO::Path doesn't implement :secure yet";
