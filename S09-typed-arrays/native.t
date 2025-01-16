@@ -1,6 +1,6 @@
 use Test;
 
-plan 10;
+plan 12;
 
 # Basic native array tests.
 {
@@ -167,6 +167,18 @@ subtest 'STOREing/splicing lazy Seq values throws' => {
         throws-like $store-stmt,  X::Cannot::Lazy, "STORE $msg";
         throws-like $splice-stmt, X::Cannot::Lazy, "splice $msg";
     }
+}
+
+# https://github.com/rakudo/rakudo/issues/5760
+{
+    my str @a = <a b c>;
+    sub foo(Real(Cool) $a) {
+        is $a, 3, 'can call a sub with coercion from Cool with a native array';
+    }
+    foo @a;
+
+    is array[str].raku, "array[str]",
+      'can call .raku on array[str] type object';
 }
 
 # vim: expandtab shiftwidth=4
