@@ -4,7 +4,7 @@ use Test::Util;
 
 use lib $?FILE.IO.parent(2).add("packages/HasMain/lib");
 
-plan 14;
+plan 15;
 
 ## If this test file is fudged, then MAIN never executes because
 ## the fudge script introduces an C<exit(1)> into the mainline.
@@ -124,6 +124,34 @@ subtest '%*SUB-MAIN-OPTS<named-anywhere>', {
       Endian::BigEndian
       OUTPUT
       'enums are converted'
+}
+
+# https://github.com/rakudo/rakudo/issues/5759
+{
+    is_run 'my %*SUB-MAIN-OPTS = :bundling; sub MAIN(|c) { say c }',
+      :args("-ab",),
+      { :out(qq|\\(:a(Bool::True), :b(Bool::True))\n|), :err(''), :0status },
+      'bundling works';
+
+    is_run 'my %*SUB-MAIN-OPTS = :coerce-allomorphs-to(Str); sub MAIN(|c) { say c }',
+      :args("42",),
+      { :out(qq|\\("42")\n|), :err(''), :0status },
+      'coercing to Str works';
+
+    is_run 'my %*SUB-MAIN-OPTS = :coerce-allomorphs-to(Int); sub MAIN(|c) { say c }',
+      :args("42",),
+      { :out(qq|\\(42)\n|), :err(''), :0status },
+      'coercing to Int works';
+
+    is_run 'my %*SUB-MAIN-OPTS = :allow-no; sub MAIN(|c) { say c }',
+      :args<--no-foo --/bar>,
+      { :out(qq|\\(:bar(Bool::False), :foo(Bool::False))\n|), :err(''), :0status },
+      'allow-no works';
+
+    is_run 'my %*SUB-MAIN-OPTS = :numeric-suffix-as-value; sub MAIN(|c) { say c }',
+      :args("-j2",),
+      { :out(qq|\\(:j(IntStr.new(2, \"2\")))\n|), :err(''), :0status },
+      'numeric-suffix-as-value works';
 }
 
 # vim: expandtab shiftwidth=4
