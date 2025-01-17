@@ -4,7 +4,7 @@ use Test::Util;
 
 use lib $?FILE.IO.parent(2).add("packages/HasMain/lib");
 
-plan 15;
+plan 19;
 
 ## If this test file is fudged, then MAIN never executes because
 ## the fudge script introduces an C<exit(1)> into the mainline.
