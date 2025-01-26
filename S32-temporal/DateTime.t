@@ -1,6 +1,6 @@
 use Test;
 
-plan 312;
+plan 314;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -967,6 +967,16 @@ lives-ok { DateTime.new(2020,3,10,11,38,.000001).Str },
       $now.later( (:2hours, :30minutes)),
       $now.later(:2hours).later(:30minutes),
       'can specify multiple units as list';
+}
+
+# https://github.com/rakudo/rakudo/issues/1238
+{
+    my role A { has $.a = 42  }
+    my role B { has $.b = 666 }
+    my $datetime = (Date.today but A) but B;
+
+    is-deeply $datetime.a, 42,  'did the first mixin survive';
+    is-deeply $datetime.b, 666, 'did the second mixin survive';
 }
 
 # vim: expandtab shiftwidth=4

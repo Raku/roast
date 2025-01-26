@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 107;
+plan 109;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -374,6 +374,16 @@ my %h;
 for <Str gist raku> -> $method {
     lives-ok { %h."$method"() },
       "self referencing hash doesn't loop on '$method'";
+}
+
+# https://github.com/rakudo/rakudo/issues/1238
+{
+    my role A { has $.a = 42  }
+    my role B { has $.b = 666 }
+    my $hash = (%( :137x, :256y ) but A) but B;
+
+    is-deeply $hash.a, 42,  'did the first mixin survive';
+    is-deeply $hash.b, 666, 'did the second mixin survive';
 }
 
 # vim: expandtab shiftwidth=4

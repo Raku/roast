@@ -2,7 +2,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 11;
+plan 13;
 
 augment class Array { method test_method  { 1 }; };
 augment class Hash { method test_method  { 1 }; };
@@ -56,6 +56,16 @@ is $pair.value, 'value', "method on a named pair";
     }
 
     is (1, 2, 3).twice.join('|'), "2|4|6", 'can extend class List';
+}
+
+# https://github.com/rakudo/rakudo/issues/1238
+{
+    my role A { has $.a = 42  }
+    my role B { has $.b = 666 }
+    my $array = ([1,2,3] but A) but B;
+
+    is-deeply $array.a, 42,  'did the first mixin survive';
+    is-deeply $array.b, 666, 'did the second mixin survive';
 }
 
 # vim: expandtab shiftwidth=4

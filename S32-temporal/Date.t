@@ -2,7 +2,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 137;
+plan 139;
 
 is Date.today.clone(:formatter{'test is good'}).Str, 'test is good',
     'Date.clone can take a formatter';
@@ -315,5 +315,15 @@ is Date.today.clone(:1day, :2month, :2017year).Str, '2017-02-01',
 
 # https://github.com/Raku/old-issue-tracker/issues/2890
 is Date.new(-13_000_000_000, 1, 1), '-13000000000-01-01', 'RT #114760';
+
+# https://github.com/rakudo/rakudo/issues/1238
+{
+    my role A { has $.a = 42  }
+    my role B { has $.b = 666 }
+    my $date = (Date.today but A) but B;
+
+    is-deeply $date.a, 42,  'did the first mixin survive';
+    is-deeply $date.b, 666, 'did the second mixin survive';
+}
 
 # vim: expandtab shiftwidth=4
