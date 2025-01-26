@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 107;
+plan 108;
 
 #L<S02/Mutable types/Array>
 
@@ -442,6 +442,15 @@ subtest 'no funny business in assignment' => {
 {
     is Array.of.^name, 'Mu', 'does Array type object return proper type';
     is Array.new.of.^name, 'Mu', 'does Array object return proper type';
+}
+
+# https://github.com/rakudo/rakudo/issues/1434
+{
+    my @a = ^10;
+    @a[3]:delete;
+
+    my @b := @a.clone;
+    is-deeply @b[3]:exists, False, 'is item 3 also deleted in clone';
 }
 
 # vim: expandtab shiftwidth=4
