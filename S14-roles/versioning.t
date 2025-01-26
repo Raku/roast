@@ -54,6 +54,8 @@ subtest "Enum", {
     is Enum-v6e.^language-revision, 'e', "enum for v6.d";
 }
 
+my $METHOD := Mu.can("POPULATE") ?? "POPULATE" !! "BUILDALL";
+
 subtest "Submethods" => {
     plan 7;
     my @compiler-args = '-I' ~ $?FILE.IO.parent(2).add: 'packages/S14-roles/lib';
@@ -64,7 +66,7 @@ subtest "Submethods" => {
             print C.^language-revision, ": ", C.^submethod_table.keys.join(" ");
             V6C
         :@compiler-args,
-        { :err(""), :out("c: BUILDALL") },
+        { :err(""), :out("c: $METHOD") },
         "6.c class consuming 6.e role doesn't receive role's submethods";
 
     is_run q:to/V6C/,
@@ -75,7 +77,7 @@ subtest "Submethods" => {
             print C.^language-revision, ": ", C.^submethod_table.keys.sort.join(" ");
             V6C
         :@compiler-args,
-        { :err(""), :out("c: BUILDALL r6c") },
+        { :err(""), :out("c: $METHOD r6c") },
         "6.c class consuming both 6.c and 6.e roles only gets submethods from 6.c role";
 
     is_run q:to/V6E/,
@@ -85,7 +87,7 @@ subtest "Submethods" => {
             print C.^language-revision, ": ", C.^submethod_table.keys.join(" ");
             V6E
         :@compiler-args,
-        { :err(""), :out("e: BUILDALL") },
+        { :err(""), :out("e: $METHOD") },
         "6.e class consuming 6.e role doesn't receive role's submethods";
 
     is_run q:to/V6E/,
@@ -96,7 +98,7 @@ subtest "Submethods" => {
             print C.^language-revision, ": ", C.^submethod_table.keys.join(" ");
             V6E
         :@compiler-args,
-        { :err(""), :out("e: BUILDALL") },
+        { :err(""), :out("e: $METHOD") },
         "6.e class consuming both 6.c and 6.e roles gets submethods from neither";
 
     #?rakudo.jvm todo 'got out: "c: "'

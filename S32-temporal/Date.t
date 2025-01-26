@@ -4,6 +4,9 @@ use Test;
 
 plan 137;
 
+is Date.today.clone(:formatter{'test is good'}).Str, 'test is good',
+    'Date.clone can take a formatter';
+
 # construction
 {
     lives-ok { Date.new('2010-01-01') }, 'Date.new("2010-01-01")';
@@ -247,8 +250,6 @@ subtest 'all Date constructors throw on invalid dates' => {
     }
 }
 
-is Date.today.clone(:formatter{'test is good'}).Str, 'test is good',
-    'Date.clone can take a formatter';
 is Date.today.clone(:1day, :2month, :2017year).Str, '2017-02-01',
     'Date.clone without formatter uses default formatter';
 

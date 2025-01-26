@@ -114,10 +114,11 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
     is @precompiled.elems, 3, "tried to precompile all 3 modules";
     is $_, 'True' for @precompiled;
 
-    my @keys = Test::Util::run( "use lib $rt123276-lib-prefix.raku();\n" ~ q:to"--END--").lines;
+    my $METHOD := Mu.can("POPULATE") ?? "POPULATE" !! "BUILDALL";
+    my @keys = Test::Util::run( "use lib $rt123276-lib-prefix.raku();\n" ~ qq:to"--END--").lines;
         use RT123276::B::C1;
         use RT123276::B::C2;
-        say RT123276::B::C1.^methods.grep( *.name ne "BUILDALL" )
+        say RT123276::B::C1.^methods.grep(*.name ne "$METHOD")
         --END--
 
     # https://github.com/Raku/old-issue-tracker/issues/3589
