@@ -61,9 +61,10 @@ plan 17;
 
 
 {
-  is( 42.reduce( {$^a+$^b} ), 42,  "method form of reduce works on numbers");
-  is( 'str'.reduce( {$^a+$^b} ), 'str', "method form of reduce works on strings");
-  is ((42,).reduce: { $^a + $^b }), 42,      "method form of reduce should work on arrays";
+  my &reducer = -> $a, $b = 0 { $a + $b }
+  is 42.reduce(&reducer),    42, "method form of reduce works on numbers";
+  is '42'.reduce(&reducer),  42, "method form of reduce works on strings";
+  is (42,).reduce(&reducer), 42, "method form of reduce should work on arrays";
 }
 
 {
