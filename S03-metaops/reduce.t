@@ -632,9 +632,9 @@ is prefix:<[**]>(2,3,4), 2417851639229258349412352, "Reduce ** can autogen witho
     is $side-effect, 1, "and does have a side effect";
 
     $side-effect = 0;
-    is ([\orelse] Nil,Int,Num,2,++$side-effect).gist, '((Any) (Int) (Num) 2 2)', "[\\orelse] on long list produces correct result without thunk";
+    is ([\orelse] Nil,Int,Num,2,++$side-effect).gist, '(Nil (Int) (Num) 2 2)', "[\\orelse] on long list produces correct result without thunk";
     is $side-effect, 0, "and doesn't have a side effect";
-    is ([\orelse] Nil,Failure,Cool,Complex,++$side-effect).gist, '((Any) (Failure) (Cool) (Complex) 1)', "[\\orelse] on long list produces correct result with thunk";
+    is ([\orelse] Nil,Failure,Cool,Complex,++$side-effect).gist, '(Nil (Failure) (Cool) (Complex) 1)', "[\\orelse] on long list produces correct result with thunk";
     is $side-effect, 1, "and does have a side effect";
 
 }
