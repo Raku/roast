@@ -1,5 +1,5 @@
 use Test;
-plan 581;
+plan 580;
 
 =begin pod
 
@@ -151,14 +151,12 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 is-deeply ([=>] (1, 2).Seq), (1 => 2), "[=>] works on Seq";
 
 {
-    my @array = <5 -3 7 0 1 -9>;
-    # according to http://irclog.perlgeek.de/perl6/2008-09-10#i_560910
-    # [,] returns a scalar (holding an Array)
-    my $count = 0;
-    $count++ for [,] @array;
-    #?rakudo todo 'item context'
-    is $count, 1, '[,] returns a single Array';
-    ok ([,] @array) ~~ Positional, '[,] returns something Positional';
+    # according to https://irclogs.raku.org/perl6/2008-09-10.html#18:50-0001
+    # [,] returns a scalar (holding an Array).  Since then, infix:<,> is
+    # expected to return a List
+    my $list := <5 -3 7 0 1 -9>;  # *not* containerized
+    my @array = $list;
+    is-deeply ([,] @array), $list, '[,] produces a uncontainerized List';
 }
 
 # Following two tests taken verbatim from former t/operators/reduce.t
