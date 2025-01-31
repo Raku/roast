@@ -1,0 +1,10 @@
+{
+    "name": "TestDist",
+    "ver": "0.0.1",
+    "auth": "test:raku",
+    "raku": "*",
+    "description": "Test MVDist versions",
+    "depends": [
+        "MVDist#dep_spec#"
+    ]
+}
