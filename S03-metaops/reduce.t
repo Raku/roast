@@ -168,10 +168,8 @@ lives-ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
 # https://github.com/Raku/old-issue-tracker/issues/3475
 {
-    #?rakudo todo 'reduce metaop of hyper metaop works with one element'
-    lives-ok { [>>+<<] 42 }, 'reduce operator works with one element';
-    #?rakudo todo 'reduce metaop of hyper metaop works with zero elements'
-    lives-ok { [>>+<<] }, 'reduce metaop of hyper metaop works with zero elements';
+    is-deeply ([>>+<<], 42), (0,42), 'reduce operator works with one element';
+    is-deeply ([>>+<<]), 0, 'reduce metaop of hyper works with zero elements';
 }
 
 # Check that user defined infix ops work with [...], too.
