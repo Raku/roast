@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 109;
+plan 111;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -384,6 +384,15 @@ for <Str gist raku> -> $method {
 
     is-deeply $hash.a, 42,  'did the first mixin survive';
     is-deeply $hash.b, 666, 'did the second mixin survive';
+}
+
+# https://github.com/rakudo/rakudo/issues/1997
+{
+    my %a = :42a, :666b, :137c;
+    my %b := %a.clone;
+    %b<c> = 256;
+    is-deeply %a,  %(:42a, :666b, :137c), 'is original unchanged';
+    is-deeply %b,  %(:42a, :666b, :256c), 'is clone updated';
 }
 
 # vim: expandtab shiftwidth=4

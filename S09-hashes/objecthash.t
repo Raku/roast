@@ -1,6 +1,6 @@
 use Test;
 
-plan 59;
+plan 61;
 
 {
     class A { method Str() { 'foo' } };
@@ -151,6 +151,15 @@ my %oh{Any};
 for <Str gist raku> -> $method {
     lives-ok { %oh."$method"() },
       "self referencing object hash doesn't loop on '$method'";
+}
+
+# https://github.com/rakudo/rakudo/issues/1997
+{
+    my %a{Mu} = :42a, :666b, :137c;
+    my %b := %a.clone;
+    %b<c> = 256;
+    is-deeply %a,  (my %{Mu} = :42a, :666b, :137c), 'is original unchanged';
+    is-deeply %b,  (my %{Mu} = :42a, :666b, :256c), 'is clone updated';
 }
 
 # vim: expandtab shiftwidth=4
