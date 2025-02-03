@@ -1,5 +1,6 @@
 use Test;
-plan 23;
+
+plan 24;
 
 {
     my %hash = :foo, :42bar;
@@ -111,6 +112,12 @@ subtest 'Map.gist shows only the first sorted 100 els' => {
     my %m is Map = a => 42, b => 666;
     dies-ok { %m<a> = 666 }, 'cannot assign to existing key';
     dies-ok { %m<c> = 666 }, 'cannot assign to non-existing key';
+}
+
+# https://github.com/rakudo/rakudo/issues/3211
+{
+    is-deeply Map.new(:42a, :666b), Map.new( (:42a, :666b) ),
+      'can we create a Map with just named arguments';
 }
 
 # vim: expandtab shiftwidth=4

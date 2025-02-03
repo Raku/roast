@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 111;
+plan 112;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -393,6 +393,12 @@ for <Str gist raku> -> $method {
     %b<c> = 256;
     is-deeply %a,  %(:42a, :666b, :137c), 'is original unchanged';
     is-deeply %b,  %(:42a, :666b, :256c), 'is clone updated';
+}
+
+# https://github.com/rakudo/rakudo/issues/3211
+{
+    is-deeply Hash.new(:42a, :666b), Hash.new( (:42a, :666b) ),
+      'can we create a Hash with just named arguments';
 }
 
 # vim: expandtab shiftwidth=4
