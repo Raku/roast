@@ -1,6 +1,6 @@
 use Test;
 
-plan 61;
+plan 62;
 
 {
     class A { method Str() { 'foo' } };
@@ -160,6 +160,12 @@ for <Str gist raku> -> $method {
     %b<c> = 256;
     is-deeply %a,  (my %{Mu} = :42a, :666b, :137c), 'is original unchanged';
     is-deeply %b,  (my %{Mu} = :42a, :666b, :256c), 'is clone updated';
+}
+
+# https://github.com/rakudo/rakudo/issues/4301
+{
+    throws-like { my %h{Int(Str)}; %h<a> = 42 }, X::Str::Numeric,
+      'did the coercion failure throw in time';
 }
 
 # vim: expandtab shiftwidth=4
