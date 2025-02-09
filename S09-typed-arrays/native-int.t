@@ -7,7 +7,7 @@ if $*KERNEL.bits == 64 {
     @uint.push: uint64;
 }
 
-plan (@int + @uint) * 182 + @uint * 2 + 3;
+plan (@int + @uint) * 182 + @uint * 2 + 10;
 
 # Basic native int array tests.
 for flat @int,@uint -> $T {
@@ -346,12 +346,27 @@ dies-ok { my int @a = ^Inf; 42 }, 'Trying to assign ^Inf to an int array dies';
     is $result1, $result2, "is $result1 == $result2";
 }
 
-# R#2912
+# https://github.com/rakudo/rakudo/issues/2912
 {
     my @a;
     @a[1] = 1;
     my int @b = @a;
     is-deeply @b, (my int @ = 0,1), 'did we survive the hole';
+}
+
+# https://github.com/rakudo/rakudo/issues/5781
+{
+    my int @a = 1,2,3;
+    is-deeply (@a.first = 42), 42, "can we assign with '.first'";
+    is-deeply @a.first, 42, "did the assign with '.first' work";
+
+    is-deeply (@a.head = 666), 666, "can we assign with '.head'";
+    is-deeply @a.head, 666, "did the assign with '.head' work";
+
+    is-deeply (@a.tail = 137), 137, "can we assign with '.tail'";
+    is-deeply @a.tail, 137, "did the assign with '.tail' work";
+
+    is-deeply @a, (my int @ = 666,2,137), 'is the final array correct';
 }
 
 # vim: expandtab shiftwidth=4

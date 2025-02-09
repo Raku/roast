@@ -1,6 +1,6 @@
 use Test;
 
-plan 184;
+plan 191;
 
 # Basic native str array tests.
 my $T := str;
@@ -308,12 +308,27 @@ is @unsorted.sort, "", "Can we sort 0-element $t array";
       "List-assigning incompatible untyped array to $t array dies";
 }
 
-# R#2912
+# https://github.com/rakudo/rakudo/issues/2912
 {
     my @a;
     @a[1] = "b";
     my str @b = @a;
     is-deeply @b, (my str @ = "","b"), 'did we survive the hole';
+}
+
+# https://github.com/rakudo/rakudo/issues/5781
+{
+    my str @a = <a b c>;
+    is (@a.first = "foo"), "foo", "can we assign with '.first'";
+    is @a.first, "foo", "did the assign with '.first' work";
+
+    is (@a.head = "bar"), "bar", "can we assign with '.head'";
+    is @a.head, "bar", "did the assign with '.head' work";
+
+    is (@a.tail = "baz"), "baz", "can we assign with '.tail'";
+    is @a.tail, "baz", "did the assign with '.tail' work";
+
+    is-deeply @a, (my str @ = <bar b baz>), 'is the final array correct';
 }
 
 # vim: expandtab shiftwidth=4

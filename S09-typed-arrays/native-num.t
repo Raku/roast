@@ -5,7 +5,7 @@ if $*KERNEL.bits == 64 {
     @num.push:  num64;
 }
 
-plan @num * 170 + 1;
+plan @num * 170 + 8;
 
 # Basic native num array tests.
 for @num -> $T {
@@ -322,12 +322,27 @@ for @num -> $T {
     is @unsorted.sort, "", "Can we sort 0-element $t array";
 }
 
-# R#2912
+# https://github.com/rakudo/rakudo/issues/2912
 {
     my @a;
     @a[1] = 1e0;
     my num @b = @a;
     is-deeply @b, (my num @ = 0e0,1e0), 'did we survive the hole';
+}
+
+# https://github.com/rakudo/rakudo/issues/5781
+{
+    my num @a = 1e0,2e0,3e0;
+    is-deeply (@a.first = 42e0), 42e0, "can we assign with '.first'";
+    is-deeply @a.first, 42e0, "did the assign with '.first' work";
+
+    is-deeply (@a.head = 666e0), 666e0, "can we assign with '.head'";
+    is-deeply @a.head, 666e0, "did the assign with '.head' work";
+
+    is-deeply (@a.tail = 137e0), 137e0, "can we assign with '.tail'";
+    is-deeply @a.tail, 137e0, "did the assign with '.tail' work";
+
+    is-deeply @a, (my num @ = 666e0,2e0,137e0), 'is the final array correct';
 }
 
 # vim: expandtab shiftwidth=4
