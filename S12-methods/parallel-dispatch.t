@@ -44,7 +44,7 @@ class Bar is Foo {
     is(@o.map({.count}), (6..11), 'parallel dispatch using @o».?doit works');
     @o>>.?doit;
     is(@o.map({.count}), (7..12), 'parallel dispatch using @o>>.?doit works');
-    is (@o».?not_here).map({ $_ === Nil }).join(", "), @o.map({ True }).join(", "),
+    is-deeply (@o».?not_here), [Any,Any,Any,Any,Any,Any],
        '$obj».?nonexistingmethod returns a list of Nil';
     is (@o».?count).join(", "), @o.map({.count}).join(", "),
        '$obj».?existingmethod returns a list of the return values';
