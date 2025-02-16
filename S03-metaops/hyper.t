@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 418;
+plan 420;
 
 =begin pod
 
@@ -1159,6 +1159,15 @@ is-deeply (:42a, :666b).Map>>.Str, (a => "42", b => "666").Map,
       X::Seq::Consumed,
       kind => HyperSeq
     ;
+}
+
+# https://github.com/rakudo/rakudo/issues/5778
+{
+    my Int @foo = 1, 2, 3;
+    is-deeply @foo >>*>> 4, (my Int @ = 4,8,12),
+      'do we get the same data structure if constraint allows';
+    is-deeply @foo >>/>> 4, (.25, .5, .75),
+      'do we get a List if constraint does not allow';
 }
 
 # vim: expandtab shiftwidth=4

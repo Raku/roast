@@ -1,6 +1,6 @@
 use Test;
 
-plan 11;
+plan 13;
 
 =begin description
 
@@ -38,5 +38,14 @@ is <a b c>.nodemap({ next if $_ eq "b"; $_ }), "a c", 'did next work';
 # at the container level.
 is ((0,1),(2,3)).deepmap(* + 1).raku, '($(1, 2), $(3, 4))',
   'did we get sublists in containers';
+
+# https://github.com/rakudo/rakudo/issues/5778
+{
+    my Str @a = <a bb cccc>;
+    is-deeply @a.deepmap("x" ~ *), (my Str @ = <xa xbb xcccc>),
+      'do we get a Str @ if the constraint allows';
+    is-deeply @a.deepmap(*.chars), (1,2,4),
+      'do we get a List if the constraint disallows';
+}
 
 # vim: expandtab shiftwidth=4
