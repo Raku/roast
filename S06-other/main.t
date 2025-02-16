@@ -4,7 +4,7 @@ use Test::Util;
 
 use lib $?FILE.IO.parent(2).add("packages/HasMain/lib");
 
-plan 19;
+plan 21;
 
 ## If this test file is fudged, then MAIN never executes because
 ## the fudge script introduces an C<exit(1)> into the mainline.
@@ -152,6 +152,16 @@ subtest '%*SUB-MAIN-OPTS<named-anywhere>', {
       :args("-j2",),
       { :out(qq|\\(:j(IntStr.new(2, \"2\")))\n|), :err(''), :0status },
       'numeric-suffix-as-value works';
+}
+
+# https://github.com/rakudo/rakudo/issues/5159
+{
+    is_run 'sub MAIN(:$o, :@t) { dd $o }', :args<--o --t=a>,
+      { :out(""), :err("Bool::True\n"), :0status },
+      'Bool with named arg array and one arg works';
+    is_run 'sub MAIN(:$o, :@t) { dd $o }', :args<--o --t=a --t=b>,
+      { :out(""), :err("Bool::True\n"), :0status },
+      'Bool with named arg array and two args works';
 }
 
 # vim: expandtab shiftwidth=4
