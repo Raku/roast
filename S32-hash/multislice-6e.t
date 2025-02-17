@@ -1,7 +1,7 @@
 use v6.e.PREVIEW;
 use Test;
 
-plan 544;
+plan 549;
 
 # Testing hash multislices, aka %h{a;b;c} and associated adverbs
 
@@ -406,6 +406,21 @@ for
       '|| did the hash get changed correctly';
     is-deeply %hash{|| "b"}, { d => 444 },
       '|| did single key get handled correctly';
+}
+
+# https://github.com/rakudo/rakudo/issues/5122
+{
+    my @a = [1,2,3],[4,5,6],[7,8,9],[10,11,12];
+    is-deeply @a[1^..*;1], (8,11),
+      "simple slice with lazy indices doesn't hang";
+    is-deeply @a[1^..*;1]:exists, (True,True),
+      "simple slice with lazy indices and :exists doesn't hang (1)";
+    is-deeply @a[1^..*;1]:delete, (8,11),
+      "simple slice with lazy indices and :delete doesn't hang";
+    is-deeply @a, [[1,2,3],[4,5,6],[7,Any,9],[10,Any,12]],
+      "proper elements were deleted from multidim array";
+    is-deeply @a[1^..*;1]:exists, (False,False),
+      "simple slice with lazy indices and :exists doesn't hang (2)";
 }
 
 # vim: expandtab shiftwidth=4
