@@ -1,6 +1,6 @@
 use Test;
 
-plan 13;
+plan 14;
 
 =begin description
 
@@ -46,6 +46,19 @@ is ((0,1),(2,3)).deepmap(* + 1).raku, '($(1, 2), $(3, 4))',
       'do we get a Str @ if the constraint allows';
     is-deeply @a.deepmap(*.chars), (1,2,4),
       'do we get a List if the constraint disallows';
+}
+
+# https://github.com/rakudo/rakudo/issues/4435
+{
+    my @data =
+      { val => 1, name => 'alpha', },
+      { val => 2, name => 'beta',  },
+      { val => 3, name => 'gamma', },
+      { val => 4, name => 'delta', },
+    ;
+    is-deeply @data.deepmap({ $_ + 10 if $_ ~~ Numeric }),
+      [{ :11val }, { :12val }, { :13val }, { :14val }],
+      'did the keys and values match up?';
 }
 
 # vim: expandtab shiftwidth=4
