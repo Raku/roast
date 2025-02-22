@@ -64,9 +64,9 @@ plan 15;
 
 
 {
-  is( 42.reduce( {$^a+$^b} ), 42,  "method form of reduce works on numbers");
-  is( 'str'.reduce( {$^a+$^b} ), 'str', "method form of reduce works on strings");
-  is ((42,).reduce: { $^a + $^b }), 42,      "method form of reduce should work on arrays";
+  is( 42.reduce(-> $a, $b = 1 { $a * $b}), 42,  "method form of reduce works on numbers");
+  is( 'str'.reduce(-> $a, $b = 'uh' { $a ~ $b}), 'struh', "method form of reduce works on strings");
+  is ((42,).reduce: -> $a, $b = 1 { $a * $b}), 42,      "method form of reduce should work on arrays";
 }
 
 {
@@ -80,7 +80,7 @@ plan 15;
   ok ([&&] @reftypes), "All the types were hashes";
 }
 
-is( (1).list.reduce({$^a * $^b}), 1, "Reduce of one element list produces correct result");
+is( (1).list.reduce(-> $a, $b = 1 { $a * $b}), 1, "Reduce of one element list produces correct result");
 
 eval-lives-ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper arity calculation');
 
