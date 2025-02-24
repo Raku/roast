@@ -1,6 +1,6 @@
 use Test;
 
-plan 211;
+plan 235;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -484,6 +484,39 @@ subtest 'no floating point drifts in degenerate Ranges' => {
     is-deeply +(5..-∞),          0, '+(5..-∞)';
     is-deeply +(-∞..-∞),         Inf, '+(-∞..-∞)';
     is-deeply +(∞..∞),           Inf, '+(∞..∞)';
+}
+
+# https://github.com/rakudo/rakudo/issues/5791
+{
+    my $r := 2..6;
+    is-deeply $r.min(:k),   0,             '2..6 min :k';
+    is-deeply $r.min(:!k),  2,             '2..6 min :!k';
+    is-deeply $r.min(:kv),  (0,2),         '2..6 min :kv';
+    is-deeply $r.min(:!kv), 2,             '2..6 min :!kv';
+    is-deeply $r.min(:p),   Pair.new(0,2), '2..6 min :p';
+    is-deeply $r.min(:!p),  2,             '2..6 min :!p';
+
+    is-deeply $r.max(:k),   4,             '2..6 max :k';
+    is-deeply $r.max(:!k),  6,             '2..6 max :!k';
+    is-deeply $r.max(:kv),  (4,6),         '2..6 max :kv';
+    is-deeply $r.max(:!kv), 6,             '2..6 max :!kv';
+    is-deeply $r.max(:p),   Pair.new(4,6), '2..6 max :p';
+    is-deeply $r.max(:!p),  6,             '2..6 max :!p';
+
+    my $i := 2..Inf;
+    is-deeply $i.min(:k),   0,             '2..Inf min :k';
+    is-deeply $i.min(:!k),  2,             '2..Inf min :!k';
+    is-deeply $i.min(:kv),  (0,2),         '2..Inf min :kv';
+    is-deeply $i.min(:!kv), 2,             '2..Inf min :!kv';
+    is-deeply $i.min(:p),   Pair.new(0,2), '2..Inf min :p';
+    is-deeply $i.min(:!p),  2,             '2..Inf min :!p';
+
+    is-deeply $i.max(:k),   Inf,               '2..Inf max :k';
+    is-deeply $i.max(:!k),  Inf,               '2..Inf max :!k';
+    is-deeply $i.max(:kv),  (Inf,Inf),         '2..Inf max :kv';
+    is-deeply $i.max(:!kv), Inf,               '2..Inf max :!kv';
+    is-deeply $i.max(:p),   Pair.new(Inf,Inf), '2..Inf max :p';
+    is-deeply $i.max(:!p),  Inf,               '2..Inf max :!p';
 }
 
 # vim: expandtab shiftwidth=4
