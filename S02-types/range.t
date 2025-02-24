@@ -1,6 +1,6 @@
 use Test;
 
-plan 235;
+plan 259;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -503,6 +503,20 @@ subtest 'no floating point drifts in degenerate Ranges' => {
     is-deeply $r.max(:p),   Pair.new(4,6), '2..6 max :p';
     is-deeply $r.max(:!p),  6,             '2..6 max :!p';
 
+    is-deeply min($r,:k),   0,             'min 2..6 :k';
+    is-deeply min($r,:!k),  2,             'min 2..6 :!k';
+    is-deeply min($r,:kv),  (0,2),         'min 2..6 :kv';
+    is-deeply min($r,:!kv), 2,             'min 2..6 :!kv';
+    is-deeply min($r,:p),   Pair.new(0,2), 'min 2..6 :p';
+    is-deeply min($r,:!p),  2,             'min 2..6 :!p';
+
+    is-deeply max($r,:k),   4,             'max 2..6 :k';
+    is-deeply max($r,:!k),  6,             'max 2..6 :!k';
+    is-deeply max($r,:kv),  (4,6),         'max 2..6 :kv';
+    is-deeply max($r,:!kv), 6,             'max 2..6 :!kv';
+    is-deeply max($r,:p),   Pair.new(4,6), 'max 2..6 :p';
+    is-deeply max($r,:!p),  6,             'max 2..6 :!p';
+
     my $i := 2..Inf;
     is-deeply $i.min(:k),   0,             '2..Inf min :k';
     is-deeply $i.min(:!k),  2,             '2..Inf min :!k';
@@ -517,6 +531,20 @@ subtest 'no floating point drifts in degenerate Ranges' => {
     is-deeply $i.max(:!kv), Inf,               '2..Inf max :!kv';
     is-deeply $i.max(:p),   Pair.new(Inf,Inf), '2..Inf max :p';
     is-deeply $i.max(:!p),  Inf,               '2..Inf max :!p';
+
+    is-deeply min($i,:k),   0,             '2..Inf min :k';
+    is-deeply min($i,:!k),  2,             '2..Inf min :!k';
+    is-deeply min($i,:kv),  (0,2),         '2..Inf min :kv';
+    is-deeply min($i,:!kv), 2,             '2..Inf min :!kv';
+    is-deeply min($i,:p),   Pair.new(0,2), '2..Inf min :p';
+    is-deeply min($i,:!p),  2,             '2..Inf min :!p';
+
+    is-deeply max($i,:k),   Inf,               '2..Inf max :k';
+    is-deeply max($i,:!k),  Inf,               '2..Inf max :!k';
+    is-deeply max($i,:kv),  (Inf,Inf),         '2..Inf max :kv';
+    is-deeply max($i,:!kv), Inf,               '2..Inf max :!kv';
+    is-deeply max($i,:p),   Pair.new(Inf,Inf), '2..Inf max :p';
+    is-deeply max($i,:!p),  Inf,               '2..Inf max :!p';
 }
 
 # vim: expandtab shiftwidth=4
