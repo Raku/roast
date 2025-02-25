@@ -12,6 +12,7 @@ plan 19;
     # This once wrongly reported a multi-dispatch circularity.
     multi rt107638(int $a) { 'ok' }      #OK not used
     multi rt107638(Str $a where 1) { }   #OK not used
+    #?rakudo todo "Only happen to pass because the optimizer inlines the most trivial cases"
     lives-ok { rt107638(1) },
         'native types and where clauses do not cause spurious circularities';
 }

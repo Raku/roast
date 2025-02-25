@@ -43,6 +43,7 @@ plan 13;
 {
     multi x(int $x is rw) { 1 }
     multi x(Int $x) { 2 }
+    #?rakudo todo "Only happen to pass because the optimizer inlines the most trivial cases"
     is x(my int $x = 42), 1, 'rw native container hits correct candidate';
     is x(1), 2, 'non-rw literal does not reach is rw candidate';
 }
