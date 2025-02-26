@@ -31,22 +31,22 @@ plan 16;
 
 
 {
-    lives-ok { constant $x = "µ @"; sub circumfix:<<$x>>($) { 42 } },
+    lives-ok { my constant $x = "µ @"; sub circumfix:<<$x>>($) { 42 } },
         'can define circumfix using << >> and both delimiters from the same constant';
-    my $test = EVAL 'constant $x = "µ @"; sub circumfix:<<$x>>($) { 42 }; µ 5 @';
+    my $test = EVAL 'my constant $x = "µ @"; sub circumfix:<<$x>>($) { 42 }; µ 5 @';
     is $test, 42, 'can define and use circumfix using << >> and both delimiters from the same constant (1)';
 
-    lives-ok { constant $x = "µµ @@"; sub circumfix:<<$x>>($) { 42 } },
+    lives-ok { my constant $x = "µµ @@"; sub circumfix:<<$x>>($) { 42 } },
         'can define circumfix using << >> and both delimiters from the same constant';
-       $test = EVAL 'constant $x = "µµ @@"; sub circumfix:<<$x>>($) { 42 }; µµ 5 @@';
+       $test = EVAL 'my constant $x = "µµ @@"; sub circumfix:<<$x>>($) { 42 }; µµ 5 @@';
     is $test, 42, 'can define and use circumfix using << >> and both delimiters from the same constant (2)';
 
-    lives-ok { constant sym = "µ @"; sub circumfix:<< {sym} >>($) { 42 } },
+    lives-ok { my constant sym = "µ @"; sub circumfix:<< {sym} >>($) { 42 } },
         'can define circumfix using << {sym} >> and both delimiters from the same constant';
-       $test = EVAL 'constant sym = "µ @"; sub circumfix:<< {sym} >>($) { 42 }; µ 5 @';
+       $test = EVAL 'my constant sym = "µ @"; sub circumfix:<< {sym} >>($) { 42 }; µ 5 @';
     is $test, 42, 'can define and use circumfix using << >> and both delimiters from the same constant';
 
-    throws-like { EVAL q[ constant $x = "@ µ ."; sub circumfix:<<$x>>($) { 42 } ] },
+    throws-like { EVAL q[ my constant $x = "@ µ ."; sub circumfix:<<$x>>($) { 42 } ] },
         X::Syntax::AddCategorical::TooManyParts,
         'constants containing too many parts throw correctly';
 }
