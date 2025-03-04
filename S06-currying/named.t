@@ -3,7 +3,7 @@ use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Assuming;
 
 # L<S06/Currying/>
-plan 27;
+plan 28;
 
 sub tester(:$a, :$b, :$c) {
     "a$a b$b c$c";
@@ -23,43 +23,56 @@ sub tester(:$a, :$b, :$c) {
     is $w(a => 'x', c => 'd'), 'ax bb cd', '... and the old one still works';
 }
 
-priming-fails-bind-ok(sub { }, "", "Unexpected named", :named);
-
 # Since you can override named params .assuming does not alter sig
-is-primed-sig(sub (:$a) { }, :(:$a), :a);
-is-primed-sig(sub (:$a, :$b) { }, :(:$a, :$b), :b);
-is-primed-sig(sub (:$a, :$b) { }, :(:$a, :$b), :a);
-is-primed-sig(sub (:$a?) { }, :(:$a), :a);
-is-primed-sig(sub (:$a?, :$b?) { }, :(:$a, :$b), :b);
-is-primed-sig(sub (:$a?, :$b?) { }, :(:$a, :$b), :a);
-# ...but it should optionalize them
-is-primed-sig(sub (:$a!) { }, :(:$a?), :a);
-is-primed-sig(sub (:$a!, :$b!) { }, :(:$a!, :$b), :b);
-is-primed-sig(sub (:$a!, :$b!) { }, :(:$a, :$b!), :a);
-is-primed-sig(sub (:$a = 2) { }, :(:$a), :a);
-is-primed-sig(sub (:$a = 2, :$b = 4) { }, :(:$a, :$b), :b);
-is-primed-sig(sub (:$a = 2, :$b = 4) { }, :(:$a, :$b), :a);
+#?rakudo todo ':a primes a default value for :$a'
+is-primed-sig(sub (:$a) { }, :(:$a = True), :a);
+#?rakudo todo ':b primes a default value for :$b'
+is-primed-sig(sub (:$a, :$b) { }, :(:$a, :$b = True), :b);
+#?rakudo todo ':a primes a default value for :$a'
+is-primed-sig(sub (:$a, :$b) { }, :(:$a = True, :$b), :a);
+#?rakudo todo ':a primes a default value for :$a'
+is-primed-sig(sub (:$a?) { }, :(:$a = True), :a);
+#?rakudo todo ':b primes a default value for :$b'
+is-primed-sig(sub (:$a?, :$b?) { }, :(:$a, :$b = True), :b);
+#?rakudo todo ':a primes a default value for :$a'
+is-primed-sig(sub (:$a?, :$b?) { }, :(:$a = True, :$b), :a);
+#?rakudo todo ':a primes a default value for :$a'
+is-primed-sig(sub (:$a!) { }, :(:$a = True), :a);
+#?rakudo todo ':b primes a default value for :$b'
+is-primed-sig(sub (:$a!, :$b!) { }, :(:$a!, :$b = True), :b);
+#?rakudo todo ':a primes a default value for :$a'
+is-primed-sig(sub (:$a!, :$b!) { }, :(:$a = True, :$b!), :a);
+#?rakudo todo ':a primes a default value for :$a'
+is-primed-sig(sub (:$a = 2) { }, :(:$a = True), :a);
+#?rakudo todo ':b primes a default value for :$b'
+is-primed-sig(sub (:$a = 2, :$b = 4) { }, :(:$a = 2, :$b = True), :b);
+#?rakudo todo ':a primes a default value for :$a'
+is-primed-sig(sub (:$a = 2, :$b = 4) { }, :(:$a = True, :$b = 4), :a);
 is-primed-sig(sub ($a, $b, :$c) { }, :($b, :$c), 1);
-is-primed-sig(sub (:b($a)!) { }, :(:b($a)), :b);
-is-primed-sig(sub (:b(:c($a))!) { }, :(:b(:c($a))), :c);
-is-primed-sig(sub (:b(:c($a))!) { }, :(:b(:c($a))), :b);
+#?rakudo todo ':b primes a default value for :$b'
+is-primed-sig(sub (:b($a)!) { }, :(:b($a) = True), :b);
+#?rakudo todo ':c primes a default value for :$b'
+is-primed-sig(sub (:b(:c($a))!) { }, :(:b(:c($a)) = True), :c);
+#?rakudo todo ':b primes a default value for :$b'
+is-primed-sig(sub (:b(:c($a))!) { }, :(:b(:c($a)) = True), :b);
+#?rakudo todo ':a primes a default value for :$a'
+is-primed-sig(sub (:$a! where { True }) { }, :(:$a where { ... } = True), :a);
+#?rakudo todo ':a primes a default value for :$a'
+is-primed-sig(sub (:$a! is raw where { True }) { }, :(:$a is raw where { ... } = True), :a);
+#?rakudo todo ':a primes a default value for :$a'
+is-primed-sig(sub (:$a! is copy where { True }) { }, :(:$a is copy where { ... } = True), :a);
 
-priming-fails-bind-ok(sub (:b(:c($a))!) { }, "", "Unexpected named", :d);
-
-
-is-primed-sig(sub (:$a! where { True }) { }, :(:$a?), :a);
-is-primed-sig(sub (:$a! is raw where { True }) { }, :(:$a? is raw), :a);
-is-primed-sig(sub (:$a! is copy where { True }) { }, :(:$a? is copy), :a);
-
-# This will not even compile.  Maybe this should be a runtime error?
 # https://github.com/Raku/old-issue-tracker/issues/3686
-##?rakudo todo 'RT #123835'
-#is-primed-sig(sub (:$a! is rw where { True }) { }, :(:$a is rw), :a);
-is-primed-sig(sub (:$a is copy where { True } = 4) { }, :(:$a is copy), :a);
-is-primed-sig(sub (Int :$a! where { True }) { }, :(Int :$a?), :a(1));
+#?rakudo todo ':a primes a default value for :$a'
+is-primed-sig(sub (:$a! is raw where { True }) { }, :(:$a is raw where { True } = True), :a);
+#?rakudo todo ':a primes a default value for :$a'
+is-primed-sig(sub (:$a is copy where { True } = 4) { }, :(:$a is copy where { True } = True), :a);
+#?rakudo todo ':a primes a default value for :$a'
+is-primed-sig(sub (Int :$a! where { True }) { }, :(Int :$a where { True } = 1), :a(1));
 
-priming-fails-bind-ok(sub (Str :$a!) { }, '$a', Str, :a);
-
-
+priming-fails-bind-ok(sub { }, "", "Unexpected", :a);
+priming-fails-bind-ok(sub (:b(:c($a))!) { }, "", "Unexpected", :d);
+#?rakudo todo 'unclear semantics of test logic'
+priming-fails-bind-ok(sub (Str :$a!) { }, '$a', X::TypeCheck::Assignment, :a);
 
 # vim: expandtab shiftwidth=4
