@@ -12,7 +12,7 @@ false, and C<[1,2] eqv [1,2]> returns true.
 
 # L<S03/"Chaining binary precedence" /Value identity>
 
-plan 57;
+plan 59;
 
 # === on values
 {
@@ -131,6 +131,12 @@ isa-ok  1|2 === 1, Junction,  '=== does autothread (2)';
 { # coverage; 2016-09-19
     is-deeply infix:<===>(42),    Bool::True, 'single arg === gives True';
     is-deeply infix:<===>(),      Bool::True, '    no arg === gives True';
+}
+
+# https://github.com/rakudo/rakudo/issues/5796
+{
+    is-deeply Any === Mu, False, 'compare different type objects with ===';
+    is-deeply Mu  === Mu, True,  'compare same type objects with ===';
 }
 
 # vim: expandtab shiftwidth=4
