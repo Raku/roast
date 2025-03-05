@@ -145,7 +145,7 @@ subtest 'attribute access from where clauses' => {
         X::Syntax::NoSelf, 'where, thunk, attr only';
     throws-like ｢my class RT130748b { has $.a; has $.b where * > $!a }｣,
         X::Syntax::NoSelf, 'where, whatevercode';
-    throws-like ｢my class RT130748c { has $.a; has $.b where {$!a}｣,
+    throws-like ｢my class RT130748c { has $.a; has $.b where {$!a} }｣,
         X::Syntax::NoSelf, 'where, block';
 
     my class RT130748d {
