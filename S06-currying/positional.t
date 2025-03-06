@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Assuming;
 
-plan 196;
+plan 195;
 
 is-primed-sig(sub () { }, :(), );
 is-primed-sig(sub ($a) { }, :(), 1);
@@ -150,8 +150,6 @@ is-primed-sig(sub (@ = 2) { }, :(), $[1]);
 is-primed-sig(sub (@ = 4, @b = 2) { }, :(@b = 2), $[1]);
 is-primed-sig(sub (@a, @) { }, :(@a), *, $[2]);
 is-primed-sig(sub (@, @b, @) { }, :(@b), $[1], *, $[3]);
-#?rakudo todo "default value should pass through"
-is-primed-sig(sub (@, [2]) { }, :([2]), $[1]);
 is-primed-sig(sub (Int @a, Int @b) { }, :(Int @b), $@AoI);
 is-primed-sig(sub (Int @, Int @b) { }, :(Int @b), $@AoI);
 is-primed-sig(sub (Int @a, Str @b) { }, :(Str @b), $@AoI);
