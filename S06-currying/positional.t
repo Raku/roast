@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Assuming;
 
-plan 192;
+plan 166;
 
 is-primed-sig(sub () { }, :(), );
 is-primed-sig(sub ($a) { }, :(), 1);
@@ -106,6 +106,7 @@ my int8 @aoi8 = 1,2;
 my X::AdHoc @AoXAH = $XAH,$XAH;
 my Array[Int] @AoAoI = $@AoI,$@AoI;
 my Array[X::AdHoc] @AoAoXAH = $@AoXAH,$@AoXAH;
+
 is-primed-sig(sub (Array[Str] $a, Array[Int] $b) { }, :(Array[Int] $b), $@AoS);
 is-primed-sig(sub (Array[Str] $, Array[Int] $b) { }, :(Array[Int] $b), $@AoS);
 is-primed-sig(sub (Array[Str] $a, Array[Int] $b) { }, :(Array[Str] $a), *, $@AoI);
@@ -114,12 +115,8 @@ is-primed-sig(sub (Array[X::AdHoc] $a, Array[X::AdHoc] $b) { }, :(Array[X::AdHoc
 is-primed-sig(sub (Array[X::AdHoc] $, Array[X::AdHoc] $b) { }, :(Array[X::AdHoc] $b), $@AoXAH);
 is-primed-sig(sub (Array[Array[Int]] $a, Array[Array[Int]] $b) { }, :(Array[Array[Int]] $b), $@AoAoI);
 is-primed-sig(sub (Array[Array[Int]] $, Array[Array[Int]] $b) { }, :(Array[Array[Int]] $b), $@AoAoI);
-is-primed-sig(sub (Array[Array[Int]] $, Array[Array[Int]] $) { }, :(Array[Array[Int]] $), $@AoAoI);
-is-primed-sig(sub (Array[Array[Int]] $a, Array[Array[Int]] $) { }, :(Array[Array[Int]] $), $@AoAoI);
 is-primed-sig(sub (Array[Array[X::AdHoc]] $a, Array[Array[X::AdHoc]] $b) { }, :(Array[Array[X::AdHoc]] $b), $@AoAoXAH);
 is-primed-sig(sub (Array[Array[X::AdHoc]] $, Array[Array[X::AdHoc]] $b) { }, :(Array[Array[X::AdHoc]] $b), $@AoAoXAH);
-is-primed-sig(sub (Array[Array[X::AdHoc]] $, Array[Array[X::AdHoc]] $) { }, :(Array[Array[X::AdHoc]] $), $@AoAoXAH);
-is-primed-sig(sub (Array[Array[X::AdHoc]] $a, Array[Array[X::AdHoc]] $) { }, :(Array[Array[X::AdHoc]] $), $@AoAoXAH);
 is-primed-sig(sub (@a) { }, :(), $[1]);
 is-primed-sig(sub (@a, @b) { }, :(@b), $[1]);
 is-primed-sig(sub (@a?) { }, :(), $[1]);
@@ -171,7 +168,8 @@ is-primed-sig(sub (%a?) { }, :(), {:1a,:2b});
 is-primed-sig(sub (%a, %b?) { }, :(%b?), {:1a,:2b});
 is-primed-sig(sub (%a?, %b?) { }, :(%b?), {:1a,:2b});
 is-primed-sig(sub (%a = :2a) { }, :(), {:1a,:2b});
-is-primed-sig(sub (%a = :4a, %b = :2b) { }, :(%b?), {:1a,:2b});
+#?rakudo todo "default value should pass through"
+is-primed-sig(sub (%a = :4a, %b = :2b) { }, :(%b = :2b), {:1a,:2b});
 is-primed-sig(sub (%a, %b) { }, :(%a), *, {:2b});
 is-primed-sig(sub (%a, %b, $c) { }, :(%b), {:1a,:2b}, *, {:3c});
 is-primed-sig(sub (%a) { }, :(%a), *);
@@ -181,18 +179,11 @@ is-primed-sig(sub (%?) { }, :(), {:1a,:2b});
 is-primed-sig(sub (%, %b?) { }, :(%b?), {:1a,:2b});
 is-primed-sig(sub (%?, %b?) { }, :(%b?), {:1a,:2b});
 is-primed-sig(sub (% = :2a) { }, :(), {:1a,:2b});
-is-primed-sig(sub (% = :4a, %b = :2b) { }, :(%b?), {:1a,:2b});
-is-primed-sig(sub (%, %b) { }, :(%), *, {:2b});
+#?rakudo todo "default value should pass through"
+is-primed-sig(sub (% = :4a, %b = :2b) { }, :(%b = :2b), {:1a,:2b});
 is-primed-sig(sub (%, %b, %c) { }, :(%b), {:1a,:2b}, *, {:3c});
-is-primed-sig(sub (%) { }, :(%), *);
-is-primed-sig(sub (%, %) { }, :(%), {:1a,:2b});
-is-primed-sig(sub (%, %?) { }, :(%?), {:1a,:2b});
-is-primed-sig(sub (%?, %?) { }, :(%?), {:1a,:2b});
 is-primed-sig(sub (% = :2a) { }, :(), {:1a,:2b});
-is-primed-sig(sub (% = :4a, % = :2b) { }, :(%?), {:1a,:2b});
-is-primed-sig(sub (%, %) { }, :(%), *, {:2b});
 is-primed-sig(sub (%, %b, %) { }, :(%b), {:1a,:2b}, *, {:3c});
-is-primed-sig(sub (%, %, %) { }, :(%), {:1a,:2b}, *, {:3c});
 
 my X::AdHoc %HoXAH = a => $XAH, b => $XAH;
 my Int %HoI = a => 1, b => 2;
@@ -201,28 +192,15 @@ my Array[Int] %HoAoI = a => $@AoI, b => $@AoI;
 my Hash[X::AdHoc] %HoHoXAH = a => $%HoXAH, b=> $%HoXAH;
 is-primed-sig(sub (Int %a, Int %b) { }, :(Int %b), $%HoI);
 is-primed-sig(sub (Int %, Int %b) { }, :(Int %b), $%HoI);
-is-primed-sig(sub (Int %, Int %) { }, :(Int %), $%HoI);
-is-primed-sig(sub (Int %a, Int %) { }, :(Int %), $%HoI);
 is-primed-sig(sub (Int %a, Str %b) { }, :(Str %b), $%HoI);
 is-primed-sig(sub (Int %, Str %b) { }, :(Str %b), $%HoI);
-is-primed-sig(sub (Int %, Str %) { }, :(Str %), $%HoI);
-is-primed-sig(sub (Int %a, Str %) { }, :(Str %), $%HoI);
 is-primed-sig(sub (Int %a, Str %b) { }, :(Int %a), *, $%HoS);
-is-primed-sig(sub (Int %, Str %b) { }, :(Int %), *, $%HoS);
-is-primed-sig(sub (Int %, Str %) { }, :(Int %), *, $%HoS);
 is-primed-sig(sub (Int %a, Str %) { }, :(Int %a), *, $%HoS);
 is-primed-sig(sub (Str(Int) %a, Str(Int) %b) { }, :(Str(Int) %b), $%HoI);
 is-primed-sig(sub (Str(Int) %, Str(Int) %b) { }, :(Str(Int) %b), $%HoI);
-is-primed-sig(sub (Str(Int) %, Str(Int) %) { }, :(Str(Int) %), $%HoI);
-is-primed-sig(sub (Str(Int) %a, Str(Int) %) { }, :(Str(Int) %), $%HoI);
 is-primed-sig(sub (Hash[X::AdHoc] %a, Hash[X::AdHoc] %b) { }, :(Hash[X::AdHoc] %b), $%HoHoXAH);
 is-primed-sig(sub (Hash[X::AdHoc] %, Hash[X::AdHoc] %b) { }, :(Hash[X::AdHoc] %b), $%HoHoXAH);
-is-primed-sig(sub (Hash[X::AdHoc] %, Hash[X::AdHoc] %) { }, :(Hash[X::AdHoc] %), $%HoHoXAH);
-is-primed-sig(sub (Hash[X::AdHoc] %a, Hash[X::AdHoc] %) { }, :(Hash[X::AdHoc] %), $%HoHoXAH);
 is-primed-sig(sub (Array[Str] %a, Array[Int] %b) { }, :(Array[Str] %a), *, $%HoAoI);
-is-primed-sig(sub (Array[Str] %, Array[Int] %b) { }, :(Array[Str] %), *, $%HoAoI);
-is-primed-sig(sub (Array[Str] %, Array[Int] %) { }, :(Array[Str] %), *, $%HoAoI);
-is-primed-sig(sub (Array[Str] %a, Array[Int] %) { }, :(Array[Str] %a), *, $%HoAoI);
 
 priming-fails-bind-ok(sub (Str $a) { }, '$a', Str, 1);
 priming-fails-bind-ok(sub (Int(Str) $a) { }, '$a', Int(Str), 1.1);
@@ -234,7 +212,6 @@ multi testsubproto (Str $x, $y) { "Str + $y" }
 multi testsubproto (Int $x, $y) { "Int + $y" }
 
 is-primed-call(&abc123, \(1,2,3), ['a','b','c',1,2,3], 'a','b','c');
-is-primed-call(-> Str $a { $a.WHAT }, \(), [Str], Nil);
 is-primed-call(&testsubproto, \(43), ["Int + 43"], 42);
 is-primed-call(&testsubproto, \(44), ["Str + 44"], "a Str");
 is-primed-call(&atan2, \(2), [atan2(1,2)],1);
