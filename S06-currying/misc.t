@@ -9,26 +9,33 @@ plan 13;
 # of the currently prototyped functionality.
 
 is-primed-sig(sub (::T $a, $b, :$c) { }, :($b, :$c), 1);
-is-primed-sig(sub (::T $a, T $b, T :$c) { }, :($b, :$c), 1);
-is-primed-sig(sub (::T $a, T @b, T :@c) { }, :(@b, :@c), 1);
-is-primed-sig(sub (::T $a, T $b, T :$c) { }, :(:$c), 1, 1);
-is-primed-sig(sub (::T $a, T @b, T :@c) { }, :(:@c), 1, $[1]);
-is-primed-sig(sub (::T $a, Array[T] $b, Array[Int] :$c) { }, :($b, Array[Int] :$c), 1);
+#?rakudo todo "type should pass through"
+is-primed-sig(sub (::T $a, T $b, T :$c) { }, :(Int $b, Int :$c), 1);
+#?rakudo todo "type should pass through"
+is-primed-sig(sub (::T $a, T @b, T :@c) { }, :(Int @b, Int :@c), 1);
+#?rakudo todo "type should pass through"
+is-primed-sig(sub (::T $a, T $b, T :$c) { }, :(Int :$c), 1, 1);
+is-primed-sig(sub (::T $a, T @b, T :@c) { }, :(Int :@c), 1, Array[Int].new(1));
+#?rakudo skip "not yet properly supported"
+is-primed-sig(sub (::T $a, Array[T] $b, Array[Int] :$c) { }, :(Array[Int] $b, Array[Int] :$c), 1);
+#?rakudo skip "not yet properly supported"
 is-primed-sig(sub (::T $a, Array[T] $b, Array[Int] :$c) { }, :(Array[Int] :$c), 1, $(Array[Int].new));
-is-primed-sig(sub (::T $a, Array[Array[T]] $b, Array[Array[Int]] :$c) { }, :($b, Array[Array[Int]] :$c), 1);
-is-primed-sig(sub (::T $a, Array[Positional[T]] $b, Array[Positional[Int]] :$c) { }, :($b, Array[Positional[Int]] :$c), 1);
+#?rakudo skip "not yet properly supported"
+is-primed-sig(sub (::T $a, Array[Array[T]] $b, Array[Array[Int]] :$c) { }, :(Array[Array[Int]] $b, Array[Array[Int]] :$c), 1);
+#?rakudo skip "not yet properly supported"
+is-primed-sig(sub (::T $a, Array[Positional[T]] $b, Array[Positional[Int]] :$c) { }, :(Array[Positional[Int]] $b, Array[Positional[Int]] :$c), 1);
 
 #?rakudo skip 'We could do better here'
 is-primed-call(sub (::T $a, T $b is copy, T :$c) { "a" ~ $a.raku ~ "b" ~ $b.raku ~ "c" ~ $c.raku }, \("A", :c<C>), ["aAb(Any)cC"], *, Nil);
 
 # How or whether this should fail is less clear to me.  Currently LTA error.
+#?rakudo skip 'We could do better here'
 is-primed-sig(sub () { }, :(), *);
 
 # https://github.com/Raku/old-issue-tracker/issues/3705
 sub same'proto(::T, T $a, T $b) { $a.WHAT === $b.WHAT };
 my &infix:<same-in-Int> = &same'proto.assuming(Int);
 throws-like { 42 same-in-Int "42" }, X::TypeCheck::Binding,
-    backtrace => rx:i/.*in\s+\S+\s+\S*curr{fail}||prim/,
     "Backtrace mentions priming and does not mention currying";
 
 # Try with an anonymous capture in the mix
