@@ -9,11 +9,8 @@ plan 13;
 # of the currently prototyped functionality.
 
 is-primed-sig(sub (::T $a, $b, :$c) { }, :($b, :$c), 1);
-#?rakudo todo "type should pass through"
 is-primed-sig(sub (::T $a, T $b, T :$c) { }, :(Int $b, Int :$c), 1);
-#?rakudo todo "type should pass through"
 is-primed-sig(sub (::T $a, T @b, T :@c) { }, :(Int @b, Int :@c), 1);
-#?rakudo todo "type should pass through"
 is-primed-sig(sub (::T $a, T $b, T :$c) { }, :(Int :$c), 1, 1);
 is-primed-sig(sub (::T $a, T @b, T :@c) { }, :(Int :@c), 1, Array[Int].new(1));
 #?rakudo skip "not yet properly supported"

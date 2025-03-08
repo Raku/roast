@@ -24,50 +24,29 @@ sub tester(:$a, :$b, :$c) {
 }
 
 # Since you can override named params .assuming does not alter sig
-#?rakudo todo ':a primes a default value for :$a'
 is-primed-sig(sub (:$a) { }, :(:$a = True), :a);
-#?rakudo todo ':b primes a default value for :$b'
 is-primed-sig(sub (:$a, :$b) { }, :(:$a, :$b = True), :b);
-#?rakudo todo ':a primes a default value for :$a'
 is-primed-sig(sub (:$a, :$b) { }, :(:$a = True, :$b), :a);
-#?rakudo todo ':a primes a default value for :$a'
 is-primed-sig(sub (:$a?) { }, :(:$a = True), :a);
-#?rakudo todo ':b primes a default value for :$b'
 is-primed-sig(sub (:$a?, :$b?) { }, :(:$a, :$b = True), :b);
-#?rakudo todo ':a primes a default value for :$a'
 is-primed-sig(sub (:$a?, :$b?) { }, :(:$a = True, :$b), :a);
-#?rakudo todo ':a primes a default value for :$a'
 is-primed-sig(sub (:$a!) { }, :(:$a = True), :a);
-#?rakudo todo ':b primes a default value for :$b'
 is-primed-sig(sub (:$a!, :$b!) { }, :(:$a!, :$b = True), :b);
-#?rakudo todo ':a primes a default value for :$a'
 is-primed-sig(sub (:$a!, :$b!) { }, :(:$a = True, :$b!), :a);
-#?rakudo todo ':a primes a default value for :$a'
 is-primed-sig(sub (:$a = 2) { }, :(:$a = True), :a);
-#?rakudo todo ':b primes a default value for :$b'
 is-primed-sig(sub (:$a = 2, :$b = 4) { }, :(:$a = 2, :$b = True), :b);
-#?rakudo todo ':a primes a default value for :$a'
 is-primed-sig(sub (:$a = 2, :$b = 4) { }, :(:$a = True, :$b = 4), :a);
 is-primed-sig(sub ($a, $b, :$c) { }, :($b, :$c), 1);
-#?rakudo todo ':b primes a default value for :$b'
 is-primed-sig(sub (:b($a)!) { }, :(:b($a) = True), :b);
-#?rakudo todo ':c primes a default value for :$b'
 is-primed-sig(sub (:b(:c($a))!) { }, :(:b(:c($a)) = True), :c);
-#?rakudo todo ':b primes a default value for :$b'
 is-primed-sig(sub (:b(:c($a))!) { }, :(:b(:c($a)) = True), :b);
-#?rakudo todo ':a primes a default value for :$a'
 is-primed-sig(sub (:$a! where { True }) { }, :(:$a where { ... } = True), :a);
-#?rakudo todo ':a primes a default value for :$a'
 is-primed-sig(sub (:$a! is raw where { True }) { }, :(:$a is raw where { ... } = True), :a);
-#?rakudo todo ':a primes a default value for :$a'
 is-primed-sig(sub (:$a! is copy where { True }) { }, :(:$a is copy where { ... } = True), :a);
 
 # https://github.com/Raku/old-issue-tracker/issues/3686
-#?rakudo todo ':a primes a default value for :$a'
 is-primed-sig(sub (:$a! is raw where { True }) { }, :(:$a is raw where { True } = True), :a);
-#?rakudo todo ':a primes a default value for :$a'
 is-primed-sig(sub (:$a is copy where { True } = 4) { }, :(:$a is copy where { True } = True), :a);
-#?rakudo todo ':a primes a default value for :$a'
 is-primed-sig(sub (Int :$a! where { True }) { }, :(Int :$a where { True } = 1), :a(1));
 
 priming-fails-bind-ok(sub { }, "", "Unexpected", :a);

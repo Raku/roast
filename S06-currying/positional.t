@@ -11,28 +11,18 @@ is-primed-sig(sub ($a?) { }, :(), 1);
 is-primed-sig(sub ($a, $b?) { }, :($b?), 1);
 is-primed-sig(sub ($a?, $b?) { }, :($b?), 1);
 is-primed-sig(sub ($a = 2) { }, :(), 1);
-#?rakudo todo "default value should pass through"
 is-primed-sig(sub ($a = 4, $b = 2) { }, :($b = 2), 1);
-#?rakudo todo "where should pass through"
 is-primed-sig(sub ($a where { True }, $b where { True }) { }, :($b where { True }), 1);
-#?rakudo todo "where and default value should pass through"
 is-primed-sig(sub ($a where { True } = 4, $b where { True } = 2) { }, :($b where { True } = 2), 1);
 is-primed-sig(sub ($a is raw) { }, :(), 1);
-#?rakudo todo "default value should pass through"
 is-primed-sig(sub ($a is raw = 4, $b is raw = 4) { }, :($b is raw = 4), 1);
-#?rakudo todo "where and default value should pass through"
 is-primed-sig(sub ($a is raw where { True }, $b is raw where { True }) { }, :($b is raw where { True }), 1);
-#?rakudo todo "where and default value should pass through"
 is-primed-sig(sub ($a is raw where { True } = 4, $b is raw where { True } = 2) { }, :($b is raw where { True } = 2), 1);
 is-primed-sig(sub ($a is copy) { }, :(), 1);
-#?rakudo todo "default value should pass through"
 is-primed-sig(sub ($a is copy = 4, $b is copy = 4) { }, :($b is copy = 4), 1);
-#?rakudo todo "where should pass through"
 is-primed-sig(sub ($a is copy where { True }, $b is copy where { True }) { }, :($b is copy where { True }), 1);
-#?rakudo todo "where and default value should pass through"
 is-primed-sig(sub ($a is copy where { True } = 4, $b is copy where { True } = 2) { }, :($b is copy where { True } = 2), 1);
 is-primed-sig(sub ($a is rw) { }, :(), 1);
-#?rakudo todo "where should pass through"
 is-primed-sig(sub ($a is rw where { True }, $b is rw where { True }) { }, :($b is rw where { True }), 1);
 is-primed-sig(sub ($a, $b) { }, :($b), Nil);
 is-primed-sig(sub ($a, $b) { }, :($a), *, 2);
@@ -44,28 +34,18 @@ is-primed-sig(sub ($?) { }, :(), 1);
 is-primed-sig(sub ($, $b?) { }, :($b?), 1);
 is-primed-sig(sub ($?, $b?) { }, :($b?), 1);
 is-primed-sig(sub ($ = 2) { }, :(), 1);
-#?rakudo todo "default value should pass through"
 is-primed-sig(sub ($ = 4, $b = 2) { }, :($b = 2), 1);
-#?rakudo todo "where should pass through"
 is-primed-sig(sub ($ where { True }, $a where { True }) { }, :($a where { True }), 1);
-#?rakudo todo "where and default value should pass through"
 is-primed-sig(sub ($ where { True } = 4, $a where { True } = 2) { }, :($a where { True } = 2), 1);
 is-primed-sig(sub ($ is raw) { }, :(), 1);
-#?rakudo todo "default value should pass through"
 is-primed-sig(sub ($ is raw = 4, $a is raw = 4) { }, :($a is raw = 4), 1);
-#?rakudo todo "where should pass through"
 is-primed-sig(sub ($ is raw where { True }, $a is raw where { True }) { }, :($a is raw where { True }), 1);
-#?rakudo todo "where and default value should pass through"
 is-primed-sig(sub ($ is raw where { True } = 4, $a is raw where { True } = 2) { }, :($a is raw where { True } = 2), 1);
 is-primed-sig(sub ($ is copy) { }, :(), 1);
-#?rakudo todo "default value should pass through"
 is-primed-sig(sub ($ is copy = 4, $a is copy = 4) { }, :($a is copy = 4), 1);
-#?rakudo todo "where should pass through"
 is-primed-sig(sub ($ is copy where { True }, $a is copy where { True }) { }, :($a is copy where { True }), 1);
-#?rakudo todo "where and default value should pass through"
 is-primed-sig(sub ($ is copy where { True } = 4, $a is copy where { True } = 2) { }, :($a is copy where { True } = 2), 1);
 is-primed-sig(sub ($ is rw) { }, :(), 1);
-#?rakudo todo "where should pass through"
 is-primed-sig(sub ($ is rw where { True }, $a is rw where { True }) { }, :($a is rw where { True }), 1);
 is-primed-sig(sub ($, $b) { }, :($b), Nil);
 is-primed-sig(sub ($a, $b) { }, :($a), *, 2);
@@ -75,12 +55,10 @@ is-primed-sig(sub ($, $b) { }, :($b), 1);
 is-primed-sig(sub ($, $b?) { }, :($b?), 1);
 is-primed-sig(sub ($?, $b?) { }, :($b?), 1);
 is-primed-sig(sub ($ = 2) { }, :(), 1);
-#?rakudo todo "default value should pass through"
 is-primed-sig(sub ($ = 4, $b = 2) { }, :($b = 2), 1);
 is-primed-sig(sub ($, $b) { }, :($b), Nil);
 is-primed-sig(sub ($a, $) { }, :($a), *, 2);
 is-primed-sig(sub ($, $b, $) { }, :($b), 1, *, 3);
-#?rakudo todo "literal value should pass through"
 is-primed-sig(sub ($, 2) { }, :(2), 1);
 is-primed-sig(sub (Int $a, Int $b) { }, :(Int $b), 1);
 is-primed-sig(sub (Int $, Int $b) { }, :(Int $b), 1);
@@ -123,7 +101,6 @@ is-primed-sig(sub (@a?) { }, :(), $[1]);
 is-primed-sig(sub (@a, @b?) { }, :(@b?), $[1]);
 is-primed-sig(sub (@a?, @b?) { }, :(@b?), $[1]);
 is-primed-sig(sub (@a = 2) { }, :(), $[1]);
-#?rakudo todo "default value should pass through"
 is-primed-sig(sub (@a = 4, @b = 2) { }, :(@b = 2), $[1]);
 is-primed-sig(sub (@a, @b) { }, :(@a), *, $[2]);
 is-primed-sig(sub (@a, @b, $c) { }, :(@b), $[1], *, $[3]);
@@ -134,7 +111,6 @@ is-primed-sig(sub (@?) { }, :(), $[1]);
 is-primed-sig(sub (@, @b?) { }, :(@b?), $[1]);
 is-primed-sig(sub (@?, @b?) { }, :(@b?), $[1]);
 is-primed-sig(sub (@ = 2) { }, :(), $[1]);
-#?rakudo todo "default value should pass through"
 is-primed-sig(sub (@ = 4, @b = 2) { }, :(@b = 2), $[1]);
 is-primed-sig(sub (@a, @b) { }, :(@a), *, $[2]);
 is-primed-sig(sub (@, @b, @c) { }, :(@b), $[1], *, $[3]);
@@ -143,7 +119,6 @@ is-primed-sig(sub (@a, @b) { }, :(@b), $[1]);
 is-primed-sig(sub (@, @b) { }, :(@b), $[1]);
 is-primed-sig(sub (@?, @b?) { }, :(@b?), $[1]);
 is-primed-sig(sub (@ = 2) { }, :(), $[1]);
-#?rakudo todo "default value should pass through"
 is-primed-sig(sub (@ = 4, @b = 2) { }, :(@b = 2), $[1]);
 is-primed-sig(sub (@a, @) { }, :(@a), *, $[2]);
 is-primed-sig(sub (@, @b, @) { }, :(@b), $[1], *, $[3]);
@@ -168,7 +143,6 @@ is-primed-sig(sub (%a?) { }, :(), {:1a,:2b});
 is-primed-sig(sub (%a, %b?) { }, :(%b?), {:1a,:2b});
 is-primed-sig(sub (%a?, %b?) { }, :(%b?), {:1a,:2b});
 is-primed-sig(sub (%a = :2a) { }, :(), {:1a,:2b});
-#?rakudo todo "default value should pass through"
 is-primed-sig(sub (%a = :4a, %b = :2b) { }, :(%b = :2b), {:1a,:2b});
 is-primed-sig(sub (%a, %b) { }, :(%a), *, {:2b});
 is-primed-sig(sub (%a, %b, $c) { }, :(%b), {:1a,:2b}, *, {:3c});
@@ -179,7 +153,6 @@ is-primed-sig(sub (%?) { }, :(), {:1a,:2b});
 is-primed-sig(sub (%, %b?) { }, :(%b?), {:1a,:2b});
 is-primed-sig(sub (%?, %b?) { }, :(%b?), {:1a,:2b});
 is-primed-sig(sub (% = :2a) { }, :(), {:1a,:2b});
-#?rakudo todo "default value should pass through"
 is-primed-sig(sub (% = :4a, %b = :2b) { }, :(%b = :2b), {:1a,:2b});
 is-primed-sig(sub (%, %b, %c) { }, :(%b), {:1a,:2b}, *, {:3c});
 is-primed-sig(sub (% = :2a) { }, :(), {:1a,:2b});

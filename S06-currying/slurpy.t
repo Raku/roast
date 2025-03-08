@@ -22,9 +22,7 @@ is-primed-sig(sub ($a, *@b) { }, :(*@b), 1);
 is-primed-sig(sub ($a, *@b) { }, :(*@b), 1, 2);
 is-primed-sig(sub ($a, *@b) { }, :(*@b), 1, 2, *, 3);
 
-#?rakudo todo ':a primes a default value for :$a'
 is-primed-sig(sub (:$a,*%B,:$b,*%C,:$c) { }, :(:$a = True,*%B,:$b,*%C,:$c), :a);
-#?rakudo todo ':a primes a default value for :$a'
 is-primed-sig(sub (:$a!,*%B,:$b!,*%C,:$c!) { }, :(:$a = True,*%B,:$b!,*%C,:$c!), :a);
 
 is-primed-call(&anonslurp, \(1, 2, :a, 'c',:d), ['a1 b2']);
