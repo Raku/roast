@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Assuming;
 
-plan 14;
+plan 17;
 
 # How clever we get with type-captures and subsignatures is TBD.  So
 # these tests are more tenuous, they just test the intent
@@ -45,6 +45,18 @@ is-primed-call(&abc123, \(1,2,3), ['a','b','c',1,2,3], 'a','b','c');
     sub foo(::T $a, T @b) { "$a:@b[]" }
     is foo(42, my Int @ = 666,137), "42:666 137",
       'can we use a generic on an array parameter';
+
+    sub foo2(::T $a, Positional[T] $b) { "$a:$b" }
+    is foo2(42, my Int @ = 666,137), "42:666 137",
+      'can we use a generic on a positional parameter';
+
+    sub bar(::T $a, T %h) { "$a:%h<a b>" }
+    is bar(42, my Int % = :666a, :137b), "42:666 137",
+      'can we use a generic on a hash parameter';
+
+    sub bar2(::T $a, Associative[T] $h) { "$a:$h<a b>" }
+    is bar2(42, my Int % = :666a, :137b), "42:666 137",
+      'can we use a generic on an associative parameter';
 }
 
 # vim: expandtab shiftwidth=4
