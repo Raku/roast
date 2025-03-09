@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Assuming;
 
-plan 13;
+plan 14;
 
 # How clever we get with type-captures and subsignatures is TBD.  So
 # these tests are more tenuous, they just test the intent
@@ -39,5 +39,12 @@ throws-like { 42 same-in-Int "42" }, X::TypeCheck::Binding,
 sub abc123 (| ($a,$b,$c,$o,$t,$th)) { $a,$b,$c,$o,$t,$th; }
 #?rakudo.jvm todo 'Got [Mu, Mu, Mu, Mu, Mu, Mu]'
 is-primed-call(&abc123, \(1,2,3), ['a','b','c',1,2,3], 'a','b','c');
+
+# https://github.com/rakudo/rakudo/pull/5804
+{
+    sub foo(::T $a, T @b) { "$a:@b[]" }
+    is foo(42, my Int @ = 666,137), "42:666 137",
+      'can we use a generic on an array parameter';
+}
 
 # vim: expandtab shiftwidth=4
