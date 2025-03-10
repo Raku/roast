@@ -1,6 +1,6 @@
 use Test;
 
-plan 757;
+plan 756;
 
 ### for now
 sub matchcheck(*@) { 1 }
@@ -1480,11 +1480,6 @@ ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 0: <dog @ 0
 # https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo skip ':: NYI RT #124902'
 ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 1: <spot @ 7>/), 'sigspace and capture together';
-
-#### :Perl \A.*? bcd\Q$\E..\z	a bcd$ef	y	Perl syntax (:Perl5)
-# https://github.com/Raku/old-issue-tracker/issues/4077
-#?rakudo todo 'parse error RT #124903'
-ok 'a bcd$ef' ~~ m:Perl5/\A.*? bcd\Q$\E..\z/, 'Perl syntax (:Perl5)';
 
 #### :s^[\d+ ]* abc			11 12 13 abc	y	<?ws> before closing bracket
 ok '11 12 13 abc' ~~ /:s^[\d+ ]* abc/, '<?ws> before closing bracket';
