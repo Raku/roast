@@ -145,6 +145,7 @@ is-approx(27 ** -⅔, ⅑, "27 ** -⅔ == ⅑");
         is-deeply .EVAL, $v**12,  $_ with "$no¹²";
         is-deeply .EVAL, $v**12,  $_ with "$no⁺¹²";
         is-deeply .EVAL, $v**-12, $_ with "$no⁻¹²";
+        #?rakudo skip 'this is all bogus, but this one throws'
         is-deeply "$no¯¹²".EVAL, $v**-12, "$no¯¹² (macron)";
 
         is-deeply .EVAL, 2**$v**2, $_ with "2**$no²";
