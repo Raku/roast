@@ -23,7 +23,7 @@ use Test::Idempotence;
 #   S02 lists ':a' as being equivlaent to a => True, so
 #   the type of the value of that pair is Bool, not Int
 
-plan 83;
+plan 84;
 
 sub f1n (:$a) { $a.WHAT.gist }
 sub f1p ( $a) { $a.WHAT.gist }
@@ -187,5 +187,12 @@ is-perl-idempotent((:a(Bool)));
 
 # https://github.com/Raku/old-issue-tracker/issues/4836
 is-perl-idempotent(((Nil) => 42));
+
+# https://github.com/rakudo/rakudo/issues/5680
+{
+    my @a = :a:!b:42c;
+    #?rakudo todo 'fixed in RakuAST'
+    is-deeply @a, [:a, :!b, :42c], 'do colonpairs get assigned ok';
+}
 
 # vim: expandtab shiftwidth=4
