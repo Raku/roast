@@ -128,7 +128,7 @@ is $y.test,     42,         'method from other role was OK too';
     for 1..1000 -> $i {
         $rt115390 += $i.raku;
         my $error = (my $val = (^10).pick(3).min but !$rt115390);
-        1
+        Nil;
     }
     is $rt115390, 500500,
         'no crash with mixin in loop when it is not the last statement in loop';
