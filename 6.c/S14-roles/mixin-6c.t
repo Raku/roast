@@ -110,7 +110,7 @@ is $y.test,     42,         'method from other role was OK too';
 
 # https://github.com/Raku/old-issue-tracker/issues/2064
 {
-    throws-like { EVAL q[{ role A { my $!foo; }; role B { my $!foo; }; class C does A does B {} }] },
+    throws-like { EVAL q[ role RT77184 { my $!foo; } ] },
        X::Syntax::Variable::Twigil, twigil => '!', scope => 'my',
        'RT #77184'
 }
