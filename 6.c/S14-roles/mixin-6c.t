@@ -152,10 +152,10 @@ lives-ok {(True but role {}).gist}, 'can mix into True';
     my $tracker = '';
     for 1..3 {
         $tracker ~= 'before';
-        1 but last;
+        $_ but last;
         $tracker ~= 'after';
     }
-    is $tracker, 'before', '"1 but last" does the same as "last"';
+    is $tracker, 'before', '"$_ but last" does the same as "last"';
 
     sub f() { role { method answer { 42 } } };
     is (1 but f).answer, 42, '<literal> but <zero-arg call> works';
