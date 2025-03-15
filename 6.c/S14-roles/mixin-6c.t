@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(3).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 57;
+plan 58;
 
 # L<S14/Run-time Mixins/>
 
@@ -265,5 +265,14 @@ cmp-ok sub () is nodal { }, &[~~], Callable,
 lives-ok {
     class { } but role { has $!foo is built(:bind) }
 }, 'can mix in roles that use the "is built" trait at runtime';
+
+# https://irclogs.raku.org/raku-dev/2025-03-15.html#11:41
+{
+    my $a = "NOT set";
+    my role Foo { method foo() { $a = "set" } }
+    my class Bar does Foo { };
+    Foo.new.foo;
+    is $a, 'set', 'did the outer lexical assign in time';
+}
 
 # vim: expandtab shiftwidth=4
