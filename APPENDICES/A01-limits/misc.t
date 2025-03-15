@@ -38,38 +38,32 @@ group-of 8 => 'role multi tiebreaking (TEST USES UNSUPPORTED FEATURES)' => {
     lives-ok { class C1 does A does C {} },
         "Multi-role mix with value constrained parameter";
     lives-ok { class C2 does A does B {} },
-        "Multis from diferent roles with value constrained parameter";
+        "Multis from different roles with value constrained parameter";
 
-    my $checked = '';
+    my $*checked = '';
     role D {
-        # NOTE: side-effects from `where` clauses are not supported on language level
-        multi method f($ where { $checked ~= "d1"; $_ == 1 }) { 1 }
-        # NOTE: side-effects from `where` clauses are not supported on language level
-        multi method f($ where { $checked ~= "d2"; $_ == 2 }) { 2 }
+        multi method f($ where { $*checked ~= "d1"; $_ == 1 }) { 1 }
+        multi method f($ where { $*checked ~= "d2"; $_ == 2 }) { 2 }
     }
     role E {
-        # NOTE: side-effects from `where` clauses are not supported on language level
-        multi method f($ where { $checked ~= "e"; $_ == 3 }) { 3 }
+        multi method f($ where { $*checked ~= "e"; $_ == 3 }) { 3 }
     }
     lives-ok { class C3 does D does C {}; C3.new.f(2) },
         "Multi-role mix with only where clauses different";
-    # NOTE: side-effects from `where` clauses are not supported on language level
-    ok $checked ~~ /^d1d2/,
+    ok $*checked ~~ /^d1d2/,
         "Multis from same role declaration order tiebreaker (TEST USES UNSUPPORTED FEATURES)";
-    $checked = '';
+    $*checked = '';
     lives-ok { class C4 does D does E {}; C4.new.f(3) },
         "Multis from different roles with only where clauses different";
-    # NOTE: side-effects from `where` clauses are not supported on language level
     #?rakudo todo "Wrong tiebreaker order (S12, actually)"
-    ok $checked ~~ /^d1d2e/,
+    ok $*checked ~~ /^d1d2e/,
         "Multis from different roles declaration order tiebreaker (TEST USES UNSUPPORTED FEATURES)";
-    $checked = '';
+    $*checked = '';
     lives-ok { class C5 does E does D {}; C4.new.f(3) },
         "Multis from different roles with only where clauses different (2)";
     # Design review needed on this one -- is inclusion order considered as declaration order?
-    # NOTE: side-effects from `where` clauses are not supported on language level
     #?rakudo todo "Wrong tiebreaker order (S12, actually)"
-    ok $checked ~~ /^d1d2e/,
+    ok $*checked ~~ /^d1d2e/,
         "Multis from different roles declaration order tiebreaker (TEST USES UNSUPPORTED FEATURES)";
 }
 
