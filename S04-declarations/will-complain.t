@@ -26,7 +26,7 @@ subtest "Custom class" => {
     lives-ok { my Bar $bar = Bar.new; }, "doesn't fire when there is no error";
 
     throws-like
-        { my Bar $bar; $bar = 0; },
+        'my Bar $bar; $bar = 0;',
         X::TypeCheck::Assignment,
         "activated upon failed type check",
         message => /'need something Bar-like, got 0'/;
