@@ -110,7 +110,7 @@ is $y.test,     42,         'method from other role was OK too';
 
 # https://github.com/Raku/old-issue-tracker/issues/2064
 {
-    throws-like { EVAL q[{ role A { my $!foo; }; role B { my $!foo; }; class C does A does B {} }] },
+    throws-like { EVAL q[ role RT77184 { my $!foo; } ] },
        X::Syntax::Variable::Twigil, twigil => '!', scope => 'my',
        'RT #77184'
 }
@@ -128,7 +128,7 @@ is $y.test,     42,         'method from other role was OK too';
     for 1..1000 -> $i {
         $rt115390 += $i.raku;
         my $error = (my $val = (^10).pick(3).min but !$rt115390);
-        1
+        Nil;
     }
     is $rt115390, 500500,
         'no crash with mixin in loop when it is not the last statement in loop';
@@ -152,10 +152,10 @@ lives-ok {(True but role {}).gist}, 'can mix into True';
     my $tracker = '';
     for 1..3 {
         $tracker ~= 'before';
-        1 but last;
+        $_ but last;
         $tracker ~= 'after';
     }
-    is $tracker, 'before', '"1 but last" does the same as "last"';
+    is $tracker, 'before', '"$_ but last" does the same as "last"';
 
     sub f() { role { method answer { 42 } } };
     is (1 but f).answer, 42, '<literal> but <zero-arg call> works';
