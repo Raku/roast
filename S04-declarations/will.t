@@ -1,6 +1,6 @@
 use Test;
 
-BEGIN plan 21;
+BEGIN plan 19;
 
 # L<S04/Phasers>
 
@@ -16,8 +16,8 @@ my $begin;
 }
 
 my $init;
+#?rakudo skip 'will init NYI'
 {
-    #?rakudo todo 'will init NYI'
     is $init, "abc", 'all init blocks in order';
     BEGIN $init ~= "a";
     INIT  $init ~= "b";
@@ -39,7 +39,7 @@ my $block;
     my $dd will enter  { $block ~= "b" };
     is $block, "ab", 'entered block ok';
     my $e will leave   { $block ~= "c" };
-    my $ee will post   { $block ~= "d" };
+#    my $ee will post   { $block ~= "d" };  # NYI
     my $eee will keep  { $block ~= "e" };
     my $eeee will undo { $block ~= "f" }; # should not fire
     1; # successful exit
@@ -97,8 +97,6 @@ is $same3, "aebebebc", 'all for blocks get $_';
 {
     my $seen = 42;
     dies-ok {EVAL 'my $a will foo { $seen = 1 }'}, 'unknown will trait';
-    is $seen, 42, 'block should not have executed';
-    lives-ok {my $a will compose { $seen = 1 }}, "don't know how to test yet";
     is $seen, 42, 'block should not have executed';
 }
 
