@@ -158,4 +158,8 @@ too long a time by default so as to make the roast run faster.  Defaults to `1`.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md)
+Roast is Copyright © [The Raku Foundation](https://raku.foundation) and is
+distributed under the terms of the Artistic License 2.0 (see [LICENSE](LICENSE)
+file for details).
+
+To contribute to Roast, please refer to [CONTRIBUTING.md](CONTRIBUTING.md)
