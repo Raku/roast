@@ -48,7 +48,8 @@ plan 47;
 
 {
     my %h{Int};
-    is %h.of,    Any, "check the value constraint";
+    #?rakudo todo 'Fixed in RakuAST'
+    is %h.of,    Mu, "check the value constraint";
     is %h.keyof, Int, "check the key constraint";
     dies-ok { %h<a>=1 }, "cannot use strings as keys";
     dies-ok { %h<a b c>=(1,2,3) }, "cannot use string slices as keys";
