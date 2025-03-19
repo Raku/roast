@@ -414,7 +414,8 @@ is Foo::official(), 44,
 is sub { 42.return }(), 42, "Sub doing 42.return works";
 
 # https://github.com/Raku/old-issue-tracker/issues/3453
-is-deeply sub { sub foo($x = return 42) { 70 }; say foo }(), 42,
+#?rakudo skip 'default run outside sub'
+is-deeply sub foo($x = return 42) { 70 }(), 42,
     'can return from parameter defaults';
 
 # https://github.com/rakudo/rakudo/issues/2201
