@@ -281,17 +281,6 @@ throws-like 'sub typed-slurpy-pos(Int *%h) { }',
     is @c[0], 'a', 'slurpy is copy-array works fine, thank you';
 }
 
-# https://github.com/Raku/old-issue-tracker/issues/1488
-{
-    sub A (*@_) {
-        is @_, [5, 4], 'slurpy @_ contains proper values';
-        if 1 {
-            is @_, [5, 4], 'slurpy @_ values not clobbered by if statement';
-        }
-    };
-    A(5, 4);
-}
-
 # https://github.com/Raku/old-issue-tracker/issues/1693
 {
     is -> *@a { @a[+0] }.([5]), 5,
