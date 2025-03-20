@@ -126,9 +126,9 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
     my sub foo(:$n is required, *%h, *@a) { };   #OK not used
     diag('Testing with named arguments (named param is required) (trait version)');
     lives-ok { foo 1, n => 20, y => 300, 4000 },
-    'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000 }`';
+    'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000`';
     dies-ok { foo 1, x => 20, y => 300, 4000 },
-    'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, x => 20, y => 300, 4000 }`';
+    'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, x => 20, y => 300, 4000`';
 }
 
 ##### Now slurpy scalar tests here.
