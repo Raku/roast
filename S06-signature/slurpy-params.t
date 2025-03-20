@@ -4,7 +4,7 @@ use Test::Util;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 88;
+plan 86;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
