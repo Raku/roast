@@ -21,7 +21,7 @@ is-primed-sig(sub (*@b) { }, :(*@b), 1, Nil, 2);
 is-primed-sig(sub ($a, *@b) { }, :(*@b), 1);
 is-primed-sig(sub ($a, *@b) { }, :(*@b), 1, 2);
 is-primed-sig(sub ($a, *@b) { }, :(*@b), 1, 2, *, 3);
-
+#?rakudo 2 todo "awaiting resurrecting of RakuAST assuming"
 is-primed-sig(sub (:$a,*%B,:$b,*%C,:$c) { }, :(:$a = True,*%B,:$b,*%C,:$c), :a);
 is-primed-sig(sub (:$a!,*%B,:$b!,*%C,:$c!) { }, :(:$a = True,*%B,:$b!,*%C,:$c!), :a);
 

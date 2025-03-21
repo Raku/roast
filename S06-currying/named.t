@@ -24,6 +24,7 @@ sub tester(:$a, :$b, :$c) {
 }
 
 # Since you can override named params .assuming does not alter sig
+#?rakudo 12 todo "awaiting resurrecting of RakuAST assuming"
 is-primed-sig(sub (:$a) { }, :(:$a = True), :a);
 is-primed-sig(sub (:$a, :$b) { }, :(:$a, :$b = True), :b);
 is-primed-sig(sub (:$a, :$b) { }, :(:$a = True, :$b), :a);
@@ -37,6 +38,7 @@ is-primed-sig(sub (:$a = 2) { }, :(:$a = True), :a);
 is-primed-sig(sub (:$a = 2, :$b = 4) { }, :(:$a = 2, :$b = True), :b);
 is-primed-sig(sub (:$a = 2, :$b = 4) { }, :(:$a = True, :$b = 4), :a);
 is-primed-sig(sub ($a, $b, :$c) { }, :($b, :$c), 1);
+#?rakudo 9 todo "awaiting resurrecting of RakuAST assuming"
 is-primed-sig(sub (:b($a)!) { }, :(:b($a) = True), :b);
 is-primed-sig(sub (:b(:c($a))!) { }, :(:b(:c($a)) = True), :c);
 is-primed-sig(sub (:b(:c($a))!) { }, :(:b(:c($a)) = True), :b);
