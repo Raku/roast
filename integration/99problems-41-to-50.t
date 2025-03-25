@@ -1,5 +1,5 @@
 use Test;
-plan 13;
+plan 9;
 
 {
     # P41 (**) A list of Goldbach compositions.
@@ -298,32 +298,16 @@ plan 13;
     # specification:
     #
     # % gray(N,C) :- C is the N-bit Gray code
-    #
-    # Can you apply the method of "result caching" in order to make the predicate
-    # more efficient, when it is to be used repeatedly?
 
-    use experimental :cached;
-    sub gray($n) is cached {
+    sub gray($n) {
         return [''] if $n == 0;
-        [flat '0' xx 2**($n-1) >>~<< gray($n-1),
-         '1' xx 2 ** ($n-1) >>~<< gray($n-1).reverse];
+        (state @g)[$n] //= [flat '0' xx 2**($n-1) >>~<< gray($n-1),
+                            '1' xx 2**($n-1) >>~<< gray($n-1).reverse];
     }
     is-deeply gray(0), [''];
     is-deeply gray(1), [<0 1>».Str];
     is-deeply gray(2), [<00 01 11 10>».Str];
     is-deeply gray(3), [<000 001 011 010 110 111 101 100>».Str];
-}
-
-{
-    sub gray2($n) {
-        return [''] if $n == 0;
-        (state @g)[$n] //= [flat '0' xx 2**($n-1) >>~<< gray2($n-1),
-                            '1' xx 2**($n-1) >>~<< gray2($n-1).reverse];
-    }
-    is-deeply gray2(0), [''];
-    is-deeply gray2(1), [<0 1>».Str];
-    is-deeply gray2(2), [<00 01 11 10>».Str];
-    is-deeply gray2(3), [<000 001 011 010 110 111 101 100>».Str];
 }
 
 {
