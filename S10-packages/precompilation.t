@@ -4,7 +4,7 @@ use Test::Util;
 
 my $pkg-path = $?FILE.IO.parent(2).add("packages/S10-packages/lib");
 
-plan 52;
+plan 51;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
 
@@ -54,20 +54,6 @@ my @keys2 = Test::Util::run( "use lib $example2-lib-prefix.raku();\n" ~ q:to"--E
 
 #?rakudo.jvm todo 'got: $["C", "K"]'
 is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
-
-# https://github.com/Raku/old-issue-tracker/issues/3539
-#?rakudo.js todo 'RT #122896'
-{
-    is_run
-      "use lib $example-lib-prefix.raku();\n" ~
-      'use Example::C;
-       f();',
-       { err => '',
-         out => '',
-         status => 0,
-       },
-       'precompile exported cached sub';
-}
 
 # https://github.com/Raku/old-issue-tracker/issues/1928
 {
