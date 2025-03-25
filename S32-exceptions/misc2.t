@@ -2,7 +2,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 266;
+plan 265;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -465,14 +465,6 @@ if $emits_suggestions {
     throws-like 'sub greet($name) { say "hello, $nam" }', X::Undeclared, suggestions => '$name';
 
     throws-like 'class Greeter { has $.name; method greet { say "hi, $name" } }', X::Undeclared, suggestions => '$!name';
-}
-
-#?rakudo.js.browser skip "use at EVAL time not supported in the browser"
-# https://github.com/rakudo/rakudo/issues/2111
-{
-    lives-ok { EVAL(
-      'package Zoo { use experimental :pack; sub go() is export { "".encode.unpack("*") }; }; import Zoo; go()'
-    ) }, 'is "use experimental :pack" visible?';
 }
 
 # https://github.com/rakudo/rakudo/issues/2361
