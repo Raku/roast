@@ -358,7 +358,6 @@ S04-declarations/our.t
 S04-declarations/smiley.t
 S04-declarations/state.t
 S04-declarations/will.t
-S04-declarations/will-complain.t
 S04-exception-handlers/catch.t
 S04-exception-handlers/control.t
 S04-exception-handlers/top-level.t
