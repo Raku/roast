@@ -1,4 +1,3 @@
-use experimental :will-complain;
 use Test;
 use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
 use Test::Util;
@@ -20,12 +19,12 @@ subtest "Basic Coercive Return", {
     throws-like { return-as-str(Int) }, X::TypeCheck::Return, "can't return a type object";
     throws-like { return-as-str([1,2]) }, X::TypeCheck::Return, "can't return a non-Numeric";
 
-    my class ANumeric does Numeric {  
+    my class ANumeric does Numeric {
         method Str { 13 }
     }
     #?rakudo.jvm todo "code doesn't die"
-    throws-like 
-        { return-as-str(ANumeric.new) }, 
+    throws-like
+        { return-as-str(ANumeric.new) },
         X::Coerce::Impossible,
         "incorrect coercion throws too";
 }
@@ -47,11 +46,11 @@ subtest "COERCE-based coercion for returns", {
     is return-as-Foo(Nil), Nil, "Nil is returned as-is";
     isa-ok return-as-Foo(my $f = Failure.new), Failure, "a Failure is returned as-is";
     $f.so; # Defuse the Failure
-    
+
     #?rakudo.jvm todo "code doesn't die"
-    throws-like 
-        { return-as-Foo(pi) }, 
-        X::Coerce::Impossible, 
+    throws-like
+        { return-as-Foo(pi) },
+        X::Coerce::Impossible,
         "coercion into a typeobject fails for a definite target";
 }
 
@@ -68,12 +67,12 @@ subtest "Coercive subset", {
     isa-ok return-as-subset(my $f = Failure.new), Failure, "a Failure is returned as-is";
     $f.so; # Defuse the Failure
 
-    throws-like 
+    throws-like
         { return-as-subset(13) },
         X::TypeCheck::Return,
         "can't return a coercion of value not passing subset constraint";
 
-    throws-like 
+    throws-like
         { quietly return-as-subset(Int) },
         X::TypeCheck::Return,
         "can't return a coercion of a typeobject for a definite subset";
@@ -91,12 +90,12 @@ subtest "Coerce into a subset", {
     $f.so; # Defuse the Failure
 
     #?rakudo.jvm 2 todo "code doesn't die"
-    throws-like 
+    throws-like
         { return-as-subset("1.3") },
         X::Coerce::Impossible,
         "can't return a coercion of value not passing subset constraint";
 
-    throws-like 
+    throws-like
         { return-as-subset(1.3) },
         X::Coerce::Impossible,
         "can't return a value not passing subset constraint";
@@ -104,7 +103,7 @@ subtest "Coerce into a subset", {
 
 subtest "Errors", {
     plan 2;
-    
+
     my class NastyCoercer {
         multi method COERCE(Str) { ::?CLASS }
     }
@@ -112,12 +111,12 @@ subtest "Errors", {
     my sub return-as-definite($x --> NastyCoercer:D()) { $x }
 
     #?rakudo.jvm 2 todo "code doesn't die"
-    throws-like 
+    throws-like
         { return-as-definite("foo"); },
         X::Coerce::Impossible,
         "class coercer doesn't give us a definite";
 
-    throws-like 
+    throws-like
         { return-as-definite(13); },
         X::Coerce::Impossible,
         "class coercer doesn't provide a coercion method";
