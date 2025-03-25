@@ -6,10 +6,12 @@ plan 28;
 
 { # basic categorize with all possible mappers
     my @list      = 29, 7, 12, 9, 18, 23, 3, 7;
-    my %expected1{Mu} =
-      (0=>[7,9,3,7],         10=>[12,18],       20=>[29,23]);
-    my %expected2{Mu} =
-      (0=>[7,9,3,7,7,9,3,7], 10=>[12,18,12,18], 20=>[29,23,29,23]);
+    my %expected1 := :{
+      0 => [7,9,3,7],         10 => [12,18],       20 => [29,23]
+    }
+    my %expected2 := :{
+      0 => [7,9,3,7,7,9,3,7], 10 => [12,18,12,18], 20 => [29,23,29,23]
+    }
     my sub subber ($a) { $a - ($a % 10) };
     my $blocker = { $_ - ($_ % 10) };
     my $hasher  = { 3=>0, 7=>0, 9=>0, 12=>10, 18=>10, 23=>20, 29=>20 };
@@ -17,23 +19,23 @@ plan 28;
 
     for &subber, $blocker, $hasher, $arrayer -> $mapper {
         is-deeply categorize( $mapper, @list ), %expected1,
-          "simple sub call with {$mapper.^name}";
+          "simple sub call with $mapper.^name()";
         is-deeply @list.categorize( $mapper ), %expected1,
-          "method call on list with {$mapper.^name}";
+          "method call on list with $mapper.^name()";
 
-        categorize( $mapper, @list, :into(my %h{Mu}) );
+        categorize( $mapper, @list, :into(my %h := :{ }) );
         is-deeply %h, %expected1,
-          "basic categorize as sub with {$mapper.^name} and new into";
+          "basic categorize as sub with $mapper.^name() and new into";
         categorize( $mapper, @list, :into(%h) );
         is-deeply %h, %expected2,
-          "basic categorize as sub with {$mapper.^name} and existing into";
+          "basic categorize as sub with $mapper.^name() and existing into";
 
-        @list.categorize( $mapper, :into(my %i{Mu}) );
+        @list.categorize( $mapper, :into(my %i := :{ }) );
         is-deeply %i, %expected1,
-          "basic categorize from list with {$mapper.^name} and new into";
+          "basic categorize from list with $mapper.^name() and new into";
         @list.categorize( $mapper, :into(%i) );
         is-deeply %i, %expected2,
-          "basic categorize from list with {$mapper.^name} and existing into";
+          "basic categorize from list with $mapper.^name() and existing into";
     }
 } #4*6
 
@@ -89,13 +91,13 @@ plan 28;
 
 {
     is-deeply( categorize( { map { [$_+0, $_+10] }, .comb }, 100,104,112,119 ),
-      (my %{Mu} =
-        1 => ( my %{Mu} = 11 => [100, 104, 112, 112, 119, 119] ),
-        0 => ( my %{Mu} = 10 => [100, 100, 104] ),
-        4 => ( my %{Mu} = 14 => [104] ),
-        2 => ( my %{Mu} = 12 => [112] ),
-        9 => ( my %{Mu} = 19 => [119] ),
-      ), 'multi-level categorize' );
+      :{
+        1 => :{ 11 => [100, 104, 112, 112, 119, 119] },
+        0 => :{ 10 => [100, 100, 104] },
+        4 => :{ 14 => [104] },
+        2 => :{ 12 => [112] },
+        9 => :{ 19 => [119] },
+      }, 'multi-level categorize' );
 }
 
 # vim: expandtab shiftwidth=4
