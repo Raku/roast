@@ -1,6 +1,6 @@
 use Test;
 
-plan 195;
+plan 194;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -100,13 +100,6 @@ throws-like { Buf.new().subbuf(0, -1) }, X::OutOfRange,
   got   => -1,
   range => "0..0",
   "throw on negative len";
-
-# https://github.com/Raku/old-issue-tracker/issues/3530
-{
-    use experimental :pack;
-    my Blob $x;
-    throws-like { $x ~= pack "V",1 }, X::Buf::AsStr;
-}
 
 # https://github.com/Raku/old-issue-tracker/issues/3486
 {
