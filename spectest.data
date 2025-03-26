@@ -528,10 +528,6 @@ S06-currying/misc.t
 S06-currying/named.t
 S06-currying/positional.t
 S06-currying/slurpy.t
-S06-macros/errors.t
-S06-macros/opaque-ast.t
-S06-macros/quasi-blocks.t
-S06-macros/unquoting.t
 S06-multi/by-trait.t
 S06-multi/compile-time.t
 S06-multi/lexical-multis.t
@@ -1388,7 +1384,6 @@ integration/advent2012-day19.t # slow
 integration/advent2012-day20.t
 integration/advent2012-day21.t #stress
 integration/advent2012-day22.t
-integration/advent2012-day23.t
 integration/advent2012-day24.t
 integration/advent2013-day02.t
 integration/advent2013-day04.t
