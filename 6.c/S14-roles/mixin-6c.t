@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(3).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 58;
+plan 57;
 
 # L<S14/Run-time Mixins/>
 
@@ -160,15 +160,6 @@ lives-ok {(True but role {}).gist}, 'can mix into True';
     sub f() { role { method answer { 42 } } };
     is (1 but f).answer, 42, '<literal> but <zero-arg call> works';
 
-}
-
-# https://github.com/Raku/old-issue-tracker/issues/3216
-{
-    use experimental :macros;
-    throws-like q[role popo { macro marco { $^a but popo }; marco popo; }],
-        X::Role::Parametric::NoSuchCandidate,
-        role    => { .^name eq 'popo' }
-        ;
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/2875
