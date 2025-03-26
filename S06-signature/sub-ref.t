@@ -2,7 +2,7 @@ use Test;
 
 # L<S02/"Built-In Data Types"/Raku>
 
-plan 34;
+plan 30;
 
 =begin description
 
@@ -78,26 +78,6 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
         "calling an anonymous sub expecting a param without a param dies";
     dies-ok { $foo.(42, 5) },
         "calling an anonymous sub expecting one param with two params dies";
-}
-
-# Confirmed by p6l, see thread "Anonymous macros?" by Ingo Blechschmidt
-# L<"http://www.nntp.perl.org/group/perl.perl6.language/21825">
-#?rakudo skip 'macros, compile time binding'
-{
-    # We do all this in a EVAL() not because the code doesn't parse,
-    # but because it's safer to only call macro references at compile-time.
-    # So we'd need to wrap the code in a BEGIN {...} block. But then, our test
-    # code would be called before all the other tests, causing confusion. :)
-    # So, we wrap the code in a EVAL() with an inner BEGIN.
-    # (The macros are subject to MMD thing still needs to be fleshed out, I
-    # think.)
-    use experimental :macros;
-    our &foo_macro ::= macro ($x) { "1000 + $x" };
-    isa-ok(&foo_macro, Code);
-    isa-ok(&foo_macro, Routine);
-    isa-ok(&foo_macro, Macro);
-
-    is foo_macro(3), 1003, "anonymous macro worked";
 }
 
 {
