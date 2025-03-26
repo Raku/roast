@@ -13,12 +13,10 @@ my $envvar = 'RAKUDO_POD_DECL_BLOCK_USER_FORMAT';
 my $s1 = q:to<HERE1>;
 #|  line 1
 #|
-
 #| line 2
 sub foo {}
 #= line 3
 #=
-
 #= line 4
 
 HERE1
@@ -26,12 +24,10 @@ HERE1
 my $s2 = q:to<HERE2>;
 #|  line 1
 #|
-
 #| line 2
 my $str = foo {}
 #= line 3
 #=
-
 #= line 4
 
 HERE2
