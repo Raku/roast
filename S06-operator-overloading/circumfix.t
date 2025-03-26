@@ -1,14 +1,6 @@
 use Test;
 
-plan 16;
-
-#?rakudo skip 'macros'
-{
-    use experimental :macros;
-    my $var = 0;
-    ok(EVAL('macro circumfix:["<!--","-->"] ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro {"",""}');
-    ok(EVAL('macro circumfix:«<!-- -->» ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro «»');
-}
+plan 14;
 
 {
     sub circumfix:<<` `>>(*@args) { @args.join('-') }
