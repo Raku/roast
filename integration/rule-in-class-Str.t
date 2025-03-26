@@ -12,7 +12,7 @@ Difficulty using a rule in a method of Str.
 
 class C is Str {
     method meth1 () {
-        if ("bar" ~~ m:P5/[^a]/) {
+        if ("bar" ~~ m/<-[a]>/) {
             "worked";
         } else {
             "didnt";
@@ -20,11 +20,11 @@ class C is Str {
     }
 }
 
-is(C.new.meth1(),"worked",'m:P5/[^a]/ in method in C (is Str)');
+is(C.new.meth1(),"worked",'m/<-[a]>/ in method in C (is Str)');
 
 augment class Str {
     method meth2 () {
-        if ("bar" ~~ m:P5/[^a]/) {
+        if ("bar" ~~ m/<-[a]>/) {
             "worked";
         } else {
             "didnt";
@@ -32,11 +32,11 @@ augment class Str {
     }
 }
 
-is(Str.new.meth2(),"worked",'m:P5/[^a]/ in method in Str');
+is(Str.new.meth2(),"worked",'m/<-[a]>/ in method in Str');
 
 augment class Str {
     method meth3 () {
-        if ("bar" ~~ m:P5/[a]/) {
+        if ("bar" ~~ m/<-[a]>/) {
             "worked";
         } else {
             "didnt";
@@ -44,6 +44,6 @@ augment class Str {
     }
 }
 
-is(Str.new.meth3(),"worked",'m:P5/[a]/ in method in Str');
+is(Str.new.meth3(),"worked",'m/<-[a]>/ in method in Str');
 
 # vim: expandtab shiftwidth=4
