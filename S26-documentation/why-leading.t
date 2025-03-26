@@ -1,5 +1,5 @@
 use Test;
-plan 67;
+plan 66;
 
 my $pod_index = 0;
 
@@ -269,12 +269,6 @@ multi sub greeble(Str) { }
     test-leading(@candidates[0], 'alpha');
     test-leading(@candidates[1], 'beta');
 }
-
-use experimental :macros;
-#| I like numbers
-macro four { quasi { 2+2 } }
-
-test-leading(&four, 'I like numbers');
 
 #| Roy
 only the-lonely {}

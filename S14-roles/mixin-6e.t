@@ -3,7 +3,7 @@ use Test;
 use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 37;
+plan 36;
 
 # L<S14/Run-time Mixins/>
 
@@ -90,15 +90,6 @@ is $y.test,     42,         'method from other role was OK too';
 # https://github.com/Raku/old-issue-tracker/issues/2279
 is (class { } but role { method answer() { 42 } }).answer, 42,
     'can mix a role into a type object';
-
-# https://github.com/Raku/old-issue-tracker/issues/3216
-{
-    use experimental :macros;
-    throws-like q[role popo { macro marco { $^a but popo }; marco popo; }],
-        X::Role::Parametric::NoSuchCandidate,
-        role    => { .^name eq 'popo' }
-        ;
-}
 
 # https://github.com/Raku/old-issue-tracker/issues/3745
 {

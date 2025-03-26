@@ -1,5 +1,5 @@
 use Test;
-plan 58;
+plan 57;
 
 my $pod_index = 0;
 
@@ -257,13 +257,6 @@ multi sub greeble(Str) { }
     test-both(@candidates[0], 'alpha', 'centauri');
     test-both(@candidates[1], 'beta', 'male');
 }
-
-use experimental :macros;
-#| I like
-macro four { quasi { 2+2 } }
-#= numbers
-
-test-both(&four, 'I like', 'numbers');
 
 #| Roy
 only the-lonely {}
