@@ -36,7 +36,7 @@ is(Str.new.meth2(),"worked",'m/<-[a]>/ in method in Str');
 
 augment class Str {
     method meth3 () {
-        if ("bar" ~~ m/<-[a]>/) {
+        if ("bar" ~~ m/<[a]>/) {
             "worked";
         } else {
             "didnt";
@@ -44,6 +44,6 @@ augment class Str {
     }
 }
 
-is(Str.new.meth3(),"worked",'m/<-[a]>/ in method in Str');
+is(Str.new.meth3(),"worked",'m/<[a]>/ in method in Str');
 
 # vim: expandtab shiftwidth=4
