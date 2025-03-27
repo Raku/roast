@@ -61,7 +61,7 @@ lives-ok {EVAL '$order.discount'}, 'public method sanity';
 throws-like {EVAL '$order!compute_discount'},
   X::Method::Private::Unqualified,
   'private method sanity';
-throws-like {EVAL '$o!Order::compute_discount'},
+throws-like {EVAL '$order!Order::compute_discount'},
   X::Method::Private::Permission,
   'private method sanity';
 
