@@ -11,21 +11,39 @@ Difficulty using a rule in a method of Str.
 =end kwid
 
 class C is Str {
-    method meth1 () { }
+    method meth1 () {
+        if ("bar" ~~ m/<-[a]>/) {
+            "worked";
+        } else {
+            "didnt";
+        }
+    }
 }
 
-lives-ok { C.new.meth1 }, "can call 'meth1' on subclass of Str";
+is(C.new.meth1(),"worked",'m/<-[a]>/ in method in C (is Str)');
 
 augment class Str {
-    method meth2 () { }
+    method meth2 () {
+        if ("bar" ~~ m/<-[a]>/) {
+            "worked";
+        } else {
+            "didnt";
+        }
+    }
 }
 
-lives-ok { C.new.meth2 }, "can call 'meth2' on augmented Str";
+is(Str.new.meth2(),"worked",'m/<-[a]>/ in method in Str');
 
 augment class Str {
-    method meth3 () { }
+    method meth3 () {
+        if ("bar" ~~ m/<[a]>/) {
+            "worked";
+        } else {
+            "didnt";
+        }
+    }
 }
 
-lives-ok { C.new.meth3 }, "can call 'meth3' on re-augmented Str";
+is(Str.new.meth3(),"worked",'m/<[a]>/ in method in Str');
 
 # vim: expandtab shiftwidth=4
