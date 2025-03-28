@@ -11,8 +11,9 @@ use Test::Util;
 plan 6;
 
 # https://github.com/rakudo/rakudo/issues/1476
-throws-like ｢*+42:foo｣, X::Syntax::Adverb, :what{.so},
-    'error in Whatever closure with adverb mentions what cannot be adverbed';
+#?rakudo todo 'passes correctly in RakuAST'
+isa-ok (try ｢*+42:foo｣.EVAL), WhateverCode,
+  "WhateverCodes should be allowed if numerical expression is also allowed";
 
 # https://github.com/Raku/old-issue-tracker/issues/6299
 subtest 'same exception with and without type smiley for failing coercion on var' => {
