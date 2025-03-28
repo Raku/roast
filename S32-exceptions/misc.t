@@ -7,7 +7,7 @@ plan 182;
 # https://github.com/Raku/old-issue-tracker/issues/2075
 throws-like 'sub foo(--> NoSuchType) { }; foo', X::Undeclared, what => { m/'Type'/ }, symbol => { m/'NoSuchType'/ };
 
-throws-like 'my class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foobar";
+throws-like 'my class Foobar is Foobar { }', X::Inheritance::SelfInherit, name => "Foobar";
 
 {
     # https://github.com/Raku/old-issue-tracker/issues/1362
