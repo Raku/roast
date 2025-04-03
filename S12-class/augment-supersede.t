@@ -92,7 +92,7 @@ eval-lives-ok q[
 
 # https://github.com/Raku/old-issue-tracker/issues/3080
 {
-    try EVAL 'class F { also is F; }';
+    try EVAL 'my class F { also is F; }';
     ok ~$! ~~ / 'cannot inherit from itself' /, "used to crash rakudo";
 }
 
