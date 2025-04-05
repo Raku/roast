@@ -193,17 +193,21 @@ role Boxer {
 }
 
 class C {
-    submethod BUILD { }
+    submethod BUILD
     #={Bob}
+    { }
 
-    proto method meth($) {}
+    proto method meth
     #={Takes a single argument}
+    ($) {}
 
-    multi method meth(Int $int-arg) {}
+    multi method meth
     #={Single Int argument}
+    (Int $int-arg) {}
 
-    multi method meth(Str $str-arg) {}
+    multi method meth
     #={Single Str argument}
+    (Str $str-arg) {}
 }
 
 {
