@@ -189,17 +189,21 @@ role Boxer {
 }
 
 class C {
-    submethod BUILD { }
+    submethod BUILD
     #= Bob
+    { }
 
-    proto method meth($) {}
+    proto method meth
     #= Takes a single argument
+    ($) {}
 
-    multi method meth(Int $int-arg) {}
+    multi method meth
     #= Single Int argument
+    (Int $int-arg) {}
 
-    multi method meth(Str $str-arg) {}
+    multi method meth
     #= Single Str argument
+    (Str $str-arg) {}
 }
 
 {
@@ -306,14 +310,15 @@ test-trailing($fancy-var.VAR, 'Very fancy!');
 )
 
 # https://github.com/Raku/old-issue-tracker/issues/4266
-sub has-where(Int $n where * > 10) {}
+sub has-where
 #= where constraints shouldn't prevent declarative comments
+(Int $n where * > 10) {}
 
 test-trailing(&has-where, "where constraints shouldn't prevent declarative comments");
 
 my $block = {;
-};
 #= this is a block
+};
 
 test-trailing($block, 'this is a block');
 
