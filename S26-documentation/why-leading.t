@@ -319,6 +319,6 @@ test-leading($block, 'this is a block');
 is $=pod.elems, $pod_index;
 
 # R#3242
-lives-ok { "#| foo\n#|\n#| bar".EVAL }, 'can we have an empty #|';
+lives-ok { "#| foo\n#| \n#| bar".EVAL }, 'can we have an empty #|';
 
 # vim: expandtab shiftwidth=4
