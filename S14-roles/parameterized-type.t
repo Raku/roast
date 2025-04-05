@@ -88,7 +88,7 @@ throws-like 'role ABCD[EFGH] { }', X::Parameter::InvalidType, 'role with undefin
 
 # https://github.com/Raku/old-issue-tracker/issues/2515
 {
-    my role R[::T = my role Q[::S = role { method baz { "OH HAI" } }] { method bar { S.baz } }] { method foo { T.bar } };
+    my role R[::T = my role Q[::S = my role { method baz { "OH HAI" } }] { method bar { S.baz } }] { method foo { T.bar } };
     is R.new.foo, 'OH HAI', 'can use a parameterized role as a default value of a parameterized role';
 
 }
