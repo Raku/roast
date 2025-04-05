@@ -159,20 +159,24 @@ role Boxer[::T] {
 
 class C {
     #| Bob
-    submethod BUILD { }
+    submethod BUILD
     #= Frank
+    { }
 
     #| Takes a
-    proto method meth($) {}
+    proto method meth
     #= single argument
+    ($) {}
 
     #| Single Int
-    multi method meth(Int $int-arg) {}
+    multi method meth
     #= argument
+    (Int $int-arg) {}
 
     #| Single
-    multi method meth(Str $str-arg) {}
+    multi method meth
     #= Str argument
+    (Str $str-arg) {}
 }
 
 {
@@ -301,15 +305,16 @@ test-both($fancy-var.VAR, 'Very', 'fancy!');
 )
 
 #| where constraints shouldn't
-sub has-where(Int $n where * > 10) {}
+sub has-where
 #= prevent declarative comments
+(Int $n where * > 10) {}
 
 test-both(&has-where, "where constraints shouldn't", 'prevent declarative comments');
 
 #| this is
 my $block = {;
-};
 #= a block
+};
 
 test-both($block, 'this is', 'a block');
 
