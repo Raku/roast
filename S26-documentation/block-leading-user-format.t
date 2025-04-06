@@ -61,6 +61,7 @@ for %h.keys -> $s {
     # test 2: the test with the envvar
     {
         (temp %*ENV){$envvar} = 1;
+        #?rakudo todo 'fixed in RakuAST'
         is_run $s,                   # the code script
         {
             #:in, :args, :err,           # not yet used
