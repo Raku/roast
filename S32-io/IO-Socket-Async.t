@@ -4,7 +4,7 @@ use Test;
 plan 38;
 
 my $hostname = 'localhost';
-my $port = 5000;
+my $port = (5_000..10_000).pick;
 
 try {
     my $sync = Promise.new;
