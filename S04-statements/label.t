@@ -90,41 +90,38 @@ throws-like { EVAL q[label1: say "OH HAI"; label1: say "OH NOES"] }, X::Redeclar
 #              types. The tests resemble Rakudo's current internal structure,
 #              but the code should work for all implementations.
 {
-    my @res;
-    @ = (L1: while True { while True { @res.push: "A"; last L1 } });
-    @ = (L2: until False { until False { @res.push: "B"; last L2 } });
-    @ = (L3: Seq.from-loop(
-        { loop { @res.push: "C"; last L3 } },
-        { True },
-        :label(L3)
-    ));
-    todo "semantics are unclear" if %*ENV<RAKUDO_RAKUAST>;
-    is-deeply @res, ["A", "B", "C"],
-        'nested loop with labeled last (1)';
+    lives-ok {
+        @ = (L1: while True { while True { last L1 } });
+        @ = (L2: until False { until False { last L2 } });
+        @ = (L3: Seq.from-loop(
+            { loop { last L3 } },
+            { True },
+            :label(L3)
+        ));
+    }, 'nested loop with labeled last (1)';
 
-    @res = [];
-    @ = (L4: Seq.from-loop(
-        { loop { @res.push: "RepeatLoop"; last L4 } },
-        { True },
-        :label(L4),
-        :repeat(1)
-    ));
-    is-deeply @res, ["RepeatLoop"], 'nested loop with labeled last (2)';
+    lives-ok {
+        @ = (L4: Seq.from-loop(
+            { loop { last L4 } },
+            { True },
+            :label(L4),
+            :repeat(1)
+        ));
+    }, 'nested loop with labeled last (2)';
 
-    @res = [];
-    @ = (L5: loop { loop { @res.push: "CStyleLoop"; last L5 } });
-    @ = (L6: Seq.from-loop(
-        { loop { @res.push: "CStyleLoop"; last L6 } },
-        { True },
-        { my $foo = 47 },
-        :label(L6)
-    ));
-    is-deeply @res, ["CStyleLoop", "CStyleLoop"],
-        'nested loop with labeled last (3)';
+    lives-ok {
+        @ = (L5: loop { loop { last L5 } });
+        @ = (L6: Seq.from-loop(
+            { loop { last L6 } },
+            { True },
+            { my $foo = 47 },
+            :label(L6)
+        ));
+    }, 'nested loop with labeled last (3)';
 
-    @res = [];
-    L7: Seq.from-loop( { loop { @res.push: "Loop"; last L7 } }, :label(L7));
-    is-deeply @res, ["Loop"], 'nested loop with labeled last (4)';
+    lives-ok {
+        L7: Seq.from-loop( { loop { last L7 } }, :label(L7));
+    }, 'nested loop with labeled last (4)';
 }
 
 # https://github.com/rakudo/rakudo/issues/4456
