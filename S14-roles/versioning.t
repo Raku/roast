@@ -59,46 +59,46 @@ my $METHOD := Mu.can("POPULATE") ?? "POPULATE" !! "BUILDALL";
 subtest "Submethods" => {
     plan 7;
     my @compiler-args = '-I' ~ $?FILE.IO.parent(2).add: 'packages/S14-roles/lib';
-    is_run q:to/V6C/,
+    is_run q:s:to/V6C/,
             use v6.c;
             use Ver6e;
             class C does R6e_1 { }
-            print C.^language-revision, ": ", C.^submethod_table.keys.join(" ");
+            print C.^language-revision, ": ", C.^submethod_table.keys.grep(* ne '$METHOD').join(" ");
             V6C
         :@compiler-args,
-        { :err(""), :out("c: $METHOD") },
+        { :err(""), :out("c: ") },
         "6.c class consuming 6.e role doesn't receive role's submethods";
 
-    is_run q:to/V6C/,
+    is_run q:s:to/V6C/,
             use v6.c;
             use Ver6c;
             use Ver6e;
             class C does R6e_1 does R6c_1 { }
-            print C.^language-revision, ": ", C.^submethod_table.keys.sort.join(" ");
+            print C.^language-revision, ": ", C.^submethod_table.keys.grep(* ne '$METHOD').sort.join(" ");
             V6C
         :@compiler-args,
-        { :err(""), :out("c: $METHOD r6c") },
+        { :err(""), :out("c: r6c") },
         "6.c class consuming both 6.c and 6.e roles only gets submethods from 6.c role";
 
-    is_run q:to/V6E/,
+    is_run q:s:to/V6E/,
             use v6.e.PREVIEW;
             use Ver6e;
             class C does R6e_1 { }
-            print C.^language-revision, ": ", C.^submethod_table.keys.join(" ");
+            print C.^language-revision, ": ", C.^submethod_table.keys.grep(* ne '$METHOD').join(" ");
             V6E
         :@compiler-args,
-        { :err(""), :out("e: $METHOD") },
+        { :err(""), :out("e: ") },
         "6.e class consuming 6.e role doesn't receive role's submethods";
 
-    is_run q:to/V6E/,
+    is_run q:s:to/V6E/,
             use v6.e.PREVIEW;
             use Ver6c;
             use Ver6e;
             class C does R6e_1 does R6c_1 { }
-            print C.^language-revision, ": ", C.^submethod_table.keys.join(" ");
+            print C.^language-revision, ": ", C.^submethod_table.keys.grep(* ne '$METHOD').join(" ");
             V6E
         :@compiler-args,
-        { :err(""), :out("e: $METHOD") },
+        { :err(""), :out("e: ") },
         "6.e class consuming both 6.c and 6.e roles gets submethods from neither";
 
     #?rakudo.jvm todo 'got out: "c: "'
