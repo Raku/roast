@@ -4,7 +4,7 @@ plan 40;
 
 my $s-address = '0.0.0.0';
 my $c-address = '127.0.0.1';
-my $port = 5000;
+my $port = (5_000..10_000).pick;
 
 try {
     my $sync = Promise.new;
