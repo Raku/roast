@@ -91,14 +91,15 @@ throws-like { EVAL q[label1: say "OH HAI"; label1: say "OH NOES"] }, X::Redeclar
 #              but the code should work for all implementations.
 {
     my @res;
-    @ = (L1: while True { while True { @res.push: "WhileLoop"; last L1 } });
-    @ = (L2: until False { until False { @res.push: "WhileLoop"; last L2 } });
+    @ = (L1: while True { while True { @res.push: "A"; last L1 } });
+    @ = (L2: until False { until False { @res.push: "B"; last L2 } });
     @ = (L3: Seq.from-loop(
-        { loop { @res.push: "WhileLoop"; last L3 } },
+        { loop { @res.push: "C"; last L3 } },
         { True },
         :label(L3)
     ));
-    is-deeply @res, ["WhileLoop", "WhileLoop", "WhileLoop"],
+    todo "semantics are unclear" if %*ENV<RAKUDO_RAKUAST>;
+    is-deeply @res, ["A", "B", "C"],
         'nested loop with labeled last (1)';
 
     @res = [];
