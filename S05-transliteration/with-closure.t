@@ -44,11 +44,9 @@ is $y, 2,                            'Closure invoked twice (once per replacemen
     # combined regex / closure
     my $count = 0;
     is 'hello'.trans(/l/ => { ++$count }), 'he12o', 'regex and closure mix';
-    #?rakudo todo 'nom regression'
     #?niecza todo 'regex and closure mix (with $/ as topic)'
     is 'hello'.trans(/l/ => { $_ x 2 }), 'hellllo', 'regex and closure mix (with $/ as topic)';
     my $x = 'hello';
-    #?rakudo todo 'nom regression'
     #?niecza todo 'regex and closure mix (with $/ as topic and capture)'
     is $x.trans(/(l)/ => { $_[0] x 2 }), 'hellllo', 'regex and closure mix (with $/ as topic and capture)';
     is $x, 'hello', 'Original string not modified';

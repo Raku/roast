@@ -64,7 +64,6 @@ plan 36;
     #?rakudo skip 'oh noes, it dies'
     is %h{ Mu, Any }.join(","), "2,3", 'check slice access on Mu';
     # note the following todo is a flapper
-    #?rakudo todo 'oh noes, it dies'
     is %h{*}.join(","), "2,3", 'check whatever access with Mu as key';
 } #6
 

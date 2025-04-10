@@ -194,7 +194,6 @@ plan 35;
     is @x, (12,6,4,3), 'with/for list comprehension works with parens';
 }
 
-#?rakudo todo "parenless with/for doesn't work yet"
 {
     my @x;
     try push @x, .abs with 12 div $_ for 0..4;

@@ -69,7 +69,6 @@ my $obj;
 
 {
     $obj = EVAL("FooBar->new", :lang<Perl5>);
-    #?rakudo todo "P5 classes not yet shadowed in P6"
     {
         isa-ok($obj, 'FooBar', "blessed");
     }

@@ -66,7 +66,6 @@ try {
 is("{ @keys }", "{ @p5keys }");
 
 ok($p5hash.store(9, 'e'), 'can store');
-#?rakudo todo "doesn't work yet due to copying of hashes RT #124647"
 {
     is(%hash{9}, 'e', 'store result');
 }
