@@ -4,28 +4,34 @@ plan 40;
 
 my $s-address = '0.0.0.0';
 my $c-address = '127.0.0.1';
-my $port = (5_000..10_000).pick;
+my $port; # With dynamic server port, refresh this on each new .tap
 
+# hardcoded port on invalid hostname
 try {
     my $sync = Promise.new;
-    IO::Socket::Async.listen('veryunlikelyhostname.bogus', $port).tap(quit => {
+    IO::Socket::Async.listen('veryunlikelyhostname.bogus', 5000).tap(quit => {
         ok $_ ~~ Exception, 'Async listen on bogus hostname';
         $sync.keep(1);
     });
     await $sync;
 }
 
-await IO::Socket::Async.connect($c-address, $port).then(-> $sr {
+# random (hopefully invalid) port on localhost
+my $random-port = (5_000..10_000).pick;
+await IO::Socket::Async.connect($c-address, $random-port).then(-> $sr {
     is $sr.status, Broken, 'Async connect to unavailable server breaks promise';
 });
 
-my $server = IO::Socket::Async.listen($s-address, $port);
-
+# use dynamic port ...
+my $server = IO::Socket::Async.listen($s-address, 0);
 my $echoTap = $server.tap(-> $c {
     $c.Supply.tap(-> $chars {
         $c.print($chars).then({ $c.close });
     }, quit => { say $_; });
 });
+
+# ... get actual port number used.
+$port = await $echoTap.socket-port;
 
 await IO::Socket::Async.connect($c-address, $port).then(-> $sr {
     is $sr.status, Kept, 'Async connect to available server keeps promise';
@@ -106,6 +112,7 @@ $echoTap.close;
             -> $msg { $firstReceive = $msg; $c.close; }
         );
     });
+    $port = await $splitGraphemeTap.socket-port;
     await client('u'.encode('utf-8'), "\c[COMBINING DOT ABOVE]\n".encode('utf-8'));
     $splitGraphemeTap.close;
     is $firstReceive, "u̇\n", 'Coped with grapheme split across packets';
@@ -117,6 +124,7 @@ $echoTap.close;
             $c.print($chars).then({ $c.close });
         }, quit => { say $_; });
     });
+    $port = await $echo2Tap.socket-port;
     my $encMessage = "пиво\n".encode('utf-8');
     my $splitResult = await client($encMessage.subbuf(0, 3), $encMessage.subbuf(3));
     $echo2Tap.close;
@@ -132,6 +140,7 @@ $echoTap.close;
             quit => { $failed = True; $c.close; }
         );
     });
+    $port = await $badInputTap.socket-port;
     try await client(Buf.new(0xFF, 0xFF));
     $badInputTap.close;
     ok $failed, 'Bad UTF-8 causes quit on Supply (but program survives)';
@@ -141,6 +150,7 @@ $echoTap.close;
     my $discardTap = $server.tap(-> $c {
         $c.Supply.tap(-> $chars { $c.close });
     });
+    $port = await $discardTap.socket-port;
     my $discardResult = await client($message);
     $discardTap.close;
     ok $discardResult eq '', 'Discard server';
@@ -151,6 +161,8 @@ $echoTap.close;
     my $binaryTap = $server.tap(-> $c {
         $c.write($binary).then({ $c.close });
     });
+
+    $port = await $binaryTap.socket-port;
 
     # https://github.com/Raku/old-issue-tracker/issues/5249
     #?rakudo.jvm todo 'unknown problem, did hang (sometimes)'
@@ -166,6 +178,7 @@ $echoTap.close;
     my $latin1Tap = $latin1server.tap(-> $c {
         $c.Supply.tap(-> Str $msg { $c.print($msg).then({ $c.close }) });
     });
+    $port = await $latin1Tap.socket-port;
     my $latin1Buf = "Öl\n".encode('latin-1');
     my $received = await client($latin1Buf);
     ok $received.list eqv $latin1Buf.list, 'Server socket configured with latin-1 handles it';
@@ -177,6 +190,7 @@ $echoTap.close;
     my $transcodeTap = $transcodeServer.tap(-> $c {
         $c.Supply(:enc('latin-1')).tap(-> Str $msg { $c.print($msg).then({ $c.close }) });
     });
+    $port = await $transcodeTap.socket-port;
     my $latin1Buf = "Öl\n".encode('latin-1');
     my $utf8Buf = "Öl\n".encode('utf-8');
     my $received = await client($latin1Buf);
@@ -188,6 +202,7 @@ $echoTap.close;
     my $byteCountTap = $server.tap(-> $c {
         $c.Supply(:bin).tap(-> Blob $b { $c.write("Öl,$b.elems()\n".encode('latin-1')).then({ $c.close }) });
     });
+    $port = await $byteCountTap.socket-port;
     my $latin1Client = await IO::Socket::Async.connect($c-address, $port, :enc('latin-1'));
     my $received = Promise.new;
     my $receivedStr = '';
@@ -210,13 +225,13 @@ $echoTap.close;
     }
 
     for @hosts -> $host {
-        my $port = 5001;
         diag("host=$host");
 
-        my $s = IO::Socket::Async.listen($host, $port);
+        my $s = IO::Socket::Async.listen($host, 0);
 
         my $s_conn_promise = Promise.new;
         my $s_tap = $s.tap({ $s_conn_promise.keep($_) });
+        my $port = await $s_tap.socket-port;
         my $c_conn = await IO::Socket::Async.connect($host, $port);
         my $s_conn = await $s_conn_promise;
 
@@ -235,7 +250,9 @@ $echoTap.close;
 }
 
 {
-    my $badServer = IO::Socket::Async.listen($s-address, 6000);
+    # random (hopefully invalid) port on localhost
+    my $random-port = (5_000..10_000).pick;
+    my $badServer = IO::Socket::Async.listen($s-address, $random-port);
     my $failed = Promise.new;
     my $t1 = $badServer.tap();
     my $t2 = $badServer.tap(quit => { $failed.keep });
@@ -244,8 +261,8 @@ $echoTap.close;
 }
 
 {
-    my $port = 5007;
-    my $t = IO::Socket::Async.listen($s-address, $port).tap: -> $conn { };
+    my $t = IO::Socket::Async.listen($s-address, 0).tap: -> $conn { };
+    my $port = await $t.socket-port;
     my $conn = await IO::Socket::Async.connect($c-address, $port);
     lives-ok { for ^5 { $conn.close; sleep 0.05; } },
         'Multiple close of an IO::Socket::Async silently coped with';
