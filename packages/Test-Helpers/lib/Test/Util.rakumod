@@ -340,7 +340,7 @@ multi doesn't-warn(&code, Str $desc) is test-assertion {
 sub make-rand-path (--> IO::Path:D) {
     my $p = $*TMPDIR;
     $p.resolve.child: (
-        'perl6_roast_',
+        'raku_roast_',
         $*PROGRAM.basename, '_line',
         ((try callframe(3).code.line)||''), '_',
         rand,
