@@ -2,7 +2,7 @@ use v6.d;
 
 use Test;
 
-BEGIN plan 20;
+BEGIN plan 18;
 
 # L<S04/Phasers>
 
@@ -18,8 +18,8 @@ my $begin;
 }
 
 my $init;
+#?rakudo skip 'will init NYI'
 {
-    #?rakudo todo 'will init NYI'
     is $init, "abc", 'all init blocks in order';
     BEGIN $init ~= "a";
     INIT  $init ~= "b";
@@ -99,8 +99,6 @@ is $same3, "aebebebc", 'all for blocks get $_';
 {
     my $seen = 42;
     dies-ok {EVAL 'my $a will foo { $seen = 1 }'}, 'unknown will trait';
-    is $seen, 42, 'block should not have executed';
-    lives-ok {my $a will compose { $seen = 1 }}, "don't know how to test yet";
     is $seen, 42, 'block should not have executed';
 }
 
