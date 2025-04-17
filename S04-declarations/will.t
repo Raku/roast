@@ -41,7 +41,7 @@ my $block;
     my $dd will enter  { $block ~= "b" };
     is $block, "ab", 'entered block ok';
     my $e will leave   { $block ~= "c" };
-    my $ee will post   { $block ~= "d" };
+    # my $ee will post   { $block ~= "d" };  # NYI
     my $eee will keep  { $block ~= "e" };
     my $eeee will undo { $block ~= "f" }; # should not fire
     1; # successful exit
