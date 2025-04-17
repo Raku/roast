@@ -4,28 +4,35 @@ use Test;
 plan 6;
 
 my $hostname = 'localhost';
-my $port = 5000;
+my $port; # With dynamic server port, refresh this on each new .tap
 
+# hardcoded port on invalid hostname
 try {
     my $sync = Promise.new;
-    IO::Socket::Async.listen('veryunlikelyhostname.bogus', $port).tap(quit => {
+    IO::Socket::Async.listen('veryunlikelyhostname.bogus', 5000).tap(quit => {
         ok $_ ~~ Exception, 'Async listen on bogus hostname';
         $sync.keep(1);
     });
     await $sync;
 }
 
-await IO::Socket::Async.connect($hostname, $port).then(-> $sr {
+# random (hopefully invalid) port on localhost
+my $random-port = (5_000..10_000).pick;
+await IO::Socket::Async.connect($hostname, $random-port).then(-> $sr {
     is $sr.status, Broken, 'Async connect to unavailable server breaks promise';
 });
 
-my $server = IO::Socket::Async.listen($hostname, $port);
+# use dynamic port ...
+my $server = IO::Socket::Async.listen($hostname, 0);
 
 my $echoTap = $server.tap(-> $c {
     $c.Supply.tap(-> $chars {
         $c.print($chars).then({ $c.close });
     }, quit => { say $_; });
 });
+
+# ... get actual port number used.
+$port = await $echoTap.socket-port;
 
 await IO::Socket::Async.connect($hostname, $port).then(-> $sr {
     is $sr.status, Kept, 'Async connect to available server keeps promise';
@@ -75,6 +82,7 @@ my $discardTap = $server.tap(-> $c {
     $c.Supply.tap(-> $chars { $c.close });
 });
 
+$port = await $discardTap.socket-port;
 my $discardResult = await client($message);
 $discardTap.close;
 ok $discardResult eq '', 'Discard server';
@@ -97,6 +105,7 @@ multi sub client(Buf $message) {
     });
 }
 
+$port = await $binaryTap.socket-port;
 my $received = await client($binary);
 $binaryTap.close;
 ok $binary eqv $received, 'bytes-supply';
