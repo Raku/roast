@@ -4,7 +4,7 @@ use Test::Util;
 
 use lib $?FILE.IO.parent(2).add("packages/HasMain/lib");
 
-plan 21;
+plan 23;
 
 ## If this test file is fudged, then MAIN never executes because
 ## the fudge script introduces an C<exit(1)> into the mainline.
@@ -162,6 +162,39 @@ subtest '%*SUB-MAIN-OPTS<named-anywhere>', {
     is_run 'sub MAIN(:$o, :@t) { dd $o }', :args<--o --t=a --t=b>,
       { :out(""), :err("Bool::True\n"), :0status },
       'Bool with named arg array and two args works';
+}
+
+subtest 'MAIN can take type-constraint using an Enum declared in a separate scope' => {
+    plan 3;
+
+    my $code = Q:to/END/;
+        module M { enum E is export <F G> }
+        import M;
+        sub MAIN (E $f, E :$g) {
+            print "pass";
+        }
+    END
+    is_run $code, :args[<F>                      ], { :out<pass>, :err('') }, 'positional works';
+    is_run $code, :args[<--g=G F>                ], { :out<pass>, :err('') }, 'positional + named works';
+    is_run $code, :args[<E>                      ], { :out{not .contains: 'pass'}, :err(/'=<E>'/) },
+            'name of enum itself is not valid and usage message prints the name of the enum';
+}
+
+subtest 'MAIN can take type-constraint using a subset declared in a separate scope' => {
+    plan 3;
+
+    my $code = Q:to/END/;
+        module M { subset S is export where / 'ok' / }
+        import M;
+        # Named arguments with subset types need to have a conformant default value
+        sub MAIN (S $s-pos, S :$s-named = "ok") {
+            print "pass";
+        }
+    END
+    is_run $code, :args[<ok>                     ], { :out<pass>, :err('') }, 'positional works';
+    is_run $code, :args[<--s-named=ok ok>        ], { :out<pass>, :err('') }, 'positional + named works';
+    is_run $code, :args[<S>                      ], { :out{not .contains: 'pass'}, :err(/'[=S]'/) },
+            'name of subset itself is not valid and usage message prints the name of the subset';
 }
 
 # vim: expandtab shiftwidth=4
