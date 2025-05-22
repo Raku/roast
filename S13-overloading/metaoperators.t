@@ -1,6 +1,6 @@
 use Test;
 
-plan 16;
+plan 17;
 
 #L<S06/Operator overloading>
 
@@ -55,6 +55,13 @@ is ([\,] <a b>, <c d>, <e f>)».join('|').join('-'), "a b-a b|c d-a b|c d|e f",
     my $a;
     $a<a b c> »=» 42;
     is( $a{$_}, 42, "is key $_ 42?" ) for <a b c>;
+}
+
+# https://github.com/rakudo/rakudo/issues/5882
+{
+    is-deeply ([\,] 1..5), (
+      (1,), (1,2), (1,2,3), (1,2,3,4), (1,2,3,4,5)
+    ), 'triangle meta op on , works correctly';
 }
 
 # vim: expandtab shiftwidth=4
