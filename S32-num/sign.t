@@ -49,6 +49,8 @@ isa-ok(sign(-Inf), Int, 'got correct type for -Inf');
 is(sign(NaN),NaN, 'sign of NaN is NaN');
 
 throws-like { sign(Int) }, Exception;
-throws-like { sign(3+4i) }, X::Numeric::Real;
+
+#?rakudo todo 'better behaviour in 6.e+'
+is-deeply (try sign(3+4i)), 0.6+0.8i, 'Does sign(Complex) return a Complex';
 
 # vim: expandtab shiftwidth=4
