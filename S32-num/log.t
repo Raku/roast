@@ -54,7 +54,8 @@ is-approx(log10(0.1), $log10_one_tenth, 'got the log10 of 0.1');
 
 is( log(0), -Inf, 'log(0) = -Inf');
 is( log(Inf), Inf, 'log(Inf) = Inf');
-is( log(-Inf), NaN, 'log(-Inf) = NaN');
+#?rakudo todo 'better behaviour in 6.e+'
+is( log(-Inf), 'Inf+3.141592653589793i', 'log(-Inf) = complex');
 is( log(NaN), NaN, 'log(NaN) = NaN');
 
 is( log2(Inf), Inf, 'log2(Inf) = Inf');
@@ -62,7 +63,8 @@ is( log2(NaN), NaN, 'log2(NaN) = NaN');
 
 is( log10(0), -Inf, 'log10(0) = -Inf');
 is( log10(Inf), Inf, 'log10(Inf) = Inf');
-is( log10(-Inf), NaN, 'log10(-Inf) = NaN');
+#?rakudo todo 'better behaviour in 6.e+'
+is( log10(-Inf), 'Inf+1.3643763538418412i', 'log10(-Inf) = complex');
 is( log10(NaN), NaN, 'log10(NaN) = NaN');
 
 
