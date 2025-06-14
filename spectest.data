@@ -40,6 +40,9 @@
 6.c/S32-io/file-tests.t
 
 6.d/S02-literals/version.t
+6.d/S32-num/log.t
+6.d/S32-num/sign.t
+6.d/S32-num/sqrt.t
 6.d/S32-str/sprintf-b.t
 6.d/S32-str/sprintf-c.t      # moar
 6.d/S32-str/sprintf-d.t

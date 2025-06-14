@@ -1,4 +1,4 @@
-use v6.c;
+use v6.d;
 use Test;
 plan 1;
 
