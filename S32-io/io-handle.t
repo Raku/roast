@@ -224,8 +224,10 @@ subtest 'opened filehandles get closed on exit automatically' => {
 
 # https://github.com/Raku/old-issue-tracker/issues/6434
 {
-    is-deeply my class Z is IO::Handle { }.new.nl-in, $[“\n”, “\r\n”],
-        ‘.nl-in in subclasses has \n and \r\n’;
+    is-deeply
+      my class Z is IO::Handle { }.new.nl-in,  # does subclass get the same
+      IO::Handle.new.nl-in,                    # as the base class
+      ‘.nl-in in subclasses has same as base class’;
 }
 
 subtest '.WRITE method' => {
