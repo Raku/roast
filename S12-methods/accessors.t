@@ -1,6 +1,6 @@
 use Test;
 
-plan 10;
+plan 11;
 
 class A {
     has @.a;
@@ -66,6 +66,17 @@ is $a.test-hash-a,   2, '%.a contextualizes as hash';
     is $o.child-x, 42, 'parent attribute is separate from child attribute of the same name (child)';
     is $o.x, 42, '.accessor returns that of the child';
 
+}
+
+# https://github.com/rakudo/rakudo/issues/5908
+{
+    my class A {
+        has $.b = 42;
+        method bb() { $.b = 666 }
+    }
+    throws-like { A.new.bb }, X::AdHoc,
+      message => 'Cannot assign to a readonly variable or a value',
+      '$.b should return a ro container';
 }
 
 # vim: expandtab shiftwidth=4
