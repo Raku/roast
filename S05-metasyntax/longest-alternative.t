@@ -116,7 +116,7 @@ my $str = 'a' x 7;
         method c($/)   { $!matched_c   = 1 };
     }
     my $o = LTM::T1::Action.new();
-    ok LTM::T1.parse('aaa---', :actions($o)), 'LTM grammar - matched';
+    ok ($/ = LTM::T1.parse('aaa---', :actions($o))), 'LTM grammar - matched';
     is ~$/, 'aaa---', 'LTM grammar - matched full string';
     # TODO: find out if $.matched_a is allowed to be set
     ok $o.matched_TOP && $o.matched_b && $o.matched_c,
