@@ -34,20 +34,25 @@ subtest "Basic role language revision", {
 }
 
 subtest "Multi-module and multi-version", {
-    plan 3;
+    plan 4;
+    use Ver6c;
+    use Ver6d;
     use Ver6e;
-    is-deeply VerRole.^candidates.map( ~ *.^language-revision ), <c e>,
+    is-deeply VerRole.^candidates.map( ~ *.^language-revision ), <c d e>,
               "role candidates are coming from different language revisions";
-    is VerRole.new.^language-revision, 'c', "pun of role defined in 6.c remains 6.c";
-    is VerRole[Str].new.^language-revision, 'e', "pun of role defined in 6.e remains 6.e";
+    is VerRole.new.^language-revision, 'c',
+      "pun of role defined in 6.c remains 6.c";
+    is VerRole[Str].new.^language-revision, 'd',
+      "pun of role defined in 6.d remains 6.d";
+    is VerRole[Str,Str].new.^language-revision, 'e',
+      "pun of role defined in 6.e remains 6.e";
 }
 
 subtest "Enum", {
     plan 3;
     use Ver6c;
+    use Ver6d;
     use Ver6e;
-
-    enum Enum-v6d <da db dc>;
 
     is Enum-v6c.^language-revision, 'c', "enum for v6.c";
     is Enum-v6d.^language-revision, 'd', "enum for v6.e";
@@ -149,7 +154,5 @@ subtest "Submethods" => {
         { :err(""), :out("e: R6e_2.BUILD R6c_2.BUILD R6e_2.TWEAK R6c_2.TWEAK") },
         "6.e class with own constructors doesn't block neither 6.e, nor 6.c constructors";
 }
-
-done-testing;
 
 # vim: expandtab shiftwidth=4

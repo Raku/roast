@@ -1,17 +1,17 @@
-use v6.e.PREVIEW;
-use Ver6d;
+use v6.d;
+use Ver6c;
 
-role VerRole[::S, ::T] is export { }
+role VerRole[::T] is export { }
 
-class Cv6e is export { }
+class Cv6d is export { }
 
-enum Enum-v6e is export <ea eb ec>;
+enum Enum-v6d is export <da db dc>;
 
-role R6e_1 {
-    submethod r6e { }
+role R6d_1 is export {
+    submethod r6d { }
 }
 
-role R6e_2[@stages] {
+role R6d_2[@stages] {
     submethod BUILD {
         @stages.push: $?ROLE.^name ~ ".BUILD";
     }

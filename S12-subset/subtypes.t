@@ -64,7 +64,7 @@ Tests subtypes, specifically in the context of multimethod dispatch.
     dies-ok { only_accepts_odds(4) },  "calling sub did not work";
 
     # Can smartmatch too
-    sub is_num_odd(Int::Odd $odd) { $odd ~~ Int::Odd },
+    sub is_num_odd(Int::Odd $odd) { $odd ~~ Int::Odd };
     ok is_num_odd(3), "Int accepted by Int::Odd";
 }
 
