@@ -109,7 +109,7 @@ subtest 'can smartmatch against regexes stored in variables' => {
 
 # https://github.com/rakudo/rakudo/commit/a62b221a80
 subtest '$/ is set when matching in a loop' => {
-    plan 8;
+    plan 11;
 
     for "a" { my $rx = rx/./; if $_ ~~ $rx {
         is ~$/, 'a', '&infix:<~~>'
@@ -120,16 +120,26 @@ subtest '$/ is set when matching in a loop' => {
     for 4   { if .subst: /./, 'x' { is ~$/, '4', 'Cool.subst' }}
 
     my grammar Foo { token TOP { . } }
-    for "a" { if Foo.parse: $_ { is ~$/, 'a', 'Grammar.parse' }}
-    for "a" { if Foo.subparse: $_ { is ~$/, 'a', 'Grammar.subparse' }}
+    $/ = 42;
+    is Foo.parse('a'), 'a',
+      'does Foo.parse return the correct Match object';
+    #?rakudo todo 'Grammar.parse does not $/ in 6.e'
+    is-deeply $/, 42, 'Foo.parse does not set $/';
+
+    $/ = 666;
+    is Foo.subparse('b'), 'b',
+      'does Foo.subparse return the correct Match object';
+    #?rakudo todo 'Grammar.subparse does not $/ in 6.e'
+    is-deeply $/, 666, 'Foo.subparse does not set $/';
 
 #?rakudo.js.browser skip "reading and writing files doesn't work in the browser"
 {
-    with make-temp-file content => 'a' {
-        for "a" -> $ { if grammar { token TOP { . } }.parsefile: $_ {
-            is ~$/, 'a', 'Grammar.parse-file'
-        }}
-    }
+    my $io := make-temp-file content => 'c';
+    $/ = 137;
+    is Foo.parsefile($io), 'c',
+      'does Foo.parsefile return the correct Match object';
+    #?rakudo todo 'Grammar.parsefile does not $/ in 6.e'
+    is-deeply $/, 137, 'Foo.parsefile does not set $/';
 }
 
 }
