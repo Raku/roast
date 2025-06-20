@@ -769,7 +769,9 @@ ok Num === Num, 'Num === Num should be truthy, and not die';
         cmp-ok atanh(my num $ = -1e0), '==', -∞, '-1e0';
 
         for @nan-test-values.map({|($_, -$_)}) -> $x {
-            cmp-ok atanh(my num $ = $x), '===', NaN, ~$x;
+            #?rakudo todo "atanh for these values return Complex in 6.e"
+            is-approx atanh(my num $ = $x), log((1+$x)/(1-$x))/2,
+              "atanh($x) is a Complex";
         }
 
         for @test-values.map({|($_, -$_)}) -> $x {
