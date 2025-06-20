@@ -53,7 +53,7 @@ Testing named capture variables nested inside each other. This doesn't appear to
         token TOP { <a>? $<b>='b' }
         token a { a }
     }
-    ok G.parse('ab'), 'grammar sanity';
+    ok ($/ = G.parse('ab')), 'grammar sanity';
     is $/.keys.map(~*).sort.join(', '), 'a, b', 'right keys in top level match';
     is $<b>.elems, 0, '$<b> has no captures';
 }
