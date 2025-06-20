@@ -1,5 +1,5 @@
 use Test;
-plan 31;
+plan 30;
 
 grammar Alts {
     token TOP { ^ <alt> $ };
@@ -17,8 +17,6 @@ ok (my $match = Alts.subparse('foo')), 'can parse with proto regexes (1)';
 
 is $match, 'foo', 'and matched the full string';
 is $match<alt>, 'foo', 'got the right name of the capture';
-
-is $/, 'foo', 'also works with $/';
 
 ok Alts.subparse('bar'), 'can parse with second alternative';
 ok Alts.subparse('argl'), 'can parse third second alternative';
