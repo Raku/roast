@@ -103,7 +103,7 @@ plan 9;
 
         method truth-table($expr,$actions) {
 
-            $.parse($expr, :actions($actions) );
+            $/ = $.parse($expr, :$actions);
             my @vars = @( $/.ast<vars> );
             my $truth-func = $/.ast<func>;
 
