@@ -45,8 +45,11 @@ is @arr.shape, (2;2), 'deletion does not change shape, however (:delete)';
 
 throws-like { @arr[0]:delete }, X::NotEnoughDimensions,
     operation => 'delete from', got-dimensions => 1, needed-dimensions => 2;
-dies-ok { @arr[2;0]:delete }, 'Delete out of bounds dies (:delete) (1)';
-dies-ok { @arr[0;2]:delete }, 'Delete out of bounds dies (:delete) (2)';
+#?rakudo 2 todo 'returns default in 6.e'
+is-deeply (try @arr[2;0]:delete), @arr.default,
+  'Delete out of bounds returns default (:delete) (1)';
+is-deeply (try @arr[0;2]:delete), @arr.default,
+  'Delete out of bounds returns default (:delete) (2)';
 
 @arr[0;1] := 42;
 is @arr[0;1], 42, 'Can bind with := to multi-dim array';
