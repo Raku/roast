@@ -42,6 +42,7 @@
 6.d/S02-literals/version.t
 6.d/S05-capture/match-object.t
 6.d/S09-multidim/indexing.t
+6.d/S15-unicode-information/uniname.t
 6.d/S32-num/atanh.t
 6.d/S32-num/log.t
 6.d/S32-num/sign.t

@@ -1,6 +1,6 @@
 use Test;
 
-plan 48;
+plan 46;
 
 # Unicode version pragma not needed here, as names cannot change.
 
@@ -79,8 +79,13 @@ is uniname("\x[80]", :either :one), "<control-0080>",
 # https://github.com/Raku/old-issue-tracker/issues/3749
 is uniname(-1), '<illegal>', "uniname with negative returns <illegal> (1)";
 is uniname(-5), '<illegal>', "uniname with negative returns <illegal> (2)";
-is uniname(0x110000), '<unassigned>', "uniname too high returns <unassigned> (1)";
-is uniname(0x210000), '<unassigned>', "uniname too high returns <unassigned> (2)";
+#?rakudo 2 todo 'unassigned codepoints throw in 6.e'
+throws-like { uniname(0x110000) }, X::AdHoc,
+  message => "Unassigned codepoint: 0x110000",
+  "uniname too high throws exception (1)";
+throws-like { uniname(0x210000) }, X::AdHoc,
+  message => "Unassigned codepoint: 0x210000",
+  "uniname too high thros exception (2)";
 
 # https://github.com/Raku/old-issue-tracker/issues/3841
 is uninames("AB"), ("LATIN CAPITAL LETTER A", "LATIN CAPITAL LETTER B"), "uninames correctly works on every character";
@@ -99,25 +104,29 @@ subtest "Noncharacters" => {
     for 0xFDD0..0xFDEF {
         ok $_.uniname.starts-with('<noncharacter'), 'nonchar';
     }
-        nok (0xFDD0 -1).uniname.starts-with('<noncharacter'), "codepoint below U+FDD0 is not a noncharacter";
-        nok (0xFDEF +1).uniname.starts-with('<noncharacter'), "codepoint after U+FDEF is not a noncharacter";
+    nok (0xFDD0 -1).uniname.starts-with('<noncharacter'),
+      "codepoint below U+FDD0 is not a noncharacter";
+    nok (0xFDEF +1).uniname.starts-with('<noncharacter'),
+      "codepoint after U+FDEF is not a noncharacter";
     my Int:D $up = 0x10000;
     my Int:D $value = $up;
     while $value <= 0x10FFFF {
         my Int:D $val = 0xFFFD + $value;
-        nok ($val).uniname.starts-with('<noncharacter'), "U+$val.base(16) is a not a noncharacter";
+        nok ($val).uniname.starts-with('<noncharacter'),
+          "U+$val.base(16) is not a noncharacter";
         $val++;
-        ok ($val).uniname.starts-with('<noncharacter'), "U+$val.base(16) is a noncharacter";
+        ok ($val).uniname.starts-with('<noncharacter'),
+          "U+$val.base(16) is a noncharacter";
         $val++;
-        ok ($val).uniname.starts-with('<noncharacter'), "U+$val.base(16) is a noncharacter";
+        ok ($val).uniname.starts-with('<noncharacter'),
+          "U+$val.base(16) is a noncharacter";
         $val++;
-        nok ($val).uniname.starts-with('<noncharacter'), "U+$val.base(16) is a not a noncharacter";
+        nok (try ($val).uniname.starts-with('<noncharacter')),
+          "U+$val.base(16) is not a noncharacter";
         $value += $up;
     }
 }
 is-deeply 0x10FFFF.uniname, "<noncharacter-10FFFF>", "0x10FFFF is <noncharacter-10FFFF>";
-is-deeply 0x110000.uniname, "<unassigned>", "Codepoints higher than 0x10FFFF return <unassigned>";
-is-deeply 0x150000.uniname, "<unassigned>", "Codepoints higher than 0x10FFFF return <unassigned>";
 is-deeply 0x0378.uniname, "<reserved-0378>", "Unassigned codepoints below 0x10FFFF return <reserved-XXXX>";
 is-deeply (-0x20).uniname, "<illegal>", "Codepoints lower than 0x0 return <illegal>";
 
