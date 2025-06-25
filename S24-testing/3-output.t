@@ -38,7 +38,7 @@ plan 6;
         'eval error via diag';
 }
 
-my $test-file = $?FILE.IO.parent.add('test-data/todo-passed.txt');
+my $test-file = $*PROGRAM.parent.add('test-data/todo-passed.txt');
 my $cmd = "$*EXECUTABLE $test-file 2>&1";
 ok qqx[$cmd] ~~ /^"1..1" \n "ok 1 - test passes" \s* "# TODO testing output for passing todo test" \n $ /,
     "expected output with passing todo test";

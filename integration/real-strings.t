@@ -80,7 +80,7 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns HLL strings';
 }
 
 {
-    my $contents = slurp $?FILE.IO.parent.add('real-strings.t');
+    my $contents = slurp $*PROGRAM.parent.add('real-strings.t');
     lives-ok {$contents.trans(['t'] => ['T']) },
        'Still works with strings returned from slurp() (lives)';
 }

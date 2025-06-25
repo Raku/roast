@@ -2,7 +2,7 @@ use Test;
 use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-my $lib-path = $?FILE.IO.parent(2).add("packages/S11-modules/lib");
+my $lib-path = $*PROGRAM.parent(2).add("packages/S11-modules/lib");
 
 plan 9;
 

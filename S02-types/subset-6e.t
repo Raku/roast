@@ -358,7 +358,7 @@ subtest 'Junction arguments to `where` parameters' => {
             :err(''),
             :status(0),
         },
-        :compiler-args['-I' ~ $?FILE.IO.parent(2).add("packages/S02-types/lib")],
+        :compiler-args['-I' ~ $*PROGRAM.parent(2).add("packages/S02-types/lib")],
         "definite subset from 6.c allows init without a value even in 6.e code";
     is_run q:to/CODE/,
             use v6.d;
@@ -371,7 +371,7 @@ subtest 'Junction arguments to `where` parameters' => {
             :err(rx:s/Variable definition of type SSDefined6e .* needs to be given an initializer/),
             :status(1),
         },
-        :compiler-args['-I' ~ $?FILE.IO.parent(2).add("packages/S02-types/lib")],
+        :compiler-args['-I' ~ $*PROGRAM.parent(2).add("packages/S02-types/lib")],
         "definite subset from 6.e doesn't allow init without a value even in 6.d code";
 }
 

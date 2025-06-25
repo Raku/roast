@@ -58,7 +58,7 @@ ok Stupid::Class.new(), 'can instantiate object of "imported" class';
 #?rakudo.js.browser skip "runtime time use doesn't work in the browser"
 # https://github.com/Raku/old-issue-tracker/issues/4635
 is_run ｢use RT126302; say "RT126302-OK"｣,
-  :compiler-args['-I', $?FILE.IO.parent(2).add("packages/RT126302/lib").absolute], {
+  :compiler-args['-I', $*PROGRAM.parent(2).add("packages/RT126302/lib").absolute], {
     :out(/'RT126302-OK'/),
     :err{not .contains: 'src/Perl6/World.nqp'}
     # "Perl6/World" is guts from Rakudo implementation and we check

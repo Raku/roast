@@ -63,7 +63,7 @@ throws-like { require InnerModule:file($name) <quux> },
 '&-less import of sub does not produce `Null PMC access` error';
 
 {
-    my $class-path = $?FILE.IO.parent(2).add('packages/S11-modules/lib/InnerClass.rakumod').absolute;
+    my $class-path = $*PROGRAM.parent(2).add('packages/S11-modules/lib/InnerClass.rakumod').absolute;
     require TestStub:file($class-path);
     my @keys = TestStub::.keys;
     is @keys.grep('InnerClass').elems, 1, 'can load InnerClass.rakumod class into specified stub';
@@ -75,7 +75,7 @@ throws-like { require InnerModule:file($name) <quux> },
 
 # no need to do that at compile time, since require() really is run time
 PROCESS::<$REPO> := CompUnit::Repository::FileSystem.new(:next-repo($*REPO),
-    :prefix($?FILE.IO.parent(2).child('packages/Fancy/lib').relative));
+    :prefix($*PROGRAM.parent(2).child('packages/Fancy/lib').relative));
 
 # Next line is for final test.
 GLOBAL::<$x> = 'still here';
@@ -111,7 +111,7 @@ is GLOBAL::<$x>, 'still here', 'loading modules does not clobber GLOBAL';
 
 # tests the combination of chdir+require
 my $cwd = $*CWD;
-lives-ok { chdir $?FILE.IO.parent(2).child('packages/FooBarBaz/lib'); require "Foo.rakumod"; },
+lives-ok { chdir $*PROGRAM.parent(2).child('packages/FooBarBaz/lib'); require "Foo.rakumod"; },
          'can change directory and require a module';
 chdir $cwd;
 

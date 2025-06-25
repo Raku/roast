@@ -338,7 +338,7 @@ throws-like q[
 #?rakudo.js.browser 2 skip "use lib doesn't work in the browser"
 subtest '`use lib` accepts IO::Path objects' => {
     plan 2;
-    constant $path = $?FILE.IO.parent(2).add('packages/Test-Helpers').absolute;
+    constant $path = $*PROGRAM.parent(2).add('packages/Test-Helpers').absolute;
     is_run "use lib '{$path}'.IO; use Test::Util",
         {:out(''), :err(''), :0status}, 'single object';
 

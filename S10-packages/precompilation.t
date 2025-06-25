@@ -2,13 +2,13 @@ use Test;
 use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-my $pkg-path = $?FILE.IO.parent(2).add("packages/S10-packages/lib");
+my $pkg-path = $*PROGRAM.parent(2).add("packages/S10-packages/lib");
 
 plan 51;
 
 my @*MODULES; # needed for calling CompUnit::Repository::need directly
 
-BEGIN my $lib-path = $?FILE.IO.parent(2).IO;
+BEGIN my $lib-path = $*PROGRAM.parent(2).IO;
 my $example-lib-prefix = $lib-path.add('packages/Example/lib').absolute;
 my $example2-lib-prefix = $lib-path.add('packages/Example2/lib').absolute;
 

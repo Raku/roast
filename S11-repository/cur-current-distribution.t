@@ -4,8 +4,8 @@ use Test::Util;
 
 
 subtest "CompUnit::Repository::FileSystem without META6.json" => {
-    my $lib-one = $?FILE.IO.parent(2).add: 'packages/CurrentDistributionOne/lib';
-    my $lib-two = $?FILE.IO.parent(2).add: 'packages/CurrentDistributionTwo/lib';
+    my $lib-one = $*PROGRAM.parent(2).add: 'packages/CurrentDistributionOne/lib';
+    my $lib-two = $*PROGRAM.parent(2).add: 'packages/CurrentDistributionTwo/lib';
 
     {
          my $proc = run :!out, :!err, $*EXECUTABLE.absolute,
@@ -36,8 +36,8 @@ subtest "CompUnit::Repository::FileSystem without META6.json" => {
 }
 
 subtest "CompUnit::Repository::FileSystem with META6.json" => {
-    my $lib-one = $?FILE.IO.parent(2).add: 'packages/CurrentDistributionOne';
-    my $lib-two = $?FILE.IO.parent(2).add: 'packages/CurrentDistributionTwo';
+    my $lib-one = $*PROGRAM.parent(2).add: 'packages/CurrentDistributionOne';
+    my $lib-two = $*PROGRAM.parent(2).add: 'packages/CurrentDistributionTwo';
 
     {
          my $proc = run :!out, :!err, $*EXECUTABLE.absolute,
@@ -68,8 +68,8 @@ subtest "CompUnit::Repository::FileSystem with META6.json" => {
 }
 
 subtest "CompUnit::Repository::Installation" => {
-    my $dist-path-one = Distribution::Path.new($?FILE.IO.parent(2).add('packages/CurrentDistributionOne'));
-    my $dist-path-two = Distribution::Path.new($?FILE.IO.parent(2).add('packages/CurrentDistributionTwo'));
+    my $dist-path-one = Distribution::Path.new($*PROGRAM.parent(2).add('packages/CurrentDistributionOne'));
+    my $dist-path-two = Distribution::Path.new($*PROGRAM.parent(2).add('packages/CurrentDistributionTwo'));
     my $cur           = CompUnit::Repository::Installation.new(prefix => make-temp-dir().absolute);
     my $lib           = $cur.path-spec;
 

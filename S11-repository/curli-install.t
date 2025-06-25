@@ -1,6 +1,6 @@
 use Test;
 
-constant $repo-path = $?FILE.IO.parent(2).add('packages/curi-install').absolute;
+constant $repo-path = $*PROGRAM.parent(2).add('packages/curi-install').absolute;
 use lib "inst#$repo-path";
 
 plan 19;

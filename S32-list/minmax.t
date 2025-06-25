@@ -99,7 +99,7 @@ is min(:by({$^a <=> $^b}), 1,2,3),  1, "subroutine form of min with literals wor
 # Try to read numbers from a file
 #?rakudo.js.browser skip "openning files doesn't work in the browser"
 {
-    my $fh = open $?FILE.IO.parent.add("numbers.data");
+    my $fh = open $*PROGRAM.parent.add("numbers.data");
     @array = $fh.lines();
     is @array.max, 5, "max of strings read from a file works";
     is @array.min, -1, "min of strings read from a file works";

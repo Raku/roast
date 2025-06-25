@@ -14,7 +14,7 @@ sub temp_name(Str $fnbase is copy) {
 # Directories
 
 # Make sure roast root is our current directory
-chdir $?FILE.IO.parent(2);
+chdir $*PROGRAM.parent(2);
 
 my @roast-files = map {$_.relative}, dir;
 my @roast-expected = <TODO LICENSE README.md>;

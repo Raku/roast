@@ -2,7 +2,7 @@ use Test;
 
 plan 15;
 
-my $dir    = $?FILE.IO.parent.add('test-data');
+my $dir    = $*PROGRAM.parent.add('test-data');
 my $prefix = 'line-number-';
 my $suffix = '.txt';
 

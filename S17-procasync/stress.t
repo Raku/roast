@@ -6,7 +6,7 @@ plan 24;
 
 # https://github.com/Raku/old-issue-tracker/issues/4365
 {
-    constant $read-file = $?FILE.IO.parent(2).add("packages").add("README");
+    constant $read-file = $*PROGRAM.parent(2).add("packages").add("README");
     $read-file.IO.r or bail-out "Missing $read-file that is needed to run a test";
 
     my @got;

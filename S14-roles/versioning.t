@@ -63,7 +63,7 @@ my $METHOD := Mu.can("POPULATE") ?? "POPULATE" !! "BUILDALL";
 
 subtest "Submethods" => {
     plan 7;
-    my @compiler-args = '-I' ~ $?FILE.IO.parent(2).add: 'packages/S14-roles/lib';
+    my @compiler-args = '-I' ~ $*PROGRAM.parent(2).add: 'packages/S14-roles/lib';
     is_run q:s:to/V6C/,
             use v6.c;
             use Ver6e;

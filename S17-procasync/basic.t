@@ -180,7 +180,7 @@ subtest 'Specifying ARG0 via separate arg works.' => {
     if $*DISTRO.is-win {
         sub test-run($arg0, $expected) is test-assertion {
             my $proc = run($*EXECUTABLE,
-                $?FILE.IO.parent.child('windows-print-raw-args.raku'),
+                $*PROGRAM.parent.child('windows-print-raw-args.raku'),
                 :$arg0, 'some-other-arg', :out);
             my $out = $proc.out.slurp(:close).trim-trailing();
             ok $out ~~ / ^ $expected ' ' \S /, "\"$out\" has \"$expected\" as first arg";
@@ -196,7 +196,7 @@ subtest 'Specifying ARG0 via separate arg works.' => {
          skip("No way to portably determine arg0 on *nix.", 4);
 #        sub test-run($arg0, @args, $expected) is test-assertion {
 #            my $proc = run('sh',
-#                $?FILE.IO.parent.child('unix-print-args.sh'),
+#                $*PROGRAM.parent.child('unix-print-args.sh'),
 #                :$arg0, |@args, :out);
 #            my $out = $proc.out.slurp(:close).trim-trailing();
 #            is $out, $expected, $expected;

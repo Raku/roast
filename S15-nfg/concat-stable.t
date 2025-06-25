@@ -5,7 +5,7 @@ use Test;
 # See Retreived.txt for dates and URL's they were retreived from
 my $num-regional-indicator-tests = 34;
 sub MAIN (:$scripts = <Hangul Arabic Tibetan>, Int:D :$repeat = 1, Bool:D :$no-test-concat = False) {
-    my IO::Path $path = $?FILE.IO.parent(2).add("3rdparty/wikipedia");
+    my IO::Path $path = $*PROGRAM.parent(2).add("3rdparty/wikipedia");
     die("Could not 3rdparty/wikipedia") unless $path.e && $path.d;
     plan 7 * $scripts.elems + $num-regional-indicator-tests;
     for $scripts.words -> $script {
