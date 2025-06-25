@@ -1,6 +1,6 @@
 use Test;
 
-use lib $?FILE.IO.parent(2).add("packages/S11-modules/lib");
+use lib $*PROGRAM.parent(2).add("packages/S11-modules/lib");
 
 plan 1;
 

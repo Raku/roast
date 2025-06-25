@@ -1,5 +1,5 @@
 use Test;
-use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
 plan 33;
@@ -118,7 +118,7 @@ is_run 'die "foo"; END { say "end run" }',
 # https://github.com/Raku/old-issue-tracker/issues/2550
 #?DOES 3
 {
-    use lib $?FILE.IO.parent(2).add("packages/FooBarBaz/lib");
+    use lib $*PROGRAM.parent(2).add("packages/FooBarBaz/lib");
     use Foo;
     try dies();
     ok $!, 'it died';

@@ -4,7 +4,7 @@ plan 8;
 
 # GH#2979 Symbols are not to be exported in containerized form.
 
-use lib $?FILE.IO.parent(2).add("packages/S11-modules/lib");
+use lib $*PROGRAM.parent(2).add("packages/S11-modules/lib");
 
 #?rakudo.jvm emit # compile time error: Method 'name' not found for invocant of class 'Any'
 use GH2979;

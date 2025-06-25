@@ -1,5 +1,5 @@
 use Test;
-use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
 my $pkg-path = $?FILE.IO.parent(2).add("packages/S10-packages/lib");
@@ -57,28 +57,28 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 
 # https://github.com/Raku/old-issue-tracker/issues/1928
 {
-    use lib $?FILE.IO.parent(2).add("packages/RT76456/lib");
+    use lib $*PROGRAM.parent(2).add("packages/RT76456/lib");
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT76456>));
     ok $comp-unit.precompiled, 'precompiled a parameterized role';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/3467
 {
-    use lib $?FILE.IO.parent(2).add("packages/RT122447/lib");
+    use lib $*PROGRAM.parent(2).add("packages/RT122447/lib");
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT122447>));
     ok $comp-unit.precompiled, 'precompiled a sub with params returning a proxy';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/2916
 {
-    use lib $?FILE.IO.parent(2).add("packages/RT115240/lib");
+    use lib $*PROGRAM.parent(2).add("packages/RT115240/lib");
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT115240>));
     ok $comp-unit.precompiled, 'precomp curried role compose';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/4847
 {
-    use lib $?FILE.IO.parent(2).add("packages/RT126878/lib");
+    use lib $*PROGRAM.parent(2).add("packages/RT126878/lib");
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT126878::Precomp>));
     ok !$comp-unit.precompiled, '"need" survives "no precompilation"';
 }
@@ -114,7 +114,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 
 # https://github.com/Raku/old-issue-tracker/issues/3755
 {
-    use lib $?FILE.IO.parent(2).add("packages/RT124162/lib");
+    use lib $*PROGRAM.parent(2).add("packages/RT124162/lib");
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT124162>));
     ok $comp-unit.precompiled, 'precomp of native array parameterization';
 }
@@ -138,14 +138,14 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 
 # https://github.com/Raku/old-issue-tracker/issues/4214
 {
-    use lib $?FILE.IO.parent(2).add("packages/RT125090/lib");
+    use lib $*PROGRAM.parent(2).add("packages/RT125090/lib");
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT125090>));
     ok $comp-unit.precompiled, 'precomp of BEGIN using $*KERNEL and $*DISTRO';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/4261
 {
-    use lib $?FILE.IO.parent(2).add("packages/RT125245/lib");
+    use lib $*PROGRAM.parent(2).add("packages/RT125245/lib");
     my $comp-unit = $*REPO.need(CompUnit::DependencySpecification.new(:short-name<RT125245>));
     ok $comp-unit.precompiled, 'precomp of assignment to variable using subset type';
 }
@@ -168,7 +168,7 @@ is-deeply @keys2, [<C F K P>], 'Twisty maze of dependencies, all different';
 {
     my $rt128156-lib-prefix = $lib-path.add('packages/RT128156/lib').absolute;
 
-    use lib $?FILE.IO.parent(2).add("packages/RT128156/lib");
+    use lib $*PROGRAM.parent(2).add("packages/RT128156/lib");
 
     # precompile it in a different process
     run $*EXECUTABLE, '-I', $rt128156-lib-prefix, '-e', 'use RT128156::One;';

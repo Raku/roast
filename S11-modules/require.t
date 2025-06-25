@@ -8,8 +8,8 @@ my $required-Test = (require Test <&plan &is &lives-ok &skip &todo
 # if you need to load any other modules.
 #############################################################################
 
-use lib $?FILE.IO.parent(2).add("packages/S11-modules/lib");
-use lib $?FILE.IO.parent(2).add("packages/Cool/lib");
+use lib $*PROGRAM.parent(2).add("packages/S11-modules/lib");
+use lib $*PROGRAM.parent(2).add("packages/Cool/lib");
 
 use MONKEY-SEE-NO-EVAL;
 
@@ -88,7 +88,7 @@ lives-ok {
 
 # L<S11/"Runtime Importation"/"It is also possible to specify the module name indirectly by string">
 lives-ok {
-    use lib $?FILE.IO.parent(2).add("packages/AandB/lib");
+    use lib $*PROGRAM.parent(2).add("packages/AandB/lib");
     my $name = 'A';
     require ::($name)
 }, 'can require with variable name';

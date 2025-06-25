@@ -1,5 +1,5 @@
 use Test;
-use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Idempotence;
 
 # L<S02/Adverbial Pair forms/"There is now a generalized adverbial form of Pair">

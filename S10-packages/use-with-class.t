@@ -1,9 +1,9 @@
 use Test;
-use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-use lib $?FILE.IO.parent(2).add("packages/UseTest/lib");
-use lib $?FILE.IO.parent(2).add("packages/FooBarBaz/lib");
+use lib $*PROGRAM.parent(2).add("packages/UseTest/lib");
+use lib $*PROGRAM.parent(2).add("packages/FooBarBaz/lib");
 
 use MONKEY-TYPING;
 

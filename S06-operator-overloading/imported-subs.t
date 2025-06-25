@@ -3,7 +3,7 @@ use Test;
 plan 20;
 
 {
-    use lib $?FILE.IO.parent(2).add("packages/Exportops/lib");
+    use lib $*PROGRAM.parent(2).add("packages/Exportops/lib");
     use Exportops;
 
     ok EVAL('5!'), 'postfix:<!> was exported...';

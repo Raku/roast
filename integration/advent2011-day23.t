@@ -1,6 +1,6 @@
 # http://perl6advent.wordpress.com/2011/12/23/day-23-idiomatic-perl-6/
 use Test;
-use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
 plan 55;

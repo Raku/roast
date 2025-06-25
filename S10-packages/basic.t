@@ -1,13 +1,13 @@
 use Test;
-use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
 # L<S10/Packages>
 
-use lib $?FILE.IO.parent(2).add("packages/FooBarBaz/lib");
-use lib $?FILE.IO.parent(2).add("packages/OverrideTest/lib");
-use lib $?FILE.IO.parent(2).add("packages/LoadFromInside/lib");
-use lib $?FILE.IO.parent(2).add("packages/PM6/lib");
+use lib $*PROGRAM.parent(2).add("packages/FooBarBaz/lib");
+use lib $*PROGRAM.parent(2).add("packages/OverrideTest/lib");
+use lib $*PROGRAM.parent(2).add("packages/LoadFromInside/lib");
+use lib $*PROGRAM.parent(2).add("packages/PM6/lib");
 
 plan 83;
 
@@ -154,7 +154,7 @@ eval-lives-ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
               'map works in a module (RT #64606)';
 
 {
-    use lib $?FILE.IO.parent(2).add("packages/ArrayInit/lib");
+    use lib $*PROGRAM.parent(2).add("packages/ArrayInit/lib");
     use ArrayInit;
     my $first_call = array_init();
     is array_init(), $first_call,
@@ -266,7 +266,7 @@ throws-like q[
 
 # https://github.com/Raku/old-issue-tracker/issues/1952
 {
-    use lib $?FILE.IO.parent(2).add("packages/RT76606/lib");
+    use lib $*PROGRAM.parent(2).add("packages/RT76606/lib");
     lives-ok { use RT76606 },
         'autovivification works with nested "use" directives (import from two nested files)';
 }

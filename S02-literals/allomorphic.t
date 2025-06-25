@@ -1,7 +1,7 @@
 # S02-literals/allomorphic.t --- Tests for the various allmorphic types, and val() processing
 
 use Test;
-use lib $?FILE.IO.parent(2).add("packages/Test-Helpers");
+use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
 # L<S02/Allomorphic value semantics>

@@ -1,8 +1,8 @@
 use Test;
 
-use lib $?FILE.IO.parent(2).add("packages/AandB/lib");
-use lib $?FILE.IO.parent(2).add("packages/S11-modules/lib");
-use lib $?FILE.IO.parent(2).add("packages/RT117117/lib");
+use lib $*PROGRAM.parent(2).add("packages/AandB/lib");
+use lib $*PROGRAM.parent(2).add("packages/S11-modules/lib");
+use lib $*PROGRAM.parent(2).add("packages/RT117117/lib");
 
 plan 11;
 

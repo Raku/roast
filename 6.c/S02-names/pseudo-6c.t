@@ -1,7 +1,7 @@
 use v6.c;
 
 use Test;
-use lib $?FILE.IO.parent(3).add("packages/Test-Helpers");
+use lib $*PROGRAM.parent(3).add("packages/Test-Helpers");
 use Test::Util;
 
 plan 161;

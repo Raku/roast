@@ -1,8 +1,8 @@
 use Test;
-use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
+use lib $*PROGRAM.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-use lib $?FILE.IO.parent(2).add: 'packages/S12-meta/lib';
+use lib $*PROGRAM.parent(2).add: 'packages/S12-meta/lib';
 
 plan 12;
 

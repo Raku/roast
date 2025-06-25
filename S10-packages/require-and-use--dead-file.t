@@ -1,6 +1,6 @@
 use Test;
-use lib $?FILE.IO.parent(2).child("packages/RequireAndUse/lib");
-use lib $?FILE.IO.parent(2).child("packages/LoadCounter/lib");
+use lib $*PROGRAM.parent(2).child("packages/RequireAndUse/lib");
+use lib $*PROGRAM.parent(2).child("packages/LoadCounter/lib");
 
 plan 18;
 

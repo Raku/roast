@@ -1,4 +1,4 @@
-use lib $?FILE.IO.parent(2).add($*SPEC.catdir(<packages Test-Helpers lib>));
+use lib $*PROGRAM.parent(2).add($*SPEC.catdir(<packages Test-Helpers lib>));
 use Test;
 use Test::Util;
 

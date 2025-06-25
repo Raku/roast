@@ -102,7 +102,7 @@ cmp-ok('test', sub ($a, $b) { ?($a gt $b) }, 'you', '... testing gt on two strin
 
 ## use-ok
 
-use lib $?FILE.IO.parent;
+use lib $*PROGRAM.parent;
 use-ok('use_ok_test');
 
 # Need to do a test loading a package that is not there,

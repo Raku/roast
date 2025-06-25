@@ -1,7 +1,7 @@
 use Test;
 
 # L<S11/Exportation>
-use lib $?FILE.IO.parent(2).child("packages/Export_Pack/lib");
+use lib $*PROGRAM.parent(2).child("packages/Export_Pack/lib");
 
 plan 7;
 

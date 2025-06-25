@@ -1,6 +1,6 @@
 use Test;
 
-use lib $?FILE.IO.parent(2).add("packages/ExportConstant/lib");
+use lib $*PROGRAM.parent(2).add("packages/ExportConstant/lib");
 
 plan 72;
 

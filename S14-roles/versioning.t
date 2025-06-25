@@ -1,6 +1,6 @@
 use Test;
-use lib $?FILE.IO.parent(2).add: 'packages/Test-Helpers';
-use lib $?FILE.IO.parent(2).add: 'packages/S14-roles/lib';
+use lib $*PROGRAM.parent(2).add: 'packages/Test-Helpers';
+use lib $*PROGRAM.parent(2).add: 'packages/S14-roles/lib';
 use Test::Util;
 
 plan 4;

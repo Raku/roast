@@ -1,9 +1,9 @@
 use Test;
 
-use lib $?FILE.IO.parent(2).add("packages/RT83354/lib");
-use lib $?FILE.IO.parent(2).add("packages/RT84280/lib");
-use lib $?FILE.IO.parent(2).add("packages/RT125715/lib");
-use lib $?FILE.IO.parent(2).add("packages/RT129215/lib");
+use lib $*PROGRAM.parent(2).add("packages/RT83354/lib");
+use lib $*PROGRAM.parent(2).add("packages/RT84280/lib");
+use lib $*PROGRAM.parent(2).add("packages/RT125715/lib");
+use lib $*PROGRAM.parent(2).add("packages/RT129215/lib");
 
 plan 59;
 

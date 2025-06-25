@@ -1,6 +1,6 @@
 use Test;
 
-use lib $?FILE.IO.parent(2).add("packages/PackageTest/lib");
+use lib $*PROGRAM.parent(2).add("packages/PackageTest/lib");
 
 # test that packages work.  Note that the correspondance between type
 # objects as obtained via the ::() syntax and packages is only hinted

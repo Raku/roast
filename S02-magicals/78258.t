@@ -1,4 +1,4 @@
-use lib $?FILE.IO.parent;
+use lib $*PROGRAM.parent;
 
 use UsedEnv; # contains plan
 
