@@ -2,7 +2,7 @@ use Test;
 
 plan 18;
 
-my $filename = $*PROGRAM.parent.child('split.testing');
+my $filename = $*PROGRAM.sibling('split.testing');
 
 sub test-split($text,@result,|c) is test-assertion {
     subtest {

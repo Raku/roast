@@ -152,7 +152,7 @@ diag "::FileSystem distributions can usually be installed to ::Installation";
         for "{$_.prefix}", "{$_.prefix}/lib" -> $prefix {
             # Add a bin/my-script to the dist
             my $bin-dir = $prefix.IO.basename eq 'lib'
-                ?? $prefix.IO.parent.child('bin')
+                ?? $prefix.IO.sibling('bin')
                 !! $prefix.IO.child('bin');
             $bin-dir.mkdir unless $bin-dir.e;
             $bin-dir.child('my-script').spurt('use XXX; sub MAIN($name-path) { print resources(){$name-path} }');

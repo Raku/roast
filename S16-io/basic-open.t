@@ -16,7 +16,7 @@ sub test_lines(@lines) is test-assertion {
 }
 
 {
-    my $fh = open($*PROGRAM.parent.child('test-data'));
+    my $fh = open($*PROGRAM.sibling('test-data'));
     my $count = 0;
     while !$fh.eof {
         my $x = $fh.get;
@@ -27,7 +27,7 @@ sub test_lines(@lines) is test-assertion {
 
 # test that we can interate over $fh.lines
 {
-    my $fh =  open($*PROGRAM.parent.child('test-data'));
+    my $fh =  open($*PROGRAM.sibling('test-data'));
 
     ok defined($fh), 'Could open test file';
     my @lines;
@@ -39,7 +39,7 @@ sub test_lines(@lines) is test-assertion {
 
 # test that we can get all items in list context:
 {
-    my $fh =  open($*PROGRAM.parent.child('test-data'));
+    my $fh =  open($*PROGRAM.sibling('test-data'));
     ok defined($fh), 'Could open test file (again)';
     my @lines = $fh.lines;
     test_lines(@lines);

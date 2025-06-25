@@ -38,7 +38,7 @@ sub proper-text (Str:D $encoding, Str:D $filename) {
 }
 # Convenience function to get the IO::Path of the file by name
 sub get-filename (Str:D $filename --> IO::Path:D) {
-    return $*PROGRAM.parent.child('utf16-test').child($filename);
+    return $*PROGRAM.sibling('utf16-test').child($filename);
 }
 for <utf16le utf16be> -> $enc-name {
     my $buf;

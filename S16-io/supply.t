@@ -2,7 +2,7 @@ use Test;
 use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Tap;
 
-my $filename = $*PROGRAM.parent.child('supply.testing');
+my $filename = $*PROGRAM.sibling('supply.testing');
 
 plan 7;
 

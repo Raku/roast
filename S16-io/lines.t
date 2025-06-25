@@ -12,7 +12,7 @@ my @endings =
 
 plan 8 + @endings * (1 + 3 * ( 5 + 6));
 
-my $filename = $*PROGRAM.parent.child('lines.testing');
+my $filename = $*PROGRAM.sibling('lines.testing');
 my @text = <zero one two three four>;
 
 for @endings -> (:key($eol), :value($EOL)) {

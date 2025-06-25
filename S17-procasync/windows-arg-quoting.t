@@ -19,7 +19,7 @@ if !$*DISTRO.is-win {
 
 sub test-run(@args, $expected, $verbatim = False) is test-assertion {
     my $marker = 'MARKER_Sx%3bX';
-    my $script = $*PROGRAM.parent.child('windows-print-raw-args.raku');
+    my $script = $*PROGRAM.sibling('windows-print-raw-args.raku');
     my $proc = run($*EXECUTABLE, $script, $marker, |@args, :out, :win-verbatim-args($verbatim));
     my $out = $proc.out.slurp(:close).trim-trailing();
     $out ~~ s/^ .* $marker ' '//;

@@ -4,7 +4,7 @@ use Test::Util;
 
 plan 30;
 
-my $filename = $*PROGRAM.parent.child('comb.testing');
+my $filename = $*PROGRAM.sibling('comb.testing');
 LEAVE unlink $filename; # cleanup
 
 #?DOES 1
