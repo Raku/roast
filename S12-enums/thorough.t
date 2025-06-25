@@ -2,7 +2,7 @@ use MONKEY-TYPING;
 
 use Test;
 
-plan 60;
+plan 61;
 
 =begin description
 
@@ -127,6 +127,15 @@ ok Bool::True.raku ~~/^ 'Bool::True'/, 'Bool::True.raku';
         method m() { self!privy }
     }
     is AA.m, 44, "Can mix a private method into an enum value"
+}
+
+# https://github.com/rakudo/rakudo/issues/5599
+{
+    my enum E <one>;
+    my role R {
+        has $.e = one;
+    }
+    cmp-ok one, '=:=', R.new.e, 'correct enum value in attribute in role';
 }
 
 # vim: expandtab shiftwidth=4
