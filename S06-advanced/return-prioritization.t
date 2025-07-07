@@ -100,3 +100,5 @@ use Test;
     is s2(), 1, "Return is uninterrupted by returns in LEAVE blocks in other scopes";
     is $val, 5, "Return in LEAVE blocks can run as usual";
 }
+
+done-testing;
