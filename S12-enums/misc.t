@@ -1,6 +1,6 @@
 use Test;
 
-plan 27;
+plan 28;
 
 {
     class EnumClass     { enum C <a b c> }
@@ -136,6 +136,12 @@ plan 27;
 {
     enum BooleanEnum (:!Lies, :Truth);
     is-deeply True ~~ BooleanEnum, False, 'should not match';
+}
+
+# https://github.com/rakudo/rakudo/issues/5935
+{
+    my enum Directions <⬆️>;
+    lives-ok { Directions::<⬆️>.raku.EVAL }, 'enum raku method should be round-trippable';
 }
 
 # vim: expandtab shiftwidth=4
