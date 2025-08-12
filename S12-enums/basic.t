@@ -48,8 +48,8 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
 {
     # usually we don't test explicit value for .raku, but here
     # it's specced, so we make an exception
-    is Day::Mon.raku, 'Day::<Mon>', '.raku on long form of Pair key';
-    is Mon.raku,      'Day::<Mon>', '.raku on short form of Pair value';
+    is Day::Mon.raku, 'Day::Mon', '.raku on long form of Pair key';
+    is Mon.raku,      'Day::Mon', '.raku on short form of Pair value';
 
     is Day::Mon.key,  'Mon',      '.key on long form of Pair value';
     is Mon.key,       'Mon',      '.key on short form of Pair value';
@@ -63,8 +63,8 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
                 c => 100, d => 500,
                 m => 1000);
     ok v == 5, 'enum with parens works and non-0 starting point works';
-    is v.raku, 'roman::<v>', '.raku works on enum with parens';
-    is v.key,  'v',          '.key works on enum with parens';
+    is v.raku, 'roman::v', '.raku works on enum with parens';
+    is v.key,  'v',        '.key works on enum with parens';
 }
 
 
