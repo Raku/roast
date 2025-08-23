@@ -83,6 +83,8 @@ subtest '.eof on empty files' => {
         subtest "reading from '$p'" => {
             plan 3;
             when not $p.e { skip "don't have '$p' available", 3 }
+            # issue 1533 was all about line-by-line reading, so this skip seems reasonable:
+            when $*KERNEL.name eq 'sunos' { skip "'$p' is a binary file on Solaris", 3 }
             with $p.open {
                 is-deeply .eof, False, 'eof is False before any reads';
                 cmp-ok .get, &[!~~], Nil, '.get reads something';
