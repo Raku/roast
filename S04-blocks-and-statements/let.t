@@ -1,6 +1,6 @@
 use Test;
 
-plan 15;
+plan 17;
 
 # L<S04/The Relationship of Blocks and Declarations/There is also a let function>
 # L<S04/Definition of Success>
@@ -93,6 +93,84 @@ plan 15;
     (my %c is default(Nil))<a> = Nil;
     { let %h; Nil };
     is-deeply %h, %c, '`let` keeps Nils around in Hashes when they exist';
+}
+
+# https://github.com/rakudo/rakudo/issues/1433
+# Make sure that holes and containerization are preserved.
+{
+    subtest "let with Array" => {
+        plan 12;
+        my @a;
+        @a[3] = 42;
+        @a[2] := 12;
+
+        # Control tests
+        nok @a[1]:exists, "control: there is an expected hole";
+        isa-ok @a[3].VAR.WHAT, Scalar, "control: there is a container at the assigned position";
+        isa-ok @a[2].VAR.WHAT, Int, "control: there is no container at the bound position";
+
+        {
+            let @a;
+
+            #?rakudo todo "NYI"
+            nok @a[1]:exists, "let doesn't vivifies containers in holes";
+            @a[1] = 13;
+            ok @a[1]:exists, "assignment closes a hole on localized array";
+
+            #?rakudo todo "NYI"
+            isa-ok @a[2].VAR.WHAT, Int, "let doesn't containerize bound elements";
+            isa-ok @a[3].VAR.WHAT, Scalar, "let doesn't decontainerize assigned elements";
+
+            @a[2] = "12";
+            @a[3] := "42";
+
+            isa-ok @a[2].VAR.WHAT, Scalar, "control: containerized a bound element";
+            isa-ok @a[3].VAR.WHAT, Str, "control: decontainerized by binding";
+
+            Nil
+        }
+
+        nok @a[1]:exists, "hole is back after restoration";
+        isa-ok @a[2].VAR.WHAT, Int, "non-container element is correctly restored";
+        isa-ok @a[3].VAR.WHAT, Scalar, "containerized element is correctly restored";
+    }
+
+    subtest "let with Hash" => {
+        plan 4;
+        my sub let-hash(\h, $msg) is test-assertion {
+            subtest $msg => {
+                plan 8;
+                h<a> = 1;
+                h<c> := 3;
+                isa-ok h<a>.VAR.WHAT, Scalar, "control: assigned value is containerized";
+                isa-ok h<c>.VAR.WHAT, Int, "control: bound value is not containerized";
+
+                {
+                    let h;
+
+                    isa-ok h<a>.VAR.WHAT, Scalar, "let doesn't decontainerize assigned elements";
+                    isa-ok h<c>.VAR.WHAT, Int, "let doesn't containerize bound elements";
+
+                    h<a> := 42;
+                    h<c>:delete;
+                    h<c> = 13;
+
+                    isa-ok h<a>.VAR.WHAT, Int, "control: decontainerized by binding";
+                    isa-ok h<c>.VAR.WHAT, Scalar, "control: containerized by re-assignment";
+
+                    Nil
+                }
+
+                isa-ok h<a>.VAR.WHAT, Scalar, "containerized element is correctly restored";
+                isa-ok h<c>.VAR.WHAT, Int, "non-container element is correctly restored";
+            }
+        }
+
+        let-hash my %h, "plain hash";
+        let-hash my Int %h, "typed hash";
+        let-hash my %h{Str}, "object hash";
+        let-hash my Int %h{Str}, "typed object hash";
+    }
 }
 
 # vim: expandtab shiftwidth=4
