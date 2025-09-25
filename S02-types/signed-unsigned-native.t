@@ -1,6 +1,6 @@
 use Test;
 
-plan 131;
+plan 132;
 
 my sub is-true(\value, str $description)  is test-assertion {
     ok value =:= True, $description
@@ -188,4 +188,23 @@ is-false $i   >= $u,   'greater than or equal on int / uint';
     is-deeply (my uint32 $ = +^0),           4294967295, 'uint32 scaled ok';
     is-deeply (my uint64 $ = +^0), 18446744073709551615, 'uint64 scaled ok';
     is-deeply (my uint   $ = +^0), 18446744073709551615, 'uint scaled ok';
+}
+
+# https://github.com/rakudo/rakudo/issues/5954
+{
+    my class Data {
+        has uint32 $.a;
+        has uint32 $.b;
+        has uint32 $.c;
+        has uint32 $.hashlen;
+        has Buf $.salt;
+    }
+
+    my int $fails;
+    for 1 .. 20000 {
+        my $meta = Data.new(:salt(Buf.new), :hashlen(32));
+        ++$fails if $meta.hashlen != 32;
+    }
+
+    nok $fails, "Saw $fails failures in uint test";
 }
