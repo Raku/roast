@@ -1,0 +1,20 @@
+{
+    "name": "MultiVer",
+    "api": "0.1.1",
+    "ver": "0.0.42",
+    "auth": "ecosys:raku",
+    "raku": "*",
+    "description": "Utils to test versioned distributions",
+    "provides": {
+        "MultiVer": "lib/MultiVer.rakumod"
+    },
+    "resources": [
+        "MVDist/META6.json.in",
+        "MVDist/bin/test-dist.raku.in",
+        "MVDist/lib/MVDist.rakumod.in",
+        "MVDist/lib/MVDist/Submod1.rakumod.in",
+        "MVDist/lib/MVDist/Submod2.rakumod.in",
+        "TestDist/META6.json.in",
+        "TestDist/bin/test-code.raku.in"
+    ]
+}

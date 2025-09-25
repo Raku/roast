@@ -1,0 +1,13 @@
+{
+    "name": "MVDist",
+    "api": "#api#",
+    "ver": "#ver#",
+    "auth": "#auth#",
+    "raku": "*",
+    "description": "#description#",
+    "provides": {
+        "MVDist": "lib/MVDist.rakumod",
+        "MVDist::Submod1": "lib/MVDist/Submod1.rakumod",
+        "MVDist::Submod2": "lib/MVDist/Submod2.rakumod"
+    }
+}
