@@ -3,7 +3,6 @@
 # It detects if the line is a testing line by whether it starts
 # with certain words. For now it only works with one line tests
 # not needing values from other lines to work.
-use v6;
 use MONKEY-SEE-NO-EVAL;
 use Test;
 my @test-words = <bail-out todo skip skip-rest diag
