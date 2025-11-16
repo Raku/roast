@@ -190,11 +190,14 @@ throws-like "=begin\n", X::Syntax::Pod::BeginWithoutIdentifier, line => 1, filen
 for <
   $^A $^B $^C $^D $^E $^F $^G $^H $^I $^J $^K $^L $^M
   $^N $^O $^P $^Q $^R $^S $^T $^U $^V $^W $^X $^Y $^Z
-  $" $$ $; $& $` $' $, $. $\ $| $? $@ $]
+  $" $$ $; $& $` $' $, $. $\ $| $? $@
   @- @+ %- %+ %!
 > {
     throws-like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
 }
+
+#?rakudo todo 'to become less Perl-centric'
+throws-like '$] = 1', X::Syntax::Confused;
 
 throws-like '$#foo', X::Syntax::Perl5Var;
 # https://github.com/Raku/old-issue-tracker/issues/3492
