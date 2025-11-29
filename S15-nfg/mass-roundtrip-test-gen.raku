@@ -24,15 +24,20 @@ sub MAIN(Str $unidata-normalization-tests, Bool:D :$test = False) {
         }
         push @source, %hash;
     }
-    done-testing if $test;
-    say "Found @source.elems() tests for NFG tests.";
-    my $header = @header.join("\n") ~ "\n";
-    # Write tests.
-    write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfc.t', @source, 'NFC', :src-header($header), NFC_ROUNDTRIP_TEST_CASES);
-    write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfd.t', @source, 'NFD', :src-header($header), OTHER_ROUNDTRIP_TEST_CASES, :CCC-only);
-    write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfkc.t', @source, 'NFKC', :src-header($header), OTHER_ROUNDTRIP_TEST_CASES, :CCC-only);
-    write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfkd.t', @source, 'NFKD', :src-header($header), OTHER_ROUNDTRIP_TEST_CASES, :CCC-only);
-    say "Make sure to run this script with the --test option to test everything — the tests this program creates do not test every possibility";
+
+    if $test {
+        done-testing;
+        say "If there are no mentions of test failures above, re-run this script without --test.";
+    } else {
+        say "Found @source.elems() tests for NFG tests.";
+        my $header = @header.join("\n") ~ "\n";
+        # Write tests.
+        write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfc.t', @source, 'NFC', :src-header($header), NFC_ROUNDTRIP_TEST_CASES);
+        write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfd.t', @source, 'NFD', :src-header($header), OTHER_ROUNDTRIP_TEST_CASES, :CCC-only);
+        write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfkc.t', @source, 'NFKC', :src-header($header), OTHER_ROUNDTRIP_TEST_CASES, :CCC-only);
+        write-roundtrip-test-file('S15-nfg/mass-roundtrip-nfkd.t', @source, 'NFKD', :src-header($header), OTHER_ROUNDTRIP_TEST_CASES, :CCC-only);
+        say "If you haven't already, make sure to run this script with the --test option to test everything — the tests this program creates do not test every possibility";
+    }
 }
 
 sub write-roundtrip-test-file($target, @source, $expected, $limit = Inf, :$src-header, Bool :$CCC-only = False) {

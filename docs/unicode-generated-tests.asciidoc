@@ -2,8 +2,13 @@
 :toc:
 
 == Instructions
-The `UNIDATA` folder referred to below can be obtained by running `tools/UCD-download.raku`
-from MoarVM's repository.
+The `UNIDATA` folder referred to below can be obtained by running
+`tools/UCD-download.raku` from MoarVM's repository. The documentation below uses
+`$UNIDATA` in paths as a stand-in for wherever the directory actually is, which
+you need to substitute in yourself. Angle bracket constructs are used to
+indicate "metasyntactic" pathname portions, e.g. `foo-<bar>.txt` means that
+`<bar>` is replaced with some other text, and depending on context there may be
+multiple files that match the `foo-<bar>.txt` pattern.
 
 .Please list these data points if possible:
 * Script path (should be the heading)
@@ -23,7 +28,10 @@ but many do not.
 == S15-nfg/emoji-test-gen.raku
 
 .Steps
-* Run `S15-nfg/emoji-test-gen.raku UNIDATA/emoji-xx.x/emoji-test.txt`
+* Run `S15-nfg/emoji-test-gen.raku $UNIDATA/emoji-<version>/emoji-test.txt`,
+  where `<version>` indicates what Emoji version you're updating for. *Do not*
+  use the unversioned `$UNIDATA/emoji/` directory, this does not contain the
+  necessary file.
 
 .Version
 * Emoji v15.0
@@ -32,17 +40,16 @@ but many do not.
 * Regenerated 2023.01.04
 
 .Generated File(s)
-* Program generates S15-nfg/emoji-test.t
+* `S15-nfg/emoji-test.t`
 
 == S15-nfg/mass-roundtrip-test-gen.raku
 
 .Steps
-* Run `S15-nfg/mass-roundtrip-test-gen.raku --test UNIDATA/NormalizationTest.txt`
-  to test normalization if you don't get any failures, all is ok.
-* The --test option is needed to test all options, as not all tests will be put into
-  the roast .t file
-* Run `S15-nfg/mass-roundtrip-test-gen.raku UNIDATA/NormalizationTest.txt`
-  to generate the tests.
+* Run `S15-nfg/mass-roundtrip-test-gen.raku --test
+  $UNIDATA/NormalizationTest.txt` to test the new normalization tests. If
+  everything passes, proceed.
+* Run `S15-nfg/mass-roundtrip-test-gen.raku $UNIDATA/NormalizationTest.txt` to
+  generate the tests.
 
 .Version
 * Unicode v15.0
@@ -51,21 +58,32 @@ but many do not.
 * Regenerated 2023.01.04
 
 .Generated File(s)
-* S15-nfg/mass-roundtrip-nfc.t
-* S15-nfg/mass-roundtrip-nfd.t
-* S15-nfg/mass-roundtrip-nfkc.t
-* S15-nfg/mass-roundtrip-nfkd.t
+* `S15-nfg/mass-roundtrip-nfc.t`
+* `S15-nfg/mass-roundtrip-nfd.t`
+* `S15-nfg/mass-roundtrip-nfkc.t`
+* `S15-nfg/mass-roundtrip-nfkd.t`
 
 
 == S32-str/CollationTestGen.raku
 
-Note: you will have to be in S32-str before running this, so it puts files in the
-correct folder.
+.Steps
+* Enter the `S32-str` directory. (This is necessary to ensure the files are
+  written to the right location.)
 
-S32-str/CollationTestGen.raku --folder=$UNIDATA/UCA/CollationTest --test-only --should-test
-MAKE SURE TO RUN `raku CollationTestGen.raku --folder=MoarVM/UNIDATA/UCA/CollationTest --test-only --should-test ` to ensure there are ~74 failures only!
+* Run `raku ./CollationTestGen.raku --folder=$UNIDATA/UCA/CollationTest
+  --test`.
 
-Then paste those failures (if they're ok into CollationTestGen.raku in the %todo variable.
+* There may be some failures. If and only if all the failures look OK (as in,
+  they're not actually an issue), follow the script's instructions to update
+  things to mark them as "todo" tests, and proceed.
+
+* Run `raku ./CollationTestGen.raku --folder=$UNIDATA/UCA/CollationTest` (that
+  is, _without_ the `--test` this time) to generate the files.
+
+* Check for any new `S32-str/CollationTest_NON_IGNORABLE-<n>.t` files. As
+  Unicode updates, there may be enough new collation tests that the generator
+  script creates a brand new numbered file, which will have to be added to
+  `spectest.data`.
 
 .Version
 * Unicode v15.0
@@ -74,16 +92,16 @@ Then paste those failures (if they're ok into CollationTestGen.raku in the %todo
 * Regenerated 2023.01.04
 
 .Generated File(s)
-* S32-str/CollationTest_NON_IGNORABLE-0.t
-* S32-str/CollationTest_NON_IGNORABLE-1.t
-* S32-str/CollationTest_NON_IGNORABLE-2.t
-* S32-str/CollationTest_NON_IGNORABLE-3.t
+* `S32-str/CollationTest_NON_IGNORABLE-<n>.t`
 
 == S15-normalization/test-gen.raku
 
 .Steps
 * Run `S15-normalization/test-gen.raku UNIDATA/NormalizationTest.txt`
 
+* Check for possible new test files to be added to `spectest.data` (see the
+  generated file section; look out for files with `<n>` in their pattern).
+
 .Version
 * Unicode v15.0
 
@@ -91,28 +109,33 @@ Then paste those failures (if they're ok into CollationTestGen.raku in the %todo
 * Regenerated 2023.01.04
 
 .Generated File(s)
-* S15-normalization/nfc-X.t
-* S15-normalization/nfc-sanity.t
-* S15-normalization/nfd-X.t
-* S15-normalization/nfd-sanity.t
-* S15-normalization/nfkc-X.t
-* S15-normalization/nfkc-sanity.t
-* S15-normalization/nfkd-X.t
-* S15-normalization/nfc-concat.t
+* `S15-normalization/nfc-<n>.t`
+* `S15-normalization/nfc-sanity.t`
+* `S15-normalization/nfd-<n>.t`
+* `S15-normalization/nfd-sanity.t`
+* `S15-normalization/nfkc-<n>.t`
+* `S15-normalization/nfkc-sanity.t`
+* `S15-normalization/nfkd-<n>.t`
+* `S15-normalization/nfc-concat.t`
 
 == S15-nfg/GraphemeBreakTest.t
 
-.How
+.Steps
 * Copy file from UNIDATA to 3rdparty folder of roast:
-cp UNIDATA/auxilary/GraphemeBreakTest.txt 3rdparty/Unicode/$version/ucd/auxilary/GraphemeBreakTest.txt
+--------------------------------------------------
+cp $UNIDATA/auxilary/GraphemeBreakTest.txt 3rdparty/Unicode/<version>/ucd/auxilary/GraphemeBreakTest.txt
+--------------------------------------------------
 
-change the filename in the S15-nfg/GraphemeBreakTest.t
+* Change the filename at the top of `S15-nfg/GraphemeBreakTest.t`. Look for this line and replace the version number in the path (what you substituted `<version>` with in the prior step):
+--------------------------------------------------
+my IO::Path $repo-dir      = $?FILE.IO.parent(2).add("3rdparty/Unicode/<version>/ucd/auxiliary/GraphemeBreakTest.txt");
+--------------------------------------------------
 
-```
-my IO::Path $repo-dir      = $?FILE.IO.parent(2).add("3rdparty/Unicode/xx.x.x/ucd/auxiliary/GraphemeBreakTest.txt");
-```
+* This file is actually run in spectests, so no further action is required.
+
 .Version
 * Unicode v15.0
+
 
 .Date
 * Regenerated 2023.01.04
@@ -121,10 +144,12 @@ my IO::Path $repo-dir      = $?FILE.IO.parent(2).add("3rdparty/Unicode/xx.x.x/uc
 
 === Also you will have to do stuff in rakudo
 
-Edit t/09-moar/UnipropCheck.rakumod folder to be set to the current version.
+Edit `t/09-moar/UnipropCheck.rakumod` folder to be set to the current version.
 
 You will have to now copy:
 
-mkdir -p t/3rdparty/Unicode/$version/extracted
-cp $UNIDATA/LineBreak.txt $UNIDATA/UnicodeData.txt t/3rdparty/Unicode/$version
-cp $UNIDATA/extracted/DerivedGeneralCategory.txt t/3rdparty/Unicode/extracted
+--------------------------------------------------
+mkdir -p t/3rdparty/Unicode/<version>/extracted
+cp $UNIDATA/LineBreak.txt $UNIDATA/UnicodeData.txt t/3rdparty/Unicode/<version>
+cp $UNIDATA/extracted/DerivedGeneralCategory.txt t/3rdparty/Unicode/<version>/extracted
+--------------------------------------------------
