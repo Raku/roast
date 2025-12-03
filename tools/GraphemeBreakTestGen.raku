@@ -187,4 +187,6 @@ sub MAIN(IO(Str) $gbt-file #=(Pathname for the GraphemeBreakTest.txt file, from 
         $from = $tdata.write-file($path, $from, 200);
         $file-idx++;
     }
+
+    say "Don't forget to update docs/unicode-generated-tests.asciidoc to indicate that you've updated this and other test files!";
 }
