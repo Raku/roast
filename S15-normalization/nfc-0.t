@@ -1,6 +1,6 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 15.0.0.
+# Generated from Unicode version 17.0.0.
 
 use Test;
 
@@ -31,6 +31,26 @@ ok Uni.new(0x05B8, 0x05B9, 0x05B1, 0x0591, 0x05C3, 0x05B0, 0x05AC, 0x059F).NFC.l
 ok Uni.new(0x0592, 0x05B7, 0x05BC, 0x05A5, 0x05B0, 0x05C0, 0x05C4, 0x05AD).NFC.list ~~ (0x05B0, 0x05B7, 0x05BC, 0x05A5, 0x0592, 0x05C0, 0x05AD, 0x05C4,), '0592 05B7 05BC 05A5 05B0 05C0 05C4 05AD -> 05B0 05B7 05BC 05A5 0592 05C0 05AD 05C4';
 ok Uni.new(0x1100, 0xAC00, 0x11A8).NFC.list ~~ (0x1100, 0xAC01,), '1100 AC00 11A8 -> 1100 AC01';
 ok Uni.new(0x1100, 0xAC00, 0x11A8, 0x11A8).NFC.list ~~ (0x1100, 0xAC01, 0x11A8,), '1100 AC00 11A8 11A8 -> 1100 AC01 11A8';
+ok Uni.new(0x01C4, 0x0323).NFC.list ~~ (0x01C4, 0x0323,), '01C4 0323 -> 01C4 0323';
+ok Uni.new(0x01C5, 0x0323).NFC.list ~~ (0x01C5, 0x0323,), '01C5 0323 -> 01C5 0323';
+ok Uni.new(0x01C6, 0x0323).NFC.list ~~ (0x01C6, 0x0323,), '01C6 0323 -> 01C6 0323';
+ok Uni.new(0x0DDD, 0x0334).NFC.list ~~ (0x0DDD, 0x0334,), '0DDD 0334 -> 0DDD 0334';
+ok Uni.new(0x3304, 0x0334).NFC.list ~~ (0x3304, 0x0334,), '3304 0334 -> 3304 0334';
+ok Uni.new(0x3307, 0x0334).NFC.list ~~ (0x3307, 0x0334,), '3307 0334 -> 3307 0334';
+ok Uni.new(0x3310, 0x0334).NFC.list ~~ (0x3310, 0x0334,), '3310 0334 -> 3310 0334';
+ok Uni.new(0x331E, 0x0334).NFC.list ~~ (0x331E, 0x0334,), '331E 0334 -> 331E 0334';
+ok Uni.new(0x3321, 0x0334).NFC.list ~~ (0x3321, 0x0334,), '3321 0334 -> 3321 0334';
+ok Uni.new(0x3332, 0x0334).NFC.list ~~ (0x3332, 0x0334,), '3332 0334 -> 3332 0334';
+ok Uni.new(0x333B, 0x0334).NFC.list ~~ (0x333B, 0x0334,), '333B 0334 -> 333B 0334';
+ok Uni.new(0x3340, 0x0334).NFC.list ~~ (0x3340, 0x0334,), '3340 0334 -> 3340 0334';
+ok Uni.new(0x334B, 0x0334).NFC.list ~~ (0x334B, 0x0334,), '334B 0334 -> 334B 0334';
+ok Uni.new(0x334E, 0x0334).NFC.list ~~ (0x334E, 0x0334,), '334E 0334 -> 334E 0334';
+ok Uni.new(0xFEF5, 0x0656).NFC.list ~~ (0xFEF5, 0x0656,), 'FEF5 0656 -> FEF5 0656';
+ok Uni.new(0xFEF6, 0x0656).NFC.list ~~ (0xFEF6, 0x0656,), 'FEF6 0656 -> FEF6 0656';
+ok Uni.new(0xFEF7, 0x0656).NFC.list ~~ (0xFEF7, 0x0656,), 'FEF7 0656 -> FEF7 0656';
+ok Uni.new(0xFEF8, 0x0656).NFC.list ~~ (0xFEF8, 0x0656,), 'FEF8 0656 -> FEF8 0656';
+ok Uni.new(0xFEF9, 0x0334).NFC.list ~~ (0xFEF9, 0x0334,), 'FEF9 0334 -> FEF9 0334';
+ok Uni.new(0xFEFA, 0x0334).NFC.list ~~ (0xFEFA, 0x0334,), 'FEFA 0334 -> FEFA 0334';
 ok Uni.new(0x00A0).NFC.list ~~ (0x00A0,), '00A0 -> 00A0';
 ok Uni.new(0x00A8).NFC.list ~~ (0x00A8,), '00A8 -> 00A8';
 ok Uni.new(0x00AA).NFC.list ~~ (0x00AA,), '00AA -> 00AA';
@@ -1986,23 +2006,3 @@ ok Uni.new(0x327E).NFC.list ~~ (0x327E,), '327E -> 327E';
 ok Uni.new(0x3280).NFC.list ~~ (0x3280,), '3280 -> 3280';
 ok Uni.new(0x3281).NFC.list ~~ (0x3281,), '3281 -> 3281';
 ok Uni.new(0x3282).NFC.list ~~ (0x3282,), '3282 -> 3282';
-ok Uni.new(0x3283).NFC.list ~~ (0x3283,), '3283 -> 3283';
-ok Uni.new(0x3284).NFC.list ~~ (0x3284,), '3284 -> 3284';
-ok Uni.new(0x3285).NFC.list ~~ (0x3285,), '3285 -> 3285';
-ok Uni.new(0x3286).NFC.list ~~ (0x3286,), '3286 -> 3286';
-ok Uni.new(0x3287).NFC.list ~~ (0x3287,), '3287 -> 3287';
-ok Uni.new(0x3288).NFC.list ~~ (0x3288,), '3288 -> 3288';
-ok Uni.new(0x3289).NFC.list ~~ (0x3289,), '3289 -> 3289';
-ok Uni.new(0x328A).NFC.list ~~ (0x328A,), '328A -> 328A';
-ok Uni.new(0x328B).NFC.list ~~ (0x328B,), '328B -> 328B';
-ok Uni.new(0x328C).NFC.list ~~ (0x328C,), '328C -> 328C';
-ok Uni.new(0x328D).NFC.list ~~ (0x328D,), '328D -> 328D';
-ok Uni.new(0x328E).NFC.list ~~ (0x328E,), '328E -> 328E';
-ok Uni.new(0x328F).NFC.list ~~ (0x328F,), '328F -> 328F';
-ok Uni.new(0x3290).NFC.list ~~ (0x3290,), '3290 -> 3290';
-ok Uni.new(0x3291).NFC.list ~~ (0x3291,), '3291 -> 3291';
-ok Uni.new(0x3292).NFC.list ~~ (0x3292,), '3292 -> 3292';
-ok Uni.new(0x3293).NFC.list ~~ (0x3293,), '3293 -> 3293';
-ok Uni.new(0x3294).NFC.list ~~ (0x3294,), '3294 -> 3294';
-ok Uni.new(0x3295).NFC.list ~~ (0x3295,), '3295 -> 3295';
-ok Uni.new(0x3296).NFC.list ~~ (0x3296,), '3296 -> 3296';

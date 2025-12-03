@@ -1,11 +1,32 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 15.0.0.
+# Generated from Unicode version 17.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xD185).NFC.list ~~ (0xD185,), 'D185 -> D185';
+ok Uni.new(0xD186).NFC.list ~~ (0xD186,), 'D186 -> D186';
+ok Uni.new(0xD187).NFC.list ~~ (0xD187,), 'D187 -> D187';
+ok Uni.new(0xD188).NFC.list ~~ (0xD188,), 'D188 -> D188';
+ok Uni.new(0xD189).NFC.list ~~ (0xD189,), 'D189 -> D189';
+ok Uni.new(0xD18A).NFC.list ~~ (0xD18A,), 'D18A -> D18A';
+ok Uni.new(0xD18B).NFC.list ~~ (0xD18B,), 'D18B -> D18B';
+ok Uni.new(0xD18C).NFC.list ~~ (0xD18C,), 'D18C -> D18C';
+ok Uni.new(0xD18D).NFC.list ~~ (0xD18D,), 'D18D -> D18D';
+ok Uni.new(0xD18E).NFC.list ~~ (0xD18E,), 'D18E -> D18E';
+ok Uni.new(0xD18F).NFC.list ~~ (0xD18F,), 'D18F -> D18F';
+ok Uni.new(0xD190).NFC.list ~~ (0xD190,), 'D190 -> D190';
+ok Uni.new(0xD191).NFC.list ~~ (0xD191,), 'D191 -> D191';
+ok Uni.new(0xD192).NFC.list ~~ (0xD192,), 'D192 -> D192';
+ok Uni.new(0xD193).NFC.list ~~ (0xD193,), 'D193 -> D193';
+ok Uni.new(0xD194).NFC.list ~~ (0xD194,), 'D194 -> D194';
+ok Uni.new(0xD195).NFC.list ~~ (0xD195,), 'D195 -> D195';
+ok Uni.new(0xD196).NFC.list ~~ (0xD196,), 'D196 -> D196';
+ok Uni.new(0xD197).NFC.list ~~ (0xD197,), 'D197 -> D197';
+ok Uni.new(0xD198).NFC.list ~~ (0xD198,), 'D198 -> D198';
+ok Uni.new(0xD199).NFC.list ~~ (0xD199,), 'D199 -> D199';
 ok Uni.new(0xD19A).NFC.list ~~ (0xD19A,), 'D19A -> D19A';
 ok Uni.new(0xD19B).NFC.list ~~ (0xD19B,), 'D19B -> D19B';
 ok Uni.new(0xD19C).NFC.list ~~ (0xD19C,), 'D19C -> D19C';
@@ -1985,24 +2006,3 @@ ok Uni.new(0xFABB).NFC.list ~~ (0x8ACB,), 'FABB -> 8ACB';
 ok Uni.new(0xFABC).NFC.list ~~ (0x8B01,), 'FABC -> 8B01';
 ok Uni.new(0xFABD).NFC.list ~~ (0x8AFE,), 'FABD -> 8AFE';
 ok Uni.new(0xFABE).NFC.list ~~ (0x8AED,), 'FABE -> 8AED';
-ok Uni.new(0xFABF).NFC.list ~~ (0x8B39,), 'FABF -> 8B39';
-ok Uni.new(0xFAC0).NFC.list ~~ (0x8B8A,), 'FAC0 -> 8B8A';
-ok Uni.new(0xFAC1).NFC.list ~~ (0x8D08,), 'FAC1 -> 8D08';
-ok Uni.new(0xFAC2).NFC.list ~~ (0x8F38,), 'FAC2 -> 8F38';
-ok Uni.new(0xFAC3).NFC.list ~~ (0x9072,), 'FAC3 -> 9072';
-ok Uni.new(0xFAC4).NFC.list ~~ (0x9199,), 'FAC4 -> 9199';
-ok Uni.new(0xFAC5).NFC.list ~~ (0x9276,), 'FAC5 -> 9276';
-ok Uni.new(0xFAC6).NFC.list ~~ (0x967C,), 'FAC6 -> 967C';
-ok Uni.new(0xFAC7).NFC.list ~~ (0x96E3,), 'FAC7 -> 96E3';
-ok Uni.new(0xFAC8).NFC.list ~~ (0x9756,), 'FAC8 -> 9756';
-ok Uni.new(0xFAC9).NFC.list ~~ (0x97DB,), 'FAC9 -> 97DB';
-ok Uni.new(0xFACA).NFC.list ~~ (0x97FF,), 'FACA -> 97FF';
-ok Uni.new(0xFACB).NFC.list ~~ (0x980B,), 'FACB -> 980B';
-ok Uni.new(0xFACC).NFC.list ~~ (0x983B,), 'FACC -> 983B';
-ok Uni.new(0xFACD).NFC.list ~~ (0x9B12,), 'FACD -> 9B12';
-ok Uni.new(0xFACE).NFC.list ~~ (0x9F9C,), 'FACE -> 9F9C';
-ok Uni.new(0xFACF).NFC.list ~~ (0x2284A,), 'FACF -> 2284A';
-ok Uni.new(0xFAD0).NFC.list ~~ (0x22844,), 'FAD0 -> 22844';
-ok Uni.new(0xFAD1).NFC.list ~~ (0x233D5,), 'FAD1 -> 233D5';
-ok Uni.new(0xFAD2).NFC.list ~~ (0x3B9D,), 'FAD2 -> 3B9D';
-ok Uni.new(0xFAD3).NFC.list ~~ (0x4018,), 'FAD3 -> 4018';

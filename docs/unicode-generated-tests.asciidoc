@@ -10,6 +10,10 @@ indicate "metasyntactic" pathname portions, e.g. `foo-<bar>.txt` means that
 `<bar>` is replaced with some other text, and depending on context there may be
 multiple files that match the `foo-<bar>.txt` pattern.
 
+CAUTION: Be sure to use a version of Rakudo that's been built to use the updated
+MoarVM. Some of the scripts below may produce incorrect results if the copy of
+Rakudo being used has outdated Unicode information.
+
 .Please list these data points if possible:
 * Script path (should be the heading)
 * Steps: list of steps to run for each Unicode update. Sometimes there is just one,
@@ -34,10 +38,10 @@ but many do not.
   necessary file.
 
 .Version
-* Emoji v15.0
+* Emoji v17.0
 
 .Date
-* Regenerated 2023.01.04
+* Regenerated 2025.12.03
 
 .Generated File(s)
 * `S15-nfg/emoji-test.t`
@@ -52,10 +56,10 @@ but many do not.
   generate the tests.
 
 .Version
-* Unicode v15.0
+* Unicode v17.0.0
 
 .Date
-* Regenerated 2023.01.04
+* Regenerated 2025.12.03
 
 .Generated File(s)
 * `S15-nfg/mass-roundtrip-nfc.t`
@@ -86,10 +90,10 @@ but many do not.
   `spectest.data`.
 
 .Version
-* Unicode v15.0
+* Unicode v17.0.0
 
 .Date
-* Regenerated 2023.01.04
+* Regenerated 2025.12.03
 
 .Generated File(s)
 * `S32-str/CollationTest_NON_IGNORABLE-<n>.t`
@@ -97,16 +101,16 @@ but many do not.
 == S15-normalization/test-gen.raku
 
 .Steps
-* Run `S15-normalization/test-gen.raku UNIDATA/NormalizationTest.txt`
+* Run `S15-normalization/test-gen.raku $UNIDATA/NormalizationTest.txt`
 
 * Check for possible new test files to be added to `spectest.data` (see the
   generated file section; look out for files with `<n>` in their pattern).
 
 .Version
-* Unicode v15.0
+* Unicode v17.0.0
 
 .Date
-* Regenerated 2023.01.04
+* Regenerated 2025.12.03
 
 .Generated File(s)
 * `S15-normalization/nfc-<n>.t`
@@ -118,27 +122,23 @@ but many do not.
 * `S15-normalization/nfkd-<n>.t`
 * `S15-normalization/nfc-concat.t`
 
-== S15-nfg/GraphemeBreakTest.t
+== tools/GraphemeBreakTestGen.raku
 
 .Steps
-* Copy file from UNIDATA to 3rdparty folder of roast:
---------------------------------------------------
-cp $UNIDATA/auxilary/GraphemeBreakTest.txt 3rdparty/Unicode/<version>/ucd/auxilary/GraphemeBreakTest.txt
---------------------------------------------------
 
-* Change the filename at the top of `S15-nfg/GraphemeBreakTest.t`. Look for this line and replace the version number in the path (what you substituted `<version>` with in the prior step):
---------------------------------------------------
-my IO::Path $repo-dir      = $?FILE.IO.parent(2).add("3rdparty/Unicode/<version>/ucd/auxiliary/GraphemeBreakTest.txt");
---------------------------------------------------
+* Run `raku tools/GraphemeBreakTestGen.raku $UNIDATA/auxiliary/GraphemeBreakTest.txt`.
 
-* This file is actually run in spectests, so no further action is required.
+* Check for possible new files to be added to `spectest.data` (check the
+  generated files list for the patterns to look for).
 
 .Version
-* Unicode v15.0
-
+* Unicode v17.0.0
 
 .Date
-* Regenerated 2023.01.04
+* Regenerated 2025.12.03
+
+.Generated File(s)
+* `S15-nfg/GraphemeBreakTest-<n>.t`
 
 == External
 

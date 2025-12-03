@@ -1,11 +1,32 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 15.0.0.
+# Generated from Unicode version 17.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xC9B5).NFKC.list ~~ (0xC9B5,), 'C9B5 -> C9B5';
+ok Uni.new(0xC9B6).NFKC.list ~~ (0xC9B6,), 'C9B6 -> C9B6';
+ok Uni.new(0xC9B7).NFKC.list ~~ (0xC9B7,), 'C9B7 -> C9B7';
+ok Uni.new(0xC9B8).NFKC.list ~~ (0xC9B8,), 'C9B8 -> C9B8';
+ok Uni.new(0xC9B9).NFKC.list ~~ (0xC9B9,), 'C9B9 -> C9B9';
+ok Uni.new(0xC9BA).NFKC.list ~~ (0xC9BA,), 'C9BA -> C9BA';
+ok Uni.new(0xC9BB).NFKC.list ~~ (0xC9BB,), 'C9BB -> C9BB';
+ok Uni.new(0xC9BC).NFKC.list ~~ (0xC9BC,), 'C9BC -> C9BC';
+ok Uni.new(0xC9BD).NFKC.list ~~ (0xC9BD,), 'C9BD -> C9BD';
+ok Uni.new(0xC9BE).NFKC.list ~~ (0xC9BE,), 'C9BE -> C9BE';
+ok Uni.new(0xC9BF).NFKC.list ~~ (0xC9BF,), 'C9BF -> C9BF';
+ok Uni.new(0xC9C0).NFKC.list ~~ (0xC9C0,), 'C9C0 -> C9C0';
+ok Uni.new(0xC9C1).NFKC.list ~~ (0xC9C1,), 'C9C1 -> C9C1';
+ok Uni.new(0xC9C2).NFKC.list ~~ (0xC9C2,), 'C9C2 -> C9C2';
+ok Uni.new(0xC9C3).NFKC.list ~~ (0xC9C3,), 'C9C3 -> C9C3';
+ok Uni.new(0xC9C4).NFKC.list ~~ (0xC9C4,), 'C9C4 -> C9C4';
+ok Uni.new(0xC9C5).NFKC.list ~~ (0xC9C5,), 'C9C5 -> C9C5';
+ok Uni.new(0xC9C6).NFKC.list ~~ (0xC9C6,), 'C9C6 -> C9C6';
+ok Uni.new(0xC9C7).NFKC.list ~~ (0xC9C7,), 'C9C7 -> C9C7';
+ok Uni.new(0xC9C8).NFKC.list ~~ (0xC9C8,), 'C9C8 -> C9C8';
+ok Uni.new(0xC9C9).NFKC.list ~~ (0xC9C9,), 'C9C9 -> C9C9';
 ok Uni.new(0xC9CA).NFKC.list ~~ (0xC9CA,), 'C9CA -> C9CA';
 ok Uni.new(0xC9CB).NFKC.list ~~ (0xC9CB,), 'C9CB -> C9CB';
 ok Uni.new(0xC9CC).NFKC.list ~~ (0xC9CC,), 'C9CC -> C9CC';
@@ -1985,24 +2006,3 @@ ok Uni.new(0xD181).NFKC.list ~~ (0xD181,), 'D181 -> D181';
 ok Uni.new(0xD182).NFKC.list ~~ (0xD182,), 'D182 -> D182';
 ok Uni.new(0xD183).NFKC.list ~~ (0xD183,), 'D183 -> D183';
 ok Uni.new(0xD184).NFKC.list ~~ (0xD184,), 'D184 -> D184';
-ok Uni.new(0xD185).NFKC.list ~~ (0xD185,), 'D185 -> D185';
-ok Uni.new(0xD186).NFKC.list ~~ (0xD186,), 'D186 -> D186';
-ok Uni.new(0xD187).NFKC.list ~~ (0xD187,), 'D187 -> D187';
-ok Uni.new(0xD188).NFKC.list ~~ (0xD188,), 'D188 -> D188';
-ok Uni.new(0xD189).NFKC.list ~~ (0xD189,), 'D189 -> D189';
-ok Uni.new(0xD18A).NFKC.list ~~ (0xD18A,), 'D18A -> D18A';
-ok Uni.new(0xD18B).NFKC.list ~~ (0xD18B,), 'D18B -> D18B';
-ok Uni.new(0xD18C).NFKC.list ~~ (0xD18C,), 'D18C -> D18C';
-ok Uni.new(0xD18D).NFKC.list ~~ (0xD18D,), 'D18D -> D18D';
-ok Uni.new(0xD18E).NFKC.list ~~ (0xD18E,), 'D18E -> D18E';
-ok Uni.new(0xD18F).NFKC.list ~~ (0xD18F,), 'D18F -> D18F';
-ok Uni.new(0xD190).NFKC.list ~~ (0xD190,), 'D190 -> D190';
-ok Uni.new(0xD191).NFKC.list ~~ (0xD191,), 'D191 -> D191';
-ok Uni.new(0xD192).NFKC.list ~~ (0xD192,), 'D192 -> D192';
-ok Uni.new(0xD193).NFKC.list ~~ (0xD193,), 'D193 -> D193';
-ok Uni.new(0xD194).NFKC.list ~~ (0xD194,), 'D194 -> D194';
-ok Uni.new(0xD195).NFKC.list ~~ (0xD195,), 'D195 -> D195';
-ok Uni.new(0xD196).NFKC.list ~~ (0xD196,), 'D196 -> D196';
-ok Uni.new(0xD197).NFKC.list ~~ (0xD197,), 'D197 -> D197';
-ok Uni.new(0xD198).NFKC.list ~~ (0xD198,), 'D198 -> D198';
-ok Uni.new(0xD199).NFKC.list ~~ (0xD199,), 'D199 -> D199';

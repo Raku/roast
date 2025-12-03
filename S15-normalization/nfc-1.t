@@ -1,11 +1,31 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 15.0.0.
+# Generated from Unicode version 17.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0x3283).NFC.list ~~ (0x3283,), '3283 -> 3283';
+ok Uni.new(0x3284).NFC.list ~~ (0x3284,), '3284 -> 3284';
+ok Uni.new(0x3285).NFC.list ~~ (0x3285,), '3285 -> 3285';
+ok Uni.new(0x3286).NFC.list ~~ (0x3286,), '3286 -> 3286';
+ok Uni.new(0x3287).NFC.list ~~ (0x3287,), '3287 -> 3287';
+ok Uni.new(0x3288).NFC.list ~~ (0x3288,), '3288 -> 3288';
+ok Uni.new(0x3289).NFC.list ~~ (0x3289,), '3289 -> 3289';
+ok Uni.new(0x328A).NFC.list ~~ (0x328A,), '328A -> 328A';
+ok Uni.new(0x328B).NFC.list ~~ (0x328B,), '328B -> 328B';
+ok Uni.new(0x328C).NFC.list ~~ (0x328C,), '328C -> 328C';
+ok Uni.new(0x328D).NFC.list ~~ (0x328D,), '328D -> 328D';
+ok Uni.new(0x328E).NFC.list ~~ (0x328E,), '328E -> 328E';
+ok Uni.new(0x328F).NFC.list ~~ (0x328F,), '328F -> 328F';
+ok Uni.new(0x3290).NFC.list ~~ (0x3290,), '3290 -> 3290';
+ok Uni.new(0x3291).NFC.list ~~ (0x3291,), '3291 -> 3291';
+ok Uni.new(0x3292).NFC.list ~~ (0x3292,), '3292 -> 3292';
+ok Uni.new(0x3293).NFC.list ~~ (0x3293,), '3293 -> 3293';
+ok Uni.new(0x3294).NFC.list ~~ (0x3294,), '3294 -> 3294';
+ok Uni.new(0x3295).NFC.list ~~ (0x3295,), '3295 -> 3295';
+ok Uni.new(0x3296).NFC.list ~~ (0x3296,), '3296 -> 3296';
 ok Uni.new(0x3297).NFC.list ~~ (0x3297,), '3297 -> 3297';
 ok Uni.new(0x3298).NFC.list ~~ (0x3298,), '3298 -> 3298';
 ok Uni.new(0x3299).NFC.list ~~ (0x3299,), '3299 -> 3299';
@@ -370,6 +390,7 @@ ok Uni.new(0x33FF).NFC.list ~~ (0x33FF,), '33FF -> 33FF';
 ok Uni.new(0xA69C).NFC.list ~~ (0xA69C,), 'A69C -> A69C';
 ok Uni.new(0xA69D).NFC.list ~~ (0xA69D,), 'A69D -> A69D';
 ok Uni.new(0xA770).NFC.list ~~ (0xA770,), 'A770 -> A770';
+ok Uni.new(0xA7F1).NFC.list ~~ (0xA7F1,), 'A7F1 -> A7F1';
 ok Uni.new(0xA7F2).NFC.list ~~ (0xA7F2,), 'A7F2 -> A7F2';
 ok Uni.new(0xA7F3).NFC.list ~~ (0xA7F3,), 'A7F3 -> A7F3';
 ok Uni.new(0xA7F4).NFC.list ~~ (0xA7F4,), 'A7F4 -> A7F4';
@@ -1985,24 +2006,3 @@ ok Uni.new(0xB241).NFC.list ~~ (0xB241,), 'B241 -> B241';
 ok Uni.new(0xB242).NFC.list ~~ (0xB242,), 'B242 -> B242';
 ok Uni.new(0xB243).NFC.list ~~ (0xB243,), 'B243 -> B243';
 ok Uni.new(0xB244).NFC.list ~~ (0xB244,), 'B244 -> B244';
-ok Uni.new(0xB245).NFC.list ~~ (0xB245,), 'B245 -> B245';
-ok Uni.new(0xB246).NFC.list ~~ (0xB246,), 'B246 -> B246';
-ok Uni.new(0xB247).NFC.list ~~ (0xB247,), 'B247 -> B247';
-ok Uni.new(0xB248).NFC.list ~~ (0xB248,), 'B248 -> B248';
-ok Uni.new(0xB249).NFC.list ~~ (0xB249,), 'B249 -> B249';
-ok Uni.new(0xB24A).NFC.list ~~ (0xB24A,), 'B24A -> B24A';
-ok Uni.new(0xB24B).NFC.list ~~ (0xB24B,), 'B24B -> B24B';
-ok Uni.new(0xB24C).NFC.list ~~ (0xB24C,), 'B24C -> B24C';
-ok Uni.new(0xB24D).NFC.list ~~ (0xB24D,), 'B24D -> B24D';
-ok Uni.new(0xB24E).NFC.list ~~ (0xB24E,), 'B24E -> B24E';
-ok Uni.new(0xB24F).NFC.list ~~ (0xB24F,), 'B24F -> B24F';
-ok Uni.new(0xB250).NFC.list ~~ (0xB250,), 'B250 -> B250';
-ok Uni.new(0xB251).NFC.list ~~ (0xB251,), 'B251 -> B251';
-ok Uni.new(0xB252).NFC.list ~~ (0xB252,), 'B252 -> B252';
-ok Uni.new(0xB253).NFC.list ~~ (0xB253,), 'B253 -> B253';
-ok Uni.new(0xB254).NFC.list ~~ (0xB254,), 'B254 -> B254';
-ok Uni.new(0xB255).NFC.list ~~ (0xB255,), 'B255 -> B255';
-ok Uni.new(0xB256).NFC.list ~~ (0xB256,), 'B256 -> B256';
-ok Uni.new(0xB257).NFC.list ~~ (0xB257,), 'B257 -> B257';
-ok Uni.new(0xB258).NFC.list ~~ (0xB258,), 'B258 -> B258';
-ok Uni.new(0xB259).NFC.list ~~ (0xB259,), 'B259 -> B259';

@@ -1,11 +1,32 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 15.0.0.
+# Generated from Unicode version 17.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xBA15).NFD.list ~~ (0x1106, 0x1163, 0x11BC,), 'BA15 -> 1106 1163 11BC';
+ok Uni.new(0xBA16).NFD.list ~~ (0x1106, 0x1163, 0x11BD,), 'BA16 -> 1106 1163 11BD';
+ok Uni.new(0xBA17).NFD.list ~~ (0x1106, 0x1163, 0x11BE,), 'BA17 -> 1106 1163 11BE';
+ok Uni.new(0xBA18).NFD.list ~~ (0x1106, 0x1163, 0x11BF,), 'BA18 -> 1106 1163 11BF';
+ok Uni.new(0xBA19).NFD.list ~~ (0x1106, 0x1163, 0x11C0,), 'BA19 -> 1106 1163 11C0';
+ok Uni.new(0xBA1A).NFD.list ~~ (0x1106, 0x1163, 0x11C1,), 'BA1A -> 1106 1163 11C1';
+ok Uni.new(0xBA1B).NFD.list ~~ (0x1106, 0x1163, 0x11C2,), 'BA1B -> 1106 1163 11C2';
+ok Uni.new(0xBA1C).NFD.list ~~ (0x1106, 0x1164,), 'BA1C -> 1106 1164';
+ok Uni.new(0xBA1D).NFD.list ~~ (0x1106, 0x1164, 0x11A8,), 'BA1D -> 1106 1164 11A8';
+ok Uni.new(0xBA1E).NFD.list ~~ (0x1106, 0x1164, 0x11A9,), 'BA1E -> 1106 1164 11A9';
+ok Uni.new(0xBA1F).NFD.list ~~ (0x1106, 0x1164, 0x11AA,), 'BA1F -> 1106 1164 11AA';
+ok Uni.new(0xBA20).NFD.list ~~ (0x1106, 0x1164, 0x11AB,), 'BA20 -> 1106 1164 11AB';
+ok Uni.new(0xBA21).NFD.list ~~ (0x1106, 0x1164, 0x11AC,), 'BA21 -> 1106 1164 11AC';
+ok Uni.new(0xBA22).NFD.list ~~ (0x1106, 0x1164, 0x11AD,), 'BA22 -> 1106 1164 11AD';
+ok Uni.new(0xBA23).NFD.list ~~ (0x1106, 0x1164, 0x11AE,), 'BA23 -> 1106 1164 11AE';
+ok Uni.new(0xBA24).NFD.list ~~ (0x1106, 0x1164, 0x11AF,), 'BA24 -> 1106 1164 11AF';
+ok Uni.new(0xBA25).NFD.list ~~ (0x1106, 0x1164, 0x11B0,), 'BA25 -> 1106 1164 11B0';
+ok Uni.new(0xBA26).NFD.list ~~ (0x1106, 0x1164, 0x11B1,), 'BA26 -> 1106 1164 11B1';
+ok Uni.new(0xBA27).NFD.list ~~ (0x1106, 0x1164, 0x11B2,), 'BA27 -> 1106 1164 11B2';
+ok Uni.new(0xBA28).NFD.list ~~ (0x1106, 0x1164, 0x11B3,), 'BA28 -> 1106 1164 11B3';
+ok Uni.new(0xBA29).NFD.list ~~ (0x1106, 0x1164, 0x11B4,), 'BA29 -> 1106 1164 11B4';
 ok Uni.new(0xBA2A).NFD.list ~~ (0x1106, 0x1164, 0x11B5,), 'BA2A -> 1106 1164 11B5';
 ok Uni.new(0xBA2B).NFD.list ~~ (0x1106, 0x1164, 0x11B6,), 'BA2B -> 1106 1164 11B6';
 ok Uni.new(0xBA2C).NFD.list ~~ (0x1106, 0x1164, 0x11B7,), 'BA2C -> 1106 1164 11B7';
@@ -1985,24 +2006,3 @@ ok Uni.new(0xC1E1).NFD.list ~~ (0x1109, 0x116C, 0x11A8,), 'C1E1 -> 1109 116C 11A
 ok Uni.new(0xC1E2).NFD.list ~~ (0x1109, 0x116C, 0x11A9,), 'C1E2 -> 1109 116C 11A9';
 ok Uni.new(0xC1E3).NFD.list ~~ (0x1109, 0x116C, 0x11AA,), 'C1E3 -> 1109 116C 11AA';
 ok Uni.new(0xC1E4).NFD.list ~~ (0x1109, 0x116C, 0x11AB,), 'C1E4 -> 1109 116C 11AB';
-ok Uni.new(0xC1E5).NFD.list ~~ (0x1109, 0x116C, 0x11AC,), 'C1E5 -> 1109 116C 11AC';
-ok Uni.new(0xC1E6).NFD.list ~~ (0x1109, 0x116C, 0x11AD,), 'C1E6 -> 1109 116C 11AD';
-ok Uni.new(0xC1E7).NFD.list ~~ (0x1109, 0x116C, 0x11AE,), 'C1E7 -> 1109 116C 11AE';
-ok Uni.new(0xC1E8).NFD.list ~~ (0x1109, 0x116C, 0x11AF,), 'C1E8 -> 1109 116C 11AF';
-ok Uni.new(0xC1E9).NFD.list ~~ (0x1109, 0x116C, 0x11B0,), 'C1E9 -> 1109 116C 11B0';
-ok Uni.new(0xC1EA).NFD.list ~~ (0x1109, 0x116C, 0x11B1,), 'C1EA -> 1109 116C 11B1';
-ok Uni.new(0xC1EB).NFD.list ~~ (0x1109, 0x116C, 0x11B2,), 'C1EB -> 1109 116C 11B2';
-ok Uni.new(0xC1EC).NFD.list ~~ (0x1109, 0x116C, 0x11B3,), 'C1EC -> 1109 116C 11B3';
-ok Uni.new(0xC1ED).NFD.list ~~ (0x1109, 0x116C, 0x11B4,), 'C1ED -> 1109 116C 11B4';
-ok Uni.new(0xC1EE).NFD.list ~~ (0x1109, 0x116C, 0x11B5,), 'C1EE -> 1109 116C 11B5';
-ok Uni.new(0xC1EF).NFD.list ~~ (0x1109, 0x116C, 0x11B6,), 'C1EF -> 1109 116C 11B6';
-ok Uni.new(0xC1F0).NFD.list ~~ (0x1109, 0x116C, 0x11B7,), 'C1F0 -> 1109 116C 11B7';
-ok Uni.new(0xC1F1).NFD.list ~~ (0x1109, 0x116C, 0x11B8,), 'C1F1 -> 1109 116C 11B8';
-ok Uni.new(0xC1F2).NFD.list ~~ (0x1109, 0x116C, 0x11B9,), 'C1F2 -> 1109 116C 11B9';
-ok Uni.new(0xC1F3).NFD.list ~~ (0x1109, 0x116C, 0x11BA,), 'C1F3 -> 1109 116C 11BA';
-ok Uni.new(0xC1F4).NFD.list ~~ (0x1109, 0x116C, 0x11BB,), 'C1F4 -> 1109 116C 11BB';
-ok Uni.new(0xC1F5).NFD.list ~~ (0x1109, 0x116C, 0x11BC,), 'C1F5 -> 1109 116C 11BC';
-ok Uni.new(0xC1F6).NFD.list ~~ (0x1109, 0x116C, 0x11BD,), 'C1F6 -> 1109 116C 11BD';
-ok Uni.new(0xC1F7).NFD.list ~~ (0x1109, 0x116C, 0x11BE,), 'C1F7 -> 1109 116C 11BE';
-ok Uni.new(0xC1F8).NFD.list ~~ (0x1109, 0x116C, 0x11BF,), 'C1F8 -> 1109 116C 11BF';
-ok Uni.new(0xC1F9).NFD.list ~~ (0x1109, 0x116C, 0x11C0,), 'C1F9 -> 1109 116C 11C0';

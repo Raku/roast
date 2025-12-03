@@ -1,11 +1,32 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 15.0.0.
+# Generated from Unicode version 17.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xC1E5).NFC.list ~~ (0xC1E5,), 'C1E5 -> C1E5';
+ok Uni.new(0xC1E6).NFC.list ~~ (0xC1E6,), 'C1E6 -> C1E6';
+ok Uni.new(0xC1E7).NFC.list ~~ (0xC1E7,), 'C1E7 -> C1E7';
+ok Uni.new(0xC1E8).NFC.list ~~ (0xC1E8,), 'C1E8 -> C1E8';
+ok Uni.new(0xC1E9).NFC.list ~~ (0xC1E9,), 'C1E9 -> C1E9';
+ok Uni.new(0xC1EA).NFC.list ~~ (0xC1EA,), 'C1EA -> C1EA';
+ok Uni.new(0xC1EB).NFC.list ~~ (0xC1EB,), 'C1EB -> C1EB';
+ok Uni.new(0xC1EC).NFC.list ~~ (0xC1EC,), 'C1EC -> C1EC';
+ok Uni.new(0xC1ED).NFC.list ~~ (0xC1ED,), 'C1ED -> C1ED';
+ok Uni.new(0xC1EE).NFC.list ~~ (0xC1EE,), 'C1EE -> C1EE';
+ok Uni.new(0xC1EF).NFC.list ~~ (0xC1EF,), 'C1EF -> C1EF';
+ok Uni.new(0xC1F0).NFC.list ~~ (0xC1F0,), 'C1F0 -> C1F0';
+ok Uni.new(0xC1F1).NFC.list ~~ (0xC1F1,), 'C1F1 -> C1F1';
+ok Uni.new(0xC1F2).NFC.list ~~ (0xC1F2,), 'C1F2 -> C1F2';
+ok Uni.new(0xC1F3).NFC.list ~~ (0xC1F3,), 'C1F3 -> C1F3';
+ok Uni.new(0xC1F4).NFC.list ~~ (0xC1F4,), 'C1F4 -> C1F4';
+ok Uni.new(0xC1F5).NFC.list ~~ (0xC1F5,), 'C1F5 -> C1F5';
+ok Uni.new(0xC1F6).NFC.list ~~ (0xC1F6,), 'C1F6 -> C1F6';
+ok Uni.new(0xC1F7).NFC.list ~~ (0xC1F7,), 'C1F7 -> C1F7';
+ok Uni.new(0xC1F8).NFC.list ~~ (0xC1F8,), 'C1F8 -> C1F8';
+ok Uni.new(0xC1F9).NFC.list ~~ (0xC1F9,), 'C1F9 -> C1F9';
 ok Uni.new(0xC1FA).NFC.list ~~ (0xC1FA,), 'C1FA -> C1FA';
 ok Uni.new(0xC1FB).NFC.list ~~ (0xC1FB,), 'C1FB -> C1FB';
 ok Uni.new(0xC1FC).NFC.list ~~ (0xC1FC,), 'C1FC -> C1FC';
@@ -1985,24 +2006,3 @@ ok Uni.new(0xC9B1).NFC.list ~~ (0xC9B1,), 'C9B1 -> C9B1';
 ok Uni.new(0xC9B2).NFC.list ~~ (0xC9B2,), 'C9B2 -> C9B2';
 ok Uni.new(0xC9B3).NFC.list ~~ (0xC9B3,), 'C9B3 -> C9B3';
 ok Uni.new(0xC9B4).NFC.list ~~ (0xC9B4,), 'C9B4 -> C9B4';
-ok Uni.new(0xC9B5).NFC.list ~~ (0xC9B5,), 'C9B5 -> C9B5';
-ok Uni.new(0xC9B6).NFC.list ~~ (0xC9B6,), 'C9B6 -> C9B6';
-ok Uni.new(0xC9B7).NFC.list ~~ (0xC9B7,), 'C9B7 -> C9B7';
-ok Uni.new(0xC9B8).NFC.list ~~ (0xC9B8,), 'C9B8 -> C9B8';
-ok Uni.new(0xC9B9).NFC.list ~~ (0xC9B9,), 'C9B9 -> C9B9';
-ok Uni.new(0xC9BA).NFC.list ~~ (0xC9BA,), 'C9BA -> C9BA';
-ok Uni.new(0xC9BB).NFC.list ~~ (0xC9BB,), 'C9BB -> C9BB';
-ok Uni.new(0xC9BC).NFC.list ~~ (0xC9BC,), 'C9BC -> C9BC';
-ok Uni.new(0xC9BD).NFC.list ~~ (0xC9BD,), 'C9BD -> C9BD';
-ok Uni.new(0xC9BE).NFC.list ~~ (0xC9BE,), 'C9BE -> C9BE';
-ok Uni.new(0xC9BF).NFC.list ~~ (0xC9BF,), 'C9BF -> C9BF';
-ok Uni.new(0xC9C0).NFC.list ~~ (0xC9C0,), 'C9C0 -> C9C0';
-ok Uni.new(0xC9C1).NFC.list ~~ (0xC9C1,), 'C9C1 -> C9C1';
-ok Uni.new(0xC9C2).NFC.list ~~ (0xC9C2,), 'C9C2 -> C9C2';
-ok Uni.new(0xC9C3).NFC.list ~~ (0xC9C3,), 'C9C3 -> C9C3';
-ok Uni.new(0xC9C4).NFC.list ~~ (0xC9C4,), 'C9C4 -> C9C4';
-ok Uni.new(0xC9C5).NFC.list ~~ (0xC9C5,), 'C9C5 -> C9C5';
-ok Uni.new(0xC9C6).NFC.list ~~ (0xC9C6,), 'C9C6 -> C9C6';
-ok Uni.new(0xC9C7).NFC.list ~~ (0xC9C7,), 'C9C7 -> C9C7';
-ok Uni.new(0xC9C8).NFC.list ~~ (0xC9C8,), 'C9C8 -> C9C8';
-ok Uni.new(0xC9C9).NFC.list ~~ (0xC9C9,), 'C9C9 -> C9C9';

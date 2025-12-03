@@ -1,11 +1,32 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 15.0.0.
+# Generated from Unicode version 17.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xB245).NFKC.list ~~ (0xB245,), 'B245 -> B245';
+ok Uni.new(0xB246).NFKC.list ~~ (0xB246,), 'B246 -> B246';
+ok Uni.new(0xB247).NFKC.list ~~ (0xB247,), 'B247 -> B247';
+ok Uni.new(0xB248).NFKC.list ~~ (0xB248,), 'B248 -> B248';
+ok Uni.new(0xB249).NFKC.list ~~ (0xB249,), 'B249 -> B249';
+ok Uni.new(0xB24A).NFKC.list ~~ (0xB24A,), 'B24A -> B24A';
+ok Uni.new(0xB24B).NFKC.list ~~ (0xB24B,), 'B24B -> B24B';
+ok Uni.new(0xB24C).NFKC.list ~~ (0xB24C,), 'B24C -> B24C';
+ok Uni.new(0xB24D).NFKC.list ~~ (0xB24D,), 'B24D -> B24D';
+ok Uni.new(0xB24E).NFKC.list ~~ (0xB24E,), 'B24E -> B24E';
+ok Uni.new(0xB24F).NFKC.list ~~ (0xB24F,), 'B24F -> B24F';
+ok Uni.new(0xB250).NFKC.list ~~ (0xB250,), 'B250 -> B250';
+ok Uni.new(0xB251).NFKC.list ~~ (0xB251,), 'B251 -> B251';
+ok Uni.new(0xB252).NFKC.list ~~ (0xB252,), 'B252 -> B252';
+ok Uni.new(0xB253).NFKC.list ~~ (0xB253,), 'B253 -> B253';
+ok Uni.new(0xB254).NFKC.list ~~ (0xB254,), 'B254 -> B254';
+ok Uni.new(0xB255).NFKC.list ~~ (0xB255,), 'B255 -> B255';
+ok Uni.new(0xB256).NFKC.list ~~ (0xB256,), 'B256 -> B256';
+ok Uni.new(0xB257).NFKC.list ~~ (0xB257,), 'B257 -> B257';
+ok Uni.new(0xB258).NFKC.list ~~ (0xB258,), 'B258 -> B258';
+ok Uni.new(0xB259).NFKC.list ~~ (0xB259,), 'B259 -> B259';
 ok Uni.new(0xB25A).NFKC.list ~~ (0xB25A,), 'B25A -> B25A';
 ok Uni.new(0xB25B).NFKC.list ~~ (0xB25B,), 'B25B -> B25B';
 ok Uni.new(0xB25C).NFKC.list ~~ (0xB25C,), 'B25C -> B25C';
@@ -1985,24 +2006,3 @@ ok Uni.new(0xBA11).NFKC.list ~~ (0xBA11,), 'BA11 -> BA11';
 ok Uni.new(0xBA12).NFKC.list ~~ (0xBA12,), 'BA12 -> BA12';
 ok Uni.new(0xBA13).NFKC.list ~~ (0xBA13,), 'BA13 -> BA13';
 ok Uni.new(0xBA14).NFKC.list ~~ (0xBA14,), 'BA14 -> BA14';
-ok Uni.new(0xBA15).NFKC.list ~~ (0xBA15,), 'BA15 -> BA15';
-ok Uni.new(0xBA16).NFKC.list ~~ (0xBA16,), 'BA16 -> BA16';
-ok Uni.new(0xBA17).NFKC.list ~~ (0xBA17,), 'BA17 -> BA17';
-ok Uni.new(0xBA18).NFKC.list ~~ (0xBA18,), 'BA18 -> BA18';
-ok Uni.new(0xBA19).NFKC.list ~~ (0xBA19,), 'BA19 -> BA19';
-ok Uni.new(0xBA1A).NFKC.list ~~ (0xBA1A,), 'BA1A -> BA1A';
-ok Uni.new(0xBA1B).NFKC.list ~~ (0xBA1B,), 'BA1B -> BA1B';
-ok Uni.new(0xBA1C).NFKC.list ~~ (0xBA1C,), 'BA1C -> BA1C';
-ok Uni.new(0xBA1D).NFKC.list ~~ (0xBA1D,), 'BA1D -> BA1D';
-ok Uni.new(0xBA1E).NFKC.list ~~ (0xBA1E,), 'BA1E -> BA1E';
-ok Uni.new(0xBA1F).NFKC.list ~~ (0xBA1F,), 'BA1F -> BA1F';
-ok Uni.new(0xBA20).NFKC.list ~~ (0xBA20,), 'BA20 -> BA20';
-ok Uni.new(0xBA21).NFKC.list ~~ (0xBA21,), 'BA21 -> BA21';
-ok Uni.new(0xBA22).NFKC.list ~~ (0xBA22,), 'BA22 -> BA22';
-ok Uni.new(0xBA23).NFKC.list ~~ (0xBA23,), 'BA23 -> BA23';
-ok Uni.new(0xBA24).NFKC.list ~~ (0xBA24,), 'BA24 -> BA24';
-ok Uni.new(0xBA25).NFKC.list ~~ (0xBA25,), 'BA25 -> BA25';
-ok Uni.new(0xBA26).NFKC.list ~~ (0xBA26,), 'BA26 -> BA26';
-ok Uni.new(0xBA27).NFKC.list ~~ (0xBA27,), 'BA27 -> BA27';
-ok Uni.new(0xBA28).NFKC.list ~~ (0xBA28,), 'BA28 -> BA28';
-ok Uni.new(0xBA29).NFKC.list ~~ (0xBA29,), 'BA29 -> BA29';

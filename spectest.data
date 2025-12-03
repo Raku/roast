@@ -797,7 +797,10 @@ S14-traits/routines.t
 S14-traits/variables.t
 S15-literals/identifiers.t
 S15-literals/numbers.t
-S15-nfg/GraphemeBreakTest.t     # moar
+S15-nfg/GraphemeBreakTest-0.t   # moar
+S15-nfg/GraphemeBreakTest-1.t   # moar
+S15-nfg/GraphemeBreakTest-2.t   # moar
+S15-nfg/GraphemeBreakTest-3.t   # moar
 S15-nfg/case-change.t           # moar
 S15-nfg/cgj.t                   # moar
 S15-nfg/concat-stable.t         # moar
@@ -826,6 +829,7 @@ S15-normalization/nfc-6.t       # moar stress
 S15-normalization/nfc-7.t       # moar stress
 S15-normalization/nfc-8.t       # moar stress
 S15-normalization/nfc-9.t       # moar stress
+S15-normalization/nfc-10.t      # moar stress
 S15-normalization/nfc-concat.t  # moar slow
 S15-normalization/nfc-sanity.t  # moar
 S15-normalization/nfd-0.t       # moar stress
@@ -838,6 +842,7 @@ S15-normalization/nfd-6.t       # moar stress
 S15-normalization/nfd-7.t       # moar stress
 S15-normalization/nfd-8.t       # moar stress
 S15-normalization/nfd-9.t       # moar stress
+S15-normalization/nfd-10.t      # moar stress
 S15-normalization/nfd-sanity.t  # moar
 S15-normalization/nfkc-0.t      # moar stress
 S15-normalization/nfkc-1.t      # moar stress
@@ -849,6 +854,7 @@ S15-normalization/nfkc-6.t      # moar stress
 S15-normalization/nfkc-7.t      # moar stress
 S15-normalization/nfkc-8.t      # moar stress
 S15-normalization/nfkc-9.t      # moar stress
+S15-normalization/nfkc-10.t     # moar stress
 S15-normalization/nfkc-sanity.t # moar
 S15-normalization/nfkd-0.t      # moar stress
 S15-normalization/nfkd-1.t      # moar stress
@@ -860,6 +866,7 @@ S15-normalization/nfkd-6.t      # moar stress
 S15-normalization/nfkd-7.t      # moar stress
 S15-normalization/nfkd-8.t      # moar stress
 S15-normalization/nfkd-9.t      # moar stress
+S15-normalization/nfkd-10.t     # moar stress
 S15-normalization/nfkd-sanity.t # moar
 S15-string-types/NF-types.t
 S15-string-types/NFK-types.t

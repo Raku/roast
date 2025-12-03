@@ -1,6 +1,6 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 15.0.0.
+# Generated from Unicode version 17.0.0.
 
 use Test;
 
@@ -24,8 +24,8 @@ ok Uni.new(0x05B8, 0x05B9, 0x05B1, 0x0591, 0x05C3, 0x05B0, 0x05AC, 0x059F).NFC.l
 ok Uni.new(0x0592, 0x05B7, 0x05BC, 0x05A5, 0x05B0, 0x05C0, 0x05C4, 0x05AD).NFC.list ~~ (0x05B0, 0x05B7, 0x05BC, 0x05A5, 0x0592, 0x05C0, 0x05AD, 0x05C4,), '0592 05B7 05BC 05A5 05B0 05C0 05C4 05AD -> 05B0 05B7 05BC 05A5 0592 05C0 05AD 05C4';
 ok Uni.new(0x1100, 0xAC00, 0x11A8).NFC.list ~~ (0x1100, 0xAC01,), '1100 AC00 11A8 -> 1100 AC01';
 ok Uni.new(0x1100, 0xAC00, 0x11A8, 0x11A8).NFC.list ~~ (0x1100, 0xAC01, 0x11A8,), '1100 AC00 11A8 11A8 -> 1100 AC01 11A8';
-ok Uni.new(0x00A0).NFC.list ~~ (0x00A0,), '00A0 -> 00A0';
-ok Uni.new(0x00A8).NFC.list ~~ (0x00A8,), '00A8 -> 00A8';
+ok Uni.new(0x01C4, 0x0323).NFC.list ~~ (0x01C4, 0x0323,), '01C4 0323 -> 01C4 0323';
+ok Uni.new(0x01C5, 0x0323).NFC.list ~~ (0x01C5, 0x0323,), '01C5 0323 -> 01C5 0323';
 ok Uni.new(0x0340).NFC.list ~~ (0x0300,), '0340 -> 0300';
 ok Uni.new(0x0341).NFC.list ~~ (0x0301,), '0341 -> 0301';
 ok Uni.new(0x0343).NFC.list ~~ (0x0313,), '0343 -> 0313';

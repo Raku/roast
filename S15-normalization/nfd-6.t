@@ -1,11 +1,32 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 15.0.0.
+# Generated from Unicode version 17.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xD185).NFD.list ~~ (0x1110, 0x1168, 0x11A8,), 'D185 -> 1110 1168 11A8';
+ok Uni.new(0xD186).NFD.list ~~ (0x1110, 0x1168, 0x11A9,), 'D186 -> 1110 1168 11A9';
+ok Uni.new(0xD187).NFD.list ~~ (0x1110, 0x1168, 0x11AA,), 'D187 -> 1110 1168 11AA';
+ok Uni.new(0xD188).NFD.list ~~ (0x1110, 0x1168, 0x11AB,), 'D188 -> 1110 1168 11AB';
+ok Uni.new(0xD189).NFD.list ~~ (0x1110, 0x1168, 0x11AC,), 'D189 -> 1110 1168 11AC';
+ok Uni.new(0xD18A).NFD.list ~~ (0x1110, 0x1168, 0x11AD,), 'D18A -> 1110 1168 11AD';
+ok Uni.new(0xD18B).NFD.list ~~ (0x1110, 0x1168, 0x11AE,), 'D18B -> 1110 1168 11AE';
+ok Uni.new(0xD18C).NFD.list ~~ (0x1110, 0x1168, 0x11AF,), 'D18C -> 1110 1168 11AF';
+ok Uni.new(0xD18D).NFD.list ~~ (0x1110, 0x1168, 0x11B0,), 'D18D -> 1110 1168 11B0';
+ok Uni.new(0xD18E).NFD.list ~~ (0x1110, 0x1168, 0x11B1,), 'D18E -> 1110 1168 11B1';
+ok Uni.new(0xD18F).NFD.list ~~ (0x1110, 0x1168, 0x11B2,), 'D18F -> 1110 1168 11B2';
+ok Uni.new(0xD190).NFD.list ~~ (0x1110, 0x1168, 0x11B3,), 'D190 -> 1110 1168 11B3';
+ok Uni.new(0xD191).NFD.list ~~ (0x1110, 0x1168, 0x11B4,), 'D191 -> 1110 1168 11B4';
+ok Uni.new(0xD192).NFD.list ~~ (0x1110, 0x1168, 0x11B5,), 'D192 -> 1110 1168 11B5';
+ok Uni.new(0xD193).NFD.list ~~ (0x1110, 0x1168, 0x11B6,), 'D193 -> 1110 1168 11B6';
+ok Uni.new(0xD194).NFD.list ~~ (0x1110, 0x1168, 0x11B7,), 'D194 -> 1110 1168 11B7';
+ok Uni.new(0xD195).NFD.list ~~ (0x1110, 0x1168, 0x11B8,), 'D195 -> 1110 1168 11B8';
+ok Uni.new(0xD196).NFD.list ~~ (0x1110, 0x1168, 0x11B9,), 'D196 -> 1110 1168 11B9';
+ok Uni.new(0xD197).NFD.list ~~ (0x1110, 0x1168, 0x11BA,), 'D197 -> 1110 1168 11BA';
+ok Uni.new(0xD198).NFD.list ~~ (0x1110, 0x1168, 0x11BB,), 'D198 -> 1110 1168 11BB';
+ok Uni.new(0xD199).NFD.list ~~ (0x1110, 0x1168, 0x11BC,), 'D199 -> 1110 1168 11BC';
 ok Uni.new(0xD19A).NFD.list ~~ (0x1110, 0x1168, 0x11BD,), 'D19A -> 1110 1168 11BD';
 ok Uni.new(0xD19B).NFD.list ~~ (0x1110, 0x1168, 0x11BE,), 'D19B -> 1110 1168 11BE';
 ok Uni.new(0xD19C).NFD.list ~~ (0x1110, 0x1168, 0x11BF,), 'D19C -> 1110 1168 11BF';
@@ -1985,24 +2006,3 @@ ok Uni.new(0xFABB).NFD.list ~~ (0x8ACB,), 'FABB -> 8ACB';
 ok Uni.new(0xFABC).NFD.list ~~ (0x8B01,), 'FABC -> 8B01';
 ok Uni.new(0xFABD).NFD.list ~~ (0x8AFE,), 'FABD -> 8AFE';
 ok Uni.new(0xFABE).NFD.list ~~ (0x8AED,), 'FABE -> 8AED';
-ok Uni.new(0xFABF).NFD.list ~~ (0x8B39,), 'FABF -> 8B39';
-ok Uni.new(0xFAC0).NFD.list ~~ (0x8B8A,), 'FAC0 -> 8B8A';
-ok Uni.new(0xFAC1).NFD.list ~~ (0x8D08,), 'FAC1 -> 8D08';
-ok Uni.new(0xFAC2).NFD.list ~~ (0x8F38,), 'FAC2 -> 8F38';
-ok Uni.new(0xFAC3).NFD.list ~~ (0x9072,), 'FAC3 -> 9072';
-ok Uni.new(0xFAC4).NFD.list ~~ (0x9199,), 'FAC4 -> 9199';
-ok Uni.new(0xFAC5).NFD.list ~~ (0x9276,), 'FAC5 -> 9276';
-ok Uni.new(0xFAC6).NFD.list ~~ (0x967C,), 'FAC6 -> 967C';
-ok Uni.new(0xFAC7).NFD.list ~~ (0x96E3,), 'FAC7 -> 96E3';
-ok Uni.new(0xFAC8).NFD.list ~~ (0x9756,), 'FAC8 -> 9756';
-ok Uni.new(0xFAC9).NFD.list ~~ (0x97DB,), 'FAC9 -> 97DB';
-ok Uni.new(0xFACA).NFD.list ~~ (0x97FF,), 'FACA -> 97FF';
-ok Uni.new(0xFACB).NFD.list ~~ (0x980B,), 'FACB -> 980B';
-ok Uni.new(0xFACC).NFD.list ~~ (0x983B,), 'FACC -> 983B';
-ok Uni.new(0xFACD).NFD.list ~~ (0x9B12,), 'FACD -> 9B12';
-ok Uni.new(0xFACE).NFD.list ~~ (0x9F9C,), 'FACE -> 9F9C';
-ok Uni.new(0xFACF).NFD.list ~~ (0x2284A,), 'FACF -> 2284A';
-ok Uni.new(0xFAD0).NFD.list ~~ (0x22844,), 'FAD0 -> 22844';
-ok Uni.new(0xFAD1).NFD.list ~~ (0x233D5,), 'FAD1 -> 233D5';
-ok Uni.new(0xFAD2).NFD.list ~~ (0x3B9D,), 'FAD2 -> 3B9D';
-ok Uni.new(0xFAD3).NFD.list ~~ (0x4018,), 'FAD3 -> 4018';

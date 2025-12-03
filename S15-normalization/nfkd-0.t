@@ -1,6 +1,6 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 15.0.0.
+# Generated from Unicode version 17.0.0.
 
 use Test;
 
@@ -31,6 +31,26 @@ ok Uni.new(0x05B8, 0x05B9, 0x05B1, 0x0591, 0x05C3, 0x05B0, 0x05AC, 0x059F).NFKD.
 ok Uni.new(0x0592, 0x05B7, 0x05BC, 0x05A5, 0x05B0, 0x05C0, 0x05C4, 0x05AD).NFKD.list ~~ (0x05B0, 0x05B7, 0x05BC, 0x05A5, 0x0592, 0x05C0, 0x05AD, 0x05C4,), '0592 05B7 05BC 05A5 05B0 05C0 05C4 05AD -> 05B0 05B7 05BC 05A5 0592 05C0 05AD 05C4';
 ok Uni.new(0x1100, 0xAC00, 0x11A8).NFKD.list ~~ (0x1100, 0x1100, 0x1161, 0x11A8,), '1100 AC00 11A8 -> 1100 1100 1161 11A8';
 ok Uni.new(0x1100, 0xAC00, 0x11A8, 0x11A8).NFKD.list ~~ (0x1100, 0x1100, 0x1161, 0x11A8, 0x11A8,), '1100 AC00 11A8 11A8 -> 1100 1100 1161 11A8 11A8';
+ok Uni.new(0x01C4, 0x0323).NFKD.list ~~ (0x0044, 0x005A, 0x0323, 0x030C,), '01C4 0323 -> 0044 005A 0323 030C';
+ok Uni.new(0x01C5, 0x0323).NFKD.list ~~ (0x0044, 0x007A, 0x0323, 0x030C,), '01C5 0323 -> 0044 007A 0323 030C';
+ok Uni.new(0x01C6, 0x0323).NFKD.list ~~ (0x0064, 0x007A, 0x0323, 0x030C,), '01C6 0323 -> 0064 007A 0323 030C';
+ok Uni.new(0x0DDD, 0x0334).NFKD.list ~~ (0x0DD9, 0x0DCF, 0x0334, 0x0DCA,), '0DDD 0334 -> 0DD9 0DCF 0334 0DCA';
+ok Uni.new(0x3304, 0x0334).NFKD.list ~~ (0x30A4, 0x30CB, 0x30F3, 0x30AF, 0x0334, 0x3099,), '3304 0334 -> 30A4 30CB 30F3 30AF 0334 3099';
+ok Uni.new(0x3307, 0x0334).NFKD.list ~~ (0x30A8, 0x30B9, 0x30AF, 0x30FC, 0x30C8, 0x0334, 0x3099,), '3307 0334 -> 30A8 30B9 30AF 30FC 30C8 0334 3099';
+ok Uni.new(0x3310, 0x0334).NFKD.list ~~ (0x30AD, 0x3099, 0x30AB, 0x0334, 0x3099,), '3310 0334 -> 30AD 3099 30AB 0334 3099';
+ok Uni.new(0x331E, 0x0334).NFKD.list ~~ (0x30B3, 0x30FC, 0x30DB, 0x0334, 0x309A,), '331E 0334 -> 30B3 30FC 30DB 0334 309A';
+ok Uni.new(0x3321, 0x0334).NFKD.list ~~ (0x30B7, 0x30EA, 0x30F3, 0x30AF, 0x0334, 0x3099,), '3321 0334 -> 30B7 30EA 30F3 30AF 0334 3099';
+ok Uni.new(0x3332, 0x0334).NFKD.list ~~ (0x30D5, 0x30A1, 0x30E9, 0x30C3, 0x30C8, 0x0334, 0x3099,), '3332 0334 -> 30D5 30A1 30E9 30C3 30C8 0334 3099';
+ok Uni.new(0x333B, 0x0334).NFKD.list ~~ (0x30D8, 0x309A, 0x30FC, 0x30B7, 0x0334, 0x3099,), '333B 0334 -> 30D8 309A 30FC 30B7 0334 3099';
+ok Uni.new(0x3340, 0x0334).NFKD.list ~~ (0x30DB, 0x309A, 0x30F3, 0x30C8, 0x0334, 0x3099,), '3340 0334 -> 30DB 309A 30F3 30C8 0334 3099';
+ok Uni.new(0x334B, 0x0334).NFKD.list ~~ (0x30E1, 0x30AB, 0x0334, 0x3099,), '334B 0334 -> 30E1 30AB 0334 3099';
+ok Uni.new(0x334E, 0x0334).NFKD.list ~~ (0x30E4, 0x30FC, 0x30C8, 0x0334, 0x3099,), '334E 0334 -> 30E4 30FC 30C8 0334 3099';
+ok Uni.new(0xFEF5, 0x0656).NFKD.list ~~ (0x0644, 0x0627, 0x0656, 0x0653,), 'FEF5 0656 -> 0644 0627 0656 0653';
+ok Uni.new(0xFEF6, 0x0656).NFKD.list ~~ (0x0644, 0x0627, 0x0656, 0x0653,), 'FEF6 0656 -> 0644 0627 0656 0653';
+ok Uni.new(0xFEF7, 0x0656).NFKD.list ~~ (0x0644, 0x0627, 0x0656, 0x0654,), 'FEF7 0656 -> 0644 0627 0656 0654';
+ok Uni.new(0xFEF8, 0x0656).NFKD.list ~~ (0x0644, 0x0627, 0x0656, 0x0654,), 'FEF8 0656 -> 0644 0627 0656 0654';
+ok Uni.new(0xFEF9, 0x0334).NFKD.list ~~ (0x0644, 0x0627, 0x0334, 0x0655,), 'FEF9 0334 -> 0644 0627 0334 0655';
+ok Uni.new(0xFEFA, 0x0334).NFKD.list ~~ (0x0644, 0x0627, 0x0334, 0x0655,), 'FEFA 0334 -> 0644 0627 0334 0655';
 ok Uni.new(0x00A0).NFKD.list ~~ (0x0020,), '00A0 -> 0020';
 ok Uni.new(0x00A8).NFKD.list ~~ (0x0020, 0x0308,), '00A8 -> 0020 0308';
 ok Uni.new(0x00AA).NFKD.list ~~ (0x0061,), '00AA -> 0061';
@@ -1986,23 +2006,3 @@ ok Uni.new(0x327E).NFKD.list ~~ (0x110B, 0x116E,), '327E -> 110B 116E';
 ok Uni.new(0x3280).NFKD.list ~~ (0x4E00,), '3280 -> 4E00';
 ok Uni.new(0x3281).NFKD.list ~~ (0x4E8C,), '3281 -> 4E8C';
 ok Uni.new(0x3282).NFKD.list ~~ (0x4E09,), '3282 -> 4E09';
-ok Uni.new(0x3283).NFKD.list ~~ (0x56DB,), '3283 -> 56DB';
-ok Uni.new(0x3284).NFKD.list ~~ (0x4E94,), '3284 -> 4E94';
-ok Uni.new(0x3285).NFKD.list ~~ (0x516D,), '3285 -> 516D';
-ok Uni.new(0x3286).NFKD.list ~~ (0x4E03,), '3286 -> 4E03';
-ok Uni.new(0x3287).NFKD.list ~~ (0x516B,), '3287 -> 516B';
-ok Uni.new(0x3288).NFKD.list ~~ (0x4E5D,), '3288 -> 4E5D';
-ok Uni.new(0x3289).NFKD.list ~~ (0x5341,), '3289 -> 5341';
-ok Uni.new(0x328A).NFKD.list ~~ (0x6708,), '328A -> 6708';
-ok Uni.new(0x328B).NFKD.list ~~ (0x706B,), '328B -> 706B';
-ok Uni.new(0x328C).NFKD.list ~~ (0x6C34,), '328C -> 6C34';
-ok Uni.new(0x328D).NFKD.list ~~ (0x6728,), '328D -> 6728';
-ok Uni.new(0x328E).NFKD.list ~~ (0x91D1,), '328E -> 91D1';
-ok Uni.new(0x328F).NFKD.list ~~ (0x571F,), '328F -> 571F';
-ok Uni.new(0x3290).NFKD.list ~~ (0x65E5,), '3290 -> 65E5';
-ok Uni.new(0x3291).NFKD.list ~~ (0x682A,), '3291 -> 682A';
-ok Uni.new(0x3292).NFKD.list ~~ (0x6709,), '3292 -> 6709';
-ok Uni.new(0x3293).NFKD.list ~~ (0x793E,), '3293 -> 793E';
-ok Uni.new(0x3294).NFKD.list ~~ (0x540D,), '3294 -> 540D';
-ok Uni.new(0x3295).NFKD.list ~~ (0x7279,), '3295 -> 7279';
-ok Uni.new(0x3296).NFKD.list ~~ (0x8CA1,), '3296 -> 8CA1';
