@@ -407,51 +407,44 @@ subtest 'smartmatch against Bool:U' => {
 
 # https://github.com/Raku/old-issue-tracker/issues/5801
 subtest 'defined with Junctions autothreads' => {
-    plan 2;
     constant $f = Failure.new;
 
-    subtest 'defined() as a sub' => {
-        plan 14;
+    # Add any more eigenstates combinations to test here, the rest
+    # will automatically adapt
+    my @any-true   = (42,), (Str,42);
+    my @any-false  = (), (Str,), (Str,Int), ($f,);
+    my @none-true  = (), (Str,), (Str,Int), ($f,);
+    my @none-false = (42,), (Str,42);
+    my @all-true   = (), (42,), (42,"x");
+    my @all-false  = (Str,), (Str,Int), ($f,);
+    my @one-true   = (42,), (42,Str), (Str,42), ($f,42), (42,$f);
+    my @one-false  = (), (Str,), (Str,Int), (42,666), (42,Str,666);
 
-        is-deeply defined(any  Str,  42), Bool::True,  'any() -> True';
-        is-deeply defined(any  Str, Int), Bool::False, 'any() -> False';
-        is-deeply defined(any $f),        Bool::False, 'any(Failure) -> false';
-
-        is-deeply defined(none Str, Int), Bool::True,  'none() -> True';
-        is-deeply defined(none $f),       Bool::True,  'none(Failure) -> True';
-        is-deeply defined(none Str,  42), Bool::False, 'none() -> False';
-
-        is-deeply defined(all  "x",  42), Bool::True,  'all() -> True';
-        is-deeply defined(all  Str, Int), Bool::False, 'all() -> False (1)';
-        is-deeply defined(all  Str,  42), Bool::False, 'all() -> False (2)';
-        is-deeply defined(all  $f,  $f),  Bool::False, 'all(Failure) -> False (3)';
-
-        is-deeply defined(one  Str,  42), Bool::True,  'one() -> True';
-        is-deeply defined(one  Str, Int), Bool::False, 'one() -> False (1)';
-        is-deeply defined(one  "x",  42), Bool::False, 'one() -> False (2)';
-        is-deeply defined(one  Str, $f),  Bool::False, 'one(Failure) -> False (3)';
+    # Handle showing failures better
+    sub show(@eigenstates) {
+        "(@eigenstates.map({
+            $_ ~~ Failure ?? "Failure" !! $_<>.raku
+        }).join(','),)"
     }
 
-    subtest 'defined() as a method' => {
-        plan 14;
+    my @junctions = <any none all one>;
+    plan 2 * @junctions.map({ ::("@$_\-true") + ::("@$_\-false") }).sum;
 
-        is-deeply any( Str,  42).defined, Bool::True,  'any() -> True';
-        is-deeply any( Str, Int).defined, Bool::False, 'any() -> False';
-        is-deeply any( $f      ).defined, Bool::False, 'any(Failure) -> false';
+    for @junctions -> $junc {
+        my &junction = ::("&$junc");
 
-        is-deeply none(Str, Int).defined, Bool::True,  'none() -> True';
-        is-deeply none($f      ).defined, Bool::True,  'none(Failure) -> True';
-        is-deeply none(Str,  42).defined, Bool::False, 'none() -> False';
-
-        is-deeply all( "x",  42).defined, Bool::True,  'all() -> True';
-        is-deeply all( Str, Int).defined, Bool::False, 'all() -> False (1)';
-        is-deeply all( Str,  42).defined, Bool::False, 'all() -> False (2)';
-        is-deeply all( $f,   $f).defined, Bool::False, 'all(Failure) -> False (3)';
-
-        is-deeply one( Str,  42).defined, Bool::True,  'one() -> True';
-        is-deeply one( Str, Int).defined, Bool::False, 'one() -> False (1)';
-        is-deeply one( "x",  42).defined, Bool::False, 'one() -> False (2)';
-        is-deeply one( Str,  $f).defined, Bool::False, 'one(Failure) -> False (3)';
+        for ::("@$junc\-true") {
+            is-deeply junction(|$_).defined, Bool::True,
+              "$junc&show($_)\.defined -> True";
+            is-deeply defined(junction(|$_)), Bool::True,
+              "defined($junc\(&show($_))) -> True";
+        }
+        for ::("@$junc\-false") {
+            is-deeply junction(|$_).defined, Bool::False,
+              "$junc&show($_)\.defined -> False";
+            is-deeply defined(junction(|$_)), Bool::False,
+              "defined($junc\(&show($_))) -> False";
+        }
     }
 }
 
