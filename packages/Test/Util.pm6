@@ -94,11 +94,11 @@ sub _is-eqv (Mu $got, Mu $expected, Str:D $desc) {
     my $test = test-eqv $got, $expected;
     my $ok = ok ?$test, $desc;
     if !$test {
-        my $got_perl      = try { $got.perl };
-        my $expected_perl = try { $expected.perl };
-        if $got_perl.defined && $expected_perl.defined {
-            diag "expected: $expected_perl\n"
-                ~ "     got: $got_perl";
+        my $got_raku      = try { $got.raku };
+        my $expected_raku = try { $expected.raku };
+        if $got_raku.defined && $expected_raku.defined {
+            diag "expected: $expected_raku\n"
+                ~ "     got: $got_raku";
         }
     }
     $ok
@@ -146,9 +146,9 @@ multi sub is_run( Str $code, Str $input, %expected, Str $name, *%o ) {
         # The check for this attribute failed.
         # Note why for a diag() after the test failure is reported.
         if !$attr_good {
-            @diag_q.push(     "     got $attr: {%got{$attr}.perl}"      );
+            @diag_q.push(     "     got $attr: {%got{$attr}.raku}"      );
             if %expected{$attr} ~~ Str|Num {
-                @diag_q.push( "expected $attr: {%expected{$attr}.perl}" );
+                @diag_q.push( "expected $attr: {%expected{$attr}.raku}" );
             }
         }
 
@@ -313,7 +313,7 @@ multi doesn't-warn (&code, Str $desc) is export {
 sub make-rand-path (--> IO::Path:D) {
     my $p = $*TMPDIR;
     $p.resolve.child: (
-        'perl6_roast_',
+        'raku_roast_',
         $*PROGRAM.basename, '_line',
         ((try callframe(3).code.line)||''), '_',
         rand,
@@ -401,7 +401,7 @@ sub throws-like-any($code, @ex_type, $reason?, *%matcher) is export {
                         my $ok = $got ~~ $v,;
                         ok $ok, ".$k matches $v.gist()";
                         unless $ok {
-                            diag "Expected: " ~ ($v ~~ Str ?? $v !! $v.perl)
+                            diag "Expected: " ~ ($v ~~ Str ?? $v !! $v.raku)
                               ~ "\nGot:      $got";
                         }
                     }
