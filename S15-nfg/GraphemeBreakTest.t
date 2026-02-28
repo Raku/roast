@@ -106,7 +106,7 @@ class parser {
         }
         my $string =  @results».List.flat.chrs;
         move-from-stack;
-        note @results.perl if $DEBUG;
+        note @results.raku if $DEBUG;
         make {
             string    => $string,
             ord-array => @results
@@ -134,7 +134,7 @@ sub process-line (Str:D $line, @fail, :@only!) {
             todo("[C] num of chars line $line-no", 1);
         }
     }
-    is-deeply $list<ord-array>.elems, $list<string>.chars, "Line $line-no: [C] right num of chars | {$list<string>.uninames.perl}" or @fail.push($line-no);
+    is-deeply $list<ord-array>.elems, $list<string>.chars, "Line $line-no: [C] right num of chars | {$list<string>.uninames.raku}" or @fail.push($line-no);
     for ^$list<ord-array>.elems -> $elem {
         if $fudge-b and %fudged-tests{$line-no}.any eq $elem {
             todo "[$elem] grapheme line $line-no todo";

@@ -63,7 +63,7 @@ sub j(*@i) {
     is ~&d.signature.params.[0].named_names.sort, 'x y z', 'multi named_names';
     is ~&d.signature.params.[0].name, '$a',    '... and .name still works';
     #?rakudo todo 'needs/find RT: Logic to make :a($a) into :$a makes :a(:b($a) into ::b(:$a)'
-    is :(:a(:b($a))).perl, :(:b($a)).perl, '... and .perl abbreviates separated name/named_name';
+    is :(:a(:b($a))).raku, :(:b($a)).raku, '... and .raku abbreviates separated name/named_name';
 }
 
 #?niecza skip "Parameter separator ;  NYI"
@@ -109,27 +109,27 @@ sub j(*@i) {
 
 {
     sub i(%h ($a, $b)) { };   #OK not used
-    my $s = &i.signature.perl;
+    my $s = &i.signature.raku;
     #?niecza 2 todo
-    ok $s ~~ /'$a' >> /, '.perl on a nested signature contains variables of the subsignature (1)';
-    ok $s ~~ /'$b' >> /, '.perl on a nested signature contains variables of the subsignature (2)';
+    ok $s ~~ /'$a' >> /, '.raku on a nested signature contains variables of the subsignature (1)';
+    ok $s ~~ /'$b' >> /, '.raku on a nested signature contains variables of the subsignature (2)';
 }
 
 #?niecza skip "Action method fakesignature not yet implemented"
 {
     my $x;
     ok :(|x).params[0].capture, 'prefix | makes .capture true';
-    ok :(|x).perl  ~~ / '|' /,  'prefix | appears in .perl output';
+    ok :(|x).raku  ~~ / '|' /,  'prefix | appears in .raku output';
 
     ok :(\x).params[0].raw, 'prefix \\ makes .raw true';
-    ok :(\x).perl ~~ / '\\' /, 'prefix \\ appears in .perl output';
+    ok :(\x).raku ~~ / '\\' /, 'prefix \\ appears in .raku output';
 }
 
 # RT #69492
 #?niecza skip "Abbreviated named parameter must have a name"
 {
     sub foo(:$) {};
-    ok &foo.signature.perl ~~ / ':(:$)' /, '.perl of a signature with anonymous named parameter';
+    ok &foo.signature.raku ~~ / ':(:$)' /, '.raku of a signature with anonymous named parameter';
 }
 
 # Capture param introspection
@@ -231,13 +231,13 @@ sub j(*@i) {
 
 role A { sub a ($a, $b, ::?CLASS $c) { }; method foo { &a } };
 class C does A {  };
-my $rolesig = try C.foo.signature.perl;
-is $rolesig, ':($a, $b, ::?CLASS $c)', ".perl of a sigature that has ::?CLASS";
+my $rolesig = try C.foo.signature.raku;
+is $rolesig, ':($a, $b, ::?CLASS $c)', ".raku of a sigature that has ::?CLASS";
 
 # RT #123895
 {
-    is_run q[sub wtvr(|) {}; &wtvr.perl], { err => "", out => "" }, ".perl on unnamed | parameters doesn't err";
-    is_run q[sub prcl(\\) {}; &prcl.perl], { err => "", out => "" }, ".perl on unnamed \\ parameters doesn't err";
+    is_run q[sub wtvr(|) {}; &wtvr.raku], { err => "", out => "" }, ".raku on unnamed | parameters doesn't err";
+    is_run q[sub prcl(\\) {}; &prcl.raku], { err => "", out => "" }, ".raku on unnamed \\ parameters doesn't err";
 }
 
 # RT #125482
@@ -245,8 +245,8 @@ is $rolesig, ':($a, $b, ::?CLASS $c)', ".perl of a sigature that has ::?CLASS";
     sub rt125482($a;; $b) { 42 };
     is &rt125482.signature.gist, '($a;; $b)',
         '";;" in signature stringifies correctly using .gist';
-    is &rt125482.signature.perl, ':($a;; $b)',
-        '";;" in signature stringifies correctly using .perl';
+    is &rt125482.signature.raku, ':($a;; $b)',
+        '";;" in signature stringifies correctly using .raku';
 }
 
 # vim: ft=perl6
