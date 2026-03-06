@@ -51,6 +51,7 @@ plan 9;
     }
 
     is_run ｢
+        use v6.c;
         $*IN  = IO::Handle.new: :path('-'.IO);
         $*OUT = IO::Handle.new: :path('-'.IO);
         my $w = '-'.IO.open: :w;
@@ -66,7 +67,7 @@ plan 9;
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/6320
-is_run ｢'-'.IO.slurp.print｣, 'meows', {:out<meows>, :err(''), :0status},
+is_run ｢use v6.c; '-'.IO.slurp.print｣, 'meows', {:out<meows>, :err(''), :0status},
     'can .slurp from "-".IO path';
 
 #?rakudo.jvm skip 'at least one of the sub-tests leads to an UnwindException'
