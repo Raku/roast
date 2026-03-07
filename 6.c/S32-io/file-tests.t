@@ -21,10 +21,12 @@ my %tempfiles =
     ;
 
 { # Create a symlink to an existing file
+    unlink(%tempfiles<symlink-existing>);
     symlink(%tempfiles<existing>, %tempfiles<symlink-existing>);
 }
 
 { # Create a symlink to a non-existent file
+    unlink(%tempfiles<symlink-non-existing>);
     symlink(%tempfiles<non-existing>, %tempfiles<symlink-non-existing>);
 }
 
