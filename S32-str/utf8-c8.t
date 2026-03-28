@@ -1,4 +1,5 @@
 use v6.c;
+%*ENV<RAKUDO_NO_DEPRECATIONS> := 1;
 use Test;
 
 # The UTF-8 Clean 8-bit encoding is used to ensure we can roundtrip any
