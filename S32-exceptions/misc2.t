@@ -2,7 +2,7 @@ use Test;
 use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 265;
+plan 266;
 
 throws-like '42 +', Exception, "missing rhs of infix", message => rx/term/;
 
@@ -328,7 +328,7 @@ throws-like 'sub f(--> 42) { return 43 }; f', X::Comp, payload => /42/;
 throws-like 'sub f(--> 42) { return 42 }; f', X::Comp, payload => /42/, "we don't allow args even if the same";
 # https://github.com/rakudo/rakudo/issues/6003
 throws-like 'sub f(--> "foo") { return () }; f', X::Comp, payload => /'"foo"'/;
-throws-like 'sub ($foo --> 42) { 27.return }', X::Comp, payload => /42/, "literal return constraint with .return should error";
+throws-like 'sub f(--> 42) { 27.return }; f', X::AdHoc, payload => /42/, "literal return constraint with .return should error";
 throws-like 'sub f(--> Junction) { 5 }; f', X::TypeCheck::Return, got => Int, expected => Junction;
 throws-like 'my Int $x = "foo"', X::TypeCheck::Assignment, got => 'foo',
             expected => Int, symbol => '$x';
