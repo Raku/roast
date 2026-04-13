@@ -50,6 +50,15 @@ is(index("Ümlaut", "Ü"), 0, "Umlaut");
 
 is("Hello".index("l"), 2, ".index on string");
 
+# Lists of overlapping needles - https://github.com/rakudo/rakudo/issues/6104
+
+is(index("ab", <ab b>), 0, "Second needle contained in the first");
+is(index("ab", <b ab>), 0, "First needle contained in the second");
+is(index("abc", <ab bc>), 0, "Needles with partial overlap (small index first)");
+is(index("abc", <bc ab>), 0, "Needles with partial overlap (large index first)");
+is(index("abcbc", <bc abc>), 0, "First needle contained in the second and occurring twice in str");
+is(index("abccbccbab", <ccbc bccb cbcc bcc bab ccbc>), 1, "Many overlapping needles");
+
 # work on variables
 
 my $a = "word";
