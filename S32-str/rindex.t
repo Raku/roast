@@ -56,7 +56,7 @@ is(rindex("ab", <ab b>), 1, "Second needle contained in the first");
 is(rindex("abc", <bc ab>), 1, "Needles with partial overlap (large index first)");
 is(rindex("abc", <ab bc>), 1, "Needles with partial overlap (small index first)");
 is(rindex("abcab", <abc ab>), 3, "Second needle contained in the first and occurring twice in str");
-is(rindex("acbc", <cbc ac bc>), 2, "Needles with partial overlap (large index first)");
+is(rindex("acbc", <cbc ac bc>), 2, "Needles with partial and with complete overlap");
 is(rindex("accbabccbccbab", <ccbc bccb ccba cbcc cbba bcc ccba ccbc>), 9, "Many overlapping needles");
 
 # on scalar variable
