@@ -2,7 +2,7 @@ use Test;
 
 # L<S32::Str/Str/"=item rindex">
 
-plan 50;
+plan 57;
 
 # Type of return value
 isa-ok('abc'.rindex('b'), Int);
@@ -98,6 +98,7 @@ throws-like 'rindex("xxyxx", "y", -1)', X::OutOfRange, 'rindex with negative sta
 
 dies-ok { 42.rindex: Str }, "Cool.rindex with wrong args does not hang";
 
+# https://github.com/rakudo/rakudo/issues/6104
 for "foobar","foobar".match(/\w+/) {
     is .rindex(<o a>), 4, "does a list of needles work ok with method";
     is rindex($_,<a o>), 4, "does a list of needles work ok with sub";
