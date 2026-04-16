@@ -660,6 +660,7 @@ S11-modules/importing.t
 S11-modules/lexical.t
 S11-modules/module-file.t
 S11-modules/module.t
+S11-modules/multi-version.t                 # slow
 S11-modules/need.t
 S11-modules/nested.t
 S11-modules/rakulib.t
