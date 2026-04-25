@@ -3,6 +3,8 @@ use lib <t/spec/packages>;
 use Test;
 use Test::Util;
 
+%*ENV<RAKUDO_NO_DEPRECATIONS> = 1;
+
 plan 2;
 
 # RT #131503
