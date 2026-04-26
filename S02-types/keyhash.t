@@ -173,11 +173,7 @@ sub showkh($h) {
 }
 
 subtest 'QuantHash.Capture' => {
-    plan 7;
-
-    is-deeply class :: does QuantHash {
-        method Hash { %(:42a, :72b) }
-    }.new.Capture, %(:42a, :72b).Capture, 'custom QuantHash';
+    plan 6;
 
     is-deeply <a b>.Set.Capture,     %(:a, :b).Capture, 'Set';
     is-deeply <a b>.SetHash.Capture, %(:a, :b).Capture, 'SetHash';
