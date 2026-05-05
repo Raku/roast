@@ -46,7 +46,7 @@ sub showkv($x) {
       X::Assignment::RO,
       "Can't assign to .values";
     throws-like { $m<a>:delete },
-      X::Immutable,
+      X::Assignment::RO,
       "Can't :delete from Mix";
 
     is ~$m<a b>, "5 1", 'Multiple-element access';
@@ -93,7 +93,7 @@ sub showkv($x) {
     is $m<a>:exists, True, ':exists with existing element';
     is $m<santa>:exists, False, ':exists with nonexistent element';
     throws-like { $m<a>:delete },
-      X::Immutable,
+      X::Assignment::RO,
       ':delete does not work on mix';
 }
 
@@ -195,7 +195,7 @@ sub showkv($x) {
       X::Assignment::RO,
       "Can't assign to a %var implemented by Mix";
     throws-like { %m<a>:delete },
-      X::Immutable,
+      X::Assignment::RO,
       "Can't :delete from a Mix";
 }
 

@@ -45,7 +45,7 @@ sub showkv($x) {
       X::Assignment::RO,
       "Can't assign to .values";
     throws-like { $b<a>:delete },
-      X::Immutable,
+      X::Assignment::RO,
       "Can't :delete from Bag";
 
     is ~$b<a b>, "5 1", 'Multiple-element access';
@@ -89,7 +89,7 @@ sub showkv($x) {
     is $b<a>:exists, True, ':exists with existing element';
     is $b<santa>:exists, False, ':exists with nonexistent element';
     throws-like { $b<a>:delete },
-      X::Immutable,
+      X::Assignment::RO,
       ':delete does not work on bag';
 }
 
@@ -192,7 +192,7 @@ sub showkv($x) {
       X::Assignment::RO,
       "Can't assign to a %var implemented by Bag";
     throws-like { %b<a>:delete },
-      X::Immutable,
+      X::Assignment::RO,
       "Can't :delete from a Bag";
 }
 
