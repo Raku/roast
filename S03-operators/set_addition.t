@@ -4,10 +4,10 @@ use Test;
 #   (+)     baggy addition (ASCII)
 #   ⊎       baggy addition
 
-# Empty mutables that have the internal hash allocated
-(my $esh = <a>.SetHash)<a>:delete;
-(my $ebh = <a>.BagHash)<a>:delete;
-(my $emh = <a>.MixHash)<a>:delete;
+# Empty mutables
+my $esh = SetHash.new;
+my $ebh = BagHash.new;
+my $emh = MixHash.new;
 
 my @types = Set, SetHash, Bag, BagHash, Mix, MixHash;
 
