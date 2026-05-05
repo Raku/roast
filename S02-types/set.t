@@ -489,7 +489,7 @@ subtest '.hash does not cause keys to be stringified' => {
 }
 
 {
-    is-deeply Set[Str].new( <a b c> ).keys.sort.List, <a b c>,
+    is-deeply Set[Str].new( qw/a b c/ ).keys.sort.List, qw/a b c/,
       'can we parameterize for strings?';
     ok Set[Str].keyof =:= Str, 'does .keyof return the correct type';
     throws-like { Set[Int].new( <a b c> ) }, X::TypeCheck::Binding,
