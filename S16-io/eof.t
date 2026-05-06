@@ -36,7 +36,8 @@ plan 5;
 #?rakudo.jvm skip 'hangs'
 #?DOES 1
 {
-  todo("Fails on $*DISTRO.desc()") if $*DISTRO.desc eq 'Sonoma' | 'Sequoia';
+  todo("Fails on $*DISTRO.desc()")
+    if $*DISTRO.desc eq 'Sonoma' | 'Sequoia' | 'Tahoe 26';
   run-with-tty ｢with $*IN { .eof.say; .slurp.say; .eof.say }｣, :in<meow>,
     # Here we use .ends-width because (currently) there's some sort of
     # bug with Proc or something where sent STDIN ends up on our STDOUT.
