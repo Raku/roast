@@ -1,5 +1,5 @@
 use v6.e.PREVIEW;
-#BEGIN %*ENV<PERL6_TEST_DIE_ON_FAIL> = True;
+BEGIN %*ENV<RAKU_TEST_DIE_ON_FAIL> = True;
 use Test;
 
 # Test combinations of flags for "%c".  The @info array is intialized with the
@@ -67,8 +67,8 @@ for @info -> $format, @tests {
     subtest {
         plan +@tests;
 
-        is-deeply zprintf($format, |.value), .key,
-          qq/zprintf("$format",{.value.list.join(",")}) eq '{.key}'/
+        is-deeply sprintf($format, |.value), .key,
+          qq/sprintf("$format",{.value.list.join(",")}) eq '{.key}'/
           for @tests;
 
     }, "Tested '$format'";
