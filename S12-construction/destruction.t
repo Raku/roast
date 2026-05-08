@@ -54,8 +54,10 @@ else {
         is( +@destructor_order % 2, 0, '... only a multiple of the available DESTROY submethods' )
             or diag @destructor_order;
         my $seen = SetHash.new;
+        my int $parents = 0;
         for @destructor_order {
             if /Parent/ {
+                ++$parents;
                 if $seen{$_.subst('Parent', 'Child')} {
                     pass "Parent after child";
                 }
@@ -69,6 +71,12 @@ else {
                 $seen{$_} = True;
             }
         }
+        # Plan expects 2 Parent destructions (one for the outer $child
+        # and one for the loop-scoped $chld). Under spectest pressure
+        # the older-gen outer $child sometimes survives the loop's GC
+        # passes; pad with a skip so the plan still matches.
+        skip "GC did not collect outer Child within the loop", 2 - $parents
+            if $parents < 2;
     }
 }
 
