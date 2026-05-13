@@ -1290,10 +1290,8 @@ S32-str/shiftjis-encode-decode.t # moar
 S32-str/space-chars.t
 S32-str/split-simple.t
 S32-str/split.t
-S32-str/sprintf-b.t
 S32-str/sprintf-c.t      # moar
 S32-str/sprintf-d.t
-S32-str/sprintf-x.t
 S32-str/sprintf-u.t
 S32-str/starts-with.t
 S32-str/substr-eq.t
