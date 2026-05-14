@@ -1293,6 +1293,7 @@ S32-str/split.t
 S32-str/sprintf-b.t
 S32-str/sprintf-c.t      # moar
 S32-str/sprintf-d.t
+S32-str/sprintf-f.t
 S32-str/sprintf-s.t
 S32-str/sprintf-u.t
 S32-str/sprintf-x.t
