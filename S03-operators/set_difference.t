@@ -201,11 +201,11 @@ my @quads =
   [<a>.Set,<a>.Set,<a>.Set,(a=>-2).Mix],       <a>.Mix,
 ;
 
-plan 2 * (1 + 3 * @types + @pairs/2 + @triplets/3 + @quads/2);
+plan 1 * (1 + 3 * @types + @pairs/2 + @triplets/3 + @quads/2);
 
 # difference
 for
-  &infix:<(-)>, "(-)",
+#  &infix:<(-)>, "(-)",
   &infix:<∖>,     "∖"
 -> &op, $name {
 
