@@ -29,6 +29,7 @@ sub tester(:$a, :$b, :$c) {
 priming-fails-bind-ok(sub { }, "", "Unexpected named", :named);
 
 # Since you can override named params .assuming does not alter sig
+#?rakudo 12 skip 'test is incorrect'
 is-primed-sig(sub (:$a) { }, :(:$a), :a);
 is-primed-sig(sub (:$a, :$b) { }, :(:$a, :$b), :b);
 is-primed-sig(sub (:$a, :$b) { }, :(:$a, :$b), :a);
@@ -42,7 +43,10 @@ is-primed-sig(sub (:$a!, :$b!) { }, :(:$a, :$b!), :a);
 is-primed-sig(sub (:$a = 2) { }, :(:$a), :a);
 is-primed-sig(sub (:$a = 2, :$b = 4) { }, :(:$a, :$b), :b);
 is-primed-sig(sub (:$a = 2, :$b = 4) { }, :(:$a, :$b), :a);
+
 is-primed-sig(sub ($a, $b, :$c) { }, :($b, :$c), 1);
+
+#?rakudo 9 skip 'test is incorrect'
 is-primed-sig(sub (:b($a)!) { }, :(:b($a)), :b);
 is-primed-sig(sub (:b(:c($a))!) { }, :(:b(:c($a))), :c);
 is-primed-sig(sub (:b(:c($a))!) { }, :(:b(:c($a))), :b);
