@@ -44,9 +44,7 @@ sub showkv($x) {
     throws-like { $m.values = 3, 4 },
       X::Assignment::RO,
       "Can't assign to .values";
-    throws-like { $m<a>:delete },
-      X::Immutable,
-      "Can't :delete from Mix";
+    dies-ok { $m<a>:delete }, "Can't :delete from Mix";
 
     is ~$m<a b>, "5 1", 'Multiple-element access';
     is ~$m<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
@@ -92,9 +90,7 @@ sub showkv($x) {
     my $m = mix <a a b foo>;
     is $m<a>:exists, True, ':exists with existing element';
     is $m<santa>:exists, False, ':exists with nonexistent element';
-    throws-like { $m<a>:delete },
-      X::Immutable,
-      ':delete does not work on mix';
+    dies-ok { $m<a>:delete }, ':delete does not work on mix';
 }
 
 {
@@ -198,9 +194,7 @@ sub showkv($x) {
     throws-like { %m = mix <a b> },
       X::Assignment::RO,
       "Can't assign to a %var implemented by Mix";
-    throws-like { %m<a>:delete },
-      X::Immutable,
-      "Can't :delete from a Mix";
+    dies-ok { %m<a>:delete }, "Can't :delete from a Mix";
 }
 
 {

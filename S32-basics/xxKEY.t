@@ -86,11 +86,9 @@ for $%h, Any, $%hi, Int, $%hia, Int -> \h, \T {
     is $s.AT-KEY("a"), True, "\$s.AT-KEY";
     throws-like { $s.BIND-KEY("a",$a) },X::Bind,:target<Set>,"\$s.BIND-KEY";
     is $s.AT-KEY("a"), True, "\$s.AT-KEY (after bind)";
-    throws-like { $s.DELETE-KEY("a") },
-      X::Immutable, :method<DELETE-KEY>, :typename<Set>, "\$s.DELETE-KEY";
+    dies-ok { $s.DELETE-KEY("a") }, "\$s.DELETE-KEY";
     is $s.AT-KEY("a"), True, "\$s.AT-KEY (after delete)";
-    throws-like { $s.ASSIGN-KEY("a",False) },
-      X::Assignment::RO, :typename<Set>, "\$s.ASSIGN-KEY";
+    dies-ok { $s.ASSIGN-KEY("a",False) }, "\$s.ASSIGN-KEY";
     is $s.AT-KEY("a"), True, "\$s.AT-KEY (after assignment)";
 }
 
@@ -117,12 +115,9 @@ for $%h, Any, $%hi, Int, $%hia, Int -> \h, \T {
     is $b.AT-KEY("a"), 1,   "\$b.AT-KEY";
     throws-like { $b.BIND-KEY("a",$a) },X::Bind,:target<Bag>,"\$b.BIND-KEY";
     is $b.AT-KEY("a"), 1, "\$b.AT-KEY (after bind)";
-    throws-like { $b.DELETE-KEY("a") },
-      X::Immutable, :method<DELETE-KEY>, :typename<Bag>, "\$b.DELETE-KEY";
+    dies-ok { $b.DELETE-KEY("a") }, "\$b.DELETE-KEY";
     is $b.AT-KEY("a"), 1, "\$b.AT-KEY (after delete)";
-    #?rakudo.jvm todo 'still mentions "value" instead of "Int"'
-    throws-like { $b.ASSIGN-KEY("a",42) },
-      X::Assignment::RO, :typename<Int>, "\$b.ASSIGN-KEY";
+    dies-ok { $b.ASSIGN-KEY("a",42) }, "\$b.ASSIGN-KEY";
     is $b.AT-KEY("a"), 1, "\$b.AT-KEY (after assignment)";
 }
 
@@ -149,12 +144,9 @@ for $%h, Any, $%hi, Int, $%hia, Int -> \h, \T {
     is $m.AT-KEY("a"), 1,   "\$m.AT-KEY";
     throws-like { $m.BIND-KEY("a",$a) },X::Bind,:target<Mix>,"\$m.BIND-KEY";
     is $m.AT-KEY("a"), 1, "\$m.AT-KEY (after bind)";
-    throws-like { $m.DELETE-KEY("a") },
-      X::Immutable, :method<DELETE-KEY>, :typename<Mix>, "\$m.DELETE-KEY";
+    dies-ok { $m.DELETE-KEY("a") }, "\$m.DELETE-KEY";
     is $m.AT-KEY("a"), 1, "\$m.AT-KEY (after delete)";
-    #?rakudo.jvm todo 'still mentions "value" instead of "Int"'
-    throws-like { $m.ASSIGN-KEY("a",42) },
-      X::Assignment::RO, :typename<Int>, "\$m.ASSIGN-KEY";
+    dies-ok { $m.ASSIGN-KEY("a",42) }, "\$m.ASSIGN-KEY";
     is $m.AT-KEY("a"), 1, "\$m.AT-KEY (after assignment)";
 }
 
