@@ -1299,6 +1299,7 @@ S32-str/sprintf-o.t
 S32-str/sprintf-s.t
 S32-str/sprintf-u.t
 S32-str/sprintf-x.t
+S32-str/sprintf.t
 S32-str/starts-with.t
 S32-str/substr-eq.t
 S32-str/substr-rw.t
