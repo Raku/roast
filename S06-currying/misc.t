@@ -9,7 +9,6 @@ plan 20;
 # of the currently prototyped functionality.
 
 is-primed-sig(sub (::T $a, $b, :$c) { }, :($b, :$c), 1);
-#?rakudo 4 todo "awaiting resurrecting of RakuAST assuming"
 is-primed-sig(sub (::T $a, T $b, T :$c) { }, :(Int $b, Int :$c), 1);
 is-primed-sig(sub (::T $a, T @b, T :@c) { }, :(Int @b, Int :@c), 1);
 is-primed-sig(sub (::T $a, T $b, T :$c) { }, :(Int :$c), 1, 1);
