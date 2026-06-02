@@ -2,7 +2,7 @@ use Test;
 use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Assuming;
 
-plan 17;
+plan 20;
 
 # How clever we get with type-captures and subsignatures is TBD.  So
 # these tests are more tenuous, they just test the intent
@@ -60,4 +60,22 @@ is-primed-call(&abc123, \(1,2,3), ['a','b','c',1,2,3], 'a','b','c');
       'can we use a generic on an associative parameter';
 }
 
-# vim: expandtab shiftwidth=4
+# https://github.com/rakudo/rakudo/issues/6212
+{
+    my %expected;
+    sub foo(*%h) {
+        is-deeply %h, %expected, "did we get the expected args: %h.raku()";
+    }
+    my &bar = &foo.assuming(:42bar);
+
+    %expected = :42bar;
+    bar();
+
+    %expected<zippo> = 666;
+    bar(:666zippo);
+
+    %expected = :137bar;
+    bar(:137bar);
+}
+
+# vim: expandtab shftwidth=4
