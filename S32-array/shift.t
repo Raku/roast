@@ -8,7 +8,7 @@ Shift tests
 
 =end description
 
-plan 33;
+plan 35;
 
 {
 
@@ -82,17 +82,18 @@ plan 33;
     dies-ok { EVAL(' @shift.shift(10)') }, 'shift() should not allow extra arguments';
 }
 
-# Push with Inf arrays (waiting on answers to perl6-compiler email)
-# {
-#     my @shift = 1 .. Inf;
-#     # best not to uncomment this it just go on forever
-#     todo_throws_ok { 'shift(@shift)' }, '?? what should this error message be ??', 'cannot shift off of a Inf array';
-# }
+# Shift with Inf arrays
+{
+    my @a = 1 .. Inf;
+    is-deeply @a.shift, 1, 'can shift off of an Inf array: 1';
+    is-deeply @a.shift, 2, 'can shift off of an Inf array: 2';
+}
 
 {
     my @a = 1,2;
     @a[0]:delete;
-    ok @a.shift === Nil, "shifting sparse array results in Nil, not failure";
+    ok @a.shift === @a.default,
+      "shifting sparse array does not result in failure";
     is @a.elems, 1, "and it actually shifted the array";
 }
 
