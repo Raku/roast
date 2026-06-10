@@ -2,7 +2,7 @@ use Test;
 use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 244;
+plan 246;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -587,5 +587,12 @@ lives-ok { my %h is Mix = 42 }, "Can we initialize a Mix with a single value";
 }
 
 is-deeply %(:42a, :b(-72)).Mix.Capture, %(:42a, :b(-72)).Capture, 'Mix Capture';
+
+# https://github.com/rakudo/rakudo/issues/6246
+{
+    my %h is Mix = <a b b>;
+    is-deeply %h.keys.sort, <a b>, 'Did the keys get set';
+    is-deeply mix().keys, (), 'did it not spoil the sentinel';
+}
 
 # vim: expandtab shiftwidth=4

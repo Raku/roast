@@ -1,6 +1,6 @@
 use Test;
 
-plan 255;
+plan 257;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -633,5 +633,12 @@ lives-ok { my %h is Bag = 42 }, "Can we initialize a Bag with a single value";
 }
 
 is-deeply %(:42a, :72b).Bag.Capture, %(:42a, :72b).Capture, 'Bag Capture';
+
+# https://github.com/rakudo/rakudo/issues/6246
+{
+    my %h is Bag = <a b b>;
+    is-deeply %h.keys.sort, <a b>, 'Did the keys get set';
+    is-deeply bag().keys, (), 'did it not spoil the sentinel';
+}
 
 # vim: expandtab shiftwidth=4

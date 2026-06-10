@@ -2,7 +2,7 @@ use Test;
 use lib $*PROGRAM.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 248;
+plan 250;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -630,5 +630,12 @@ lives-ok { my %h is Set = 42 }, "Can we initialize a Set with a single value";
 }
 
 is-deeply <a b>.Set.Capture, %(:a, :b).Capture, 'Set Capture';
+
+# https://github.com/rakudo/rakudo/issues/6246
+{
+    my %h is Set = <a b>;
+    is-deeply %h.keys.sort, <a b>, 'Did the keys get set';
+    is-deeply set().keys, (), 'did it not spoil the sentinel';
+}
 
 # vim: expandtab shiftwidth=4
