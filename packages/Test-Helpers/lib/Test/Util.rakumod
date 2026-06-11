@@ -396,14 +396,20 @@ sub run-with-tty(
 
     subtest $desc => {
         $path.IO.spurt: $code;
-        given shell :in, :out, :err, $script {
+        # `script`'s standard input must not be the socketpair a Proc
+        # pipe is: on MacOS `script` does a tcgetattr on its standard
+        # input and exits with "Operation not supported on socket" before
+        # ever running the command. A file handle makes the child inherit
+        # a plain file descriptor instead. The file also carries the
+        # ending newline MacOS `script` wants.
+        my $in-fh = make-temp-file(:content("$in\n")).open: :r;
+        given shell :in($in-fh), :out, :err, $script {
             plan 3;
-            # on MacOS, `script` really wants the ending newline...
-            .in.spurt: "$in\n", :close;
             cmp-ok .out.slurp(:close), '~~', $out,    'STDOUT';
             cmp-ok .err.slurp(:close), '~~', $err,    'STDERR';
             cmp-ok .exitcode,  '~~', $status, 'exit code';
         }
+        $in-fh.close;
     }
 }
 
