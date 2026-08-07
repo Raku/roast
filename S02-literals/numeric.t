@@ -1,6 +1,6 @@
 use Test;
 
-plan 71;
+plan 89;
 
 isa-ok 1, Int, '1 produces a Int';
 does-ok 1, Numeric, '1 does Numeric';
@@ -152,6 +152,31 @@ subtest '#2094 prefix as post fix works on number literals' => {
 {
     is-deeply (-1234567890).Str(:superscript), '⁻¹²³⁴⁵⁶⁷⁸⁹⁰', 'Int superscript';
     is-deeply (-1234567890).Str(:subscript),   '₋₁₂₃₄₅₆₇₈₉₀', 'Int subscript';
+}
+
+# C99 hexadecimal floating point literals - rakudo/rakudo#6524
+{
+    isa-ok 0x1.8p+1, Num, 'hexfloat literal produces a Num';
+    is-deeply 0x1.8p+1,  3e0,    'hexfloat with fraction';
+    is-deeply 0x1p-2,    0.25e0, 'hexfloat without fraction, negative exponent';
+    is-deeply 0x.8p+1,   1e0,    'hexfloat without integer part';
+    is-deeply 0x1.8P4,   24e0,   'capital P exponent without sign';
+    is-deeply -0x1.8p+1, -3e0,   'negated hexfloat';
+    is-deeply 0x1.999999999999ap-4, 0.1e0, 'full-precision mantissa';
+    is-deeply 0xde_ad.be_efp+0, 0xdead.beefp0, 'underscores in mantissa';
+    is-deeply 0x1p+1_0, 1024e0, 'underscore in exponent';
+    is-deeply 0x1.fffffffffffffp+1023, 1.7976931348623157e308, 'largest double';
+    is-deeply 0x1p-1022, 2.2250738585072014e-308, 'smallest normal';
+    is-deeply 0x1p-1074, 5e-324, 'smallest subnormal';
+    is-deeply 0x1.8p-1074, 1e-323, 'subnormal tie rounds to even';
+    is-deeply 0x1p+9999, Inf, 'exponent overflow gives Inf';
+    is-deeply 0x1p-9999, 0e0, 'exponent underflow gives 0';
+    ok (-0x0p+0) === -0e0, 'negative zero survives';
+
+    # unchanged behaviors
+    is-deeply 0x1.abs, 1, 'method call on hex integer literal still works';
+    throws-like '0x1.8', Exception,
+        'hexfloat without binary exponent is still an error';
 }
 
 # vim: expandtab shiftwidth=4
