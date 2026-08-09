@@ -75,6 +75,7 @@ subtest 'dynamics accessible from .then' => {
 {
     my %test-status;
     my $slock = Lock.new;
+    my $independent-then;
 
     my sub get-results($p1) {
         %test-status = ();
@@ -91,7 +92,9 @@ subtest 'dynamics accessible from .then' => {
             }
         }
 
-        $p1.then: { record-result($_, "independent-then"); };
+        # This one is not part of the chain returned below, so it has to be
+        # awaited separately before %test-status is read.
+        $independent-then = $p1.then: { record-result($_, "independent-then"); };
 
         $p1
             .andthen({ record-result($_, "andthen1"); .result < -10 ?? die "andthen1 dies" !! .result * 2 })
@@ -117,6 +120,7 @@ subtest 'dynamics accessible from .then' => {
                 my $p2 = get-results($p1);
 
                 is await($p2), $rc, "final promise result";
+                await $independent-then;
                 is-deeply %test-status, %status, "thens ran as expected";
             }
 
@@ -127,6 +131,7 @@ subtest 'dynamics accessible from .then' => {
                 $p1."$method"($value);
 
                 is await($p2), $rc, "final promise result";
+                await $independent-then;
                 is-deeply %test-status, %status, "thens ran as expected";
             }
         }
