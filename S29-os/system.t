@@ -103,10 +103,21 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
 
 subtest "run and shell's :cwd" => {
     plan 4;
+    # So...
+    # `echo $PWD` works *nearly* everywhere, because the shell sets the
+    # environment variable PWD to the current directory on startup.
+    # Except on Solaris, where /bin/sh only sets $PWD to the current directory
+    # if it happens to be / or the user's home directory.
+    # Otherwise it leaves it unchanged.
+    # (Even AIX isn't this nuts. Why is ksh93 so special?)
+    # Which matters to this test, because we (eg MoarVM) call chdir to our temp
+    # directory before we exec the shell, and we don't change PWD in our C
+    # environment.
+    # So use pwd instead. And use `exec pwd` to test that we have run the shell.
     my @run-cmd   = $*DISTRO.is-win ?? ('cmd.exe', '/C', 'echo %CD%')
-                                    !! ('/bin/sh', '-c', 'echo $PWD');
+                                    !! ('/bin/sh', '-c', 'exec pwd');
     my $shell-cmd = $*DISTRO.is-win ?? 'echo %CD%'
-                                    !! 'echo $PWD';
+                                    !! 'exec pwd';
 
     indir (my $cwd = make-temp-dir.absolute), {
         (my $p = run @run-cmd, :!err, :out)
