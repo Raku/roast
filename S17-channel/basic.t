@@ -109,12 +109,15 @@ plan 29;
 # https://github.com/rakudo/rakudo/issues/1974
 {
     my @seen;
-    (my Channel $c .= new).Supply.tap: { @seen.push($_) };
+    my $drained = Promise.new;
+    (my Channel $c .= new).Supply.tap: { @seen.push($_) },
+        done => { $drained.keep };
     sub get-urls($url) {
         gather { take $url; $url.chars > 1 and (.take for get-urls $url.chop) }
     }
     await get-urls("meows").Supply.throttle: 3, {$c.send: $_};
     $c.close;
+    await $drained;
     is-deeply @seen, [<meows meow meo me m>], 'got all urls';
 }
 
