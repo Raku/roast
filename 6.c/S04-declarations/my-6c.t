@@ -235,23 +235,27 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
     # If there is a regression this may die not just fail to make ints
     eval-lives-ok 'my (int $a);','native in declarator sig';
     eval-lives-ok 'my (int $a, int $b);','natives in declarator sig';
-    dies-ok { my (int $a, num $b); $a = 'omg'; }, 'Native types in declarator sig 1/2 constrains';
-    dies-ok { my (int $a, num $b); $b = 'omg'; }, 'Native types in declarator sig 2/2 constrains';
+    # The value assigned is held in a variable so that the declared type is what
+    # rejects it, rather than the compiler rejecting the literal out of hand.
+    my $omg = 'omg';
+    my $str = "str";
+    dies-ok { my (int $a, num $b); $a = $omg; }, 'Native types in declarator sig 1/2 constrains';
+    dies-ok { my (int $a, num $b); $b = $omg; }, 'Native types in declarator sig 2/2 constrains';
     lives-ok { my (int $a, num $b); $a = 42; $b = 4e2; }, 'Native types in declarator sig allow correct assignments';
 
-    throws-like { my (Int $a); $a = "str" }, X::TypeCheck, 'Type in declarator sig 1/1 constrains';
-    throws-like { my (Int $a, Num $b); $a = "str" }, X::TypeCheck, 'Types in declarator sig 1/2 constrain';
-    throws-like { my (Int $a, Num $b); $b = "str" }, X::TypeCheck, 'Types in declarator sig 2/2 constrain';
+    throws-like { my (Int $a); $a = $str }, X::TypeCheck, 'Type in declarator sig 1/1 constrains';
+    throws-like { my (Int $a, Num $b); $a = $str }, X::TypeCheck, 'Types in declarator sig 1/2 constrain';
+    throws-like { my (Int $a, Num $b); $b = $str }, X::TypeCheck, 'Types in declarator sig 2/2 constrain';
     lives-ok { my (Int $a, Num $b); $a = 1; $b = 1e0; }, 'Types in declarator sig allow correct assignments';
 
     # These still need spec clarification but test them, since they pass
     eval-lives-ok 'my int ($a);', 'native outside declarator sig 1';
     eval-lives-ok 'my int ($a, $b)', 'native outside declarator sig 2';
-    throws-like { my Int ($a); $a = "str" }, X::TypeCheck, 'Type outside declarator sig 1/1 constrains';
-    throws-like { my Int ($a, $b); $a = "str" }, X::TypeCheck, 'Type outside declarator sig 1/2 constrains';
-    throws-like { my Int ($a, $b); $b = "str"}, X::TypeCheck, 'Type outside declarator sig 2/2 constrains';
-    dies-ok { my int ($a, $b); $a = "str" }, 'Native type outside declarator sig 1/2 constrains';
-    dies-ok { my int ($a, $b); $b = "str" }, 'Native type outside declarator sig 2/2 constrains';
+    throws-like { my Int ($a); $a = $str }, X::TypeCheck, 'Type outside declarator sig 1/1 constrains';
+    throws-like { my Int ($a, $b); $a = $str }, X::TypeCheck, 'Type outside declarator sig 1/2 constrains';
+    throws-like { my Int ($a, $b); $b = $str}, X::TypeCheck, 'Type outside declarator sig 2/2 constrains';
+    dies-ok { my int ($a, $b); $a = $str }, 'Native type outside declarator sig 1/2 constrains';
+    dies-ok { my int ($a, $b); $b = $str }, 'Native type outside declarator sig 2/2 constrains';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/2983
