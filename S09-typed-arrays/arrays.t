@@ -55,8 +55,12 @@ plan 81;
 
 {
     my Array @x;
+    # The values assigned are held in a variable so that the element type is
+    # what rejects them, rather than the compiler rejecting the literals out
+    # of hand.
+    my @wrong = 1, 2, 3;
     ok @x.VAR.of === Array, '@x.VAR.of of typed array (my Array @x)';
-    dies-ok { @x = 1, 2, 3 }, 'can not assign values of the wrong type';
+    dies-ok { @x = @wrong }, 'can not assign values of the wrong type';
     dies-ok { @x = 1..3    }, 'can not assign range of the wrong type';
     dies-ok { @x.push: 3, 4}, 'can not push values of the wrong type';
     dies-ok { @x.unshift: 3}, 'can not unshift values of the wrong type';
@@ -68,8 +72,9 @@ plan 81;
 
 {
     my @x of Array;
+    my @wrong = 1, 2, 3;
     ok @x.VAR.of === Array, '@x.VAR.of of typed array (my @x of Array)';
-    dies-ok { @x = 1, 2, 3 }, 'can not assign values of the wrong type';
+    dies-ok { @x = @wrong }, 'can not assign values of the wrong type';
     dies-ok { @x = 1..3    }, 'can not assign range of the wrong type';
     dies-ok { @x.push: 3, 4}, 'can not push values of the wrong type';
     dies-ok { @x.unshift: 3}, 'can not unshift values of the wrong type';
@@ -113,8 +118,8 @@ plan 81;
     sub ret_pos_2 returns Positional of Int { my Int @a = 1,2,3; @a }
     sub ret_pos_3 returns Positional of Int { my @a = 1,2,3; return @a; }
     sub ret_pos_4 returns Positional of Int { my @a = 1,2,3; @a }
-    sub ret_pos_5 returns Positional of Int { my Num @a = 1,2,3; return @a; }
-    sub ret_pos_6 returns Positional of Int { my Num @a = 1,2,3; @a }
+    sub ret_pos_5 returns Positional of Int { my Num @a = 1e0,2e0,3e0; return @a; }
+    sub ret_pos_6 returns Positional of Int { my Num @a = 1e0,2e0,3e0; @a }
     sub ret_pos_7 returns Positional of Numeric { my Int @a = 1,2,3; return @a; }
     sub ret_pos_8 returns Positional of Numeric { my Int @a = 1,2,3; @a }
     lives-ok { ret_pos_1() },
