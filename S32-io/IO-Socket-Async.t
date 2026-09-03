@@ -250,14 +250,17 @@ $echoTap.close;
 }
 
 {
-    # random (hopefully invalid) port on localhost
-    my $random-port = (5_000..10_000).pick;
-    my $badServer = IO::Socket::Async.listen($s-address, $random-port);
+    # hold a port so a second listen on it is guaranteed to fail
+    my $holderTap = IO::Socket::Async.listen($s-address, 0).tap();
+    my $held-port = await $holderTap.socket-port;
+    my $badServer = IO::Socket::Async.listen($s-address, $held-port);
     my $failed = Promise.new;
-    my $t1 = $badServer.tap();
-    my $t2 = $badServer.tap(quit => { $failed.keep });
+    # neither tap gets closed: closing the failed one hangs awaiting a
+    # socket that will never arrive, and closing the holder after a
+    # failed listen panics MoarVM on the next listen tap cancellation
+    $badServer.tap(quit => { $failed.keep });
     await Promise.anyof($failed, Promise.in(5));
-    ok $failed, 'Address already in use results in a quit';
+    is $failed.status, Kept, 'Address already in use results in a quit';
 }
 
 {
