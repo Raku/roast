@@ -237,10 +237,9 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
     eval-lives-ok 'my (int $a, int $b);','natives in declarator sig';
     # The value assigned is held in a variable so that the declared type is what
     # rejects it, rather than the compiler rejecting the literal out of hand.
-    my $omg = 'omg';
     my $str = "str";
-    dies-ok { my (int $a, num $b); $a = $omg; }, 'Native types in declarator sig 1/2 constrains';
-    dies-ok { my (int $a, num $b); $b = $omg; }, 'Native types in declarator sig 2/2 constrains';
+    dies-ok { my (int $a, num $b); $a = $str; }, 'Native types in declarator sig 1/2 constrains';
+    dies-ok { my (int $a, num $b); $b = $str; }, 'Native types in declarator sig 2/2 constrains';
     lives-ok { my (int $a, num $b); $a = 42; $b = 4e2; }, 'Native types in declarator sig allow correct assignments';
 
     throws-like { my (Int $a); $a = $str }, X::TypeCheck, 'Type in declarator sig 1/1 constrains';
