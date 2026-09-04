@@ -1,6 +1,6 @@
 use Test;
 
-plan 101;
+plan 115;
 
 =begin description
 
@@ -81,6 +81,21 @@ ok 'A4' ~~ /:i a[3|4|5] | b[3|4] /, 'alternation sanity';
     ok  "m" ~~ /:i <[M]>/, "ignore case of character classes";
     nok "m" ~~ /<[M]>/,    "ignore case of character classes";
     nok "n" ~~ /:i <[M]>/, "ignore case of character classes";
+    # https://github.com/rakudo/rakudo/issues/2962
+    ok  "m" ~~ /:i <[ \x[4D] ]>/, "ignore case of a hex escape in a character class";
+    ok  "m" ~~ /:i <[ \c[LATIN CAPITAL LETTER M] ]>/, "ignore case of a named escape in a character class";
+    ok  "ß" ~~ /:i <[ \x[DF] ]>/, "escape that folds to two characters still matches itself in a character class";
+    nok "s" ~~ /:i <[ \x[DF] ]>/, "escape that folds to two characters does not match part of the fold";
+    ok  "ß" ~~ /:i <[ ß ]>/, "character that folds to two characters still matches itself in a character class";
+    nok "s" ~~ /:i <[ ß ]>/, "character that folds to two characters does not match part of the fold";
+    ok  "\x[300]" ~~ /:i <[ \x[300] ]>/, "lone combining escape in a character class matches itself under ignorecase";
+    nok "f" ~~ /:i <[ \c[LATIN SMALL LIGATURE FF] ]>/, "ligature escape in a character class does not match part of the fold";
+    ok  "ﬀ" ~~ /:i <[ ﬀ ]>/, "ligature in a character class still matches itself";
+    nok "m" ~~ /:i <-[ \x[4D] ]>/, "negated character class with a hex escape rejects the other case";
+    ok  "n" ~~ /:i <-[ \x[4D] ]>/, "negated character class with a hex escape accepts other characters";
+    ok  "ǅ" ~~ /:i <[ ǆ ]>/, "character class matches the titlecase form of its entry";
+    ok  "ä" ~~ /:i <[ a \x[308] ]>/, "character class entry formed by a base character and combining escape matches itself";
+    nok "a" ~~ /:i <[ a \x[308] ]>/, "character class entry formed by a base character and combining escape does not match the bare base character";
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/4811
