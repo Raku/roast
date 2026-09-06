@@ -1,6 +1,6 @@
 use Test;
 
-plan 45;
+plan 60;
 
 =begin description
 
@@ -84,6 +84,25 @@ is "\c[SYRIAC ABBREVIATION MARK, COMBINING CARON]" ~~ /:m "\c[SYRIAC ABBREVIATIO
 # https://github.com/rakudo/rakudo/issues/2961
 {
     is "a\x[300]" ~~ / :ignoremark <[ a b c ]> /, 'à', 'charclass ok';
+}
+
+# https://github.com/rakudo/rakudo/issues/2962
+{
+    is "a\x[300]" ~~ / :ignoremark <[ a \n ]> /, 'à', 'charclass with a newline escape matches a marked character';
+    is "a\x[300]" ~~ / :ignoremark <[ a \r\n ]> /, 'à', 'charclass with carriage return and newline escapes matches a marked character';
+    is "a\x[300]" ~~ / :ignoremark [ \n | <[ a ]> ] /, 'à', 'charclass after an alternation branch matches a marked character';
+    is "a\x[300]" ~~ / :ignoremark [ <[ a ]> | \n ] /, 'à', 'charclass before an alternation branch matches a marked character';
+    nok "x" ~~ / :ignoremark <[ a \n ]> /, 'charclass with a newline escape still rejects other characters';
+    is "a" ~~ / :ignoremark <[ \x[E0] ]> /, 'a', 'hex escape in a charclass ignores its mark';
+    is "a\x[300]" ~~ / :ignoremark <[ a \x[300] ]> /, 'à', 'charclass entry formed by a base character and combining escape matches a marked character';
+    is "a\x[300]" ~~ / :ignoremark [ \n | <[ b a ]> ] /, 'à', 'charclass in an alternation matches on its second entry';
+    nok "a\x[300]" ~~ / :ignoremark <-[ a \x[300] ]> /, 'negated charclass entry formed by a base character and combining escape rejects a marked character';
+    is "b\x[300]" ~~ / :ignoremark <-[ a \x[300] ]> /, "b\x[300]", 'negated charclass entry formed by a base character and combining escape accepts another marked character';
+    is "A\x[300]" ~~ / :i:m <[ \x[61] ]> /, 'À', 'hex escape in a charclass ignores case and mark together';
+    is "a" ~~ / :i:m <[ \x[C0] ]> /, 'a', 'hex escape with a mark in a charclass matches the bare base character under ignorecase and ignoremark';
+    is "b\x[300]" ~~ / :ignoremark [ \n | <-[ a ]> ] /, "b\x[300]", 'negated charclass in an alternation accepts another marked character';
+    is "\n" ~~ / :ignoremark <[ \x[D]\x[A] \x[A] ]> /, "\n", 'folded entries that would form one grapheme stay separate entries';
+    is "\r" ~~ / :ignoremark <[ \x[D]\x[A] \x[A] ]> /, "\r", 'a folded carriage return newline entry matches a carriage return';
 }
 
 # vim: expandtab shiftwidth=4
