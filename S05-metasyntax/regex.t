@@ -2,7 +2,7 @@ use Test;
 use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 55;
+plan 68;
 
 throws-like 'qr/foo/', X::Obsolete, 'qr// is gone';
 
@@ -297,5 +297,40 @@ is ("aa" ~~ /$<start>=<.alpha> $<start>/).gist,
 is ("aa" ~~ /$<start>=<alpha> $<start>/).gist,
   "｢aa｣\n alpha => ｢a｣\n start => ｢a｣" | "｢aa｣\n start => ｢a｣\n alpha => ｢a｣",
   'capturing backref works';
+
+# https://github.com/rakudo/rakudo/issues/5588
+#?rakudo.jvm skip 'block quantifier limits are lost on restart'
+{
+    my $n = 2;
+    my regex pair { . ** {2} }
+    is ("burden" ~~ /(. ** {2})+ n/).gist, "｢urden｣\n 0 => ｢ur｣\n 0 => ｢de｣",
+        'backtracking into a capture keeps the block quantifier exact count';
+    is ("burden" ~~ /(. ** {$n})+ n/).gist, "｢urden｣\n 0 => ｢ur｣\n 0 => ｢de｣",
+        'backtracking into a capture keeps a lexical block quantifier count';
+    is ("burden" ~~ /<pair>+ n/).gist, "｢urden｣\n pair => ｢ur｣\n pair => ｢de｣",
+        'backtracking into a named regex keeps the block quantifier exact count';
+    is ("abcdn" ~~ /(. ** {2..3})+ n/).gist, "｢abcdn｣\n 0 => ｢ab｣\n 0 => ｢cd｣",
+        'backtracking into a capture keeps the block quantifier minimum';
+    is-deeply "abcd".match(/. ** {2..3}/, :ex)>>.Str, ("abc", "ab", "bcd", "bc", "cd"),
+        'exhaustive matching keeps the block quantifier limits';
+    is ~("aaac" ~~ /(a **? {1..2}) c/), "aac",
+        'frugal block quantifier stops at its maximum when backtracked into';
+    is ~("aaac" ~~ /(a **? {1..3}) c/), "aaac",
+        'frugal block quantifier grows up to its maximum when backtracked into';
+    is-deeply ("xxan" ~~ /(x ** {2} . ** {2})+ n/), Nil,
+        'backtracking into a capture keeps the limits of each block quantifier in it';
+    is-deeply ("a,b" ~~ /(<[a..z]> ** {2} % ",") ",b"/), Nil,
+        'backtracking into a capture keeps the block quantifier count with a separator';
+    my $m;
+    is-deeply ("2aaaaab" ~~ /(\d) { $m = +$0 } (a ** {$m})+ b/), Nil,
+        'backtracking into a capture keeps a block quantifier count set by an earlier code block';
+    is ("2aaaab" ~~ /(\d) { $m = +$0 } (a ** {$m})+ b/).gist,
+        "｢2aaaab｣\n 0 => ｢2｣\n 1 => ｢aa｣\n 1 => ｢aa｣",
+        'a block quantifier count set by an earlier code block survives backtracking';
+    is ("a,a" ~~ /^ (a **? {2} % ",") $/).gist, "｢a,a｣\n 0 => ｢a,a｣",
+        'frugal block quantifier with a separator counts its first repetition once';
+    is ("a,a,a,c" ~~ /^ (a **? {1..3} % ",") ",c"/).gist, "｢a,a,a,c｣\n 0 => ｢a,a,a｣",
+        'frugal block quantifier with a separator grows to its maximum when backtracked into';
+}
 
 # vim: expandtab shiftwidth=4
