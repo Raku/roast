@@ -10,7 +10,7 @@ be valid perl6.
 
 =end pod
 
-plan 55;
+plan 90;
 
 # Broken:
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading [ ">
@@ -109,6 +109,82 @@ nok '^'   ~~ /  <[ \[ .. \] ]>    /, '... does not match outside its range';
 {
     is "\r\na" ~~ /<?[\n]>"\r\na"/, "\r\na",
         'look-ahead with windows newline does not advance cursor position';
+}
+
+# https://github.com/rakudo/rakudo/issues/4512
+{
+    grammar G4512 { token TOP { [<?[\s a]> .]+ } }
+    grammar G4512LTM { token TOP { <a> | <b> }; token a { <?[a] - [b]> . b }; token b { . bb } }
+    is 'aa' ~~ /<?[\s a]> ./, 'a',
+        'lookahead of a class mixing a backslash sequence and a character does not consume';
+    is 'ab' ~~ /<?[\N a]>/, '',
+        'lookahead of a class mixing a negated backslash sequence and a character is zero width';
+    is 'bb' ~~ /<![\s a]> ./, 'b',
+        'negated lookahead of a mixed class matches when neither part does';
+    nok 'aa' ~~ /<![\s a]> ./,
+        'negated lookahead of a mixed class fails on the character part';
+    nok ' a' ~~ /<![\s a]> ./,
+        'negated lookahead of a mixed class fails on the backslash part';
+    ok '' ~~ /<![\s a]>/,
+        'negated lookahead of a mixed class matches at the end of the string';
+    is 'aa' ~~ /<?[a] - [b]> ./, 'a',
+        'lookahead of a class subtraction does not consume';
+    is 'bb' ~~ /<![a] - [b]> ./, 'b',
+        'negated lookahead of a class subtraction matches a subtracted character';
+    nok 'aa' ~~ /<![a] - [b]> ./,
+        'negated lookahead of a class subtraction fails on a remaining character';
+    is 'bb' ~~ /<?-[\s a]> ./, 'b',
+        'lookahead of a negated mixed class does not consume';
+    is 'aa' ~~ /<!-[\s a]> ./, 'a',
+        'negated lookahead of a negated mixed class matches an excluded character';
+    is ('ab' ~~ /<![a \s]> ./).from, 1,
+        'negated lookahead of a mixed class whose first part matches moves on';
+    nok 'aa' ~~ /<![a \s]> ./,
+        'negated lookahead of a mixed class fails on its first part';
+    is 'aa' ~~ /<?[a] - [\s b]> ./, 'a',
+        'lookahead of a subtraction of a mixed class does not consume';
+    is '  ' ~~ /<![\w] - [\d _]> ./, ' ',
+        'negated lookahead of a subtraction of a mixed class matches an excluded character';
+    is 'aa' ~~ /<?[a 1] - digit> ./, 'a',
+        'lookahead of a subtraction of a named class does not consume';
+    is 'Aa' ~~ /:i <?[\s a]> ./, 'A',
+        'lookahead of a mixed class under :i does not consume';
+    nok 'Aa' ~~ /:i <![\s a]> ./,
+        'negated lookahead of a mixed class under :i fails on a case variant';
+    is 'xyz a' ~~ /[<![\s a]> .]+/, 'xyz',
+        'negated lookahead of a mixed class inside a quantifier';
+    is 'xyz' ~~ /[<![\s a]> .] ** 2/, 'xy',
+        'negated lookahead of a mixed class inside a bounded quantifier';
+    is +('aaa' ~~ /[<?[\s a]> (.)]+ a/)[0], 2,
+        'quantified lookahead of a mixed class backtracks by whole iterations';
+    is 'ab' ~~ /[<?[\s a]> b | a]/, 'a',
+        'failing atom after a lookahead of a mixed class backtracks into the next alternative';
+    is 'ab' ~~ /[<?[\s a]> b || a]/, 'a',
+        'failing atom after a lookahead of a mixed class backtracks into the next sequential alternative';
+    is 'aab' ~~ /a [<![\s a]> . | a]/, 'aa',
+        'failing negated lookahead of a mixed class backtracks into the next alternative';
+    is ('ab' ~~ / $<x>=[<?[\s a]> .] | $<y>=[..] /)<y>, 'ab',
+        'longest token matching counts a lookahead of a mixed class as one character';
+    is ('aa' ~~ /(<?[\s a]>) (.)/)[0], '',
+        'capture around a lookahead of a mixed class is empty';
+    is G4512.parse('aaa'), 'aaa',
+        'quantified lookahead of a mixed class inside a token';
+    ok 'b' ~~ /<[a] + [\S]>/,
+        'plus sign keeps a negated backslash sequence as a union';
+    ok 'a' ~~ /<[a] - []>/,
+        'subtracting an empty enumeration leaves the class alone';
+    is 'a' ~~ /<?[a] - []> a/, 'a',
+        'lookahead of a class subtracting an empty enumeration leaves the class alone';
+    is 'bb' ~~ /<![a] - []> ./, 'b',
+        'negated lookahead of a class subtracting an empty enumeration matches an excluded character';
+    nok 'a' ~~ /<?[]>/,
+        'lookahead of an empty enumeration never matches';
+    ok 'a' ~~ /<![]> a/,
+        'negated lookahead of an empty enumeration always matches';
+    is ('ab' ~~ / $<x>=[<?[a] - [b]> . b] | $<y>=[. bb] /)<x>, 'ab',
+        'longest token matching falls through to a lookahead of a class subtraction';
+    is G4512LTM.parse('ab')<a>, 'ab',
+        'longest token matching falls through to a token starting with a lookahead of a class subtraction';
 }
 
 {
