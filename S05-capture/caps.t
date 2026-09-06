@@ -1,5 +1,5 @@
 use Test;
-plan 43;
+plan 56;
 
 # L<S05/Match objects/"$/.caps">
 
@@ -88,6 +88,56 @@ is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on %% separator';
     }
     is Gram.parse('XXXXXX').caps.map(*.key), (0, "delim", 0, "delim", 0, "delim"),
         '.caps respects order of matching even with zero-width delimeters';
+}
+
+# https://github.com/rakudo/rakudo/issues/4105
+#?rakudo.jvm skip 'captures stay in $/ after backtracking'
+{
+    my @seen;
+    'abc' ~~ /(\w)+ { @seen.push($0.elems) } bc/;
+    is-deeply @seen, [3, 2, 1],
+        'a code block sees only the captures left after backtracking';
+    my @named;
+    'abc' ~~ /$<l>=(\w)+ { @named.push($<l>.elems) } bc/;
+    is-deeply @named, [3, 2, 1],
+        'a code block sees only the named captures left after backtracking';
+    is ~('abc' ~~ /(\w)+ <?{ $0.tail eq 'b' }>/), 'ab',
+        'an assertion sees only the captures left after backtracking';
+    is ~("1 2 3 4 5 6 7 8 " ~~ /^ [(\d) \s]+ <?{ $0.sum == 28 }>/), '1 2 3 4 5 6 7 ',
+        'an assertion sums only the captures left after backtracking into a quantified group';
+    my @empty;
+    'ab' ~~ /(\w)? { @empty.push($0.defined) } a/;
+    is-deeply @empty, [True, False],
+        'a code block sees no capture after backtracking drops the only one';
+    is ('abc' ~~ /(\w)+ { make $0.elems } bc/).made, 1,
+        'make in a code block sees only the captures left after backtracking';
+    my @alt;
+    'ab' ~~ /[ (a) b | a ] { @alt.push($0.defined) } b/;
+    is-deeply @alt, [True, False],
+        'a code block sees no capture after backtracking into another alternative';
+    my @seq;
+    'ab' ~~ /[ (a) b || a ] { @seq.push($0.defined) } b/;
+    is-deeply @seq, [True, False],
+        'a code block sees no capture after backtracking into another sequential alternative';
+    my regex w { \w }
+    my @sub;
+    'abc' ~~ /<w>+ { @sub.push($<w>.elems) } bc/;
+    is-deeply @sub, [3, 2, 1],
+        'a code block sees only the named regex captures left after backtracking';
+    my @keys;
+    'abc' ~~ /(\w)+ $<t>=(\w)? { @keys.push($/.hash.keys.join) } c/;
+    is-deeply @keys, ['', 't', ''],
+        'a code block loses a named capture key after backtracking drops it';
+    is ~('abc' ~~ /(\w)+ <!{ $0.tail eq 'c' }>/), 'ab',
+        'a negated assertion sees only the captures left after backtracking';
+    my @sep;
+    'a,b,c' ~~ /(\w)+ % ',' { @sep.push($0.elems) } ',c'/;
+    is-deeply @sep, [3, 2],
+        'a code block sees only the separated captures left after backtracking';
+    my @caps;
+    'abc' ~~ /(\w)+ { @caps.push($/.caps.elems) } bc/;
+    is-deeply @caps, [3, 2, 1],
+        '.caps in a code block lists only the captures left after backtracking';
 }
 
 # vim: expandtab shiftwidth=4
