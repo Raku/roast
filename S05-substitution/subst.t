@@ -2,7 +2,7 @@ use Test;
 use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 191;
+plan 193;
 
 # L<S05/Substitution/>
 
@@ -252,12 +252,16 @@ is '12'.subst(/(.)(.)/,{$/*2}),'24', '.. and do nifty things in closures';
     ok s:ss:ii:mm/a ḇ?   c D/w x y z/, 'successful s:ss:ii:mm substitution returns truthy';
     is $_, "Ẅ\nx\tý Z", 's:ss:ii:mm/.../.../ preserves whitespace, case, and marks';
 
-    $_ = "a\nḇ\tĆ d";
+    $_ = "a\nb\tC d";
     # https://github.com/Raku/old-issue-tracker/issues/4454
     #?rakudo.jvm 2 todo 'RT #125753'
-    ok ss:i:m/Å b C d/w x y z/, 'successful ss substitution returns truthy';
+    ok ss:i:m/Å ḇ ć d/w x y z/, 'successful ss substitution returns truthy';
     # https://github.com/Raku/old-issue-tracker/issues/3275
-    is $_, "w\nx̱\tý z", 'ss/.../.../ preserves whitespace';
+    is $_, "w\nx\ty z", 'ss/.../.../ preserves whitespace';
+
+    $_ = "a\nḇ\tĆ d";
+    ok ss:i:mm/Å b C d/w x y z/, 'successful ss:i:mm substitution returns truthy';
+    is $_, "w\nx̱\tý z", 'ss:i:mm/.../.../ preserves whitespace and marks';
 
     $_ = "Å\nḇ\tć d";
     # https://github.com/Raku/old-issue-tracker/issues/4454
