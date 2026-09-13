@@ -1,6 +1,6 @@
 use Test;
 
-plan 62;
+plan 79;
 
 #L<S05/Unchanged syntactic features/"While the syntax of | does not change">
 
@@ -486,6 +486,64 @@ is "abcde" ~~ / ab <![e]> cde | ab.. /, "abcde", 'negative lookahead does LTM pr
     is 'ab' ~~ / [ab | a ]: b /,      Nil,  'don\'t backtrack into [ | ]:';
     is 'ab' ~~ / :r [ab | a ] b /,    Nil,  'don\'t backtrack into | under :r';
     is 'ab' ~~ / :r [ab | a ]:! b /,  'ab', 'backtrack into [ | ]:! despite :r';
+}
+
+# https://github.com/rakudo/rakudo/issues/3830
+{
+    my token alnum-more { ^^ [ <alnum> | <alnum> .+ ] $$ }
+    is 'þ,' ~~ &alnum-more, 'þ,',
+        'a branch calling <alnum> then more is longer than <alnum> alone';
+
+    my token alnum-plain { ^^ [ <.alnum> | <.alnum> .+ ] $$ }
+    is 'þ,' ~~ &alnum-plain, 'þ,',
+        'a non capturing call to <alnum> contributes the same prefix';
+
+    my token alnum-enum { ^^ [ <+alnum> | <+alnum> .+ ] $$ }
+    is 'þ,' ~~ &alnum-enum, 'þ,',
+        'an enumerated character class calling <alnum> contributes the same prefix';
+
+    my grammar Alnum {
+        token TOP   { <alnum> | <other> }
+        token other { <alnum> .+ }
+    }
+    is Alnum.parse('n~'), 'n~',
+        'a branch calling a subrule that starts with <alnum> is not cut short';
+
+    for (
+        ('digit',  '1,'),
+        ('upper',  'N,'),
+        ('lower',  'n,'),
+        ('xdigit', 'f,'),
+        ('space',  ' n'),
+        ('blank',  ' n'),
+        ('print',  'n~'),
+        ('cntrl',  "\x[1]n"),
+        ('punct',  ',n'),
+        ('graph',  'n~'),
+    ) -> ($class, $text) {
+        my $token := "token \{ ^^ [ <$class> | <$class> .+ ] \$\$ \}".EVAL;
+        is $text ~~ $token, $text,
+            "a branch calling <$class> then more is longer than <$class> alone";
+    }
+
+    my token graph-punct { ^^ [ <graph> | <graph> .+ ] $$ }
+    is ',n' ~~ &graph-punct, ',n',
+        'a branch calling <graph> on punctuation then more is longer than <graph> alone';
+
+    my grammar Proto {
+        proto token TOP {*}
+        token TOP:sym<one>  { <alnum> }
+        token TOP:sym<more> { <alnum> .+ }
+    }
+    is Proto.parse('n~'), 'n~',
+        'a proto token candidate calling <alnum> then more wins';
+
+    my grammar Override {
+        token digit { <[a..z]> }
+        token TOP   { a | <digit> b }
+    }
+    is Override.parse('ab'), 'ab',
+        'a regex overriding <digit> contributes its own prefix';
 }
 
 # vim: expandtab shiftwidth=4
