@@ -283,8 +283,8 @@ only the-lonely {}
 
 test-leading(&the-lonely, 'Roy');
 
-#|{Anonymous}
-my $anon-sub = anon Str sub {};
+my $anon-sub = #|{Anonymous}
+    anon Str sub {};
 
 test-leading($anon-sub, 'Anonymous');
 

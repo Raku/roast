@@ -268,8 +268,8 @@ only the-lonely {}
 
 test-both(&the-lonely, 'Roy', 'Orbison');
 
-#| Anonymous
-my $anon-sub = anon Str sub {};
+my $anon-sub = #| Anonymous
+    anon Str sub {};
 #= Sub
 
 test-both($anon-sub, 'Anonymous', 'Sub');
@@ -311,8 +311,8 @@ sub has-where
 
 test-both(&has-where, "where constraints shouldn't", 'prevent declarative comments');
 
-#| this is
-my $block = {;
+my $block = #| this is
+{;
 #= a block
 };
 

@@ -275,8 +275,8 @@ only the-lonely {}
 
 test-leading(&the-lonely, 'Roy');
 
-#| Anonymous
-my $anon-sub = anon Str sub {};
+my $anon-sub = #| Anonymous
+    anon Str sub {};
 
 test-leading($anon-sub, 'Anonymous');
 
@@ -311,8 +311,8 @@ sub has-where(Int $n where * > 10) {}
 
 test-leading(&has-where, "where constraints shouldn't prevent declarative comments");
 
-#| this is a block
-my $block = {;
+my $block = #| this is a block
+{;
 };
 
 test-leading($block, 'this is a block');
