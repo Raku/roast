@@ -97,7 +97,6 @@ is max(:by({$^a <=> $^b}), 1,2,3),  3, "subroutine form of max with literals wor
 is min(:by({$^a <=> $^b}), 1,2,3),  1, "subroutine form of min with literals works";
 
 # Try to read numbers from a file
-#?rakudo.js.browser skip "openning files doesn't work in the browser"
 {
     my $fh = open $*PROGRAM.parent.add("numbers.data");
     @array = $fh.lines();

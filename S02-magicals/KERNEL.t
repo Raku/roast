@@ -59,7 +59,6 @@ isa-ok $*KERNEL.version, Version;
 isa-ok $*KERNEL.signature, Blob;
 isa-ok $*KERNEL.bits, Int;
 
-#?rakudo.js.browser skip 'no signals in the browser'
 {
     ok $*KERNEL.signals ~~ Positional, 'did Kernel.signals return a list';
     is $*KERNEL.signals.elems, $*KERNEL.signals.grep(Signal|Any).elems,
@@ -75,7 +74,6 @@ isa-ok $*KERNEL.bits, Int;
 }
 
 # https://github.com/rakudo/rakudo/commit/01d948d2d2
-#?rakudo.js.browser skip 'no signals in the browser'
 is_run ｢print $*KERNEL.signal: 'SIGHUP';｣, {out => /^\d+$/},
     '.signal: Str:D works with un-initialized $*KERNEL.signals';
 

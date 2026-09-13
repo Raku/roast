@@ -811,7 +811,6 @@ ok("\c[DEVANAGARI VOWEL SIGN AU]\c[SYRIAC ABBREVIATION MARK]" ~~ m/<:Format>/, q
     is 'abc' ~~ /<:alpha>+/, 'abc', 'alpha chars';
 
     #?rakudo.jvm todo 'get: Match.new(orig => "\t \t", pos => 2,  made => Any, from => 1, list => (), hash => Map.new(()))'
-    #?rakudo.js 1 skip 'test seems wrong'
     # https://github.com/Raku/old-issue-tracker/issues/5966
     is "\t \t" ~~ /<:space>+/, "\t \t", 'space chars';
 
@@ -826,7 +825,6 @@ ok("\c[DEVANAGARI VOWEL SIGN AU]\c[SYRIAC ABBREVIATION MARK]" ~~ m/<:Format>/, q
 is '  ' ~~ m/<:White_Space>+/, '  ', '<:White_Space> matches space in regex';
 #?rakudo.moar todo "<alpha> doesn't match alphabetics which are not Letters"
 # https://github.com/MoarVM/MoarVM/issues/521
-#?rakudo.js todo "we copy the rakudo.moar behavior for <alpha>"
 is 'Ⓐ' ~~ m/<alpha>/, 'Ⓐ', '<alpha> matches alphabetics which are not Letters';
 
 #?rakudo.jvm 4 skip 'Unicode property pairs NYI'

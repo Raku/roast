@@ -2,7 +2,6 @@ use Test;
 use lib $*PROGRAM.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-#?rakudo.js emit plan 40;
 #?rakudo.jvm emit plan 38;
 #?rakudo.moar emit plan 37;
 
