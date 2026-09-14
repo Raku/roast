@@ -98,7 +98,6 @@ for @inttypes -> $type {
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5022
-#?rakudo.js.browser skip "CUnion doesn't work in the browser we don't have proper NativeCall there"
 {
     class Overlap is repr('CUnion') {
         has uint32 $.u32;

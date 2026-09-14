@@ -4,7 +4,6 @@ plan 32;
 
 # https://github.com/Raku/old-issue-tracker/issues/3918
 #?rakudo.moar   skip 'VM.properties does not exist RT #124624'
-#?rakudo.js   skip 'I have no information how it is supposed to work'
 {
     #?rakudo skip 'unimpl $?VM'
     ok $?VM.properties,     "We have properties";
