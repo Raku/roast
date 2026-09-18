@@ -18,6 +18,7 @@ is sub {
 sub foo {} ; sub bar {}
 #= there
 
+#?rakudo 2 skip 'shaky old declarator docs semantics'
 is &foo.WHY, "hi\nthere", 'two subs on a line - first come, first served';
 ok !&bar.WHY.defined, 'two subs on a line - first come, first served';
 
