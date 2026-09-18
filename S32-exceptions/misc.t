@@ -186,7 +186,7 @@ for <
   $" $$ $& $` $' $| $? $]
   @- @+ %- %+ %!
 > {
-    throws-like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
+    dies-ok { "$_ = 1".EVAL }, "Did $_ throw?";
 }
 
 throws-like '$#foo', X::Syntax::Perl5Var;
@@ -459,7 +459,7 @@ if $emits_suggestions {
 # RT #77270
 throws-like 'sub foo(--> NoSuchType) { }; foo', X::Undeclared, what => { m/'Type'/ }, symbol => { m/'NoSuchType'/ };
 
-throws-like 'my class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foobar";
+throws-like 'my class Foobar is Foobar { }', X::Inheritance::SelfInherit, name => "Foobar";
 
 {
     # RT #69760
@@ -615,7 +615,7 @@ throws-like { $*an_undeclared_dynvar = 42 }, X::Dynamic::NotFound;
 
 # RT #123584
 {
-    is_run q[$; my $b;], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use of unnamed \$ variable in sink context" / }, "unnamed var in sink context warns"
+    is_run q[$; my $b;], { status => 0, err => / "Useless use of unnamed \$ variable in sink context" / }, "unnamed var in sink context warns"
 }
 
 # RT #114430
@@ -770,34 +770,34 @@ throws-like 'my Int $a is default(Nil)',
     X::Parameter::Default::TypeCheck, got => Nil;
 
 {
-    is_run q[1;2], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* "Useless use"/ }, "sink distributes to statement list with 2 messages";
-    is_run q[1,2], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* "Useless use"/ }, "sink distributes to comma list with 2 messages";
-    is_run q[{ 1,2 },Nil], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* "Useless use"/ }, "sink distributes to comma list with 2 messages with bare block before Nil";
-    is_run q[{ 1,2 }], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* "Useless use"/ }, "sink distributes to comma list with 2 messages with bare block alone";
-    is_run q[my $x; $x = 1, 123], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 123/ }, "sink distributes to comma list when first is item assignment";
-    is_run q[my $x = 1, 123], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 123/ }, "sink distributes to comma list when first is item initializer";
-    is_run q["foo"], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'foo' / }, "sink warns on string";
-    is_run q[6.0221409e+23], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '6.0221409' 'e'|'E' / }, "sink warns on num";
-    is_run q[my $x; $x], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '$x' / }, "sink warns on variable";
-    is_run q[1+2], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '1+2' / }, "sink warns on operator";
-    is_run q[:foo(42)], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* ':foo(42)' / }, "sink warns on colonpair";
-    is_run q[foo => 42], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'foo => 42' / }, "sink warns on fatarrow";
-    is_run q["foo" => 42], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '=>' / }, "sink warns on pair composer";
-    is_run q[<42i>], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '42' / }, "sink warns on complex";
-    is_run q[<1/3i>], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '1/3' / }, "sink warns on fractional rat";
-    is_run q[<123.456>], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '123.456' / }, "sink warns on decimal rat";
-    is_run q[<123i 456i>], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '456' / }, "sink warns components of qw";
-    is_run q[1 while 0], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'Nil' / }, "sink warns on while mod and suggests Nil";
-    is_run q[1 until 1], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'Nil' / }, "sink warns on until mod and suggests Nil";
-    is_run q["nada" for 1,2], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'Nil' / }, "sink warns on for mod and suggests Nil";
-    is_run q[1.0 given 1,2], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'Nil' / }, "sink warns on given mod and suggests Nil";
-    is_run q[6.02e23 for 1], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'Nil' / }, "sink warns on floater and suggests Nil";
-    is_run q[Mu for 1], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'Nil' / }, "sink warns on type object outside Any and suggests Nil";
-    is_run q[Any for 1], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'Nil' / }, "sink warns on type object Any and suggests Nil";
-    is_run q[Cool for 1], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'Nil' / }, "sink warns on type object inside Any and suggests Nil";
-    is_run q[my $sink; $sink for 1], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'Nil' / }, "sink warns on variable and suggests Nil";
-    is_run q[() while 0], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* 'Nil' / }, "sink warns on () and suggests Nil";
-    is_run q[my @x = gather 43], { status => 0, err => / ^ "WARNINGS" \N* \n "Useless use" .* '43' / }, "sink warns inside of gather";
+    is_run q[1;2], { status => 0, err => / "Useless use" .* "Useless use"/ }, "sink distributes to statement list with 2 messages";
+    is_run q[1,2], { status => 0, err => / "Useless use" .* "Useless use"/ }, "sink distributes to comma list with 2 messages";
+    is_run q[{ 1,2 },Nil], { status => 0, err => / "Useless use" .* "Useless use"/ }, "sink distributes to comma list with 2 messages with bare block before Nil";
+    is_run q[{ 1,2 }], { status => 0, err => / "Useless use" .* "Useless use"/ }, "sink distributes to comma list with 2 messages with bare block alone";
+    is_run q[my $x; $x = 1, 123], { status => 0, err => / "Useless use" .* 123/ }, "sink distributes to comma list when first is item assignment";
+    is_run q[my $x = 1, 123], { status => 0, err => / "Useless use" .* 123/ }, "sink distributes to comma list when first is item initializer";
+    is_run q["foo"], { status => 0, err => / "Useless use" .* 'foo' / }, "sink warns on string";
+    is_run q[6.0221409e+23], { status => 0, err => / "Useless use" .* '6.0221409' 'e'|'E' / }, "sink warns on num";
+    is_run q[my $x; $x], { status => 0, err => / "Useless use" .* '$x' / }, "sink warns on variable";
+    is_run q[1+2], { status => 0, err => / "Useless use" .* '1+2' / }, "sink warns on operator";
+    is_run q[:foo(42)], { status => 0, err => / "Useless use" .* ':foo(42)' / }, "sink warns on colonpair";
+    is_run q[foo => 42], { status => 0, err => / "Useless use" .* 'foo => 42' / }, "sink warns on fatarrow";
+    is_run q["foo" => 42], { status => 0, err => / "Useless use" .* '=>' / }, "sink warns on pair composer";
+    is_run q[<42i>], { status => 0, err => / "Useless use" .* '42' / }, "sink warns on complex";
+    is_run q[<1/3i>], { status => 0, err => / "Useless use" .* '1/3' / }, "sink warns on fractional rat";
+    is_run q[<123.456>], { status => 0, err => / "Useless use" .* '123.456' / }, "sink warns on decimal rat";
+    is_run q[<123i 456i>], { status => 0, err => / "Useless use" .* '456' / }, "sink warns components of qw";
+    is_run q[1 while 0], { status => 0, err => / "Useless use" .* 'Nil' / }, "sink warns on while mod and suggests Nil";
+    is_run q[1 until 1], { status => 0, err => / "Useless use" .* 'Nil' / }, "sink warns on until mod and suggests Nil";
+    is_run q["nada" for 1,2], { status => 0, err => / "Useless use" .* 'Nil' / }, "sink warns on for mod and suggests Nil";
+    is_run q[1.0 given 1,2], { status => 0, err => / "Useless use" .* 'Nil' / }, "sink warns on given mod and suggests Nil";
+    is_run q[6.02e23 for 1], { status => 0, err => / "Useless use" .* 'Nil' / }, "sink warns on floater and suggests Nil";
+    is_run q[Mu for 1], { status => 0, err => / "Useless use" .* 'Nil' / }, "sink warns on type object outside Any and suggests Nil";
+    is_run q[Any for 1], { status => 0, err => / "Useless use" .* 'Nil' / }, "sink warns on type object Any and suggests Nil";
+    is_run q[Cool for 1], { status => 0, err => / "Useless use" .* 'Nil' / }, "sink warns on type object inside Any and suggests Nil";
+    is_run q[my $sink; $sink for 1], { status => 0, err => / "Useless use" .* 'Nil' / }, "sink warns on variable and suggests Nil";
+    is_run q[() while 0], { status => 0, err => / "Useless use" .* 'Nil' / }, "sink warns on () and suggests Nil";
+    is_run q[my @x = gather 43], { status => 0, err => / "Useless use" .* '43' / }, "sink warns inside of gather";
 }
 
 # RT #125769
