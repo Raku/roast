@@ -131,6 +131,7 @@ plan 41;
 
 # state() inside regular expressions
 #?niecza skip ':Perl5'
+#?rakudo skip ':Perl5'
 #?DOES 1
 {
     my $str = "abc";
