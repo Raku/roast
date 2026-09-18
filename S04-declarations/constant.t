@@ -36,7 +36,7 @@ plan 70;
 }
 
 {
-    throws-like 'use v6.c; constant %hash = "nothash"', X::TypeCheck, 'constant hash requires Associative';
+    dies-ok { 'use v6.c; constant %hash = "nothash"'.EVAL }, 'constant hash requires Associative';
 }
 
 {
@@ -48,6 +48,7 @@ plan 70;
 }
 
 #?niecza skip 'Lexical foo3 is not a package (?)'
+#?rakudo skip 'Lexical foo3 is not a package (?)'
 {
     constant foo3 = 42;
     #?rakudo todo 'constants as type constraints'
