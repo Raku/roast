@@ -11,7 +11,6 @@ is-approx (3/7), 0.4285714;
 is-approx (3/7).Num + (2/7).Num + (2/7).Num - 1, -1.1102230e-16;
 is 3/7 + 2/7 + 2/7 - 1,  0;
 
-#?rakudo skip 'now renders as ³/₇'
 is (3/7).perl, "<3/7>";
 
 is (3/7).numerator, 3;
@@ -21,7 +20,6 @@ is (3/7).nude.join('|'), "3|7";
 my $a = 1/60000 + 1/60000; 
 is-deeply $a.WHAT, Rat;
 is-approx $a, 3.3333333e-05;
-#?rakudo skip 'now renders as ¹/₃₀₀₀₀'
 is $a.perl, "<1/30000>";
 
 $a = 1/60000 + 1/60001;
@@ -34,9 +32,7 @@ is-approx $a, 0.99999999;
 
 # I'm not at all convinced the next three are sensible tests -- colomon
 is 3.14.Rat.perl, "3.14";
-#?rakudo skip 'now renders as 3¹⁶/₁₁₃'
 is pi.Rat.perl, "<355/113>";
-#?rakudo skip 'now renders as 3¹⁴⁰⁹³/₉₉₅₃₂'
 is pi.Rat(1e-10).perl, "<312689/99532>";
 
 is-deeply 1.75.WHAT, Rat;
