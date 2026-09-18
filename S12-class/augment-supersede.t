@@ -101,7 +101,7 @@ eval-lives-ok q[
 
 # RT #117165
 {
-    try EVAL 'class ::F { ... }; class F is ::F';
+    try EVAL 'class ::F { ... }; class F is ::F { }';
     ok ~$! ~~ / 'cannot inherit from itself' /, "used to crash rakudo";
 }
 
