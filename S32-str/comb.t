@@ -58,6 +58,7 @@ ok("forty-two".comb() ~~ Iterable, '.comb() returns something Positional' );
 # comb a list
 
 #?niecza skip ':Perl5'
+#?rakudo skip ':Perl5'
 is (<a ab>, <bc ad ba>).comb(rx:Perl5/\S*a\S*/), <a ab ad ba>,
      'comb a list';
 
