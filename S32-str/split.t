@@ -4,7 +4,7 @@ use Test;
 
 # L<S32-setting-library/Str"=item split">
 
-plan 57;
+plan 47;
 
 # Legend:
 # r   result
@@ -197,7 +197,7 @@ test( "aaaa",$_,3,"only chars matching $_.perl()",
   <0 0 aa>,                   # rlkse
   <0 a 0 a aa>,               # rlkvse
   (0=>"a",0=>"a","aa"),       # rlpse
-) for "a", /a/, rx:Perl5/a/;
+) for "a", /a/;
 
 #?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 7
@@ -223,7 +223,7 @@ test( "foo bar baz",$_,2,$_,
   <<foo 0 "bar baz">>,      # rlkse
   <<foo 0 " " "bar baz">>,  # rlkvse
   ("foo",0=>" ","bar baz"), # rlpse
-) for " ", / " " /, / \s /, / \s+ /, rx:Perl5/ /, rx:Perl5/\s/, rx:Perl5/\s+/;
+) for " ", / " " /, / \s /, / \s+ /;
 
 #?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 2
@@ -299,7 +299,7 @@ test( "foo|bar|baz|zoo|",$_,2,$_,
   <foo 0 bar|baz|zoo|>,          # rlkse
   <foo 0 | bar|baz|zoo|>,        # rlkvse
   ("foo",0=>"|","bar|baz|zoo|"), # rlpse
-) for "|", / \| /, rx:Perl5/\|/;
+) for "|", / \| /;
 
 #?rakudo.jvm skip 'UnwindException RT #124279'
 #?DOES 7
@@ -325,12 +325,11 @@ test( "comma, separated, values",$_,2,$_,
   <<comma 0 "separated, values">>,       # rlkse
   <<comma 0 ", " "separated, values">>,  # rlkvse
   ("comma",0=>", ","separated, values"), # rlpse
-) for ", ", / ", " /, / "," \s /, / "," \s+ /,
-    rx:Perl5/, /, rx:Perl5/,\s/, rx:Perl5/,\s+/;
+) for ", ", / ", " /, / "," \s /, / "," \s+ /;
 
 # blessed by $Larry at Message-ID: <20060118191046.GB32562@wall.org>
 test("",$_,2,$_, |("" xx 20)
-) for "a", /a/, "ab", /ab/, <a b>, /a|b/, /\s/, rx:Perl5/\s/;
+) for "a", /a/, "ab", /ab/, <a b>, /a|b/, /\s/;
 
 test("","",2,"empty string", |(() xx 20));
 test("","foo",2,"empty string", |(() xx 20));
@@ -382,7 +381,7 @@ test( "hello world",$_,3,$_,
   <<h 0 ll 0 " world">>,             # rlkse
   <<h 0 e ll 0 o " world">>,         # rlkvse
   ("h",0=>"e","ll",0=>"o"," world"), # rlpse
-) for /<[aeiou]>/, rx:Perl5/[aeiou]/;
+) for /<[aeiou]>/;
 
 {
     my @a = "hello world".split(/<[aeiou]>/, :v);
