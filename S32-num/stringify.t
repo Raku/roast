@@ -1,6 +1,6 @@
 use v6.c;
 use Test;
-plan 112;
+plan 109;
 
 # L<S32::Numeric/Complex/"=item gist">
 
@@ -44,7 +44,6 @@ sub Rat_str_test($value, $str_nucleus, $str, $perl = $str) {
     is ~$value, $str, "~<$str_nucleus>";
     is $value.Str, $str, "<$str_nucleus>.Str";
     is $value.gist, $str, "<$str_nucleus>.gist";
-    todo("rendering of rats changed") if $value.perl ne $perl;;
     is $value.perl, $perl, "<$str_nucleus>.perl";
     
     # FatRat tests
@@ -59,7 +58,8 @@ Rat_str_test -1/2, '-1/2', '-0.5';
 # 0/1 and 1/1 are Rats too!
 Rat_str_test 0/2, '0/1', '0', '0.0';
 Rat_str_test 1/1, '1/1', '1', '1.0';
-Rat_str_test 13/39, '1/3', '0.333333', '<1/3>' ;
+#?rakudo skip 'rendering of <1/3> changed'
+Rat_str_test 13/39, '1/3', '0.333333', '<1/3>';
 Rat_str_test 1000001/10000, '1000001/10000', '100.0001';
 Rat_str_test -1000001/10000, '-1000001/10000', '-100.0001';
 Rat_str_test 555555555555555555555555555555555555555555555/5,
