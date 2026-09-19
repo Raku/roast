@@ -154,6 +154,7 @@ isa-ok $r, Pod::Block;
 
 $r = $=pod[9];
 isa-ok $r.contents[0], Pod::Heading;
+#?rakudo 5 todo 'different margin rules in RakuDoc fixups'
 isa-ok $r.contents[1], Pod::Block::Para;
 isa-ok $r.contents[2], Pod::Block::Para;
 isa-ok $r.contents[3], Pod::Heading;

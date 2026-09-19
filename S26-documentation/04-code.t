@@ -44,6 +44,7 @@ isa-ok $r.contents[1], Pod::Block::Code;
 is $r.contents[1].contents, "While this is not\nThis is a code block";
 isa-ok $r.contents[2], Pod::Block;
 is $r.contents[2].contents[0].contents, 'Mumble mumble';
+#?rakudo 2 todo 'RakuDoc has different margin rule fixups?'
 isa-ok $r.contents[3], Pod::Block::Para;
 is $r.contents[3].contents, "Suprisingly, this is not a code block"
                         ~ " (with fancy indentation too)";
