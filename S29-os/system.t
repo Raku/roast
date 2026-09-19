@@ -57,14 +57,14 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
     my $rt115390;
     for 1..100 -> $i {
         $rt115390 += $i.perl;
-        run "$*EXECUTABLE", "-v";
+        run "$*EXECUTABLE", "-e", "";
         1;
     }
     is $rt115390, 5050, 'no crash with run() in loop; run() in sink context';
     $rt115390 = 0;
     for 1..100 -> $i {
         $rt115390 += $i.perl;
-        my $var = run "$*EXECUTABLE", "-v";
+        my $var = run "$*EXECUTABLE", "-e", "";
         1;
     }
     is $rt115390, 5050, 'no crash with run() in loop; run() not in sink context';
