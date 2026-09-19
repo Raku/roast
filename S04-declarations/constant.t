@@ -44,10 +44,10 @@ plan 72;
 
 {
     constant foo3 = 42;
-    #?rakudo todo 'constants as type constraints'
-    lives-ok { my foo3 $x = 42 },        'constant can be used as a type constraint';
-    dies-ok { my foo3 $x = 43 },         'constant used as a type constraint enforces';
-    dies-ok { my foo3 $x = 42; $x =43 }, 'constant used as a type constraint enforces';
+    #?rakudo skip 'constants as type constraints'
+    lives-ok { my foo3 $x = 42 },               'constant can be used as a type constraint';
+    dies-ok { 'my foo3 $x = 43'.EVAL },         'constant used as a type constraint enforces';
+    dies-ok { 'my foo3 $x = 42; $x =43'.EVAL }, 'constant used as a type constraint enforces';
 }
 
 {
