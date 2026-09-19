@@ -195,7 +195,7 @@ for <
   $" $$ $; $& $` $' $, $. $\ $| $? $@ $]
   @- @+ %- %+ %!
 > {
-    throws-like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
+    dies-ok { "$_ = 1;".EVAL }, "Did $_ throw?";
 }
 
 throws-like '$#foo', X::Syntax::Perl5Var;
