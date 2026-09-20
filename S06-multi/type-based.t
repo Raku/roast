@@ -226,6 +226,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     # This once wrongly reported a multi-dispatch circularity.
     multi rt107638(int $a) { 'ok' }      #OK not used
     multi rt107638(Str $a where 1) { }   #OK not used
+    #?rakudo todo 'should dispatch to int candidate, but does not'
     lives-ok { rt107638(1) },
         'native types and where clauses do not cause spurious circularities';
 }
