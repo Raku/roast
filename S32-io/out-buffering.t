@@ -1,12 +1,13 @@
-use lib $?FILE.IO.parent(2).add("packages");
+use v6.d;
 use Test;
+use lib $?FILE.IO.parent(2).add("packages");
 use Test::Util;
 
 plan 4;
 
-sub test-out-buffer (
+sub test-out-buffer(
     Str:D $desc, &test, UInt:D :$buffer = 1000, UInt :$exp-bytes, Capture :$open-args = \(:w)
-) {
+) is test-assertion {
     state $path = make-temp-file;
     # print an empty string after open. It's allowed for implementation to pass the first print
     # unbuffed, to test if the handle is writable
@@ -24,7 +25,7 @@ sub test-out-buffer (
 }
 
 for \(:w), \(:rw), \(:a) -> $open-args {
-    subtest ".open: $open-args.perl()" => {
+    subtest ".open: $open-args.raku()" => {
         plan 10;
         test-out-buffer :10buffer, :15exp-bytes, :$open-args, '1 x over', { .print: 'x' x 15 };
         test-out-buffer :10buffer, :15exp-bytes, :$open-args, '1 x over + 1 x under', {
@@ -82,17 +83,15 @@ for \(:w), \(:rw), \(:a) -> $open-args {
     }
 }
 
-# RT #131700
-#?rakudo.jvm skip 'hangs, RT #131700'
-#?DOES 1
-{
-  run-with-tty ｢say prompt "FOO"｣, :in<bar>,
-    # Here we use .ends-width because (currently) there's some sort of
+# https://github.com/Raku/old-issue-tracker/issues/6374
+todo("Fails on $*DISTRO.desc()")
+  if $*DISTRO.desc eq 'Sonoma' | 'Sequoia' | 'Tahoe 26';
+run-with-tty ｢say prompt "FOO"｣, :in<bar>,
+    # Here we use .contains because (currently) there's some sort of
     # bug with Proc or something where sent STDIN ends up on our STDOUT.
-    # Extra "\n" after `meow` is 'cause run-as-tty sends extra new line,
-    # 'cause MacOS's `script` really wants it or something
     :out{ .contains: "FOO" & "bar" or do {
-        diag "Got STDOUT: {.perl}";
+        diag "Got STDOUT: {.raku}";
         False;
     }}, 'prompt does not hang';
-}
+
+# vim: expandtab shiftwidth=4
