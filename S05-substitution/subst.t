@@ -260,7 +260,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
     $_ = "a\nḇ\tĆ d";
     #?rakudo.jvm 2 skip '"ordbaseat NYI" RT #125753'
-    ok ss:i:m/Å b C d/w x y z/, 'successful ss substitution returns truthy';
+    ok ss:i:mm/Å b C d/w x y z/, 'successful ss substitution returns truthy';
     # RT #120526
     is $_, "w\nx̱\tý z", 'ss/.../.../ preserves whitespace';
 
