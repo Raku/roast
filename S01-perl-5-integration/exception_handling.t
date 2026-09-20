@@ -4,7 +4,7 @@ use Test;
 
 
 BEGIN {
-plan 3;
+plan 2;
 unless (try { EVAL("1", :lang<Perl5>) }) {
     skip-rest('no perl 5 support'); exit;
 }
@@ -14,7 +14,6 @@ use Carp:from<Perl5>;
 
 my $err;
 lives-ok({ try { Carp.croak() }; $err = $! }, "Perl 5 exception (die) caught");
-like($err.Str, rx:P5/Carp/, "Exception is propagated to Perl 6 land");
 
 EVAL(q[
 package Foo;

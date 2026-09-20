@@ -83,21 +83,21 @@ isa-ok(Foo.new(), 'Foo');
 
 ## like
 
-like("Hello World", rx:P5/\s/, '... testing like()');
-like("Hello World", rx:P5/\s/, desc => '... testing like()');
-like("Hello World", rx:P5/\s/, :desc('... testing like()'));
+like("Hello World", rx/\s/, '... testing like()');
+like("Hello World", rx/\s/, desc => '... testing like()');
+like("Hello World", rx/\s/, :desc('... testing like()'));
 
-like("HelloWorld", rx:P5/\s/, desc => '... testing like()', todo => 1);
-like("HelloWorld", rx:P5/\s/, :todo(1), :desc('... testing like()'));
+like("HelloWorld", rx/\s/, desc => '... testing like()', todo => 1);
+like("HelloWorld", rx/\s/, :todo(1), :desc('... testing like()'));
 
 ## unlike
 
-unlike("HelloWorld", rx:P5/\s/, '... testing unlike()');
-unlike("HelloWorld", rx:P5/\s/, desc => '... testing unlike()');
-unlike("HelloWorld", rx:P5/\s/, :desc('... testing unlike()'));
+unlike("HelloWorld", rx/\s/, '... testing unlike()');
+unlike("HelloWorld", rx/\s/, desc => '... testing unlike()');
+unlike("HelloWorld", rx/\s/, :desc('... testing unlike()'));
 
-unlike("Hello World", rx:P5/\s/, todo => 1, desc => '... testing unlike()');
-unlike("Hello World", rx:P5/\s/, :desc('... testing unlike()'), :todo(1));
+unlike("Hello World", rx/\s/, todo => 1, desc => '... testing unlike()');
+unlike("Hello World", rx/\s/, :desc('... testing unlike()'), :todo(1));
 
 ## cmp-ok
 
@@ -139,7 +139,7 @@ lives-ok -> { die "test" }, :desc('... it lives-ok'), :todo(1);
 ## throws_ok
 
 #throws_ok -> { die "Testing throws_ok" }, 'Testing throws_ok', '... it throws_ok with a Str';
-#throws_ok -> { die "Testing throws_ok" }, rx:P5:i/testing throws_ok/, '... it throws_ok with a Rule';
+#throws_ok -> { die "Testing throws_ok" }, rx:i/testing throws_ok/, '... it throws_ok with a Rule';
 
 ## diag
 
