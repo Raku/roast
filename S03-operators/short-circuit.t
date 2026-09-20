@@ -293,11 +293,13 @@ ok (0 || 0 || 1), '0 || 0 || 1 is true';
 # https://github.com/rakudo/rakudo/issues/1389
 subtest 'xor warns when used with bad precedence' => {
     plan 3;
-    is_run ｢uc 'f♥oo' xor 'b♥ar'｣, {:err{.contains: 'Useless' & 'b♥ar' & none 'f♥oo'}}, '2-arg';
+    my sub warning-lines($err) { $err.lines.grep(*.contains('Useless')).join("\n") }
+    is_run ｢uc 'f♥oo' xor 'b♥ar'｣,
+        {:err{warning-lines($_).contains: 'b♥ar' & none 'f♥oo'}}, '2-arg';
     is_run ｢uc 'f♥oo' xor 'b♥ar' xor 'b♥er' xor 'b♥az'｣,
-        {:err{.contains: <Useless b♥ar b♥er b♥az>.all & none 'f♥oo'}}, '4-arg';
+        {:err{warning-lines($_).contains: <b♥ar b♥er b♥az>.all & none 'f♥oo'}}, '4-arg';
     is_run ｢uc 'f♥oo' xor 'b♥ar'.uc xor 'b♥er'.uc xor 'b♥az'｣,
-        {:err{.contains: <Useless b♥az>.all & <f♥oo b♥ar b♥er>.none}},
+        {:err{warning-lines($_).contains: 'b♥az' & <f♥oo b♥ar b♥er>.none}},
         '4-arg, with all but last args wanted';
 }
 
