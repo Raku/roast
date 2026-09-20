@@ -484,7 +484,7 @@ sub get_test_names {
     my ($self) = @_;
 
     # Should we run tests that only pass with RakuAST (marked as #rakuast in spectest.data)
-    my $rakuast = $ENV{'RAKUDO_RAKUAST'};
+    my $rakuast = $ENV{'RAKUDO_RAKUAST'} || !$ENV{'RAKUDO_LEGACY'};
 
     # Build the list of test scripts to run in @tfiles
     my @tfiles;
