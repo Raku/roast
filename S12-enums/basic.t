@@ -80,7 +80,10 @@ my Color $c1 = Color::white;
 ok($c1 == 0, 'can assign enum value to typed variable with long name');
 my Color $c2 = white;
 ok($c2 == 0, 'can assign enum value to typed variable with short name');
-dies-ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
+# The value assigned is held in a variable so that the enum is what rejects
+# it, rather than the compiler rejecting the literal out of hand.
+my $fail = "for the fail";
+dies-ok({ my Color $c3 = $fail }, 'enum as a type enforces checks');
 
 # conflict between subs and enums
 {
