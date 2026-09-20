@@ -1,6 +1,6 @@
 use v6.d;
-use lib $?FILE.IO.parent(2).add("packages");
 use Test;
+use lib $?FILE.IO.parent(2).add("packages");
 use Test::Util;
 
 # The UTF-8 Clean 8-bit encoding is used to ensure we can roundtrip any
@@ -63,6 +63,7 @@ plan 66;
         'Encoding back to utf8-c8 round-trips';
 }
 
+#?rakudo.js.browser skip "slurp doesn't work in the browser"
 {
     my $test-file := make-temp-path content => Buf.new:
         ord('A'), 0xFA, ord('B'), 0xFB, 0xFC, ord('C'), 0xFD;
@@ -79,27 +80,35 @@ plan 66;
         'Encoding back to utf8-c8 roundtrips';
 }
 
-# RT #125420
+# https://github.com/Raku/old-issue-tracker/issues/4327
 if $*DISTRO.is-win {
     skip('Not clear how to recreate this situation on Windows', 2);
+}
+elsif $*DISTRO.name eq 'browser' {
+    skip('Calling the shell doesn\'t work ', 2);
 }
 else {
     {
         my $cmd = Q{env ACME=$'L\xe9on' } ~ $*EXECUTABLE ~ Q{ -e 'say("lived")'};
         my $proc = shell $cmd, :out;
-        is $proc.out.get, 'lived', 'Can run Perl 6 with non-UTF-8 environment';
+        is $proc.out.get, 'lived', 'Can run Raku with non-UTF-8 environment';
     }
     {
-        my $cmd = Q{echo 'say(42)' > $'L\xe9on' && } ~ $*EXECUTABLE ~ Q{ $'L\xe9on' && rm $'L\xe9on'};
-        my $proc = shell $cmd, :out;
-        is $proc.out.get, '42', 'Can run Perl 6 sourcefile with non-UTF-8 name';
+        my $filename = "L\xe9on";
+        spurt $filename, 'say(42)';
+        LEAVE { try unlink $filename }
+        my $proc = run $*EXECUTABLE, $filename, :out;
+        is $proc.out.get, '42', 'Can run Raku sourcefile with non-UTF-8 name';
     }
 }
 
-# RT #126756
+# https://github.com/Raku/old-issue-tracker/issues/4794
 is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works';
 
-# RT #128184
+#?rakudo.js.browser skip "writing to files doesn't work in the browser"
+# @bufs.elems * 2 + 2
+#?DOES 20
+# https://github.com/Raku/old-issue-tracker/issues/5330
 {
     my @bufs =
         Buf.new(61,29,61,200,30,99,107,150,71,11,253,134,110,27,35,227,88,140,
@@ -122,6 +131,7 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
             109,108,228,192);
 
     my $test-file := make-temp-path;
+
     for @bufs.kv -> $i, $buf {
         is-deeply Buf.new($buf.decode('utf8-c8').encode('utf8-c8').list), $buf,
             ".decode.encode roundtrips correctly for utf8-c8 [Buf #{$i+1}]";
@@ -151,7 +161,7 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
             $ok++ if Buf.new(.encode('utf8-c8').list) eqv @bufs[0];
             unless Buf.new(.encode('utf8-c8').list) eqv @bufs[0] {
                 note $ok;
-                note Buf.new(.encode('utf8-c8').list).perl ~ "\n", @bufs[0].perl;
+                note Buf.new(.encode('utf8-c8').list).raku ~ "\n", @bufs[0].raku;
             }
         }
         $fh.close;
@@ -160,6 +170,7 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
 }
 
 # MoarVM #482
+#?rakudo.js.browser skip "writing to files doesn't work in the browser"
 {
     is Buf.new('“'.encode('utf8')).decode('utf8-c8'), '“',
         'Valid and NFC UTF-8 comes out fine (string case)';
@@ -171,9 +182,15 @@ is Buf.new(0xFE).decode('utf8-c8').chars, 1, 'Decoding Buf with just 0xFE works'
     $fh.close;
 }
 
-# RT#127671
+# https://github.com/Raku/old-issue-tracker/issues/5165
+
 if $*DISTRO.is-win {
     skip('Not clear if there is an alternative to this issue on Windows', 4);
+} elsif $*DISTRO.name eq 'browser' {
+    skip('We don\'t have directories in the browser', 4);
+} elsif $*KERNEL eq 'darwin' {
+    # currently $*DISTRO.name is 'macosx' on OS X, 'macos' on macOS
+    skip('Some problems on MacOS', 4);
 } else {
     my $test-dir = make-temp-dir;
     # ↑ normal directory in TMPDIR to hide our scary stuff
@@ -217,12 +234,14 @@ if $*DISTRO.is-win {
     is ($c8 ~ 'L'      ) ~~ /L/, 'L',
         "Regex still matches when utf8-c8 graphemes are adjacent (start)";
 }
-# RT #128511
+# https://github.com/Raku/old-issue-tracker/issues/5408
 {
     is-deeply Blob[uint8].new(233).decode("utf8-c8").encode("utf8-c8"), Blob[uint8].new(233), 'utf8-c8 does not generate spurious NUL 1';
     is-deeply Blob[uint8].new(233, 128).decode("utf8-c8").encode("utf8-c8"), Blob[uint8].new(233, 128), 'utf8-c8 does not generate spurious NUL 2';
 }
-# RT #128512
+# https://github.com/Raku/old-issue-tracker/issues/5409
 {
     is-deeply Blob[uint8].new(101, 204, 129).decode("utf8-c8").encode("utf8-c8"), Blob[uint8].new(101, 204, 129), 'Non normalized NFC is not mangled by utf-c8';
 }
+
+# vim: expandtab shiftwidth=4
