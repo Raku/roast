@@ -1,6 +1,6 @@
 use v6.d;
-use lib $?FILE.IO.parent(2).add("packages");
 use Test;
+use lib $?FILE.IO.parent(2).add("packages");
 use Test::Util;
 
 plan 5;
@@ -13,10 +13,10 @@ plan 5;
     close $fh;
 }
 
-# RT #127370
+# https://github.com/Raku/old-issue-tracker/issues/5087
 {
   if $*KERNEL.name eq 'linux' {
-    # RT #128831
+    # https://github.com/Raku/old-issue-tracker/issues/5527
     my $files = gather {
         for '/proc/1'.IO.dir() -> $file {
             take $file if $file.f && $file.r;
@@ -33,17 +33,19 @@ plan 5;
   }
 }
 
-# RT # 132349
+# https://github.com/Raku/old-issue-tracker/issues/2593
 #?rakudo.jvm skip 'hangs'
 #?DOES 1
 {
+  todo("Fails on $*DISTRO.desc()")
+    if $*DISTRO.desc eq 'Sonoma' | 'Sequoia' | 'Tahoe 26';
   run-with-tty ｢with $*IN { .eof.say; .slurp.say; .eof.say }｣, :in<meow>,
     # Here we use .ends-width because (currently) there's some sort of
     # bug with Proc or something where sent STDIN ends up on our STDOUT.
     # Extra "\n" after `meow` is 'cause run-as-tty sends extra new line,
     # 'cause MacOS's `script` really wants it or something
     :out{ .ends-with: "False\nmeow\n\nTrue\n" or do {
-        diag "Got STDOUT: {.perl}";
+        diag "Got STDOUT: {.raku}";
         False;
     }}, '.eof on TTY STDIN works right';
 }
@@ -96,4 +98,4 @@ subtest '.eof on empty files' => {
     }
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4
