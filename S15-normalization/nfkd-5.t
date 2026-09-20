@@ -1,11 +1,18 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 17.0.0.
+# Generated from Unicode version 18.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xC9AE).NFKD.list ~~ (0x110C, 0x1174, 0x11B1,), 'C9AE -> 110C 1174 11B1';
+ok Uni.new(0xC9AF).NFKD.list ~~ (0x110C, 0x1174, 0x11B2,), 'C9AF -> 110C 1174 11B2';
+ok Uni.new(0xC9B0).NFKD.list ~~ (0x110C, 0x1174, 0x11B3,), 'C9B0 -> 110C 1174 11B3';
+ok Uni.new(0xC9B1).NFKD.list ~~ (0x110C, 0x1174, 0x11B4,), 'C9B1 -> 110C 1174 11B4';
+ok Uni.new(0xC9B2).NFKD.list ~~ (0x110C, 0x1174, 0x11B5,), 'C9B2 -> 110C 1174 11B5';
+ok Uni.new(0xC9B3).NFKD.list ~~ (0x110C, 0x1174, 0x11B6,), 'C9B3 -> 110C 1174 11B6';
+ok Uni.new(0xC9B4).NFKD.list ~~ (0x110C, 0x1174, 0x11B7,), 'C9B4 -> 110C 1174 11B7';
 ok Uni.new(0xC9B5).NFKD.list ~~ (0x110C, 0x1174, 0x11B8,), 'C9B5 -> 110C 1174 11B8';
 ok Uni.new(0xC9B6).NFKD.list ~~ (0x110C, 0x1174, 0x11B9,), 'C9B6 -> 110C 1174 11B9';
 ok Uni.new(0xC9B7).NFKD.list ~~ (0x110C, 0x1174, 0x11BA,), 'C9B7 -> 110C 1174 11BA';
@@ -1999,10 +2006,3 @@ ok Uni.new(0xD17A).NFKD.list ~~ (0x1110, 0x1167, 0x11B9,), 'D17A -> 1110 1167 11
 ok Uni.new(0xD17B).NFKD.list ~~ (0x1110, 0x1167, 0x11BA,), 'D17B -> 1110 1167 11BA';
 ok Uni.new(0xD17C).NFKD.list ~~ (0x1110, 0x1167, 0x11BB,), 'D17C -> 1110 1167 11BB';
 ok Uni.new(0xD17D).NFKD.list ~~ (0x1110, 0x1167, 0x11BC,), 'D17D -> 1110 1167 11BC';
-ok Uni.new(0xD17E).NFKD.list ~~ (0x1110, 0x1167, 0x11BD,), 'D17E -> 1110 1167 11BD';
-ok Uni.new(0xD17F).NFKD.list ~~ (0x1110, 0x1167, 0x11BE,), 'D17F -> 1110 1167 11BE';
-ok Uni.new(0xD180).NFKD.list ~~ (0x1110, 0x1167, 0x11BF,), 'D180 -> 1110 1167 11BF';
-ok Uni.new(0xD181).NFKD.list ~~ (0x1110, 0x1167, 0x11C0,), 'D181 -> 1110 1167 11C0';
-ok Uni.new(0xD182).NFKD.list ~~ (0x1110, 0x1167, 0x11C1,), 'D182 -> 1110 1167 11C1';
-ok Uni.new(0xD183).NFKD.list ~~ (0x1110, 0x1167, 0x11C2,), 'D183 -> 1110 1167 11C2';
-ok Uni.new(0xD184).NFKD.list ~~ (0x1110, 0x1168,), 'D184 -> 1110 1168';

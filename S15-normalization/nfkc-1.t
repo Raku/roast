@@ -1,11 +1,18 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 17.0.0.
+# Generated from Unicode version 18.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0x327B).NFKC.list ~~ (0xD558,), '327B -> D558';
+ok Uni.new(0x327C).NFKC.list ~~ (0xCC38, 0xACE0,), '327C -> CC38 ACE0';
+ok Uni.new(0x327D).NFKC.list ~~ (0xC8FC, 0xC758,), '327D -> C8FC C758';
+ok Uni.new(0x327E).NFKC.list ~~ (0xC6B0,), '327E -> C6B0';
+ok Uni.new(0x3280).NFKC.list ~~ (0x4E00,), '3280 -> 4E00';
+ok Uni.new(0x3281).NFKC.list ~~ (0x4E8C,), '3281 -> 4E8C';
+ok Uni.new(0x3282).NFKC.list ~~ (0x4E09,), '3282 -> 4E09';
 ok Uni.new(0x3283).NFKC.list ~~ (0x56DB,), '3283 -> 56DB';
 ok Uni.new(0x3284).NFKC.list ~~ (0x4E94,), '3284 -> 4E94';
 ok Uni.new(0x3285).NFKC.list ~~ (0x516D,), '3285 -> 516D';
@@ -1999,10 +2006,3 @@ ok Uni.new(0xB23A).NFKC.list ~~ (0xB23A,), 'B23A -> B23A';
 ok Uni.new(0xB23B).NFKC.list ~~ (0xB23B,), 'B23B -> B23B';
 ok Uni.new(0xB23C).NFKC.list ~~ (0xB23C,), 'B23C -> B23C';
 ok Uni.new(0xB23D).NFKC.list ~~ (0xB23D,), 'B23D -> B23D';
-ok Uni.new(0xB23E).NFKC.list ~~ (0xB23E,), 'B23E -> B23E';
-ok Uni.new(0xB23F).NFKC.list ~~ (0xB23F,), 'B23F -> B23F';
-ok Uni.new(0xB240).NFKC.list ~~ (0xB240,), 'B240 -> B240';
-ok Uni.new(0xB241).NFKC.list ~~ (0xB241,), 'B241 -> B241';
-ok Uni.new(0xB242).NFKC.list ~~ (0xB242,), 'B242 -> B242';
-ok Uni.new(0xB243).NFKC.list ~~ (0xB243,), 'B243 -> B243';
-ok Uni.new(0xB244).NFKC.list ~~ (0xB244,), 'B244 -> B244';

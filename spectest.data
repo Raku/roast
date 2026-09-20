@@ -802,6 +802,7 @@ S15-nfg/GraphemeBreakTest-0.t   # moar
 S15-nfg/GraphemeBreakTest-1.t   # moar
 S15-nfg/GraphemeBreakTest-2.t   # moar
 S15-nfg/GraphemeBreakTest-3.t   # moar
+S15-nfg/GraphemeBreakTest-4.t   # moar
 S15-nfg/case-change.t           # moar
 S15-nfg/cgj.t                   # moar
 S15-nfg/concat-stable.t         # moar

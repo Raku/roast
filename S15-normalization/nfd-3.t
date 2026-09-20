@@ -1,11 +1,18 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 17.0.0.
+# Generated from Unicode version 18.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xBA0E).NFD.list ~~ (0x1106, 0x1163, 0x11B5,), 'BA0E -> 1106 1163 11B5';
+ok Uni.new(0xBA0F).NFD.list ~~ (0x1106, 0x1163, 0x11B6,), 'BA0F -> 1106 1163 11B6';
+ok Uni.new(0xBA10).NFD.list ~~ (0x1106, 0x1163, 0x11B7,), 'BA10 -> 1106 1163 11B7';
+ok Uni.new(0xBA11).NFD.list ~~ (0x1106, 0x1163, 0x11B8,), 'BA11 -> 1106 1163 11B8';
+ok Uni.new(0xBA12).NFD.list ~~ (0x1106, 0x1163, 0x11B9,), 'BA12 -> 1106 1163 11B9';
+ok Uni.new(0xBA13).NFD.list ~~ (0x1106, 0x1163, 0x11BA,), 'BA13 -> 1106 1163 11BA';
+ok Uni.new(0xBA14).NFD.list ~~ (0x1106, 0x1163, 0x11BB,), 'BA14 -> 1106 1163 11BB';
 ok Uni.new(0xBA15).NFD.list ~~ (0x1106, 0x1163, 0x11BC,), 'BA15 -> 1106 1163 11BC';
 ok Uni.new(0xBA16).NFD.list ~~ (0x1106, 0x1163, 0x11BD,), 'BA16 -> 1106 1163 11BD';
 ok Uni.new(0xBA17).NFD.list ~~ (0x1106, 0x1163, 0x11BE,), 'BA17 -> 1106 1163 11BE';
@@ -1999,10 +2006,3 @@ ok Uni.new(0xC1DA).NFD.list ~~ (0x1109, 0x116B, 0x11BD,), 'C1DA -> 1109 116B 11B
 ok Uni.new(0xC1DB).NFD.list ~~ (0x1109, 0x116B, 0x11BE,), 'C1DB -> 1109 116B 11BE';
 ok Uni.new(0xC1DC).NFD.list ~~ (0x1109, 0x116B, 0x11BF,), 'C1DC -> 1109 116B 11BF';
 ok Uni.new(0xC1DD).NFD.list ~~ (0x1109, 0x116B, 0x11C0,), 'C1DD -> 1109 116B 11C0';
-ok Uni.new(0xC1DE).NFD.list ~~ (0x1109, 0x116B, 0x11C1,), 'C1DE -> 1109 116B 11C1';
-ok Uni.new(0xC1DF).NFD.list ~~ (0x1109, 0x116B, 0x11C2,), 'C1DF -> 1109 116B 11C2';
-ok Uni.new(0xC1E0).NFD.list ~~ (0x1109, 0x116C,), 'C1E0 -> 1109 116C';
-ok Uni.new(0xC1E1).NFD.list ~~ (0x1109, 0x116C, 0x11A8,), 'C1E1 -> 1109 116C 11A8';
-ok Uni.new(0xC1E2).NFD.list ~~ (0x1109, 0x116C, 0x11A9,), 'C1E2 -> 1109 116C 11A9';
-ok Uni.new(0xC1E3).NFD.list ~~ (0x1109, 0x116C, 0x11AA,), 'C1E3 -> 1109 116C 11AA';
-ok Uni.new(0xC1E4).NFD.list ~~ (0x1109, 0x116C, 0x11AB,), 'C1E4 -> 1109 116C 11AB';

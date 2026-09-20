@@ -1,11 +1,18 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 17.0.0.
+# Generated from Unicode version 18.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0x327B).NFKD.list ~~ (0x1112, 0x1161,), '327B -> 1112 1161';
+ok Uni.new(0x327C).NFKD.list ~~ (0x110E, 0x1161, 0x11B7, 0x1100, 0x1169,), '327C -> 110E 1161 11B7 1100 1169';
+ok Uni.new(0x327D).NFKD.list ~~ (0x110C, 0x116E, 0x110B, 0x1174,), '327D -> 110C 116E 110B 1174';
+ok Uni.new(0x327E).NFKD.list ~~ (0x110B, 0x116E,), '327E -> 110B 116E';
+ok Uni.new(0x3280).NFKD.list ~~ (0x4E00,), '3280 -> 4E00';
+ok Uni.new(0x3281).NFKD.list ~~ (0x4E8C,), '3281 -> 4E8C';
+ok Uni.new(0x3282).NFKD.list ~~ (0x4E09,), '3282 -> 4E09';
 ok Uni.new(0x3283).NFKD.list ~~ (0x56DB,), '3283 -> 56DB';
 ok Uni.new(0x3284).NFKD.list ~~ (0x4E94,), '3284 -> 4E94';
 ok Uni.new(0x3285).NFKD.list ~~ (0x516D,), '3285 -> 516D';
@@ -1999,10 +2006,3 @@ ok Uni.new(0xB23A).NFKD.list ~~ (0x1102, 0x116F, 0x11C1,), 'B23A -> 1102 116F 11
 ok Uni.new(0xB23B).NFKD.list ~~ (0x1102, 0x116F, 0x11C2,), 'B23B -> 1102 116F 11C2';
 ok Uni.new(0xB23C).NFKD.list ~~ (0x1102, 0x1170,), 'B23C -> 1102 1170';
 ok Uni.new(0xB23D).NFKD.list ~~ (0x1102, 0x1170, 0x11A8,), 'B23D -> 1102 1170 11A8';
-ok Uni.new(0xB23E).NFKD.list ~~ (0x1102, 0x1170, 0x11A9,), 'B23E -> 1102 1170 11A9';
-ok Uni.new(0xB23F).NFKD.list ~~ (0x1102, 0x1170, 0x11AA,), 'B23F -> 1102 1170 11AA';
-ok Uni.new(0xB240).NFKD.list ~~ (0x1102, 0x1170, 0x11AB,), 'B240 -> 1102 1170 11AB';
-ok Uni.new(0xB241).NFKD.list ~~ (0x1102, 0x1170, 0x11AC,), 'B241 -> 1102 1170 11AC';
-ok Uni.new(0xB242).NFKD.list ~~ (0x1102, 0x1170, 0x11AD,), 'B242 -> 1102 1170 11AD';
-ok Uni.new(0xB243).NFKD.list ~~ (0x1102, 0x1170, 0x11AE,), 'B243 -> 1102 1170 11AE';
-ok Uni.new(0xB244).NFKD.list ~~ (0x1102, 0x1170, 0x11AF,), 'B244 -> 1102 1170 11AF';

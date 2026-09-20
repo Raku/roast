@@ -1,11 +1,18 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 17.0.0.
+# Generated from Unicode version 18.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xD17E).NFC.list ~~ (0xD17E,), 'D17E -> D17E';
+ok Uni.new(0xD17F).NFC.list ~~ (0xD17F,), 'D17F -> D17F';
+ok Uni.new(0xD180).NFC.list ~~ (0xD180,), 'D180 -> D180';
+ok Uni.new(0xD181).NFC.list ~~ (0xD181,), 'D181 -> D181';
+ok Uni.new(0xD182).NFC.list ~~ (0xD182,), 'D182 -> D182';
+ok Uni.new(0xD183).NFC.list ~~ (0xD183,), 'D183 -> D183';
+ok Uni.new(0xD184).NFC.list ~~ (0xD184,), 'D184 -> D184';
 ok Uni.new(0xD185).NFC.list ~~ (0xD185,), 'D185 -> D185';
 ok Uni.new(0xD186).NFC.list ~~ (0xD186,), 'D186 -> D186';
 ok Uni.new(0xD187).NFC.list ~~ (0xD187,), 'D187 -> D187';
@@ -1999,10 +2006,3 @@ ok Uni.new(0xFAB4).NFC.list ~~ (0x83EF,), 'FAB4 -> 83EF';
 ok Uni.new(0xFAB5).NFC.list ~~ (0x8779,), 'FAB5 -> 8779';
 ok Uni.new(0xFAB6).NFC.list ~~ (0x8941,), 'FAB6 -> 8941';
 ok Uni.new(0xFAB7).NFC.list ~~ (0x8986,), 'FAB7 -> 8986';
-ok Uni.new(0xFAB8).NFC.list ~~ (0x8996,), 'FAB8 -> 8996';
-ok Uni.new(0xFAB9).NFC.list ~~ (0x8ABF,), 'FAB9 -> 8ABF';
-ok Uni.new(0xFABA).NFC.list ~~ (0x8AF8,), 'FABA -> 8AF8';
-ok Uni.new(0xFABB).NFC.list ~~ (0x8ACB,), 'FABB -> 8ACB';
-ok Uni.new(0xFABC).NFC.list ~~ (0x8B01,), 'FABC -> 8B01';
-ok Uni.new(0xFABD).NFC.list ~~ (0x8AFE,), 'FABD -> 8AFE';
-ok Uni.new(0xFABE).NFC.list ~~ (0x8AED,), 'FABE -> 8AED';

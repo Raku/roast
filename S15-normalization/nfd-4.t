@@ -1,11 +1,18 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 17.0.0.
+# Generated from Unicode version 18.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xC1DE).NFD.list ~~ (0x1109, 0x116B, 0x11C1,), 'C1DE -> 1109 116B 11C1';
+ok Uni.new(0xC1DF).NFD.list ~~ (0x1109, 0x116B, 0x11C2,), 'C1DF -> 1109 116B 11C2';
+ok Uni.new(0xC1E0).NFD.list ~~ (0x1109, 0x116C,), 'C1E0 -> 1109 116C';
+ok Uni.new(0xC1E1).NFD.list ~~ (0x1109, 0x116C, 0x11A8,), 'C1E1 -> 1109 116C 11A8';
+ok Uni.new(0xC1E2).NFD.list ~~ (0x1109, 0x116C, 0x11A9,), 'C1E2 -> 1109 116C 11A9';
+ok Uni.new(0xC1E3).NFD.list ~~ (0x1109, 0x116C, 0x11AA,), 'C1E3 -> 1109 116C 11AA';
+ok Uni.new(0xC1E4).NFD.list ~~ (0x1109, 0x116C, 0x11AB,), 'C1E4 -> 1109 116C 11AB';
 ok Uni.new(0xC1E5).NFD.list ~~ (0x1109, 0x116C, 0x11AC,), 'C1E5 -> 1109 116C 11AC';
 ok Uni.new(0xC1E6).NFD.list ~~ (0x1109, 0x116C, 0x11AD,), 'C1E6 -> 1109 116C 11AD';
 ok Uni.new(0xC1E7).NFD.list ~~ (0x1109, 0x116C, 0x11AE,), 'C1E7 -> 1109 116C 11AE';
@@ -1999,10 +2006,3 @@ ok Uni.new(0xC9AA).NFD.list ~~ (0x110C, 0x1174, 0x11AD,), 'C9AA -> 110C 1174 11A
 ok Uni.new(0xC9AB).NFD.list ~~ (0x110C, 0x1174, 0x11AE,), 'C9AB -> 110C 1174 11AE';
 ok Uni.new(0xC9AC).NFD.list ~~ (0x110C, 0x1174, 0x11AF,), 'C9AC -> 110C 1174 11AF';
 ok Uni.new(0xC9AD).NFD.list ~~ (0x110C, 0x1174, 0x11B0,), 'C9AD -> 110C 1174 11B0';
-ok Uni.new(0xC9AE).NFD.list ~~ (0x110C, 0x1174, 0x11B1,), 'C9AE -> 110C 1174 11B1';
-ok Uni.new(0xC9AF).NFD.list ~~ (0x110C, 0x1174, 0x11B2,), 'C9AF -> 110C 1174 11B2';
-ok Uni.new(0xC9B0).NFD.list ~~ (0x110C, 0x1174, 0x11B3,), 'C9B0 -> 110C 1174 11B3';
-ok Uni.new(0xC9B1).NFD.list ~~ (0x110C, 0x1174, 0x11B4,), 'C9B1 -> 110C 1174 11B4';
-ok Uni.new(0xC9B2).NFD.list ~~ (0x110C, 0x1174, 0x11B5,), 'C9B2 -> 110C 1174 11B5';
-ok Uni.new(0xC9B3).NFD.list ~~ (0x110C, 0x1174, 0x11B6,), 'C9B3 -> 110C 1174 11B6';
-ok Uni.new(0xC9B4).NFD.list ~~ (0x110C, 0x1174, 0x11B7,), 'C9B4 -> 110C 1174 11B7';
