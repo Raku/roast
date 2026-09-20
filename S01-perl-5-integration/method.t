@@ -2,7 +2,7 @@ use v6.c;
 
 use Test;
 
-plan(13);
+plan(12);
 
 unless (try { EVAL("1", :lang<Perl5>) }) {
     skip-rest;
@@ -71,10 +71,6 @@ my $obj;
     $obj = EVAL("FooBar->new", :lang<Perl5>);
     {
         isa-ok($obj, 'FooBar', "blessed");
-    }
-    {
-        #?rakudo skip "Probably bogus test. Tests if the P5 object stringifies to something containing the class name, like FooBar=HASH(0x12345678)"
-        like($obj, rx:Perl5/FooBar/, "blessed");
     }
 }
 

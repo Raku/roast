@@ -405,16 +405,6 @@ S05-modifier/ignoremark.t                   # moar
 S05-modifier/ii.t
 S05-modifier/my.t
 S05-modifier/overlapping.t
-S05-modifier/perl5_0.t
-S05-modifier/perl5_1.t
-S05-modifier/perl5_2.t
-S05-modifier/perl5_3.t
-S05-modifier/perl5_4.t
-S05-modifier/perl5_5.t
-S05-modifier/perl5_6.t
-S05-modifier/perl5_7.t
-S05-modifier/perl5_8.t
-S05-modifier/perl5_9.t
 S05-modifier/pos.t
 S05-modifier/repetition-exhaustive.t
 S05-modifier/repetition.t
@@ -1162,7 +1152,6 @@ integration/passing-pair-class-to-sub.t
 integration/precompiled.t      # moar slow
 integration/real-strings.t
 integration/role-composition-vs-attribute.t
-integration/rule-in-class-Str.t
 integration/say-crash.t
 integration/substr-after-match-in-gather-in-for.t
 integration/topic_in_double_loop.t

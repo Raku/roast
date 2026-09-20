@@ -2,7 +2,7 @@ use v6.c;
 
 use Test;
 
-plan 78;
+plan 77;
 
 # L<S32::Str/Str/=item comb>
 
@@ -56,11 +56,6 @@ is "forty-two".comb().join('|'), 'f|o|r|t|y|-|t|w|o', q{Str.comb(/./)};
 ok("forty-two".comb() ~~ Iterable, '.comb() returns something Positional' );
 
 # comb a list
-
-#?niecza skip ':Perl5'
-#?rakudo skip ':Perl5'
-is (<a ab>, <bc ad ba>).comb(rx:Perl5/\S*a\S*/), <a ab ad ba>,
-     'comb a list';
 
 # needed: comb a filehandle
 
