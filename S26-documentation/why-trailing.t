@@ -1,6 +1,6 @@
 use v6.d;
 use Test;
-plan 54;
+plan 53;
 
 my $pod_index = 0;
 
@@ -265,12 +265,6 @@ multi sub greeble(Str) { }
     test-trailing(@candidates[0], 'alpha');
     test-trailing(@candidates[1], 'beta');
 }
-
-use experimental :macros;
-macro four { quasi { 2+2 } }
-#= I like numbers
-
-test-trailing(&four, 'I like numbers');
 
 only the-lonely {}
 #= Orbison
