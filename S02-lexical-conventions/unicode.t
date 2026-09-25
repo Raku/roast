@@ -56,7 +56,6 @@ is
 
 # https://github.com/Raku/old-issue-tracker/issues/3448
 #?rakudo.jvm 2 skip 'Bogus postfix'
-#?rakudo.js 2 skip 'Bogus postfix'
 lives-ok { my $पहला = 1; }, "hindi declaration";
 is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल($दूसरा) }), 4, "evaluation");
 

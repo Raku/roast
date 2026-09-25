@@ -18,7 +18,6 @@ child processes see the modified C<%*ENV>.
 
 =end desc
 
-#?rakudo.js.browser skip "in the browser we start with no env variables"
 # It must not be empty at startup.
 ok +%*ENV.keys, '%*ENV has keys';
 
@@ -105,7 +104,6 @@ throws-like { EVAL "%ENV" },
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/4498
-#?rakudo.js.browser skip "spawning a new process in a browser doesn't work"
 {
     %*ENV<FOOBAR> = 1;
     lives-ok { run($*EXECUTABLE, '-v') },
