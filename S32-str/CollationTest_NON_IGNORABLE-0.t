@@ -1,14 +1,8 @@
-# Test created with ./CollationTestGen.raku on 2026-09-20 from CollationTest_NON_IGNORABLE.txt UCA version 18.0.0 UCD version 18.0.0
+# Test created with ./CollationTestGen.raku on 2026-09-25 from CollationTest_NON_IGNORABLE.txt UCA version 18.0.0 UCD version 18.0.0
 # ( (codepoints), description, line-num-from-UCA-file, expect-success )
 
 my @a = 
 ( (0x338,  0x334, ), Q«« (̸) COMBINING LONG SOLIDUS OVERLAY»», 11, True ),
-( (0xFFFE,  0x21, ), Q«« ('U+FFFE') <noncharacter-FFFE>»», 1467, True ),
-( (0xFFFE,  0x3F, ), Q«« ('U+FFFE') <noncharacter-FFFE>»», 1468, True ),
-( (0xFFFE,  0x61, ), Q«« ('U+FFFE') <noncharacter-FFFE>»», 1469, True ),
-( (0xFFFE,  0x41, ), Q«« ('U+FFFE') <noncharacter-FFFE>»», 1470, True ),
-( (0xFFFE,  0x62, ), Q«« ('U+FFFE') <noncharacter-FFFE>»», 1471, False ),
-( (0x9,  0x21, ), Q«« ('U+0009') <CHARACTER TABULATION>»», 1472, True ),
 ( (0xE4D,  0x21, ), Q«« (ํ) THAI CHARACTER NIKHAHIT»», 3832, True ),
 ( (0xECE,  0x21, ), Q«« (໎) LAO YAMAKKAN»», 3833, True ),
 ( (0xECD,  0x21, ), Q«« (ໍ) LAO NIGGAHITA»», 3839, True ),
@@ -67,7 +61,7 @@ my @a =
 ( (0x6C,  0x591,  0xFFFE,  0x66,  0x61, ), Q«« (l֑'U+FFFE'f) LATIN SMALL LETTER L, HEBREW ACCENT ETNAHTA, <noncharacter-FFFE>, LATIN SMALL LETTER F»», 71256, True ),
 ( (0x6C,  0x1D165,  0xFFFE,  0x66,  0x61, ), Q«« (l𝅥'U+FFFE'f) LATIN SMALL LETTER L, MUSICAL SYMBOL COMBINING STEM, <noncharacter-FFFE>, LATIN SMALL LETTER F»», 71257, True ),
 ( (0x6C,  0xFFFE,  0x66,  0x41, ), Q«« (l'U+FFFE'f) LATIN SMALL LETTER L, <noncharacter-FFFE>, LATIN SMALL LETTER F»», 71258, True ),
-( (0x6C,  0xFFFE,  0x66,  0x62, ), Q«« (l'U+FFFE'f) LATIN SMALL LETTER L, <noncharacter-FFFE>, LATIN SMALL LETTER F»», 71259, False ),
+( (0x6C,  0xFFFE,  0x66,  0x62, ), Q«« (l'U+FFFE'f) LATIN SMALL LETTER L, <noncharacter-FFFE>, LATIN SMALL LETTER F»», 71259, True ),
 ( (0x6C,  0x20,  0x66,  0x21, ), Q«« (l' 'f) LATIN SMALL LETTER L, SPACE, LATIN SMALL LETTER F»», 71260, True ),
 ( (0x6C,  0x20,  0x66,  0x3F, ), Q«« (l' 'f) LATIN SMALL LETTER L, SPACE, LATIN SMALL LETTER F»», 71261, True ),
 ( (0x6C,  0x20,  0x66,  0x32,  0x21, ), Q«« (l' 'f2) LATIN SMALL LETTER L, SPACE, LATIN SMALL LETTER F, DIGIT TWO»», 71262, True ),
@@ -145,7 +139,7 @@ my @a =
 ( (0x6C,  0x591,  0x32,  0xFFFE,  0x66,  0x61, ), Q«« (l֑2'U+FFFE'f) LATIN SMALL LETTER L, HEBREW ACCENT ETNAHTA, DIGIT TWO, <noncharacter-FFFE>, LATIN SMALL LETTER F»», 71456, True ),
 ( (0x6C,  0x1D165,  0x32,  0xFFFE,  0x66,  0x61, ), Q«« (l𝅥2'U+FFFE'f) LATIN SMALL LETTER L, MUSICAL SYMBOL COMBINING STEM, DIGIT TWO, <noncharacter-FFFE>, LATIN SMALL LETTER F»», 71457, True ),
 ( (0x6C,  0x32,  0xFFFE,  0x66,  0x41, ), Q«« (l2'U+FFFE'f) LATIN SMALL LETTER L, DIGIT TWO, <noncharacter-FFFE>, LATIN SMALL LETTER F»», 71458, True ),
-( (0x6C,  0x32,  0xFFFE,  0x66,  0x62, ), Q«« (l2'U+FFFE'f) LATIN SMALL LETTER L, DIGIT TWO, <noncharacter-FFFE>, LATIN SMALL LETTER F»», 71459, False ),
+( (0x6C,  0x32,  0xFFFE,  0x66,  0x62, ), Q«« (l2'U+FFFE'f) LATIN SMALL LETTER L, DIGIT TWO, <noncharacter-FFFE>, LATIN SMALL LETTER F»», 71459, True ),
 ( (0x6C,  0x32,  0x20,  0x66,  0x21, ), Q«« (l2' 'f) LATIN SMALL LETTER L, DIGIT TWO, SPACE, LATIN SMALL LETTER F»», 71460, True ),
 ( (0x6C,  0x32,  0x20,  0x66,  0x3F, ), Q«« (l2' 'f) LATIN SMALL LETTER L, DIGIT TWO, SPACE, LATIN SMALL LETTER F»», 71461, True ),
 ( (0x6C,  0x32,  0x20,  0x66,  0x32,  0x21, ), Q«« (l2' 'f2) LATIN SMALL LETTER L, DIGIT TWO, SPACE, LATIN SMALL LETTER F, DIGIT TWO»», 71462, True ),
@@ -2302,7 +2296,13 @@ my @a =
 ( (0xE43,  0x1D165,  0xE14,  0x61, ), Q«« (ใ𝅥ด) THAI CHARACTER SARA AI MAIMUAN, MUSICAL SYMBOL COMBINING STEM, THAI CHARACTER DO DEK»», 114233, True ),
 ( (0xE43,  0x1,  0xE15,  0x61, ), Q«« (ใ'U+0001'ต) THAI CHARACTER SARA AI MAIMUAN, <START OF HEADING>, THAI CHARACTER TO TAO»», 114234, True ),
 ( (0xE43,  0x591,  0xE15,  0x61, ), Q«« (ใ֑ต) THAI CHARACTER SARA AI MAIMUAN, HEBREW ACCENT ETNAHTA, THAI CHARACTER TO TAO»», 114235, True ),
-( (0xE43,  0x1D165,  0xE15,  0x61, ), Q«« (ใ𝅥ต) THAI CHARACTER SARA AI MAIMUAN, MUSICAL SYMBOL COMBINING STEM, THAI CHARACTER TO TAO»», 114236, True ),;
+( (0xE43,  0x1D165,  0xE15,  0x61, ), Q«« (ใ𝅥ต) THAI CHARACTER SARA AI MAIMUAN, MUSICAL SYMBOL COMBINING STEM, THAI CHARACTER TO TAO»», 114236, True ),
+( (0xE43,  0x1,  0xE16,  0x61, ), Q«« (ใ'U+0001'ถ) THAI CHARACTER SARA AI MAIMUAN, <START OF HEADING>, THAI CHARACTER THO THUNG»», 114237, True ),
+( (0xE43,  0x591,  0xE16,  0x61, ), Q«« (ใ֑ถ) THAI CHARACTER SARA AI MAIMUAN, HEBREW ACCENT ETNAHTA, THAI CHARACTER THO THUNG»», 114238, True ),
+( (0xE43,  0x1D165,  0xE16,  0x61, ), Q«« (ใ𝅥ถ) THAI CHARACTER SARA AI MAIMUAN, MUSICAL SYMBOL COMBINING STEM, THAI CHARACTER THO THUNG»», 114239, True ),
+( (0xE43,  0x1,  0xE17,  0x61, ), Q«« (ใ'U+0001'ท) THAI CHARACTER SARA AI MAIMUAN, <START OF HEADING>, THAI CHARACTER THO THAHAN»», 114240, True ),
+( (0xE43,  0x591,  0xE17,  0x61, ), Q«« (ใ֑ท) THAI CHARACTER SARA AI MAIMUAN, HEBREW ACCENT ETNAHTA, THAI CHARACTER THO THAHAN»», 114241, True ),
+( (0xE43,  0x1D165,  0xE17,  0x61, ), Q«« (ใ𝅥ท) THAI CHARACTER SARA AI MAIMUAN, MUSICAL SYMBOL COMBINING STEM, THAI CHARACTER THO THAHAN»», 114242, True ),;
 plan 2300;
 use Test;
 # Iterate from 0 to one before the last index

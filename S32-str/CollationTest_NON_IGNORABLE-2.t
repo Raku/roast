@@ -1,13 +1,7 @@
-# Test created with ./CollationTestGen.raku on 2026-09-20 from CollationTest_NON_IGNORABLE.txt UCA version 18.0.0 UCD version 18.0.0
+# Test created with ./CollationTestGen.raku on 2026-09-25 from CollationTest_NON_IGNORABLE.txt UCA version 18.0.0 UCD version 18.0.0
 # ( (codepoints), description, line-num-from-UCA-file, expect-success )
 
 my @a = 
-( (0xAABB,  0xAA87,  0x21, ), Q«« (ꪻꪇ) TAI VIET VOWEL AUE, TAI VIET LETTER HIGH GO»», 116829, True ),
-( (0xAABB,  0xAA87,  0x3F, ), Q«« (ꪻꪇ) TAI VIET VOWEL AUE, TAI VIET LETTER HIGH GO»», 116830, True ),
-( (0xAABB,  0xAA87,  0x61, ), Q«« (ꪻꪇ) TAI VIET VOWEL AUE, TAI VIET LETTER HIGH GO»», 116831, True ),
-( (0xAABB,  0xAA87,  0x41, ), Q«« (ꪻꪇ) TAI VIET VOWEL AUE, TAI VIET LETTER HIGH GO»», 116832, True ),
-( (0xAABB,  0xAA87,  0x62, ), Q«« (ꪻꪇ) TAI VIET VOWEL AUE, TAI VIET LETTER HIGH GO»», 116833, True ),
-( (0xAABC,  0xAA87,  0x21, ), Q«« (ꪼꪇ) TAI VIET VOWEL AY, TAI VIET LETTER HIGH GO»», 116834, True ),
 ( (0xAABC,  0xAA87,  0x3F, ), Q«« (ꪼꪇ) TAI VIET VOWEL AY, TAI VIET LETTER HIGH GO»», 116835, True ),
 ( (0xAABC,  0xAA87,  0x61, ), Q«« (ꪼꪇ) TAI VIET VOWEL AY, TAI VIET LETTER HIGH GO»», 116836, True ),
 ( (0xAABC,  0xAA87,  0x41, ), Q«« (ꪼꪇ) TAI VIET VOWEL AY, TAI VIET LETTER HIGH GO»», 116837, True ),
@@ -2303,7 +2297,13 @@ my @a =
 ( (0x19B6,  0x198F,  0x21, ), Q«« (ᦶᦏ) NEW TAI LUE VOWEL SIGN AE, NEW TAI LUE LETTER HIGH THA»», 125011, True ),
 ( (0x19B6,  0x198F,  0x3F, ), Q«« (ᦶᦏ) NEW TAI LUE VOWEL SIGN AE, NEW TAI LUE LETTER HIGH THA»», 125012, True ),
 ( (0x19B6,  0x198F,  0x61, ), Q«« (ᦶᦏ) NEW TAI LUE VOWEL SIGN AE, NEW TAI LUE LETTER HIGH THA»», 125013, True ),
-( (0x19B6,  0x198F,  0x41, ), Q«« (ᦶᦏ) NEW TAI LUE VOWEL SIGN AE, NEW TAI LUE LETTER HIGH THA»», 125014, True ),;
+( (0x19B6,  0x198F,  0x41, ), Q«« (ᦶᦏ) NEW TAI LUE VOWEL SIGN AE, NEW TAI LUE LETTER HIGH THA»», 125014, True ),
+( (0x19B6,  0x198F,  0x62, ), Q«« (ᦶᦏ) NEW TAI LUE VOWEL SIGN AE, NEW TAI LUE LETTER HIGH THA»», 125015, True ),
+( (0x19B7,  0x198F,  0x21, ), Q«« (ᦷᦏ) NEW TAI LUE VOWEL SIGN O, NEW TAI LUE LETTER HIGH THA»», 125016, True ),
+( (0x19B7,  0x198F,  0x3F, ), Q«« (ᦷᦏ) NEW TAI LUE VOWEL SIGN O, NEW TAI LUE LETTER HIGH THA»», 125017, True ),
+( (0x19B7,  0x198F,  0x61, ), Q«« (ᦷᦏ) NEW TAI LUE VOWEL SIGN O, NEW TAI LUE LETTER HIGH THA»», 125018, True ),
+( (0x19B7,  0x198F,  0x41, ), Q«« (ᦷᦏ) NEW TAI LUE VOWEL SIGN O, NEW TAI LUE LETTER HIGH THA»», 125019, True ),
+( (0x19B7,  0x198F,  0x62, ), Q«« (ᦷᦏ) NEW TAI LUE VOWEL SIGN O, NEW TAI LUE LETTER HIGH THA»», 125020, True ),;
 plan 2301;
 use Test;
 # Iterate from 0 to one before the last index

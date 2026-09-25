@@ -93,7 +93,7 @@ but many do not.
 * Unicode v18.0.0
 
 .Date
-* Regenerated 2026.09.20
+* Regenerated 2026.09.25
 
 .Generated File(s)
 * `S32-str/CollationTest_NON_IGNORABLE-<n>.t`
