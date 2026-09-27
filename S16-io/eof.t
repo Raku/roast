@@ -37,16 +37,21 @@ plan 5;
 #?rakudo.jvm skip 'hangs'
 #?DOES 1
 {
-  skip("Fails on $*DISTRO.desc()") if $*KERNEL.name eq 'darwin';
-  try run-with-tty ｢with $*IN { .eof.say; .slurp.say; .eof.say }｣, :in<meow>,
-    # Here we use .ends-width because (currently) there's some sort of
-    # bug with Proc or something where sent STDIN ends up on our STDOUT.
-    # Extra "\n" after `meow` is 'cause run-as-tty sends extra new line,
-    # 'cause MacOS's `script` really wants it or something
-    :out{ .ends-with: "False\nmeow\n\nTrue\n" or do {
-        diag "Got STDOUT: {.raku}";
-        False;
-    }}, '.eof on TTY STDIN works right';
+    if $*KERNEL.name eq 'darwin' {
+        todo "Fails on $*DISTRO.desc()";
+        flunk ".eof works right even when we seek past end and back";
+    }
+    else {
+        run-with-tty ｢with $*IN { .eof.say; .slurp.say; .eof.say }｣, :in<meow>,
+        # Here we use .ends-width because (currently) there's some sort of
+        # bug with Proc or something where sent STDIN ends up on our STDOUT.
+        # Extra "\n" after `meow` is 'cause run-as-tty sends extra new line,
+        # 'cause MacOS's `script` really wants it or something
+        :out{ .ends-with: "False\nmeow\n\nTrue\n" or do {
+            diag "Got STDOUT: {.raku}";
+            False;
+        }}, '.eof on TTY STDIN works right';
+    }
 }
 
 # https://github.com/rakudo/rakudo/issues/1322
