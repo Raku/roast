@@ -235,7 +235,7 @@ subtest 'composition errors do not crash when printing (RT129906)' => {
 
     #?rakudo.jvm todo 'StackOverflowError RT #129906'
     throws-like 'class A129906 { ... }; class B129906 '
-            ~ 'does A129906 { }; role A129906 { }',
+            ~ 'does A129906 { };',
         X::Composition::NotComposable,  message => /129906/,
     'Accessing X::Composition::NotComposable.message does not crash';
 }
