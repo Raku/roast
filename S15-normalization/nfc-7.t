@@ -1,11 +1,18 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 17.0.0.
+# Generated from Unicode version 18.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xFAB8).NFC.list ~~ (0x8996,), 'FAB8 -> 8996';
+ok Uni.new(0xFAB9).NFC.list ~~ (0x8ABF,), 'FAB9 -> 8ABF';
+ok Uni.new(0xFABA).NFC.list ~~ (0x8AF8,), 'FABA -> 8AF8';
+ok Uni.new(0xFABB).NFC.list ~~ (0x8ACB,), 'FABB -> 8ACB';
+ok Uni.new(0xFABC).NFC.list ~~ (0x8B01,), 'FABC -> 8B01';
+ok Uni.new(0xFABD).NFC.list ~~ (0x8AFE,), 'FABD -> 8AFE';
+ok Uni.new(0xFABE).NFC.list ~~ (0x8AED,), 'FABE -> 8AED';
 ok Uni.new(0xFABF).NFC.list ~~ (0x8B39,), 'FABF -> 8B39';
 ok Uni.new(0xFAC0).NFC.list ~~ (0x8B8A,), 'FAC0 -> 8B8A';
 ok Uni.new(0xFAC1).NFC.list ~~ (0x8D08,), 'FAC1 -> 8D08';
@@ -1170,6 +1177,11 @@ ok Uni.new(0x107B7).NFC.list ~~ (0x107B7,), '107B7 -> 107B7';
 ok Uni.new(0x107B8).NFC.list ~~ (0x107B8,), '107B8 -> 107B8';
 ok Uni.new(0x107B9).NFC.list ~~ (0x107B9,), '107B9 -> 107B9';
 ok Uni.new(0x107BA).NFC.list ~~ (0x107BA,), '107BA -> 107BA';
+ok Uni.new(0x107BB).NFC.list ~~ (0x107BB,), '107BB -> 107BB';
+ok Uni.new(0x107BC).NFC.list ~~ (0x107BC,), '107BC -> 107BC';
+ok Uni.new(0x107BD).NFC.list ~~ (0x107BD,), '107BD -> 107BD';
+ok Uni.new(0x107BE).NFC.list ~~ (0x107BE,), '107BE -> 107BE';
+ok Uni.new(0x107BF).NFC.list ~~ (0x107BF,), '107BF -> 107BF';
 ok Uni.new(0x1109A).NFC.list ~~ (0x1109A,), '1109A -> 1109A';
 ok Uni.new(0x1109C).NFC.list ~~ (0x1109C,), '1109C -> 1109C';
 ok Uni.new(0x110AB).NFC.list ~~ (0x110AB,), '110AB -> 110AB';
@@ -1201,6 +1213,10 @@ ok Uni.new(0x16128).NFC.list ~~ (0x16128,), '16128 -> 16128';
 ok Uni.new(0x16D68).NFC.list ~~ (0x16D68,), '16D68 -> 16D68';
 ok Uni.new(0x16D69).NFC.list ~~ (0x16D69,), '16D69 -> 16D69';
 ok Uni.new(0x16D6A).NFC.list ~~ (0x16D6A,), '16D6A -> 16D6A';
+ok Uni.new(0x1B123).NFC.list ~~ (0x1B123,), '1B123 -> 1B123';
+ok Uni.new(0x1B124).NFC.list ~~ (0x1B124,), '1B124 -> 1B124';
+ok Uni.new(0x1B125).NFC.list ~~ (0x1B125,), '1B125 -> 1B125';
+ok Uni.new(0x1B126).NFC.list ~~ (0x1B126,), '1B126 -> 1B126';
 ok Uni.new(0x1CCD6).NFC.list ~~ (0x1CCD6,), '1CCD6 -> 1CCD6';
 ok Uni.new(0x1CCD7).NFC.list ~~ (0x1CCD7,), '1CCD7 -> 1CCD7';
 ok Uni.new(0x1CCD8).NFC.list ~~ (0x1CCD8,), '1CCD8 -> 1CCD8';
@@ -1904,6 +1920,7 @@ ok Uni.new(0x1D6A2).NFC.list ~~ (0x1D6A2,), '1D6A2 -> 1D6A2';
 ok Uni.new(0x1D6A3).NFC.list ~~ (0x1D6A3,), '1D6A3 -> 1D6A3';
 ok Uni.new(0x1D6A4).NFC.list ~~ (0x1D6A4,), '1D6A4 -> 1D6A4';
 ok Uni.new(0x1D6A5).NFC.list ~~ (0x1D6A5,), '1D6A5 -> 1D6A5';
+ok Uni.new(0x1D6A6).NFC.list ~~ (0x1D6A6,), '1D6A6 -> 1D6A6';
 ok Uni.new(0x1D6A8).NFC.list ~~ (0x1D6A8,), '1D6A8 -> 1D6A8';
 ok Uni.new(0x1D6A9).NFC.list ~~ (0x1D6A9,), '1D6A9 -> 1D6A9';
 ok Uni.new(0x1D6AA).NFC.list ~~ (0x1D6AA,), '1D6AA -> 1D6AA';
@@ -1989,20 +2006,3 @@ ok Uni.new(0x1D6F9).NFC.list ~~ (0x1D6F9,), '1D6F9 -> 1D6F9';
 ok Uni.new(0x1D6FA).NFC.list ~~ (0x1D6FA,), '1D6FA -> 1D6FA';
 ok Uni.new(0x1D6FB).NFC.list ~~ (0x1D6FB,), '1D6FB -> 1D6FB';
 ok Uni.new(0x1D6FC).NFC.list ~~ (0x1D6FC,), '1D6FC -> 1D6FC';
-ok Uni.new(0x1D6FD).NFC.list ~~ (0x1D6FD,), '1D6FD -> 1D6FD';
-ok Uni.new(0x1D6FE).NFC.list ~~ (0x1D6FE,), '1D6FE -> 1D6FE';
-ok Uni.new(0x1D6FF).NFC.list ~~ (0x1D6FF,), '1D6FF -> 1D6FF';
-ok Uni.new(0x1D700).NFC.list ~~ (0x1D700,), '1D700 -> 1D700';
-ok Uni.new(0x1D701).NFC.list ~~ (0x1D701,), '1D701 -> 1D701';
-ok Uni.new(0x1D702).NFC.list ~~ (0x1D702,), '1D702 -> 1D702';
-ok Uni.new(0x1D703).NFC.list ~~ (0x1D703,), '1D703 -> 1D703';
-ok Uni.new(0x1D704).NFC.list ~~ (0x1D704,), '1D704 -> 1D704';
-ok Uni.new(0x1D705).NFC.list ~~ (0x1D705,), '1D705 -> 1D705';
-ok Uni.new(0x1D706).NFC.list ~~ (0x1D706,), '1D706 -> 1D706';
-ok Uni.new(0x1D707).NFC.list ~~ (0x1D707,), '1D707 -> 1D707';
-ok Uni.new(0x1D708).NFC.list ~~ (0x1D708,), '1D708 -> 1D708';
-ok Uni.new(0x1D709).NFC.list ~~ (0x1D709,), '1D709 -> 1D709';
-ok Uni.new(0x1D70A).NFC.list ~~ (0x1D70A,), '1D70A -> 1D70A';
-ok Uni.new(0x1D70B).NFC.list ~~ (0x1D70B,), '1D70B -> 1D70B';
-ok Uni.new(0x1D70C).NFC.list ~~ (0x1D70C,), '1D70C -> 1D70C';
-ok Uni.new(0x1D70D).NFC.list ~~ (0x1D70D,), '1D70D -> 1D70D';

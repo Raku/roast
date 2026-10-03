@@ -1,7 +1,103 @@
-# Generated from GraphemeBreakTest.txt, Unicode version 17.0.0
+# Generated from GraphemeBreakTest.txt, Unicode version 18.0.0
 # Test lines 200..^400
 use Test;
 plan 200;
+
+subtest "Codepoint sequence \"\\x[200C,000D]\"", {
+    plan 3;
+
+    my @chars = "\x[200C,000D]".comb;
+
+    is +@chars, 2, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x200c).NFC, "Grapheme 1/2";
+    is-deeply (@chars[1]//"").NFC, Uni.new(0x000d).NFC, "Grapheme 2/2";
+}
+
+subtest "Codepoint sequence \"\\x[200C,0308,000D]\"", {
+    plan 3;
+
+    my @chars = "\x[200C,0308,000D]".comb;
+
+    is +@chars, 2, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x200c, 0x0308).NFC, "Grapheme 1/2";
+    is-deeply (@chars[1]//"").NFC, Uni.new(0x000d).NFC, "Grapheme 2/2";
+}
+
+subtest "Codepoint sequence \"\\x[200C,000A]\"", {
+    plan 3;
+
+    my @chars = "\x[200C,000A]".comb;
+
+    is +@chars, 2, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x200c).NFC, "Grapheme 1/2";
+    is-deeply (@chars[1]//"").NFC, Uni.new(0x000a).NFC, "Grapheme 2/2";
+}
+
+subtest "Codepoint sequence \"\\x[200C,0308,000A]\"", {
+    plan 3;
+
+    my @chars = "\x[200C,0308,000A]".comb;
+
+    is +@chars, 2, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x200c, 0x0308).NFC, "Grapheme 1/2";
+    is-deeply (@chars[1]//"").NFC, Uni.new(0x000a).NFC, "Grapheme 2/2";
+}
+
+subtest "Codepoint sequence \"\\x[200C,0000]\"", {
+    plan 3;
+
+    my @chars = "\x[200C,0000]".comb;
+
+    is +@chars, 2, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x200c).NFC, "Grapheme 1/2";
+    is-deeply (@chars[1]//"").NFC, Uni.new(0x0000).NFC, "Grapheme 2/2";
+}
+
+subtest "Codepoint sequence \"\\x[200C,0308,0000]\"", {
+    plan 3;
+
+    my @chars = "\x[200C,0308,0000]".comb;
+
+    is +@chars, 2, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x200c, 0x0308).NFC, "Grapheme 1/2";
+    is-deeply (@chars[1]//"").NFC, Uni.new(0x0000).NFC, "Grapheme 2/2";
+}
+
+subtest "Codepoint sequence \"\\x[200C,094D]\"", {
+    plan 2;
+
+    my @chars = "\x[200C,094D]".comb;
+
+    is +@chars, 1, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x200c, 0x094d).NFC, "Grapheme 1/1";
+}
+
+subtest "Codepoint sequence \"\\x[200C,0308,094D]\"", {
+    plan 2;
+
+    my @chars = "\x[200C,0308,094D]".comb;
+
+    is +@chars, 1, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x200c, 0x0308, 0x094d).NFC, "Grapheme 1/1";
+}
+
+subtest "Codepoint sequence \"\\x[200C,0300]\"", {
+    plan 2;
+
+    my @chars = "\x[200C,0300]".comb;
+
+    is +@chars, 1, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x200c, 0x0300).NFC, "Grapheme 1/1";
+}
+
+subtest "Codepoint sequence \"\\x[200C,0308,0300]\"", {
+    plan 2;
+
+    my @chars = "\x[200C,0308,0300]".comb;
+
+    is +@chars, 1, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x200c, 0x0308, 0x0300).NFC, "Grapheme 1/1";
+}
 
 subtest "Codepoint sequence \"\\x[200C,200C]\"", {
     plan 2;
@@ -195,6 +291,26 @@ subtest "Codepoint sequence \"\\x[200C,0308,AC01]\"", {
     is +@chars, 2, "Correct number of graphemes";
     is-deeply (@chars[0]//"").NFC, Uni.new(0x200c, 0x0308).NFC, "Grapheme 1/2";
     is-deeply (@chars[1]//"").NFC, Uni.new(0xac01).NFC, "Grapheme 2/2";
+}
+
+subtest "Codepoint sequence \"\\x[200C,1CF5]\"", {
+    plan 3;
+
+    my @chars = "\x[200C,1CF5]".comb;
+
+    is +@chars, 2, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x200c).NFC, "Grapheme 1/2";
+    is-deeply (@chars[1]//"").NFC, Uni.new(0x1cf5).NFC, "Grapheme 2/2";
+}
+
+subtest "Codepoint sequence \"\\x[200C,0308,1CF5]\"", {
+    plan 3;
+
+    my @chars = "\x[200C,0308,1CF5]".comb;
+
+    is +@chars, 2, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x200c, 0x0308).NFC, "Grapheme 1/2";
+    is-deeply (@chars[1]//"").NFC, Uni.new(0x1cf5).NFC, "Grapheme 2/2";
 }
 
 subtest "Codepoint sequence \"\\x[200C,0915]\"", {
@@ -567,6 +683,26 @@ subtest "Codepoint sequence \"\\x[200D,0308,AC01]\"", {
     is-deeply (@chars[1]//"").NFC, Uni.new(0xac01).NFC, "Grapheme 2/2";
 }
 
+subtest "Codepoint sequence \"\\x[200D,1CF5]\"", {
+    plan 3;
+
+    my @chars = "\x[200D,1CF5]".comb;
+
+    is +@chars, 2, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x200d).NFC, "Grapheme 1/2";
+    is-deeply (@chars[1]//"").NFC, Uni.new(0x1cf5).NFC, "Grapheme 2/2";
+}
+
+subtest "Codepoint sequence \"\\x[200D,0308,1CF5]\"", {
+    plan 3;
+
+    my @chars = "\x[200D,0308,1CF5]".comb;
+
+    is +@chars, 2, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x200d, 0x0308).NFC, "Grapheme 1/2";
+    is-deeply (@chars[1]//"").NFC, Uni.new(0x1cf5).NFC, "Grapheme 2/2";
+}
+
 subtest "Codepoint sequence \"\\x[200D,0915]\"", {
     plan 3;
 
@@ -936,6 +1072,26 @@ subtest "Codepoint sequence \"\\x[1F1E6,0308,AC01]\"", {
     is-deeply (@chars[1]//"").NFC, Uni.new(0xac01).NFC, "Grapheme 2/2";
 }
 
+subtest "Codepoint sequence \"\\x[1F1E6,1CF5]\"", {
+    plan 3;
+
+    my @chars = "\x[1F1E6,1CF5]".comb;
+
+    is +@chars, 2, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x1f1e6).NFC, "Grapheme 1/2";
+    is-deeply (@chars[1]//"").NFC, Uni.new(0x1cf5).NFC, "Grapheme 2/2";
+}
+
+subtest "Codepoint sequence \"\\x[1F1E6,0308,1CF5]\"", {
+    plan 3;
+
+    my @chars = "\x[1F1E6,0308,1CF5]".comb;
+
+    is +@chars, 2, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x1f1e6, 0x0308).NFC, "Grapheme 1/2";
+    is-deeply (@chars[1]//"").NFC, Uni.new(0x1cf5).NFC, "Grapheme 2/2";
+}
+
 subtest "Codepoint sequence \"\\x[1F1E6,0915]\"", {
     plan 3;
 
@@ -1297,6 +1453,25 @@ subtest "Codepoint sequence \"\\x[06DD,0308,AC01]\"", {
     is +@chars, 2, "Correct number of graphemes";
     is-deeply (@chars[0]//"").NFC, Uni.new(0x06dd, 0x0308).NFC, "Grapheme 1/2";
     is-deeply (@chars[1]//"").NFC, Uni.new(0xac01).NFC, "Grapheme 2/2";
+}
+
+subtest "Codepoint sequence \"\\x[06DD,1CF5]\"", {
+    plan 2;
+
+    my @chars = "\x[06DD,1CF5]".comb;
+
+    is +@chars, 1, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x06dd, 0x1cf5).NFC, "Grapheme 1/1";
+}
+
+subtest "Codepoint sequence \"\\x[06DD,0308,1CF5]\"", {
+    plan 3;
+
+    my @chars = "\x[06DD,0308,1CF5]".comb;
+
+    is +@chars, 2, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x06dd, 0x0308).NFC, "Grapheme 1/2";
+    is-deeply (@chars[1]//"").NFC, Uni.new(0x1cf5).NFC, "Grapheme 2/2";
 }
 
 subtest "Codepoint sequence \"\\x[06DD,0915]\"", {
@@ -1665,6 +1840,26 @@ subtest "Codepoint sequence \"\\x[0903,0308,AC01]\"", {
     is-deeply (@chars[1]//"").NFC, Uni.new(0xac01).NFC, "Grapheme 2/2";
 }
 
+subtest "Codepoint sequence \"\\x[0903,1CF5]\"", {
+    plan 3;
+
+    my @chars = "\x[0903,1CF5]".comb;
+
+    is +@chars, 2, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x0903).NFC, "Grapheme 1/2";
+    is-deeply (@chars[1]//"").NFC, Uni.new(0x1cf5).NFC, "Grapheme 2/2";
+}
+
+subtest "Codepoint sequence \"\\x[0903,0308,1CF5]\"", {
+    plan 3;
+
+    my @chars = "\x[0903,0308,1CF5]".comb;
+
+    is +@chars, 2, "Correct number of graphemes";
+    is-deeply (@chars[0]//"").NFC, Uni.new(0x0903, 0x0308).NFC, "Grapheme 1/2";
+    is-deeply (@chars[1]//"").NFC, Uni.new(0x1cf5).NFC, "Grapheme 2/2";
+}
+
 subtest "Codepoint sequence \"\\x[0903,0915]\"", {
     plan 3;
 
@@ -1743,195 +1938,5 @@ subtest "Codepoint sequence \"\\x[0903,0308,0378]\"", {
     is +@chars, 2, "Correct number of graphemes";
     is-deeply (@chars[0]//"").NFC, Uni.new(0x0903, 0x0308).NFC, "Grapheme 1/2";
     is-deeply (@chars[1]//"").NFC, Uni.new(0x0378).NFC, "Grapheme 2/2";
-}
-
-subtest "Codepoint sequence \"\\x[1100,000D]\"", {
-    plan 3;
-
-    my @chars = "\x[1100,000D]".comb;
-
-    is +@chars, 2, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100).NFC, "Grapheme 1/2";
-    is-deeply (@chars[1]//"").NFC, Uni.new(0x000d).NFC, "Grapheme 2/2";
-}
-
-subtest "Codepoint sequence \"\\x[1100,0308,000D]\"", {
-    plan 3;
-
-    my @chars = "\x[1100,0308,000D]".comb;
-
-    is +@chars, 2, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100, 0x0308).NFC, "Grapheme 1/2";
-    is-deeply (@chars[1]//"").NFC, Uni.new(0x000d).NFC, "Grapheme 2/2";
-}
-
-subtest "Codepoint sequence \"\\x[1100,000A]\"", {
-    plan 3;
-
-    my @chars = "\x[1100,000A]".comb;
-
-    is +@chars, 2, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100).NFC, "Grapheme 1/2";
-    is-deeply (@chars[1]//"").NFC, Uni.new(0x000a).NFC, "Grapheme 2/2";
-}
-
-subtest "Codepoint sequence \"\\x[1100,0308,000A]\"", {
-    plan 3;
-
-    my @chars = "\x[1100,0308,000A]".comb;
-
-    is +@chars, 2, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100, 0x0308).NFC, "Grapheme 1/2";
-    is-deeply (@chars[1]//"").NFC, Uni.new(0x000a).NFC, "Grapheme 2/2";
-}
-
-subtest "Codepoint sequence \"\\x[1100,0000]\"", {
-    plan 3;
-
-    my @chars = "\x[1100,0000]".comb;
-
-    is +@chars, 2, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100).NFC, "Grapheme 1/2";
-    is-deeply (@chars[1]//"").NFC, Uni.new(0x0000).NFC, "Grapheme 2/2";
-}
-
-subtest "Codepoint sequence \"\\x[1100,0308,0000]\"", {
-    plan 3;
-
-    my @chars = "\x[1100,0308,0000]".comb;
-
-    is +@chars, 2, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100, 0x0308).NFC, "Grapheme 1/2";
-    is-deeply (@chars[1]//"").NFC, Uni.new(0x0000).NFC, "Grapheme 2/2";
-}
-
-subtest "Codepoint sequence \"\\x[1100,094D]\"", {
-    plan 2;
-
-    my @chars = "\x[1100,094D]".comb;
-
-    is +@chars, 1, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100, 0x094d).NFC, "Grapheme 1/1";
-}
-
-subtest "Codepoint sequence \"\\x[1100,0308,094D]\"", {
-    plan 2;
-
-    my @chars = "\x[1100,0308,094D]".comb;
-
-    is +@chars, 1, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100, 0x0308, 0x094d).NFC, "Grapheme 1/1";
-}
-
-subtest "Codepoint sequence \"\\x[1100,0300]\"", {
-    plan 2;
-
-    my @chars = "\x[1100,0300]".comb;
-
-    is +@chars, 1, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100, 0x0300).NFC, "Grapheme 1/1";
-}
-
-subtest "Codepoint sequence \"\\x[1100,0308,0300]\"", {
-    plan 2;
-
-    my @chars = "\x[1100,0308,0300]".comb;
-
-    is +@chars, 1, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100, 0x0308, 0x0300).NFC, "Grapheme 1/1";
-}
-
-subtest "Codepoint sequence \"\\x[1100,200C]\"", {
-    plan 2;
-
-    my @chars = "\x[1100,200C]".comb;
-
-    is +@chars, 1, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100, 0x200c).NFC, "Grapheme 1/1";
-}
-
-subtest "Codepoint sequence \"\\x[1100,0308,200C]\"", {
-    plan 2;
-
-    my @chars = "\x[1100,0308,200C]".comb;
-
-    is +@chars, 1, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100, 0x0308, 0x200c).NFC, "Grapheme 1/1";
-}
-
-subtest "Codepoint sequence \"\\x[1100,200D]\"", {
-    plan 2;
-
-    my @chars = "\x[1100,200D]".comb;
-
-    is +@chars, 1, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100, 0x200d).NFC, "Grapheme 1/1";
-}
-
-subtest "Codepoint sequence \"\\x[1100,0308,200D]\"", {
-    plan 2;
-
-    my @chars = "\x[1100,0308,200D]".comb;
-
-    is +@chars, 1, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100, 0x0308, 0x200d).NFC, "Grapheme 1/1";
-}
-
-subtest "Codepoint sequence \"\\x[1100,1F1E6]\"", {
-    plan 3;
-
-    my @chars = "\x[1100,1F1E6]".comb;
-
-    is +@chars, 2, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100).NFC, "Grapheme 1/2";
-    is-deeply (@chars[1]//"").NFC, Uni.new(0x1f1e6).NFC, "Grapheme 2/2";
-}
-
-subtest "Codepoint sequence \"\\x[1100,0308,1F1E6]\"", {
-    plan 3;
-
-    my @chars = "\x[1100,0308,1F1E6]".comb;
-
-    is +@chars, 2, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100, 0x0308).NFC, "Grapheme 1/2";
-    is-deeply (@chars[1]//"").NFC, Uni.new(0x1f1e6).NFC, "Grapheme 2/2";
-}
-
-subtest "Codepoint sequence \"\\x[1100,06DD]\"", {
-    plan 3;
-
-    my @chars = "\x[1100,06DD]".comb;
-
-    is +@chars, 2, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100).NFC, "Grapheme 1/2";
-    is-deeply (@chars[1]//"").NFC, Uni.new(0x06dd).NFC, "Grapheme 2/2";
-}
-
-subtest "Codepoint sequence \"\\x[1100,0308,06DD]\"", {
-    plan 3;
-
-    my @chars = "\x[1100,0308,06DD]".comb;
-
-    is +@chars, 2, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100, 0x0308).NFC, "Grapheme 1/2";
-    is-deeply (@chars[1]//"").NFC, Uni.new(0x06dd).NFC, "Grapheme 2/2";
-}
-
-subtest "Codepoint sequence \"\\x[1100,0903]\"", {
-    plan 2;
-
-    my @chars = "\x[1100,0903]".comb;
-
-    is +@chars, 1, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100, 0x0903).NFC, "Grapheme 1/1";
-}
-
-subtest "Codepoint sequence \"\\x[1100,0308,0903]\"", {
-    plan 2;
-
-    my @chars = "\x[1100,0308,0903]".comb;
-
-    is +@chars, 1, "Correct number of graphemes";
-    is-deeply (@chars[0]//"").NFC, Uni.new(0x1100, 0x0308, 0x0903).NFC, "Grapheme 1/1";
 }
 

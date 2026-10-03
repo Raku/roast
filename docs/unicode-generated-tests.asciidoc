@@ -38,10 +38,10 @@ but many do not.
   necessary file.
 
 .Version
-* Emoji v17.0
+* Emoji v18.0
 
 .Date
-* Regenerated 2025.12.03
+* Regenerated 2026.09.20
 
 .Generated File(s)
 * `S15-nfg/emoji-test.t`
@@ -56,10 +56,10 @@ but many do not.
   generate the tests.
 
 .Version
-* Unicode v17.0.0
+* Unicode v18.0.0
 
 .Date
-* Regenerated 2025.12.03
+* Regenerated 2026.09.20
 
 .Generated File(s)
 * `S15-nfg/mass-roundtrip-nfc.t`
@@ -90,10 +90,10 @@ but many do not.
   `spectest.data`.
 
 .Version
-* Unicode v17.0.0
+* Unicode v18.0.0
 
 .Date
-* Regenerated 2025.12.03
+* Regenerated 2026.09.25
 
 .Generated File(s)
 * `S32-str/CollationTest_NON_IGNORABLE-<n>.t`
@@ -107,10 +107,10 @@ but many do not.
   generated file section; look out for files with `<n>` in their pattern).
 
 .Version
-* Unicode v17.0.0
+* Unicode v18.0.0
 
 .Date
-* Regenerated 2025.12.03
+* Regenerated 2026.09.20
 
 .Generated File(s)
 * `S15-normalization/nfc-<n>.t`
@@ -132,10 +132,10 @@ but many do not.
   generated files list for the patterns to look for).
 
 .Version
-* Unicode v17.0.0
+* Unicode v18.0.0
 
 .Date
-* Regenerated 2025.12.03
+* Regenerated 2026.09.20
 
 .Generated File(s)
 * `S15-nfg/GraphemeBreakTest-<n>.t`

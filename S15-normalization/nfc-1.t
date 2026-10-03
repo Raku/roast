@@ -1,11 +1,18 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 17.0.0.
+# Generated from Unicode version 18.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0x327B).NFC.list ~~ (0x327B,), '327B -> 327B';
+ok Uni.new(0x327C).NFC.list ~~ (0x327C,), '327C -> 327C';
+ok Uni.new(0x327D).NFC.list ~~ (0x327D,), '327D -> 327D';
+ok Uni.new(0x327E).NFC.list ~~ (0x327E,), '327E -> 327E';
+ok Uni.new(0x3280).NFC.list ~~ (0x3280,), '3280 -> 3280';
+ok Uni.new(0x3281).NFC.list ~~ (0x3281,), '3281 -> 3281';
+ok Uni.new(0x3282).NFC.list ~~ (0x3282,), '3282 -> 3282';
 ok Uni.new(0x3283).NFC.list ~~ (0x3283,), '3283 -> 3283';
 ok Uni.new(0x3284).NFC.list ~~ (0x3284,), '3284 -> 3284';
 ok Uni.new(0x3285).NFC.list ~~ (0x3285,), '3285 -> 3285';
@@ -1999,10 +2006,3 @@ ok Uni.new(0xB23A).NFC.list ~~ (0xB23A,), 'B23A -> B23A';
 ok Uni.new(0xB23B).NFC.list ~~ (0xB23B,), 'B23B -> B23B';
 ok Uni.new(0xB23C).NFC.list ~~ (0xB23C,), 'B23C -> B23C';
 ok Uni.new(0xB23D).NFC.list ~~ (0xB23D,), 'B23D -> B23D';
-ok Uni.new(0xB23E).NFC.list ~~ (0xB23E,), 'B23E -> B23E';
-ok Uni.new(0xB23F).NFC.list ~~ (0xB23F,), 'B23F -> B23F';
-ok Uni.new(0xB240).NFC.list ~~ (0xB240,), 'B240 -> B240';
-ok Uni.new(0xB241).NFC.list ~~ (0xB241,), 'B241 -> B241';
-ok Uni.new(0xB242).NFC.list ~~ (0xB242,), 'B242 -> B242';
-ok Uni.new(0xB243).NFC.list ~~ (0xB243,), 'B243 -> B243';
-ok Uni.new(0xB244).NFC.list ~~ (0xB244,), 'B244 -> B244';

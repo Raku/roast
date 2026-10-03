@@ -1,11 +1,18 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 17.0.0.
+# Generated from Unicode version 18.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xBA0E).NFKC.list ~~ (0xBA0E,), 'BA0E -> BA0E';
+ok Uni.new(0xBA0F).NFKC.list ~~ (0xBA0F,), 'BA0F -> BA0F';
+ok Uni.new(0xBA10).NFKC.list ~~ (0xBA10,), 'BA10 -> BA10';
+ok Uni.new(0xBA11).NFKC.list ~~ (0xBA11,), 'BA11 -> BA11';
+ok Uni.new(0xBA12).NFKC.list ~~ (0xBA12,), 'BA12 -> BA12';
+ok Uni.new(0xBA13).NFKC.list ~~ (0xBA13,), 'BA13 -> BA13';
+ok Uni.new(0xBA14).NFKC.list ~~ (0xBA14,), 'BA14 -> BA14';
 ok Uni.new(0xBA15).NFKC.list ~~ (0xBA15,), 'BA15 -> BA15';
 ok Uni.new(0xBA16).NFKC.list ~~ (0xBA16,), 'BA16 -> BA16';
 ok Uni.new(0xBA17).NFKC.list ~~ (0xBA17,), 'BA17 -> BA17';
@@ -1999,10 +2006,3 @@ ok Uni.new(0xC1DA).NFKC.list ~~ (0xC1DA,), 'C1DA -> C1DA';
 ok Uni.new(0xC1DB).NFKC.list ~~ (0xC1DB,), 'C1DB -> C1DB';
 ok Uni.new(0xC1DC).NFKC.list ~~ (0xC1DC,), 'C1DC -> C1DC';
 ok Uni.new(0xC1DD).NFKC.list ~~ (0xC1DD,), 'C1DD -> C1DD';
-ok Uni.new(0xC1DE).NFKC.list ~~ (0xC1DE,), 'C1DE -> C1DE';
-ok Uni.new(0xC1DF).NFKC.list ~~ (0xC1DF,), 'C1DF -> C1DF';
-ok Uni.new(0xC1E0).NFKC.list ~~ (0xC1E0,), 'C1E0 -> C1E0';
-ok Uni.new(0xC1E1).NFKC.list ~~ (0xC1E1,), 'C1E1 -> C1E1';
-ok Uni.new(0xC1E2).NFKC.list ~~ (0xC1E2,), 'C1E2 -> C1E2';
-ok Uni.new(0xC1E3).NFKC.list ~~ (0xC1E3,), 'C1E3 -> C1E3';
-ok Uni.new(0xC1E4).NFKC.list ~~ (0xC1E4,), 'C1E4 -> C1E4';

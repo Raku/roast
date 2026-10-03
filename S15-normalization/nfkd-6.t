@@ -1,11 +1,18 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 17.0.0.
+# Generated from Unicode version 18.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xD17E).NFKD.list ~~ (0x1110, 0x1167, 0x11BD,), 'D17E -> 1110 1167 11BD';
+ok Uni.new(0xD17F).NFKD.list ~~ (0x1110, 0x1167, 0x11BE,), 'D17F -> 1110 1167 11BE';
+ok Uni.new(0xD180).NFKD.list ~~ (0x1110, 0x1167, 0x11BF,), 'D180 -> 1110 1167 11BF';
+ok Uni.new(0xD181).NFKD.list ~~ (0x1110, 0x1167, 0x11C0,), 'D181 -> 1110 1167 11C0';
+ok Uni.new(0xD182).NFKD.list ~~ (0x1110, 0x1167, 0x11C1,), 'D182 -> 1110 1167 11C1';
+ok Uni.new(0xD183).NFKD.list ~~ (0x1110, 0x1167, 0x11C2,), 'D183 -> 1110 1167 11C2';
+ok Uni.new(0xD184).NFKD.list ~~ (0x1110, 0x1168,), 'D184 -> 1110 1168';
 ok Uni.new(0xD185).NFKD.list ~~ (0x1110, 0x1168, 0x11A8,), 'D185 -> 1110 1168 11A8';
 ok Uni.new(0xD186).NFKD.list ~~ (0x1110, 0x1168, 0x11A9,), 'D186 -> 1110 1168 11A9';
 ok Uni.new(0xD187).NFKD.list ~~ (0x1110, 0x1168, 0x11AA,), 'D187 -> 1110 1168 11AA';
@@ -1999,10 +2006,3 @@ ok Uni.new(0xFAB4).NFKD.list ~~ (0x83EF,), 'FAB4 -> 83EF';
 ok Uni.new(0xFAB5).NFKD.list ~~ (0x8779,), 'FAB5 -> 8779';
 ok Uni.new(0xFAB6).NFKD.list ~~ (0x8941,), 'FAB6 -> 8941';
 ok Uni.new(0xFAB7).NFKD.list ~~ (0x8986,), 'FAB7 -> 8986';
-ok Uni.new(0xFAB8).NFKD.list ~~ (0x8996,), 'FAB8 -> 8996';
-ok Uni.new(0xFAB9).NFKD.list ~~ (0x8ABF,), 'FAB9 -> 8ABF';
-ok Uni.new(0xFABA).NFKD.list ~~ (0x8AF8,), 'FABA -> 8AF8';
-ok Uni.new(0xFABB).NFKD.list ~~ (0x8ACB,), 'FABB -> 8ACB';
-ok Uni.new(0xFABC).NFKD.list ~~ (0x8B01,), 'FABC -> 8B01';
-ok Uni.new(0xFABD).NFKD.list ~~ (0x8AFE,), 'FABD -> 8AFE';
-ok Uni.new(0xFABE).NFKD.list ~~ (0x8AED,), 'FABE -> 8AED';

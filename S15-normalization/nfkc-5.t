@@ -1,11 +1,18 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 17.0.0.
+# Generated from Unicode version 18.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xC9AE).NFKC.list ~~ (0xC9AE,), 'C9AE -> C9AE';
+ok Uni.new(0xC9AF).NFKC.list ~~ (0xC9AF,), 'C9AF -> C9AF';
+ok Uni.new(0xC9B0).NFKC.list ~~ (0xC9B0,), 'C9B0 -> C9B0';
+ok Uni.new(0xC9B1).NFKC.list ~~ (0xC9B1,), 'C9B1 -> C9B1';
+ok Uni.new(0xC9B2).NFKC.list ~~ (0xC9B2,), 'C9B2 -> C9B2';
+ok Uni.new(0xC9B3).NFKC.list ~~ (0xC9B3,), 'C9B3 -> C9B3';
+ok Uni.new(0xC9B4).NFKC.list ~~ (0xC9B4,), 'C9B4 -> C9B4';
 ok Uni.new(0xC9B5).NFKC.list ~~ (0xC9B5,), 'C9B5 -> C9B5';
 ok Uni.new(0xC9B6).NFKC.list ~~ (0xC9B6,), 'C9B6 -> C9B6';
 ok Uni.new(0xC9B7).NFKC.list ~~ (0xC9B7,), 'C9B7 -> C9B7';
@@ -1999,10 +2006,3 @@ ok Uni.new(0xD17A).NFKC.list ~~ (0xD17A,), 'D17A -> D17A';
 ok Uni.new(0xD17B).NFKC.list ~~ (0xD17B,), 'D17B -> D17B';
 ok Uni.new(0xD17C).NFKC.list ~~ (0xD17C,), 'D17C -> D17C';
 ok Uni.new(0xD17D).NFKC.list ~~ (0xD17D,), 'D17D -> D17D';
-ok Uni.new(0xD17E).NFKC.list ~~ (0xD17E,), 'D17E -> D17E';
-ok Uni.new(0xD17F).NFKC.list ~~ (0xD17F,), 'D17F -> D17F';
-ok Uni.new(0xD180).NFKC.list ~~ (0xD180,), 'D180 -> D180';
-ok Uni.new(0xD181).NFKC.list ~~ (0xD181,), 'D181 -> D181';
-ok Uni.new(0xD182).NFKC.list ~~ (0xD182,), 'D182 -> D182';
-ok Uni.new(0xD183).NFKC.list ~~ (0xD183,), 'D183 -> D183';
-ok Uni.new(0xD184).NFKC.list ~~ (0xD184,), 'D184 -> D184';
