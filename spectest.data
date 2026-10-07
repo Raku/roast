@@ -1066,7 +1066,7 @@ S29-context/exit.t
 S29-context/sleep.t  # slow
 S29-conversions/hash.t
 S29-conversions/ord_and_chr.t
-S29-os/system.t
+S29-os/system.t  # slow
 S32-array/adverbs.t
 S32-array/bool.t
 S32-array/create.t
