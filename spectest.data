@@ -47,15 +47,15 @@
 6.d/S32-num/log.t
 6.d/S32-num/sign.t
 6.d/S32-num/sqrt.t
-6.d/S32-str/sprintf-b.t
-6.d/S32-str/sprintf-c.t      # moar
-6.d/S32-str/sprintf-d.t
-6.d/S32-str/sprintf-e.t
-6.d/S32-str/sprintf-f.t
-6.d/S32-str/sprintf-o.t
-6.d/S32-str/sprintf-s.t      # moar
-6.d/S32-str/sprintf-u.t
-6.d/S32-str/sprintf-x.t
+6.d/S32-str/sprintf-b.t      # slow
+6.d/S32-str/sprintf-c.t      # slow moar
+6.d/S32-str/sprintf-d.t      # slow
+6.d/S32-str/sprintf-e.t      # slow
+6.d/S32-str/sprintf-f.t      # slow
+6.d/S32-str/sprintf-o.t      # slow
+6.d/S32-str/sprintf-s.t      # slow moar
+6.d/S32-str/sprintf-u.t      # slow
+6.d/S32-str/sprintf-x.t      # slow
 6.d/S32-str/sprintf.t
 
 APPENDICES/A01-limits/misc.t
