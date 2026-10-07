@@ -223,8 +223,6 @@ throws-like 'my $z = $z', X::Syntax::Variable::Initializer, name => '$z';
         ok $a, 'unreached declaration in effect at block start';
     }
 
-    # XXX As I write this, this does not die right.  more testing needed.
-    #?rakudo todo 'only pass with rakuast'
     throws-like 'my Int $x = "abc";', X::TypeCheck, 'type error'; #OK
     dies-ok { EVAL '$x = "abc"'; my Int $x; }, 'also a type error';
 }

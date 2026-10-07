@@ -96,7 +96,6 @@ throws-like { shell("program_that_does_not_exist_ignore_errors_please.exe") },
     await $p.write: "1\n2\n3\n4\n".encode;
     await $prom;
 
-    #?rakudo.moar todo 'RT 128398'
     is $stdout, "1\ntest worked\n",
         'LAST phaser gets triggered when using -n command line switch';
 }

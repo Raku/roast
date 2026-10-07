@@ -17,7 +17,6 @@ is sub {
 sub foo {} ; sub bar {}
 #= there
 
-todo 'needs RakuAST', 2;
 is &foo.WHY, "hi", 'leading attaches to first';
 is &bar.WHY, "there", 'trailing attaches to last';
 
@@ -63,7 +62,6 @@ class B {
 }
 
 $first = B.^attributes.first(*.name eq '$!attribute');
-todo 'needs RakuAST', 1;
 is $first.WHY, 'first trailing second trailing', 'interleaved trailing';
 
 sub six(Str $param1, Str $param2) {

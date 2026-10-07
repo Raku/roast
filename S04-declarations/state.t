@@ -245,7 +245,6 @@ sub bughunt1 { (state $svar) }    #OK not used
 eval-lives-ok 'state $x; $x', 'state outside control structure';
 
 # https://github.com/Raku/old-issue-tracker/issues/2548
-#?rakudo todo 'initialization happens only on first call(?)'
 {
     sub f($x) {
         return if $x;

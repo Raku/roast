@@ -191,7 +191,6 @@ is-perl-idempotent(((Nil) => 42));
 # https://github.com/rakudo/rakudo/issues/5680
 {
     my @a = :a:!b:42c;
-    #?rakudo todo 'fixed in RakuAST'
     is-deeply @a, [:a, :!b, :42c], 'do colonpairs get assigned ok';
 }
 

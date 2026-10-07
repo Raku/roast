@@ -349,7 +349,6 @@ throws-like '*(42)', X::Method::NotFound, typename => 'Whatever';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/6068
-#?rakudo todo 'useless use corner case'
 is_run "my &f = EVAL '*+*'", { err => '' }, '*+* does not warn from inside EVAL';
 
 is_run '-> +@foo { @foo.head.(41) }(* == 42)', { err => '' }, 'no warning when WhateverCode passed as arg and invoked';
@@ -359,7 +358,6 @@ is-eqv (1,2,3).combinations(2..*), ((1, 2), (1, 3), (2, 3), (1, 2, 3)).Seq,
     'combinations(2..*)';
 
 # https://github.com/Raku/old-issue-tracker/issues/6296
-#?rakudo todo 'closure/scoping of outer parameter with rx'
 {
     my @match-rx = <foo fie>.map( -> $r { * ~~ /<$r>/ } );
     my @matches = (for <fee foo fie fum> -> $f { @match-rx.grep({$_($f)}).map({~$/}).list } );

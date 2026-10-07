@@ -36,7 +36,6 @@ is $r.config<number>, 42;
 }
 
 
-#?rakudo todo 'https://github.com/Raku/old-issue-tracker/issues/3778'
 is-deeply $r.config<feist>, <1 2 3 4>;
 
 
@@ -158,7 +157,6 @@ foo
 
 $r = $=pod[$p++];
 say "=== testing nums";
-#?rakudo 2 todo '2.3 and -2.3 are Rats, not Nums'
 isa-ok $r.config<k1>, Rat;
 isa-ok $r.config<k2>, Rat;
 isa-ok $r.config<k3>, Num;

@@ -53,7 +53,6 @@ subtest '-n -e "" works like awk ""' => {
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5374
-#?rakudo todo 'LAST working with -n NYI'
 is_run(
     $str,          # input
     {
@@ -64,7 +63,6 @@ is_run(
 );
 
 # https://github.com/Raku/old-issue-tracker/issues/5374
-#?rakudo todo 'LAST working with -n NYI'
 is_run(
     $str,          # input
     {
@@ -75,7 +73,6 @@ is_run(
 );
 
 # https://github.com/Raku/old-issue-tracker/issues/5374
-#?rakudo todo 'LAST working with -n NYI'
 is_run(
     $str,          # input
     {
