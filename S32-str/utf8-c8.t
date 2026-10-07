@@ -6,7 +6,7 @@ use Test::Util;
 # 8-bit octet stream given to us by OSes that don't promise anything about
 # the character encoding of filenames and so forth.
 
-plan 66;
+plan 78;
 
 {
     my $test-str;
@@ -233,6 +233,54 @@ if $*DISTRO.is-win {
     is ($c8 ~ 'L'      ) ~~ /L/, 'L',
         "Regex still matches when utf8-c8 graphemes are adjacent (start)";
 }
+
+# Make sure UTF8-C8 is handled properly in grapheme assembly. They're treated as
+# control characters, and thus always cause grapheme breaks around themselves.
+# They also shouldn't cause any fatal errors when encountered in the middle of
+# searching for a grapheme cluster.
+{
+    my $token = Buf.new(0xFF).decode("utf8-c8");
+
+    is Buf.new(0xFE, 0xE1).decode("utf8-c8").chars, 2,
+       "Synthetics don't combine with each other into larger grapheme clusters";
+
+    is Buf.new(0x0D, 0xE0, 0x0A).decode("utf8-c8").chars, 3,
+       "Synthetic interrupting CRLF grapheme";
+
+    is ("한" ~ $token ~ "ᆯ").chars, 3,
+       "Synthetic interrupting Hangul graphemes";
+
+    is "$token\x20E7".chars, 2,
+       "Synthetic doesn't combine with GCB=Extend";
+
+    is "$token\c[ZWJ]".chars, 2,
+       "Synthetic doesn't combine with GCB=ZWJ";
+
+    is "$token\x[E33]".chars, 2,
+       "Synthetic doesn't combine with GCB=SpacingMark";
+
+    is "!$token".chars, 2,
+       "Synthetic doesn't act like GCB=(Extend|ZWJ|SpacingMark)";
+
+    is "\x[11941]\x[11A88]$token!".chars, 3,
+       "Synthetic doesn't combine with, or act like, GCB=Prepend";
+
+    # the current grapheme rules, in their "regex" form, split the conjunct
+    # handling based on whether or not the InCB=Linker is also GCB=Extend, so
+    # make sure we exercise both paths for implementations that base their
+    # grapheme handling on the regex rules.
+    is "ᳶ$token".chars, 2,
+       "Synthetic interrupts conjuncts (non-extending InCB=Linker)";
+    is "\x[09CD,0303]$token\x[1B99]".chars, 3,
+       "Synthetic interrupts conjuncts (extending InCB=Linker)";
+
+    is "\x[1FAEB]\c[ZWJ]$token\c[ZWJ]\x[1FACC]".chars, 4,
+       "Synthetic doesn't act like an Extended_Pictographic";
+
+    is "\x[1F1EF]$token\x[1F1F5]".chars, 3,
+       "Synthetic doesn't act like a Regional_Indicator";
+}
+
 # https://github.com/Raku/old-issue-tracker/issues/5408
 {
     is-deeply Blob[uint8].new(233).decode("utf8-c8").encode("utf8-c8"), Blob[uint8].new(233), 'utf8-c8 does not generate spurious NUL 1';

@@ -1,11 +1,18 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 17.0.0.
+# Generated from Unicode version 18.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xB23E).NFKD.list ~~ (0x1102, 0x1170, 0x11A9,), 'B23E -> 1102 1170 11A9';
+ok Uni.new(0xB23F).NFKD.list ~~ (0x1102, 0x1170, 0x11AA,), 'B23F -> 1102 1170 11AA';
+ok Uni.new(0xB240).NFKD.list ~~ (0x1102, 0x1170, 0x11AB,), 'B240 -> 1102 1170 11AB';
+ok Uni.new(0xB241).NFKD.list ~~ (0x1102, 0x1170, 0x11AC,), 'B241 -> 1102 1170 11AC';
+ok Uni.new(0xB242).NFKD.list ~~ (0x1102, 0x1170, 0x11AD,), 'B242 -> 1102 1170 11AD';
+ok Uni.new(0xB243).NFKD.list ~~ (0x1102, 0x1170, 0x11AE,), 'B243 -> 1102 1170 11AE';
+ok Uni.new(0xB244).NFKD.list ~~ (0x1102, 0x1170, 0x11AF,), 'B244 -> 1102 1170 11AF';
 ok Uni.new(0xB245).NFKD.list ~~ (0x1102, 0x1170, 0x11B0,), 'B245 -> 1102 1170 11B0';
 ok Uni.new(0xB246).NFKD.list ~~ (0x1102, 0x1170, 0x11B1,), 'B246 -> 1102 1170 11B1';
 ok Uni.new(0xB247).NFKD.list ~~ (0x1102, 0x1170, 0x11B2,), 'B247 -> 1102 1170 11B2';
@@ -1999,10 +2006,3 @@ ok Uni.new(0xBA0A).NFKD.list ~~ (0x1106, 0x1163, 0x11B1,), 'BA0A -> 1106 1163 11
 ok Uni.new(0xBA0B).NFKD.list ~~ (0x1106, 0x1163, 0x11B2,), 'BA0B -> 1106 1163 11B2';
 ok Uni.new(0xBA0C).NFKD.list ~~ (0x1106, 0x1163, 0x11B3,), 'BA0C -> 1106 1163 11B3';
 ok Uni.new(0xBA0D).NFKD.list ~~ (0x1106, 0x1163, 0x11B4,), 'BA0D -> 1106 1163 11B4';
-ok Uni.new(0xBA0E).NFKD.list ~~ (0x1106, 0x1163, 0x11B5,), 'BA0E -> 1106 1163 11B5';
-ok Uni.new(0xBA0F).NFKD.list ~~ (0x1106, 0x1163, 0x11B6,), 'BA0F -> 1106 1163 11B6';
-ok Uni.new(0xBA10).NFKD.list ~~ (0x1106, 0x1163, 0x11B7,), 'BA10 -> 1106 1163 11B7';
-ok Uni.new(0xBA11).NFKD.list ~~ (0x1106, 0x1163, 0x11B8,), 'BA11 -> 1106 1163 11B8';
-ok Uni.new(0xBA12).NFKD.list ~~ (0x1106, 0x1163, 0x11B9,), 'BA12 -> 1106 1163 11B9';
-ok Uni.new(0xBA13).NFKD.list ~~ (0x1106, 0x1163, 0x11BA,), 'BA13 -> 1106 1163 11BA';
-ok Uni.new(0xBA14).NFKD.list ~~ (0x1106, 0x1163, 0x11BB,), 'BA14 -> 1106 1163 11BB';

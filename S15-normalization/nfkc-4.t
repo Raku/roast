@@ -1,11 +1,18 @@
 # Unicode normalization tests, generated from NormalizationTests.txt in the
 # Unicode database by S15-normalization/test-gen.raku.
-# Generated from Unicode version 17.0.0.
+# Generated from Unicode version 18.0.0.
 
 use Test;
 
 plan 2000;
 
+ok Uni.new(0xC1DE).NFKC.list ~~ (0xC1DE,), 'C1DE -> C1DE';
+ok Uni.new(0xC1DF).NFKC.list ~~ (0xC1DF,), 'C1DF -> C1DF';
+ok Uni.new(0xC1E0).NFKC.list ~~ (0xC1E0,), 'C1E0 -> C1E0';
+ok Uni.new(0xC1E1).NFKC.list ~~ (0xC1E1,), 'C1E1 -> C1E1';
+ok Uni.new(0xC1E2).NFKC.list ~~ (0xC1E2,), 'C1E2 -> C1E2';
+ok Uni.new(0xC1E3).NFKC.list ~~ (0xC1E3,), 'C1E3 -> C1E3';
+ok Uni.new(0xC1E4).NFKC.list ~~ (0xC1E4,), 'C1E4 -> C1E4';
 ok Uni.new(0xC1E5).NFKC.list ~~ (0xC1E5,), 'C1E5 -> C1E5';
 ok Uni.new(0xC1E6).NFKC.list ~~ (0xC1E6,), 'C1E6 -> C1E6';
 ok Uni.new(0xC1E7).NFKC.list ~~ (0xC1E7,), 'C1E7 -> C1E7';
@@ -1999,10 +2006,3 @@ ok Uni.new(0xC9AA).NFKC.list ~~ (0xC9AA,), 'C9AA -> C9AA';
 ok Uni.new(0xC9AB).NFKC.list ~~ (0xC9AB,), 'C9AB -> C9AB';
 ok Uni.new(0xC9AC).NFKC.list ~~ (0xC9AC,), 'C9AC -> C9AC';
 ok Uni.new(0xC9AD).NFKC.list ~~ (0xC9AD,), 'C9AD -> C9AD';
-ok Uni.new(0xC9AE).NFKC.list ~~ (0xC9AE,), 'C9AE -> C9AE';
-ok Uni.new(0xC9AF).NFKC.list ~~ (0xC9AF,), 'C9AF -> C9AF';
-ok Uni.new(0xC9B0).NFKC.list ~~ (0xC9B0,), 'C9B0 -> C9B0';
-ok Uni.new(0xC9B1).NFKC.list ~~ (0xC9B1,), 'C9B1 -> C9B1';
-ok Uni.new(0xC9B2).NFKC.list ~~ (0xC9B2,), 'C9B2 -> C9B2';
-ok Uni.new(0xC9B3).NFKC.list ~~ (0xC9B3,), 'C9B3 -> C9B3';
-ok Uni.new(0xC9B4).NFKC.list ~~ (0xC9B4,), 'C9B4 -> C9B4';
