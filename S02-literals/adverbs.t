@@ -52,6 +52,7 @@ plan 35;
     # Not using sigils in rx due to RT #121061 but we do not need to for this
     "aaaa" ~~ m/$<fee>=a $<fie>=((a)(a)) $<foe>=($<fum>=(a))/;
     is-deeply (:$<fee>), (fee => $<fee>), 'Adverb with $< twigil works';
+    #?rakudo 2 todo ":@<...> and :%<...> broken needs RT"
     is-deeply (:@<fie>), (fie => @<fie>), 'Adverb with @< twigil works';
     is-deeply (:%<foe>), (foe => %<foe>), 'Adverb with %< twigil works';
     is-deeply (:$~MAIN), (MAIN => $~MAIN), 'Adverb with $~ twigil works';

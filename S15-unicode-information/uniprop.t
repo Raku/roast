@@ -270,6 +270,7 @@ is 'a'.uniprop('NFKC_Quick_Check'), 'Yes', 'uniprop for NFKC_Quick_Check returns
 is 0x00C0.uniprop('NFKD_Quick_Check'), 'No', 'uniprop for NFKD_Quick_Check returns False for codes without this property';
 is 'a'.uniprop('NFKD_Quick_Check'), 'Yes', 'uniprop for NFKD_Quick_Check returns True for codes with this property';
 
+#?rakudo.moar 2 todo "Indic_Syllabic_Category NYI in MoarVM"
 # https://github.com/MoarVM/MoarVM/issues/466
 is 0x11052.uniprop('Indic_Syllabic_Category'), 'Brahmi_Joining_Number', 'uniprop for Indic_Syllabic_Category returns N for ‘No’ value codes';
 is 'a'.uniprop('Indic_Syllabic_Category'), 'Other', 'uniprop for Indic_Syllabic_Category returns Other for codes without this property';
