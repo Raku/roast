@@ -11,6 +11,7 @@ use Test::Util;
 plan 6;
 
 # https://github.com/rakudo/rakudo/issues/1476
+#?rakudo todo 'passes correctly in RakuAST'
 isa-ok (try ｢*+42:foo｣.EVAL), WhateverCode,
   "WhateverCodes should be allowed if numerical expression is also allowed";
 

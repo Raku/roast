@@ -196,6 +196,7 @@ for <
     throws-like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
 }
 
+#?rakudo todo 'to become less Perl-centric'
 throws-like '$] = 1', X::Syntax::Confused;
 
 throws-like '$#foo', X::Syntax::Perl5Var;

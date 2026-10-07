@@ -19,6 +19,7 @@ throws-like ｢class { has Int:U $.a = 42 }.new.a｣,
 throws-like 'class { has Int:D $.a }',
   X::Syntax::Variable::MissingInitializer,
   type => 'Int:D',                             'can Int:D be on its own';
+#?rakudo todo 'only pass with rakuast'
 throws-like 'class { has Int:D $.a = Int }.new.a',
   X::TypeCheck::Attribute::Default,
   name => '$!a',                               'can Int:D take an Int:U';
@@ -43,6 +44,7 @@ is class { has Int:D $.a = 42  }.new.a,    42, 'can Int:D take an Int:D';
     throws-like 'class { has Int:D $.a }',
       X::Syntax::Variable::MissingInitializer,
       type => 'Int:D',                             'with :_, can Int:D be on its own';
+#?rakudo todo 'only pass with rakuast'
     throws-like 'class { has Int:D $.a = Int }.new',
       X::TypeCheck::Attribute::Default,
       name => '$!a',                               'with :_, can Int:D take an Int:U';
@@ -70,6 +72,7 @@ is class { has Int:D $.a = 42  }.new.a,    42, 'can Int:D take an Int:D';
     throws-like 'use attributes :U; class { has Int:D $a }', # XXX pragma's not seen in EVAL
       X::Syntax::Variable::MissingInitializer,
       type => 'Int:D',                             'with :U, can Int:D be on its own';
+#?rakudo todo 'only pass with rakuast'
     throws-like 'class { has Int:D $.a = Int }.new',
       X::TypeCheck::Attribute::Default,
       name => '$!a',                               'with :U, can Int:D take an Int:U';
@@ -81,6 +84,7 @@ is class { has Int:D $.a = 42  }.new.a,    42, 'can Int:D take an Int:D';
     throws-like 'use attributes :D; class { has Int $a }',  # XXX pragma's not seen in EVAL
       X::Syntax::Variable::MissingInitializer,
       type => 'Int:D', implicit => ':D by pragma', 'with :D, can Int   be on its own';
+#?rakudo todo 'only pass with rakuast'
     throws-like 'use attributes :D; class { has Int $a = Int }.new',  # XXX pragma's not seen in EVAL
       X::TypeCheck::Attribute::Default,
       name => '$!a',                               'with :D, can Int   take an Int:U';
@@ -99,6 +103,7 @@ is class { has Int:D $.a = 42  }.new.a,    42, 'can Int:D take an Int:D';
     throws-like 'use attributes :D; class { has Int:D $.a }', # XXX pragma's not seen in EVAL
       X::Syntax::Variable::MissingInitializer,
       type => 'Int:D',                             'with :D, can Int:D be on its own';
+#?rakudo todo 'only pass with rakuast'
     throws-like 'class { has Int:D $.a = Int }.new',
       X::TypeCheck::Attribute::Default,
       name => '$!a',                               'with :D, can Int:D take an Int:U';
