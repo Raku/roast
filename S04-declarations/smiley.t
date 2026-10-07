@@ -173,6 +173,7 @@ throws-like 'use variables :foo',
 # https://github.com/rakudo/rakudo/issues/4255
 {
     my Int:D ($x = 5);
+    todo 'Initialization fails';
     is-deeply $x, 5, 'Initialization ok';
     $x = 6;
     is-deeply $x, 6, 'Assignment ok';

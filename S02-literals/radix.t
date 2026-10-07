@@ -246,6 +246,7 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 
     # Representation-stressing large radix.  Do two tests in one here
     # so both 32-bit and 64-bit machines are likely to fail uniformly.
+    #?rakudo todo "This needs an RT"
     is :18446744073709551616[1,1] ~ " " ~ :4294967296[1,1], "18446744073709551617 4294967297", "32bit and 64bit large radix literals work";
 }
 

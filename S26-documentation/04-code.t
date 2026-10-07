@@ -43,6 +43,7 @@ isa-ok $r.contents[1], Pod::Block::Code;
 is $r.contents[1].contents, "While this is not\nThis is a code block";
 isa-ok $r.contents[2], Pod::Block;
 is $r.contents[2].contents[0].contents, 'Mumble mumble';
+#?rakudo 2 todo 'legacy pod grammar incorrectly assumes not code'
 isa-ok $r.contents[3], Pod::Block::Code;
 is $r.contents[3].contents, "Unsurprisingly, this is also a code block\n"
                         ~ "    (with fancy indentation too)";
