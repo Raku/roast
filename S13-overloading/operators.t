@@ -57,13 +57,14 @@ is_run ｢$ = ""; sub postfix:<♥> ($) { "pass" }; print "{ 5♥ }"｣,
 'earlier quoted strings do not interfere with later interpolation of newly defined ops';
 
 # https://github.com/rakudo/rakudo/pull/6809
+#?rakudo skip 'fixed in rakuast'
 {
     my class Signer does Callable {
         has Str $.signature = "-- foo";
         method CALL-ME($msg) { "$msg $!signature" }
     }
     my constant &prefix:<signed> = Signer.new;
-    is (signed "hello"), "hello -- foo", "did CALL-ME get called";;
+    is (signed "hello"), "hello -- foo", "did CALL-ME get called";
 }
 
 # vim: expandtab shiftwidth=4
