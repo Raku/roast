@@ -2,7 +2,7 @@ use Test;
 use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 7;
+plan 8;
 
 #L<S06/Operator overloading>
 
@@ -55,5 +55,15 @@ plan 7;
 is_run ｢$ = ""; sub postfix:<♥> ($) { "pass" }; print "{ 5♥ }"｣,
     {:out<pass>, :err(''), :0status},
 'earlier quoted strings do not interfere with later interpolation of newly defined ops';
+
+# https://github.com/rakudo/rakudo/pull/6809
+{
+    my class Signer does Callable {
+        has Str $.signature = "-- foo";
+        method CALL-ME($msg) { "$msg $!signature" }
+    }
+    my constant &prefix:<signed> = Signer.new;
+    is (signed "hello"), "hello -- foo", "did CALL-ME get called";;
+}
 
 # vim: expandtab shiftwidth=4
