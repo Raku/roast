@@ -19,7 +19,6 @@ is(~Foo.subparse("123xyz"), "123",  ".subparse method doesn't require match to e
 dies-ok({ Bar.parse("abc123xyz") }, "dies if no TOP rule");
 
 
-#?rakudo.js.browser skip 'writing to a file is not supported in the browser'
 {
   my $fh = open("parse_and_parsefile_test", :w);
   $fh.say("abc\n123\nxyz");

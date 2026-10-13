@@ -290,7 +290,6 @@ for 2..36 {
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/5676
-#?rakudo.js skip 'Error while compiling: Radix 0 out of range (allowed: 2..36)'
 is-deeply :۳<12>, 5, 'Unicode digit radix bases work';
 
 # https://github.com/Raku/old-issue-tracker/issues/5511

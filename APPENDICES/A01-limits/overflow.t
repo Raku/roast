@@ -33,7 +33,6 @@ throws-like '(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵', X::Numeri
     '(-2)⁴⁵⁵³⁵³⁵³⁴⁵³⁶⁴⁵³⁵³⁴⁵ throws';
 
 #?rakudo.jvm 2 skip 'implementation specific limit'
-#?rakudo.js 2 skip 'implementation specific limit'
 # https://github.com/Raku/old-issue-tracker/issues/2751
 # if no throwage happens, as is wanted, the program will take forever to run
 # so we wait for 2 seconds, then print success message and exit; if the throw

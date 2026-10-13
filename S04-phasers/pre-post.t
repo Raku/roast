@@ -164,7 +164,6 @@ throws-like '$pt.test(1)',
 
 # https://github.com/Raku/old-issue-tracker/issues/4113
 #?rakudo.moar todo "POST and exceptions"
-#?rakudo.js todo "POST and exceptions"
 #?rakudo.jvm skip "POST and exceptions"
 {
     try {
