@@ -212,15 +212,15 @@ plan 74;
 {
     my &code-method = *.sort;
     my &code-sub    =  &sort;
-    isa-ok code-method(<y z x>), Seq, '.sort stored in a sub returns a List';
-    isa-ok code-sub(   <y z x>), Seq, '&sort stored in a sub returns a List';
+    is-deeply code-method(<y z x>), <x y z>, '.sort stored in a sub returns a List';
+    is-deeply code-sub(   <y z x>), <x y z>, '&sort stored in a sub returns a List';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/4855
-isa-ok (<2 1 3>   .sort), Seq, 'detached .sort returns a List';
+is-deeply (<2 1 3>   .sort), <1 2 3>, 'detached .sort returns a List';
 
 # https://github.com/Raku/old-issue-tracker/issues/4842
-isa-ok (*.sort)(<2 3 1>), Seq, 'auto-primed *.sort returns a Seq';
+is-deeply (*.sort)(<2 3 1>), <1 2 3>, 'auto-primed *.sort returns a List';
 
 # https://github.com/Raku/old-issue-tracker/issues/6101
 eval-lives-ok ｢.elems, .sort with @｣,
@@ -252,7 +252,7 @@ subtest 'degenerate cases' => {
 }
 
 # https://github.com/rakudo/rakudo/issues/1739
-is-eqv <a c b>.sort(&lc), <a b c>.Seq, 'no crashes when using &lc in .sort';
+is-deeply <a c b>.sort(&lc), <a b c>, 'no crashes when using &lc in .sort';
 
 # R#2937
 {
