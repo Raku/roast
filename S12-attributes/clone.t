@@ -1,6 +1,6 @@
 use Test;
 
-plan 44;
+plan 45;
 
 # L<S12/Cloning/You can clone an object, changing some of the attributes:>
 class Foo {
@@ -179,6 +179,15 @@ subtest 'Array/Hash cloning does not lose the descriptor' => {
       A.new.clone(:a(666), :b(666e0), :c("666")),
       A.new(:a(666), :b(666e0), :c("666")),
       "cloning native attribtes works";
+}
+
+# https://github.com/rakudo/rakudo/commit/9adc19cb0b
+{
+    my class A {
+        has uint8 $.foo = 42;
+    }
+    is-deeply A.new.clone(:foo(666)).foo, 154,
+      'did the unint8 get twiddled ok';
 }
 
 # vim: expandtab shiftwidth=4
