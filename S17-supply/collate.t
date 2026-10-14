@@ -5,7 +5,7 @@ use Test::Util;
 
 plan 7;
 
-is-eqv Supply.collate, (Supply,).Seq, 'can sort a Supply type object';
+is-deeply Supply.collate, (Supply,), 'can sort a Supply type object';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
     diag "**** scheduling with {$*SCHEDULER.WHAT.raku}";
