@@ -1,6 +1,6 @@
 use Test;
 
-plan 51;
+plan 54;
 
 # The multi-dimensional forms of *-POS should, on undimensioned data
 # structures, just dig into them, doing nested access.
@@ -82,5 +82,13 @@ nok @a[1][1][0]:exists, 'DELETE-POS with many indices digs into nested arrays';
 @a.BIND-POS(0,0,0,42);
 is @a.AT-POS(0,0,0), 42, 'BIND-POS with many indices digs into nested arrays';
 dies-ok { @a.ASSIGN-POS(0,0,0,69) }, 'BIND-POS with many indices really binds';
+
+# https://github.com/rakudo/rakudo/commit/cfb221c3e2
+{
+    my $a = 42;;
+    is-deeply $a.AT-POS(0),          42, 'AT-POS: can we access 0th element';
+    is-deeply ($a.AT-POS(0) = 666), 666, 'AT-POS: does it return a container';
+    is-deeply $a,                   666, 'AT-POS: did the result hold';
+}
 
 # vim: expandtab shiftwidth=4
