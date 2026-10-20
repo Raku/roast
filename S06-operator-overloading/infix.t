@@ -1,5 +1,5 @@
 use Test;
-plan 50;
+plan 51;
 
 {
     sub infix:<×> ($a, $b) { $a + $b }
@@ -278,6 +278,16 @@ is infix:['Z~'](<a b>, <c d>), 'ac bd', 'can call autogen infix via compile-time
     ok !(6 is-eq⨧ 4 is-eq⨧ 2),
       "Custom operator with precedence same as == still doesn't chain";
     is-deeply %calls<plain>, %calls<is-eq⨧>, "Both are called the same";
+}
+
+# https://github.com/rakudo/rakudo/issues/6860
+{
+    my class A {
+        method Str { self }
+    }
+    multi infix:<~>(Str() $a, A $b) { "B" }
+    my $a = A.new;
+    is "A: $a", "B", 'did the right ~ get used';
 }
 
 # vim: expandtab shiftwidth=4
