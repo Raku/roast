@@ -282,6 +282,10 @@ with make-temp-dir() -> $dir {
 
 # GH rakudo issue #1219
 with make-temp-dir() -> $dir {
+    # The child must see deprecation messages, even if the harness silences them
+    temp %*ENV;
+    %*ENV<RAKUDO_NO_DEPRECATIONS>:delete;
+
     $dir.add('Simple1219.rakumod').spurt: ｢
         class A {
             method a() is DEPRECATED<b> {
