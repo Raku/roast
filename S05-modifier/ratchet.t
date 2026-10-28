@@ -1,5 +1,5 @@
 use Test;
-plan 5;
+plan 6;
 
 #L<S05/Modifiers/"The new :r or :ratchet modifier">
 # for other tests see
@@ -23,5 +23,10 @@ ok 'aaaa'  ~~ m/ :ratchet ^ [ :!ratchet <aplus> a ]  /,
 
 ok 'aaaa'  ~~ m/ ^ :!ratchet <aplus> :ratchet a  /,
    'Same if not grouped';
+
+# https://github.com/rakudo/rakudo/issues/6879
+{
+    lives-ok { "a" ~~ m:g/ :r (\w) / }, "ratchet + capture doesn't die";
+}
 
 # vim: expandtab shiftwidth=4
