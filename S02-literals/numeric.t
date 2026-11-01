@@ -107,15 +107,12 @@ ok 0e999999999999999 == 0, '0e999999999999 equals zero';
 
 # We are not afraid of unicode
 {
-    #?rakudo.js skip 'unsupported unicode stuff'
     is ۵۵, 55, "We can handle Unicode digits";
     #?rakudo.jvm 3 skip 'bogus term'
-    #?rakudo.js 3 skip 'unsupported unicode stuff'
     is ⅷ , 8, "We can handle Unicode non-digit numerics";
     is ⅔, 2/3, "We can handle vulgar fractions";
     is 𒑡  × 𒑒, 2/3, "We can multiply cuneiform :-)";
     #?rakudo.jvm skip 'Prefix - requires an argument, but no valid term found'
-    #?rakudo.js skip 'unsupported unicode stuff'
     ok -𝑒 ** −π\i ≅ 1, "We can write 1 in funny ways too";
     is ∞, Inf, "yeah, we do that too...";
 }

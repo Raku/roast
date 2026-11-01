@@ -83,7 +83,6 @@ plan 17;
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/3150
-#?rakudo.js.browser skip "EVAL time use doesn't work in the browser"
 {
     lives-ok { EVAL 'use Test' },
         'can import the same thing twice';   ## the first import at line 2 ;)

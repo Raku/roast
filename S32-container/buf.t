@@ -162,7 +162,6 @@ subtest 'Buf.prepend' => {
 
 } # </coverage; 2016-09-26>
 
-#?rakudo.js.browser skip "not sure why this doesn't work when precomiling on js"
 #?DOES 1
 {
     subtest 'arity-1 infix:<~> works on Blobs' => {

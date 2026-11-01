@@ -132,7 +132,6 @@ subtest '$/ is set when matching in a loop' => {
     #?rakudo todo 'Grammar.subparse does not $/ in 6.e'
     is-deeply $/, 666, 'Foo.subparse does not set $/';
 
-#?rakudo.js.browser skip "reading and writing files doesn't work in the browser"
 {
     my $io := make-temp-file content => 'c';
     $/ = 137;
