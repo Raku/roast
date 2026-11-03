@@ -1,0 +1,5 @@
+use v6;
+unit class MVDist;
+
+method distribution { $?DISTRIBUTION }
+method expanded-version { "#ver#" }
