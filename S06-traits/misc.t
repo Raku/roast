@@ -2,7 +2,7 @@ use Test;
 use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 23;
+plan 29;
 
 =begin description
 
@@ -64,6 +64,20 @@ $foo=1;
 sub mods_param_copy ($x is copy) {$x++;}
 lives-ok { mods_param_copy($foo) }, 'is copy';
 is($foo, 1, 'pass by value works');
+
+# `is copy` from a readonly source: the copy must be writable
+my constant RO = 5;
+sub mods_param_copy_constant ($x is copy)       { $x = 9; $x }
+sub mods_param_copy_native   (int32 $x is copy) { $x = 9; $x }
+sub mods_param_copy_boxed    (Int $x is copy)   { $x = 9; $x }
+sub mods_param_copy_named    (:$x is copy)      { $x = 9; $x }
+sub mods_param_copy_default  ($x is copy = RO)  { $x = 9; $x }
+is mods_param_copy_constant(RO),  9, 'is copy of a constant';
+is mods_param_copy_native(RO),    9, 'is copy of a constant, native';
+is mods_param_copy_boxed(RO),     9, 'is copy of a constant, boxed';
+is mods_param_copy_named(:x(RO)), 9, 'is copy of a constant, named';
+is mods_param_copy_default(),     9, 'is copy defaulting to a constant';
+is RO, 5, 'the constant is unchanged';
 
 # same test with default value
 sub boom ($arg is copy = 0) { $arg++ }
