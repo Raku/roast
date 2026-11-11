@@ -1,7 +1,7 @@
 use Test;
 # L<S32::IO/IO::Path>
 
-plan 43;
+plan 44;
 
 # make sure we have a controlled environment here
 my $*SPEC = IO::Spec::Unix;
@@ -46,7 +46,6 @@ is $relpath.absolute.IO.relative, "foo/bar",
   "relative inverts absolute";
 is $relpath.absolute("/foo").IO.relative("/foo"),
   "foo/bar","absolute inverts relative";
-#?rakudo 1 todo 'resolve NYI, needs nqp::readlink'
 is $abspath.relative.IO.absolute.IO.resolve, "/foo/bar", "absolute inverts relative with resolve";
 
 is IO::Path::Unix.new("foo/bar").parent, "foo",   "parent of 'foo/bar' is 'foo'";
@@ -76,5 +75,10 @@ is IO::Path::Unix.new("foo/()").succ, "foo/()", "pred only effects basename";
 # https://github.com/Raku/old-issue-tracker/issues/5531
 isnt IO::Path::Unix.new("-a").absolute, '',
     '.absolute on paths starting with `-` does not produce empty string';
+
+{
+    my $root = "/".IO;
+    is $root.resolve, $root, 'does the root resolve to itself';
+}
 
 # vim: expandtab shiftwidth=4
