@@ -13,7 +13,7 @@ I/O tests
 
 =end pod
 
-plan 114;
+plan 115;
 
 sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_filehandles_io' ~ nonce();
@@ -237,6 +237,12 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
     is $buf.elems, 3, "three bytes were read";
     is $buf.decode("ISO-8859-1"), "föö", "the bytes decode into the right Str";
     $binary_in_fh.close;
+}
+
+{
+    my $fh = open($filename, :w, :bin);
+    dies-ok { $fh.write("föö") }, 'write requires a Blob, not a Str';
+    $fh.close;
 }
 
 {
