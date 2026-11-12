@@ -3,7 +3,7 @@ use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
 
-plan 64;
+plan 65;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
@@ -124,6 +124,14 @@ plan 64;
     my $/ := 'foobar';
     is $0, 'foobar', '$0 works like $/[0], even for non-Match objects';
     nok $1.defined, '$1 is not defined';
+}
+
+# https://github.com/ash/rakupp/issues/256
+# `$0` must follow a lexical `$/` even when an earlier match is in scope.
+{
+    'ab' ~~ /(a)/;
+    my $/ := 'foobar';
+    is $0, 'foobar', '$0 follows a lexical $/ after an earlier match';
 }
 
 # https://github.com/Raku/old-issue-tracker/issues/1527
