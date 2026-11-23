@@ -1,6 +1,6 @@
 use Test;
 
-plan 66;
+plan 67;
 
 my Int:D $j = 256;
 MY::<$j> = 111;
@@ -178,6 +178,12 @@ throws-like 'use variables :foo',
     $x = 6;
     is-deeply $x, 6, 'Assignment ok';
     throws-like { $x = Int }, X::TypeCheck::Assignment;
+}
+
+# https://github.com/rakudo/rakudo/issues/6955
+{
+    lives-ok { q/use variables :D; my $x = 1/.EVAL },
+      'can have untyped variables with :D';
 }
 
 # vim: expandtab shiftwidth=4
