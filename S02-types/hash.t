@@ -2,7 +2,7 @@ use Test;
 use lib $*PROGRAM.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 112;
+plan 114;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -399,6 +399,15 @@ for <Str gist raku> -> $method {
 {
     is-deeply Hash.new(:42a, :666b), Hash.new( (:42a, :666b) ),
       'can we create a Hash with just named arguments';
+}
+
+# https://github.com/ash/rakupp/issues/259
+# A hash assignment expects two elements; Nil is not the zero-slot value.
+{
+    my $v = Nil;
+    dies-ok { my %h = $v }, 'a Nil RHS is not a hash initializer';
+    my %h;
+    dies-ok { %h = Nil }, 'assigning Nil to a Hash dies';
 }
 
 # vim: expandtab shiftwidth=4
