@@ -2,7 +2,7 @@ use Test;
 use lib $*PROGRAM.parent(2).add: 'packages/Test-Helpers';
 use Test::Util;
 
-plan 143;
+plan 239;
 
 # L<S32::Numeric/Real/"=item round">
 # L<S32::Numeric/Real/"=item floor">
@@ -311,5 +311,35 @@ group-of 64 => "type of .round's return value" => {
         "ComplexStr with ComplexStr rounder is Complex";
 }
 
+# Tests for :HALF-[UP|DOWN|EVEN|ODD] and [TO|FROM]-ZERO rounding
+# https://github.com/rakudo/rakudo/issues/2826
+{
+  my @tests = [
+    [ 1.5,    :half-up(2),  :half-down(1),  :half-even(2),  :half-odd(1),  :to-zero(1),  :from-zero(2)  ],
+    [ 2,      :half-up(2),  :half-down(2),  :half-even(2),  :half-odd(2),  :to-zero(2),  :from-zero(2)  ],
+    [ 1.4999, :half-up(1),  :half-down(1),  :half-even(1),  :half-odd(1),  :to-zero(1),  :from-zero(1)  ],
+    [ 0.5,    :half-up(1),  :half-down(0),  :half-even(0),  :half-odd(1),  :to-zero(0),  :from-zero(1)  ],
+    [ 0.1,    :half-up(0),  :half-down(0),  :half-even(0),  :half-odd(0),  :to-zero(0),  :from-zero(0)  ],
+    [  0,     :half-up(0),  :half-down(0),  :half-even(0),  :half-odd(0),  :to-zero(0),  :from-zero(0)  ],
+    [ -0.01,  :half-up(0),  :half-down(0),  :half-even(0),  :half-odd(0),  :to-zero(0),  :from-zero(0)  ],
+    [ -1,     :half-up(-1), :half-down(-1), :half-even(-1), :half-odd(-1), :to-zero(-1), :from-zero(-1) ],
+    [ -5.9,   :half-up(-6), :half-down(-6), :half-even(-6), :half-odd(-6), :to-zero(-6), :from-zero(-6) ],
+    [ -0.5,   :half-up(0),  :half-down(-1), :half-even(0),  :half-odd(-1), :to-zero(0),  :from-zero(-1) ],
+    [ -0.499, :half-up(0),  :half-down(0),  :half-even(0),  :half-odd(0),  :to-zero(0),  :from-zero(0)  ],
+    [ -5.499, :half-up(-5), :half-down(-5), :half-even(-5), :half-odd(-5), :to-zero(-5), :from-zero(-5) ],
+    [ -2,     :half-up(-2), :half-down(-2), :half-even(-2), :half-odd(-2), :to-zero(-2), :from-zero(-2)  ],
+    [  9999999999999999999999999999999999999999998.5, :half-up( 9999999999999999999999999999999999999999999), :half-down( 9999999999999999999999999999999999999999998), :half-even(9999999999999999999999999999999999999999998), :half-odd( 9999999999999999999999999999999999999999999), :to-zero( 9999999999999999999999999999999999999999998), :from-zero( 9999999999999999999999999999999999999999999)  ],
+    [ -9999999999999999999999999999999999999999998.5, :half-up(-9999999999999999999999999999999999999999998), :half-down(-9999999999999999999999999999999999999999999), :half-even(-9999999999999999999999999999999999999999998), :half-odd(-9999999999999999999999999999999999999999999), :to-zero(-9999999999999999999999999999999999999999998), :from-zero(-9999999999999999999999999999999999999999999)  ],
+    [ -9999999999999999999999999999999999999999998.9, :half-up(-9999999999999999999999999999999999999999999), :half-down(-9999999999999999999999999999999999999999999), :half-even(-9999999999999999999999999999999999999999999), :half-odd(-9999999999999999999999999999999999999999999), :to-zero(-9999999999999999999999999999999999999999999), :from-zero(-9999999999999999999999999999999999999999999)  ],
+  ];
+
+  my $to-round;
+  for @tests -> $test {
+    $to-round = $test.shift;
+    for @$test -> $test-pair {
+      ok $to-round.round(|Pair.new($test-pair.key,True)) == $test-pair.value, "Round {$to-round}:{$test-pair.key} == {$test-pair.value}";
+    }
+  }
+}
 
 # vim: expandtab shiftwidth=4
