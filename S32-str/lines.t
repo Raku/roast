@@ -2,7 +2,7 @@ use Test;
 use lib $*PROGRAM.parent(2).add("packages/Test-Helpers");
 use Test::Util;
 
-plan 27;
+plan 29;
 
 is "a\nb\n\nc".lines.join('|'),
   'a|b||c', 'LF .lines without trailing';
@@ -48,8 +48,12 @@ is "a\nb\r\rc\r".lines(*).join('|'),
 is "a\nb\r\rc\r".lines(2).join('|'),
   'a|b',    'mixed .lines with limit';
 
+is ''.lines().eager.elems, 0, '"".lines()';
+
 is lines("a\nb\nc\n").join('|'), 'a|b|c', '&lines';
 is lines("a\nb\nc\n",2).join('|'), 'a|b', '&lines(2)';
+
+is lines('').eager.elems, 0, 'lines("")';
 
 # https://github.com/Raku/old-issue-tracker/issues/2910
 is_run( 'print lines[0]',
