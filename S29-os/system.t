@@ -206,8 +206,17 @@ subtest 'Proc.pid is set correctly' => {
 
 # https://github.com/rakudo/rakudo/issues/3149
 {
-    my $proc = run $*EXECUTABLE, ‘-e’,
-        ‘use NativeCall; sub strdup(int64) is native(Str) {*}; strdup(0)’;
+    my $proc = run $*EXECUTABLE, ‘-e’, q:to/CODE/;
+        use NativeCall;
+
+        # try to avoid generating a core dump:
+        sub setrlimit(int32 $resource, blob8 $rlp) is native(Str) { * }
+        try setrlimit(4, blob8.allocate(4096, 0));
+
+        # trigger an intentional segfault:
+        sub strdup(int64) is native(Str) {*};
+        strdup(0)
+        CODE
     throws-like { sink $proc },
         X::Proc::Unsuccessful,
         'Exit with a segfault makes the Proc throw in sink context';
