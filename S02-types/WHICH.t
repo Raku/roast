@@ -376,7 +376,6 @@ my @exception = <
   X::TypeCheck::Assignment
   X::TypeCheck::Binding
   X::TypeCheck::Return
-  X::TypeCheck::Splice
   X::Undeclared
   X::Undeclared::Symbols
   X::UnitScope::Invalid
