@@ -1,7 +1,6 @@
 use Test;
 
 my @normal = <
-  AST
   Any
   array
   Allomorph
