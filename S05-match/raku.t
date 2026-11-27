@@ -29,7 +29,7 @@ lives-ok { $/.raku }, 'lives on quantified named captures';
 #?rakudo skip '<foo::bar>'
 {
     my $code_str = 'say <OH HAI>';
-    $code_str ~~ /<Perl6::Grammar::TOP>/;
+    $code_str ~~ /<Grammar::TOP>/;
 
     isa-ok $/, Match;
     is $/.ast, $code_str, 'Match.ast is the code matched';
